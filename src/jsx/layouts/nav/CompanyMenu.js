@@ -13,6 +13,11 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Home,
     },
     {
+        title: 'Sub Company',
+        iconStyle: SVGICON.Employe,
+        to: '/sub-company',
+    },
+    {
         title: 'Employees',
         iconStyle: SVGICON.Employe,
         to: '/employee',
