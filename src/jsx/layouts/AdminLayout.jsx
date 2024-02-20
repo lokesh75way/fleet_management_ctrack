@@ -22,7 +22,7 @@ function AdminLayout() {
         id="main-wrapper"
         className={`show ${menuToggle ? "menu-toggle" : ""}`}
       >
-        <Nav role="Admin" />
+        <Nav role="admin" />
         <div
           className="content-body"
           style={{ minHeight: window.screen.height - 45 }}

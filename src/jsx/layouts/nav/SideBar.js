@@ -21,7 +21,7 @@ const initialState = {
   activeSubmenu: "",
 }
 
-const SideBar = ({ role = 'Company' }) => {
+const SideBar = ({ role = 'company' }) => {
   const {
     iconHover,
     sidebarposition,
@@ -29,7 +29,7 @@ const SideBar = ({ role = 'Company' }) => {
     sidebarLayout,
   } = useContext(ThemeContext);
 
-  const MenuList = role === 'Company' ? CompanyMenuList : AdminMenuList;
+  const MenuList = role === 'company' ? CompanyMenuList : AdminMenuList;
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {
