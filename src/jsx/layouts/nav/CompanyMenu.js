@@ -1,6 +1,6 @@
 import { SVGICON } from "../../constant/theme";
 
-export const MenuList = [
+export const CompanyMenuList = [
     //Content
     {
         title: 'YOUR COMPANY',

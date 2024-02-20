@@ -54,7 +54,7 @@ function App(props) {
 
   if (props.isAuthenticated) {
     console.log(role);
-    return role == 'admin' ? <AdminRoutes /> : <CompanyRoutes />
+    return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />
   }
 
   return (

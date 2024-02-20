@@ -1,6 +1,6 @@
 import React, { Suspense, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
-import Nav from "./admin-nav";
+import Nav from "./nav";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
@@ -22,7 +22,7 @@ function AdminLayout() {
         id="main-wrapper"
         className={`show ${menuToggle ? "menu-toggle" : ""}`}
       >
-        <Nav />
+        <Nav role="Admin" />
         <div
           className="content-body"
           style={{ minHeight: window.screen.height - 45 }}
