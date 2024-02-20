@@ -1,7 +1,7 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 
 /// React router dom
-import {  Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 
 /// Css
 import "./index.css";
@@ -129,174 +129,57 @@ import Error500 from "./pages/Error500";
 import Error503 from "./pages/Error503";
 
 import { ThemeContext } from "../context/ThemeContext";
+import AdminLayout from "./layouts/AdminLayout";
 
 
 
-const Markup = () => { 
-  
+const AdminRoutes = () => {
+
   const allroutes = [
-  // Dashboard
+    // Dashboard
     { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },
-    { url: "dashboard-dark", component: <DashboardDark/> },
     { url: "core-hr", component: <CoreHr /> },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
-    { url: "blog-1", component: <HomeBlog /> },
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
     { url: "employee", component: <Employees /> },
-    { url: "task", component: <Task /> },
+  ];
 
-    //Update Pages
-    { url: "svg-icon", component: <SvgIcons /> },
 
-    ///Cms
-    { url: 'content', component: <Content/> },
-    { url: 'menu', component: <Menu/> },
-    { url: 'email-template', component: <EmailTemplate/> },
-    { url: 'blog', component: <CmsBlog/> },
-    { url: 'add-content', component: <ContentAdd/> },
-    { url: 'add-email', component: <AddMail/> },
-    { url: 'add-blog', component: <AddBlog/> },
-    { url: 'blog-category', component: <BlogCategory/> },
-    
-    ///AiKit    
-    { url: 'auto-write', component: <AutoWriter/> },
-    { url: 'scheduled', component: <Scheduler/> },
-    { url: 'repurpose', component: <Repurpose/> },
-    { url: 'rss', component: <RSS/> },
-    { url: 'chatbot', component: <Chatbot/> },
-    { url: 'fine-tune-models', component: <FineTuneModels/> },
-    { url: 'prompt', component: <AIMenu/> },
-    { url: 'setting', component: <Settings/> },
-    { url: 'import', component: <ImportExport/> },
-
-  //Apps
-    { url: "contacts", component: <Contacts /> },
-    { url: "user", component: <User /> },
-    { url: "user-roles", component: <UserRoles /> },
-    { url: "add-role", component: <AddRole /> },
-    { url: "app-profile", component: <AppProfile /> },
-    { url: "app-profile-2", component: <AppProfile2 /> },
-    { url: "edit-profile", component: <EditProfile /> },
-    { url: "post-details", component: <PostDetails /> },
-    { url: "customer", component: <AppCustomer /> },
-    { url: "customer-profile", component: <CustomerProfile /> },    
-    
-  // Apps  
-    { url: "email-compose", component: <Compose /> },
-    { url: "email-inbox", component: <Inbox /> },
-    { url: "email-read", component: <Read /> },
-    { url: "app-calender", component: <Calendar /> },
-
-  // Shop
-    { url: "ecom-product-grid", component: <ProductGrid /> },
-    { url: "ecom-product-list", component: <ProductList /> },
-    { url: "ecom-product-detail", component: <ProductDetail /> },
-    { url: "ecom-product-order", component: <ProductOrder /> },
-    { url: "ecom-checkout", component: <Checkout /> },
-    { url: "ecom-invoice", component: <Invoice /> },
-    { url: "ecom-customers", component: <Customers /> },
-  // Chart
-    { url: "chart-sparkline", component: <SparklineChart /> },
-    { url: "chart-chartjs", component: <ChartJs /> },    
-    { url: "chart-apexchart", component: <ApexChart /> },
-    { url: "chart-rechart", component: <RechartJs /> },
-  // Bootstrap
-    { url: "ui-accordion", component: <UiAccordion /> },
-    { url: "ui-alert", component: <UiAlert /> },
-    { url: "ui-badge", component: <UiBadge /> },
-    { url: "ui-button", component: <UiButton /> },
-    { url: "ui-modal", component: <UiModal /> },
-    { url: "ui-button-group", component: <UiButtonGroup /> },
-    { url: "ui-list-group", component: <UiListGroup /> },
-    { url: "ui-card", component: <UiCards />},
-    { url: "ui-carousel", component: <UiCarousel /> },
-    { url: "ui-dropdown", component: <UiDropDown /> },
-    { url: "ui-popover", component: <UiPopOver /> },
-    { url: "ui-progressbar", component: <UiProgressBar /> },
-    { url: "ui-tab", component: <UiTab /> },
-    { url: "ui-pagination", component: <UiPagination /> },
-    { url: "ui-typography", component: <UiTypography /> },
-    { url: "ui-grid", component: <UiGrid /> },  
-  // Plugin
-    { url: "uc-select2", component: <Select2 /> },
-    { url: "uc-sweetalert", component: <MainSweetAlert /> },
-    { url: "uc-toastr", component: <Toastr /> },
-    { url: "map-jqvmap", component: <JqvMap /> },
-    { url: "uc-lightgallery", component: <Lightgallery /> },
-  // Widget
-    { url: "widget-basic", component: <Widget /> },
-  // Form
-    { url: "form-element", component: <Element /> },
-    { url: "form-wizard", component: <Wizard /> },
-    { url: "form-ckeditor", component: <CkEditor /> },
-    { url: "form-pickers", component: <Pickers /> },
-    { url: "form-validation", component: <FormValidation /> },
-
-  // table
-    { url: 'table-filtering', component: <FilteringTable /> },
-    { url: 'table-sorting', component: <SortingTable /> },
-    { url: "table-bootstrap-basic", component: <BootstrapTable /> },
-    
-];
-
- 
-  function NotFound(){    
+  function NotFound() {
     const url = allroutes.map((route) => route.url);
     let path = window.location.pathname
     path = path.split('/')
-    path = path[path.length - 1]    
-      
-    if(url.indexOf(path) <= 0){     
+    path = path[path.length - 1]
+
+    if (url.indexOf(path) <= 0) {
       return <Error404 />
     }
   }
-   
-    return (
-      <>
-          <Routes>              
-              <Route path='/page-lock-screen' element= {<LockScreen />} />
-              <Route path='/page-error-400' element={<Error400/>} />            
-              <Route path='/page-error-403' element={<Error403/>} />
-              <Route path='/page-error-404' element={<Error404/>} />
-              <Route path='/page-error-500' element={<Error500/>} />
-              <Route path='/page-error-503' element={<Error503/>} />     
-              <Route  element={<MainLayout />} > 
-                  {allroutes.map((data, i) => (
-                    <Route
-                      key={i}
-                      exact
-                      path={`${data.url}`}
-                      element={data.component}
-                    />
-                    ))}
-              </Route>                
-              <Route path='*' element={<NotFound/>} />     
-          </Routes>     
-          <ScrollToTop />
-          
-      </>
-    );       
+
+  return (
+    <>
+      <Routes>
+        <Route element={<AdminLayout />} >
+          {allroutes.map((data, i) => (
+            <Route
+              key={i}
+              exact
+              path={`${data.url}`}
+              element={data.component}
+            />
+          ))}
+        </Route>
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+      <ScrollToTop />
+    </>
+  );
 };
 
 
-  function MainLayout(){
-    const { menuToggle } = useContext(ThemeContext);
-    return (
-      <div id="main-wrapper" className={`show ${ menuToggle ? "menu-toggle" : ""}`}>  
-          <Nav />
-          <div className="content-body" style={{ minHeight: window.screen.height - 45 }}>          
-            <Outlet />   
-          </div>
-        <Footer />
-      </div>
-    )
-  };
-
-
-
-export default Markup;
+export default AdminRoutes;
