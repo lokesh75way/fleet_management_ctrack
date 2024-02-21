@@ -13,9 +13,9 @@ export const AdminMenuList = [
         iconStyle: SVGICON.Home,
     },
     {
-        title: 'Employees',
+        title: 'Compnay',
         iconStyle: SVGICON.Employe,
-        to: '/employee',
+        to: '/company',
     },
     {
         title: 'Core HR',

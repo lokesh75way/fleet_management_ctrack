@@ -29,6 +29,7 @@
     "react-bootstrap-daterangepicker": "^8.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-color": "^2.19.3",
+    "react-country-state-city": "^1.1.0",
     "react-countup": "^6.4.2",
     "react-csv": "^2.2.2",
     "react-datepicker": "^4.11.0",
