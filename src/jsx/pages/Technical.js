@@ -8,18 +8,18 @@ import InviteCustomer from '../constant/ModalList';
 import TechnicalOffCanvas from '../constant/TechnicalOffCanvas';
 
 const tableData = [
-    {emplid: '1001', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
-    {emplid: '1002', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1003', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France'},    
-    {emplid: '1004', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai'},    
-    {emplid: '1005', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA'},    
-    {emplid: '1006', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA'},    
-    {emplid: '1007', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1008', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France'},    
-    {emplid: '1009', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
-    {emplid: '1010', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai'},    
-    {emplid: '1011', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1012', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
+    {emplid: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
+    {emplid: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
+    {emplid: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
+    {emplid: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
+    {emplid: '1005', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
+    {emplid: '1006', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
+    {emplid: '1007', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
+    {emplid: '1008', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
+    {emplid: '1009', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
+    {emplid: '1010', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
+    {emplid: '1011', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
+    {emplid: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
 ];
 
 const headers = [
@@ -103,10 +103,8 @@ const Technical = () => {
                                                 <tr>                                                   
                                                     <th>Technician ID</th>
                                                     <th>Technician Name</th>
-                                                    <th>Designation</th>
                                                     <th>Email</th>
                                                     <th>Contact Number</th>
-                                                    <th>Active</th>
                                                     <th>Location</th>
                                                     <th>Status</th>
                                                 </tr>
@@ -124,14 +122,12 @@ const Technical = () => {
                                                                 </div>	
                                                             </div>
                                                         </td>
-                                                        <td><span>{item.department}</span></td>
+                                                        
                                                         <td><span className="text-primary">{item.email}</span></td>
                                                         <td>
                                                             <span>{item.contact}</span>
                                                         </td>
-                                                        <td>
-                                                            <span>{item.gender}</span>
-                                                        </td>	
+                                                        	
                                                         <td>
                                                             <span>{item.location}</span>
                                                         </td>

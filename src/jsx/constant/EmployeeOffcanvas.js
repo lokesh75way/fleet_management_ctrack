@@ -253,14 +253,6 @@ const EmployeeOffcanvas =forwardRef((props, ref) => {
                                         onChange={(date) => setStartDate(date)} 
                                     />
                                 </div>
-                                <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput8" className="form-label">Date of Birth <span className="text-danger">*</span></label>                                    
-                                    <DatePicker 
-                                        className="form-control"
-                                        selected={startDate2} 
-                                        onChange={(date) => setStartDate2(date)} 
-                                    />
-                                </div>
                                 {/* <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput10" className="form-label">Reporting To <span className="text-danger">*</span></label>
                                     <input type="text" className="form-control" id="exampleFormControlInput10" placeholder="" />
