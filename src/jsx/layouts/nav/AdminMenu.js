@@ -13,6 +13,10 @@ export const AdminMenuList = [
         iconStyle: SVGICON.Home,
     },
     {
+        title: 'Driver',
+        iconStyle: SVGICON.Employe,
+        to: '/driver',
+     },
         title: 'Compnay',
         iconStyle: SVGICON.Employe,
         to: '/company',
@@ -42,6 +46,11 @@ export const AdminMenuList = [
         title: 'Reports',
         iconStyle: SVGICON.Reports,
         to: '/reports',
+    },
+    {
+        title: 'Technical',
+        iconStyle: SVGICON.Employe,
+        to: '/technical',
     },
 
     {

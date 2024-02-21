@@ -12,15 +12,20 @@ export const CompanyMenuList = [
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Home,
     },
+   {
+        title: 'Companies',
+        iconStyle: SVGICON.Employe,
+        to: '/companies',
+    },
     {
-        title: 'Sub Company',
+        title: 'Sub Companies',
         iconStyle: SVGICON.Employe,
         to: '/sub-company',
     },
     {
-        title: 'Employees',
+        title: 'Driver',
         iconStyle: SVGICON.Employe,
-        to: '/employee',
+        to: '/driver',
     },
     {
         title: 'Core HR',
@@ -47,6 +52,11 @@ export const CompanyMenuList = [
         title: 'Reports',
         iconStyle: SVGICON.Reports,
         to: '/reports',
+    },
+    {
+        title: 'Technical',
+        iconStyle: SVGICON.Employe,
+        to: '/technical',
     },
 
     {

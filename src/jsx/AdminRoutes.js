@@ -24,7 +24,8 @@ import HomeBlog from "./components/Dashboard/Blog";
 import ManageClient from "./components/Dashboard/ManageClient";
 import Report from "./components/Dashboard/Report";
 import Finance from "./components/Dashboard/Finance";
-import Employees from "./components/Dashboard/Employees";
+import Driver from "./pages/Driver";
+import Technical from "./pages/Technical"
 import Task from "./components/Dashboard/Task";
 import CoreHr from "./components/Dashboard/CoreHr";
 
@@ -147,6 +148,8 @@ const AdminRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
+    { url: "driver", component: <Driver /> },
+    { url: "technical", component: <Technical /> },
     { url: "company", component: <Company /> },
   ];
 
