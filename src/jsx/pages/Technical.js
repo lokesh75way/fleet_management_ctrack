@@ -89,7 +89,7 @@ const Technical = () => {
                                                 Export Report
                                             </CSVLink>  */}
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>technical.current.showEmployeModal()}
+                                                onClick={()=>technical.current.showModal()}
                                             >+ Add Technician</Link> {" "}
                                             {/* <button type="button" className="btn btn-secondary btn-sm"                                                 
                                                 onClick={() => invite.current.showInviteModal()}

@@ -104,7 +104,7 @@ const AppCustomer = () => {
 							<div className="d-flex align-items-center">
                                 <button type="button" className="btn btn-primary btn-sm me-2"><i className="fa-solid fa-filter me-2"></i>Filter</button>
 								<Link to={"#"} className="btn btn-primary btn-sm ms-2" data-bs-toggle="offcanvas"
-                                    onClick={()=>custom.current.showEmployeModal()}
+                                    onClick={()=>custom.current.showModal()}
                                 >
                                     + Add Customer
                                 </Link>

@@ -88,7 +88,7 @@ const Company = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showEmployeModal()}
+                                                onClick={()=>company.current.showModal()}
                                             >+ Add Company</Link> {" "}
                                            
                                         </div>
