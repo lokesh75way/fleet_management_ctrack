@@ -1,7 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Offcanvas } from 'react-bootstrap';
-import DatePicker from "react-datepicker";
 import {
     CitySelect,
     CountrySelect,
@@ -10,14 +9,12 @@ import {
 import "react-country-state-city/dist/react-country-state-city.css";
 
 const SubCompanyOffcanvas = forwardRef((props, ref) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [startDate2, setStartDate2] = useState(new Date());
-    const [addEmploye, setAddEmploye] = useState(false);
+    const [addSubCompany, setAddSubCompany] = useState(false);
     const [countryid, setCountryid] = useState(0);
     const [stateid, setstateid] = useState(0);
     useImperativeHandle(ref, () => ({
-        showEmployeModal() {
-            setAddEmploye(true)
+        showModal() {
+            setAddSubCompany(true)
         }
     }));
     const nav = useNavigate();
@@ -27,11 +24,11 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
     }
     return (
         <>
-            <Offcanvas show={addEmploye} onHide={setAddEmploye} className="offcanvas-end customeoff" placement='end'>
+            <Offcanvas show={addSubCompany} onHide={setAddSubCompany} className="offcanvas-end customeoff" placement='end'>
                 <div className="offcanvas-header">
                     <h5 className="modal-title" id="#gridSystemModal">{props.Title}</h5>
                     <button type="button" className="btn-close"
-                        onClick={() => setAddEmploye(false)}
+                        onClick={() => setAddSubCompany(false)}
                     >
                         <i className="fa-solid fa-xmark"></i>
                     </button>
@@ -103,12 +100,6 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label className="form-label">Country <span className="text-danger">*</span></label>
-                                    {/* <select className="default-select form-control">
-                                        <option  data-display="Select">Please select</option>
-                                        <option value="html">Ind</option>
-                                        <option value="css">USA</option>
-                                        <option value="javascript">UK</option>
-                                    </select> */}
                                     <CountrySelect className="default-select form-control"
                                     containerClassName = "bg-white"
                                     inputClassName="border border-white"
@@ -121,12 +112,6 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label className="form-label">State <span className="text-danger">*</span></label>
-                                    {/* <select className="default-select form-control">
-                                        <option data-display="Select">Please select</option>
-                                        <option value="html">Software</option>
-                                        <option value="css">Doit</option>
-                                        <option value="javascript">Designing</option>
-                                    </select> */}
                                     <StateSelect className="default-select form-control"
                                      containerClassName = "bg-white"
                                      inputClassName="border border-white"
@@ -175,56 +160,10 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                         <option value="css">Pending</option>
                                     </select>
                                 </div>
-                                {/* <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput99" className="form-label">Created Date<span className="text-danger">*</span></label>                                    
-                                    <DatePicker 
-                                        className="form-control"
-                                        selected={startDate} 
-                                        onChange={(date) => setStartDate(date)} 
-                                    />
-                                </div> */}
-                                {/* <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput8" className="form-label">Date of Birth <span className="text-danger">*</span></label>                                    
-                                    <DatePicker 
-                                        className="form-control"
-                                        selected={startDate2} 
-                                        onChange={(date) => setStartDate2(date)} 
-                                    />
-                                </div>
-                                <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput10" className="form-label">Reporting To <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="exampleFormControlInput10" placeholder="" />
-                                </div>		
-                                <div className="col-xl-6 mb-3">
-                                    <label className="form-label">Language Select <span className="text-danger">*</span></label>
-                                    <select className="default-select form-control">
-                                        <option  data-display="Select">Please select</option>
-                                        <option value="html">English</option>
-                                        <option value="css">Hindi</option>
-                                        <option value="javascript">Canada</option>
-                                    </select>
-                                </div>
-                                <div className="col-xl-6 mb-3">
-                                    <label className="form-label">User Role <span className="text-danger">*</span></label>
-                                    <select className="default-select form-control">
-                                        <option  data-display="Select">Please select</option>
-                                        <option value="html">Parmanent</option>
-                                        <option value="css">Parttime</option>
-                                        <option value="javascript">Per Hours</option>
-                                    </select>
-                                </div>
-                                <div className="col-xl-12 mb-3">
-                                    <label className="form-label">Address <span className="text-danger">*</span></label>
-                                    <textarea rows="2" className="form-control"></textarea>
-                                </div>
-                                <div className="col-xl-12 mb-3">
-                                    <label className="form-label">About <span className="text-danger">*</span></label>
-                                    <textarea rows="2" className="form-control"></textarea>
-                                </div>	 */}
                             </div>
                             <div>
                                 <button type="submit" className="btn btn-primary me-1">Submit</button>
-                                <Link to={"#"} onClick={() => setAddEmploye(false)} className="btn btn-danger light ms-1">Cancel</Link>
+                                <Link to={"#"} onClick={() => setAddSubCompany(false)} className="btn btn-danger light ms-1">Cancel</Link>
                             </div>
                         </form>
                     </div>

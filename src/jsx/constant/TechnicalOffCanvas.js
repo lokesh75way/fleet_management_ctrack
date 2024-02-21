@@ -13,7 +13,7 @@ const TechnicalOffCanvas =forwardRef((props, ref) => {
     const [addEmploye , setAddEmploye] = useState(false);
     const [countryid, setCountryid] = useState(0);
     useImperativeHandle(ref, () => ({
-        showEmployeModal() {
+        showModal() {
             setAddEmploye(true)
         }    
     }));

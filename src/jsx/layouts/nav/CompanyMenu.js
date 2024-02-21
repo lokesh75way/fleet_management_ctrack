@@ -11,11 +11,7 @@ export const CompanyMenuList = [
         title: 'Dashboard',
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Home,
-    },
-   {
-        title: 'Companies',
-        iconStyle: SVGICON.Employe,
-        to: '/companies',
+        to: '/dashboard',
     },
     {
         title: 'Sub Companies',
@@ -47,11 +43,107 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.ProjectsSidbar,
         to: '/project',
     },
-
     {
         title: 'Reports',
+        classsChange:'mm-collapse',
         iconStyle: SVGICON.Reports,
-        to: '/reports',
+        content:[
+            {
+                title:'Activity',
+                to: '/reports/activity'
+            },
+            {
+                title:'Geofence-Address',
+                to: '/reports/geofence-address'
+            },
+            {
+                title:'Sensor',
+                to: '/reports/sensor'
+            },
+            {
+                title:'Alert',
+                to: '/reports/alert'
+            },
+            {
+                title:'Reminder',
+                to: '/reports/reminder'
+            },
+            {
+                title:'Expense',
+                to: '/reports/expense'
+            },
+            {
+                title:'Fuel',
+                to: '/reports/fuel'
+            },
+            {
+                title:'RPM',
+                to: '/reports/rpm'
+            },
+            {
+                title:'Temperature',
+                to: '/reports/temperature'
+            },
+            {
+                title:'Driver Behaviour',
+                to: '/reports/driver-behaviour'
+            },
+            {
+                title:'OBD',
+                to: '/reports/obd'
+            },
+            {
+                title:'Billing',
+                to: '/reports/billing'
+            },
+            {
+                title:'Customized',
+                to: '/reports/customized'
+            },
+            {
+                title:'Logs',
+                to: '/reports/logs'
+            },
+            {
+                title:'Hardware Maintenance',
+                to: '/reports/hardware-maintenance'
+            },
+            {
+                title:'Elock',
+                to: '/reports/elock'
+            },
+            {
+                title:'Trip Classification',
+                to: '/reports/trip-classification'
+            },
+        ]
+    },
+    {
+        title: 'Charts',
+        classsChange:'mm-collapse',
+        iconStyle: SVGICON.Charts,
+        content:[
+            {
+                title:'Activity',
+                to: '/charts/activity'
+            },
+            {
+                title:'Alert',
+                to: '/charts/alert'
+            },
+            {
+                title:'Fuel',
+                to: '/charts/fuel'
+            },
+            {
+                title:'Expense',
+                to: '/charts/expense'
+            },
+            {
+                title:'Temperature Chart',
+                to: '/charts/temperature-chart'
+            },
+        ]
     },
     {
         title: 'Technical',

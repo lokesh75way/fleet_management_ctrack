@@ -122,13 +122,37 @@ import CkEditor from "./components/Forms/CkEditor/CkEditor";
 import Pickers from "./components/Forms/Pickers/Pickers";
 import FormValidation from "./components/Forms/FormValidation/FormValidation";
 import Error404 from "./pages/Error404";
-import AdminLayout from "./layouts/AdminLayout";
 import CompanyLayout from "./layouts/CompanyLayout";
 import SubCompany from "./pages/company/SubCompany";
 
+//Reports
+import TripClassification from "./pages/company/reports/TripClassification";
+import Elock from "./pages/company/reports/Elock";
+import HardwareMaintenance from "./pages/company/reports/HardwareMaintenance";
+import Logs from "./pages/company/reports/Logs";
+import Customized from "./pages/company/reports/Customized";
+import OBD from "./pages/company/reports/OBD";
+import Billing from "./pages/company/reports/Billing";
+import RPM from "./pages/company/reports/RPM";
+import Temperature from "./pages/company/reports/Temperature";
+import DriverBehaviour from "./pages/company/reports/DriverBehaviour";
+import ActivityReport from "./pages/company/reports/Activity";
+import GeofenceAddress from "./pages/company/reports/GeofenceAddress";
+import Sensor from "./pages/company/reports/Sensor";
+import AlertReport from "./pages/company/reports/Alert";
+import Reminder from "./pages/company/reports/Reminder";
+import ExpenseReport from "./pages/company/reports/Expense";
+import FuelReport from "./pages/company/reports/Fuel";
+
+//Charts
+import ActivityChart from "./pages/company/charts/Activity";
+import AlertChart from "./pages/company/charts/Alert";
+import FuelChart from "./pages/company/charts/Fuel";
+import ExpenseChart from "./pages/company/charts/Expense"
+import TemperatureChart from "./pages/company/charts/TemperatureChart";
 
 
-const AdminRoutes = () => {
+const CompanyRoutes = () => {
 
   const allroutes = [
     // Dashboard
@@ -143,10 +167,36 @@ const AdminRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
-    { url: "driver", component: <Driver /> },
     { url: "task", component: <Task /> },
     { url: "technical", component: <Technical /> },
     { url: "sub-company", component: <SubCompany /> },
+    { url: "driver", component: <Driver /> },
+
+    //Reports
+    { url: "/reports/activity", component: <ActivityReport /> },
+    { url: "/reports/geofence-address", component: <GeofenceAddress /> },
+    { url: "/reports/sensor", component: <Sensor /> },
+    { url: "/reports/alert", component: <AlertReport /> },
+    { url: "/reports/reminder", component: <Reminder /> },
+    { url: "/reports/expense", component: <ExpenseReport /> },
+    { url: "/reports/fuel", component: <FuelReport /> },
+    { url: "/reports/rpm", component: <RPM /> },
+    { url: "/reports/temperature", component: <Temperature /> },
+    { url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
+    { url: "/reports/obd", component: <OBD /> },
+    { url: "/reports/billing", component: <Billing /> },
+    { url: "/reports/customized", component: <Customized /> },
+    { url: "/reports/logs", component: <Logs /> },
+    { url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
+    { url: "/reports/elock", component: <Elock /> },
+    { url: "/reports/trip-classification", component: <TripClassification /> },
+
+    //Charts
+    { url: "/charts/activity", component: <ActivityChart /> },
+    { url: "/charts/alert", component: <AlertChart /> },
+    { url: "/charts/fuel", component: <FuelChart /> },
+    { url: "/charts/expense", component: <ExpenseChart /> },
+    { url: "/charts/temperature-chart", component: <TemperatureChart /> },
 
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },
@@ -275,4 +325,4 @@ const AdminRoutes = () => {
 };
 
 
-export default AdminRoutes;
+export default CompanyRoutes;

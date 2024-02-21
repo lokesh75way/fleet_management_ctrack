@@ -88,9 +88,12 @@ const Company = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showEmployeModal()}
-                                            >+ Add Company</Link> {" "}
-                                           
+                                                onClick={()=>company.current.showModal()}
+                                            >+ Add Employee</Link> {" "}
+                                            <button type="button" className="btn btn-secondary btn-sm"                                                 
+                                                onClick={() => invite.current.showInviteModal()}
+                                            >+ Invite Employee
+                                            </button>
                                         </div>
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">

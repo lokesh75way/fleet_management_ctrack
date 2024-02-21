@@ -103,7 +103,7 @@ const EmployeesTableList = () => {
                             <div>
                                 <CSVLink {...csvlink} className="btn btn-primary light btn-sm me-2"><i className="fa-solid fa-file-excel" /> Export Report</CSVLink> 
                                 <Link to={"#"} className="btn btn-primary btn-sm" data-bs-toggle="offcanvas"
-                                   onClick={()=>employe.current.showEmployeModal()}
+                                   onClick={()=>employe.current.showModal()}
                                 >+ Add Employee</Link> {" "}
                                 <button type="button" className="btn btn-secondary btn-sm" 
                                     onClick={() => invite.current.showInviteModal()}

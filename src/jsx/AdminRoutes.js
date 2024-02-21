@@ -151,6 +151,7 @@ const AdminRoutes = () => {
     { url: "driver", component: <Driver /> },
     { url: "technical", component: <Technical /> },
     { url: "company", component: <Company /> },
+    { url: "driver", component: <Driver /> },
   ];
 
 

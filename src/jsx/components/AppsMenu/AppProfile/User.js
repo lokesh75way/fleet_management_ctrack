@@ -31,7 +31,7 @@ const User = () => {
                                     </Nav.Item>
                                 </Nav>
                                 <Link to className="btn btn-primary btn-sm ms-2"
-                                    onClick={()=>userdata.current.showEmployeModal()}
+                                    onClick={()=>userdata.current.showModal()}
                                 >+ Add User
                                 </Link>
                             </div>
