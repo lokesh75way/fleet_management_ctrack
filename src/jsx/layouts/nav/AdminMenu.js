@@ -17,7 +17,7 @@ export const AdminMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/driver',
      },
-        title: 'Compnay',
+       { title: 'Compnay',
         iconStyle: SVGICON.Employe,
         to: '/company',
     },
@@ -57,6 +57,26 @@ export const AdminMenuList = [
         title: 'Manage Clients',
         iconStyle: SVGICON.ManageClient,
         to: '/manage-client',
+    },
+    {
+        title: 'Settings',
+        classsChange:'mm-collapse',
+        iconStyle: SVGICON.SettingMenu,
+        content:[
+            {
+                title:'General',
+                to: 'general'
+            },
+            {
+                title:'Master',
+                to: 'master'
+            },
+            {
+                title:'Technician',
+                to: 'technician'
+            }
+
+        ]
     },
 
 ]

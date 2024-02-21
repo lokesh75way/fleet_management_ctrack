@@ -103,7 +103,7 @@ const Contacts = () => {
 							<h4 className="heading mb-0">Contacts</h4>
 							<div>
 								<Link to={"#"} className="btn btn-primary btn-sm me-1" data-bs-toggle="offcanvas"
-                                    onClick={()=>addcontact.current.showEmployeModal()}
+                                    onClick={()=>addcontact.current.showModal()}
                                 >
                                     + Add Contacts
                                 </Link>

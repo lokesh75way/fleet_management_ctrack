@@ -89,7 +89,7 @@ const Driver = () => {
                                                 Export Report
                                             </CSVLink>  */}
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>employe.current.showEmployeModal()}
+                                                onClick={()=>employe.current.showModal()}
                                             >+ Add Driver</Link> {" "}
                                             {/* <button type="button" className="btn btn-secondary btn-sm"                                                 
                                                 onClick={() => invite.current.showInviteModal()}
@@ -136,7 +136,7 @@ const Driver = () => {
                                                             <span>{item.location}</span>
                                                         </td>
                                                         <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
+                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"45%"}}>{item.status}</span>
                                                         </td>
                                                     </tr>
                                                 ))}

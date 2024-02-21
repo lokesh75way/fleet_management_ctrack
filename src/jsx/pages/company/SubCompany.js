@@ -87,7 +87,7 @@ const SubCompany = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showEmployeModal()}
+                                                onClick={()=>company.current.showModal()}
                                             >+ Add Sub Company</Link> {" "}
                                            
                                         </div>

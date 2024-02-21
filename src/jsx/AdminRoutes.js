@@ -132,6 +132,9 @@ import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import AdminLayout from "./layouts/AdminLayout";
 import Company from "./pages/admin/Compnay";
+import General from "./pages/admin/settings/General";
+import Master from "./pages/admin/settings/Master";
+import Technician from "./pages/admin/settings/Technician";
 
 
 
@@ -151,6 +154,10 @@ const AdminRoutes = () => {
     { url: "driver", component: <Driver /> },
     { url: "technical", component: <Technical /> },
     { url: "company", component: <Company /> },
+    { url: "general", component: <General /> },
+    { url: "master", component: <Master /> },
+    { url: "technician", component: <Technician /> },
+   
   ];
 
 

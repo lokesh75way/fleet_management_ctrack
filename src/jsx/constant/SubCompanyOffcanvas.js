@@ -16,7 +16,7 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
     const [countryid, setCountryid] = useState(0);
     const [stateid, setstateid] = useState(0);
     useImperativeHandle(ref, () => ({
-        showEmployeModal() {
+        showModal() {
             setAddEmploye(true)
         }
     }));
