@@ -124,6 +124,7 @@ import FormValidation from "./components/Forms/FormValidation/FormValidation";
 import Error404 from "./pages/Error404";
 import AdminLayout from "./layouts/AdminLayout";
 import CompanyLayout from "./layouts/CompanyLayout";
+import SubCompany from "./pages/company/SubCompany";
 
 
 
@@ -145,6 +146,7 @@ const AdminRoutes = () => {
     { url: "driver", component: <Driver /> },
     { url: "task", component: <Task /> },
     { url: "technical", component: <Technical /> },
+    { url: "sub-company", component: <SubCompany /> },
 
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },

@@ -12,6 +12,16 @@ export const CompanyMenuList = [
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Home,
     },
+   {
+        title: 'Companies',
+        iconStyle: SVGICON.Employe,
+        to: '/companies',
+    },
+    {
+        title: 'Sub Companies',
+        iconStyle: SVGICON.Employe,
+        to: '/sub-company',
+    },
     {
         title: 'Driver',
         iconStyle: SVGICON.Employe,

@@ -16,6 +16,10 @@ export const AdminMenuList = [
         title: 'Driver',
         iconStyle: SVGICON.Employe,
         to: '/driver',
+     },
+        title: 'Compnay',
+        iconStyle: SVGICON.Employe,
+        to: '/company',
     },
     {
         title: 'Core HR',

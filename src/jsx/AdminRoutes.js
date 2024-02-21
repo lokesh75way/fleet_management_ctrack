@@ -131,6 +131,7 @@ import Error503 from "./pages/Error503";
 
 import { ThemeContext } from "../context/ThemeContext";
 import AdminLayout from "./layouts/AdminLayout";
+import Company from "./pages/admin/Compnay";
 
 
 
@@ -149,6 +150,7 @@ const AdminRoutes = () => {
     { url: "finance", component: <Finance /> },
     { url: "driver", component: <Driver /> },
     { url: "technical", component: <Technical /> },
+    { url: "company", component: <Company /> },
   ];
 
 
