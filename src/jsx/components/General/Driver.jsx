@@ -2,24 +2,22 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
-import { IMAGES } from '../constant/theme';
-import MainPagetitle from '../layouts/MainPagetitle';
-import InviteCustomer from '../constant/ModalList';
-import TechnicalOffCanvas from '../constant/TechnicalOffCanvas';
-
+import { IMAGES } from '../../constant/theme';
+import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
+import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
 const tableData = [
-    {emplid: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
-    {emplid: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
-    {emplid: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
-    {emplid: '1005', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
-    {emplid: '1006', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
-    {emplid: '1007', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1008', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
-    {emplid: '1009', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
-    {emplid: '1010', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
-    {emplid: '1011', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
+    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
+    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
+    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France'},    
+    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai'},    
+    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA'},    
+    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA'},    
+    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil'},    
+    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France'},    
+    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
+    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai'},    
+    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil'},    
+    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
 ];
 
 const headers = [
@@ -39,7 +37,7 @@ const headers = [
 //     filename: "csvfile.csv"
 // }
 
-const Technical = () => {  
+const Driver = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -71,40 +69,40 @@ const Technical = () => {
 	};
    
     const invite = useRef();
-    const technical = useRef();
+    // const employe = useRef();
+    const company = useRef();
+    const edit = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Technician" pageTitle={'Technician'} parentTitle={'Home'} />  
-            <div className="container-fluid">
+            <div className="">
 				<div className="row">
 			    	<div className="col-xl-12">
                         <div className="card">            
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">   
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Technician</h4>                                        
+                                        <h4 className="heading mb-0">Drivers</h4> 
                                         <div>
-                                            {/* <CSVLink {...csvlink} className="btn btn-primary light btn-sm me-1">
-                                                <i className="fa-solid fa-file-excel" /> {" "} 
-                                                Export Report
-                                            </CSVLink>  */}
+                                            
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>technical.current.showModal()}
-                                            >+ Add Technician</Link> {" "}
-                                            {/* <button type="button" className="btn btn-secondary btn-sm"                                                 
-                                                onClick={() => invite.current.showInviteModal()}
-                                            >+ Invite Employee
-                                            </button> */}
-                                        </div>
+                                                onClick={()=>company.current.showModal()}
+                                            >+ Add Driver</Link> {" "}
+                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
+                                                onClick={()=>edit.current.showModal()}
+                                            >+ Edit Driver Info</Link> {" "}
+                                           
+                                        </div>                                         
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
-                                                    <th>Technician ID</th>
-                                                    <th>Technician Name</th>
-                                                    <th>Email</th>
+                                                    <th>Driver ID</th>
+                                                    <th>Driver Name</th>
+                                                    <th>Age</th>
                                                     <th>Contact Number</th>
+                                                    <th>Gender</th>
+                                                    <th>Driving Experience</th>
                                                     <th>Location</th>
                                                     <th>Status</th>
                                                 </tr>
@@ -122,17 +120,19 @@ const Technical = () => {
                                                                 </div>	
                                                             </div>
                                                         </td>
-                                                        
-                                                        <td><span className="text-primary">{item.email}</span></td>
+                                                        <td><span>{item.age}</span></td>
                                                         <td>
                                                             <span>{item.contact}</span>
                                                         </td>
-                                                        	
+                                                        <td>
+                                                            <span>{item.gender}</span>
+                                                        </td>	
+                                                        <td><span className="text-primary">{item.drivingExperience}</span></td>
                                                         <td>
                                                             <span>{item.location}</span>
                                                         </td>
                                                         <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"45%"}}>{item.status}</span>
+                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -153,7 +153,7 @@ const Technical = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/technical"
+                                                    to="/general"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -165,7 +165,7 @@ const Technical = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/technical"
+                                                        to="/general"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -177,7 +177,7 @@ const Technical = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/technical"
+                                                    to="/general"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)
@@ -194,16 +194,16 @@ const Technical = () => {
                     </div>
                 </div>
             </div>
-            <TechnicalOffCanvas 
-                ref={technical}
-                Title="Add Technician"
+            <CompanyOffcanvas 
+                ref={company}
+                Title="Add Driver"
             />
-            {/* <InviteCustomer
-                ref={invite}       
-                Title="Invite Employee"
-            /> */}
+             <EditCompanyOffcanvas 
+                ref={edit}
+                Title="Edit Driver Info"
+            />
         </>
     );
 };
 
-export default Technical;
+export default Driver;

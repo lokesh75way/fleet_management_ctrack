@@ -74,5 +74,25 @@ export const AdminMenuList = [
         iconStyle: SVGICON.ManageClient,
         to: '/manage-client',
     },
+    {
+        title: 'Settings',
+        classsChange:'mm-collapse',
+        iconStyle: SVGICON.SettingMenu,
+        content:[
+            {
+                title:'General',
+                to: 'general'
+            },
+            {
+                title:'Master',
+                to: 'master'
+            },
+            {
+                title:'Technician',
+                to: 'technician'
+            }
+
+        ]
+    },
 
 ]
