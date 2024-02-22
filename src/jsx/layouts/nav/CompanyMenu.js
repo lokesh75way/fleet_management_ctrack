@@ -42,6 +42,22 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.ProjectsSidbar,
         to: '/project',
     },
+    {
+        title: 'Tracking',
+        classsChange: 'mm-collapse',
+        iconStyle: SVGICON.Task,
+        content: [
+            {
+                title: 'Sub Company',
+                to: 'sub-company-tracking',
+            },
+            {
+                title: 'Driver',
+                to: 'driver-tracking',
+            },
+            
+        ]
+    },
 
     {
         title: 'Reports',

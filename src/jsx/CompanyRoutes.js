@@ -26,7 +26,8 @@ import Report from "./components/Dashboard/Report";
 import Finance from "./components/Dashboard/Finance";
 import Driver from "./pages/Driver";
 import Technical from "./pages/Technical";
-import Task from "./components/Dashboard/Task";
+import DriverTracking from "./pages/DriverTracking";
+import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
 import CoreHr from "./components/Dashboard/CoreHr";
 
 //Update Pages
@@ -47,6 +48,7 @@ import Compose from "./components/AppsMenu/Email/Compose/Compose";
 import Inbox from "./components/AppsMenu/Email/Inbox/Inbox";
 import Read from "./components/AppsMenu/Email/Read/Read";
 import Calendar from "./components/AppsMenu/Calendar/Calendar";
+
 
 //CMS
 import Content from './components/Cms/Content';
@@ -143,10 +145,12 @@ const AdminRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
-    { url: "driver", component: <Driver /> },
-    { url: "task", component: <Task /> },
     { url: "technical", component: <Technical /> },
     { url: "sub-company", component: <SubCompany /> },
+    { url: "driver", component: <Driver /> },
+    { url: "driver-tracking", component: <DriverTracking /> },
+    { url: "sub-company-tracking", component: <SubCompanyTracking /> },
+
 
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },

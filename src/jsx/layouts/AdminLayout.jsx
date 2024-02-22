@@ -29,7 +29,7 @@ function AdminLayout() {
         >
           <Outlet />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Suspense>
   );
