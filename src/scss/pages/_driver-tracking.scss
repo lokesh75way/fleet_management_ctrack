@@ -6,7 +6,7 @@
     padding: 1px;
     position:absolute;
     top: 16%;
-    right: .70%;
+    right: 1%;
     border-radius: .6rem;
 }
 .modes{
@@ -24,4 +24,7 @@
 .modes:hover{
     background-color: rgb(245, 241, 241);
     // background-color: rgb(201, 198, 198);
+}
+.outer_container{
+    width: 25%;
 }
