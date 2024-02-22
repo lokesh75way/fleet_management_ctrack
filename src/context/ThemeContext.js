@@ -1,4 +1,4 @@
-import React, { createContext, useEffect,  useReducer } from "react";
+import React, { createContext, useEffect,useState,  useReducer } from "react";
 import {dezThemeSet} from './ThemeDemo';
 
 export const ThemeContext = createContext();
@@ -259,6 +259,8 @@ const {
 	changeDirectionLayout(setAttr); 
 	
 	};
+  const [currentPosition, setCurrentPosition] = useState({})
+  const [isTrafficClick, setIsTrafficClick] = useState(false)
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -341,6 +343,10 @@ const {
         //containerPosition_,
         containerPositionSize,
 		    setDemoTheme,
+        setCurrentPosition,
+        currentPosition,
+        setIsTrafficClick,
+        isTrafficClick
 	}}
     >
       {props.children}

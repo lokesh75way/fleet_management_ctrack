@@ -29,7 +29,7 @@ function CompanyLayout() {
         >
           <Outlet />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Suspense>
   );

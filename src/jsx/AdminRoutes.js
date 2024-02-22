@@ -26,7 +26,8 @@ import Report from "./components/Dashboard/Report";
 import Finance from "./components/Dashboard/Finance";
 import Driver from "./pages/Driver";
 import Technical from "./pages/Technical"
-import Task from "./components/Dashboard/Task";
+import DriverTracking from "./pages/DriverTracking";
+import CompanyTracking from "./pages/admin/tracking/CompanyTracking"
 import CoreHr from "./components/Dashboard/CoreHr";
 
 //Update Pages
@@ -132,6 +133,9 @@ import Error503 from "./pages/Error503";
 import { ThemeContext } from "../context/ThemeContext";
 import AdminLayout from "./layouts/AdminLayout";
 import Company from "./pages/admin/Compnay";
+import General from "./pages/admin/settings/General";
+import Master from "./pages/admin/settings/Master";
+import Technician from "./pages/admin/settings/Technician";
 
 
 
@@ -149,9 +153,14 @@ const AdminRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
     { url: "driver", component: <Driver /> },
-    { url: "technical", component: <Technical /> },
     { url: "company", component: <Company /> },
     { url: "driver", component: <Driver /> },
+    { url: "general", component: <General /> },
+    { url: "master", component: <Master /> },
+    { url: "technician", component: <Technician /> },
+    { url: "technical", component: <Technical /> },
+    { url: "driver-tracking", component: <DriverTracking /> },
+    { url: "company-tracking", component: <CompanyTracking /> },
   ];
 
 
