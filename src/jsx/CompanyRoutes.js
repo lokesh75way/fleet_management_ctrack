@@ -169,7 +169,6 @@ const CompanyRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "finance", component: <Finance /> },
-    { url: "task", component: <Task /> },
     { url: "technical", component: <Technical /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },

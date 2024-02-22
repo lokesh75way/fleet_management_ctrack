@@ -35,7 +35,7 @@ const ChartPie = ({ color1, color2, color3, color4, height, width }) => {
 
    return (
       <>
-         <Pie data={data} height={height ? height : 200} options={options} />
+         <Pie data={data} height={height ? height : 300} options={options} />
       </>
    );
 };

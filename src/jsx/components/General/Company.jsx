@@ -136,7 +136,7 @@ const Company = () => {
                                                             <span>{item.location}</span>
                                                         </td>
                                                         <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
+                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
                                                         </td>
                                                     </tr>
                                                 ))}

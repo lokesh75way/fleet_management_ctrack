@@ -1,8 +1,25 @@
 import React from 'react'
+import MainPagetitle from '../../../layouts/MainPagetitle';
+import Tabs from '../../../components/Tabs';
+import { FaTemperatureThreeQuarters } from "react-icons/fa6";
+import Temperature from '../../../components/company/charts/temperatureChart/Temperature';
+
+
 
 const TemperatureChart = () => {
+  const data = [
+    {
+      title: "Temperature",
+      component: <Temperature/>,
+      icon:<FaTemperatureThreeQuarters />
+      
+    },
+  ]
   return (
-    <h1>TemperatureChart</h1>
+    <>
+      <MainPagetitle mainTitle="Temperature Chart" pageTitle={'Temperature Chart'} parentTitle={'Charts'} />
+        <Tabs tabs={data} />
+    </>
   )
 }
 
