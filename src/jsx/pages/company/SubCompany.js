@@ -8,29 +8,29 @@ import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
 
 
 const tableData = [
-    {emplid: '1001', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
-    {emplid: '1002', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1003', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France'},    
-    {emplid: '1004', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai'},    
-    {emplid: '1005', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA'},    
-    {emplid: '1006', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA'},    
-    {emplid: '1007', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1008', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France'},    
-    {emplid: '1009', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
-    {emplid: '1010', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai'},    
-    {emplid: '1011', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil'},    
-    {emplid: '1012', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India'},    
+    {shortname: '1001', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
+    {shortname: '1002', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
+    {shortname: '1003', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
+    {shortname: '1004', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
+    {shortname: '1005', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
+    {shortname: '1006', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
+    {shortname: '1007', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
+    {shortname: '1008', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
+    {shortname: '1009', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
+    {shortname: '1010', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
+    {shortname: '1011', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
+    {shortname: '1012', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
 ];
 
 const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
+    { label: "Short Name", key: "shortname" },
+    { label: "Reseller", key: "reseller" },
+    { label: "Application", key: "application" },
+    { label: "User Name", key: "username" },
     { label: "Contact Number", key: "contact" },
-    { label: "Gender", key: "gender" },
     { label: "Location", key: "location" },
     { label: "Status", key: "status" },
+    { label: "User Group", key: "usergroup" }
 ]
 
 const csvlink = {
@@ -71,8 +71,7 @@ const SubCompany = () => {
 	};
    
     const invite = useRef();
-    // const employe = useRef();
-    const company = useRef();
+    const subCompany = useRef();
     return (
         <>
             <MainPagetitle mainTitle="Sub Company" pageTitle={'Sub Company'} parentTitle={'Home'} />  
@@ -87,7 +86,7 @@ const SubCompany = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                onClick={()=>subCompany.current.showModal()}
                                             >+ Add Sub Company</Link> {" "}
                                            
                                         </div>
@@ -96,39 +95,39 @@ const SubCompany = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
-                                                    <th>Sub Company ID</th>
-                                                    <th>Sub Company Name</th>
-                                                    <th>Department</th>
-                                                    <th>Email Address</th>
+                                                    <th>Short Name</th>
+                                                    <th>Reseller</th>
+                                                    <th>Application</th>
+                                                    <th>User Name</th>
                                                     <th>Contact Number</th>
-                                                    <th>Gender</th>
                                                     <th>Location</th>
+                                                    <th>User Group</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {tableData.map((item, index)=>(
                                                     <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
+                                                        <td><span>{item.shortname}</span></td>
                                                         <td>
                                                             <div className="products">
                                                                 <img src={item.image}  className="avatar avatar-md" alt="" />
                                                                 <div>
-                                                                    <h6>{item.title}</h6>
+                                                                    <h6>{item.reseller}</h6>
                                                                     <span>Web Designer</span>	
                                                                 </div>	
                                                             </div>
                                                         </td>
-                                                        <td><span>{item.department}</span></td>
-                                                        <td><span className="text-primary">{item.email}</span></td>
+                                                        <td><span>{item.application}</span></td>
+                                                        <td><span className="text-primary">{item.username}</span></td>
                                                         <td>
                                                             <span>{item.contact}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>{item.gender}</span>
                                                         </td>	
                                                         <td>
                                                             <span>{item.location}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span>{item.usergroup}</span>
                                                         </td>
                                                         <td>
                                                             <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
@@ -194,7 +193,7 @@ const SubCompany = () => {
                 </div>
             </div>
             <SubCompanyOffcanvas 
-                ref={company}
+                ref={subCompany}
                 Title="Add Sub Company"
             />
             

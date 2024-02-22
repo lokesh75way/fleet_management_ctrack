@@ -25,7 +25,7 @@ class AllProjectDonutChart extends React.Component {
         plotOptions: {          
             pie: {
                 donut: {
-                    size: '80%',
+                    size: '50%',
                     labels: {
                         show: true,
                         name: {
@@ -70,7 +70,7 @@ class AllProjectDonutChart extends React.Component {
           options={this.state.options}
           series={this.state.series}
           type="donut"
-          width={150}
+          width={this.props.width}
         />
       </div>
     );
