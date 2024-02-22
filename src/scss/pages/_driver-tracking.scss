@@ -25,6 +25,48 @@
     background-color: rgb(245, 241, 241);
     // background-color: rgb(201, 198, 198);
 }
-.outer_container{
-    width: 25%;
+.outer-container{
+    width: 23%;
+    font-size: .8rem;
+    border: 1px solid grey;
+    border-radius: .5rem;
+    padding: 5px;
+    background-color: rgb(232,245,255);
+    position: absolute;
+    margin-left: 1rem;
+    top: 16%;   
+}
+.tab-icon{
+    margin:0 2px;
+}
+.form-control-driver-tab{
+  display: block;
+  width: 90%;
+  padding: 0.2rem 0.4rem ;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: var(--bs-body-color);
+  background-color: white;
+  background-clip: padding-box;
+  border: var(--bs-border-width) solid white;
+  appearance: none;
+  color: black;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.search-driver-tab{
+    display: flex;
+    width: 80%;
+    background-color: white;
+}
+.search-driver-tab2{
+    display: flex;
+    width: 60%;
+    background-color: white;
+}
+.accordian-header-driver-tab{
+    margin: 0;
+    padding: 0;
+}
+.accordion-button{
+    padding: 1px .75rem;
 }

@@ -3,12 +3,16 @@ import MainPagetitle from '../layouts/MainPagetitle'
 import ShowMap from '../components/maps/ShowMap'
 import { ThemeContext } from '../../context/ThemeContext'
 import DriverTab from '../components/maps/DriverTab'
+import { TbLocationFilled } from "react-icons/tb";
+import { FaUser } from "react-icons/fa";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { MdFence } from "react-icons/md";
 
 const DriverTracking = () => {
   const {currentPosition, setCurrentPosition} = useContext(ThemeContext)
   const data = [{lat:30.7099475,lng:76.6900474},{lat:30.7333,lng:76.7794}]
-  const tabData = [{name:"Object", icon:"location"},{name:"Driver", icon:"location"},
-    {name:"Address", icon:"location"},{name:"Geofence", icon:"location"},]
+  const tabData = [{name:"Object", icon:TbLocationFilled},{name:"Driver", icon:FaUser},
+    {name:"Address", icon:FaMapLocationDot},{name:"Geofence", icon:MdFence},]
 
   // const getCurrentPosition = () => {
   //   navigator.geolocation.getCurrentPosition((position) => {
@@ -28,7 +32,9 @@ const DriverTracking = () => {
       <div className='p-2'>
         <ShowMap data={data}/>
       </div>
-      <DriverTab tabData={tabData}/>  
+      <div >
+        <DriverTab tabData={tabData}/>  
+      </div>
     </>
   )
 }
