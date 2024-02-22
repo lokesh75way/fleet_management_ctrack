@@ -143,7 +143,7 @@ const Task = () => {
 							</Link>
 						</div>
 						<Link to={"#"} className="btn btn-primary btn-sm ms-2"
-							onClick={()=>task.current.showEmployeModal()}
+							onClick={()=>task.current.showModal()}
 						>+ Add Task</Link>
 					</div>
 				</div>

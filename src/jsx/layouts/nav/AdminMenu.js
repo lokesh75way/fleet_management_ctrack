@@ -17,7 +17,7 @@ export const AdminMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/driver',
      },
-        title: 'Compnay',
+     {   title: 'Compnay',
         iconStyle: SVGICON.Employe,
         to: '/company',
     },
@@ -40,6 +40,22 @@ export const AdminMenuList = [
         title: 'Projects',
         iconStyle: SVGICON.ProjectsSidbar,
         to: '/project',
+    },
+    {
+        title: 'Tracking',
+        classsChange: 'mm-collapse',
+        iconStyle: SVGICON.Task,
+        content: [
+            {
+                title: 'Company',
+                to: 'company-tracking',
+            },
+            {
+                title: 'Driver',
+                to: 'driver-tracking',
+            },
+            
+        ]
     },
 
     {
