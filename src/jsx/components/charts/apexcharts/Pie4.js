@@ -26,7 +26,10 @@ class ApexPie4 extends React.Component {
           colors: undefined,
         },
         yaxis: {
-          show: false,
+          show: true,
+        },
+        xAxis: {
+          show: true,
         },
         legend: {
           position: "bottom",
@@ -56,7 +59,7 @@ class ApexPie4 extends React.Component {
           options={this.state.options}
           series={this.state.series}
           type="polarArea"
-          height={251}
+          height={315}
           // width={300}
         />
       </div>
