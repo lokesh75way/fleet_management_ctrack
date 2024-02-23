@@ -3,8 +3,7 @@ import MainPagetitle from '../../../layouts/MainPagetitle';
 import Tabs from '../../../components/Tabs';
 import { GiTakeMyMoney } from "react-icons/gi";
 import { CiTimer } from "react-icons/ci";
-import CostDistribution from '../../../components/company/charts/expense/CostDistribution';
-import CostByTime from '../../../components/company/charts/expense/CostByTime';
+import ChartComponent from '../../../components/company/charts/ChartComponent';
 
 
 
@@ -12,13 +11,13 @@ const Expense = () => {
   const data = [
     {
       title: "Cost Distribution",
-      component: <CostDistribution/>,
+      component: <ChartComponent/>,
       icon:<GiTakeMyMoney />
       
     },
     {
       title: "Cost By Time",
-      component: <CostByTime/>,
+      component: <ChartComponent />,
       icon:<CiTimer />
       
     },

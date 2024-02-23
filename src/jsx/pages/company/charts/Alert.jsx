@@ -2,7 +2,7 @@ import React from 'react'
 import MainPagetitle from '../../../layouts/MainPagetitle';
 import Tabs from '../../../components/Tabs';
 import { IoAlertSharp } from "react-icons/io5";
-import Alerts from '../../../components/company/charts/alert/Alerts';
+import ChartComponent from '../../../components/company/charts/ChartComponent';
 
 
 
@@ -10,7 +10,7 @@ const Alert = () => {
   const data = [
     {
       title: "Alerts",
-      component: <Alerts/>,
+      component: <ChartComponent/>,
       icon:<IoAlertSharp />
       
     },

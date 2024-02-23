@@ -3,21 +3,20 @@ import MainPagetitle from '../../../layouts/MainPagetitle';
 import Tabs from '../../../components/Tabs';
 import { FaFillDrip } from "react-icons/fa";
 import { BsFillFuelPumpFill } from "react-icons/bs";
-import FillDrain from '../../../components/company/charts/fuel/FillDrain';
-import FuelEconomy from '../../../components/company/charts/fuel/FuelEconomy';
+import ChartComponent from '../../../components/company/charts/ChartComponent';
 
 
 const Fuel = () => {
   const data = [
     {
       title: "Fill-Drain",
-      component: <FillDrain/>,
+      component: <ChartComponent/>,
       icon:<FaFillDrip />
       
     },
     {
       title: "Fuel Economy",
-      component: <FuelEconomy/>,
+      component: <ChartComponent/>,
       icon:<BsFillFuelPumpFill />
       
     },

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import ApexBar3 from "../../../charts/apexcharts/Bar3";
+import ApexBar3 from "../../charts/apexcharts/Bar3";
 import { IoBarChartSharp } from "react-icons/io5";
 import { MdBarChart } from "react-icons/md";
 import { FaChartPie } from "react-icons/fa";
 import { IoAnalyticsOutline } from "react-icons/io5";
-import ApexPie4 from "../../../charts/apexcharts/Pie4";
-import ApexLine3 from "../../../charts/apexcharts/Line3";
-import ApexBar2 from "../../../charts/apexcharts/Bar2";
-import ChartPie from "../../../charts/Chartjs/pie";
+import ApexPie4 from "../../charts/apexcharts/Pie4";
+import ApexLine3 from "../../charts/apexcharts/Line3";
+import ApexBar2 from "../../charts/apexcharts/Bar2";
+import ChartPie from "../../charts/Chartjs/pie";
 import { PiChartPieSlice } from "react-icons/pi";
 import { IoMdDownload } from "react-icons/io";
 
-const Temperature = () => {
+const ChartComponent = () => {
   const [currentGraph, setCurrentGraph] = useState("graph1");
   const [selectedGraph, setSelectedGraph] = useState(currentGraph);
 
@@ -37,7 +37,7 @@ const Temperature = () => {
           <button onClick={() => handleGraphChange("graph1")} style={{backgroundColor: "transparent"}}>
             <MdBarChart
               size={30}
-              color={selectedGraph === "graph1" && "blue"}
+              color={selectedGraph === "graph1" ? "blue" : ""}
             />
           </button>
           <button onClick={() => handleGraphChange("graph2")} style={{backgroundColor: "transparent"}}>
@@ -73,4 +73,4 @@ const Temperature = () => {
   );
 };
 
-export default Temperature;
+export default ChartComponent;
