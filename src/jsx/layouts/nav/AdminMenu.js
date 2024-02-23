@@ -46,11 +46,11 @@ export const AdminMenuList = [
         iconStyle: SVGICON.Task,
         content: [
             {
-                title: 'Company',
+                title: 'Companies',
                 to: 'company-tracking',
             },
             {
-                title: 'Driver',
+                title: 'Drivers',
                 to: 'driver-tracking',
             },
         ]

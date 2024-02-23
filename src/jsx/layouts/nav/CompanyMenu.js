@@ -49,11 +49,11 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Task,
         content: [
             {
-                title: 'Sub Company',
+                title: 'Sub Companies',
                 to: 'sub-company-tracking',
             },
             {
-                title: 'Driver',
+                title: 'Drivers',
                 to: 'driver-tracking',
             },
             
