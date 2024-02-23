@@ -66,9 +66,9 @@ const MainPagetitle = ({pageTitle, parentTitle, mainTitle}) => {
 					</li>
 					<li className="breadcrumb-item active"><Link to={"#"}>{pageTitle}</Link></li>
 				</ol>
-				<Link to={"#"} className="text-primary fs-13" 
+				{/* <Link to={"#"} className="text-primary fs-13" 
                     onClick={()=>handleShow()}
-                >+ Add Task</Link>
+                >+ Add Task</Link> */}
 			</div>  
 			<Offcanvas show={show} onHide={handleClose} placement='end' className="offcanvas-end customeoff">
 				<div className="offcanvas-header">

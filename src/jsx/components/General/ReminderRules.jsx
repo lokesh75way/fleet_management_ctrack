@@ -2,10 +2,7 @@ import React from 'react'
 
 const ReminderRules = () => {
   return (
-   <>
-   
-   <h1>Reminder Rules</h1>
-   </>
+    <div>ReminderRules</div>
   )
 }
 

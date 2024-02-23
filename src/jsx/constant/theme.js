@@ -136,10 +136,10 @@ export const SVGICON = {
         <path d="M11.6271 4.1598C11.1037 4.1598 10.6531 3.7898 10.5504 3.27713L10.3884 2.46647C10.2884 2.09247 9.94974 1.8338 9.56374 1.8338H6.74174C6.35574 1.8338 6.01707 2.09247 5.91707 2.46647L5.75507 3.27713C5.65241 3.7898 5.20174 4.1598 4.67841 4.1598" stroke="#FF5E5E" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>,
     EditPrimary: <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9.16492 13.6286H14" stroke="#0D99FF" strokeLinecap="round" strokeLinejoin="round"/>
-        <path fillRule="evenodd" clipRule="evenodd" d="M8.52001 2.52986C9.0371 1.91186 9.96666 1.82124 10.5975 2.32782C10.6324 2.35531 11.753 3.22586 11.753 3.22586C12.446 3.64479 12.6613 4.5354 12.2329 5.21506C12.2102 5.25146 5.87463 13.1763 5.87463 13.1763C5.66385 13.4393 5.34389 13.5945 5.00194 13.5982L2.57569 13.6287L2.02902 11.3149C1.95244 10.9895 2.02902 10.6478 2.2398 10.3849L8.52001 2.52986Z" stroke="#0D99FF" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M7.34723 4.00059L10.9821 6.79201" stroke="#0D99FF" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>,
+    <path d="M9.16492 13.6286H14" stroke="#343e45" strokeLinecap="round" strokeLinejoin="round"/>
+    <path fillRule="evenodd" clipRule="evenodd" d="M8.52001 2.52986C9.0371 1.91186 9.96666 1.82124 10.5975 2.32782C10.6324 2.35531 11.753 3.22586 11.753 3.22586C12.446 3.64479 12.6613 4.5354 12.2329 5.21506C12.2102 5.25146 5.87463 13.1763 5.87463 13.1763C5.66385 13.4393 5.34389 13.5945 5.00194 13.5982L2.57569 13.6287L2.02902 11.3149C1.95244 10.9895 2.02902 10.6478 2.2398 10.3849L8.52001 2.52986Z" stroke="#343e45" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M7.34723 4.00059L10.9821 6.79201" stroke="#343e45" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>,
     Stopboard :<svg className="me-1" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M3.61051 15.3276H14.3978C15.5843 15.3276 16.329 14.0451 15.7395 13.0146L10.35 3.59085C9.75676 2.5536 8.26126 2.55285 7.66726 3.5901L2.26876 13.0139C1.67926 14.0444 2.42326 15.3276 3.61051 15.3276Z" stroke="#FF9F00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M9.00189 10.0611V7.7361" stroke="#FF9F00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

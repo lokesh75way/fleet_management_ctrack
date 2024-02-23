@@ -7,15 +7,15 @@ function TabCard(props) {
   return (
     <div
       onClick={onClick}
-      className={`card same-card mx-2 bg-white col-xl-2 col-lg-4 cold-md-4 col-sm-6 ${
+      className={`cursor-pointer card same-card mx-2 bg-white col-xl-2 col-lg-4 cold-md-4 col-sm-6 ${
         isActive ? 'active-tab' : ''
       }`}
       style={{ height: '160px', width: '160px', border: isActive ? '1px solid #4C9AFF' : '1px solid #E6E6E6' }}
     >
       <div className="card-body d-flex align-items-center">
         <div className="d-flex flex-column align-items-center w-100 pb-2">
-          {icon && <span className="card-text text-primary fs-1 mb-2">{icon}</span>}
-          <h6 className="card-text text-primary text-center fs-4">{title}</h6>
+          {icon && <span className="card-text text-primary fs-1 " style={{position:"absolute",top:"20%"}}>{icon}</span>}
+          <h6 className="card-text text-primary text-center fs-4" style={{position:"absolute",top:"60%"}}>{title}</h6>
         </div>
       </div>
     </div>
