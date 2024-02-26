@@ -173,6 +173,8 @@
 
 import React from 'react'
 import DeleteWithConfirm from '../../components/Drawer/DeleteDrawer';
+import { MdDelete } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 
 const TableData = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
     return (
@@ -203,11 +205,12 @@ const TableData = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                         <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} style={{ width: "45%" }}>{item.status}</span>
                     </td>
                     <td>
-                        <span className='row'>
-                            <span className='cursor-pointer col-xl-6' onClick={()=>editDrawerOpen(item)} >{item.edit}</span>
-                            <DeleteWithConfirm onConfirmDelete={onConfirmDelete} id={item.id} >{item.delete}</DeleteWithConfirm>
+                        <span className='d-flex justify-content-center'>
+                            <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <DeleteWithConfirm className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteWithConfirm>
 
-                        </span>                                </td>
+                        </span>
+                    </td>
                 </tr>
             ))}
         </>

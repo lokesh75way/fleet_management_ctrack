@@ -5,25 +5,11 @@ import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
-
-
-const tableData = [
-    {shortname: '1001', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-    {shortname: '1002', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1003', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
-    {shortname: '1004', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
-    {shortname: '1005', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
-    {shortname: '1006', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
-    {shortname: '1007', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1008', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
-    {shortname: '1009', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-    {shortname: '1010', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
-    {shortname: '1011', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1012', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-];
+import SubCompanyTable from '../../components/Tables/SubCompanyTable';
+import {SubCompanyData} from '../../components/Tables/Tables'
 
 const headers = [
-    { label: "Short Name", key: "shortname" },
+    { label: "id", key: "id" },
     { label: "Reseller", key: "reseller" },
     { label: "Application", key: "application" },
     { label: "User Name", key: "username" },
@@ -33,16 +19,13 @@ const headers = [
     { label: "User Group", key: "usergroup" }
 ]
 
-const csvlink = {
-    headers : headers,
-    data : tableData,
-    filename: "csvfile.csv"
-}
 
 const SubCompany = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
+    const [tableData , setTableData] = useState(SubCompanyData);
+    const [editData , setEditData] = useState({});
 	const sort = 10;
 	const activePag = useRef(0);
 	const [test, settest] = useState(0);
@@ -69,6 +52,19 @@ const SubCompany = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
+
+    const onConfirmDelete = (id) => {
+        const updatedData = tableData.filter(item => item.id !== id);
+        setTableData(updatedData);
+    }
+    const editDrawerOpen = (item)=>{
+        console.log(item)
+        tableData.map((table)=>(
+            table.id === item && setEditData(table)
+        ))
+        // setEditTableData(item);
+        subCompany.current.showModal();
+    }
    
     const invite = useRef();
     const subCompany = useRef();
@@ -95,7 +91,7 @@ const SubCompany = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
-                                                    <th>Short Name</th>
+                                                    <th>ID</th>
                                                     <th>Reseller</th>
                                                     <th>Application</th>
                                                     <th>User Name</th>
@@ -103,37 +99,11 @@ const SubCompany = () => {
                                                     <th>Location</th>
                                                     <th>User Group</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.shortname}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.reseller}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        <td><span>{item.application}</span></td>
-                                                        <td><span className="text-primary">{item.username}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>	
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>{item.usergroup}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <SubCompanyTable tableData={tableData} editDrawerOpen={editDrawerOpen} onConfirmDelete={onConfirmDelete} />
                                             </tbody>
                                             
                                         </table>

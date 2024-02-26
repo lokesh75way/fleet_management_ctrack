@@ -236,7 +236,7 @@ const Company = () => {
                 ref={company}
                 Title="Add Company"
             />
-             <EditCompanyOffcanvas 
+             <EditCompanyOffcanvas
                 ref={edit}
                 Title="Edit Company"
                 editTableData={editTableData}

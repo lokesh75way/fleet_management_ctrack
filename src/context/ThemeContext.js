@@ -261,6 +261,7 @@ const {
 	};
   const [currentPosition, setCurrentPosition] = useState({})
   const [isTrafficClick, setIsTrafficClick] = useState(false)
+  const [editId, setEditId] = useState('')
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -346,7 +347,9 @@ const {
         setCurrentPosition,
         currentPosition,
         setIsTrafficClick,
-        isTrafficClick
+        isTrafficClick,
+        setEditId,
+        editId
 	}}
     >
       {props.children}

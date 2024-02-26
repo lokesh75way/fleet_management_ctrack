@@ -176,8 +176,6 @@ import "react-country-state-city/dist/react-country-state-city.css";
 
 const CompanyOffcanvas = forwardRef((props, ref) => {
     const{editTableData} =props;
-    const [startDate, setStartDate] = useState(new Date());
-    const [startDate2, setStartDate2] = useState(new Date());
     const [addEmploye, setAddEmploye] = useState(false);
     const [countryid, setCountryid] = useState(0);
     const [stateid, setstateid] = useState(0);
@@ -232,7 +230,7 @@ console.log(formdata);
                             <div className="row">
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Reseller <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                    <input type="text"  className="form-control" id="exampleFormControlInput1" placeholder="" />
                                 </div>
                                
                                 <div className="col-xl-6 mb-3">
