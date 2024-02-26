@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
-import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
+// import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 const tableData = [
     {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
     {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
@@ -70,7 +69,7 @@ const Driver = () => {
    
     const invite = useRef();
     // const employe = useRef();
-    const company = useRef();
+    const driver = useRef();
     const edit = useRef();
     return (
         <>
@@ -85,12 +84,8 @@ const Driver = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                // onClick={()=>driver.current.showModal()}
                                             >+ Add Driver</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Driver Info</Link> {" "}
-                                           
                                         </div>                                         
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -194,14 +189,10 @@ const Driver = () => {
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
-                ref={company}
+            {/* <CompanyOffcanvas 
+                ref={driver}
                 Title="Add Driver"
-            />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Driver Info"
-            />
+            />   */}
         </>
     );
 };

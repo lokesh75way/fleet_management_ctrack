@@ -4,23 +4,9 @@ import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
+import SubCompanyTable from '../../components/Tables/SubCompanyTable'
 import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
-
-
-const tableData = [
-    {shortname: '1001', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-    {shortname: '1002', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1003', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
-    {shortname: '1004', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
-    {shortname: '1005', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
-    {shortname: '1006', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Honey Risher', username: 'xyz@gmail.com', location:'USA', usergroup:'East Minister Company'},    
-    {shortname: '1007', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1008', application: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company'},    
-    {shortname: '1009', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-    {shortname: '1010', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company'},    
-    {shortname: '1011', application: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company'},    
-    {shortname: '1012', application: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
-];
+import { SubCompanyData } from '../../components/Tables/Tables';
 
 const headers = [
     { label: "Short Name", key: "shortname" },
@@ -33,16 +19,20 @@ const headers = [
     { label: "User Group", key: "usergroup" }
 ]
 
-const csvlink = {
-    headers : headers,
-    data : tableData,
-    filename: "csvfile.csv"
-}
-
 const SubCompany = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
+    const [tableData , setTableData] = useState(SubCompanyData);
+    const [editData , setEditData] = useState({
+        id:0,
+        reseller:'',
+        contact:0,
+        username:'',
+        status:'',
+        location:'',
+        usergroup:''
+    });
 	const sort = 10;
 	const activePag = useRef(0);
 	const [test, settest] = useState(0);
@@ -69,6 +59,29 @@ const SubCompany = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
+
+    const onConfirmDelete = (id) => {
+        const updatedData = tableData.filter(item => item.id !== id);
+        setTableData(updatedData);
+    }
+    const editDrawerOpen = (item)=>{
+        console.log(item)
+        tableData.map((table)=>(
+            table.id === item && setEditData(table)
+        ))
+        subCompany.current.showModal();
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        const updateTable = tableData.map((table)=>{
+            if(table.id === editData.id) {
+                console.log(table.id)   
+                return {...table, ...editData };
+            }
+            return table;
+        })
+        setTableData(updateTable)
+    }  
    
     const invite = useRef();
     const subCompany = useRef();
@@ -97,43 +110,15 @@ const SubCompany = () => {
                                                 <tr>                                                   
                                                     <th>Short Name</th>
                                                     <th>Reseller</th>
-                                                    <th>Application</th>
-                                                    <th>User Name</th>
+                                                    <th>Username</th>
                                                     <th>Contact Number</th>
-                                                    <th>Location</th>
+                                                    <th>Location</th>                                                                             
                                                     <th>User Group</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.shortname}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.reseller}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        <td><span>{item.application}</span></td>
-                                                        <td><span className="text-primary">{item.username}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>	
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>{item.usergroup}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                            <SubCompanyTable editData={editData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
                                             </tbody>
                                             
                                         </table>
@@ -194,7 +179,10 @@ const SubCompany = () => {
             </div>
             <SubCompanyOffcanvas 
                 ref={subCompany}
-                Title="Add Sub Company"
+                editData={editData}
+                setEditData={setEditData}
+                handleSubmit={handleSubmit}
+                Title={ editData.id === 0 ? "Add Sub Company" : "Edit Sub Company"}
             />
             
         </>

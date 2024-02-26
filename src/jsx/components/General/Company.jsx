@@ -5,8 +5,6 @@ import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import InviteCustomer from '../../constant/ModalList';
-import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
 
 
 const tableData = [
@@ -88,12 +86,8 @@ const Company = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                // onClick={()=>company.current.showModal()}
                                             >+ Add Company</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Company</Link> {" "}
-                                           
                                         </div>                                    
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -198,15 +192,10 @@ const Company = () => {
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
+            {/* <CompanyOffcanvas 
                 ref={company}
                 Title="Add Company"
-            />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Company"
-            />
-            
+            />        */}
         </>
     );
 };

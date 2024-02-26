@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
-import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
+// import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 
 const tableData = [
     {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
@@ -38,7 +37,7 @@ const headers = [
 //     filename: "csvfile.csv"
 // }
 
-const Driver = () => {  
+const SubUser = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -71,7 +70,7 @@ const Driver = () => {
    
     const invite = useRef();
     // const employe = useRef();
-    const company = useRef();
+    const subuser = useRef();
     const edit = useRef();
     return (
         <>
@@ -86,12 +85,8 @@ const Driver = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                // onClick={()=>subuser.current.showModal()}
                                             >+ Add Sub User</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Sub User</Link> {" "}
-                                           
                                         </div>                                      
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -192,16 +187,12 @@ const Driver = () => {
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
-                ref={company}
+            {/* <CompanyOffcanvas 
+                ref={subuser}
                 Title="Add Sub User"
-            />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Sub User"
-            />
+            /> */}
         </>
     );
 };
 
-export default Driver;
+export default SubUser;

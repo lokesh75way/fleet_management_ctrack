@@ -56,10 +56,6 @@ const General = () => {
     <>
       <MainPagetitle mainTitle="General" pageTitle={'General'} parentTitle={'Settings'} />
         <Tabs  tabs={data} />
-
-
-
-
     </>
   )
 }

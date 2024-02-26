@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
-import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
+// import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 
 const tableData = [
     {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
@@ -86,12 +85,8 @@ const Vehicle = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                // onClick={()=>company.current.showModal()}
                                             >+ Add Vehicle Info</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Vehicle Info</Link> {" "}
-                                           
                                         </div>                                          
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -194,14 +189,10 @@ const Vehicle = () => {
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
+            {/* <CompanyOffcanvas 
                 ref={company}
                 Title="Add Vehicle Info"
-            />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Vehicle Info"
-            />
+            /> */}
         </>
     );
 };
