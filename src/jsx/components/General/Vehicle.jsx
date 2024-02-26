@@ -1,46 +1,23 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import { CSVLink } from 'react-csv';
-
-import { IMAGES } from '../../constant/theme';
-// import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-
-const tableData = [
-    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
-    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France'},    
-    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai'},    
-    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA'},    
-    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA'},    
-    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil'},    
-    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France'},    
-    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai'},    
-    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil'},    
-    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-];
-
-const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Gender", key: "gender" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-]
-
-// const csvlink = {
-//     headers : headers,
-//     data : tableData,
-//     filename: "csvfile.csv"
-// }
+import {VehicleData} from '../Tables/Tables'
+import VehicleTable from '../Tables/VehicleTable';
+import VehicleOffCanvas from '../../constant/VehicleOffCanvas';
 
 const Vehicle = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
+    const [tableData, setTableData] = useState(VehicleData)
+    const [editData, setEditData] = useState({
+        id:0,
+        vehicleName:'',
+        plateNumber:'',
+        simNumber:0,
+        IMEINumber:0,
+        GPSDeviceType:'',
+        distanceCounter:0
+    })
 	const sort = 10;
 	const activePag = useRef(0);
 	const [test, settest] = useState(0);
@@ -67,11 +44,39 @@ const Vehicle = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
+    // delete function
+    const onConfirmDelete =(id)=>{
+        const updatedData = tableData.filter(item => item.id !== id);
+        setTableData(updatedData);
+    
+       }
+    // Edit function
+    const editDrawerOpen = (item)=>{
+        tableData.map((table)=>(
+            table.id === item && setEditData(table)
+        ))
+        vehicle.current.showModal();
+    }
+
+    const handleSubmit=(e)=>{
+        console.log("I am here")
+        e.preventDefault();
+        if(editData.id === 0){
+            editData.id = editData.simNumber-1
+            tableData.push(editData)
+        }
+        else{
+            const updateTable = tableData.map((table)=>{
+                if(table.id === editData.id) {
+                    return {...table, ...editData };
+                }
+                return table;
+            })
+            setTableData(updateTable)
+        }
+    }  
    
-    const invite = useRef();
-    // const employe = useRef();
-    const company = useRef();
-    const edit = useRef();
+    const vehicle = useRef();
     return (
         <>
             <div className="">
@@ -85,7 +90,7 @@ const Vehicle = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                // onClick={()=>company.current.showModal()}
+                                                onClick={()=>vehicle.current.showModal()}
                                             >+ Add Vehicle Info</Link> {" "}
                                         </div>                                          
                                     </div>          
@@ -98,39 +103,13 @@ const Vehicle = () => {
                                                     <th>SIM Number</th>
                                                     <th>IMEI Number</th>
                                                     <th>GPS Device Type</th>
-                                                   
-                                                   
                                                     <th>Distance Counter</th>
                                                     <th>Speed Detection</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.title}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        <td><span>{item.age}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>
-                                                        
-                                                        <td><span className="text-primary">{item.drivingExperience}</span></td>
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <VehicleTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen}  />
                                             </tbody>
                                             
                                         </table>
@@ -189,10 +168,13 @@ const Vehicle = () => {
                     </div>
                 </div>
             </div>
-            {/* <CompanyOffcanvas 
-                ref={company}
-                Title="Add Vehicle Info"
-            /> */}
+            <VehicleOffCanvas 
+                ref={vehicle}
+                Title={editData.id === 0 ? "Add Vehicle Info": "Edit Vehicle Info"}
+                handleSubmit={handleSubmit}
+                editData={editData}
+                setEditData={setEditData}
+            />
         </>
     );
 };

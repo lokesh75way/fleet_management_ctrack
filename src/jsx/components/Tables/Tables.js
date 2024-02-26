@@ -44,5 +44,20 @@ export const SubCompanyData = [
     {id: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company'},    
 ];
 
+export const VehicleData = [
+    {id:'1001', plateNumber: "ABC123",vehicleName: "Toyota Camry",simNumber: "123456789012",IMEINumber: "987654321012",GPSDeviceType: "GPS-123",distanceCounter: "1000 km",speedDetection: "Yes"},
+    {id:'1002', plateNumber: "XYZ456",vehicleName: "Honda Civic",simNumber: "234567890123",IMEINumber: "876543210123",GPSDeviceType: "GPS-456",distanceCounter: "800 km",speedDetection: "No"},
+    {id:'1003', plateNumber: "DEF789",vehicleName: "Ford F-150",simNumber: "345678901234",IMEINumber: "765432109876",GPSDeviceType: "GPS-789",distanceCounter: "1200 km",speedDetection: "Yes"},
+    {id:'1004', plateNumber: "GHI012",vehicleName: "Tesla Model 3",simNumber: "456789012345",IMEINumber: "654321098765",GPSDeviceType: "GPS-012",distanceCounter: "500 km",speedDetection: "Yes"},
+    {id:'1005', plateNumber: "JKL345",vehicleName: "Chevrolet Silverado",simNumber: "567890123456",IMEINumber: "543210987654",GPSDeviceType: "GPS-345",distanceCounter: "1500 km",speedDetection: "No"},
+    {id:'1006', plateNumber: "MNO678",vehicleName: "BMW X5",simNumber: "678901234567",IMEINumber: "432109876543",GPSDeviceType: "GPS-678",distanceCounter: "700 km",speedDetection: "Yes"},
+    {id:'1007', plateNumber: "PQR901",vehicleName: "Mercedes-Benz E-Class",simNumber: "789012345678",IMEINumber: "321098765432",GPSDeviceType: "GPS-901",distanceCounter: "900 km",speedDetection: "No"},
+    {id:'1008', plateNumber: "STU234",vehicleName: "Audi Q5",simNumber: "890123456789",IMEINumber: "210987654321",GPSDeviceType: "GPS-234",distanceCounter: "1100 km",speedDetection: "Yes"},
+    {id:'1009', plateNumber: "VWX567",vehicleName: "Volkswagen Golf",simNumber: "901234567890",IMEINumber: "109876543210",GPSDeviceType: "GPS-567",distanceCounter: "200 km",speedDetection: "No"},
+    {id:'1010', plateNumber: "YZA890",vehicleName: "Hyundai Elantra",simNumber: "012345678901",IMEINumber: "098765432109",GPSDeviceType: "GPS-890",distanceCounter: "1300 km",speedDetection: "Yes"},
+    {id:'1011', plateNumber: "BCD123",vehicleName: "Subaru Outback",simNumber: "123456789012",IMEINumber: "987654321098",GPSDeviceType: "GPS-123",distanceCounter: "600 km",speedDetection: "No"},
+    {id:'1012', plateNumber: "EFG456",vehicleName: "Nissan Altima",simNumber: "234567890123",IMEINumber: "876543210987",GPSDeviceType: "GPS-456",distanceCounter: "100 km",speedDetection: "Yes"}
+  ];
+
 
 
