@@ -70,3 +70,11 @@
 .accordion-button{
     padding: 1px .75rem;
 }
+.toggleBarInside{
+    transform: translate(-104%, 0%);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.toggleBarOutside{
+    transform: translate(0%, 0%);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
