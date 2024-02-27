@@ -8,7 +8,7 @@ const ForgotPassword = ({ history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     //history.push("/dashboard");
-    navigate("/dashboard");
+    navigate("/page-resetpassword");
   };
   return (
     <div className="authincation h-100 p-meddle">
@@ -40,7 +40,7 @@ const ForgotPassword = ({ history }) => {
                       <div className="text-center">
                         <button
                           type="submit"
-                          className="btn btn-primary btn-block"
+                          className="btn btn-primary btn-block mt-3"
                         >
                           SUBMIT
                         </button>

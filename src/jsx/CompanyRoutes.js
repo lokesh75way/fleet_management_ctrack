@@ -29,6 +29,7 @@ import Technical from "./pages/Technical";
 import DriverTracking from "./pages/DriverTracking";
 import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
 import CoreHr from "./components/Dashboard/CoreHr";
+import Permission from "./pages/Permission";
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -48,6 +49,7 @@ import Compose from "./components/AppsMenu/Email/Compose/Compose";
 import Inbox from "./components/AppsMenu/Email/Inbox/Inbox";
 import Read from "./components/AppsMenu/Email/Read/Read";
 import Calendar from "./components/AppsMenu/Calendar/Calendar";
+import ChangePassword from "./pages/ChangePassword";
 
 
 //CMS
@@ -172,6 +174,7 @@ const CompanyRoutes = () => {
     { url: "technical", component: <Technical /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
+    { url: "permission", component: <Permission /> },
 
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
@@ -239,6 +242,7 @@ const CompanyRoutes = () => {
     { url: "post-details", component: <PostDetails /> },
     { url: "customer", component: <AppCustomer /> },
     { url: "customer-profile", component: <CustomerProfile /> },
+    { url: "changepassword", component: <ChangePassword/> },
 
     // Apps  
     { url: "email-compose", component: <Compose /> },

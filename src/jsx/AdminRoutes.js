@@ -29,6 +29,7 @@ import Technical from "./pages/Technical"
 import DriverTracking from "./pages/DriverTracking";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking"
 import CoreHr from "./components/Dashboard/CoreHr";
+import Permission from "./pages/Permission";
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -161,6 +162,7 @@ const AdminRoutes = () => {
     { url: "technical", component: <Technical /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
+    { url: "permission", component: <Permission /> },
   ];
 
 

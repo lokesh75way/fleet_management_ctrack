@@ -11,6 +11,8 @@ import "./css/style.css";
 import BasicLayout from './jsx/layouts/BasicLayout';
 import AdminRoutes from './jsx/AdminRoutes';
 import CompanyRoutes from './jsx/CompanyRoutes';
+import ForgotPassword from './jsx/pages/ForgotPassword';
+import ResetPassword from './jsx/pages/ResetPassword';
 
 
 
@@ -63,6 +65,8 @@ function App(props) {
         <Route element={<BasicLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/page-register' element={<SignUp />} />
+          <Route path='/page-forgotpassword' element={<ForgotPassword />} />
+          <Route path='/page-resetpassword' element={<ResetPassword />} />
         </Route>
       </Routes>
     </div>
