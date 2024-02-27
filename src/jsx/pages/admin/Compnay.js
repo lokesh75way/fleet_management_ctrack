@@ -6,45 +6,23 @@ import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import InviteCustomer from '../../constant/ModalList';
 import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
-
-
-const tableData = [
-    {emplid: '1001', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  location:'India',usergroup:'West Minister Company'},    
-    {emplid: '1002', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil',usergroup:'West Minister Company'},    
-    {emplid: '1003', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France',usergroup:'West Minister Company'},    
-    {emplid: '1004', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company'},    
-    {emplid: '1005', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA',usergroup:'West Minister Company'},    
-    {emplid: '1006', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', location:'USA',usergroup:'West Minister Company'},    
-    {emplid: '1007', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil',usergroup:'West Minister Company'},    
-    {emplid: '1008', department: 'Computer Science', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', location:'France',usergroup:'West Minister Company'},    
-    {emplid: '1009', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India',usergroup:'West Minister Company'},    
-    {emplid: '1010', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company'},    
-    {emplid: '1011', department: 'Computer Science', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil', usergroup:'West Minister Company'},    
-    {emplid: '1012', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India', usergroup:'West Minister Company'},    
-];
-
-const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-    { label: "User Group", key: "usergroup" },
-]
-
-const csvlink = {
-    headers : headers,
-    data : tableData,
-    filename: "csvfile.csv"
-}
+import {CompanyData} from "../../components/Tables/Tables";
+import CompanyTable from '../../components/Tables/CompanyTable';
 
 const Company = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
+    const [tableData, setTableData] = useState(CompanyData);
+    const [editData , setEditData] = useState({
+        id:0,
+        title:'',
+        contact:0,
+        email:'',
+        status:'',
+        location:'',
+        usergroup:''
+    });
 	const sort = 10;
 	const activePag = useRef(0);
 	const [test, settest] = useState(0);
@@ -71,9 +49,30 @@ const Company = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
-   
-    const invite = useRef();
-    // const employe = useRef();
+    // for deleting data in table
+   const onConfirmDelete =(id)=>{
+    const updatedData = tableData.filter(item => item.id !== id);
+    setTableData(updatedData);
+
+   }
+   const editDrawerOpen = (item)=>{
+    tableData.map((table)=>(
+        table.id === item && setEditData(table)
+    ))
+
+    company.current.showModal();
+}
+const handleSubmit=(e)=>{
+    e.preventDefault();
+    const updateTable = tableData.map((table)=>{
+        if(table.id === editData.id) {
+            console.log(table.id)   
+            return {...table, ...editData };
+        }
+        return table;
+    })
+    setTableData(updateTable)
+}  
     const company = useRef();
     const edit = useRef();
     return (
@@ -92,56 +91,24 @@ const Company = () => {
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
                                                 onClick={()=>company.current.showModal()}
                                             >+ Add Company</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Company</Link> {" "}
-                                           
                                         </div>
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>  
-                                                <th>Short Name</th>                                                 
-                                                    <th>Resller</th>
-                                                    <th>Application</th>
+                                                <th>ID</th>                                                 
+                                                    <th>Reseller</th>
                                                     <th>User Name</th>
                                                     <th>Mobile Number</th>
                                                     <th>User Group</th>
                                                     <th>Location</th>
-                                                  
                                                     <th>Payment Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.title}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        <td><span>{item.department}</span></td>
-                                                        <td><span className="text-primary">{item.email}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>{item.usergroup}</span>
-                                                        </td>	
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"45%"}}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                               <CompanyTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen}/>
                                             </tbody>
                                             
                                         </table>
@@ -202,14 +169,13 @@ const Company = () => {
             </div>
             <CompanyOffcanvas 
                 ref={company}
-                Title="Add Company"
+                Title={ editData.id === 0 ? "Add Company" : "Edit Company"}
+                handleSubmit={handleSubmit}
+                editData={editData}
+                setEditData={setEditData}
             />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Company"
-            />
-            
         </>
     );
 };
 export default Company;
+

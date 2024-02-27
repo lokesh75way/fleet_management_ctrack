@@ -3,8 +3,7 @@ import {Link} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
-import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import EditCompanyOffcanvas from '../../constant/EditCompanyCanvas';
+// import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 
 const tableData = [
     {emplid: '1001', department: 'Computer Science', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  location:'India',usergroup:'West Minister Company'},    
@@ -70,7 +69,7 @@ const Alert = () => {
 	};
     const invite = useRef();
     // const employe = useRef();
-    const company = useRef();
+    const alert = useRef();
     const edit = useRef();
     return (
         <>
@@ -85,19 +84,15 @@ const Alert = () => {
                                         <div>
                                             
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                                // onClick={()=>alert.current.showModal()}
                                             >+ Add Alert</Link> {" "}
-                                              <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>edit.current.showModal()}
-                                            >+ Edit Alert</Link> {" "}
-                                           
                                         </div>                                       
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>  
-                                                <th>Vehicles</th>                                                 
+                                                <th>Alerts</th>                                                 
                                                     <th>Name</th>
                                                     <th>Alert Type</th>
                                                     <th>User Name</th>
@@ -195,14 +190,10 @@ const Alert = () => {
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
-                ref={company}
+            {/* <CompanyOffcanvas 
+                ref={alert}
                 Title="Add Alert"
-            />
-             <EditCompanyOffcanvas 
-                ref={edit}
-                Title="Edit Alert"
-            />
+            /> */}
         </>
     );
 };

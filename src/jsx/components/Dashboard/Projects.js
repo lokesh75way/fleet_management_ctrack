@@ -4,7 +4,7 @@ import MainPagetitle from '../../layouts/MainPagetitle';
 import { IMAGES, SVGICON } from '../../constant/theme';
 import CountUp from 'react-countup';
 import { Dropdown } from 'react-bootstrap';
-import EmployeeOffcanvas from '../../constant/EmployeeOffcanvas';
+// import EmployeeOffcanvas from '../../constant/EmployeeOffcanvas';
 
 const counterBlog = [
     { title: 'Completed', count : '24', colorstyle: 'success', icon: SVGICON.Complete  },
@@ -66,7 +66,7 @@ const Projects = () => {
                                 </Link>
                             </div>
                             <Link to={"#"} className="btn btn-primary btn-sm ms-2"
-                                onClick={()=>project.current.showModal()}
+                                // onClick={()=>project.current.showModal()}
                             >+ Add Task</Link>
                         </div>
                     </div>
@@ -118,10 +118,10 @@ const Projects = () => {
                     ))}
                 </div>
 			</div>
-            <EmployeeOffcanvas 
+            {/* <EmployeeOffcanvas 
                 ref={project}
                 Title="New Task"
-            />
+            /> */}
         </>
     );
 };
