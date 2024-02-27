@@ -89,8 +89,7 @@ const Vehicle = () => {
                                         <h4 className="heading mb-0">Vehicle</h4> 
                                         <div>
                                             
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>vehicle.current.showModal()}
+                                            <Link to={'/vehicle/create'} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
                                             >+ Add Vehicle Info</Link> {" "}
                                         </div>                                          
                                     </div>          
@@ -168,13 +167,6 @@ const Vehicle = () => {
                     </div>
                 </div>
             </div>
-            <VehicleOffCanvas 
-                ref={vehicle}
-                Title={editData.id === 0 ? "Add Vehicle Info": "Edit Vehicle Info"}
-                handleSubmit={handleSubmit}
-                editData={editData}
-                setEditData={setEditData}
-            />
         </>
     );
 };
