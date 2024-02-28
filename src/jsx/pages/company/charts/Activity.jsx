@@ -6,6 +6,11 @@ import { SiSpeedtest } from "react-icons/si";
 import { FaCarBattery } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import ChartComponent from '../../../components/company/charts/ChartComponent';
+import DistanceChart from '../../../components/company/charts/DistanceChart';
+import DurationChart from '../../../components/company/charts/DurationChart';
+import SpeedTimeChart from '../../../components/company/charts/SpeedTimeChart';
+import BatteryChart from '../../../components/company/charts/BatteryChart';
+import ObjectWork from '../../../components/company/charts/ObjectWork';
 
 
 
@@ -13,30 +18,30 @@ const Activity = () => {
   const data = [
     {
       title: "Distance",
-      component: <ChartComponent  />,
+      component: <DistanceChart  />,
       icon:<GiPathDistance />
       
     },
     {
       title: "Duration",
-      component: <ChartComponent />,
+      component: <DurationChart />,
       icon:<GiDuration />
     },
     {
       title: "Speed Vs Time",
-      component: <ChartComponent />,
+      component: <SpeedTimeChart />,
       icon:<SiSpeedtest />
     
     },
     {
       title: "Battery Voltage",
-      component: <ChartComponent />,
+      component: <BatteryChart />,
       icon:<FaCarBattery />
       
     },
     {
       title: "Object Work Hour",
-      component:  <ChartComponent />,
+      component:  <ObjectWork />,
       icon: <MdWork />
      
     },

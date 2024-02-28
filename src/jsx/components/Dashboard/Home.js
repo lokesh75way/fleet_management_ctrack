@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 //import loadable from "@loadable/component";
 //import pMinDelay from "p-min-delay";
 
@@ -28,20 +28,20 @@ import { TbAirConditioning } from "react-icons/tb";
 import { PiGraph } from "react-icons/pi";
 import { FaThermometerHalf } from "react-icons/fa";
 import { SiGraphql } from "react-icons/si";
-
-// const DashboardComboChart = loadable(() =>
-// 	pMinDelay(import("./Dashboard/DashboardComboChart"), 1000)
-// );
-
-const Select = () => {
-  return (
-    <select style={{ width: "3.5rem", fontSize: "8px", marginRight: "0.2rem" }}>
-      <option>Today</option>
-      <option>Yesterday</option>
-      <option>Tomorrow</option>
-    </select>
-  );
-};
+import Select from "./Select";
+import UiModal from "../bootstrap/Modal";
+import CardModal from "./Model";
+import Model from "./Model";
+import BasicDatatable from "../table/BasicDatatable";
+import SimpleDataTable from "../table/SimpleDataTable";
+import OverspeedTable from "../table/OverspeedTable";
+import FenceOverstayTable from "../table/FenceOverstayTable";
+import ACMisuseTable from "../table/ACMisuseTable";
+import StayAwayTable from "../table/StayAwayTable";
+import StayInZoneTable from "../table/StayInZoneTable";
+import TemperatureTable from "../table/TemperatureTable";
+import FleetIdleTable from "../table/FleetIdleTable";
+import MaintenanceReminderTable from "../table/MaintenanceReminderTable";
 
 const Home = () => {
   const { changeBackground } = useContext(ThemeContext);
@@ -49,8 +49,28 @@ const Home = () => {
     changeBackground({ value: "light", label: "Light" });
   }, []);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [data, setData] = useState({});
+  const [selectedDataTable, setSelectedDataTable] = useState(null);
+
+  const openModal = (dataTableComponent, title) => {
+    setSelectedDataTable(dataTableComponent);
+    setData({ title }); // Set the title in the data object
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
+      {/* Modal component */}
+      {isModalOpen && (
+        <Model onClose={closeModal}>
+          {selectedDataTable && React.cloneElement(selectedDataTable, { data })}
+        </Model>
+      )}
       <MainPagetitle
         mainTitle="Dashboard"
         pageTitle="Dashboard"
@@ -67,7 +87,11 @@ const Home = () => {
                 <p className="text-black text-md">Fleet Status</p>
               </div>
               <div className="card-body d-flex align-items-center  py-2">
-                <AllProjectDonutChart width={300} data={[12,10,15]} />
+                <AllProjectDonutChart
+                  labels={["Running", "Idle", "Stopped"]}
+                  width={300}
+                  data={[12, 10, 15]}
+                />
                 <ul className="project-list">
                   <li>
                     <svg
@@ -126,7 +150,13 @@ const Home = () => {
             >
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Usage</p>
-                <Select />
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Select />
+                </div>
               </div>
               <div className="mt-5">
                 <p>
@@ -147,15 +177,22 @@ const Home = () => {
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               <div
                 className="card same-card mb-3 pt-2"
-                style={{ paddingLeft: "1rem" }}
+                style={{ paddingLeft: "1rem",cursor : 'pointer'  }}
+                onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
               >
                 <div className="d-flex justify-content-between">
                   <p className="text-black text-md">Fleet Idle</p>
-                  <Select />
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <Select />
+                  </div>
                 </div>
                 <div className="d-flex justify-content-evenly">
                   <div className="">
-                    <p>Total Fleet Idle</p>
+                    <p >Total Fleet Idle</p>
                     <div className="d-flex justify-content-evenly align-items-center">
                       <FaCar color="#b3b300" />
                       <p style={{ color: "#b3b300" }}>O hr</p>
@@ -190,17 +227,31 @@ const Home = () => {
                 >
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#90EE90" }}
+                    style={{ backgroundColor: "#90EE90",cursor : 'pointer'  }}
+                    onClick={() =>
+                      openModal(<StayInZoneTable />, "Stay In Zone")
+                    }
                   >
                     <div className="d-flex justify-content-between">
-                        <p
-                          className="text-black fs-4"
-                          style={{ marginLeft: "0.3rem" }}
-                        >
-                          Stay In Zone
-                        </p>
+                      <p
+                        className="text-black fs-4"
+                        style={{
+                          marginLeft: "0.3rem",
+                          whiteSpace: "nowrap", // Added: prevent text from wrapping
+                          overflow: "hidden", // Added: hide overflow
+                          textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                        }}
+                      >
+                        Stay In Zone
+                      </p>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
                         <Select />
                       </div>
+                    </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
                         className="d-flex align-items-end mb-2"
@@ -236,16 +287,30 @@ const Home = () => {
                   </div>
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#00FFFF" }}
+                    style={{ backgroundColor: "#00FFFF",cursor : 'pointer' }}
+                    onClick={() =>
+                      openModal(<TemperatureTable />, "Temperature")
+                    }
                   >
                     <div className="d-flex justify-content-between">
-                    <p
-                      className="text-black fs-4"
-                      style={{ marginLeft: "0.3rem" }}
-                    >
-                      Temperature
-                    </p>
-                    <Select />
+                      <p
+                        className="text-black fs-4"
+                        style={{
+                          marginLeft: "0.3rem",
+                          whiteSpace: "nowrap", // Added: prevent text from wrapping
+                          overflow: "hidden", // Added: hide overflow
+                          textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                        }}
+                      >
+                        Temperature
+                      </p>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <Select />
+                      </div>
                     </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
@@ -288,18 +353,32 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         <div className="row" style={{ marginRight: "0.2rem" }}>
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#ffb09c" }}
+              style={{ backgroundColor: "#ffb09c", cursor: "pointer" }}
+              onClick={() => openModal(<OverspeedTable />, "Overspeed")}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Overspeed
-              </p>
-              <Select />
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginLeft: "0.3rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  Overspeed
+                </p>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Select />
+                </div>
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -340,11 +419,31 @@ const Home = () => {
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#CBC3E3" }}
+              style={{ backgroundColor: "#CBC3E3",cursor : 'pointer'  }}
+              onClick={() =>
+                openModal(<FenceOverstayTable />, "Fence Overstay")
+              }
             >
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Fence Overstay
-              </p>
+              <div className="d-flex justify-content-between">
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginLeft: "0.3rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  Fence Overstay
+                </p>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Select />
+                </div>
+              </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
                   className="d-flex align-items-end mb-2"
@@ -382,16 +481,32 @@ const Home = () => {
               </div>
             </div>
           </div>
+
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#ADD8E6" }}
+              style={{ backgroundColor: "#ADD8E6",cursor : 'pointer'  }}
+              onClick={() => openModal(<ACMisuseTable />, "AC Misuse")}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                AC Misuse
-              </p>
-              <Select />
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginLeft: "0.3rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  AC Misuse
+                </p>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Select />
+                </div>
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -433,11 +548,29 @@ const Home = () => {
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#FFE36E" }}
+              style={{ backgroundColor: "#FFE36E",cursor : 'pointer'  }}
+              onClick={() => openModal(<StayAwayTable />, "Stay Away From")}
             >
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Stay Away From
-              </p>
+              <div className="d-flex justify-content-between">
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginLeft: "0.3rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  Stay Away From
+                </p>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <Select />
+                </div>
+              </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
                   className="d-flex align-items-end mb-2"
@@ -483,9 +616,23 @@ const Home = () => {
 
         <div className="row" style={{ marginRight: "0.2rem" }}>
           <div className="col-xl-2 col-sm-12">
-            <div className="card same-card p-2" style={{ height: "20vh" }}>
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Maintenance
+            <div
+              className="card same-card p-2"
+              style={{ height: "20vh" }}
+              onClick={() =>
+                openModal(<MaintenanceReminderTable />, "Maintenance Reminder")
+              }
+            >
+              <p
+                className="text-black fs-4"
+                style={{
+                  marginLeft: "0.3rem",
+                  whiteSpace: "nowrap", // Added: prevent text from wrapping
+                  overflow: "hidden", // Added: hide overflow
+                  textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                }}
+              >
+                Maintenance Reminder
               </p>
               <div
                 className="text-center"
@@ -497,23 +644,40 @@ const Home = () => {
                 }}
               >
                 <div>
-                  <div className="mb-3">
-                    <SlCalender color="blue" size={20} />
+                  <div className="mb-2">
+                    <SlCalender color="#3dace3" size={20} />
+                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>Due</p>
                   </div>
-                  <div style={{ color: "blue" }}>0</div>
+                  <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
                 </div>
+
                 <div>
-                  <div className="mb-3">
-                    <LuSiren color="blue" size={20} />
+                  <div className="mb-2">
+                    <LuSiren color="#ff3811" size={20} />
+                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>OverDue</p>
                   </div>
-                  <div style={{ color: "blue" }}>0</div>
+                  <div style={{ color: "#ff3811", fontSize :'22px' }}>0</div>
                 </div>
               </div>
             </div>
           </div>
           <div className="col-xl-2 col-sm-12">
-            <div className="card same-card p-2" style={{ height: "20vh" }}>
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+            <div
+              className="card same-card p-2"
+              style={{ height: "20vh" }}
+              onClick={() =>
+                openModal(<MaintenanceReminderTable />, "Renewal Reminder")
+              }
+            >
+              <p
+                className="text-black fs-4"
+                style={{
+                  marginLeft: "0.3rem",
+                  whiteSpace: "nowrap", // Added: prevent text from wrapping
+                  overflow: "hidden", // Added: hide overflow
+                  textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                }}
+              >
                 Renewal Reminder
               </p>
               <div
@@ -526,16 +690,18 @@ const Home = () => {
                 }}
               >
                 <div>
-                  <div className="mb-3">
-                    <SlCalender color="blue" size={20} />
+                  <div className="mb-2">
+                    <SlCalender color="#3dace3" size={20} />
+                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>Due</p>
                   </div>
-                  <div style={{ color: "blue" }}>0</div>
+                  <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
                 </div>
                 <div>
-                  <div className="mb-3">
-                    <LuSiren color="blue" size={20} />
+                  <div className="mb-2">
+                    <LuSiren color="#ff3811" size={20} />
+                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>OverDue</p>
                   </div>
-                  <div style={{ color: "blue" }}>0</div>
+                  <div style={{ color: "#ff3811" , fontSize :'22px'}}>0</div>
                 </div>
               </div>
             </div>

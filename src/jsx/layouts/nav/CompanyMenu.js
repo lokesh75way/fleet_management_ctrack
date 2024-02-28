@@ -23,26 +23,26 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/driver',
     },
-    {
-        title: 'Core HR',
-        iconStyle: SVGICON.CoreHr,
-        to: '/core-hr',
-    },
-    {
-        title: 'Finance',
-        iconStyle: SVGICON.Finance,
-        to: '/finance',
-    },
-    {
-        title: 'Performance',
-        iconStyle: SVGICON.Performance,
-        to: '/performance',
-    },
-    {
-        title: 'Projects',
-        iconStyle: SVGICON.ProjectsSidbar,
-        to: '/project',
-    },
+    // {
+    //     title: 'Core HR',
+    //     iconStyle: SVGICON.CoreHr,
+    //     to: '/core-hr',
+    // },
+    // {
+    //     title: 'Finance',
+    //     iconStyle: SVGICON.Finance,
+    //     to: '/finance',
+    // },
+    // {
+    //     title: 'Performance',
+    //     iconStyle: SVGICON.Performance,
+    //     to: '/performance',
+    // },
+    // {
+    //     title: 'Projects',
+    //     iconStyle: SVGICON.ProjectsSidbar,
+    //     to: '/project',
+    // },
     {
         title: 'Tracking',
         classsChange: 'mm-collapse',
@@ -167,10 +167,10 @@ export const CompanyMenuList = [
         to: '/technical',
     },
 
-    {
-        title: 'Manage Clients',
-        iconStyle: SVGICON.ManageClient,
-        to: '/manage-client',
-    },
+    // {
+    //     title: 'Manage Clients',
+    //     iconStyle: SVGICON.ManageClient,
+    //     to: '/manage-client',
+    // },
 
 ]

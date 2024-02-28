@@ -1,0 +1,82 @@
+.modal_overlay {
+  position: fixed;
+  top: 30px;
+  left: 100px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 99;
+}
+
+.box_model {
+  top: 200px;
+  width: 700px;
+  height: 500px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 5px;
+}
+  
+  .header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .cross_button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .search_bar {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  
+    position: relative;
+  }
+  
+  .search_bar input {
+    width: 100%;
+    padding: 8px;
+    padding-right:30px ;
+    background-color: #F5F5F5;
+    border: none;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    
+  }
+  
+.search_icon {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust the right spacing based on your design */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+  .table {
+    width: 100%;
+    height: calc(100% - 80px); /* Adjust height based on your content */
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    /* border: 2px solid red; */
+  }
+
+  
+
+  

@@ -14,7 +14,7 @@ class AllProjectDonutChart extends React.Component {
           width: 150,
         },
         colors: ["#3AC977", "var(--primary)", "var(--secondary)"],
-        labels: ["Compete", "Pending", "Not Start"],
+        labels: props.labels,
         dataLabels: {
           enabled: false,
         },
