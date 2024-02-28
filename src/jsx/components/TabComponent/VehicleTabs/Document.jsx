@@ -1,9 +1,11 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
+import { Controller, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
-const Document = () => {
-  const [startDate, setStartDate] = useState(new Date());
+const Document = ({ register, setValue }) => {
+  const { control, getValues } = useForm();
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -54,22 +56,34 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="insuranceIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("insuranceIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("insuranceIssueDate", newValue)
+                }
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="insuranceExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("insuranceExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("insuranceExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -119,22 +133,30 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="PUCIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("PUCIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("PUCIssueDate", newValue)}
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="PUCExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("PUCExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("PUCExpiryDate", newValue)}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -184,22 +206,38 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="registrationCertificateIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={
+                  getValues("registrationCertificateIssueDate") || new Date()
+                }
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("registrationCertificateIssueDate", newValue)
+                }
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="registrationCertificateExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={
+                  getValues("registrationCertificateExpiryDate") || new Date()
+                }
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("registrationCertificateExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -249,22 +287,33 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="serviceContractIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("serviceContractIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("serviceContractIssueDate", newValue)
+                }
+              />
+            )}
           />
-
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="serviceContractExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("serviceContractExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("serviceContractExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -314,22 +363,34 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="nationalPermitIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("nationalPermitIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("nationalPermitIssueDate", newValue)
+                }
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="nationalPermitExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("nationalPermitExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("nationalPermitExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -379,22 +440,34 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="statePermitIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("statePermitIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("statePermitIssueDate", newValue)
+                }
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="statePermitExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("statePermitExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("statePermitExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -444,22 +517,34 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="RTOPassingIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("RTOPassingIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("RTOPassingIssueDate", newValue)
+                }
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="RTOPassingExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("RTOPassingExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("RTOPassingExpiryDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-4">
@@ -509,26 +594,41 @@ const Document = () => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-        <label className="form-label">
-            Issue Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Issue Date</label>
+          <Controller
+            name="roadTaxIssueDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("roadTaxIssueDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("roadTaxIssueDate", newValue)}
+              />
+            )}
           />
 
-          <label className="form-label">
-            Expiry Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Expiry Date</label>
+          <Controller
+            name="roadTaxExpiryDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("roadTaxExpiryDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("roadTaxExpiryDate", newValue)}
+              />
+            )}
           />
         </div>
-        
-        <Button style={{ width: "10%", margin: "auto" }} type="submit"> Submit</Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "2rem 0",
+          }}
+        >
+            <Button type="submit"> Submit</Button>
+        </div>
       </div>
     </div>
   );
