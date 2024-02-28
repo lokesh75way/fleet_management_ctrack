@@ -174,9 +174,9 @@ export const CompanyMenuList = [
     },
     
     {
-        title: 'Permission',
-        iconStyle: SVGICON.Employe,
-        to: '/permission',
+        title: 'Groups',
+        iconStyle: SVGICON.ManageClient,
+        to: '/groups',
     },
 
 ]

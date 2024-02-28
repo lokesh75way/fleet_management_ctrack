@@ -29,7 +29,7 @@ import Technical from "./pages/Technical";
 import DriverTracking from "./pages/DriverTracking";
 import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
 import CoreHr from "./components/Dashboard/CoreHr";
-import Permission from "./pages/Permission";
+
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -155,6 +155,9 @@ import FuelChart from "./pages/company/charts/Fuel";
 import ExpenseChart from "./pages/company/charts/Expense"
 import TemperatureChart from "./pages/company/charts/TemperatureChart";
 
+//groups
+import CreateGroups from "./pages/CreateGroups";
+import Permission from "./pages/Permission";
 
 const CompanyRoutes = () => {
 
@@ -174,8 +177,7 @@ const CompanyRoutes = () => {
     { url: "technical", component: <Technical /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
-    { url: "permission", component: <Permission /> },
-
+    
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
     { url: "/reports/geofence-address", component: <GeofenceAddress /> },
@@ -194,7 +196,7 @@ const CompanyRoutes = () => {
     { url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
     { url: "/reports/elock", component: <Elock /> },
     { url: "/reports/trip-classification", component: <TripClassification /> },
-
+    
     //Charts
     { url: "/charts/activity", component: <ActivityChart /> },
     { url: "/charts/alert", component: <AlertChart /> },
@@ -206,10 +208,10 @@ const CompanyRoutes = () => {
     { url: "driver", component: <Driver /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "sub-company-tracking", component: <SubCompanyTracking /> },
-
+    
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },
-
+    
     ///Cms
     { url: 'content', component: <Content /> },
     { url: 'menu', component: <Menu /> },
@@ -219,7 +221,7 @@ const CompanyRoutes = () => {
     { url: 'add-email', component: <AddMail /> },
     { url: 'add-blog', component: <AddBlog /> },
     { url: 'blog-category', component: <BlogCategory /> },
-
+    
     ///AiKit    
     { url: 'auto-write', component: <AutoWriter /> },
     { url: 'scheduled', component: <Scheduler /> },
@@ -230,7 +232,7 @@ const CompanyRoutes = () => {
     { url: 'prompt', component: <AIMenu /> },
     { url: 'setting', component: <Settings /> },
     { url: 'import', component: <ImportExport /> },
-
+    
     //Apps
     { url: "contacts", component: <Contacts /> },
     { url: "user", component: <User /> },
@@ -243,13 +245,13 @@ const CompanyRoutes = () => {
     { url: "customer", component: <AppCustomer /> },
     { url: "customer-profile", component: <CustomerProfile /> },
     { url: "changepassword", component: <ChangePassword/> },
-
+    
     // Apps  
     { url: "email-compose", component: <Compose /> },
     { url: "email-inbox", component: <Inbox /> },
     { url: "email-read", component: <Read /> },
     { url: "app-calender", component: <Calendar /> },
-
+    
     // Shop
     { url: "ecom-product-grid", component: <ProductGrid /> },
     { url: "ecom-product-list", component: <ProductList /> },
@@ -294,15 +296,19 @@ const CompanyRoutes = () => {
     { url: "form-ckeditor", component: <CkEditor /> },
     { url: "form-pickers", component: <Pickers /> },
     { url: "form-validation", component: <FormValidation /> },
-
+    
     // table
     { url: 'table-filtering', component: <FilteringTable /> },
     { url: 'table-sorting', component: <SortingTable /> },
     { url: "table-bootstrap-basic", component: <BootstrapTable /> },
-
+    
+    // groups
+    { url: "groups", component: <CreateGroups /> },
+    { url: "permission", component: <Permission /> },
+    
   ];
-
-
+  
+  
   function NotFound() {
     const url = allroutes.map((route) => route.url);
     let path = window.location.pathname

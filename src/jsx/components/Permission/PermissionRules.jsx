@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useContext, useState,useEffect } from "react";
 import React from "react";
-import { Card, Table, Button } from "react-bootstrap";
+import { Card, Table } from "react-bootstrap";
+import { useLocation } from 'react-router-dom';
 import Select from "react-select";
 import { options } from "./Options";
+import { ThemeContext } from "../../../context/ThemeContext";
+
+
+
 
 const Permission = () => {
   
 
+  const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
   const [data,setData] = useState(options)
 
@@ -52,8 +58,33 @@ const Permission = () => {
     };
   };
 
+  const [newGroupData,setNewGroupData] = useState({groupName:"",groupPermissions:{}});
 
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setNewGroupData((prev) => ({
+      ...prev,
+      groupName: value
+    }));
+  }
 
+  const handleSave = ()=>{
+     setNewGroupData((prev)=>({
+      ...prev,groupPermissions:data
+    }))
+
+    setGroupsDataState([...groupsDataState, newGroupData ]);
+    setNewGroupData({groupName:"",groupPermissions:{}});
+  }
+
+  console.log(newGroupData);
+  console.log('data saved',groupsDataState);
+
+  const [selectOptions, setSelectOptions] = useState([]);
+
+  useEffect(() => {
+    setSelectOptions(groupsDataState.map((e) => ({ value: e.index, label: e.groupName })));
+  }, [groupsDataState]);
   
   return (
     <div>
@@ -62,26 +93,28 @@ const Permission = () => {
           <Card.Title>Permissions</Card.Title>
         </Card.Header>
 
-          <div className="d-flex justify-content-start m-2 mt-4">
-            <input type="text" className="p-2" style={{marginRight:"1rem", border:"#D3D3D3 1px solid", borderRadius:"0.3rem" }}  placeholder="Group Name" />
-            <Select> Template Clone </Select>
-            <button className="p-2 btn btn-primary " style={{marginLeft:"1rem", border:"#D3D3D3 1px solid", borderRadius:"0.3rem" }}   > Save </button>
+          <div className="d-flex justify-content-between m-2 mt-4 p-3">
+            <input name="groupname" type="text" className="p-2" onChange={(e)=>handleInputChange(e)} style={{marginRight:"1rem", border:"#D3D3D3 1px solid", borderRadius:"0.3rem",width:"15rem" }}  placeholder="Group Name" />
+            <div className="d-flex justify-content-center"  style={{width:"25rem"}}>
+            <Select options={selectOptions} placeholder="Select group to copy from"> Template Clone </Select>
+            <button className="btn btn-primary p-2" style={{marginLeft:"1rem"}} >Copy</button>
+            </div>
           </div>
 
         <Card.Body className="d-flex">
 
 
-        <div style={{ flex: 0.4}} >
-          <Table  bordered>
-            <thead>
+        <div style={{ flex: 0.4 , maxHeight: "50vh", overflow: "auto",border:"1px solid #D3D3D3  ", borderRadius:"0.5rem"}} >
+          <Table >
+            <thead style={{ position: "sticky", top: 0, background: "white" }}>
               <tr>
                 <th scope="col">Module</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody  >
               {
                 data.map((element,i)=>{
-
+                  
                   return <tr key={i} >         
                     <td> <input type="checkbox" className="form-check-input " style={{marginRight:"0.2rem"}} name="create" checked={subModuleIndexArray.includes(i)} onChange={(e) => handleCheckboxChange(e.target.checked, i)} /> {element.name}</td>
                   </tr>  
@@ -92,9 +125,9 @@ const Permission = () => {
           </Table>
           </div>
 
-          <div style={{ flex: 1 }} >
-          <Table bordered>
-            <thead>
+          <div style={{ flex: 1, maxHeight: "50vh", overflow: "auto",border:"1px solid #D3D3D3", borderRadius:"0.5rem", marginLeft:"0.2rem" }} >
+          <Table   >
+            <thead style={{ position: "sticky", top: 0, background: "white" }}>
               <tr>
                 <th scope="col" className="col-4">SubModules</th>
                 <th scope="col">Add</th>
@@ -160,6 +193,9 @@ const Permission = () => {
           </Table>
           </div>
         </Card.Body>
+      <div className="d-flex justify-content-end  p-3">
+        <button className="btn btn-primary " onClick={handleSave}   > Save </button>
+      </div>
       </Card>
     </div>
   );

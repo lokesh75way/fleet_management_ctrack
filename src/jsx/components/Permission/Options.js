@@ -1,3 +1,8 @@
+
+
+export const groupsData = [{groupName:"",groupPermissions:[]}]
+
+
 export const options = [
     {
       name: "Dashboard",
@@ -353,5 +358,5 @@ export const options = [
             delete: false,
             export: false,
         },
-      },
+      }
   ];
