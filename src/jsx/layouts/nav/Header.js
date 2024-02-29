@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { ThemeContext } from "../../../context/ThemeContext";
 import LogoutPage from './Logout';
-
+import { HiOutlineLanguage } from "react-icons/hi2";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import Logoutbtn from "./Logoutbtn";
 
@@ -51,13 +51,13 @@ const Header = ({ onNote, role }) => {
 		});
 	}, []);
 
-
+	const {lang,setLang} = useContext(ThemeContext);
 	return (
-		<div className={`header ${headerFix ? "is-fixed" : ""}`}>
-			<div className="header-content">
+		<div className={`header ${headerFix ? "is-fixed" : ""}`} >
+			<div className="header-content" >
 				<nav className="navbar navbar-expand">
-					<div className="collapse navbar-collapse justify-content-between">
-						<div className="header-left">
+					<div className="collapse navbar-collapse justify-content-between" >
+						<div className="header-left" >
 							<div className="input-group search-area">
 								<span className="input-group-text rounded-0">
 									<Link to={"#"}>
@@ -216,6 +216,26 @@ const Header = ({ onNote, role }) => {
 									</svg>
 								</Dropdown.Toggle>
 							</Dropdown>
+
+
+
+							<Dropdown as="li" className="nav-item dropdown language_dropdown">
+								<Dropdown.Toggle className="nav-link i-false  c-pointer"  as="a">
+								<HiOutlineLanguage />
+								</Dropdown.Toggle>
+								<Dropdown.Menu align="end" className="mt-2 dropdown-menu dropdown-menu-end">
+									<Link className="dropdown-item" to="#" onClick={() => setLang('ar')}>
+										Arabic
+									</Link>
+									<Link className="dropdown-item" to="#" onClick={() => setLang('en')}>
+										English
+									</Link>
+								</Dropdown.Menu>
+							</Dropdown>
+
+
+
+
 							<li className="nav-item align-items-center header-border">
 								<Logoutbtn />
 							</li>
