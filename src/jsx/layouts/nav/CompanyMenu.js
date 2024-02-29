@@ -166,11 +166,17 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/technical',
     },
-
+    
     {
         title: 'Manage Clients',
         iconStyle: SVGICON.ManageClient,
         to: '/manage-client',
+    },
+    
+    {
+        title: 'Groups',
+        iconStyle: SVGICON.ManageClient,
+        to: '/groups',
     },
 
 ]

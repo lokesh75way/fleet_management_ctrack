@@ -263,6 +263,7 @@ const {
   const [addVehicle, setAddVehicle] = useState({})
   const [currentPosition, setCurrentPosition] = useState({})
   const [isTrafficClick, setIsTrafficClick] = useState(false)
+  const [groupsDataState,setGroupsDataState] = useState([]);
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -349,6 +350,8 @@ const {
         currentPosition,
         setIsTrafficClick,
         isTrafficClick,
+        setGroupsDataState,
+        groupsDataState,
         setAddVehicle,
         addVehicle
 	}}

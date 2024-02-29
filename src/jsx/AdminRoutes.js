@@ -31,6 +31,7 @@ import CompanyTracking from "./pages/admin/tracking/CompanyTracking"
 import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm"
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import CoreHr from "./components/Dashboard/CoreHr";
+import Permission from "./pages/Permission";
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -163,6 +164,7 @@ const AdminRoutes = () => {
     { url: "technical", component: <Technical /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
+    { url: "permission", component: <Permission /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
   ];

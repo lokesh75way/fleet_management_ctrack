@@ -71,6 +71,11 @@ export const AdminMenuList = [
         to: '/manage-client',
     },
     {
+        title: 'Permission',
+        iconStyle: SVGICON.Employe,
+        to: '/permission',
+    },
+    {
         title: 'Settings',
         classsChange:'mm-collapse',
         iconStyle: SVGICON.SettingMenu,

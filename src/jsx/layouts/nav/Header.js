@@ -261,6 +261,10 @@ const Header = ({ onNote, role }) => {
 													{SVGICON.Notification} {" "}
 													<span className="ms-2">Notification </span>
 												</Link>
+												<Link to={"/changepassword"} className="dropdown-item ai-icon ">
+													{SVGICON.Password} {" "}
+													<span className="ms-2">Change Password </span>
+												</Link>
 											</div>
 											<div className="card-footer px-0 py-2">
 												<Link to={"#"} className="dropdown-item ai-icon ">

@@ -1,23 +1,21 @@
 
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect,useContext} from 'react';
 import {Link} from 'react-router-dom';
-import { CSVLink } from 'react-csv';
-import { IMAGES } from '../../constant/theme';
-import MainPagetitle from '../../layouts/MainPagetitle';
-import SubCompanyTable from '../../components/Tables/SubCompanyTable'
-import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
-import { SubCompanyData } from '../../components/Tables/Tables';
-const headers = [
-    { label: "Short Name", key: "shortname" },
-    { label: "Reseller", key: "reseller" },
-    { label: "Application", key: "application" },
-    { label: "User Name", key: "username" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-    { label: "User Group", key: "usergroup" }
-]
-const SubCompany = () => {
+import MainPagetitle from '../layouts/MainPagetitle';
+import SubCompanyOffcanvas from '../constant/SubCompanyOffcanvas';
+import { SubCompanyData } from '../components/Tables/Tables';
+import GroupTable from '../components/Tables/GroupTable';
+import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../context/ThemeContext';
+
+
+const CreateGroups = () => {
+
+    const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
+    console.log('printing from group page',groupsDataState);
+
+    const navigate = useNavigate();
+
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
@@ -55,9 +53,15 @@ const SubCompany = () => {
         chageData(activePag.current * sort, (activePag.current + 1) * sort);
         settest(i);
     };
-    const onConfirmDelete = (id) => {
-        const updatedData = tableData.filter(item => item.id !== id);
-        setTableData(updatedData);
+    const onConfirmDelete = (index) => {
+        
+        console.log('index is ',index);
+        const newdata = groupsDataState.filter((e,i)=>{
+            if(index != i) return e;
+        })
+
+        setGroupsDataState(newdata);
+
     }
     const editDrawerOpen = (item)=>{
         console.log(item)
@@ -77,11 +81,19 @@ const SubCompany = () => {
         })
         setTableData(updateTable)
     }
-    const invite = useRef();
     const subCompany = useRef();
+
+
+    
+
+    const handleAddGroup = ()=>{
+        navigate('/permission');
+    }
+
+
     return (
         <>
-            <MainPagetitle mainTitle="Sub Company" pageTitle={'Sub Company'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Groups" pageTitle={'Groups'} parentTitle={'Home'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -89,11 +101,11 @@ const SubCompany = () => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Sub Companies</h4>
+                                        <h4 className="heading mb-0">Groups</h4>
                                         <div>
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={()=>subCompany.current.showModal()}
-                                            >+ Add Sub Company</Link> {" "}
+                                            <button  className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                onClick={handleAddGroup}
+                                            >+ Add Group</button> {""}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -101,16 +113,17 @@ const SubCompany = () => {
                                             <thead>
                                                 <tr>
                                                     <th>Short Name</th>
-                                                    <th>Reseller</th>
+                                                    <th>Group Name</th>
                                                     <th>Username</th>
                                                     <th>Contact Number</th>
                                                     <th>Location</th>
                                                     <th>User Group</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <SubCompanyTable editData={editData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
+                                            <GroupTable editData={editData} tableData={groupsDataState} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
                                             </tbody>
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
@@ -127,7 +140,7 @@ const SubCompany = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/sub-company"
+                                                    to="/groups"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -139,7 +152,7 @@ const SubCompany = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/sub-company"
+                                                        to="/groups"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -151,7 +164,7 @@ const SubCompany = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/sub-company"
+                                                    to="/groups"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)
@@ -178,4 +191,4 @@ const SubCompany = () => {
         </>
     );
 };
-export default SubCompany;
+export default CreateGroups;
