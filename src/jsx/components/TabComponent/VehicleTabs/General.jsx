@@ -1,22 +1,28 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import Select from 'react-select'
+import { useForm, Controller } from "react-hook-form";
+import Select from "react-select";
+import Error from "../../Error/Error";
+import {
+  branchOptions,
+  deviceTypeOptions,
+  copyFromOptions,
+  distanceCounterOptions,
+  unitOfDistanceOptions,
+  speedDetectionOptions,
+} from "./Options";
 
-const General = () => {
-  const { register } = useForm();
+const General = ({ handleNext, register, setValue}) => {
+  const{control, getValues,formState: errors} = useForm()
+  
   const [selectedOption, setSelectedOption] = useState(null);
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
   const customStyles = {
-    control: base => ({
+    control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -24,12 +30,22 @@ const General = () => {
           <label className="form-label">
             Branch <span className="text-danger">*</span>
           </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <Controller
+            name="branch"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("branch", newValue.value)}
+                options={branchOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={branchOptions[0]}
+              />
+            )}
           />
+          <Error errorName={errors.branch} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -44,16 +60,26 @@ const General = () => {
             name="vehicleName"
             placeholder=""
           />
+          <Error errorName={errors.vehicleName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Device Type <span className="text-danger">*</span>
           </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <Controller
+            name="deviceType"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("deviceType", newValue.value)}
+                options={deviceTypeOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={deviceTypeOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -69,27 +95,32 @@ const General = () => {
             name="IMEINumber"
             placeholder=""
           />
+          <Error errorName={errors.IMEINumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Copy From <span className="text-danger">*</span>
-          </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <label className="form-label">Copy From</label>
+          <Controller
+            name="copyFrom"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("copyFrom", newValue.value)}
+                options={copyFromOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={copyFromOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Server Address <span className="text-danger">*</span>
+            Server Address
           </label>
           <input
             type="text"
-            {...register("serverAddress", {
-              required: "Server Address is required",
-            })}
+            {...register("serverAddress")}
             className="form-control"
             name="serverAddress"
             placeholder=""
@@ -97,13 +128,11 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            SIM Number <span className="text-danger">*</span>
+            SIM Number
           </label>
           <input
             type="number"
-            {...register("simNumber", {
-              required: "SIM Number is required",
-            })}
+            {...register("simNumber")}
             className="form-control"
             name="simNumber"
             placeholder=""
@@ -111,13 +140,11 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Secondary SIM Number <span className="text-danger">*</span>
+            Secondary SIM Number
           </label>
           <input
             type="number"
-            {...register("secondarySimNumber", {
-              required: "secondary SIM Number is required",
-            })}
+            {...register("secondarySimNumber")}
             className="form-control"
             name="secondarySimNumber"
             placeholder=""
@@ -125,46 +152,74 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Distance Counter<span className="text-danger">*</span>
+            Distance Counter
           </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <Controller
+            name="distanceCounter"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) =>
+                  setValue("distanceCounter", newValue.value)
+                }
+                options={distanceCounterOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={distanceCounterOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Unit of Distance<span className="text-danger">*</span>
+            Unit of Distance
           </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <Controller
+            name="unitOfDistance"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) =>
+                  setValue("unitOfDistance", newValue.value)
+                }
+                options={unitOfDistanceOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={unitOfDistanceOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Speed Detection<span className="text-danger">*</span>
+            Speed Detection
           </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <Controller
+            name="speedDetection"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) =>
+                  setValue("speedDetection", newValue.value)
+                }
+                options={speedDetectionOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={speedDetectionOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          Device Accuracy Tolerance <span className="text-danger">*</span>
+            Device Accuracy Tolerance
           </label>
           <input
             type="number"
-            {...register("deviceAccuracyTolerance", {
-              required: "Device Accuracy Tolerance is required",
-            })}
+            {...register("deviceAccuracyTolerance")}
             className="form-control"
             name="deviceAccuracyTolerance"
             placeholder=""
@@ -172,13 +227,11 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Shift Group<span className="text-danger">*</span>
+            Shift Group
           </label>
           <input
             type="text"
-            {...register("shiftGroup", {
-              required: "Shift Group is required",
-            })}
+            {...register("shiftGroup")}
             className="form-control"
             name="shiftGroup"
             placeholder=""
@@ -186,13 +239,11 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Shift Name<span className="text-danger">*</span>
+            Shift Name
           </label>
           <input
             type="text"
-            {...register("shiftName", {
-              required: "Shift Name is required",
-            })}
+            {...register("shiftName")}
             className="form-control"
             name="shiftName"
             placeholder=""
@@ -200,22 +251,27 @@ const General = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            QR Code<span className="text-danger">*</span>
+            QR Code
           </label>
           <input
             type="text"
-            {...register("qrCode", {
-              required: "QR Code is required",
-            })}
+            {...register("qrCode")}
             className="form-control"
             name="qrCode"
             placeholder=""
           />
         </div>
       </div>
-      <div style={{ width: "100%", display:"flex", justifyContent:"center", margin:"2rem 0"}}>
-          <Button style={{ width: "10%"}}> Next</Button>
-        </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          margin: "2rem 0",
+        }}
+      >
+        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+      </div>
     </div>
   );
 };

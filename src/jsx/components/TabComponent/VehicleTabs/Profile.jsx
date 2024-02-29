@@ -1,67 +1,63 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
+import Error from "../../Error/Error";
+import {
+  options,
+  permitOptions,
+  fuelTypeOptions,
+  distanceQuantitySelectOptions,
+  durationSelectOptions,
+  durationCostSelectOptions,
+} from "./Options";
 
-const Profile = () => {
-  const { register } = useForm();
+const Profile = ({handleNext, register, setValue}) => {
+  const { control, getValues } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
-  const [startDate, setStartDate] = useState(new Date());
-  const [isChecked1, setIsChecked1] = useState(false);
-  const [isChecked2, setIsChecked2] = useState(false);
-  const [isChecked3, setIsChecked3] = useState(false);
-  const [isChecked4, setIsChecked4] = useState(false);
-  const [isChecked5, setIsChecked5] = useState(false);
-  const [isChecked6, setIsChecked6] = useState(false);
-  const [isMultiple, setIsMultiple] = useState(false);
-  
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
+  const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
+  const [isCheckedCBO, setIsCheckedCBO] = useState(false);
+  const [isCheckedCBO2, setIsCheckedCBO2] = useState(false);
+  const [isCheckedWC, setIsCheckedWC] = useState(false);
+  const [isCheckedGS, setIsCheckedGS] = useState(false);
+
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+  const handleChange = (e)=>{
+    setSelectedOption(e.target.value)
+    setValue('fuelSensor', e.target.value)
+  }
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Plate Number <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Plate Number</label>
           <input
             type="text"
-            {...register("plateNumber", {
-              required: "Plate Number is required",
-            })}
+            {...register("plateNumber")}
             className="form-control"
             name="plateNumber"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Vehicle Category<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Vehicle Category</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox987"
                 name="optradioCustom1"
+                onChange={() => setValue("vehicleCategory", "movable")}
               />
-              <label
-                className="form-check-label"
-                htmlFor="customRadioBox987"
-                style={{ marginBottom: "0" }}
-              >
+              <label className="form-check-label" style={{ marginBottom: "0" }}>
                 Movable
               </label>
             </div>
@@ -69,100 +65,96 @@ const Profile = () => {
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox988"
+                onChange={() => setValue("vehicleCategory", "immovable")}
                 name="optradioCustom1"
               />
-              <label
-                className="form-check-label"
-                htmlFor="customRadioBox988"
-                style={{ marginBottom: "0" }}
-              >
+              <label className="form-check-label" style={{ marginBottom: "0" }}>
                 Immovable
               </label>
             </div>
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            DVIR Template <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">DVIR Template</label>
           <input
             type="text"
-            {...register("DVIRTemplate", {
-              required: "DVIR Template is required",
-            })}
+            {...register("DVIRTemplate")}
             className="form-control"
             name="DVIRTemplate"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Purchase Amount <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Purchase Amount</label>
           <input
             type="text"
-            {...register("purchaseAmount", {
-              required: "Purchase Amount is required",
-            })}
+            {...register("purchaseAmount")}
             className="form-control"
             name="purchaseAmount"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Manufacture Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Manufacture Date</label>
+          <Controller
+            name="manufactureDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("manufactureDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("manufactureDate", newValue)}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Purchase Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Purchase Date</label>
+          <Controller
+            name="purchaseDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("purchaseDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("purchaseDate", newValue)}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Weight Capacity <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Weight Capacity</label>
           <input
             type="text"
-            {...register("weightCapacity", {
-              required: "Weight Capacity is required",
-            })}
+            {...register("weightCapacity")}
             className="form-control"
             name="weightCapacity"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            GPS Installation Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">GPS Installation Date</label>
+          <Controller
+            name="GPSInstallationDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("GPSInstallationDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) =>
+                  setValue("GPSInstallationDate", newValue)
+                }
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            GPS Warranty <span className="text-danger">*</span>
+            GPS Warranty
           </label>
           <input
             type="text"
-            {...register("GPSWarranty", {
-              required: "GPS Warranty is required",
-            })}
+            {...register("GPSWarranty")}
             className="form-control"
             name="GPSWarranty"
             placeholder=""
@@ -170,199 +162,224 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Company Average <span className="text-danger">*</span>
+            Company Average
           </label>
           <input
             type="text"
-            {...register("companyAverage", {
-              required: "Company Average is required",
-            })}
+            {...register("companyAverage")}
             className="form-control"
             name="companyAverage"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Permit <span className="text-danger">*</span>
-          </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <label className="form-label">Permit</label>
+          <Controller
+            name="permit"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("permit", newValue.value)}
+                options={permitOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={permitOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Installation Date <span className="text-danger">*</span>
-          </label>
-          <DatePicker
-            className="form-control"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+          <label className="form-label">Installation Date</label>
+          <Controller
+            name="installationDate"
+            control={control}
+            render={({ value, name }) => (
+              <DatePicker
+                selected={getValues("installationDate") || new Date()}
+                className="form-control"
+                onChange={(newValue) => setValue("installationDate", newValue)}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Registration Number <span className="text-danger">*</span>
+            Registration Number
           </label>
           <input
             type="text"
-            {...register("registrationNumber", {
-              required: "Registration Number is required",
-            })}
+            {...register("registrationNumber")}
             className="form-control"
             name="registrationNumber"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Fuel Type <span className="text-danger">*</span>
-          </label>
-          <Select
-            defaultValue={selectedOption}
-            styles={customStyles}
-            onChange={setSelectedOption}
-            options={options}
+          <label className="form-label">Fuel Type</label>
+          <Controller
+            name="fuelType"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("fuelType", newValue.value)}
+                options={fuelTypeOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={fuelTypeOptions[0]}
+              />
+            )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Distance based Fuel Consumption{" "}
-            <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Distance based Fuel Consumption </label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
-              onChange={() => setIsChecked1(!isChecked1)}
+              onChange={() => setIsCheckedDBFC(!isCheckedDBFC)}
               className="form-check-input"
-              id="customCheckBox1"
-              required
             />
             <input
               type="number"
-              {...register("distance", {
-                required: "Distance is required",
-              })}
+              {...register("distance")}
               className="form-control"
               style={{ width: "6rem", margin: " 0 1rem" }}
               name="distance"
               placeholder=""
             />
             <span>Kilometer</span>
-            {isChecked1 && (
+            {isCheckedDBFC && (
               <>
                 <span style={{ paddingLeft: ".6rem" }}>/</span>
                 <input
                   type="number"
-                  {...register("quantity", {
-                    required: "Quantity is required",
-                  })}
+                  {...register("distanceQuantity")}
                   className="form-control"
                   style={{ width: "6rem", margin: " 0 1rem" }}
-                  name="quantity"
+                  name="distanceQuantity"
                   placeholder=""
                 />
-                <Select
-                  defaultValue={selectedOption}
-                  styles={customStyles}
-                  onChange={setSelectedOption}
-                  options={options}
+                <Controller
+                  name="distanceQuantitySelect"
+                  control={control}
+                  render={({ field: { onChange, value, name, ref } }) => (
+                    <Select
+                      onChange={(newValue) =>
+                        setValue("distanceQuantitySelect", newValue.value)
+                      }
+                      options={distanceQuantitySelectOptions}
+                      ref={ref}
+                      name={name}
+                      styles={customStyles}
+                      defaultValue={distanceQuantitySelectOptions[0]}
+                    />
+                  )}
                 />
               </>
             )}
           </div>
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Duration based Fuel Consumption{" "}
-            <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Duration based Fuel Consumption </label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
-              onChange={() => setIsChecked2(!isChecked2)}
+              onChange={() => setIsCheckedDBFC2(!isCheckedDBFC2)}
               className="form-check-input"
               id="customCheckBox1"
-              required
             />
             <input
               type="number"
-              {...register("distance", {
-                required: "Distance is required",
-              })}
+              {...register("duration")}
               className="form-control"
               style={{ width: "6rem", margin: " 0 1rem" }}
-              name="distance"
+              name="duration"
               placeholder=""
             />
-            <Select
-              defaultValue={selectedOption}
-              styles={customStyles}
-              onChange={setSelectedOption}
-              options={options}
+            <Controller
+              name="durationSelect"
+              control={control}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <Select
+                  onChange={(newValue) =>
+                    setValue("durationSelect", newValue.value)
+                  }
+                  options={durationSelectOptions}
+                  ref={ref}
+                  name={name}
+                  styles={customStyles}
+                  defaultValue={durationSelectOptions[0]}
+                />
+              )}
             />
-            {isChecked2 && (
+            {isCheckedDBFC2 && (
               <>
                 <span style={{ paddingLeft: ".6rem" }}>/</span>
                 <input
                   type="number"
-                  {...register("quantity", {
-                    required: "Quantity is required",
-                  })}
+                  {...register("durationQuantity")}
                   className="form-control"
                   style={{ width: "6rem", margin: " 0 1rem" }}
-                  name="quantity"
+                  name="durationQuantity"
                   placeholder=""
                 />
-                <Select
-                  defaultValue={selectedOption}
-                  styles={customStyles}
-                  onChange={setSelectedOption}
-                  options={options}
+                <Controller
+                  name="durationQuantitySelect"
+                  control={control}
+                  render={({ field: { onChange, value, name, ref } }) => (
+                    <Select
+                      onChange={(newValue) =>
+                        setValue("durationQuantitySelect", newValue.value)
+                      }
+                      options={distanceQuantitySelectOptions}
+                      ref={ref}
+                      name={name}
+                      styles={customStyles}
+                      defaultValue={distanceQuantitySelectOptions[0]}
+                    />
+                  )}
                 />
               </>
             )}
           </div>
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Fuel Idling Consumption <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Fuel Idling Consumption</label>
           <div className="d-flex align-items-center">
             <input
               type="number"
-              {...register("distance", {
-                required: "Distance is required",
-              })}
+              {...register("fuelIdlingConsumption")}
               className="form-control"
               style={{ width: "50%", marginRight: "1rem" }}
-              name="distance"
+              name="fuelIdlingConsumption"
               placeholder=""
             />
-            <Select
-              defaultValue={selectedOption}
-              styles={customStyles}
-              onChange={setSelectedOption}
-              options={options}
+            <Controller
+              name="fuelIdlingConsumptionSelect"
+              control={control}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <Select
+                  onChange={(newValue) =>
+                    setValue("fuelIdlingConsumptionSelect", newValue.value)
+                  }
+                  options={distanceQuantitySelectOptions}
+                  ref={ref}
+                  name={name}
+                  styles={customStyles}
+                  defaultValue={distanceQuantitySelectOptions[0]}
+                />
+              )}
             />
             <span style={{ padding: " 0 .5rem" }}>/Hr</span>
           </div>
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Consumption Tolerance <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Consumption Tolerance</label>
           <div className="d-flex align-items-center">
             <input
               type="number"
-              {...register("consumptionTolerance", {
-                required: "Consumption Tolerance is required",
-              })}
-              min="1"
-              max="100"
+              {...register("consumptionTolerance")}
               className="form-control"
               style={{ marginRight: ".5rem" }}
               name="consumptionTolerance"
@@ -374,13 +391,11 @@ const Profile = () => {
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            VIN(Chassis) Number : <span className="text-danger">*</span>
+            VIN(Chassis) Number :
           </label>
           <input
             type="text"
-            {...register("vinNumber", {
-              required: "VIN Number Number is required",
-            })}
+            {...register("vinNumber")}
             className="form-control"
             name="vinNumber"
             placeholder=""
@@ -388,13 +403,11 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Engine Number <span className="text-danger">*</span>
+            Engine Number
           </label>
           <input
             type="text"
-            {...register("engineNumber", {
-              required: "Engine Number is required",
-            })}
+            {...register("engineNumber")}
             className="form-control"
             name="engineNumber"
             placeholder=""
@@ -402,13 +415,11 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Odometer <span className="text-danger">*</span>
+            Odometer
           </label>
           <input
             type="text"
-            {...register("Odometer", {
-              required: "Odometer is required",
-            })}
+            {...register("Odometer")}
             className="form-control"
             name="Odometer"
             placeholder=""
@@ -416,13 +427,11 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            LBS Detection Radius <span className="text-danger">*</span>
+            LBS Detection Radius
           </label>
           <input
             type="number"
-            {...register("LBSDetectionRadius", {
-              required: "LBS Detection Radius is required",
-            })}
+            {...register("LBSDetectionRadius")}
             className="form-control"
             name="LBSDetectionRadius"
             placeholder="Max value upto 5000meters"
@@ -430,13 +439,11 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Engine Hours <span className="text-danger">*</span>
+            Engine Hours
           </label>
           <input
             type="text"
-            {...register("engineHours", {
-              required: "Engine Hours is required",
-            })}
+            {...register("engineHours")}
             className="form-control"
             name="engineHours"
             placeholder="Max value upto 5000meters"
@@ -444,29 +451,24 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of passenger seats <span className="text-danger">*</span>
+            No of passenger seats
           </label>
           <input
             type="number"
-            {...register("passengerSeats", {
-              required: "Passenger Seats is required",
-            })}
+            {...register("passengerSeats")}
             className="form-control"
             name="passengerSeats"
             placeholder="Max value upto 5000meters"
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Cost Based On <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Cost Based On</label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
-              onChange={() => setIsChecked3(!isChecked3)}
+              onChange={() => setIsCheckedCBO(!isCheckedCBO)}
               className="form-check-input"
               id="customCheckBox1"
-              required
             />
             <label
               className="form-check-label"
@@ -477,10 +479,9 @@ const Profile = () => {
             </label>
             <input
               type="checkbox"
-              onChange={() => setIsChecked4(!isChecked4)}
+              onChange={() => setIsCheckedCBO2(!isCheckedCBO2)}
               className="form-check-input"
               id="customCheckBox1"
-              required
             />
             <label
               className="form-check-label"
@@ -491,19 +492,13 @@ const Profile = () => {
             </label>
           </div>
         </div>
-        {isChecked3 && (
+        {isCheckedCBO && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              Distance <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Distance</label>
             <div className="d-flex align-items-center">
               <input
                 type="number"
-                {...register("distanceCost", {
-                  required: "Distance is required",
-                })}
-                min="1"
-                max="100"
+                {...register("distanceCost")}
                 className="form-control"
                 style={{ marginRight: ".5rem" }}
                 name="distanceCost"
@@ -513,42 +508,45 @@ const Profile = () => {
             </div>
           </div>
         )}
-        {isChecked4 && (
+        {isCheckedCBO2 && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              Duration <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Duration</label>
             <div className="d-flex align-items-center">
               <input
                 type="number"
-                {...register("durationCost", {
-                  required: "Duration is required",
-                })}
+                {...register("durationCost")}
                 className="form-control"
                 style={{ maxWidth: "70%", marginRight: ".5rem" }}
                 name="durationCost"
                 placeholder=""
               />
               <span style={{ padding: " 0 .5rem" }}>$/</span>
-              <Select
-                defaultValue={selectedOption}
-                styles={customStyles}
-                onChange={setSelectedOption}
-                options={options}
-              />
+              <Controller
+              name="durationCostSelect"
+              control={control}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <Select
+                  onChange={(newValue) =>
+                    setValue("durationCostSelect", newValue.value)
+                  }
+                  options={durationCostSelectOptions}
+                  ref={ref}
+                  name={name}
+                  styles={customStyles}
+                  defaultValue={durationCostSelectOptions[0]}
+                />
+              )}
+            />
             </div>
           </div>
         )}
-
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            RFID Timeout Duration <span className="text-danger">*</span>
+            RFID Timeout Duration
           </label>
           <input
             type="number"
-            {...register("RFIDTimeoutDuration", {
-              required: "RFID Timeout Duration is required",
-            })}
+            {...register("RFIDTimeoutDuration")}
             className="form-control"
             name="RFIDTimeoutDuration"
             placeholder="Max value upto 5000meters"
@@ -556,13 +554,11 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Sleep Mode Duration <span className="text-danger">*</span>
+            Sleep Mode Duration
           </label>
           <input
             type="number"
-            {...register("sleepModeDuration", {
-              required: "Sleep Mode Duration is required",
-            })}
+            {...register("sleepModeDuration")}
             className="form-control"
             name="sleepModeDuration"
             placeholder="Max value upto 5000meters"
@@ -570,91 +566,73 @@ const Profile = () => {
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Minimum Working Hours <span className="text-danger">*</span>
+            Minimum Working Hours
           </label>
           <input
             type="number"
-            {...register("minimumWorkingHours ", {
-              required: "Minimum Working Hours  is required",
-            })}
+            {...register("minimumWorkingHours")}
             className="form-control"
             name="minimumWorkingHours"
             placeholder="Max value upto 5000meters"
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Weight Sensor <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Weight Sensor</label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
-              onChange={() => setIsChecked5(!isChecked5)}
+              onChange={() => setIsCheckedWC(!isCheckedWC)}
               className="form-check-input"
               id="customCheckBox1"
-              required
             />
             <label
               className="form-check-label"
               style={{ marginBottom: "0", marginRight: "1rem" }}
               htmlFor="customCheckBox1"
             >
-              {isChecked5 ? "Checked" : "Unchecked"}
+              {isCheckedWC ? "Checked" : "Unchecked"}
             </label>
           </div>
         </div>
-        {isChecked5 && (
+        {isCheckedWC && (
           <>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Underweight Tolerance <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Underweight Tolerance</label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("underweightTolerance")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="underweightTolerance"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>%</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Overweight Tolerance <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Overweight Tolerance</label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("overweightTolerance")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="overweightTolerance"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>%</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Loading/Unloading Tolerance{" "}
-                <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Loading/Unloading Tolerance </label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("loadingUnloadingTolerance")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="loadingUnloadingTolerance"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>%</span>
@@ -662,17 +640,17 @@ const Profile = () => {
             </div>
           </>
         )}
-
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Fuel Sensor<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Fuel Sensor</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
                 id="customRadioBox987"
+                value='single'
+                checked={selectedOption === 'single'}
+                onChange={handleChange}
                 name="optradioCustom1"
               />
               <label
@@ -689,7 +667,9 @@ const Profile = () => {
                 className="form-check-input"
                 id="customRadioBox988"
                 name="optradioCustom1"
-                onClick={()=>setIsMultiple(!isMultiple)}
+                value='multiple'
+                checked={selectedOption === 'multiple'}
+                onChange={handleChange}
               />
               <label
                 className="form-check-label"
@@ -701,99 +681,80 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        {isMultiple && (
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                No of Tanks <span className="text-danger">*</span>
-              </label>
-              <div className="d-flex align-items-center">
-                <input
-                  type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
-                  className="form-control"
-                  style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
-                  placeholder=""
-                />
-                <span style={{ padding: " 0 .5rem" }}>mG</span>
-              </div>
+        {selectedOption === 'multiple' && (
+          <div className="col-xl-6 mb-3 ">
+            <label className="form-label">No of Tanks</label>
+            <div className="d-flex align-items-center">
+              <input
+                type="number"
+                {...register("noOfTanks")}
+                className="form-control"
+                style={{ marginRight: ".5rem" }}
+                name="noOfTanks"
+                placeholder=""
+              />
+              <span style={{ padding: " 0 .5rem" }}>mG</span>
             </div>
+          </div>
         )}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            G Sensor <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">G Sensor</label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
-              onChange={() => setIsChecked6(!isChecked6)}
+              onChange={() => setIsCheckedGS(!isCheckedGS)}
               className="form-check-input"
               id="customCheckBox1"
-              required
             />
             <label
               className="form-check-label"
               style={{ marginBottom: "0", marginRight: "1rem" }}
               htmlFor="customCheckBox1"
             >
-              {isChecked6 ? "Checked" : "Unchecked"}
+              {isCheckedGS ? "Checked" : "Unchecked"}
             </label>
           </div>
         </div>
-        {isChecked6 && (
+        {isCheckedGS && (
           <>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Axis X <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Axis X</label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("axisX")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="axisX"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>mG</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Axis Y <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Axis Y</label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("axisY")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="axisY"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>mG</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Axis Z <span className="text-danger">*</span>
-              </label>
+              <label className="form-label">Axis Z</label>
               <div className="d-flex align-items-center">
                 <input
                   type="number"
-                  {...register("distanceCost", {
-                    required: "Distance is required",
-                  })}
+                  {...register("axisZ")}
                   className="form-control"
                   style={{ marginRight: ".5rem" }}
-                  name="distanceCost"
+                  name="axisZ"
                   placeholder=""
                 />
                 <span style={{ padding: " 0 .5rem" }}>mG</span>
@@ -802,9 +763,16 @@ const Profile = () => {
           </>
         )}
       </div>
-        <div style={{ width: "100%", display:"flex", justifyContent:"center", margin:"2rem 0"}}>
-          <Button style={{ width: "10%"}}> Next</Button>
-        </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          margin: "2rem 0",
+        }}
+      >
+        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+      </div>
     </div>
   );
 };
