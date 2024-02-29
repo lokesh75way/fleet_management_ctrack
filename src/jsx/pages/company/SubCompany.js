@@ -107,6 +107,7 @@ const SubCompany = () => {
                                                     <th>Location</th>
                                                     <th>User Group</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

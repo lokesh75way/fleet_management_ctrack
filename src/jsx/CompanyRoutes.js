@@ -35,6 +35,7 @@ import Geofence from "./pages/Geofence";
 import ClassifyTrips from "./pages/ClassifyTrips";
 import ContactUs from "./pages/ContactUs";
 import TechnicianTask from "./pages/TechnicianTask";
+import Vehicle from "./pages/Vehicle";
 
 
 //Update Pages
@@ -190,6 +191,7 @@ const CompanyRoutes = () => {
     { url: "geofence", component: <Geofence /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "technicianTask", component: <TechnicianTask /> },
+    { url: "Vehicle", component: <Vehicle/> },
     
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },

@@ -353,6 +353,239 @@ export const VehicleData = [
       timezone: "GMT-4:00"
     }
   ];
+  export const ClassifyTripData = [
+    {
+      tripId: 1001,
+      startTime: "2024-02-23T08:00:00",
+      startLocation: "City A",
+      reachTime: "2024-02-23T10:00:00",
+      reachLocation: "City B",
+      distance: 150,
+      fuelConsumption: 10,
+      driver: "John Doe"
+    },
+    {
+      tripId: 1002,
+      startTime: "2024-02-22T09:00:00",
+      startLocation: "City B",
+      reachTime: "2024-02-22T11:30:00",
+      reachLocation: "City C",
+      distance: 200,
+      fuelConsumption: 15,
+      driver: "Jane Smith"
+    },
+    {
+      tripId: 1003,
+      startTime: "2024-02-21T11:30:00",
+      startLocation: "City C",
+      reachTime: "2024-02-21T14:00:00",
+      reachLocation: "City D",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Mike Johnson"
+    },
+    {
+      tripId: 1004,
+      startTime: "2024-02-20T10:00:00",
+      startLocation: "City D",
+      reachTime: "2024-02-20T12:30:00",
+      reachLocation: "City E",
+      distance: 220,
+      fuelConsumption: 18,
+      driver: "Emily Wilson"
+    },
+    {
+      tripId: 1005,
+      startTime: "2024-02-19T08:30:00",
+      startLocation: "City E",
+      reachTime: "2024-02-19T11:00:00",
+      reachLocation: "City F",
+      distance: 190,
+      fuelConsumption: 14,
+      driver: "David Brown"
+    },
+    {
+      tripId: 1006,
+      startTime: "2024-02-18T07:45:00",
+      startLocation: "City F",
+      reachTime: "2024-02-18T10:15:00",
+      reachLocation: "City G",
+      distance: 210,
+      fuelConsumption: 16,
+      driver: "Sarah Garcia"
+    },
+    {
+      tripId: 1007,
+      startTime: "2024-02-17T09:15:00",
+      startLocation: "City G",
+      reachTime: "2024-02-17T11:45:00",
+      reachLocation: "City H",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Michael Martinez"
+    },
+    {
+      tripId: 1008,
+      startTime: "2024-02-16T10:30:00",
+      startLocation: "City H",
+      reachTime: "2024-02-16T13:00:00",
+      reachLocation: "City I",
+      distance: 240,
+      fuelConsumption: 20,
+      driver: "Jessica Taylor"
+    },
+    {
+      tripId: 1009,
+      startTime: "2024-02-15T08:45:00",
+      startLocation: "City I",
+      reachTime: "2024-02-15T11:15:00",
+      reachLocation: "City J",
+      distance: 200,
+      fuelConsumption: 15,
+      driver: "Daniel Anderson"
+    },
+    {
+      tripId: 1010,
+      startTime: "2024-02-14T11:00:00",
+      startLocation: "City J",
+      reachTime: "2024-02-14T13:30:00",
+      reachLocation: "City K",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Olivia Thomas"
+    },
+    {
+      tripId: 1011,
+      startTime: "2024-02-13T07:30:00",
+      startLocation: "City K",
+      reachTime: "2024-02-13T10:00:00",
+      reachLocation: "City L",
+      distance: 220,
+      fuelConsumption: 18,
+      driver: "William Rodriguez"
+    },
+    {
+      tripId: 1012,
+      startTime: "2024-02-12T09:45:00",
+      startLocation: "City L",
+      reachTime: "2024-02-12T12:15:00",
+      reachLocation: "City M",
+      distance: 210,
+      fuelConsumption: 16,
+      driver: "Emma Wilson"
+    }
+  ];
+  export const GeofenceData = [
+    {
+      id: 1001,
+      geofenceName: "Office",
+      geofenceType: "Restricted",
+      contactNo: "+1234567890",
+      address: "123 Main Street, City A",
+      description: "Restricted area for employees only",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1002,
+      geofenceName: "Home",
+      geofenceType: "Safe",
+      contactNo: "+1987654321",
+      address: "456 Elm Street, City B",
+      description: "Safe zone for family members",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1003,
+      geofenceName: "School",
+      geofenceType: "Restricted",
+      contactNo: "+1122334455",
+      address: "789 Oak Street, City C",
+      description: "Restricted area for students and staff",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1004,
+      geofenceName: "Park",
+      geofenceType: "Public",
+      contactNo: "+1555666777",
+      address: "101 Maple Avenue, City D",
+      description: "Public park for recreational activities",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1005,
+      geofenceName: "Mall",
+      geofenceType: "Commercial",
+      contactNo: "+1444333222",
+      address: "202 Pine Street, City E",
+      description: "Shopping mall for customers",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1006,
+      geofenceName: "Hospital",
+      geofenceType: "Restricted",
+      contactNo: "+1999888777",
+      address: "303 Cedar Street, City F",
+      description: "Restricted area for medical personnel",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1007,
+      geofenceName: "Airport",
+      geofenceType: "Restricted",
+      contactNo: "+1888777666",
+      address: "404 Birch Street, City G",
+      description: "Restricted area for airport staff",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1008,
+      geofenceName: "Gym",
+      geofenceType: "Restricted",
+      contactNo: "+1666555444",
+      address: "505 Cedar Street, City H",
+      description: "Restricted area for gym members",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1009,
+      geofenceName: "Restaurant",
+      geofenceType: "Commercial",
+      contactNo: "+1777444333",
+      address: "606 Maple Avenue, City I",
+      description: "Restaurant for dining",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1010,
+      geofenceName: "Construction Site",
+      geofenceType: "Restricted",
+      contactNo: "+1333222111",
+      address: "707 Elm Street, City J",
+      description: "Restricted area for construction workers",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1011,
+      geofenceName: "Library",
+      geofenceType: "Public",
+      contactNo: "+1222111333",
+      address: "808 Oak Street, City K",
+      description: "Public library for reading",
+      geofenceAccess: "Allowed"
+    },
+    {
+      id: 1012,
+      geofenceName: "Warehouse",
+      geofenceType: "Restricted",
+      contactNo: "+1000000000",
+      address: "909 Pine Street, City L",
+      description: "Restricted area for warehouse employees",
+      geofenceAccess: "Allowed"
+    }
+  ];
+  
   
 
 

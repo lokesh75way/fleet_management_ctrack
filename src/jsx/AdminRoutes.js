@@ -41,6 +41,7 @@ import ClassifyTrips from "./pages/ClassifyTrips";
 import Permission from "./pages/Permission";
 import ContactUs from "./pages/ContactUs";
 import TechnicianTask from "./pages/TechnicianTask";
+import Vehicle from "./pages/Vehicle";
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -180,6 +181,7 @@ const AdminRoutes = () => {
     { url: "geofence", component: <Geofence /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
+    { url: "Vehicle", component: <Vehicle/> },
   ];
 
 

@@ -87,4 +87,9 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor2", label: "BLE Battery Sensor2" },
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
+export const leaveTimeOptions = [
+  { value: "CL", label: "CL" },
+  { value: "PL", label: "PL" },
+  { value: "SL", label: "SL" },
+];
 export const options = [{ value: "West Company", label: "West Company" }];

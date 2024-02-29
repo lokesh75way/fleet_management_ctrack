@@ -7,7 +7,6 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import useDriverSubmit from "../../../hooks/useDriverSubmit";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import DataAccess from "../../components/TabComponent/SubUserTab/DataAccess";
-import ScreenAccess from "../../components/TabComponent/SubUserTab/ScreenAccess";
 import UserSetting from "../../components/TabComponent/SubUserTab/UserSetting";
 
 
@@ -23,8 +22,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   } = useDriverSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Account", "Data Access", "Screen Access", "User Setting"];
-  const component = [Account, DataAccess, ScreenAccess, UserSetting];
+  const tabHeading = ["Account", "Data Access"];
+  const component = [Account, DataAccess];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index

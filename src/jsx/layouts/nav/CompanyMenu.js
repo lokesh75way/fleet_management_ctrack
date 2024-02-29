@@ -28,15 +28,10 @@ export const CompanyMenuList = [
         to: '/driver',
     },
     {
-        title: 'Performance',
-        iconStyle: SVGICON.Performance,
-        to: '/performance',
-    },
-    {
-        title: 'Projects',
-        iconStyle: SVGICON.ProjectsSidbar,
-        to: '/project',
-    },
+        title: 'Vehicle',
+        iconStyle: SVGICON.Employe,
+        to: '/vehicle',
+     },
     {
         title: 'Tracking',
         classsChange: 'mm-collapse',
@@ -72,7 +67,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Alert',
-                to: '/reports/alert'
+                to: '/alert'
             },
             {
                 title:'Reminder',
@@ -80,7 +75,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Expense',
-                to: '/reports/expense'
+                to: '/expense'
             },
             {
                 title:'Fuel',
