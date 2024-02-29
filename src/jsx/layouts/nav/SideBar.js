@@ -186,7 +186,7 @@ const SideBar = ({ role = 'company' }) => {
           })}
         </ul>
         <div className="help-desk">
-          <Link to={"#"} className="btn btn-primary">Help Desk</Link>
+          <Link to={"/contactUs"} className="btn btn-primary">Help Desk</Link>
         </div>
       </div>
     </div>

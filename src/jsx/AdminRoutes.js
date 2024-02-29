@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-
+import React, { lazy, useContext } from "react";
 /// React router dom
 import { Routes, Route, Outlet } from "react-router-dom";
 
@@ -15,6 +14,7 @@ import ScrollToTop from "./layouts/ScrollToTop";
 
 
 /// Dashboard
+// const Home = lazy(() => import("./components/Dashboard/Home"));
 import Home from "./components/Dashboard/Home";
 import DashboardDark from "./components/Dashboard/DashboardDark";
 import Performance from "./components/Dashboard/Performance";
@@ -24,14 +24,23 @@ import HomeBlog from "./components/Dashboard/Blog";
 import ManageClient from "./components/Dashboard/ManageClient";
 import Report from "./components/Dashboard/Report";
 import Finance from "./components/Dashboard/Finance";
+// const Driver = lazy(() => import("./pages/Driver"));
 import Driver from "./pages/Driver";
-import Technical from "./pages/Technical"
+import Technician from "./pages/Technician"
 import DriverTracking from "./pages/DriverTracking";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking"
 import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm"
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
-import CoreHr from "./components/Dashboard/CoreHr";
+import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
+import SubUserForm from "./pages/CreateForms/SubUserForm";
+import SubUser from "./pages/SubUser";
+import Alert from "./pages/Alert";
+import Expense from "./pages/Expense";
+import Geofence from "./pages/Geofence";
+import ClassifyTrips from "./pages/ClassifyTrips";
 import Permission from "./pages/Permission";
+import ContactUs from "./pages/ContactUs";
+import TechnicianTask from "./pages/TechnicianTask";
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -138,7 +147,6 @@ import AdminLayout from "./layouts/AdminLayout";
 import Company from "./pages/admin/Compnay";
 import General from "./pages/admin/settings/General";
 import Master from "./pages/admin/settings/Master";
-import Technician from "./pages/admin/settings/Technician";
 
 
 
@@ -146,27 +154,32 @@ const AdminRoutes = () => {
 
   const allroutes = [
     // Dashboard
-    { url: "", component: <Home /> },
-    { url: "dashboard", component: <Home /> },
-    { url: "core-hr", component: <CoreHr /> },
+    { url: "", component: <Home/> },
+    { url: "dashboard", component: <Home/>  },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
-    { url: "finance", component: <Finance /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
-    { url: "driver", component: <Driver /> },
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
     { url: "technician", component: <Technician /> },
-    { url: "technical", component: <Technical /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "permission", component: <Permission /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
+    { url: "technician/create", component: <TechnicianForm /> },
+    { url: "subUser/create", component: <SubUserForm /> },
+    { url: "subUser", component: <SubUser /> },
+    { url: "alert", component: <Alert /> },
+    { url: "classifyTrips", component: <ClassifyTrips /> },
+    { url: "expense", component: <Expense /> },
+    { url: "geofence", component: <Geofence /> },
+    { url: "contactUs", component: <ContactUs /> },
+    { url: "TechnicianTask", component: <TechnicianTask /> },
   ];
 
 

@@ -18,20 +18,14 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/sub-company',
     },
+    {   title: 'SubUser',
+        iconStyle: SVGICON.Employe,
+        to: '/subUser',
+    },
     {
         title: 'Driver',
         iconStyle: SVGICON.Employe,
         to: '/driver',
-    },
-    {
-        title: 'Core HR',
-        iconStyle: SVGICON.CoreHr,
-        to: '/core-hr',
-    },
-    {
-        title: 'Finance',
-        iconStyle: SVGICON.Finance,
-        to: '/finance',
     },
     {
         title: 'Performance',
@@ -162,21 +156,46 @@ export const CompanyMenuList = [
         ]
     },
     {
-        title: 'Technical',
+        title: 'Technician',
         iconStyle: SVGICON.Employe,
-        to: '/technical',
+        to: '/technician',
     },
-    
     {
-        title: 'Manage Clients',
-        iconStyle: SVGICON.ManageClient,
-        to: '/manage-client',
-    },
+        title: "Technician Tasks",
+        iconStyle: SVGICON.Employe,
+        to: "/technicianTask",
+      },
+    
+    // {
+    //     title: 'Manage Clients',
+    //     iconStyle: SVGICON.ManageClient,
+    //     to: '/manage-client',
+    // },
     
     {
         title: 'Groups',
         iconStyle: SVGICON.ManageClient,
         to: '/groups',
+    },
+    {
+        title: 'Alerts',
+        iconStyle: SVGICON.ManageClient,
+        to: '/alert',
+    },
+    {
+        title: 'Expense',
+        iconStyle: SVGICON.ManageClient,
+        to: '/expense',
+    },
+    {
+        title: 'Geofence',
+        iconStyle: SVGICON.ManageClient,
+        to: '/geofence',
+    },
+    {
+        title: 'Classify Trips',
+        iconStyle: SVGICON.ManageClient,
+        to: '/classifyTrips',
     },
 
 ]

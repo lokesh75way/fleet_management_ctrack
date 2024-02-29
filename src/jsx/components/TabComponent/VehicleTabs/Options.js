@@ -67,11 +67,24 @@ export const tagViaOptions = [
 export const defaultObjectNumberOptions = [
   { value: "Test", label: "Test" },
 ];
+export const adminOptions = [
+  { value: "Timeline", label: "Timeline" },
+];
+export const resellerOptions = [
+  { value: "Test Timeline", label: "Test Timeline" },
+];
 export const licenseToDriveOptions = [
   { value: "CAT1", label: "CAT1" },
   { value: "CAT2", label: "CAT2" },
   { value: "CAT3", label: "CAT3" },
   { value: "CAT4", label: "CAT4" },
   { value: "CAT5", label: "CAT5" },
+];
+export const alertTypeOptions = [
+  { value: "911", label: "911" },
+  { value: "Crash Detection", label: "Crash Detection" },
+  { value: "BLE Battery Sensor1", label: "BLE Battery Sensor1" },
+  { value: "BLE Battery Sensor2", label: "BLE Battery Sensor2" },
+  { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
 export const options = [{ value: "West Company", label: "West Company" }];
