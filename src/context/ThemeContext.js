@@ -259,6 +259,8 @@ const {
 	changeDirectionLayout(setAttr); 
 	
 	};
+
+  const [addVehicle, setAddVehicle] = useState({})
   const [currentPosition, setCurrentPosition] = useState({})
   const [isTrafficClick, setIsTrafficClick] = useState(false)
   const [groupsDataState,setGroupsDataState] = useState([]);
@@ -349,7 +351,9 @@ const {
         setIsTrafficClick,
         isTrafficClick,
         setGroupsDataState,
-        groupsDataState
+        groupsDataState,
+        setAddVehicle,
+        addVehicle
 	}}
     >
       {props.children}

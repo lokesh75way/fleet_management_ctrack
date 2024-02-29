@@ -1,10 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import {VehicleData} from '../Tables/Tables'
 import VehicleTable from '../Tables/VehicleTable';
 import VehicleOffCanvas from '../../constant/VehicleOffCanvas';
+import { ThemeContext } from '../../../context/ThemeContext';
 
 const Vehicle = () => {  
+    const {setAddVehicle, addVehicle} = useContext(ThemeContext)
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -34,6 +36,10 @@ const Vehicle = () => {
    useEffect(() => {
       setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
 	}, [test]);
+
+    useEffect(()=>{
+        console.log("enter herer")
+    },[])
 
    activePag.current === 0 && chageData(0, sort);
    let paggination = Array(Math.ceil(data.length / sort))
@@ -89,8 +95,7 @@ const Vehicle = () => {
                                         <h4 className="heading mb-0">Vehicle</h4> 
                                         <div>
                                             
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>vehicle.current.showModal()}
+                                            <Link to={'/vehicle/create'} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
                                             >+ Add Vehicle Info</Link> {" "}
                                         </div>                                          
                                     </div>          
@@ -168,13 +173,6 @@ const Vehicle = () => {
                     </div>
                 </div>
             </div>
-            <VehicleOffCanvas 
-                ref={vehicle}
-                Title={editData.id === 0 ? "Add Vehicle Info": "Edit Vehicle Info"}
-                handleSubmit={handleSubmit}
-                editData={editData}
-                setEditData={setEditData}
-            />
         </>
     );
 };
