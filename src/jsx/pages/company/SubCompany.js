@@ -184,7 +184,6 @@ const SubCompany = () => {
                 handleSubmit={handleSubmit}
                 Title={ editData.id === 0 ? "Add Sub Company" : "Edit Sub Company"}
             />
-            
         </>
     );
 };
