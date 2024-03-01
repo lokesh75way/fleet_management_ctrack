@@ -105,7 +105,7 @@ const ExpenseOffcanvas = forwardRef(
                     />
                   </div>
 
-                  <div className="col-xl-6 mb-3 ">
+                  {/* <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Object</label>
                     <Controller
                       name="object"
@@ -123,7 +123,7 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       )}
                     />
-                  </div>
+                  </div> */}
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">Category</label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>

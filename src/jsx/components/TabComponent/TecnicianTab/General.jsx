@@ -37,7 +37,7 @@ const General = ({ handleNext, register, setValue}) => {
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3 ">
+        {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Admin 
           </label>
@@ -57,8 +57,8 @@ const General = ({ handleNext, register, setValue}) => {
             )}
           />
           <Error errorName={errors.admin} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
+        </div> */}
+        {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Reseller 
           </label>
@@ -78,7 +78,7 @@ const General = ({ handleNext, register, setValue}) => {
             )}
           />
           <Error errorName={errors.reseller} />
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             First Name <span className="text-danger">*</span>
@@ -169,7 +169,7 @@ const General = ({ handleNext, register, setValue}) => {
             </div>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        {/* <div className="col-xl-6 mb-3">
           <label className="form-label">Verification Via</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
@@ -203,9 +203,9 @@ const General = ({ handleNext, register, setValue}) => {
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        {
+        {/* {
           selectedOption2 === 'password' && <>
             <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -232,7 +232,7 @@ const General = ({ handleNext, register, setValue}) => {
           />
         </div>
           </>
-        }
+        } */}
         {
           selectedOption2 === 'otp' && <>
             <div className="col-xl-6 mb-3">

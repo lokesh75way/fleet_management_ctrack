@@ -301,6 +301,31 @@ const Header = ({ onNote, role }) => {
                 </Dropdown.Menu>
               </Dropdown>
 
+              <Dropdown as="li" className="nav-item dropdown language_dropdown">
+                <Dropdown.Toggle className="nav-link i-false  c-pointer" as="a">
+                  <HiOutlineLanguage />
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  align="end"
+                  className="mt-2 dropdown-menu dropdown-menu-end"
+                >
+                  <Link
+                    className="dropdown-item"
+                    to="#"
+                    onClick={() => setLang("ar")}
+                  >
+                    Arabic
+                  </Link>
+                  <Link
+                    className="dropdown-item"
+                    to="#"
+                    onClick={() => setLang("en")}
+                  >
+                    English
+                  </Link>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <li className="nav-item align-items-center header-border">
                 <Logoutbtn />
               </li>
@@ -339,27 +364,7 @@ const Header = ({ onNote, role }) => {
                         >
                           {SVGICON.User} <span className="ms-2">Profile </span>
                         </Link>
-                        <Link
-                          to={"/app-profile"}
-                          className="dropdown-item ai-icon "
-                        >
-                          {SVGICON.Project}{" "}
-                          <span className="ms-2">My Project</span>
-                          <span className="badge badge-sm badge-secondary light rounded-circle text-white ms-2">
-                            4
-                          </span>
-                        </Link>
-                        <Link to={"#"} className="dropdown-item ai-icon ">
-                          {SVGICON.Message}{" "}
-                          <span className="ms-2">Message </span>
-                        </Link>
-                        <Link
-                          to={"/email-inbox"}
-                          className="dropdown-item ai-icon "
-                        >
-                          {SVGICON.Notification}{" "}
-                          <span className="ms-2">Notification </span>
-                        </Link>
+
                         <Link
                           to={"/changepassword"}
                           className="dropdown-item ai-icon "

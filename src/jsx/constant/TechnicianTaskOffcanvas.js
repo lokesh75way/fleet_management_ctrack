@@ -66,7 +66,7 @@ const TechnicianOffcanvas = forwardRef(
             <div className="container-fluid">
               <form onClick={(e) => handleSubmit(e)}>
                 <div className="row">
-                  <div className="col-xl-6 mb-3 ">
+                  {/* <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
                       Company <span className="text-danger">*</span>
                     </label>
@@ -86,7 +86,7 @@ const TechnicianOffcanvas = forwardRef(
                       )}
                     />
                     <Error errorName={errors.branch} />
-                  </div>
+                  </div> */}
 
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">

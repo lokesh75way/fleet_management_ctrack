@@ -81,7 +81,7 @@ const AlertOffcanvas = forwardRef(
             <div className="container-fluid">
               <form onClick={()=>handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-xl-6 mb-3 ">
+                  {/* <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Company</label>
                     <Controller
                       name="company"
@@ -99,7 +99,7 @@ const AlertOffcanvas = forwardRef(
                         />
                       )}
                     />
-                  </div>
+                  </div> */}
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Branch</label>
                     <Controller

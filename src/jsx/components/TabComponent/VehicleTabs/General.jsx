@@ -225,7 +225,7 @@ const General = ({ handleNext, register, setValue}) => {
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3">
+        {/* <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Shift Group
           </label>
@@ -248,8 +248,8 @@ const General = ({ handleNext, register, setValue}) => {
             name="shiftName"
             placeholder=""
           />
-        </div>
-        <div className="col-xl-6 mb-3">
+        </div> */}
+        {/* <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             QR Code
           </label>
@@ -260,7 +260,7 @@ const General = ({ handleNext, register, setValue}) => {
             name="qrCode"
             placeholder=""
           />
-        </div>
+        </div> */}
       </div>
       <div
         style={{

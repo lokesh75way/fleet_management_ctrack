@@ -23,8 +23,8 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
   } = useVehicleSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Sensors", "Camera", "Document"];
-  const component = [General, Profile, Sensors, Camera, Document];
+  const tabHeading = ["General", "Profile", "Document"];
+  const component = [General, Camera, Document];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
