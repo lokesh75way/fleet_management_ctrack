@@ -67,7 +67,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Alert',
-                to: '/alert'
+                to: '/reports/alert'
             },
             {
                 title:'Reminder',
@@ -75,7 +75,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Expense',
-                to: '/expense'
+                to: '/reports/expense'
             },
             {
                 title:'Fuel',
