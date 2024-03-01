@@ -94,7 +94,7 @@ const Driver = (ref) => {
     const expense = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Expense" pageTitle={'Expense'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Expense" pageTitle={'Expense'} parentTitle={'Settings'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">

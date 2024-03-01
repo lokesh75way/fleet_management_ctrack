@@ -93,7 +93,7 @@ const CreateGroups = () => {
 
     return (
         <>
-            <MainPagetitle mainTitle="Groups" pageTitle={'Groups'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Feature Templates" pageTitle={'Feature Templates'} parentTitle={'Settings'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -101,11 +101,11 @@ const CreateGroups = () => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Groups</h4>
+                                        <h4 className="heading mb-0">Feature Template</h4>
                                         <div>
                                             <button  className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 onClick={handleAddGroup}
-                                            >+ Add Group</button> {""}
+                                            >+ Add New</button> {""}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -113,11 +113,11 @@ const CreateGroups = () => {
                                             <thead>
                                                 <tr>
                                                     <th>Short Name</th>
-                                                    <th>Group Name</th>
+                                                    <th>Template Name</th>
                                                     <th>Username</th>
                                                     <th>Contact Number</th>
                                                     <th>Location</th>
-                                                    <th>User Group</th>
+                                                    <th>User Template</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>

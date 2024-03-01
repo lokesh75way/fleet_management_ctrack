@@ -17,7 +17,7 @@ import EmployeesTableList from "./elements/EmployeesTableList";
 import ActiveUserMap from "./elements/ActiveUserMap";
 import UpcomingBlog from "./elements/UpcomingBlog";
 import AllProjectDonutChart from "./elements/AllProjectDonutChart";
-import GradientArea from "../charts/Chartjs/gradinetArea";
+// import GradientArea from "../charts/Chartjs/gradinetArea";
 import { FaCar } from "react-icons/fa";
 import { BsFuelPumpFill } from "react-icons/bs";
 import { SlCalender } from "react-icons/sl";
@@ -35,7 +35,7 @@ import { SiGraphql } from "react-icons/si";
 
 const Select = () => {
   return (
-    <select style={{ width: "3.5rem", fontSize: "8px", marginRight: "0.2rem" }}>
+    <select style={{ width: "4.5rem", fontSize: "8px" }}>
       <option>Today</option>
       <option>Yesterday</option>
       <option>Tomorrow</option>
@@ -67,7 +67,7 @@ const Home = () => {
                 <p className="text-black text-md">Fleet Status</p>
               </div>
               <div className="card-body d-flex align-items-center  py-2">
-                <AllProjectDonutChart width={300} data={[12,10,15]} />
+                <AllProjectDonutChart width={300} data={[12, 10, 15]} />
                 <ul className="project-list">
                   <li>
                     <svg
@@ -120,10 +120,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-xl-4 col-sm-12">
-            <div
-              className="card same-card pt-2"
-              style={{ paddingLeft: "1rem" }}
-            >
+            <div className="card same-card p-2" style={{ paddingLeft: "1rem" }}>
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Usage</p>
                 <Select />
@@ -139,14 +136,14 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <GradientArea />
+                {/* <GradientArea /> */}
               </div>
             </div>
           </div>
-          <div className="col-xl-4 col-sm-12">
+          <div className="col-xl-4 col-sm-12" style={{paddingInline : '0px'}}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               <div
-                className="card same-card mb-3 pt-2"
+                className="card same-card mb-3 p-2"
                 style={{ paddingLeft: "1rem" }}
               >
                 <div className="d-flex justify-content-between">
@@ -180,7 +177,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div
+              {/* <div
                 className="fluid container"
                 style={{ marginTop: 0, padding: 0 }}
               >
@@ -190,17 +187,17 @@ const Home = () => {
                 >
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#90EE90" }}
+                    style={{ backgroundColor: "#90EE90" , marginInline : "0px" }}
                   >
                     <div className="d-flex justify-content-between">
-                        <p
-                          className="text-black fs-4"
-                          style={{ marginLeft: "0.3rem" }}
-                        >
-                          Stay In Zone
-                        </p>
-                        <Select />
-                      </div>
+                      <p
+                        className="text-black fs-4"
+                        style={{ marginLeft: "0.3rem" }}
+                      >
+                        Stay In Zone
+                      </p>
+                      <Select />
+                    </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
                         className="d-flex align-items-end mb-2"
@@ -236,16 +233,16 @@ const Home = () => {
                   </div>
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#00FFFF" }}
+                    style={{ backgroundColor: "#00FFFF" , marginInline : "0px"}}
                   >
                     <div className="d-flex justify-content-between">
-                    <p
-                      className="text-black fs-4"
-                      style={{ marginLeft: "0.3rem" }}
-                    >
-                      Temperature
-                    </p>
-                    <Select />
+                      <p
+                        className="text-black fs-4"
+                        style={{ marginLeft: "0.3rem" }}
+                      >
+                        Temperature
+                      </p>
+                      <Select />
                     </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
@@ -284,22 +281,22 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
 
         <div className="row" style={{ marginRight: "0.2rem" }}>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#ffb09c" }}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Overspeed
-              </p>
-              <Select />
+                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                  Overspeed
+                </p>
+                <Select />
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -337,7 +334,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#CBC3E3" }}
@@ -382,16 +379,16 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#ADD8E6" }}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                AC Misuse
-              </p>
-              <Select />
+                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                  AC Misuse
+                </p>
+                <Select />
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -430,7 +427,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#FFE36E" }}
@@ -472,7 +469,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-4 col-sm-12">
+          <div className="col-xl-4 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div className="card same-card p-2">
               <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
                 Fleet Fuel
@@ -496,13 +493,23 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
                   </div>
                   <div style={{ color: "blue" }}>0</div>
                 </div>
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
                   </div>
@@ -525,13 +532,23 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
                   </div>
                   <div style={{ color: "blue" }}>0</div>
                 </div>
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
                   </div>

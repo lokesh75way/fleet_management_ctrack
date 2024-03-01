@@ -92,7 +92,7 @@ const Driver = (ref) => {
     const employe = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Geofence" pageTitle={'Geofence'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Geofence" pageTitle={'Geofence'} parentTitle={'Settings'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">

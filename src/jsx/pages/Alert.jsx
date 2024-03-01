@@ -100,7 +100,7 @@ const Alert = () => {
     const alert = useRef();
     return (
         <>
-        <MainPagetitle mainTitle="Alert" pageTitle={'Alert'} parentTitle={'Home'} />
+        <MainPagetitle mainTitle="Alert" pageTitle={'Alert'} parentTitle={'Settings'} />
             <div className="container-fluid">
 				<div className="row">
 			    	<div className="col-xl-12">

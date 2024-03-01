@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 /// React router dom
 import { Routes, Route } from "react-router-dom";
@@ -8,173 +8,168 @@ import "./index.css";
 import "./chart.css";
 import "./step.css";
 
-/// Layout
-import Nav from "./layouts/nav";
-import Footer from "./layouts/Footer";
 import ScrollToTop from "./layouts/ScrollToTop";
 
 
 /// Dashboard
 import Home from "./components/Dashboard/Home";
-import DashboardDark from "./components/Dashboard/DashboardDark";
-import Performance from "./components/Dashboard/Performance";
-import Projects from "./components/Dashboard/Projects";
-import TaskSummary from "./components/Dashboard/TaskSummary";
-import HomeBlog from "./components/Dashboard/Blog";
-import ManageClient from "./components/Dashboard/ManageClient";
-import Report from "./components/Dashboard/Report";
-import Driver from "./pages/Driver";
-import Technician from "./pages/Technician";
-import DriverTracking from "./pages/DriverTracking";
-import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
-import SubUserForm from "./pages/CreateForms/SubUserForm";
-import SubUser from "./pages/SubUser";
-import Alert from "./pages/Alert";
-import Expense from "./pages/Expense";
-import Geofence from "./pages/Geofence";
-import ClassifyTrips from "./pages/ClassifyTrips";
-import ContactUs from "./pages/ContactUs";
-import TechnicianTask from "./pages/TechnicianTask";
-import Vehicle from "./pages/Vehicle";
+import Loader from "./components/Loader";
+
+const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
+const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
+const TaskSummary = React.lazy(() => import("./components/Dashboard/TaskSummary"));
+const HomeBlog = React.lazy(() => import("./components/Dashboard/Blog"));
+const ManageClient = React.lazy(() => import("./components/Dashboard/ManageClient"));
+const Report = React.lazy(() => import("./components/Dashboard/Report"));
+const Driver = React.lazy(() => import("./pages/Driver"));
+const Technician = React.lazy(() => import("./pages/Technician"));
+const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const SubCompanyTracking = React.lazy(() => import("./pages/company/tracking/SubCompanyTracking"));
+const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
+const SubUser = React.lazy(() => import("./pages/SubUser"));
+const Alert = React.lazy(() => import("./pages/Alert"));
+const Expense = React.lazy(() => import("./pages/Expense"));
+const Geofence = React.lazy(() => import("./pages/Geofence"));
+const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
+const ContactUs = React.lazy(() => import("./pages/ContactUs"));
+const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
+const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 
 
 //Update Pages
-import SvgIcons from "./components/Dashboard/SvgIcons";
+const SvgIcons = React.lazy(() => import("./components/Dashboard/SvgIcons"));
 
 //Apps
-import Contacts from './components/AppsMenu/Contacts';
-import User from './components/AppsMenu/AppProfile/User';
-import UserRoles from './components/AppsMenu/AppProfile/UserRoles';
-import AddRole from './components/AppsMenu/AppProfile/AddRole';
-import AppProfile from "./components/AppsMenu/AppProfile/AppProfile";
-import AppProfile2 from "./components/AppsMenu/AppProfile/AppProfile2";
-import EditProfile from "./components/AppsMenu/AppProfile/EditProfile";
-import PostDetails from "./components/AppsMenu/AppProfile/PostDetails";
-import CustomerProfile from "./components/AppsMenu/AppProfile/CustomerProfile";
-import AppCustomer from "./components/AppsMenu/AppProfile/AppCustomer";
-import Compose from "./components/AppsMenu/Email/Compose/Compose";
-import Inbox from "./components/AppsMenu/Email/Inbox/Inbox";
-import Read from "./components/AppsMenu/Email/Read/Read";
-import Calendar from "./components/AppsMenu/Calendar/Calendar";
-import ChangePassword from "./pages/ChangePassword";
+const Contacts = React.lazy(() => import('./components/AppsMenu/Contacts'));
+const User = React.lazy(() => import('./components/AppsMenu/AppProfile/User'));
+const UserRoles = React.lazy(() => import('./components/AppsMenu/AppProfile/UserRoles'));
+const AddRole = React.lazy(() => import('./components/AppsMenu/AppProfile/AddRole'));
+const AppProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/AppProfile"));
+const AppProfile2 = React.lazy(() => import("./components/AppsMenu/AppProfile/AppProfile2"));
+const EditProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/EditProfile"));
+const PostDetails = React.lazy(() => import("./components/AppsMenu/AppProfile/PostDetails"));
+const CustomerProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/CustomerProfile"));
+const AppCustomer = React.lazy(() => import("./components/AppsMenu/AppProfile/AppCustomer"));
+const Compose = React.lazy(() => import("./components/AppsMenu/Email/Compose/Compose"));
+const Inbox = React.lazy(() => import("./components/AppsMenu/Email/Inbox/Inbox"));
+const Read = React.lazy(() => import("./components/AppsMenu/Email/Read/Read"));
+const Calendar = React.lazy(() => import("./components/AppsMenu/Calendar/Calendar"));
+const ChangePassword = React.lazy(() => import("./pages/ChangePassword"));
 
 
 
 //CMS
-import Content from './components/Cms/Content';
-import Menu from './components/Cms/Menu';
-import EmailTemplate from './components/Cms/EmailTemplate';
-import CmsBlog from './components/Cms/Blog';
-import ContentAdd from './components/Cms/ContentAdd';
-import AddMail from './components/Cms/AddMail';
-import AddBlog from './components/Cms/AddBlog';
-import BlogCategory from './components/Cms/BlogCategory';
+const Content = React.lazy(() => import('./components/Cms/Content'));
+const Menu = React.lazy(() => import('./components/Cms/Menu'));
+const EmailTemplate = React.lazy(() => import('./components/Cms/EmailTemplate'));
+const CmsBlog = React.lazy(() => import('./components/Cms/Blog'));
+const ContentAdd = React.lazy(() => import('./components/Cms/ContentAdd'));
+const AddMail = React.lazy(() => import('./components/Cms/AddMail'));
+const AddBlog = React.lazy(() => import('./components/Cms/AddBlog'));
+const BlogCategory = React.lazy(() => import('./components/Cms/BlogCategory'));
 
 //Aikit pages
-import AutoWriter from './components/Aikit/AutoWriter';
-import Scheduler from './components/Aikit/Scheduler';
-import Repurpose from './components/Aikit/Repurpose';
-import RSS from './components/Aikit/Rss';
-import Chatbot from './components/Aikit/Chatbot';
-import FineTuneModels from './components/Aikit/FineTuneModels';
-import AIMenu from './components/Aikit/AIMenu';
-import Settings from './components/Aikit/Settings';
-import ImportExport from './components/Aikit/ImportExport';
+const AutoWriter = React.lazy(() => import('./components/Aikit/AutoWriter'));
+const Scheduler = React.lazy(() => import('./components/Aikit/Scheduler'));
+const Repurpose = React.lazy(() => import('./components/Aikit/Repurpose'));
+const RSS = React.lazy(() => import('./components/Aikit/Rss'));
+const Chatbot = React.lazy(() => import('./components/Aikit/Chatbot'));
+const FineTuneModels = React.lazy(() => import('./components/Aikit/FineTuneModels'));
+const AIMenu = React.lazy(() => import('./components/Aikit/AIMenu'));
+const Settings = React.lazy(() => import('./components/Aikit/Settings'));
+const ImportExport = React.lazy(() => import('./components/Aikit/ImportExport'));
 
 
 /// Product List
-import ProductGrid from "./components/AppsMenu/Shop/ProductGrid/ProductGrid";
-import ProductList from "./components/AppsMenu/Shop/ProductList/ProductList";
-import ProductDetail from "./components/AppsMenu/Shop/ProductGrid/ProductDetail";
-import ProductOrder from "./components/AppsMenu/Shop/ProductOrder";
-import Checkout from "./components/AppsMenu/Shop/Checkout/Checkout";
-import Invoice from "./components/AppsMenu/Shop/Invoice/Invoice";
-import Customers from "./components/AppsMenu/Shop/Customers/Customers";
+const ProductGrid = React.lazy(() => import("./components/AppsMenu/Shop/ProductGrid/ProductGrid"));
+const ProductList = React.lazy(() => import("./components/AppsMenu/Shop/ProductList/ProductList"));
+const ProductDetail = React.lazy(() => import("./components/AppsMenu/Shop/ProductGrid/ProductDetail"));
+const ProductOrder = React.lazy(() => import("./components/AppsMenu/Shop/ProductOrder"));
+const Checkout = React.lazy(() => import("./components/AppsMenu/Shop/Checkout/Checkout"));
+const Invoice = React.lazy(() => import("./components/AppsMenu/Shop/Invoice/Invoice"));
+const Customers = React.lazy(() => import("./components/AppsMenu/Shop/Customers/Customers"));
 
 /// Charts
-import SparklineChart from "./components/charts/Sparkline";
-import ChartJs from "./components/charts/Chartjs";
-import RechartJs from "./components/charts/rechart";
-import ApexChart from "./components/charts/apexcharts";
+const SparklineChart = React.lazy(() => import("./components/charts/Sparkline"));
+const ChartJs = React.lazy(() => import("./components/charts/Chartjs"));
+const RechartJs = React.lazy(() => import("./components/charts/rechart"));
+const ApexChart = React.lazy(() => import("./components/charts/apexcharts"));
 
 /// Bootstrap
-import UiAccordion from "./components/bootstrap/Accordion";
-import UiAlert from "./components/bootstrap/Alert";
-import UiBadge from "./components/bootstrap/Badge";
-import UiButton from "./components/bootstrap/Button";
-import UiModal from "./components/bootstrap/Modal";
-import UiButtonGroup from "./components/bootstrap/ButtonGroup";
-import UiListGroup from "./components/bootstrap/ListGroup";
-import UiCards from "./components/bootstrap/Cards";
-import UiCarousel from "./components/bootstrap/Carousel";
-import UiDropDown from "./components/bootstrap/DropDown";
-import UiPopOver from "./components/bootstrap/PopOver";
-import UiProgressBar from "./components/bootstrap/ProgressBar";
-import UiTab from "./components/bootstrap/Tab";
-import UiPagination from "./components/bootstrap/Pagination";
-import UiGrid from "./components/bootstrap/Grid";
-import UiTypography from "./components/bootstrap/Typography";
+const UiAccordion = React.lazy(() => import("./components/bootstrap/Accordion"));
+const UiAlert = React.lazy(() => import("./components/bootstrap/Alert"));
+const UiBadge = React.lazy(() => import("./components/bootstrap/Badge"));
+const UiButton = React.lazy(() => import("./components/bootstrap/Button"));
+const UiModal = React.lazy(() => import("./components/bootstrap/Modal"));
+const UiButtonGroup = React.lazy(() => import("./components/bootstrap/ButtonGroup"));
+const UiListGroup = React.lazy(() => import("./components/bootstrap/ListGroup"));
+const UiCards = React.lazy(() => import("./components/bootstrap/Cards"));
+const UiCarousel = React.lazy(() => import("./components/bootstrap/Carousel"));
+const UiDropDown = React.lazy(() => import("./components/bootstrap/DropDown"));
+const UiPopOver = React.lazy(() => import("./components/bootstrap/PopOver"));
+const UiProgressBar = React.lazy(() => import("./components/bootstrap/ProgressBar"));
+const UiTab = React.lazy(() => import("./components/bootstrap/Tab"));
+const UiPagination = React.lazy(() => import("./components/bootstrap/Pagination"));
+const UiGrid = React.lazy(() => import("./components/bootstrap/Grid"));
+const UiTypography = React.lazy(() => import("./components/bootstrap/Typography"));
 
 /// Plugins
-import Select2 from "./components/PluginsMenu/Select2/Select2";
-import MainSweetAlert from "./components/PluginsMenu/SweetAlert/SweetAlert";
-import Toastr from "./components/PluginsMenu/Toastr/Toastr";
-import JqvMap from "./components/PluginsMenu/JqvMap/JqvMap";
-import Lightgallery from "./components/PluginsMenu/Lightgallery/Lightgallery";
+const Select2 = React.lazy(() => import("./components/PluginsMenu/Select2/Select2"));
+const MainSweetAlert = React.lazy(() => import("./components/PluginsMenu/SweetAlert/SweetAlert"));
+const Toastr = React.lazy(() => import("./components/PluginsMenu/Toastr/Toastr"));
+const JqvMap = React.lazy(() => import("./components/PluginsMenu/JqvMap/JqvMap"));
+const Lightgallery = React.lazy(() => import("./components/PluginsMenu/Lightgallery/Lightgallery"));
 // Widget
-import Widget from "./pages/Widget";
+const Widget = React.lazy(() => import("./pages/Widget"));
 /// Table
-import SortingTable from "./components/table/SortingTable/SortingTable";
-import FilteringTable from "./components/table/FilteringTable/FilteringTable";
-import BootstrapTable from "./components/table/BootstrapTable";
+const SortingTable = React.lazy(() => import("./components/table/SortingTable/SortingTable"));
+const FilteringTable = React.lazy(() => import("./components/table/FilteringTable/FilteringTable"));
+const BootstrapTable = React.lazy(() => import("./components/table/BootstrapTable"));
 /// Form
-import Element from "./components/Forms/Element/Element";
-import Wizard from "./components/Forms/Wizard/Wizard";
-import CkEditor from "./components/Forms/CkEditor/CkEditor";
-import Pickers from "./components/Forms/Pickers/Pickers";
-import FormValidation from "./components/Forms/FormValidation/FormValidation";
-import Error404 from "./pages/Error404";
-import CompanyLayout from "./layouts/CompanyLayout";
-import SubCompany from "./pages/company/SubCompany";
+const Element = React.lazy(() => import("./components/Forms/Element/Element"));
+const Wizard = React.lazy(() => import("./components/Forms/Wizard/Wizard"));
+const CkEditor = React.lazy(() => import("./components/Forms/CkEditor/CkEditor"));
+const Pickers = React.lazy(() => import("./components/Forms/Pickers/Pickers"));
+const FormValidation = React.lazy(() => import("./components/Forms/FormValidation/FormValidation"));
+const Error404 = React.lazy(() => import("./pages/Error404"));
+const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
+const SubCompany = React.lazy(() => import("./pages/company/SubCompany"));
 
 //Reports
-import TripClassification from "./pages/company/reports/TripClassification";
-import Elock from "./pages/company/reports/Elock";
-import HardwareMaintenance from "./pages/company/reports/HardwareMaintenance";
-import Logs from "./pages/company/reports/Logs";
-import Customized from "./pages/company/reports/Customized";
-import OBD from "./pages/company/reports/OBD";
-import Billing from "./pages/company/reports/Billing";
-import RPM from "./pages/company/reports/RPM";
-import Temperature from "./pages/company/reports/Temperature";
-import DriverBehaviour from "./pages/company/reports/DriverBehaviour";
-import ActivityReport from "./pages/company/reports/Activity";
-import GeofenceAddress from "./pages/company/reports/GeofenceAddress";
-import Sensor from "./pages/company/reports/Sensor";
-import AlertReport from "./pages/company/reports/Alert";
-import Reminder from "./pages/company/reports/Reminder";
-import ExpenseReport from "./pages/company/reports/Expense";
-import FuelReport from "./pages/company/reports/Fuel";
+const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
+const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
+const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
+const Logs = React.lazy(() => import("./pages/company/reports/Logs"));
+const Customized = React.lazy(() => import("./pages/company/reports/Customized"));
+const OBD = React.lazy(() => import("./pages/company/reports/OBD"));
+const Billing = React.lazy(() => import("./pages/company/reports/Billing"));
+const RPM = React.lazy(() => import("./pages/company/reports/RPM"));
+const Temperature = React.lazy(() => import("./pages/company/reports/Temperature"));
+const DriverBehaviour = React.lazy(() => import("./pages/company/reports/DriverBehaviour"));
+const ActivityReport = React.lazy(() => import("./pages/company/reports/Activity"));
+const GeofenceAddress = React.lazy(() => import("./pages/company/reports/GeofenceAddress"));
+const Sensor = React.lazy(() => import("./pages/company/reports/Sensor"));
+const AlertReport = React.lazy(() => import("./pages/company/reports/Alert"));
+const Reminder = React.lazy(() => import("./pages/company/reports/Reminder"));
+const ExpenseReport = React.lazy(() => import("./pages/company/reports/Expense"));
+const FuelReport = React.lazy(() => import("./pages/company/reports/Fuel"));
 
 //Charts
-import ActivityChart from "./pages/company/charts/Activity";
-import AlertChart from "./pages/company/charts/Alert";
-import FuelChart from "./pages/company/charts/Fuel";
-import ExpenseChart from "./pages/company/charts/Expense"
-import TemperatureChart from "./pages/company/charts/TemperatureChart";
+const ActivityChart = React.lazy(() => import("./pages/company/charts/Activity"));
+const AlertChart = React.lazy(() => import("./pages/company/charts/Alert"));
+const FuelChart = React.lazy(() => import("./pages/company/charts/Fuel"));
+const ExpenseChart = React.lazy(() => import("./pages/company/charts/Expense"));
+const TemperatureChart = React.lazy(() => import("./pages/company/charts/TemperatureChart"));
 
 //groups
-import CreateGroups from "./pages/CreateGroups";
-import Permission from "./pages/Permission";
-import GeofenceMap from "./pages/GeofenceMap";
-
+const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
+const Permission = React.lazy(() => import("./pages/Permission"));
+const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 const CompanyRoutes = () => {
 
   const allroutes = [
-    // Dashboard
-    { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },
-    { url: "dashboard-dark", component: <DashboardDark /> },
+    { url: "", component: <Home /> },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
@@ -193,8 +188,8 @@ const CompanyRoutes = () => {
     { url: "geofence", component: <Geofence /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "technicianTask", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle/> },
-    
+    { url: "Vehicle", component: <Vehicle /> },
+
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
     { url: "/reports/geofence-address", component: <GeofenceAddress /> },
@@ -213,7 +208,7 @@ const CompanyRoutes = () => {
     { url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
     { url: "/reports/elock", component: <Elock /> },
     { url: "/reports/trip-classification", component: <TripClassification /> },
-    
+
     //Charts
     { url: "/charts/activity", component: <ActivityChart /> },
     { url: "/charts/alert", component: <AlertChart /> },
@@ -225,10 +220,10 @@ const CompanyRoutes = () => {
     { url: "driver", component: <Driver /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "sub-company-tracking", component: <SubCompanyTracking /> },
-    
+
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },
-    
+
     ///Cms
     { url: 'content', component: <Content /> },
     { url: 'menu', component: <Menu /> },
@@ -238,7 +233,7 @@ const CompanyRoutes = () => {
     { url: 'add-email', component: <AddMail /> },
     { url: 'add-blog', component: <AddBlog /> },
     { url: 'blog-category', component: <BlogCategory /> },
-    
+
     ///AiKit    
     { url: 'auto-write', component: <AutoWriter /> },
     { url: 'scheduled', component: <Scheduler /> },
@@ -249,7 +244,7 @@ const CompanyRoutes = () => {
     { url: 'prompt', component: <AIMenu /> },
     { url: 'setting', component: <Settings /> },
     { url: 'import', component: <ImportExport /> },
-    
+
     //Apps
     { url: "contacts", component: <Contacts /> },
     { url: "user", component: <User /> },
@@ -261,14 +256,14 @@ const CompanyRoutes = () => {
     { url: "post-details", component: <PostDetails /> },
     { url: "customer", component: <AppCustomer /> },
     { url: "customer-profile", component: <CustomerProfile /> },
-    { url: "changepassword", component: <ChangePassword/> },
-    
+    { url: "changepassword", component: <ChangePassword /> },
+
     // Apps  
     { url: "email-compose", component: <Compose /> },
     { url: "email-inbox", component: <Inbox /> },
     { url: "email-read", component: <Read /> },
     { url: "app-calender", component: <Calendar /> },
-    
+
     // Shop
     { url: "ecom-product-grid", component: <ProductGrid /> },
     { url: "ecom-product-list", component: <ProductList /> },
@@ -313,19 +308,19 @@ const CompanyRoutes = () => {
     { url: "form-ckeditor", component: <CkEditor /> },
     { url: "form-pickers", component: <Pickers /> },
     { url: "form-validation", component: <FormValidation /> },
-    
+
     // table
     { url: 'table-filtering', component: <FilteringTable /> },
     { url: 'table-sorting', component: <SortingTable /> },
     { url: "table-bootstrap-basic", component: <BootstrapTable /> },
-    
+
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "permission", component: <Permission /> },
-    
+
   ];
-  
-  
+
+
   function NotFound() {
     const url = allroutes.map((route) => route.url);
     let path = window.location.pathname
@@ -338,7 +333,7 @@ const CompanyRoutes = () => {
   }
 
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route element={<CompanyLayout />} >
           {allroutes.map((data, i) => (
@@ -353,7 +348,7 @@ const CompanyRoutes = () => {
         <Route path='*' element={<NotFound />} />
       </Routes>
       <ScrollToTop />
-    </>
+    </Suspense>
   );
 };
 

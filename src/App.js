@@ -1,4 +1,4 @@
-import { lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 
 import { connect, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -61,12 +61,14 @@ function App(props) {
 
   if (props.isAuthenticated) {
     console.log(role);
-    return role == 'admin' ? <AdminRoutes/> : <CompanyRoutes/>;
+    return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />;
   }
 
   return (
     <div className="vh-100">
       <Routes>
+
+        
         <Route element={<BasicLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/page-register' element={<SignUp />} />
