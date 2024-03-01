@@ -169,6 +169,7 @@ const CompanyRoutes = () => {
 
   const allroutes = [
     { url: "dashboard", component: <Home /> },
+    { url: "", component: <Home /> },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
