@@ -264,6 +264,8 @@ const {
   const [currentPosition, setCurrentPosition] = useState({})
   const [isTrafficClick, setIsTrafficClick] = useState(false)
   const [groupsDataState,setGroupsDataState] = useState([]);
+  const [lang,setLang] = useState("");
+  const [isArabic,setIsArabic] = useState("");
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -353,7 +355,12 @@ const {
         setGroupsDataState,
         groupsDataState,
         setAddVehicle,
-        addVehicle
+        addVehicle,
+        setLang,
+        lang,
+        setIsArabic,
+        isArabic
+
 	}}
     >
       {props.children}
