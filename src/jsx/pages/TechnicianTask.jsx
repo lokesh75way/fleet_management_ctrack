@@ -7,6 +7,7 @@ import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
 import {TechnicianTaskData} from '../components/Tables/Tables'
 import TechnicianTaskTable from '../components/Tables/TechnicianTaskTable';
+import TechnicianOffcanvas from '../constant/TechnicianTaskOffcanvas';
 
 const headers = [
     { label: "Employee ID", key: "emplid" },
@@ -103,7 +104,7 @@ const TechnicianTask = (ref) => {
                                         <div>
  
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                // onClick={() => technicianTask.current.showModal()}
+                                                onClick={() => technicianTask.current.showModal()}
                                             >+ Add Technician Task</Link> {" "}
                                            
                                         </div>
@@ -181,13 +182,13 @@ const TechnicianTask = (ref) => {
                     </div>
                 </div>
             </div>
-            {/* <EmployeeOffcanvas 
-                ref={employe}
+            <TechnicianOffcanvas 
+                ref={technicianTask}
                 editData={editData}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
-            /> */}
+                Title={ editData.id === 0 ? "Add Task" : "Edit Task"}
+            />
         </>
     );
 };

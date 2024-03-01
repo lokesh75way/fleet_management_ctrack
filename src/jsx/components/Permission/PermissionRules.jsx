@@ -1,20 +1,22 @@
 import { useContext, useState,useEffect } from "react";
 import React from "react";
 import { Card, Table } from "react-bootstrap";
-import { useLocation } from 'react-router-dom';
 import Select from "react-select";
-import { options } from "./Options";
+import { staticoptions } from "./Options";
 import { ThemeContext } from "../../../context/ThemeContext";
+import { reset } from "./Options";
+import _ from 'lodash';
 
 
 
 
 const Permission = () => {
   
-
   const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
-  const [data,setData] = useState(options)
+  const [data,setData] = useState(staticoptions)
+  const [newGroupData,setNewGroupData] = useState({groupName:"",groupPermissions:{}});
+  const [selectOptions, setSelectOptions] = useState([]);
 
 
   const handleCheckboxChange = (isChecked, index) => {
@@ -58,7 +60,6 @@ const Permission = () => {
     };
   };
 
-  const [newGroupData,setNewGroupData] = useState({groupName:"",groupPermissions:{}});
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -70,7 +71,7 @@ const Permission = () => {
 
   const handleSave = ()=>{
 
-    if(data === options) return;
+    if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;   
     if(!newGroupData.groupName) return;
 
      setNewGroupData((prev)=>({
@@ -80,13 +81,15 @@ const Permission = () => {
     
     setGroupsDataState([...groupsDataState, newGroupData ]);
     setNewGroupData({groupName:"",groupPermissions:{}});
+    setData(JSON.parse(JSON.stringify(reset)));
 
   }
 
   console.log(newGroupData);
   console.log('data saved',groupsDataState);
 
-  const [selectOptions, setSelectOptions] = useState([]);
+  console.log('reset data',reset);
+
 
   useEffect(() => {
     setSelectOptions(groupsDataState.map((e) => ({ value: e.index, label: e.groupName })));
