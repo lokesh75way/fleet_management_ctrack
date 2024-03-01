@@ -353,6 +353,128 @@ export const VehicleData = [
       timezone: "GMT-4:00"
     }
   ];
+  export const ClassifyTripData = [
+    {
+      tripId: 1001,
+      startTime: "2024-02-23T08:00:00",
+      startLocation: "City A",
+      reachTime: "2024-02-23T10:00:00",
+      reachLocation: "City B",
+      distance: 150,
+      fuelConsumption: 10,
+      driver: "John Doe"
+    },
+    {
+      tripId: 1002,
+      startTime: "2024-02-22T09:00:00",
+      startLocation: "City B",
+      reachTime: "2024-02-22T11:30:00",
+      reachLocation: "City C",
+      distance: 200,
+      fuelConsumption: 15,
+      driver: "Jane Smith"
+    },
+    {
+      tripId: 1003,
+      startTime: "2024-02-21T11:30:00",
+      startLocation: "City C",
+      reachTime: "2024-02-21T14:00:00",
+      reachLocation: "City D",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Mike Johnson"
+    },
+    {
+      tripId: 1004,
+      startTime: "2024-02-20T10:00:00",
+      startLocation: "City D",
+      reachTime: "2024-02-20T12:30:00",
+      reachLocation: "City E",
+      distance: 220,
+      fuelConsumption: 18,
+      driver: "Emily Wilson"
+    },
+    {
+      tripId: 1005,
+      startTime: "2024-02-19T08:30:00",
+      startLocation: "City E",
+      reachTime: "2024-02-19T11:00:00",
+      reachLocation: "City F",
+      distance: 190,
+      fuelConsumption: 14,
+      driver: "David Brown"
+    },
+    {
+      tripId: 1006,
+      startTime: "2024-02-18T07:45:00",
+      startLocation: "City F",
+      reachTime: "2024-02-18T10:15:00",
+      reachLocation: "City G",
+      distance: 210,
+      fuelConsumption: 16,
+      driver: "Sarah Garcia"
+    },
+    {
+      tripId: 1007,
+      startTime: "2024-02-17T09:15:00",
+      startLocation: "City G",
+      reachTime: "2024-02-17T11:45:00",
+      reachLocation: "City H",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Michael Martinez"
+    },
+    {
+      tripId: 1008,
+      startTime: "2024-02-16T10:30:00",
+      startLocation: "City H",
+      reachTime: "2024-02-16T13:00:00",
+      reachLocation: "City I",
+      distance: 240,
+      fuelConsumption: 20,
+      driver: "Jessica Taylor"
+    },
+    {
+      tripId: 1009,
+      startTime: "2024-02-15T08:45:00",
+      startLocation: "City I",
+      reachTime: "2024-02-15T11:15:00",
+      reachLocation: "City J",
+      distance: 200,
+      fuelConsumption: 15,
+      driver: "Daniel Anderson"
+    },
+    {
+      tripId: 1010,
+      startTime: "2024-02-14T11:00:00",
+      startLocation: "City J",
+      reachTime: "2024-02-14T13:30:00",
+      reachLocation: "City K",
+      distance: 180,
+      fuelConsumption: 12,
+      driver: "Olivia Thomas"
+    },
+    {
+      tripId: 1011,
+      startTime: "2024-02-13T07:30:00",
+      startLocation: "City K",
+      reachTime: "2024-02-13T10:00:00",
+      reachLocation: "City L",
+      distance: 220,
+      fuelConsumption: 18,
+      driver: "William Rodriguez"
+    },
+    {
+      tripId: 1012,
+      startTime: "2024-02-12T09:45:00",
+      startLocation: "City L",
+      reachTime: "2024-02-12T12:15:00",
+      reachLocation: "City M",
+      distance: 210,
+      fuelConsumption: 16,
+      driver: "Emma Wilson"
+    }
+  ];
   
 
 

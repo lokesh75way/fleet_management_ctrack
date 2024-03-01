@@ -28,16 +28,6 @@ export const CompanyMenuList = [
         to: '/driver',
     },
     {
-        title: 'Performance',
-        iconStyle: SVGICON.Performance,
-        to: '/performance',
-    },
-    {
-        title: 'Projects',
-        iconStyle: SVGICON.ProjectsSidbar,
-        to: '/project',
-    },
-    {
         title: 'Tracking',
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Task,

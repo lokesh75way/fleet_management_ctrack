@@ -13,6 +13,7 @@ const General = ({ handleNext, register, setValue}) => {
   const{control, getValues,formState: errors} = useForm()
   
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption2, setSelectedOption2] = useState(null);
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -22,6 +23,10 @@ const General = ({ handleNext, register, setValue}) => {
   const handleChange = (e)=>{
     setSelectedOption(e.target.value)
     setValue('fuelSensor', e.target.value)
+  }
+  const handleChange2 = (e)=>{
+    setSelectedOption2(e.target.value)
+    setValue('verificationVia', e.target.value)
   }
 
   return (
@@ -131,15 +136,12 @@ const General = ({ handleNext, register, setValue}) => {
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox987"
-                value='single'
+                value='male'
                 checked={selectedOption === 'male'}
                 onChange={handleChange}
-                name="optradioCustom1"
               />
               <label
                 className="form-check-label"
-                htmlFor="customRadioBox987"
                 style={{ marginBottom: "0" }}
               >
                 Male
@@ -149,15 +151,12 @@ const General = ({ handleNext, register, setValue}) => {
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox988"
-                name="optradioCustom1"
-                value='multiple'
+                value='female'
                 checked={selectedOption === 'female'}
                 onChange={handleChange}
               />
               <label
                 className="form-check-label"
-                htmlFor="customRadioBox988"
                 style={{ marginBottom: "0" }}
               >
                 Female
@@ -166,47 +165,97 @@ const General = ({ handleNext, register, setValue}) => {
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Fuel Sensor</label>
+          <label className="form-label">Verification Via</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox987"
-                value='single'
-                checked={selectedOption === 'otp'}
-                onChange={handleChange}
-                name="optradioCustom1"
+                value='otp'
+                checked={selectedOption2 === 'otp'}
+                onChange={handleChange2}
               />
               <label
                 className="form-check-label"
-                htmlFor="customRadioBox987"
                 style={{ marginBottom: "0" }}
               >
-                Male
+                OTP
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                id="customRadioBox988"
-                name="optradioCustom1"
-                value='multiple'
-                checked={selectedOption === 'password'}
-                onChange={handleChange}
+                value='password'
+                checked={selectedOption2 === 'password'}
+                onChange={handleChange2}
               />
               <label
                 className="form-check-label"
-                htmlFor="customRadioBox988"
                 style={{ marginBottom: "0" }}
               >
-                Female
+                Password
               </label>
             </div>
           </div>
         </div>
 
+        {
+          selectedOption2 === 'password' && <>
+            <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+             Password 
+          </label>
+          <input
+            type="password"
+            {...register("password")}
+            className="form-control"
+            name="password"
+            placeholder=""
+          />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+          Retype password  
+          </label>
+          <input
+            type="password"
+            {...register("retypePassword")}
+            className="form-control"
+            name="retypePassword"
+            placeholder=""
+          />
+        </div>
+          </>
+        }
+        {
+          selectedOption2 === 'otp' && <>
+            <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+             Password 
+          </label>
+          <input
+            type="password"
+            {...register("password")}
+            className="form-control"
+            name="password"
+            placeholder=""
+          />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+          Retype password  
+          </label>
+          <input
+            type="password"
+            {...register("retypePassword")}
+            className="form-control"
+            name="retypePassword"
+            placeholder=""
+          />
+        </div>
+          </>
+        }
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
