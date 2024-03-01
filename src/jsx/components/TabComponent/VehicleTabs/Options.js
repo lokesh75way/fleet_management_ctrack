@@ -125,4 +125,8 @@ export const weekStartDayOptions = [
   { value: "Friday", label: "Friday" },
   { value: "Saturday", label: "Saturday" },
 ];
+export const subCompanyOptions = [
+  { value: "All", label: "All" },
+  { value: "75 way", label: "75 way" },
+];
 export const options = [{ value: "West Company", label: "West Company" }];
