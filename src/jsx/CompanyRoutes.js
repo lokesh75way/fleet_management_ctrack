@@ -28,6 +28,8 @@ import Technician from "./pages/Technician";
 import DriverTracking from "./pages/DriverTracking";
 import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
 import SubUserForm from "./pages/CreateForms/SubUserForm";
+import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm"
+import DriverForm from "./pages/admin/settings/CreateForms/DriverForm"
 import SubUser from "./pages/SubUser";
 import Alert from "./pages/Alert";
 import Expense from "./pages/Expense";
@@ -166,6 +168,7 @@ import TemperatureChart from "./pages/company/charts/TemperatureChart";
 //groups
 import CreateGroups from "./pages/CreateGroups";
 import Permission from "./pages/Permission";
+import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 
 const CompanyRoutes = () => {
 
@@ -184,6 +187,9 @@ const CompanyRoutes = () => {
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
+    { url: "technician/create", component: <TechnicianForm /> },
+    { url: "driver/create", component: <DriverForm /> },
+    { url: "vehicle/create", component: <VehicleForm /> },
     { url: "subuser", component: <SubUser /> },
     { url: "alert", component: <Alert /> },
     { url: "classifyTrips", component: <ClassifyTrips /> },
