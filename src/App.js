@@ -67,6 +67,8 @@ function App(props) {
   return (
     <div className="vh-100">
       <Routes>
+
+        
         <Route element={<BasicLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/page-register' element={<SignUp />} />

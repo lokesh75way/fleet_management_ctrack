@@ -92,7 +92,7 @@ const Driver = (ref) => {
     const employe = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Geofence" pageTitle={'Geofence'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Geofence" pageTitle={'Geofence'} parentTitle={'Settings'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -103,9 +103,9 @@ const Driver = (ref) => {
                                         <h4 className="heading mb-0">Geofence</h4>
                                         <div>
  
-                                            {/* <Link to={"/driver/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                            <Link to={"/geofencemap"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 // onClick={() => employe.current.showModal()}
-                                            >+ Add Driver</Link> {" "} */}
+                                            >+ Show Map</Link> {" "}
                                            
                                         </div>
                                     </div>

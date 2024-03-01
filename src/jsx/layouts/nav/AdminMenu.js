@@ -11,7 +11,7 @@ export const AdminMenuList = [
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Home,
     },
-    {   title: 'Compnay',
+    {   title: 'Companay',
        iconStyle: SVGICON.Employe,
        to: '/company',
    },
@@ -51,13 +51,18 @@ export const AdminMenuList = [
   },
   {
     title: "Technician",
+    classsChange: "mm-collapse",
     iconStyle: SVGICON.Employe,
-    to: "/technician",
-  },
-  {
-    title: "Technician Tasks",
-    iconStyle: SVGICON.Employe,
-    to: "/technicianTask",
+    content: [
+      {
+        title: "Technician Details",
+        to: "/technician",
+      },
+      {
+        title: "Technician Tasks",
+        to: "/technicianTask",
+      },
+    ],
   },
     // {
     //     title: 'Manage Clients',

@@ -35,7 +35,7 @@ import { SiGraphql } from "react-icons/si";
 
 const Select = () => {
   return (
-    <select style={{ width: "3.5rem", fontSize: "8px", marginRight: "0.2rem" }}>
+    <select style={{ width: "4.5rem", fontSize: "8px" }}>
       <option>Today</option>
       <option>Yesterday</option>
       <option>Tomorrow</option>
@@ -120,10 +120,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-xl-4 col-sm-12">
-            <div
-              className="card same-card pt-2"
-              style={{ paddingLeft: "1rem" }}
-            >
+            <div className="card same-card p-2" style={{ paddingLeft: "1rem" }}>
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Usage</p>
                 <Select />
@@ -143,10 +140,10 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-4 col-sm-12">
+          <div className="col-xl-4 col-sm-12" style={{paddingInline : '0px'}}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               <div
-                className="card same-card mb-3 pt-2"
+                className="card same-card mb-3 p-2"
                 style={{ paddingLeft: "1rem" }}
               >
                 <div className="d-flex justify-content-between">
@@ -191,7 +188,7 @@ const Home = () => {
                 >
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#90EE90" }}
+                    style={{ backgroundColor: "#90EE90" , marginInline : "0px" }}
                   >
                     <div className="d-flex justify-content-between">
                       <p
@@ -237,7 +234,7 @@ const Home = () => {
                   </div>
                   <div
                     className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#00FFFF" }}
+                    style={{ backgroundColor: "#00FFFF" , marginInline : "0px"}}
                   >
                     <div className="d-flex justify-content-between">
                       <p
@@ -291,7 +288,7 @@ const Home = () => {
         </div>
 
         <div className="row" style={{ marginRight: "0.2rem" }}>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#ffb09c" }}
@@ -497,13 +494,23 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
                   </div>
                   <div style={{ color: "blue" }}>0</div>
                 </div>
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
                   </div>
@@ -526,13 +533,23 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
                   </div>
                   <div style={{ color: "blue" }}>0</div>
                 </div>
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "8px",
+                  }}
+                >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
                   </div>

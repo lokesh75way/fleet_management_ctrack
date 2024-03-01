@@ -167,7 +167,7 @@ const TemperatureChart = React.lazy(() => import("./pages/company/charts/Tempera
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 const Permission = React.lazy(() => import("./pages/Permission"));
-
+const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 const CompanyRoutes = () => {
 
   const allroutes = [
@@ -180,6 +180,7 @@ const CompanyRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
+    { url: "geofencemap", component: <GeofenceMap /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
