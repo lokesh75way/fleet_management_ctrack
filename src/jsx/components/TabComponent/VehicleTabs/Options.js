@@ -87,9 +87,42 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor2", label: "BLE Battery Sensor2" },
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
+
 export const leaveTimeOptions = [
   { value: "CL", label: "CL" },
   { value: "PL", label: "PL" },
   { value: "SL", label: "SL" },
+];
+export const ObjectOptions = [
+  { value: "Test1", label: "Test1" },
+  { value: "Test2", label: "Test2" },
+];
+export const TypeOptions = [
+  { value: "Accidents", label: "Accidents" },
+  { value: "Bonuses", label: "Bonuses" },
+  { value: "BreakDown", label: "BreakDown" },
+  { value: "Fines", label: "Fines" },
+  { value: "Maintainance", label: "Maintainance" },
+  { value: "Fuel", label: "Fuel" },
+];
+export const jobOptions = [
+  { value: "Job1", label: "Job1" },
+];
+export const dateFormatOptions = [
+  { value: "dd-MM-yyyy", label: "dd-MM-yyyy" },
+  { value: "MM-dd-yyyy", label: "MM-dd-yyyy" },
+];
+export const timeFormatOptions = [
+  { value: "12 Hour", label: "12 Hour" },
+  { value: "24 Hour", label: "24 Hour" },
+];
+export const weekStartDayOptions = [
+  { value: "Sunday", label: "Sunday" },
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
 ];
 export const options = [{ value: "West Company", label: "West Company" }];

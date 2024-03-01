@@ -32,6 +32,7 @@ import CompanyTracking from "./pages/admin/tracking/CompanyTracking"
 import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm"
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
+import CompanyForm from "./pages/admin/settings/CreateForms/CompanyForm";
 import SubUserForm from "./pages/CreateForms/SubUserForm";
 import SubUser from "./pages/SubUser";
 import Alert from "./pages/Alert";
@@ -42,6 +43,7 @@ import Permission from "./pages/Permission";
 import ContactUs from "./pages/ContactUs";
 import TechnicianTask from "./pages/TechnicianTask";
 import Vehicle from "./pages/Vehicle";
+
 
 //Update Pages
 import SvgIcons from "./components/Dashboard/SvgIcons";
@@ -148,10 +150,8 @@ import AdminLayout from "./layouts/AdminLayout";
 import Company from "./pages/admin/Compnay";
 import General from "./pages/admin/settings/General";
 import Master from "./pages/admin/settings/Master";
-
 //groups
 import CreateGroups from "./pages/CreateGroups";
-import Permission from "./pages/Permission";
 
 
 
@@ -186,7 +186,7 @@ const AdminRoutes = () => {
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle/> },
-
+    { url: "company/create", component: <CompanyForm/> },
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "permission", component: <Permission /> },
