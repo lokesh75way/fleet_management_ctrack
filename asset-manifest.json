@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/fleet_management_ctrack/static/css/main.ee6880fb.css",
-    "main.js": "/fleet_management_ctrack/static/js/main.f41bd20a.js",
+    "main.js": "/fleet_management_ctrack/static/js/main.71d39144.js",
     "static/js/3591.5bf1766b.chunk.js": "/fleet_management_ctrack/static/js/3591.5bf1766b.chunk.js",
-    "static/js/184.8b2c970f.chunk.js": "/fleet_management_ctrack/static/js/184.8b2c970f.chunk.js",
+    "static/js/184.d8bb38a5.chunk.js": "/fleet_management_ctrack/static/js/184.d8bb38a5.chunk.js",
     "static/js/2440.181d9198.chunk.js": "/fleet_management_ctrack/static/js/2440.181d9198.chunk.js",
     "static/js/2492.5d25dd21.chunk.js": "/fleet_management_ctrack/static/js/2492.5d25dd21.chunk.js",
     "static/js/8629.0d463e44.chunk.js": "/fleet_management_ctrack/static/js/8629.0d463e44.chunk.js",
@@ -141,7 +141,7 @@
     "static/js/158.0e1ffda9.chunk.js": "/fleet_management_ctrack/static/js/158.0e1ffda9.chunk.js",
     "static/js/6227.1375aa38.chunk.js": "/fleet_management_ctrack/static/js/6227.1375aa38.chunk.js",
     "static/js/922.42fd77c8.chunk.js": "/fleet_management_ctrack/static/js/922.42fd77c8.chunk.js",
-    "static/js/9406.0bb53692.chunk.js": "/fleet_management_ctrack/static/js/9406.0bb53692.chunk.js",
+    "static/js/9406.1b25281d.chunk.js": "/fleet_management_ctrack/static/js/9406.1b25281d.chunk.js",
     "static/js/787.14bbf0eb.chunk.js": "/fleet_management_ctrack/static/js/787.14bbf0eb.chunk.js",
     "static/js/9662.6e6c6ede.chunk.js": "/fleet_management_ctrack/static/js/9662.6e6c6ede.chunk.js",
     "static/js/3618.4aea8d49.chunk.js": "/fleet_management_ctrack/static/js/3618.4aea8d49.chunk.js",
@@ -289,9 +289,9 @@
     "index.html": "/fleet_management_ctrack/index.html",
     "static/media/england.svg": "/fleet_management_ctrack/static/media/england.2fc90f00163fc7f083be186003b9b1ba.svg",
     "main.ee6880fb.css.map": "/fleet_management_ctrack/static/css/main.ee6880fb.css.map",
-    "main.f41bd20a.js.map": "/fleet_management_ctrack/static/js/main.f41bd20a.js.map",
+    "main.71d39144.js.map": "/fleet_management_ctrack/static/js/main.71d39144.js.map",
     "3591.5bf1766b.chunk.js.map": "/fleet_management_ctrack/static/js/3591.5bf1766b.chunk.js.map",
-    "184.8b2c970f.chunk.js.map": "/fleet_management_ctrack/static/js/184.8b2c970f.chunk.js.map",
+    "184.d8bb38a5.chunk.js.map": "/fleet_management_ctrack/static/js/184.d8bb38a5.chunk.js.map",
     "2440.181d9198.chunk.js.map": "/fleet_management_ctrack/static/js/2440.181d9198.chunk.js.map",
     "2492.5d25dd21.chunk.js.map": "/fleet_management_ctrack/static/js/2492.5d25dd21.chunk.js.map",
     "8629.0d463e44.chunk.js.map": "/fleet_management_ctrack/static/js/8629.0d463e44.chunk.js.map",
@@ -429,7 +429,7 @@
     "158.0e1ffda9.chunk.js.map": "/fleet_management_ctrack/static/js/158.0e1ffda9.chunk.js.map",
     "6227.1375aa38.chunk.js.map": "/fleet_management_ctrack/static/js/6227.1375aa38.chunk.js.map",
     "922.42fd77c8.chunk.js.map": "/fleet_management_ctrack/static/js/922.42fd77c8.chunk.js.map",
-    "9406.0bb53692.chunk.js.map": "/fleet_management_ctrack/static/js/9406.0bb53692.chunk.js.map",
+    "9406.1b25281d.chunk.js.map": "/fleet_management_ctrack/static/js/9406.1b25281d.chunk.js.map",
     "787.14bbf0eb.chunk.js.map": "/fleet_management_ctrack/static/js/787.14bbf0eb.chunk.js.map",
     "9662.6e6c6ede.chunk.js.map": "/fleet_management_ctrack/static/js/9662.6e6c6ede.chunk.js.map",
     "3618.4aea8d49.chunk.js.map": "/fleet_management_ctrack/static/js/3618.4aea8d49.chunk.js.map",
@@ -496,6 +496,6 @@
   },
   "entrypoints": [
     "static/css/main.ee6880fb.css",
-    "static/js/main.f41bd20a.js"
+    "static/js/main.71d39144.js"
   ]
 }
