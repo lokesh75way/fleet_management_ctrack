@@ -1,26 +1,13 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../constant/theme';
 import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
 import EmployeeOffcanvas from '../constant/EmployeeOffcanvas';
-
-const tableData = [
-    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
-    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France'},    
-    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai'},    
-    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA'},    
-    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA'},    
-    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil'},    
-    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France'},    
-    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai'},    
-    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil'},    
-    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-];
+import {DriverData} from '../components/Tables/Tables'
+import DriverTable from '../components/Tables/DriverTable';
 
 const headers = [
     { label: "Employee ID", key: "emplid" },
@@ -33,74 +20,99 @@ const headers = [
     { label: "Status", key: "status" },
 ]
 
-// const csvlink = {
-//     headers : headers,
-//     data : tableData,
-//     filename: "csvfile.csv"
-// }
-
-const Driver = () => {  
+const Driver = (ref) => {
+    const[tableData, setTableData] = useState(DriverData)
+    const [editData , setEditData] = useState({
+        id:0,
+        status:'',    
+        title:'',
+        contact:0,
+        age:0,
+        drivingExperience:0,
+        gender:'',
+        location:''
+    });
     const [data, setData] = useState(
-		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-	);
-	const sort = 10;
-	const activePag = useRef(0);
-	const [test, settest] = useState(0);
-	const chageData = (frist, sec) => {
-		for (var i = 0; i < data.length; ++i) {
-			if (i >= frist && i < sec) {
-				data[i].classList.remove("d-none");
-			} else {
-				data[i].classList.add("d-none");
-			}
-		}
-	};
-   
-   useEffect(() => {
-      setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-	}, [test]);
+        document.querySelectorAll("#employee-tbl_wrapper tbody tr")
+    );
+    const sort = 10;
+    const activePag = useRef(0);
+    const [test, settest] = useState(0);
+    const chageData = (frist, sec) => {
+        for (var i = 0; i < data.length; ++i) {
+            if (i >= frist && i < sec) {
+                data[i].classList.remove("d-none");
+            } else {
+                data[i].classList.add("d-none");
+            }
+        }
+    };
 
-   activePag.current === 0 && chageData(0, sort);
-   let paggination = Array(Math.ceil(data.length / sort))
-      .fill()
-      .map((_, i) => i + 1);
-	const onClick = (i) => {
-		activePag.current = i;
-		chageData(activePag.current * sort, (activePag.current + 1) * sort);
-		settest(i);
-	};
-   
-    const invite = useRef();
+    // const[formData, setFormData] = useState()
+
+    
+
+    useEffect(() => {
+        setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
+    }, [test]);
+
+    activePag.current === 0 && chageData(0, sort);
+    let paggination = Array(Math.ceil(data.length / sort))
+        .fill()
+        .map((_, i) => i + 1);
+    const onClick = (i) => {
+        activePag.current = i;
+        chageData(activePag.current * sort, (activePag.current + 1) * sort);
+        settest(i);
+    };
+    const onConfirmDelete = (id) => {
+        const updatedData = tableData.filter(item => item.id !== id);
+        setTableData(updatedData);
+    }
+    const editDrawerOpen = (item)=>{
+        tableData.map((table)=>(
+            table.id === item && setEditData(table)
+        ))
+
+        // setEditTableData(item);
+        employe.current.showModal();
+    }
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        const updateTable = tableData.map((table)=>{
+            if(table.id === editData.id) {
+                console.log(table.id)   
+                return {...table, ...editData };
+            }
+            return table;
+        })
+        setTableData(updateTable)
+    }  
+
     const employe = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Drivers" pageTitle={'Drivers'} parentTitle={'Home'} />  
+            <MainPagetitle mainTitle="Drivers" pageTitle={'Drivers'} parentTitle={'Home'} />
             <div className="container-fluid">
-				<div className="row">
-			    	<div className="col-xl-12">
-                        <div className="card">            
+                <div className="row">
+                    <div className="col-xl-12">
+                        <div className="card">
                             <div className="card-body p-0">
-                                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">   
+                                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Drivers</h4>                                        
+                                        <h4 className="heading mb-0">Drivers</h4>
                                         <div>
-                                            {/* <CSVLink {...csvlink} className="btn btn-primary light btn-sm me-1">
-                                                <i className="fa-solid fa-file-excel" /> {" "} 
-                                                Export Report
-                                            </CSVLink>  */}
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>employe.current.showModal()}
+ 
+                                            <Link to={"/driver/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                // onClick={() => employe.current.showModal()}
                                             >+ Add Driver</Link> {" "}
-                                            {/* <button type="button" className="btn btn-secondary btn-sm"                                                 
-                                                onClick={() => invite.current.showInviteModal()}
-                                            >+ Invite Employee
-                                            </button> */}
+                                           
                                         </div>
-                                    </div>          
+                                    </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
-                                                <tr>                                                   
+                                                <tr>
                                                     <th>Employee ID</th>
                                                     <th>Employee Name</th>
                                                     <th>Age</th>
@@ -109,37 +121,11 @@ const Driver = () => {
                                                     <th>Driving Experience</th>
                                                     <th>Location</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.title}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        <td><span>{item.age}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span>{item.gender}</span>
-                                                        </td>	
-                                                        <td><span className="text-primary">{item.drivingExperience}</span></td>
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"45%"}}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <DriverTable editData={editData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
                                             </tbody>
                                             
                                         </table>
@@ -198,13 +184,12 @@ const Driver = () => {
                     </div>
                 </div>
             </div>
-            <EmployeeOffcanvas 
+            {/* <EmployeeOffcanvas 
                 ref={employe}
-                Title="Add Driver"
-            />
-            {/* <InviteCustomer
-                ref={invite}       
-                Title="Invite Employee"
+                editData={editData}
+                setEditData={setEditData}
+                handleSubmit={handleSubmit}
+                Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
             /> */}
         </>
     );

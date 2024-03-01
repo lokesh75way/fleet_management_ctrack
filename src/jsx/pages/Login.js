@@ -87,6 +87,7 @@ function Login (props) {
 																	<input type="checkbox" className="form-check-input" id="check1" name="example1" />
 																	<label className="form-check-label" htmlFor="check1">Remember me</label>
 																</span>
+
 																
 															</div>
 															<div className="dz-social">
@@ -102,7 +103,11 @@ function Login (props) {
 														<div className="text-center bottom"> 
 															<NavLink to="/page-register" className="btn btn-primary button-md btn-block" >
 																Create an account
-															</NavLink> 																	
+															</NavLink> 	
+
+															<div className='mt-2'>
+															<Link to='/page-forgotpassword' style={{ fontSize: 'small' }}> Forgot Password?</Link>
+															</div>																
 														</div>
 													</div>
 																										

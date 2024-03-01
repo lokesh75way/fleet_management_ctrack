@@ -8,7 +8,7 @@ import {
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 
-const SubCompanyOffcanvas = forwardRef((props, ref) => {
+const SubCompanyOffcanvas = forwardRef(({ Title, handleSubmit, editData, setEditData }, ref) => {
     const [addSubCompany, setAddSubCompany] = useState(false);
     const [countryid, setCountryid] = useState(0);
     const [stateid, setstateid] = useState(0);
@@ -17,16 +17,18 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
             setAddSubCompany(true)
         }
     }));
+  
     const nav = useNavigate();
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        nav("#");
+     const handleChange = (e)=>{
+        const {name,value} = e.target;
+        console.log(e.target.value)
+        setEditData({...editData, [name]:value })
     }
     return (
         <>
             <Offcanvas show={addSubCompany} onHide={setAddSubCompany} className="offcanvas-end customeoff" placement='end'>
                 <div className="offcanvas-header">
-                    <h5 className="modal-title" id="#gridSystemModal">{props.Title}</h5>
+                    <h5 className="modal-title" id="#gridSystemModal">{Title}</h5>
                     <button type="button" className="btn-close"
                         onClick={() => setAddSubCompany(false)}
                     >
@@ -55,7 +57,7 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                             <div className="row">
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput1" className="form-label">Reseller <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                    <input type="text" className="form-control" name="reseller" defaultValue={editData.reseller} onChange={handleChange} id="exampleFormControlInput1" placeholder="" />
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput2" className="form-label">Short Name <span className="text-danger">*</span></label>
@@ -63,7 +65,7 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput3" className="form-label">User Name <span className="text-danger">*</span></label>
-                                    <input type="email" className="form-control" id="exampleFormControlInput3" placeholder="" />
+                                    <input type="email" className="form-control" name="username" defaultValue={editData.username} onChange={handleChange} id="exampleFormControlInput3" placeholder="" />
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput4" className="form-label">Password <span className="text-danger">*</span></label>
@@ -96,7 +98,7 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput88" className="form-label">Mobile Number<span className="text-danger">*</span></label>
-                                    <input type="number" className="form-control" id="exampleFormControlInput88" placeholder="" />
+                                    <input type="number" className="form-control" name="contact" defaultValue={editData.contact} onChange={handleChange} id="exampleFormControlInput88" placeholder="" />
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label className="form-label">Country <span className="text-danger">*</span></label>
@@ -162,7 +164,7 @@ const SubCompanyOffcanvas = forwardRef((props, ref) => {
                                 </div>
                             </div>
                             <div>
-                                <button type="submit" className="btn btn-primary me-1">Submit</button>
+                                <button type="submit" onClick={() => setAddSubCompany(false)} className="btn btn-primary me-1">Submit</button>
                                 <Link to={"#"} onClick={() => setAddSubCompany(false)} className="btn btn-danger light ms-1">Cancel</Link>
                             </div>
                         </form>

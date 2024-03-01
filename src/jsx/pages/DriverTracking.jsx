@@ -11,8 +11,14 @@ import { MdFence } from "react-icons/md";
 const DriverTracking = () => {
   const {currentPosition, setCurrentPosition} = useContext(ThemeContext)
   const data = [{lat:30.7099475,lng:76.6900474},{lat:30.7333,lng:76.7794}]
+  const [isOutside, setIsOutside] = useState(false);
   const tabData = [{name:"Object", icon:TbLocationFilled},{name:"Driver", icon:FaUser},
     {name:"Address", icon:FaMapLocationDot},{name:"Geofence", icon:MdFence},]
+
+
+  const handleToggleCardPosition = () => {
+    setIsOutside(!isOutside);
+  };
 
   // const getCurrentPosition = () => {
   //   navigator.geolocation.getCurrentPosition((position) => {
@@ -32,8 +38,8 @@ const DriverTracking = () => {
       <div className='p-2'>
         <ShowMap data={data}/>
       </div>
-      <div >
-        <DriverTab tabData={tabData}/>  
+      <div  >
+        <DriverTab tabData={tabData} handleToggleCardPosition={handleToggleCardPosition} isOutside={isOutside} />
       </div>
     </>
   )

@@ -16,46 +16,25 @@ import { FaKey } from "react-icons/fa6";
 import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
-const DriverTab = ({ tabData }) => {
-  const componentData = [
-    {
-      running: 1,
-      idle: 2,
-      stopped: 4,
-      inactive: 1,
-      nodata: 0,
-      total: 8,
-      companyName: [
-        {
-          name: "Company1",
-          driver: [
-            { name: "test1", date: "22-02-2024", time: "3:00 PM" },
-            { name: "test2", date: "22-02-2024", time: "3:00 PM" },
-          ],
-        },
-        {
-          name: "Company2",
-          driver: [
-            { name: "test3", date: "22-02-2024", time: "3:00 PM" },
-            { name: "test4", date: "22-02-2024", time: "3:00 PM" },
-          ],
-        },
-      ],
-    },
-    {
-      allocatedDriver: 5,
-      notAllocatedDriver: 7,
-      totalDriver: 12,
-      driverData: ["data1", "data2", "data3", "data4"],
-    },
-    {
-      data: ["SALIK Airport-Tunnel-Dubai1", "SALIK Airport-Tunnel-Dubai2","SALIK Airport-Tunnel-Dubai3"],
-    },
-    {
-      data: ["WRC Camp 1", "WRC Camp 2"],
-    },
-  ];
+const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
+  const componentData = {
+    name: "Company1",
+    drivers: [
+      { name: "driver1", timeStamp: "22-02-2024 3:00 PM", status: "running" },
+      { name: "driver2", timeStamp: "22-02-2024 3:00 PM", status: "idle" },
+      { name: "driver3", timeStamp: "22-02-2024 3:00 PM", status: "inactive" },
+      { name: "driver4", timeStamp: "22-02-2024 3:00 PM", status: "running" },
+      { name: "driver5", timeStamp: "22-02-2024 3:00 PM", status: "stopped" },
+      { name: "driver6", timeStamp: "22-02-2024 3:00 PM", status: "stopped" },
+      { name: "driver7", timeStamp: "22-02-2024 3:00 PM" },
+    ],
+    allocatedDriver: 4,
+    notAllocatedDriver: 3,
+    totalDriver: 7,
+  };
+
   const components = [
     DriverTabComponent1,
     DriverTabComponent2,
@@ -63,39 +42,72 @@ const DriverTab = ({ tabData }) => {
     DriverTabComponent4,
   ];
   return (
-    <div className="default-tab outer-container">
-      <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
-        <Nav as="ul" className="nav-tabs">
-          {tabData.map((data, i) => {
-            const Icon = data.icon;
-            return (
-              <Nav.Item as="li" key={i}>
-                <Nav.Link eventKey={data.name.toLowerCase()}>
-                  <Icon className="tab-icon" />
-                  {data.name}
-                </Nav.Link>
-              </Nav.Item>
-            );
-          })}
-        </Nav>
-        <Tab.Content className="p-1">
-          {tabData.map((data, i) => {
-            const Component = components[i];
-            return (
-              <Tab.Pane eventKey={data.name.toLowerCase()} key={i}>
-                <Component data={componentData[i]} />
-              </Tab.Pane>
-            );
-          })}
-        </Tab.Content>
-      </Tab.Container>
-    </div>
+    <>
+      <div
+        className={`default-tab outer-container ${
+          isOutside ? "toggleBarInside" : "toggleBarOutside"
+        }`}
+      >
+        <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
+          <Nav as="ul" className="nav-tabs">
+            {tabData.map((data, i) => {
+              const Icon = data.icon;
+              return (
+                <Nav.Item as="li" key={i}>
+                  <Nav.Link eventKey={data.name.toLowerCase()}>
+                    <Icon className="tab-icon" />
+                    {data.name}
+                  </Nav.Link>
+                </Nav.Item>
+              );
+            })}
+          </Nav>
+          <Tab.Content className="p-1">
+            {tabData.map((data, i) => {
+              const Component = components[i];
+              return (
+                <Tab.Pane eventKey={data.name.toLowerCase()} key={i}>
+                  <Component data={componentData} />
+                </Tab.Pane>
+              );
+            })}
+          </Tab.Content>
+        </Tab.Container>
+        <button
+          onClick={handleToggleCardPosition}
+          style={{
+            position: "absolute",
+            borderBottomRightRadius: "2rem",
+            borderTopRightRadius: "2rem",
+            left: "100.5%",
+            top: "35%",
+            fontSize: "1.2rem",
+            height: "5rem",
+            background: "rgb(232,245,255)",
+          }}
+        >{
+          isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />
+        }
+        </button>
+      </div>
+    </>
   );
 };
 
 const DriverTabComponent1 = (props) => {
-  const { running, idle, stopped, inactive, nodata, total, companyName } =
-    props.data;
+  const { drivers } = props.data;
+  let statusData = {
+    running: 0,
+    idle: 0,
+    stopped: 0,
+    inactive: 0,
+    nodata: 0,
+    total: drivers.length,
+  };
+  drivers.forEach((driver) => {
+    statusData[driver.status]++;
+  });
+  const { running, idle, stopped, inactive, nodata, total } = statusData;
   return (
     <>
       <div className="row px-2">
@@ -249,9 +261,8 @@ const DriverTabComponent1 = (props) => {
 };
 
 const DriverTabComponent2 = (props) => {
-  const { allocatedDriver, notAllocatedDriver, totalDriver, driverData } =
+  const { allocatedDriver, notAllocatedDriver, totalDriver, drivers } =
     props.data;
-  console.log(driverData);
   return (
     <>
       <div className="row px-2">
@@ -298,11 +309,11 @@ const DriverTabComponent2 = (props) => {
         className="d-flex flex-column bg-white"
         style={{ border: " 1px solid white", marginTop: ".5rem" }}
       >
-        {driverData.length === 0 ? (
+        {drivers.length === 0 ? (
           <span className="p-1 text-center fs-4 ">No Record Found</span>
         ) : (
-          driverData.map((d, index) => {
-            return <span className="p-1 fs-6">{d}</span>;
+          drivers.map((d, index) => {
+            return <span className="p-1 fs-6">{d.name}</span>;
           })
         )}
       </div>
@@ -318,7 +329,7 @@ const DriverTabComponent2 = (props) => {
   );
 };
 const DriverTabComponent3 = (props) => {
-  const {data} = props.data;
+  const { drivers } = props.data;
   return (
     <>
       <div className="d-flex mt-2">
@@ -376,7 +387,7 @@ const DriverTabComponent3 = (props) => {
           <span className="text-end">[1]</span>
         </div>
       </div>
-      {data.map((d,index) => {
+      {drivers.map((d, index) => {
         return (
           <div className="d-flex align-items-center mb-1">
             <div
@@ -391,7 +402,7 @@ const DriverTabComponent3 = (props) => {
               />
             </div>
             <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-              <span>{d}</span>
+              <span>{d.name}</span>
               <div className="d-flex justify-content-around">
                 <IoIosNavigate
                   style={{
@@ -432,7 +443,7 @@ const DriverTabComponent3 = (props) => {
 };
 
 const DriverTabComponent4 = (props) => {
-  const { data } = props.data;
+  const { drivers } = props.data;
   return (
     <>
       <div className="d-flex mt-2">
@@ -481,12 +492,16 @@ const DriverTabComponent4 = (props) => {
           }}
         />
       </div>
-      <Accordion className="accordian accordion-solid-bg mt-4" defaultActiveKey="0" flush>
+      <Accordion
+        className="accordian accordion-solid-bg mt-4"
+        defaultActiveKey="0"
+        flush
+      >
         <Accordion.Item eventKey="0">
           <Accordion.Header>All</Accordion.Header>
-          {data.map((d, index) => {
+          {drivers.map((d, index) => {
             return (
-              <Accordion.Body>
+              <Accordion.Body className="p-2">
                 <div className="d-flex align-items-center">
                   <div
                     className="form-check custom-checkbox"
@@ -500,7 +515,7 @@ const DriverTabComponent4 = (props) => {
                     />
                   </div>
                   <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-                    <span>{d}</span>
+                    <span>{d.name}</span>
                     <div className="d-flex justify-content-around">
                       <IoIosNavigate
                         style={{

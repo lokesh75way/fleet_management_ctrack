@@ -18,31 +18,20 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Employe,
         to: '/sub-company',
     },
+    {   title: 'SubUser',
+        iconStyle: SVGICON.Employe,
+        to: '/subUser',
+    },
     {
         title: 'Driver',
         iconStyle: SVGICON.Employe,
         to: '/driver',
     },
-    // {
-    //     title: 'Core HR',
-    //     iconStyle: SVGICON.CoreHr,
-    //     to: '/core-hr',
-    // },
-    // {
-    //     title: 'Finance',
-    //     iconStyle: SVGICON.Finance,
-    //     to: '/finance',
-    // },
-    // {
-    //     title: 'Performance',
-    //     iconStyle: SVGICON.Performance,
-    //     to: '/performance',
-    // },
-    // {
-    //     title: 'Projects',
-    //     iconStyle: SVGICON.ProjectsSidbar,
-    //     to: '/project',
-    // },
+    {
+        title: 'Vehicle',
+        iconStyle: SVGICON.Employe,
+        to: '/vehicle',
+     },
     {
         title: 'Tracking',
         classsChange: 'mm-collapse',
@@ -78,7 +67,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Alert',
-                to: '/reports/alert'
+                to: '/alert'
             },
             {
                 title:'Reminder',
@@ -86,7 +75,7 @@ export const CompanyMenuList = [
             },
             {
                 title:'Expense',
-                to: '/reports/expense'
+                to: '/expense'
             },
             {
                 title:'Fuel',
@@ -162,15 +151,46 @@ export const CompanyMenuList = [
         ]
     },
     {
-        title: 'Technical',
+        title: 'Technician',
         iconStyle: SVGICON.Employe,
-        to: '/technical',
+        to: '/technician',
     },
-
+    {
+        title: "Technician Tasks",
+        iconStyle: SVGICON.Employe,
+        to: "/technicianTask",
+      },
+    
     // {
     //     title: 'Manage Clients',
     //     iconStyle: SVGICON.ManageClient,
     //     to: '/manage-client',
     // },
+    
+    {
+        title: 'Groups',
+        iconStyle: SVGICON.ManageClient,
+        to: '/groups',
+    },
+    {
+        title: 'Alerts',
+        iconStyle: SVGICON.ManageClient,
+        to: '/alert',
+    },
+    {
+        title: 'Expense',
+        iconStyle: SVGICON.ManageClient,
+        to: '/expense',
+    },
+    {
+        title: 'Geofence',
+        iconStyle: SVGICON.ManageClient,
+        to: '/geofence',
+    },
+    {
+        title: 'Classify Trips',
+        iconStyle: SVGICON.ManageClient,
+        to: '/classifyTrips',
+    },
 
 ]

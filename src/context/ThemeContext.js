@@ -259,8 +259,13 @@ const {
 	changeDirectionLayout(setAttr); 
 	
 	};
+
+  const [addVehicle, setAddVehicle] = useState({})
   const [currentPosition, setCurrentPosition] = useState({})
   const [isTrafficClick, setIsTrafficClick] = useState(false)
+  const [groupsDataState,setGroupsDataState] = useState([]);
+  const [lang,setLang] = useState("");
+  const [isArabic,setIsArabic] = useState("");
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -346,7 +351,16 @@ const {
         setCurrentPosition,
         currentPosition,
         setIsTrafficClick,
-        isTrafficClick
+        isTrafficClick,
+        setGroupsDataState,
+        groupsDataState,
+        setAddVehicle,
+        addVehicle,
+        setLang,
+        lang,
+        setIsArabic,
+        isArabic
+
 	}}
     >
       {props.children}

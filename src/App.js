@@ -8,9 +8,16 @@ import { checkAutoLogin } from './services/AuthService';
 import { isAuthenticated } from './store/selectors/AuthSelectors';
 
 import "./css/style.css";
+// const AdminRoutes = lazy(() => import('./jsx/AdminRoutes'));
+// const CompanyRoutes = lazy(() => import('./jsx/CompanyRoutes'));
+// const BasicLayout = lazy(() => import('./jsx/layouts/BasicLayout'));
+// const ForgotPassword = lazy(() => import('./jsx/pages/ForgotPassword'));
+// const ResetPassword = lazy(() => import('./jsx/pages/ResetPassword'));
 import BasicLayout from './jsx/layouts/BasicLayout';
 import AdminRoutes from './jsx/AdminRoutes';
 import CompanyRoutes from './jsx/CompanyRoutes';
+import ForgotPassword from './jsx/pages/ForgotPassword';
+import ResetPassword from './jsx/pages/ResetPassword';
 
 
 
@@ -54,7 +61,7 @@ function App(props) {
 
   if (props.isAuthenticated) {
     console.log(role);
-    return role == 'admin' ? <AdminRoutes /> : <CompanyRoutes />
+    return role == 'admin' ? <AdminRoutes/> : <CompanyRoutes/>;
   }
 
   return (
@@ -63,6 +70,8 @@ function App(props) {
         <Route element={<BasicLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/page-register' element={<SignUp />} />
+          <Route path='/page-forgotpassword' element={<ForgotPassword />} />
+          <Route path='/page-resetpassword' element={<ResetPassword />} />
         </Route>
       </Routes>
     </div>
