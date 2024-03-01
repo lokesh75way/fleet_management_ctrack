@@ -61,18 +61,18 @@ export const CompanyMenuList = [
                 title:'Geofence-Address',
                 to: '/reports/geofence-address'
             },
-            {
-                title:'Sensor',
-                to: '/reports/sensor'
-            },
+            // {
+            //     title:'Sensor',
+            //     to: '/reports/sensor'
+            // },
             {
                 title:'Alert',
                 to: '/alert'
             },
-            {
-                title:'Reminder',
-                to: '/reports/reminder'
-            },
+            // {
+            //     title:'Reminder',
+            //     to: '/reports/reminder'
+            // },
             {
                 title:'Expense',
                 to: '/expense'
@@ -81,10 +81,10 @@ export const CompanyMenuList = [
                 title:'Fuel',
                 to: '/reports/fuel'
             },
-            {
-                title:'RPM',
-                to: '/reports/rpm'
-            },
+            // {
+            //     title:'RPM',
+            //     to: '/reports/rpm'
+            // },
             {
                 title:'Temperature',
                 to: '/reports/temperature'
@@ -93,34 +93,34 @@ export const CompanyMenuList = [
                 title:'Driver Behaviour',
                 to: '/reports/driver-behaviour'
             },
-            {
-                title:'OBD',
-                to: '/reports/obd'
-            },
-            {
-                title:'Billing',
-                to: '/reports/billing'
-            },
-            {
-                title:'Customized',
-                to: '/reports/customized'
-            },
-            {
-                title:'Logs',
-                to: '/reports/logs'
-            },
-            {
-                title:'Hardware Maintenance',
-                to: '/reports/hardware-maintenance'
-            },
-            {
-                title:'Elock',
-                to: '/reports/elock'
-            },
-            {
-                title:'Trip Classification',
-                to: '/reports/trip-classification'
-            },
+            // {
+            //     title:'OBD',
+            //     to: '/reports/obd'
+            // },
+            // {
+            //     title:'Billing',
+            //     to: '/reports/billing'
+            // },
+            // {
+            //     title:'Customized',
+            //     to: '/reports/customized'
+            // },
+            // {
+            //     title:'Logs',
+            //     to: '/reports/logs'
+            // },
+            // {
+            //     title:'Hardware Maintenance',
+            //     to: '/reports/hardware-maintenance'
+            // },
+            // {
+            //     title:'Elock',
+            //     to: '/reports/elock'
+            // },
+            // {
+            //     title:'Trip Classification',
+            //     to: '/reports/trip-classification'
+            // },
         ]
     },
     {

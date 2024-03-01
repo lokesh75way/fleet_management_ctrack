@@ -166,6 +166,7 @@ import TemperatureChart from "./pages/company/charts/TemperatureChart";
 //groups
 import CreateGroups from "./pages/CreateGroups";
 import Permission from "./pages/Permission";
+import GeofenceMap from "./pages/GeofenceMap";
 
 const CompanyRoutes = () => {
 
@@ -181,6 +182,7 @@ const CompanyRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
+    { url: "geofencemap", component: <GeofenceMap /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
