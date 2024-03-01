@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[9785],{9785:(e,s,c)=>{c.r(s),c.d(s,{default:()=>h});c(72791);var t=c(80184);const h=()=>(0,t.jsx)("h1",{children:"Activity"})}}]);
+//# sourceMappingURL=9785.b019261a.chunk.js.map

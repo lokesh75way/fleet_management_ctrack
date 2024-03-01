@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/2052.92efde07.chunk.js","mappings":"qJAEA,MAMA,EANiBA,KAEbC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,Y","sources":["jsx/pages/company/reports/Reminder.jsx"],"sourcesContent":["import React from 'react'\n\nconst Reminder = () => {\n  return (\n    <h1>Reminder</h1>\n  )\n}\n\nexport default Reminder"],"names":["Reminder","_jsx","children"],"sourceRoot":""}
