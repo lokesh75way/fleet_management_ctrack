@@ -60,7 +60,7 @@ const Header = ({ onNote, role }) => {
         <nav className="navbar navbar-expand">
           <div className="collapse navbar-collapse justify-content-between">
             <div className="header-left">
-              <div className="input-group search-area">
+              {/* <div className="input-group search-area">
                 <span className="input-group-text rounded-0">
                   <Link to={"#"}>
                     <svg
@@ -92,7 +92,7 @@ const Header = ({ onNote, role }) => {
                   className="form-control rounded-0"
                   placeholder="Search"
                 />
-              </div>
+              </div> */}
             </div>
             <ul className="navbar-nav header-right">
               {/* <Dropdown as="li" className="nav-item dropdown notification_dropdown ">
@@ -205,7 +205,7 @@ const Header = ({ onNote, role }) => {
 									</div>
 								</Dropdown.Menu>
 							</Dropdown> */}
-              <Dropdown
+              {/* <Dropdown
                 as="li"
                 className="nav-item dropdown notification_dropdown"
               >
@@ -235,7 +235,7 @@ const Header = ({ onNote, role }) => {
                     ></path>
                   </svg>
                 </Dropdown.Toggle>
-                <Dropdown.Menu
+                {/* <Dropdown.Menu
                   align="end"
                   className="mt-2 dropdown-menu dropdown-menu-end"
                 >
@@ -264,8 +264,8 @@ const Header = ({ onNote, role }) => {
                   <Link className="all-notification" to="#">
                     See all notifications <i className="ti-arrow-right" />
                   </Link>
-                </Dropdown.Menu>
-              </Dropdown>
+                </Dropdown.Menu> */}
+              {/* </Dropdown> */} 
               {/* <Dropdown as="li" className="nav-item dropdown notification_dropdown ">
 								<Dropdown.Toggle variant="" as="a" className="nav-link  i-false c-pointer" onClick={() => onNote()}>
 									<svg width="20" height="22" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -275,31 +275,6 @@ const Header = ({ onNote, role }) => {
 								</Dropdown.Toggle>
 							</Dropdown>
 					     	*/}
-
-              <Dropdown as="li" className="nav-item dropdown language_dropdown">
-                <Dropdown.Toggle className="nav-link i-false  c-pointer" as="a">
-                  <HiOutlineLanguage />
-                </Dropdown.Toggle>
-                <Dropdown.Menu
-                  align="end"
-                  className="mt-2 dropdown-menu dropdown-menu-end"
-                >
-                  <Link
-                    className="dropdown-item"
-                    to="#"
-                    onClick={() => setLang("ar")}
-                  >
-                    Arabic
-                  </Link>
-                  <Link
-                    className="dropdown-item"
-                    to="#"
-                    onClick={() => setLang("en")}
-                  >
-                    English
-                  </Link>
-                </Dropdown.Menu>
-              </Dropdown>
 
               <Dropdown as="li" className="nav-item dropdown language_dropdown">
                 <Dropdown.Toggle className="nav-link i-false  c-pointer" as="a">
