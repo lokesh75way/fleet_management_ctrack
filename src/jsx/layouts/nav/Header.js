@@ -269,18 +269,7 @@ const Header = ({ onNote, role }) => {
 													{SVGICON.User}{" "}
 													<span className="ms-2">Profile </span>
 												</Link>
-												<Link to={"/app-profile"} className="dropdown-item ai-icon ">
-													{SVGICON.Project}{" "}
-													<span className="ms-2">My Project</span><span className="badge badge-sm badge-secondary light rounded-circle text-white ms-2">4</span>
-												</Link>
-												<Link to={"#"} className="dropdown-item ai-icon ">
-													{SVGICON.Message}{" "}
-													<span className="ms-2">Message </span>
-												</Link>
-												<Link to={"/email-inbox"} className="dropdown-item ai-icon ">
-													{SVGICON.Notification} {" "}
-													<span className="ms-2">Notification </span>
-												</Link>
+
 												<Link to={"/changepassword"} className="dropdown-item ai-icon ">
 													{SVGICON.Password} {" "}
 													<span className="ms-2">Change Password </span>

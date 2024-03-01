@@ -19,7 +19,7 @@ const Profile = ({ setValue, register, handleNext}) => {
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3 ">
+        {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Company <span className="text-danger">*</span>
           </label>
@@ -39,7 +39,7 @@ const Profile = ({ setValue, register, handleNext}) => {
             )}
           />
           <Error errorName={errors.branch} />
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch <span className="text-danger">*</span>
@@ -119,7 +119,7 @@ const Profile = ({ setValue, register, handleNext}) => {
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Tag via 
           </label>
@@ -137,8 +137,8 @@ const Profile = ({ setValue, register, handleNext}) => {
               />
             )}
           />
-        </div>
-        <div className="col-xl-6 mb-3">
+        </div> */}
+        {/* <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Shift Group 
           </label>
@@ -161,7 +161,7 @@ const Profile = ({ setValue, register, handleNext}) => {
             name="shift"
             placeholder=""
           />
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3">
           <label className="form-label">
             Country 

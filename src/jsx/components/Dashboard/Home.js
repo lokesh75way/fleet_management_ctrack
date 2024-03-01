@@ -180,6 +180,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              
               <div
                 className="fluid container"
                 style={{ marginTop: 0, padding: 0 }}
@@ -337,7 +338,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          {/* <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#CBC3E3" }}
@@ -381,7 +382,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
@@ -430,7 +431,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          {/* <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#FFE36E" }}
@@ -471,7 +472,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="col-xl-4 col-sm-12">
             <div className="card same-card p-2">
               <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
@@ -541,7 +542,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="col-xl-4 col-sm-12">
+          {/* <div className="col-xl-4 col-sm-12">
             <div className="card same-card p-2" style={{ height: "20vh" }}>
               <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
                 Distance Classification
@@ -557,7 +558,7 @@ const Home = () => {
                 No Record Found
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

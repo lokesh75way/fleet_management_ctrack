@@ -14,6 +14,9 @@ import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
+import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
+import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
+import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 
 const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
 const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
@@ -187,8 +190,11 @@ const CompanyRoutes = () => {
     { url: "geofence", component: <Geofence /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "technicianTask", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle /> },
-
+    { url: "Vehicle", component: <Vehicle/> },
+    { url: "vehicle/create", component: <VehicleForm/> },
+    { url: "driver/create", component: <DriverForm/> },
+    { url: "technician/create", component: <TechnicianForm/> },
+    
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
     { url: "/reports/geofence-address", component: <GeofenceAddress /> },

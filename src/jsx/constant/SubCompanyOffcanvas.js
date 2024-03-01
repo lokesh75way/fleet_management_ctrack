@@ -67,14 +67,14 @@ const SubCompanyOffcanvas = forwardRef(({ Title, handleSubmit, editData, setEdit
                                     <label htmlFor="exampleFormControlInput3" className="form-label">User Name <span className="text-danger">*</span></label>
                                     <input type="email" className="form-control" name="username" defaultValue={editData.username} onChange={handleChange} id="exampleFormControlInput3" placeholder="" />
                                 </div>
-                                <div className="col-xl-6 mb-3">
+                                {/* <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput4" className="form-label">Password <span className="text-danger">*</span></label>
                                     <input type="password" className="form-control" id="exampleFormControlInput4" placeholder="" />
-                                </div>
-                                <div className="col-xl-6 mb-3">
+                                </div> */}
+                                {/* <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput3" className="form-label">Application<span className="text-danger">*</span></label>
                                     <input type="text" className="form-control" id="exampleFormControlInput2" placeholder="" />
-                                </div>
+                                </div> */}
                                 <div className="col-xl-6 mb-3">
                                     <label className="form-label">Parent Company<span className="text-danger">*</span></label>
                                     <select className="default-select form-control">
@@ -137,14 +137,14 @@ const SubCompanyOffcanvas = forwardRef(({ Title, handleSubmit, editData, setEdit
                                         placeHolder="Select City"
                                     />
                                 </div>
-                                <div className="col-xl-6 mb-3">
+                                {/* <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput88" className="form-label">Monthly SMS Limt <span className="text-danger">*</span></label>
                                     <input type="number" className="form-control" id="exampleFormControlInput88" placeholder="" />
                                 </div>
                                 <div className="col-xl-6 mb-3">
                                     <label htmlFor="exampleFormControlInput88" className="form-label">Daily SMS Limt <span className="text-danger">*</span></label>
                                     <input type="number" className="form-control" id="exampleFormControlInput88" placeholder="" />
-                                </div>
+                                </div> */}
                                 <div className="col-xl-6 mb-3">
                                     <label className="form-label">User Time Zone <span className="text-danger">*</span></label>
                                     <select className="default-select form-control">
@@ -154,14 +154,14 @@ const SubCompanyOffcanvas = forwardRef(({ Title, handleSubmit, editData, setEdit
                                         <option value="javascript">Other</option>
                                     </select>
                                 </div>
-                                <div className="col-xl-6 mb-3">
+                                {/* <div className="col-xl-6 mb-3">
                                     <label className="form-label">Payment Status <span className="text-danger">*</span></label>
                                     <select className="default-select form-control">
                                         <option data-display="Select">Please select</option>
                                         <option value="html">Paid</option>
                                         <option value="css">Pending</option>
                                     </select>
-                                </div>
+                                </div> */}
                             </div>
                             <div>
                                 <button type="submit" onClick={() => setAddSubCompany(false)} className="btn btn-primary me-1">Submit</button>
