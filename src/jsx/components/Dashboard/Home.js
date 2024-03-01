@@ -17,7 +17,7 @@ import EmployeesTableList from "./elements/EmployeesTableList";
 import ActiveUserMap from "./elements/ActiveUserMap";
 import UpcomingBlog from "./elements/UpcomingBlog";
 import AllProjectDonutChart from "./elements/AllProjectDonutChart";
-import GradientArea from "../charts/Chartjs/gradinetArea";
+// import GradientArea from "../charts/Chartjs/gradinetArea";
 import { FaCar } from "react-icons/fa";
 import { BsFuelPumpFill } from "react-icons/bs";
 import { SlCalender } from "react-icons/sl";
@@ -67,7 +67,7 @@ const Home = () => {
                 <p className="text-black text-md">Fleet Status</p>
               </div>
               <div className="card-body d-flex align-items-center  py-2">
-                <AllProjectDonutChart width={300} data={[12,10,15]} />
+                <AllProjectDonutChart width={300} data={[12, 10, 15]} />
                 <ul className="project-list">
                   <li>
                     <svg
@@ -139,7 +139,7 @@ const Home = () => {
                 </p>
               </div>
               <div className="mt-3">
-                <GradientArea />
+                {/* <GradientArea /> */}
               </div>
             </div>
           </div>
@@ -193,14 +193,14 @@ const Home = () => {
                     style={{ backgroundColor: "#90EE90" }}
                   >
                     <div className="d-flex justify-content-between">
-                        <p
-                          className="text-black fs-4"
-                          style={{ marginLeft: "0.3rem" }}
-                        >
-                          Stay In Zone
-                        </p>
-                        <Select />
-                      </div>
+                      <p
+                        className="text-black fs-4"
+                        style={{ marginLeft: "0.3rem" }}
+                      >
+                        Stay In Zone
+                      </p>
+                      <Select />
+                    </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
                         className="d-flex align-items-end mb-2"
@@ -239,13 +239,13 @@ const Home = () => {
                     style={{ backgroundColor: "#00FFFF" }}
                   >
                     <div className="d-flex justify-content-between">
-                    <p
-                      className="text-black fs-4"
-                      style={{ marginLeft: "0.3rem" }}
-                    >
-                      Temperature
-                    </p>
-                    <Select />
+                      <p
+                        className="text-black fs-4"
+                        style={{ marginLeft: "0.3rem" }}
+                      >
+                        Temperature
+                      </p>
+                      <Select />
                     </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
@@ -296,10 +296,10 @@ const Home = () => {
               style={{ backgroundColor: "#ffb09c" }}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Overspeed
-              </p>
-              <Select />
+                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                  Overspeed
+                </p>
+                <Select />
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -388,10 +388,10 @@ const Home = () => {
               style={{ backgroundColor: "#ADD8E6" }}
             >
               <div className="d-flex justify-content-between">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                AC Misuse
-              </p>
-              <Select />
+                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                  AC Misuse
+                </p>
+                <Select />
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
