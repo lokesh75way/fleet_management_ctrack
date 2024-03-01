@@ -92,7 +92,7 @@ const TechnicianTask = (ref) => {
     const technicianTask = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Technician Task" pageTitle={'Technician Task'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Technician Task" pageTitle={'Technician Task'} parentTitle={'Technician'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
