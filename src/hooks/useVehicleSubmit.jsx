@@ -9,7 +9,6 @@ const {
     getValues,
     clearErrors,
     control,
-    trigger,
     formState: { errors },
   } = useForm();
   const {setAddVehicle} = useContext(ThemeContext)
@@ -31,6 +30,7 @@ const {
     onSubmit,
     setValue,
     control,
+    getValues,
     formState: { errors },
     }
 }

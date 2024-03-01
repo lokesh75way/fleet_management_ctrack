@@ -23,12 +23,19 @@ import TaskSummary from "./components/Dashboard/TaskSummary";
 import HomeBlog from "./components/Dashboard/Blog";
 import ManageClient from "./components/Dashboard/ManageClient";
 import Report from "./components/Dashboard/Report";
-import Finance from "./components/Dashboard/Finance";
 import Driver from "./pages/Driver";
-import Technical from "./pages/Technical";
+import Technician from "./pages/Technician";
 import DriverTracking from "./pages/DriverTracking";
 import SubCompanyTracking from "./pages/company/tracking/SubCompanyTracking"
-import CoreHr from "./components/Dashboard/CoreHr";
+import SubUserForm from "./pages/CreateForms/SubUserForm";
+import SubUser from "./pages/SubUser";
+import Alert from "./pages/Alert";
+import Expense from "./pages/Expense";
+import Geofence from "./pages/Geofence";
+import ClassifyTrips from "./pages/ClassifyTrips";
+import ContactUs from "./pages/ContactUs";
+import TechnicianTask from "./pages/TechnicianTask";
+import Vehicle from "./pages/Vehicle";
 
 
 //Update Pages
@@ -50,6 +57,7 @@ import Inbox from "./components/AppsMenu/Email/Inbox/Inbox";
 import Read from "./components/AppsMenu/Email/Read/Read";
 import Calendar from "./components/AppsMenu/Calendar/Calendar";
 import ChangePassword from "./pages/ChangePassword";
+
 
 
 //CMS
@@ -166,17 +174,24 @@ const CompanyRoutes = () => {
     { url: "", component: <Home /> },
     { url: "dashboard", component: <Home /> },
     { url: "dashboard-dark", component: <DashboardDark /> },
-    { url: "core-hr", component: <CoreHr /> },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
     { url: "blog-1", component: <HomeBlog /> },
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
-    { url: "finance", component: <Finance /> },
-    { url: "technical", component: <Technical /> },
+    { url: "Technician", component: <Technician /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
+    { url: "subuser/create", component: <SubUserForm /> },
+    { url: "subuser", component: <SubUser /> },
+    { url: "alert", component: <Alert /> },
+    { url: "classifyTrips", component: <ClassifyTrips /> },
+    { url: "expense", component: <Expense /> },
+    { url: "geofence", component: <Geofence /> },
+    { url: "contactUs", component: <ContactUs /> },
+    { url: "technicianTask", component: <TechnicianTask /> },
+    { url: "Vehicle", component: <Vehicle/> },
     
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
@@ -203,7 +218,7 @@ const CompanyRoutes = () => {
     { url: "/charts/fuel", component: <FuelChart /> },
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
-    { url: "technical", component: <Technical /> },
+    { url: "Technician", component: <Technician /> },
     { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "driver-tracking", component: <DriverTracking /> },

@@ -103,8 +103,8 @@ const Driver = (ref) => {
                                         <h4 className="heading mb-0">Drivers</h4>
                                         <div>
  
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={() => employe.current.showModal()}
+                                            <Link to={"/driver/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                // onClick={() => employe.current.showModal()}
                                             >+ Add Driver</Link> {" "}
                                            
                                         </div>
@@ -184,13 +184,13 @@ const Driver = (ref) => {
                     </div>
                 </div>
             </div>
-            <EmployeeOffcanvas 
+            {/* <EmployeeOffcanvas 
                 ref={employe}
                 editData={editData}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
                 Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
-            />
+            /> */}
         </>
     );
 };

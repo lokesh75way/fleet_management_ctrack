@@ -8,6 +8,11 @@ import { checkAutoLogin } from './services/AuthService';
 import { isAuthenticated } from './store/selectors/AuthSelectors';
 
 import "./css/style.css";
+// const AdminRoutes = lazy(() => import('./jsx/AdminRoutes'));
+// const CompanyRoutes = lazy(() => import('./jsx/CompanyRoutes'));
+// const BasicLayout = lazy(() => import('./jsx/layouts/BasicLayout'));
+// const ForgotPassword = lazy(() => import('./jsx/pages/ForgotPassword'));
+// const ResetPassword = lazy(() => import('./jsx/pages/ResetPassword'));
 import BasicLayout from './jsx/layouts/BasicLayout';
 import AdminRoutes from './jsx/AdminRoutes';
 import CompanyRoutes from './jsx/CompanyRoutes';
@@ -56,7 +61,7 @@ function App(props) {
 
   if (props.isAuthenticated) {
     console.log(role);
-    return role == 'admin' ? <AdminRoutes /> : <CompanyRoutes />
+    return role == 'admin' ? <AdminRoutes/> : <CompanyRoutes/>;
   }
 
   return (

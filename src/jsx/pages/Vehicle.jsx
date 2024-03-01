@@ -1,118 +1,123 @@
-
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
-import { CSVLink } from 'react-csv';
-import { IMAGES } from '../../constant/theme';
-import MainPagetitle from '../../layouts/MainPagetitle';
-import SubCompanyTable from '../../components/Tables/SubCompanyTable'
-import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
-import { SubCompanyData } from '../../components/Tables/Tables';
-const headers = [
-    { label: "Short Name", key: "shortname" },
-    { label: "Reseller", key: "reseller" },
-    { label: "Application", key: "application" },
-    { label: "User Name", key: "username" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-    { label: "User Group", key: "usergroup" }
-]
-const SubCompany = () => {
+import {VehicleData} from '../components/Tables/Tables'
+import VehicleTable from '../components/Tables/VehicleTable';
+import { ThemeContext } from '../../context/ThemeContext';
+import MainPagetitle from '../layouts/MainPagetitle';
+
+const Vehicle = () => {  
+    const {setAddVehicle, addVehicle} = useContext(ThemeContext)
     const [data, setData] = useState(
-        document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-    );
-    const [tableData , setTableData] = useState(SubCompanyData);
-    const [editData , setEditData] = useState({
+		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
+	);
+    const [tableData, setTableData] = useState(VehicleData)
+    const [editData, setEditData] = useState({
         id:0,
-        reseller:'',
-        contact:0,
-        username:'',
-        status:'',
-        location:'',
-        usergroup:''
-    });
-    const sort = 10;
-    const activePag = useRef(0);
-    const [test, settest] = useState(0);
-    const chageData = (frist, sec) => {
-        for (var i = 0; i < data.length; ++i) {
-            if (i >= frist && i < sec) {
-                data[i].classList.remove("d-none");
-            } else {
-                data[i].classList.add("d-none");
-            }
-        }
-    };
+        vehicleName:'',
+        plateNumber:'',
+        simNumber:0,
+        IMEINumber:0,
+        GPSDeviceType:'',
+        distanceCounter:0
+    })
+	const sort = 10;
+	const activePag = useRef(0);
+	const [test, settest] = useState(0);
+	const chageData = (frist, sec) => {
+		for (var i = 0; i < data.length; ++i) {
+			if (i >= frist && i < sec) {
+				data[i].classList.remove("d-none");
+			} else {
+				data[i].classList.add("d-none");
+			}
+		}
+	};
+   
    useEffect(() => {
       setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-    }, [test]);
+	}, [test]);
+
+    useEffect(()=>{
+        console.log("enter herer")
+    },[])
+
    activePag.current === 0 && chageData(0, sort);
    let paggination = Array(Math.ceil(data.length / sort))
       .fill()
       .map((_, i) => i + 1);
-    const onClick = (i) => {
-        activePag.current = i;
-        chageData(activePag.current * sort, (activePag.current + 1) * sort);
-        settest(i);
-    };
-    const onConfirmDelete = (id) => {
+	const onClick = (i) => {
+		activePag.current = i;
+		chageData(activePag.current * sort, (activePag.current + 1) * sort);
+		settest(i);
+	};
+    // delete function
+    const onConfirmDelete =(id)=>{
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
-    }
+    
+       }
+    // Edit function
     const editDrawerOpen = (item)=>{
-        console.log(item)
         tableData.map((table)=>(
             table.id === item && setEditData(table)
         ))
-        subCompany.current.showModal();
+        vehicle.current.showModal();
     }
+
     const handleSubmit=(e)=>{
+        console.log("I am here")
         e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)
-                return {...table, ...editData };
-            }
-            return table;
-        })
-        setTableData(updateTable)
-    }
-    const invite = useRef();
-    const subCompany = useRef();
+        if(editData.id === 0){
+            editData.id = editData.simNumber-1
+            tableData.push(editData)
+        }
+        else{
+            const updateTable = tableData.map((table)=>{
+                if(table.id === editData.id) {
+                    return {...table, ...editData };
+                }
+                return table;
+            })
+            setTableData(updateTable)
+        }
+    }  
+   
+    const vehicle = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Sub Company" pageTitle={'Sub Company'} parentTitle={'Home'} />
+        <MainPagetitle mainTitle="Vehicle" pageTitle={'Vehicle'} parentTitle={'Home'} />
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-xl-12">
-                        <div className="card">
+				<div className="row">
+			    	<div className="col-xl-12">
+                        <div className="card">            
                             <div className="card-body p-0">
-                                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+                                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">   
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Sub Companies</h4>
+                                        <h4 className="heading mb-0">Vehicle</h4> 
                                         <div>
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={()=>subCompany.current.showModal()}
-                                            >+ Add Sub Company</Link> {" "}
-                                        </div>
-                                    </div>
+                                            
+                                            <Link to={'/vehicle/create'} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
+                                            >+ Add Vehicle Info</Link> {" "}
+                                        </div>                                          
+                                    </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
-                                                <tr>
-                                                    <th>Short Name</th>
-                                                    <th>Reseller</th>
-                                                    <th>Username</th>
-                                                    <th>Contact Number</th>
-                                                    <th>Location</th>
-                                                    <th>User Group</th>
-                                                    <th>Status</th>
+                                                <tr>                                                   
+                                                    <th>Plate Number</th>
+                                                    <th>Vehicle Name</th>
+                                                    <th>SIM Number</th>
+                                                    <th>IMEI Number</th>
+                                                    <th>GPS Device Type</th>
+                                                    <th>Distance Counter</th>
+                                                    <th>Speed Detection</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <SubCompanyTable editData={editData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
+                                                <VehicleTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen}  />
                                             </tbody>
+                                            
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
                                             <div className="dataTables_info">
@@ -128,7 +133,7 @@ const SubCompany = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/sub-company"
+                                                    to="/general"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -140,7 +145,7 @@ const SubCompany = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/sub-company"
+                                                        to="/general"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -152,7 +157,7 @@ const SubCompany = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/sub-company"
+                                                    to="/general"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)
@@ -161,7 +166,7 @@ const SubCompany = () => {
                                                     <i className="fa-solid fa-angle-right" />
                                                 </Link>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -169,14 +174,8 @@ const SubCompany = () => {
                     </div>
                 </div>
             </div>
-            <SubCompanyOffcanvas
-                ref={subCompany}
-                editData={editData}
-                setEditData={setEditData}
-                handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Sub Company" : "Edit Sub Company"}
-            />
         </>
     );
 };
-export default SubCompany;
+
+export default Vehicle;
