@@ -91,7 +91,7 @@ const ClassifyTrip = (ref) => {
     const employe = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Classify Trip" pageTitle={'Classify Trip'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Classify Trip" pageTitle={'Classify Trip'} parentTitle={'Settings'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">

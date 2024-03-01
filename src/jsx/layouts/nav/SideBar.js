@@ -107,7 +107,6 @@ const SideBar = ({ role = 'company' }) => {
                 <li className={` ${state.active === data.title ? 'mm-active' : ''}`}
                   key={index}
                 >
-
                   {data.content && data.content.length > 0 ?
                     <>
                       <Link to={"#"}

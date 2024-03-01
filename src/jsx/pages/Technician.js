@@ -74,7 +74,7 @@ const Technician = () => {
     const technical = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Technician" pageTitle={'Technician'} parentTitle={'Home'} />  
+            <MainPagetitle mainTitle="Technician Details" pageTitle={'Technician Details'} parentTitle={'Technician'} />  
             <div className="container-fluid">
 				<div className="row">
 			    	<div className="col-xl-12">
