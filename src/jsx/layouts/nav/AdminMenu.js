@@ -90,6 +90,26 @@ export const AdminMenuList = [
         to: '/classifyTrips',
     },
     {
+        title: 'Alerts',
+        iconStyle: SVGICON.ManageClient,
+        to: '/alert',
+    },
+    {
+        title: 'Expense',
+        iconStyle: SVGICON.ManageClient,
+        to: '/expense',
+    },
+    {
+        title: 'Geofence',
+        iconStyle: SVGICON.ManageClient,
+        to: '/geofence',
+    },
+    {
+        title: 'Classify Trips',
+        iconStyle: SVGICON.ManageClient,
+        to: '/classifyTrips',
+    },
+    {
         title: 'Settings',
         classsChange:'mm-collapse',
         iconStyle: SVGICON.SettingMenu,

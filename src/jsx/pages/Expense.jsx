@@ -7,6 +7,8 @@ import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
 import {ExpenseData} from '../components/Tables/Tables'
 import ExpenseTable from '../components/Tables/ExpenseTable'
+import ExpenseOffcanvas from '../constant/ExpenseOffcanvas';
+import { useForm } from 'react-hook-form';
 
 const headers = [
     { label: "Employee ID", key: "emplid" },
@@ -21,6 +23,7 @@ const headers = [
 
 const Driver = (ref) => {
     const[tableData, setTableData] = useState(ExpenseData)
+    const {register, setValue, onSubmit,getValues, handleSubmit} = useForm()
     const [editData , setEditData] = useState({
         id:0,
         status:'',    
@@ -76,17 +79,17 @@ const Driver = (ref) => {
         // setEditTableData(item);
         expense.current.showModal();
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)   
-                return {...table, ...editData };
-            }
-            return table;
-        })
-        setTableData(updateTable)
-    }  
+    // const handleSubmit=(e)=>{
+    //     e.preventDefault();
+    //     const updateTable = tableData.map((table)=>{
+    //         if(table.id === editData.id) {
+    //             console.log(table.id)   
+    //             return {...table, ...editData };
+    //         }
+    //         return table;
+    //     })
+    //     setTableData(updateTable)
+    // }  
 
     const expense = useRef();
     return (
@@ -103,7 +106,7 @@ const Driver = (ref) => {
                                         <div>
  
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                // onClick={() => expense.current.showModal()}
+                                                onClick={() => expense.current.showModal()}
                                             >+ Add Expense</Link> {" "}
                                            
                                         </div>
@@ -180,13 +183,17 @@ const Driver = (ref) => {
                     </div>
                 </div>
             </div>
-            {/* <EmployeeOffcanvas 
-                ref={employe}
+            <ExpenseOffcanvas 
+                ref={expense}
                 editData={editData}
+                register={register}
+                onSubmit={onSubmit}
+                setValue={setValue}
+                getValues={getValues}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
-            /> */}
+                Title={ editData.id === 0 ? "Add Expense" : "Edit Expense"}
+            />
         </>
     );
 };

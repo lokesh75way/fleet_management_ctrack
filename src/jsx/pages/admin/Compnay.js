@@ -62,17 +62,17 @@ const Company = () => {
 
     company.current.showModal();
 }
-const handleSubmit=(e)=>{
-    e.preventDefault();
-    const updateTable = tableData.map((table)=>{
-        if(table.id === editData.id) {
-            console.log(table.id)   
-            return {...table, ...editData };
-        }
-        return table;
-    })
-    setTableData(updateTable)
-}  
+// const handleSubmit=(e)=>{
+//     e.preventDefault();
+//     const updateTable = tableData.map((table)=>{
+//         if(table.id === editData.id) {
+//             console.log(table.id)   
+//             return {...table, ...editData };
+//         }
+//         return table;
+//     })
+//     setTableData(updateTable)
+// }  
     const company = useRef();
     const edit = useRef();
     return (
@@ -88,8 +88,8 @@ const handleSubmit=(e)=>{
                                         <h4 className="heading mb-0">Companies</h4>                                        
                                         <div>
                                             
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                onClick={()=>company.current.showModal()}
+                                            <Link to={"/company/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
+                                                // onClick={()=>company.current.showModal()}
                                             >+ Add Company</Link> {" "}
                                         </div>
                                     </div>          
@@ -167,13 +167,13 @@ const handleSubmit=(e)=>{
                     </div>
                 </div>
             </div>
-            <CompanyOffcanvas 
+            {/* <CompanyOffcanvas 
                 ref={company}
                 Title={ editData.id === 0 ? "Add Company" : "Edit Company"}
                 handleSubmit={handleSubmit}
                 editData={editData}
                 setEditData={setEditData}
-            />
+            /> */}
         </>
     );
 };
