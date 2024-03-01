@@ -151,7 +151,7 @@ import Master from "./pages/admin/settings/Master";
 
 //groups
 import CreateGroups from "./pages/CreateGroups";
-import Permission from "./pages/Permission";
+// import Permission from "./pages/Permission";
 
 
 
