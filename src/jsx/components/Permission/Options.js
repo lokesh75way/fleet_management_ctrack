@@ -3,7 +3,9 @@
 export const groupsData = [{groupName:"",groupPermissions:[]}]
 
 
-export const options = [
+
+
+export const staticoptions = [
     {
       name: "Dashboard",
       submodules: [],
@@ -360,3 +362,5 @@ export const options = [
         },
       }
   ];
+
+export const reset = JSON.parse(JSON.stringify(staticoptions));
