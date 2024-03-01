@@ -6,6 +6,15 @@ import { Outlet } from "react-router-dom";
 
 function AdminLayout() {
   const { menuToggle } = useContext(ThemeContext);
+  const {lang,setIsArabic} = useContext(ThemeContext);
+  if(lang == "ar"){
+    document.getElementById("root").style.direction = "rtl"
+    setIsArabic(true)
+  }
+  else{
+    document.getElementById("root").style.direction = "ltr"
+    setIsArabic(false)
+  }
   return (
     <Suspense
       fallback={

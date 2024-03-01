@@ -149,6 +149,11 @@ import Company from "./pages/admin/Compnay";
 import General from "./pages/admin/settings/General";
 import Master from "./pages/admin/settings/Master";
 
+//groups
+import CreateGroups from "./pages/CreateGroups";
+import Permission from "./pages/Permission";
+
+
 
 
 const AdminRoutes = () => {
@@ -169,7 +174,6 @@ const AdminRoutes = () => {
     { url: "technician", component: <Technician /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
-    { url: "permission", component: <Permission /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
     { url: "technician/create", component: <TechnicianForm /> },
@@ -182,6 +186,10 @@ const AdminRoutes = () => {
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle/> },
+
+    // groups
+    { url: "groups", component: <CreateGroups /> },
+    { url: "permission", component: <Permission /> },
   ];
 
 
