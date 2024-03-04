@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { loadingToggleAction,loginAction,
 } from '../../store/actions/AuthActions';
+import users from './usersStatic';
 
 
 import logo from '../../images/logo/logo-full.png';

@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 
 import { AdminMenuList } from './AdminMenu';
 import { CompanyMenuList } from './CompanyMenu';
+import { BusinessGroupMenuList } from "./BusinessGroupMenu";
+import { SubCompanyMenuList } from "./SubCompanyMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
@@ -21,7 +23,7 @@ const initialState = {
   activeSubmenu: "",
 }
 
-const SideBar = ({ role = 'company' }) => {
+const SideBar = () => {
   const {
     iconHover,
     sidebarposition,
@@ -29,7 +31,25 @@ const SideBar = ({ role = 'company' }) => {
     sidebarLayout,
   } = useContext(ThemeContext);
 
-  const MenuList = role === 'company' ? CompanyMenuList : AdminMenuList;
+  const role = localStorage.getItem('role');
+
+  let MenuList;
+  switch (role) {
+    case 'company':
+      MenuList = CompanyMenuList;
+      break;
+    case 'admin':
+      MenuList = AdminMenuList;
+      break;
+    case 'businessgroup':
+      MenuList = BusinessGroupMenuList;
+      break;
+    case 'subcompany':
+      MenuList = SubCompanyMenuList;
+      break;
+    default:
+      MenuList = CompanyMenuList; // Default case if role doesn't match any case
+  }
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {
@@ -83,6 +103,11 @@ const SideBar = ({ role = 'company' }) => {
     })
   }, [path]);
 
+  const handleNonContentMenu = ()=>{
+    console.log('clicked');
+    setState({active:""});
+  }
+
   return (
     <div
       className={`deznav  border-right ${iconHover} ${sidebarposition.value === "fixed" &&
@@ -95,7 +120,7 @@ const SideBar = ({ role = 'company' }) => {
         }`}
     >
       <div className="deznav-scroll">
-        <ul className="metismenu" id="menu">
+        <ul className="metismenu" id="menu" style={{height:"85vh"}}>
           {MenuList.map((data, index) => {
             let menuClass = data.classsChange;
             if (menuClass === "menu-title") {
@@ -165,7 +190,7 @@ const SideBar = ({ role = 'company' }) => {
                       </Collapse>
                     </>
                     :
-                    <Link to={data.to} >
+                    <Link to={data.to} onClick={handleNonContentMenu} >
                       <div className="menu-icon">
                         {data.iconStyle}
                       </div>
