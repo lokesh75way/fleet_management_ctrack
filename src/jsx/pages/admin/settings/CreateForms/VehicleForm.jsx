@@ -5,9 +5,7 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
 import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
-import Sensors from "../../../../components/TabComponent/VehicleTabs/Sensor";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
-import Camera from "../../../../components/TabComponent/VehicleTabs/Camera";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link } from "react-router-dom";
 
@@ -24,7 +22,7 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
-  const component = [General, Camera, Document];
+  const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index

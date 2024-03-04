@@ -4,15 +4,9 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import {
-  branchOptions,
-  employeeDesignationOptions,
-  tagViaOptions,
-  defaultObjectNumberOptions,
-} from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
 
-const MyAccount = ({ setValue, register, handleNext }) => {
-  const { formState: errors, control } = useForm();
+const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isCheckCP, setIsCheckCP] = useState(false);
@@ -28,7 +22,7 @@ const MyAccount = ({ setValue, register, handleNext }) => {
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country</label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -38,9 +32,10 @@ const MyAccount = ({ setValue, register, handleNext }) => {
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
+         { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">State</label>
+          <label className="form-label">State<span className="text-danger">*</span></label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -53,34 +48,35 @@ const MyAccount = ({ setValue, register, handleNext }) => {
               placeHolder="Select State"
             />
           </div>
+          {!getValues('state') && <Error errorName={errors.state} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Short Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("shortName", {
-              required: "Short Number is required",
-            })}
-            className="form-control"
+            required
+            register={register}
+            lable="Short Name"
             name="shortName"
             placeholder=""
           />
+           <Error errorName={errors.shortName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             User Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("userName", {
-              required: "User Number is required",
-            })}
-            className="form-control"
+            register={register}
+            required
+            label="User Name"
             name="userName"
             placeholder=""
           />
+          <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Change Password</label>
@@ -99,128 +95,100 @@ const MyAccount = ({ setValue, register, handleNext }) => {
               <label className="form-label">
                 Old Password<span className="text-danger">*</span>
               </label>
-              <input
+              <CustomInput
                 type="password"
-                {...register("oldPassword")}
-                className="form-control"
+                register={register}
                 name="oldPassword"
+                label="Old Password"
                 placeholder=""
               />
+              <Error errorName={errors.oldPassword} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">
                 New Password<span className="text-danger">*</span>
               </label>
-              <input
+              <CustomInput
                 type="password"
-                {...register("newPassword")}
-                className="form-control"
+                register={register}
+                label="New Password"
                 name="newPassword"
                 placeholder=""
               />
+              <Error errorName={errors.newPassword} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">
                 Retype Password<span className="text-danger">*</span>
               </label>
-              <input
+              <CustomInput
                 type="password"
-                {...register("retypePassword")}
-                className="form-control"
+                register={register}
+                label="Retype Passwor"
                 name="retypePassword"
                 placeholder=""
               />
+              <Error errorName={errors.retypePassword} />
             </div>
           </>
         )}
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Enable Security Pin</label>
-          <div className="form-check custom-checkbox mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="customCheckBox1"
-              onClick={() => setIsCheckEsP(!isCheckESP)}
-            />
-          </div>
-        </div>
-        {isCheckESP && (
-          <>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Security Pin
-              </label>
-              <input
-                type="number"
-                {...register("securityPin")}
-                className="form-control"
-                name="securityPin"
-                placeholder=""
-              />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Retype Security Pin
-              </label>
-              <input
-                type="number"
-                {...register("retypeSecurityPin")}
-                className="form-control"
-                name="retypeSecurityPin"
-                placeholder=""
-              />
-            </div>
-          </>
-        )}
+        
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Password Recovery Email</label>
-          <input
+          <CustomInput
             type="email"
-            {...register("passwordRecoveryEmail")}
-            className="form-control"
+            register={register}
+            label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
           />
+          <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Email</label>
-          <input
+          <CustomInput
             type="email"
-            {...register("helpDeskEmail")}
-            className="form-control"
+            register={register}
             name="helpDeskEmail"
+            label="Help Desk Email"
             placeholder=""
           />
+          <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Telephone Number</label>
-          <input
+          <CustomInput
             type="number"
-            {...register("helpDeskTelephoneNumber")}
+            register={register}
             className="form-control"
+            label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
           />
+          <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Mobile Number</label>
-          <input
+          <CustomInput
             type="number"
-            {...register("mobileNumber")}
-            className="form-control"
+            register={register}
             name="mobileNumber"
+            label="Mobile Number"
             placeholder=""
           />
+          <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Whatsapp Contact Number</label>
-          <input
+          <CustomInput
             type="number"
-            {...register("whatsappContactNumber")}
+            register={register}
             className="form-control"
+            label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
           />
+          <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -301,7 +269,7 @@ const MyAccount = ({ setValue, register, handleNext }) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
           Next
         </Button>

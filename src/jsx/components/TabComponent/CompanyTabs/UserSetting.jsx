@@ -11,8 +11,8 @@ import {
   unitOfDistanceOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, register, handleNext }) => {
-  const { formState: errors, control } = useForm();
+const UserSetting = ({ setValue, register, handleSubmit,errors,control, onSubmit }) => {
+
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isCheckCP, setIsCheckCP] = useState(false);
@@ -45,6 +45,7 @@ const UserSetting = ({ setValue, register, handleNext }) => {
               />
             )}
           />
+          <Error errorName={errors.dateFormat} />
         </div>
       <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -64,25 +65,7 @@ const UserSetting = ({ setValue, register, handleNext }) => {
               />
             )}
           />
-        </div>
-      <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-          Week Start Day
-          </label>
-          <Controller
-            name="timeFormat"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => setValue("weekStartDay", newValue.value)}
-                options={weekStartDayOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={weekStartDayOptions[0]}
-              />
-            )}
-          />
+          <Error errorName={errors.timeFormat} />
         </div>
       <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -102,59 +85,9 @@ const UserSetting = ({ setValue, register, handleNext }) => {
               />
             )}
           />
+          <Error errorName={errors.unitOfDistance} />
         </div>
         
-        {/* <div className="col-xl-6 mb-3">
-          <label className="form-label">Change Password</label>
-          <div className="form-check custom-checkbox mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="customCheckBox1"
-              onClick={() => setIsCheckCP(!isCheckCP)}
-            />
-          </div>
-        </div>
-        {isCheckCP && (
-          <>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Old Password<span className="text-danger">*</span>
-              </label>
-              <input
-                type="password"
-                {...register("oldPassword")}
-                className="form-control"
-                name="oldPassword"
-                placeholder=""
-              />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                New Password<span className="text-danger">*</span>
-              </label>
-              <input
-                type="password"
-                {...register("newPassword")}
-                className="form-control"
-                name="newPassword"
-                placeholder=""
-              />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Retype Password<span className="text-danger">*</span>
-              </label>
-              <input
-                type="password"
-                {...register("retypePassword")}
-                className="form-control"
-                name="retypePassword"
-                placeholder=""
-              />
-            </div>
-          </>
-        )} */}
         
       </div>
       <div
@@ -165,7 +98,7 @@ const UserSetting = ({ setValue, register, handleNext }) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
           Next
         </Button>

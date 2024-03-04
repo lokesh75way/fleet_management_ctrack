@@ -1,6 +1,9 @@
 import {useEffect, useState, useContext} from 'react'
 import { useForm } from "react-hook-form";
 import { ThemeContext } from '../context/ThemeContext';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { vehicleSchema } from '../yup';
+
 const useVehicleSubmit = () => {
 const {
     register,
@@ -10,7 +13,9 @@ const {
     clearErrors,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(vehicleSchema)
+  });
   const {setAddVehicle} = useContext(ThemeContext)
 
   const onSubmit = async(data) =>{
