@@ -11,7 +11,7 @@ export const AdminMenuList = [
         classsChange: 'mm-collapse',
         iconStyle: SVGICON.Home,
     },
-    {   title: 'Companay',
+    {   title: 'Company',
        iconStyle: SVGICON.Employe,
        to: '/company',
    },

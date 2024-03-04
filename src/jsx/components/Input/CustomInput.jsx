@@ -1,21 +1,32 @@
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
-
-const CustomInput = ({ name, label, defaultValue }) => {
-  const { register, errors } = useFormContext();
-
+import React from "react";
+import { useFormContext } from "react-hook-form";
+import Error from "../Error/Error";
+const CustomInput = ({
+  name,
+  label,
+  defaultValue,
+  required,
+  placeholder,
+  register,
+  type,
+  style,
+}) => {
+  const { errors } = useFormContext();
   return (
-    <div>
+    <div className="mb-3">
       <input
         {...register(`${name}`, {
-            required: required ? false : `${label} is required!`,
-          })}
+          required: required ? false : `${label} is required!`,
+        })}
         name={name}
-        defaultValue={defaultValue}
+        type={type}
+        label={label}
+        style={style}
+        placeholder={placeholder}
+        className="form-control"
+        // defaultValue={defaultValue}
       />
-      {errors[name] && <span>{errors[name].message}</span>} {/* Display error messages if any */}
     </div>
   );
 };
-
 export default CustomInput;

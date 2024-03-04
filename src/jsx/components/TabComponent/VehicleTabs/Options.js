@@ -129,4 +129,17 @@ export const subCompanyOptions = [
   { value: "All", label: "All" },
   { value: "75 way", label: "75 way" },
 ];
+export const preferredCurrencyUnitOptions = [
+  { value: "All", label: "All" },
+  { value: "75 way", label: "75 way" },
+];
+export const unitOfFuelOptions = [
+  { value: "litre", label: "Litre" },
+  { value: "gallon", label: "Gallon" },
+];
+export const fuelEconomyScalingOptions = [
+  { value: "km/i", label: "Km/I" },
+  { value: "i/100", label: "I/100" },
+];
+
 export const options = [{ value: "West Company", label: "West Company" }];
