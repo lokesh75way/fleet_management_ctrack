@@ -337,7 +337,7 @@ const Header = ({ onNote, role }) => {
                           to={"/app-profile"}
                           className="dropdown-item ai-icon "
                         >
-                          {SVGICON.User} <span className="ms-2">Profile </span>
+                          {SVGICON.User} <span className="ms-2">Company Details </span>
                         </Link>
 
                         <Link
@@ -349,10 +349,6 @@ const Header = ({ onNote, role }) => {
                         </Link>
                       </div>
                       <div className="card-footer px-0 py-2">
-                        <Link to={"#"} className="dropdown-item ai-icon ">
-                          {SVGICON.Headersetting}{" "}
-                          <span className="ms-2">Settings </span>
-                        </Link>
                         <LogoutPage />
                       </div>
                     </div>
