@@ -35,7 +35,7 @@ import { SiGraphql } from "react-icons/si";
 
 const Select = () => {
   return (
-    <select style={{ width: "4.5rem", fontSize: "8px" }}>
+    <select style={{ width: "4.5rem", fontSize: "8px" , paddingBlock : "7px" }}>
       <option>Today</option>
       <option>Yesterday</option>
       <option>Tomorrow</option>
@@ -121,8 +121,8 @@ const Home = () => {
           </div>
           <div className="col-xl-4 col-sm-12">
             <div className="card same-card p-2" style={{ paddingLeft: "1rem" }}>
-              <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Usage</p>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="text-black text-md mb-0">Fleet Usage</p>
                 <Select />
               </div>
               <div className="mt-5">
@@ -147,7 +147,7 @@ const Home = () => {
                 style={{ paddingLeft: "1rem" }}
               >
                 <div className="d-flex justify-content-between">
-                  <p className="text-black text-md">Fleet Idle</p>
+                  <p className="text-black text-md mb-0">Fleet Idle</p>
                   <Select />
                 </div>
                 <div className="d-flex justify-content-evenly">
@@ -192,8 +192,7 @@ const Home = () => {
                   >
                     <div className="d-flex justify-content-between">
                       <p
-                        className="text-black fs-4"
-                        style={{ marginLeft: "0.3rem" }}
+                        className="text-black fs-4 mb-0"
                       >
                         Stay In Zone
                       </p>
@@ -238,8 +237,8 @@ const Home = () => {
                   >
                     <div className="d-flex justify-content-between">
                       <p
-                        className="text-black fs-4"
-                        style={{ marginLeft: "0.3rem" }}
+                        className="text-black fs-4 mb-0"
+                        
                       >
                         Temperature
                       </p>
@@ -294,7 +293,7 @@ const Home = () => {
               style={{ backgroundColor: "#ffb09c" }}
             >
               <div className="d-flex justify-content-between">
-                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                <p className="text-black fs-4 mb-0" >
                   Overspeed
                 </p>
                 <Select />
@@ -386,7 +385,7 @@ const Home = () => {
               style={{ backgroundColor: "#ADD8E6" }}
             >
               <div className="d-flex justify-content-between">
-                <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
+                <p className="text-black fs-4 mb-0" >
                   AC Misuse
                 </p>
                 <Select />

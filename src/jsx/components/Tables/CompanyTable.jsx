@@ -33,7 +33,7 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                         <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status}</span>
                     </td>
                     <td>
-                        <Link to={`/business-group/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>
+                        <Link to={`/branch/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
