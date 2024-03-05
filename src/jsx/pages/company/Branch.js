@@ -31,7 +31,8 @@ const Branch = () => {
         username:'',
         status:'',
         location:'',
-        usergroup:''
+        usergroup:'',
+        companies : 0
     });
 
     const sort = 10;
@@ -110,6 +111,7 @@ const Branch = () => {
                                                     <th>Location</th>
                                                     <th>User Group</th>
                                                     <th>Status</th>
+                                                    <th>Companies</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

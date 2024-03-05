@@ -11,7 +11,9 @@ import {
   defaultObjectNumberOptions,
 } from "../VehicleTabs/Options";
 import DummyData from '../../../../users.json'
-const MyAccount = ({ setValue, register, handleNext }) => {
+import CustomInput from "../../Input/CustomInput";
+
+const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , handleSubmit }) => {
   const { formState: errors, control } = useForm();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);

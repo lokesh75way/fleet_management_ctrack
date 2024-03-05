@@ -25,7 +25,7 @@ export const AdminMenuList = [
   },
   {
     title : "Business Group",
-    to: "user-groups",
+    to: "business-group",
     iconStyle : SVGICON.Employe
   },
   {

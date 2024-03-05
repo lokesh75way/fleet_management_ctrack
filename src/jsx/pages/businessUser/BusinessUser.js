@@ -7,7 +7,7 @@ import MainPagetitle from '../../layouts/MainPagetitle';
 import InviteCustomer from '../../constant/ModalList';
 import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 import {CompanyData} from "../../components/Tables/Tables";
-import CompanyTable from '../../components/Tables/CompanyTable';
+import BusinessTable from  "../../components/Tables/BusinessTable"
 
 const BusinessUser = () => {  
     const [data, setData] = useState(
@@ -104,11 +104,12 @@ const BusinessUser = () => {
                                                     <th>User Group</th>
                                                     <th>Location</th>
                                                     <th>Payment Status</th>
+                                                    <th>Companies</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               <CompanyTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen}/>
+                                               <BusinessTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen}/>
                                             </tbody>
                                             
                                         </table>

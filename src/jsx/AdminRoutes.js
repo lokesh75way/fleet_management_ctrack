@@ -12,7 +12,8 @@ import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
-import UserGroups from "./pages/admin/BusinessGroup";
+import UserGroups from "./pages/businessUser/BusinessUser";
+import BusinessUser from "./pages/businessUser/BusinessUser";
 
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
@@ -81,6 +82,7 @@ const AdminRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
+    { url: "company/:id", component: <Company /> },
     { url: "business", component: <Business /> },
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
@@ -103,8 +105,8 @@ const AdminRoutes = () => {
     { url: "business/create", component: <BusinessForm /> },
     { url: "branch/create", component: <BusinessForm /> },
     { url: "branch", component: <Branch /> },
-    { url: "user-groups", component: <UserGroups/> },
-    { url: "user-groups/:id", component: <UserGroups/> },
+    { url: "business-group", component: <BusinessUser/> },
+    { url: "business-group/:id", component: <BusinessUser/> },
     { url: "branch", component: <Branch /> },
     { url: "branch/:id", component: <Branch /> },
     // Manage Profile
