@@ -12,8 +12,9 @@ import {
   durationSelectOptions,
   durationCostSelectOptions,
 } from "./Options";
+import CustomInput from "../../Input/CustomInput";
 
-const Profile = ({handleNext, register, setValue}) => {
+const Profile = ({handleNext, register, setValue, errors}) => {
   const { control, getValues } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
@@ -39,13 +40,14 @@ const Profile = ({handleNext, register, setValue}) => {
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Plate Number</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("plateNumber")}
-            className="form-control"
+            register={register}
+            label="Plate Number"
             name="plateNumber"
             placeholder=""
           />
+          <Error errorName={errors.plateNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Vehicle Category</label>
@@ -76,23 +78,24 @@ const Profile = ({handleNext, register, setValue}) => {
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">DVIR Template</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("DVIRTemplate")}
-            className="form-control"
+            register={register}
+            label="DVIR Plate"
             name="DVIRTemplate"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Purchase Amount</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("purchaseAmount")}
-            className="form-control"
+            register={register}
+            label="Purchase Amount"
             name="purchaseAmount"
             placeholder=""
           />
+          <Error errorName={errors.purchaseAmount} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Manufacture Date</label>
@@ -124,10 +127,10 @@ const Profile = ({handleNext, register, setValue}) => {
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Weight Capacity</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("weightCapacity")}
-            className="form-control"
+            register={register}
+            label="Weight Capacity"
             name="weightCapacity"
             placeholder=""
           />
@@ -152,10 +155,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             GPS Warranty
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("GPSWarranty")}
-            className="form-control"
+            register={register}
+            label="GPS Warranty"
             name="GPSWarranty"
             placeholder=""
           />
@@ -164,10 +167,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Company Average
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("companyAverage")}
-            className="form-control"
+            register={register}
+            label="Company Average"
             name="companyAverage"
             placeholder=""
           />
@@ -177,7 +180,8 @@ const Profile = ({handleNext, register, setValue}) => {
           <Controller
             name="permit"
             control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, rules, ref } }) => (
               <Select
                 onChange={(newValue) => setValue("permit", newValue.value)}
                 options={permitOptions}
@@ -188,6 +192,7 @@ const Profile = ({handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.permit} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Installation Date</label>
@@ -207,13 +212,14 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Registration Number
           </label>
-          <input
-            type="text"
-            {...register("registrationNumber")}
-            className="form-control"
+          <CustomInput
+            type="number"
+            register={register}
+            label="Registration Number"
             name="registrationNumber"
             placeholder=""
           />
+          <Error errorName={errors.registrationNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Fuel Type</label>
@@ -240,10 +246,10 @@ const Profile = ({handleNext, register, setValue}) => {
               onChange={() => setIsCheckedDBFC(!isCheckedDBFC)}
               className="form-check-input"
             />
-            <input
+            <CustomInput
               type="number"
-              {...register("distance")}
-              className="form-control"
+              register={register}
+              label="Distance"
               style={{ width: "6rem", margin: " 0 1rem" }}
               name="distance"
               placeholder=""
@@ -252,10 +258,10 @@ const Profile = ({handleNext, register, setValue}) => {
             {isCheckedDBFC && (
               <>
                 <span style={{ paddingLeft: ".6rem" }}>/</span>
-                <input
+                <CustomInput
                   type="number"
-                  {...register("distanceQuantity")}
-                  className="form-control"
+                  register={register}
+                  label = "Distance Quantity"
                   style={{ width: "6rem", margin: " 0 1rem" }}
                   name="distanceQuantity"
                   placeholder=""
@@ -289,10 +295,10 @@ const Profile = ({handleNext, register, setValue}) => {
               className="form-check-input"
               id="customCheckBox1"
             />
-            <input
+            <CustomInput
               type="number"
-              {...register("duration")}
-              className="form-control"
+              register={register}
+              label="Duration"
               style={{ width: "6rem", margin: " 0 1rem" }}
               name="duration"
               placeholder=""
@@ -316,10 +322,10 @@ const Profile = ({handleNext, register, setValue}) => {
             {isCheckedDBFC2 && (
               <>
                 <span style={{ paddingLeft: ".6rem" }}>/</span>
-                <input
+                <CustomInput
                   type="number"
-                  {...register("durationQuantity")}
-                  className="form-control"
+                  register={register}
+                  label="Duration Quantity"
                   style={{ width: "6rem", margin: " 0 1rem" }}
                   name="durationQuantity"
                   placeholder=""
@@ -347,11 +353,11 @@ const Profile = ({handleNext, register, setValue}) => {
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Fuel Idling Consumption</label>
           <div className="d-flex align-items-center">
-            <input
+            <CustomInput
               type="number"
-              {...register("fuelIdlingConsumption")}
-              className="form-control"
-              style={{ width: "50%", marginRight: "1rem" }}
+              register={register}
+              label="Fuel Idling Consumption"
+              style={{ width:"50%" ,marginRight:"1rem" }}
               name="fuelIdlingConsumption"
               placeholder=""
             />
@@ -377,11 +383,10 @@ const Profile = ({handleNext, register, setValue}) => {
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Consumption Tolerance</label>
           <div className="d-flex align-items-center">
-            <input
+            <CustomInput
               type="number"
-              {...register("consumptionTolerance")}
-              className="form-control"
-              style={{ marginRight: ".5rem" }}
+              register={register}
+              style={{marginRight: ".5rem" }}
               name="consumptionTolerance"
               placeholder=""
             />
@@ -393,10 +398,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             VIN(Chassis) Number :
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("vinNumber")}
-            className="form-control"
+            register={register}
+            label="VIN Number"
             name="vinNumber"
             placeholder=""
           />
@@ -405,10 +410,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Engine Number
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("engineNumber")}
-            className="form-control"
+            register={register}
+            label="Engine Number"
             name="engineNumber"
             placeholder=""
           />
@@ -417,10 +422,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Odometer
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("Odometer")}
-            className="form-control"
+            register={register}
+            label="Odometer"
             name="Odometer"
             placeholder=""
           />
@@ -429,37 +434,38 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             LBS Detection Radius
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("LBSDetectionRadius")}
-            className="form-control"
+            register={register}
+            label="LBS Detection Radius"
             name="LBSDetectionRadius"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Engine Hours
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("engineHours")}
-            className="form-control"
+            register={register}
+            label="Engine Hours"
             name="engineHours"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             No of passenger seats
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("passengerSeats")}
-            className="form-control"
+            register={register}
+            label="Passenger Seats"
             name="passengerSeats"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
+          <Error errorName={errors.passengerSeats} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Cost Based On</label>
@@ -494,17 +500,18 @@ const Profile = ({handleNext, register, setValue}) => {
         </div>
         {isCheckedCBO && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">Distance</label>
+            <label className="form-label">Distance<span className="text-danger">*</span></label>
             <div className="d-flex align-items-center">
-              <input
+              <CustomInput
                 type="number"
-                {...register("distanceCost")}
-                className="form-control"
+                register={register}
+                label="Distance Cost"
                 style={{ marginRight: ".5rem" }}
                 name="distanceCost"
                 placeholder=""
               />
               <span style={{ padding: " 0 .5rem" }}>$/Km</span>
+              <Error errorName={errors.distanceCost} />
             </div>
           </div>
         )}
@@ -512,10 +519,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">Duration</label>
             <div className="d-flex align-items-center">
-              <input
+              <CustomInput
                 type="number"
-                {...register("durationCost")}
-                className="form-control"
+                register={register}
+                label="Duration Cost"
                 style={{ maxWidth: "70%", marginRight: ".5rem" }}
                 name="durationCost"
                 placeholder=""
@@ -544,36 +551,36 @@ const Profile = ({handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             RFID Timeout Duration
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("RFIDTimeoutDuration")}
-            className="form-control"
+            register={register}
+            label="RFIDT Timeout Duration"
             name="RFIDTimeoutDuration"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Sleep Mode Duration
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("sleepModeDuration")}
-            className="form-control"
+            register={register}
+            label="Sleep Mode Duration"
             name="sleepModeDuration"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Minimum Working Hours
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("minimumWorkingHours")}
-            className="form-control"
+            register={register}
+            label="Minimum Working Hours"
             name="minimumWorkingHours"
-            placeholder="Max value upto 5000meters"
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -599,10 +606,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Underweight Tolerance</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("underweightTolerance")}
-                  className="form-control"
+                  register={register}
+                  label="Underweight Tolerance"
                   style={{ marginRight: ".5rem" }}
                   name="underweightTolerance"
                   placeholder=""
@@ -613,10 +620,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Overweight Tolerance</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("overweightTolerance")}
-                  className="form-control"
+                  register={register}
+                  label="Overweight Tolerance"
                   style={{ marginRight: ".5rem" }}
                   name="overweightTolerance"
                   placeholder=""
@@ -627,10 +634,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Loading/Unloading Tolerance </label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("loadingUnloadingTolerance")}
-                  className="form-control"
+                  register={register}
+                  label="Loading/Unloading Tolerance "
                   style={{ marginRight: ".5rem" }}
                   name="loadingUnloadingTolerance"
                   placeholder=""
@@ -685,10 +692,10 @@ const Profile = ({handleNext, register, setValue}) => {
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">No of Tanks</label>
             <div className="d-flex align-items-center">
-              <input
+              <CustomInput
                 type="number"
-                {...register("noOfTanks")}
-                className="form-control"
+                register={register}
+                label="No Of Tanks"
                 style={{ marginRight: ".5rem" }}
                 name="noOfTanks"
                 placeholder=""
@@ -721,10 +728,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis X</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("axisX")}
-                  className="form-control"
+                  register={register}
+                  label="Axis X"
                   style={{ marginRight: ".5rem" }}
                   name="axisX"
                   placeholder=""
@@ -735,10 +742,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis Y</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("axisY")}
-                  className="form-control"
+                  register={register}
+                  label="Axis Y"
                   style={{ marginRight: ".5rem" }}
                   name="axisY"
                   placeholder=""
@@ -749,10 +756,10 @@ const Profile = ({handleNext, register, setValue}) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis Z</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("axisZ")}
-                  className="form-control"
+                  register={register}
+                  label="Axis Z"
                   style={{ marginRight: ".5rem" }}
                   name="axisZ"
                   placeholder=""

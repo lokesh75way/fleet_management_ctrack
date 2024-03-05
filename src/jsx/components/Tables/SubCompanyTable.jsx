@@ -2,6 +2,7 @@ import React from 'react'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
+import { Link } from 'react-router-dom'
 
 const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
     return (
@@ -29,8 +30,12 @@ const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
                     <td>
                         <span>{item.usergroup}</span>
                     </td>
+                 
                     <td>
                         <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
+                    </td>
+                    <td>
+                        <Link to={`/company/${item.id}`} className='text-primary badge badge-count border-0'>{item.companies}</Link>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>

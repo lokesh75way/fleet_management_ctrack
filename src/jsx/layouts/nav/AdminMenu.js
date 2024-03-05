@@ -1,54 +1,87 @@
 import { SVGICON } from "../../constant/theme";
 export const AdminMenuList = [
-    //Content
-    {
-        title: 'YOUR COMPANY',
-        classsChange: 'menu-title'
-    },
-    //Dashboard
-    {
-        title: 'Dashboard',
-        classsChange: 'mm-collapse',
-        iconStyle: SVGICON.Home,
-    },
-    {   title: 'Companay',
-       iconStyle: SVGICON.Employe,
-       to: '/company',
-   },
-    {   title: 'SubUser',
-       iconStyle: SVGICON.Employe,
-       to: '/subUser',
-    },
-    {
-        title: 'Driver',
-        iconStyle: SVGICON.Employe,
-        to: '/driver',
-     },
-    {
-        title: 'Vehicle',
-        iconStyle: SVGICON.Employe,
-        to: '/vehicle',
-     },
-    {
-        title: 'Tracking',
-        classsChange: 'mm-collapse',
-        iconStyle: SVGICON.Task,
-        content: [
-            {
-                title: 'Companies',
-                to: 'company-tracking',
-            },
-            {
-                title: 'Drivers',
-                to: 'driver-tracking',
-            },
-        ]
-    },
+  //Content
+  {
+    title: "YOUR COMPANY",
+    classsChange: "menu-title",
+  },
+  //Dashboard
+  {
+    title: "Dashboard",
+    classsChange: "mm-collapse",
+    iconStyle: SVGICON.Home,
+  },
+  { title: "Company", iconStyle: SVGICON.Employe, to: "/company" },
+  { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
+  {
+    title: "Driver",
+    iconStyle: SVGICON.Employe,
+    to: "/driver",
+  },
+  {
+    title: "Vehicle",
+    iconStyle: SVGICON.Employe,
+    to: "/vehicle",
+  },
+  {
+    title : "Business Group",
+    to: "business-group",
+    iconStyle : SVGICON.Employe
+  },
+  {
+    title: "Branches",
+    iconStyle: SVGICON.Employe,
+    to: "branch",
+  },
+  {
+    title: "Tracking",
+    classsChange: "mm-collapse",
+    iconStyle: SVGICON.Task,
+    content: [
+      {
+        title: "Companies",
+        to: "company-tracking",
+      },
+      {
+        title: "Drivers",
+        to: "driver-tracking",
+      },
+    ],
+  },
   {
     title: "Reports",
+    classsChange: "mm-collapse",
     iconStyle: SVGICON.Reports,
-    to: "/reports",
+    content: [
+      {
+        title: "Reports",
+        to: "/reports",
+      },
+      {
+        title: "Activity",
+        to: "/reports/activity",
+      },
+      {
+        title: "Geofence-Address",
+        to: "/reports/geofence-address",
+      },
+
+      {
+        title: "Fuel",
+        to: "/reports/fuel",
+      },
+
+      {
+        title: "Temperature",
+        to: "/reports/temperature",
+      },
+      {
+        title: "Driver Behaviour",
+        to: "/reports/driver-behaviour",
+      },
+    ],
   },
+
   {
     title: "Technician",
     classsChange: "mm-collapse",
@@ -64,73 +97,46 @@ export const AdminMenuList = [
       },
     ],
   },
-    // {
-    //     title: 'Manage Clients',
-    //     iconStyle: SVGICON.ManageClient,
-    //     to: '/manage-client',
-    // },
-    {
-        title: 'Groups',
+  {
+    title: "Settings",
+    classsChange: "mm-collapse",
+    iconStyle: SVGICON.SettingMenu,
+    content: [
+      {
+        title: "Feature Templates",
         iconStyle: SVGICON.ManageClient,
-        to: '/groups',
-    },
-    {
-        title: 'Alerts',
+        to: "/groups",
+      },
+      {
+        title: "Alert",
+        to: "/alert",
+      },
+      {
+        title: "Expense",
+        to: "/expense",
+      },
+      {
+        title: "General",
+        to: "general",
+      },
+      {
+        title: "Master",
+        to: "master",
+      },
+      {
+        title: "Technician",
+        to: "technician",
+      },
+      {
+        title: "Geofence",
         iconStyle: SVGICON.ManageClient,
-        to: '/alert',
-    },
-    {
-        title: 'Expense',
+        to: "/geofence",
+      },
+      {
+        title: "Classify Trips",
         iconStyle: SVGICON.ManageClient,
-        to: '/expense',
-    },
-    {
-        title: 'Geofence',
-        iconStyle: SVGICON.ManageClient,
-        to: '/geofence',
-    },
-    {
-        title: 'Classify Trips',
-        iconStyle: SVGICON.ManageClient,
-        to: '/classifyTrips',
-    },
-    {
-        title: 'Alerts',
-        iconStyle: SVGICON.ManageClient,
-        to: '/alert',
-    },
-    {
-        title: 'Expense',
-        iconStyle: SVGICON.ManageClient,
-        to: '/expense',
-    },
-    {
-        title: 'Geofence',
-        iconStyle: SVGICON.ManageClient,
-        to: '/geofence',
-    },
-    {
-        title: 'Classify Trips',
-        iconStyle: SVGICON.ManageClient,
-        to: '/classifyTrips',
-    },
-    {
-        title: 'Settings',
-        classsChange:'mm-collapse',
-        iconStyle: SVGICON.SettingMenu,
-        content:[
-            {
-                title:'General',
-                to: 'general'
-            },
-            {
-                title:'Master',
-                to: 'master'
-            },
-            {
-                title:'Technician',
-                to: 'technician'
-            }
-        ]
-    },
+        to: "/classifyTrips",
+      },
+    ],
+  },
 ];

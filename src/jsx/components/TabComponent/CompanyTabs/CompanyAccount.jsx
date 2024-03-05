@@ -4,17 +4,9 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import {
-  branchOptions,
-  employeeDesignationOptions,
-  tagViaOptions,
-  defaultObjectNumberOptions,
-} from "../VehicleTabs/Options";
-import DummyData from '../../../../users.json'
 import CustomInput from "../../Input/CustomInput";
 
-const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , handleSubmit }) => {
-  const { formState: errors, control } = useForm();
+const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isCheckCP, setIsCheckCP] = useState(false);
@@ -26,41 +18,11 @@ const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , han
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
-  const businessUserOptions = DummyData.filter((item) => item.role === "business group").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
-
-  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
-          <Select
-            options={businessUserOptions}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
-          />
-        </div>
-
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Company</label>
-          <Select
-          options={companyOptions}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Company"
-          />
-        </div>
-
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Country</label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -316,4 +278,4 @@ const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , han
   );
 };
 
-export default MyAccount;
+export default CompanyAccount;

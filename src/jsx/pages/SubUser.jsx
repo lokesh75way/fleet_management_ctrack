@@ -7,18 +7,18 @@ import MainPagetitle from '../layouts/MainPagetitle';
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 
 const tableData = [
-    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
-    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France'},    
-    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai'},    
-    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA'},    
-    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA'},    
-    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil'},    
-    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France'},    
-    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai'},    
-    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil'},    
-    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
+    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
+    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil', branches : 4},    
+    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France', branches : 4},    
+    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai', branches : 4},    
+    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA', branches : 4},    
+    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA', branches : 4},    
+    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil', branches : 4},    
+    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France', branches : 4},    
+    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
+    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai', branches : 4},    
+    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil', branches : 4},    
+    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
 ];
 
 const headers = [
@@ -99,9 +99,10 @@ const SubUser = () => {
                                                     <th>User Name</th>
                                                     <th>Age</th>
                                                     <th>Mobile Number</th>
-                                                    <th>User Group</th>
+                                                    <th>Experience</th>
                                                    
                                                     <th>Location</th>
+                                                    <th>Branches</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -125,6 +126,11 @@ const SubUser = () => {
                                                         <td><span className="text-primary">{item.drivingExperience}</span></td>
                                                         <td>
                                                             <span>{item.location}</span>
+                                                        </td>
+                                                        <td>
+                                                            <Link to={`/branch/${item.emplid}`} className="text-primary badge badge-count">
+                                                                {item.branches}
+                                                            </Link>
                                                         </td>
                                                         {/* <td>
                                                             <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>

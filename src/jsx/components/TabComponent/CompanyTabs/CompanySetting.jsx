@@ -15,7 +15,7 @@ import {
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 
-const UserSetting = ({ setValue, register, handleNext , onSubmit , handleSubmit}) => {
+const CompanySetting = ({ setValue, register, handleNext , onSubmit , handleSubmit}) => {
   const { formState: errors, control } = useForm();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -864,4 +864,4 @@ const UserSetting = ({ setValue, register, handleNext , onSubmit , handleSubmit}
   );
 };
 
-export default UserSetting;
+export default CompanySetting;
