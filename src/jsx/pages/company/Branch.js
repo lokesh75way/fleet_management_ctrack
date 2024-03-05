@@ -17,7 +17,7 @@ const headers = [
     { label: "Status", key: "status" },
     { label: "User Group", key: "usergroup" }
 ]
-const SubCompany = () => {
+const Branch = () => {
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
@@ -31,6 +31,7 @@ const SubCompany = () => {
         location:'',
         usergroup:''
     });
+
     const sort = 10;
     const activePag = useRef(0);
     const [test, settest] = useState(0);
@@ -81,7 +82,7 @@ const SubCompany = () => {
     const subCompany = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Sub Company" pageTitle={'Sub Company'} parentTitle={'Home'} />
+            <MainPagetitle mainTitle="Branch" pageTitle={'Branch'} parentTitle={'Home'} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -89,11 +90,11 @@ const SubCompany = () => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Sub Companies</h4>
+                                        <h4 className="heading mb-0">Branches</h4>
                                         <div>
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 onClick={()=>subCompany.current.showModal()}
-                                            >+ Add Sub Company</Link> {" "}
+                                            >+ Add Branch</Link> {" "}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -174,9 +175,9 @@ const SubCompany = () => {
                 editData={editData}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Sub Company" : "Edit Sub Company"}
+                Title={ editData.id === 0 ? "Add Branch" : "Edit Branch"}
             />
         </>
     );
 };
-export default SubCompany;
+export default Branch;

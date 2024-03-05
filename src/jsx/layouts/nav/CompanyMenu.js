@@ -94,8 +94,8 @@ export const CompanyMenuList = [
     iconStyle: SVGICON.Task,
     content: [
       {
-        title: "Sub Companies",
-        to: "sub-company-tracking",
+        title: "Branches",
+        to: "branch-tracking",
       },
       {
         title: "Drivers",
@@ -104,9 +104,9 @@ export const CompanyMenuList = [
     ],
   },
   {
-    title: "Sub Companies",
+    title: "Branches",
     iconStyle: SVGICON.Employe,
-    to: "/sub-company",
+    to: "branch",
   },
   { title: "Staff Management", iconStyle: SVGICON.Employe, to: "/subUser" },
   {

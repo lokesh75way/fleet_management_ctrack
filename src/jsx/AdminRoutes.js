@@ -24,6 +24,7 @@ const VehicleForm = React.lazy(() => import("./pages/admin/settings/CreateForms/
 const DriverForm = React.lazy(() => import("./pages/admin/settings/CreateForms/DriverForm"));
 const TechnicianForm = React.lazy(() => import("./pages/admin/settings/CreateForms/TechnicianForm"));
 const CompanyForm = React.lazy(() => import("./pages/admin/settings/CreateForms/CompanyForm"));
+const BusinessForm = React.lazy(() => import("./pages/admin/settings/CreateForms/BusinessForm"));
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
@@ -39,13 +40,13 @@ const Error404 = React.lazy(() => import("./pages/Error404"));
 
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
 const Company = React.lazy(() => import("./pages/admin/Compnay"));
+const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
+const Branch = React.lazy(() => import("./pages/company/Branch"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 // import Permission from "./pages/Permission";
-
-
 
 
 const AdminRoutes = () => {
@@ -61,6 +62,7 @@ const AdminRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
+    { url: "business", component: <Business /> },
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
     { url: "technician", component: <Technician /> },
@@ -79,6 +81,8 @@ const AdminRoutes = () => {
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
+    { url: "business/create", component: <BusinessForm /> },
+    { url: "branch", component: <Branch /> },
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "permission", component: <Permission /> },
