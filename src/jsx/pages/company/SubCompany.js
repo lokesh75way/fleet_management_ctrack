@@ -1,6 +1,6 @@
 
 import React, {useState, useRef, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Route, useParams} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
@@ -16,8 +16,13 @@ const headers = [
     { label: "Location", key: "location" },
     { label: "Status", key: "status" },
     { label: "User Group", key: "usergroup" }
-]
+] 
 const SubCompany = () => {
+
+    const {id} = useParams();
+    console.log("User Id is :- ", id)
+
+
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );

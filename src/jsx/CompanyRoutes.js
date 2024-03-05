@@ -181,7 +181,7 @@ const CompanyRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
     { url: "geofencemap", component: <GeofenceMap /> },
-    { url: "sub-company", component: <SubCompany /> },
+    { url: "sub-company/:id", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },

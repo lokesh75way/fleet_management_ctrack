@@ -27,6 +27,7 @@ const AppProfile = ({ Title, editData, setEditData }) => {
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
   };
+  
   return (
     <>
       <MainPagetitle
