@@ -144,5 +144,30 @@ export const fuelEconomyScalingOptions = [
   { value: "km/i", label: "Km/I" },
   { value: "i/100", label: "I/100" },
 ];
-
+export const severityOptions = [
+  { value: "low", label: "low" },
+  { value: "medium", label: "medium" },
+  { value: "high", label: "high" },
+];
+export const taskCategoryOptions = [
+  { value: "Installation", label: "Installation" },
+  { value: "Maintainance", label: "Maintainance" },
+];
+export const technicianOptions = [
+  { value: "Arpit", label: "Arpit" },
+  { value: "Abhinav", label: "Abhinav" },
+  { value: "Aasish", label: "Aasish" },
+];
+export const categoryOptions = [
+  { value: "Area", label: "Area" },
+  { value: "Stay In Zone", label: "Stay In Zone" },
+  { value: "Stay Awat From Zone", label: "Stay Awat From Zone" },
+];
+export const toleranceOptions = [
+  { value: "5", label: "5" },
+  { value: "10", label: "10" },
+  { value: "15", label: "15" },
+  { value: "20", label: "20" },
+  { value: "40", label: "40" },
+];
 export const options = [{ value: "West Company", label: "West Company" }];

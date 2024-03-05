@@ -8,18 +8,16 @@ import {
   StateSelect,
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { useForm, Controller } from "react-hook-form";
-import { branchOptions } from "../components/TabComponent/VehicleTabs/Options";
+import { useForm, Controller, FormProvider } from "react-hook-form";
 import Select from "react-select";
 import Error from "../components/Error/Error";
+import CustomInput from "../components/Input/CustomInput";
+import {taskCategoryOptions, severityOptions, technicianOptions, branchOptions} from '../components/TabComponent/VehicleTabs/Options'
 
 const TechnicianOffcanvas = forwardRef(
-  ({ Title, handleSubmit, editData, setEditData }, ref) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [startDate2, setStartDate2] = useState(new Date());
+  ({ Title, handleSubmit, editData, setEditData, control, setValue, getValues,register, errors, onSubmit }, ref) => {
     const [addEmploye, setAddEmploye] = useState(false);
-    const [countryid, setCountryid] = useState(0);
-    const [stateid, setstateid] = useState(0);
+    const [tempValue, setTempValue] = useState();
     useImperativeHandle(ref, () => ({
       showModal() {
         setAddEmploye(true);
@@ -31,8 +29,6 @@ const TechnicianOffcanvas = forwardRef(
       console.log(e.target.value);
       setEditData({ ...editData, [name]: value });
     };
-
-    const { control, getValues, formState: errors } = useForm();
 
     const [selectedOption, setSelectedOption] = useState(null);
     const customStyles = {
@@ -64,30 +60,9 @@ const TechnicianOffcanvas = forwardRef(
           </div>
           <div className="offcanvas-body">
             <div className="container-fluid">
-              <form onClick={(e) => handleSubmit(e)}>
+              <FormProvider>
+              <form onSubmit={ handleSubmit(onSubmit)}>
                 <div className="row">
-                  {/* <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">
-                      Company <span className="text-danger">*</span>
-                    </label>
-                    <Controller
-                      name="branch"
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          // onChange={(newValue) => setValue("branch", newValue.value)}
-                          options={branchOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={branchOptions[0]}
-                        />
-                      )}
-                    />
-                    <Error errorName={errors.branch} />
-                  </div> */}
-
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Branch <span className="text-danger">*</span>
@@ -98,7 +73,7 @@ const TechnicianOffcanvas = forwardRef(
                       rules={{ required: true }}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
-                          // onChange={(newValue) => setValue("branch", newValue.value)}
+                          onChange={(newValue) => {setTempValue(newValue.value);setValue("branch", newValue.value)}}
                           options={branchOptions}
                           ref={ref}
                           name={name}
@@ -107,7 +82,7 @@ const TechnicianOffcanvas = forwardRef(
                         />
                       )}
                     />
-                    <Error errorName={errors.branch} />
+                    { !getValues('branch') && <Error errorName={errors.branch} />}
                   </div>
 
                   <div className="col-xl-6 mb-3">
@@ -115,42 +90,42 @@ const TechnicianOffcanvas = forwardRef(
                       Technicnan <span className="text-danger">*</span>
                     </label>
                     <Controller
-                      name="tasks"
+                      name="technician"
                       control={control}
                       rules={{ required: true }}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
-                          // onChange={(newValue) => setValue("branch", newValue.value)}
-                          // options={branchOptions}
+                          onChange={(newValue) => {setTempValue(newValue.value);setValue("technician", newValue.value)}}
+                          options={technicianOptions}
                           ref={ref}
                           name={name}
                           styles={customStyles}
-                          // defaultValue={branchOptions[0]}
+                          defaultValue={technicianOptions[0]}
                         />
                       )}
                     />
-                    <Error errorName={errors.branch} />
+                    {!getValues('technician') && <Error errorName={errors.technician} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Task Category <span className="text-danger">*</span>
                     </label>
                     <Controller
-                      name="tasks"
+                      name="c"
                       control={control}
                       rules={{ required: true }}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
-                          // onChange={(newValue) => setValue("branch", newValue.value)}
-                          // options={branchOptions}
+                          onChange={(newValue) =>{setTempValue(newValue.value); setValue("taskCategory", newValue.value)}}
+                          options={taskCategoryOptions}
                           ref={ref}
                           name={name}
                           styles={customStyles}
-                          // defaultValue={branchOptions[0]}
+                          defaultValue={taskCategoryOptions[0]}
                         />
                       )}
                     />
-                    <Error errorName={errors.branch} />
+                     { !getValues('taskCategory') && <Error errorName={errors.taskCategory} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label
@@ -159,42 +134,45 @@ const TechnicianOffcanvas = forwardRef(
                     >
                       Task Name <span className="text-danger">*</span>
                     </label>
-                    <input
+                    <CustomInput
                       type="text"
-                      className="form-control"
-                      id="exampleFormControlInput2"
+                      register={register}
+                      name="taskName"
+                      label="Task Name"
                       placeholder=""
                     />
+                    <Error errorName={errors.taskName} />
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Task Priority <span className="text-danger">*</span>
                     </label>
                     <Controller
-                      name="tasks"
+                      name="taskPriority"
                       control={control}
                       rules={{ required: true }}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
-                          // onChange={(newValue) => setValue("branch", newValue.value)}
-                          // options={branchOptions}
+                          onChange={(newValue) => {setTempValue(newValue.value); setValue("taskPriority", newValue.value)}}
+                          options={severityOptions}
                           ref={ref}
                           name={name}
                           styles={customStyles}
-                          // defaultValue={branchOptions[0]}
+                          defaultValue={severityOptions[0]}
                         />
                       )}
                     />
-                    <Error errorName={errors.branch} />
+                   { !getValues('taskPriority') && <Error errorName={errors.taskPriority} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Contact Person Name 
                     </label>
-                    <input
+                    <CustomInput
                       type="text"
-                      className="form-control"
-                      id="exampleFormControlInput2"
+                      register={register}
+                      name="contactPersonName"
+                      label="Contact Person Name"
                       placeholder=""
                     />
                   </div>
@@ -205,21 +183,24 @@ const TechnicianOffcanvas = forwardRef(
                     >
                       Contact Person Number
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="exampleFormControlInput2"
+                    <CustomInput
+                      type="number"
+                      register={register}
+                      name="contactPersonNumber"
+                      label="Contact Person Number"
                       placeholder=""
                     />
+                    <Error errorName={errors.contactPersonNumber} />
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Service Location<span className="text-danger">*</span>
                     </label>
-                    <input
+                    <CustomInput
                       type="text"
-                      className="form-control"
-                      id="exampleFormControlInput2"
+                      name="serviceLocation"
+                      register={register}
+                      label="Service Location"
                       placeholder=""
                     />
                   </div>
@@ -236,7 +217,7 @@ const TechnicianOffcanvas = forwardRef(
                             getValues("plannedReportingDate") || new Date()
                           }
                           className="form-control"
-                          // onChange={(newValue) => setValue("manufactureDate", newValue)}
+                          onChange={(newValue) => setValue("plannedReportingDate", newValue)}
                         />
                       )}
                     />
@@ -248,62 +229,19 @@ const TechnicianOffcanvas = forwardRef(
                     <div className="mb-3 ">
                       <textarea
                         className="form-txtarea form-control"
+                        {...register}
+                        name='description'
+                        label="Description"
                         rows="8"
                         id="comment"
                       ></textarea>
                     </div>
                   </div>
-                  {/* <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput99" className="form-label">Created Date<span className="text-danger">*</span></label>                                    
-                                    <DatePicker 
-                                        className="form-control"
-                                        selected={startDate} 
-                                        onChange={(date) => setStartDate(date)} 
-                                    />
-                                </div> */}
-                  {/* <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput8" className="form-label">Date of Birth <span className="text-danger">*</span></label>                                    
-                                    <DatePicker 
-                                        className="form-control"
-                                        selected={startDate2} 
-                                        onChange={(date) => setStartDate2(date)} 
-                                    />
-                                </div>
-                                <div className="col-xl-6 mb-3">
-                                    <label htmlFor="exampleFormControlInput10" className="form-label">Reporting To <span className="text-danger">*</span></label>
-                                    <input type="text" className="form-control" id="exampleFormControlInput10" placeholder="" />
-                                </div>		
-                                <div className="col-xl-6 mb-3">
-                                    <label className="form-label">Language Select <span className="text-danger">*</span></label>
-                                    <select className="default-select form-control">
-                                        <option  data-display="Select">Please select</option>
-                                        <option value="html">English</option>
-                                        <option value="css">Hindi</option>
-                                        <option value="javascript">Canada</option>
-                                    </select>
-                                </div>
-                                <div className="col-xl-6 mb-3">
-                                    <label className="form-label">User Role <span className="text-danger">*</span></label>
-                                    <select className="default-select form-control">
-                                        <option  data-display="Select">Please select</option>
-                                        <option value="html">Parmanent</option>
-                                        <option value="css">Parttime</option>
-                                        <option value="javascript">Per Hours</option>
-                                    </select>
-                                </div>
-                                <div className="col-xl-12 mb-3">
-                                    <label className="form-label">Address <span className="text-danger">*</span></label>
-                                    <textarea rows="2" className="form-control"></textarea>
-                                </div>
-                                <div className="col-xl-12 mb-3">
-                                    <label className="form-label">About <span className="text-danger">*</span></label>
-                                    <textarea rows="2" className="form-control"></textarea>
-                                </div>	 */}
                 </div>
                 <div>
                   <button
                     type="submit"
-                    onClick={() => setAddEmploye(false)}
+                    onClick={() => {handleSubmit(onSubmit)}}
                     className="btn btn-primary me-1"
                   >
                     Submit
@@ -317,6 +255,7 @@ const TechnicianOffcanvas = forwardRef(
                   </Link>
                 </div>
               </form>
+              </FormProvider>
             </div>
           </div>
         </Offcanvas>

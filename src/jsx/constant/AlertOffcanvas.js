@@ -10,6 +10,7 @@ import {
   branchOptions,
   alertTypeOptions,
   objectOptions,
+  severityOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
 
@@ -90,7 +91,8 @@ const AlertOffcanvas = forwardRef(
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("branch", newValue.value)
+                            {setTempValue(newValue.value);
+                            setValue("branch", newValue.value)}
                           }
                           options={branchOptions}
                           ref={ref}
@@ -165,7 +167,8 @@ const AlertOffcanvas = forwardRef(
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("object", newValue.value)
+                            {setTempValue(newValue.value)
+                            setValue("object", newValue.value)}
                           }
                           options={objectOptions}
                           ref={ref}
@@ -227,7 +230,7 @@ const AlertOffcanvas = forwardRef(
                         />
                       )}
                     />
-                    <Error errorName={errors.alertType} />
+                    {!getValues('alertType') && <Error errorName={errors.alertType} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">Value</label>
@@ -372,6 +375,30 @@ const AlertOffcanvas = forwardRef(
                     </div>
                   </div>
                 </div>
+                <div className="col-xl-6 mb-3 ">
+                    <label className="form-label">
+                      Severity <span className="text-danger">*</span>
+                    </label>
+                    <Controller
+                      name="severity"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            {setTempValue(newValue.value);
+                            setValue("severity", newValue.value)}
+                          }
+                          options={severityOptions}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={severityOptions[0]}
+                        />
+                      )}
+                    />
+                    {!getValues('severity') && <Error errorName={errors.severity} />}
+                  </div>
                 <div>
                   <button
                     type="submit"

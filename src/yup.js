@@ -113,6 +113,7 @@ export const alertSchema = yup
    alertType: yup.string().required("Select an Alert Type !!"),
    alertValue: yup.string().required("Choose an Alert Value !!"),
    validDays: yup.string().required("Choose Valid day options !!"),
+   severity: yup.string().required("Choose Severity options !!"),
   //  userName: yup.string().required("User Name is required !!"),
   })
   .required();
@@ -126,5 +127,54 @@ export const expenseSchema = yup
    toDate: yup.date().required("Enter the date !!"),
    referenceNumber: yup.number().required("Reference Number a required !!"),
   //  userName: yup.string().required("User Name is required !!"),
+  })
+  .required();
+export const technicianTaskSchema = yup
+  .object({
+   branch: yup.string().required("Select a Branch !!"),
+   technician: yup.string().required("Select a Technician !!"),
+   taskCategory: yup.string().required("Select a Category !!"),
+   taskPriority: yup.string().required("Select a task priority !!"),
+   taskName: yup.string().required("Task Name is required !!"),
+   contactPersonNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+
+  })
+  .required();
+export const geofenceMapSchema = yup
+  .object({
+   company: yup.string().required("Enter company name !!"),
+   name: yup.string().required("Enter Geofence name !!"),
+   category: yup.string().required("Select a Category !!"),
+   geofenceAccess: yup.string().required("Choose access method !!"),
+   contactNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+
+  })
+  .required();
+export const technicianGeneralSchema = yup
+  .object({
+    firstName: yup.string().required("First Name is required !!"),
+    middleName: yup.string(),
+    lastName: yup.string().required("Last Name is required !!"),
+    technicianNumber: yup.number().required("Technician Number is required !!"),
+    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required("Mobile Number is required !!"),
+    emergencyContact: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+    dateOfJoin: yup.string().required("Date of join is required"),
+    dateOfBirth: yup.string().required("Date of birth is required"),
+
+  })
+  .required();
+export const technicianAddressSchema = yup
+  .object({
+    zipCode: yup.number().required("Zip Code is required !!"),
+    country: yup.string().required('Please select a Country !!'),
+    city: yup.string().required('Please enter a City !!'),
+    street1: yup.string().required('Please enter street1 address !!'),
+  })
+  .required();
+export const technicianLeaveSchema = yup
+  .object({
+   leaveTime: yup.string().required("Select type of leave !!"),
+   noOfDays: yup.number().required("Enter total number of leaves !!"),
+
   })
   .required();

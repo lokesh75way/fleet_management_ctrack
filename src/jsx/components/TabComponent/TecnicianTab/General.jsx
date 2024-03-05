@@ -1,20 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import {
-  adminOptions,
-  resellerOptions,
-} from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
 
-const General = ({ handleNext, register, setValue}) => {
-  const{control, getValues,formState: errors} = useForm()
+const General = ({ register, setValue, control, errors,getValues, handleSubmit, onSubmit}) => {
   
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOption2, setSelectedOption2] = useState(null);
-  const [selectedOption3, setSelectedOption3] = useState(null);
+  const [tempValue, setTempValue] = useState();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -25,70 +20,18 @@ const General = ({ handleNext, register, setValue}) => {
     setSelectedOption(e.target.value)
     setValue('fuelSensor', e.target.value)
   }
-  const handleChange2 = (e)=>{
-    setSelectedOption2(e.target.value)
-    setValue('verificationVia', e.target.value)
-  }
-  const handleChange3 = (e)=>{
-    setSelectedOption3(e.target.value)
-    setValue('verificationVia', e.target.value)
-  }
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        {/* <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Admin 
-          </label>
-          <Controller
-            name="admin"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => setValue("admin", newValue.value)}
-                options={adminOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={adminOptions[0]}
-              />
-            )}
-          />
-          <Error errorName={errors.admin} />
-        </div> */}
-        {/* <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Reseller 
-          </label>
-          <Controller
-            name="reseller"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => setValue("reseller", newValue.value)}
-                options={resellerOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={resellerOptions[0]}
-              />
-            )}
-          />
-          <Error errorName={errors.reseller} />
-        </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             First Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("firstName", {
-              required: "First Name is required",
-            })}
-            className="form-control"
+            register={register}
+            label="First Name"
             name="firstName"
             placeholder=""
           />
@@ -98,25 +41,22 @@ const General = ({ handleNext, register, setValue}) => {
           <label className="form-label">
             Middle Name 
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("middleName")}
-            className="form-control"
+            register={register}
+            label="middleName"
             name="middleName"
             placeholder=""
           />
-
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Last Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("lastName", {
-              required: "Last Name is required",
-            })}
-            className="form-control"
+            register={register}
+            label="Last Name"
             name="lastName"
             placeholder=""
           />
@@ -126,13 +66,14 @@ const General = ({ handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Technician Number 
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("technicianNumber")}
-            className="form-control"
+            register={register}
+            label="Technician Number"
             name="technicianNumber"
             placeholder=""
           />
+          <Error errorName={errors.technicianNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Gender</label>
@@ -168,137 +109,34 @@ const General = ({ handleNext, register, setValue}) => {
               </label>
             </div>
           </div>
+          {!getValues('gender') && <Error errorName={errors.gender} />}
         </div>
-        {/* <div className="col-xl-6 mb-3">
-          <label className="form-label">Verification Via</label>
-          <div className="basic-form" style={{ marginTop: ".5rem" }}>
-            <div className="form-check custom-checkbox form-check-inline">
-              <input
-                type="radio"
-                className="form-check-input"
-                value='otp'
-                checked={selectedOption2 === 'otp'}
-                onChange={handleChange2}
-              />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
-                OTP
-              </label>
-            </div>
-            <div className="form-check custom-checkbox form-check-inline">
-              <input
-                type="radio"
-                className="form-check-input"
-                value='password'
-                checked={selectedOption2 === 'password'}
-                onChange={handleChange2}
-              />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
-                Password
-              </label>
-            </div>
-          </div>
-        </div> */}
-
-        {/* {
-          selectedOption2 === 'password' && <>
-            <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-             Password 
-          </label>
-          <input
-            type="password"
-            {...register("password")}
-            className="form-control"
-            name="password"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-          Retype password  
-          </label>
-          <input
-            type="password"
-            {...register("retypePassword")}
-            className="form-control"
-            name="retypePassword"
-            placeholder=""
-          />
-        </div>
-          </>
-        } */}
-        {
-          selectedOption2 === 'otp' && <>
-            <div className="col-xl-6 mb-3">
-          <label className="form-label">OTP Via</label>
-          <div className="basic-form" style={{ marginTop: ".5rem" }}>
-            <div className="form-check custom-checkbox form-check-inline">
-              <input
-                type="radio"
-                className="form-check-input"
-                value='sms'
-                checked={selectedOption3 === 'sms'}
-                onChange={handleChange3}
-              />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
-                SMS
-              </label>
-            </div>
-            <div className="form-check custom-checkbox form-check-inline">
-              <input
-                type="radio"
-                className="form-check-input"
-                value='email'
-                checked={selectedOption3 === 'email'}
-                onChange={handleChange3}
-              />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
-                Email
-              </label>
-            </div>
-          </div>
-        </div>
-          </>
-        }
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Mobile Number <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("mobileNumber",{
-                required: "Mobile Number is required",
-              })}
-            className="form-control"
+            register={register}
+            label="Mobile Number"
             name="mobileNumber"
             placeholder=""
           />
-           <Error errorName={errors.firstName} />
+           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Emergency Contact 
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("emergencyContact")}
-            className="form-control"
+            register={register}
+            label="Emergency Contact"
             name="emergencyContact"
             placeholder=""
           />
+          <Error errorName={errors.emergencyContact} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Date of Join</label>
@@ -309,10 +147,11 @@ const General = ({ handleNext, register, setValue}) => {
               <DatePicker
                 selected={getValues("dateOfJoin") || new Date()}
                 className="form-control"
-                onChange={(newValue) => setValue("dateOfJoin", newValue)}
+                onChange={(newValue) => {setTempValue(newValue); setValue("dateOfJoin", newValue)}}
               />
             )}
           />
+          {!getValues('dateOfJoin') && <Error errorName={errors.dateOfJoin} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label"> Date of Birth</label>
@@ -323,10 +162,11 @@ const General = ({ handleNext, register, setValue}) => {
               <DatePicker
                 selected={getValues("dateOfBirth") || new Date()}
                 className="form-control"
-                onChange={(newValue) => setValue("dateOfBirth", newValue)}
+                onChange={(newValue) => {setTempValue(newValue); setValue("dateOfBirth", newValue)}}
               />
             )}
           />
+          {!getValues('dateOfBirth') && <Error errorName={errors.dateOfBirth} />}
         </div>
 
         </div>
@@ -338,7 +178,7 @@ const General = ({ handleNext, register, setValue}) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
       </div>
     </div>
   );
