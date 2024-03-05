@@ -14,21 +14,6 @@ export const SubCompanyMenuList = [
     to: "/dashboard",
   },
   {
-    title: "Business Group",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-      
-    ],
-  },
-  {
-    title: "Company",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-    ],
-  },
-  {
     title: "Sub Companies",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Task,
@@ -115,7 +100,7 @@ export const SubCompanyMenuList = [
         iconStyle: SVGICON.Task,
         content: [
           {
-            title: "Sub Companies",
+            title: "Branch",
             to: "sub-company-tracking",
           },
           {
@@ -125,7 +110,7 @@ export const SubCompanyMenuList = [
         ],
       },
       {
-        title: "Sub Companies",
+        title: "Branch",
         iconStyle: SVGICON.Employe,
         to: "/sub-company",
       },

@@ -16,6 +16,7 @@ export const AdminMenuList = [
     title: "Business Group",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Employe,
+    to:"/business",
     content: [
       {
         title: "Tracking",
@@ -54,11 +55,8 @@ export const AdminMenuList = [
     title: "Company",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Employe,
+    to:"/company",
     content: [
-      {   title: 'Add Company',
-          iconStyle: SVGICON.Employe,
-          to: '/company',
-      },
       {
         title: "Alerts",
         iconStyle: SVGICON.ManageClient,
@@ -82,9 +80,10 @@ export const AdminMenuList = [
     ],
   },
   {
-    title: "Sub Company",
+    title: "Branch",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Employe,
+    to:"/branch",
     content: [
       {
         title: "Driver",

@@ -134,7 +134,7 @@ const SideBar = () => {
                 >
                   {data.content && data.content.length > 0 ?
                     <>
-                      <Link to={"#"}
+                      <Link to={data.to}
                         className="has-arrow"
                         onClick={() => { handleMenuActive(data.title) }}
                       >

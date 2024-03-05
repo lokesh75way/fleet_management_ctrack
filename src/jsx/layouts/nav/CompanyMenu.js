@@ -14,24 +14,10 @@ export const CompanyMenuList = [
     to: "/dashboard",
   },
   {
-    title: "Business Group",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-      
-    ],
-  },
-  {
-    title: "Company",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-    ],
-  },
-  {
-    title: "Sub Companies",
+    title: "Branch",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Task,
+    to:"branch",
     content: [
 
       {
@@ -115,7 +101,7 @@ export const CompanyMenuList = [
         iconStyle: SVGICON.Task,
         content: [
           {
-            title: "Sub Companies",
+            title: "Branch",
             to: "sub-company-tracking",
           },
           {
@@ -125,7 +111,7 @@ export const CompanyMenuList = [
         ],
       },
       {
-        title: "Sub Companies",
+        title: "Branch",
         iconStyle: SVGICON.Employe,
         to: "/sub-company",
       },

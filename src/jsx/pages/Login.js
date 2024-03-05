@@ -3,7 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { loadingToggleAction,loginAction,
 } from '../../store/actions/AuthActions';
-import users from './usersStatic';
+import users from '../../users.json'
 
 
 import logo from '../../images/logo/logo-full.png';
@@ -14,10 +14,10 @@ function Login (props) {
 	const [heartActive, setHeartActive] = useState(true);
 	
 	const navigate = useNavigate();
-    const [email, setEmail] = useState('demo@example.com');
+    const [email, setEmail] = useState('admin@example.com');
     let errorsObj = { email: '', password: '' };
     const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('123456');
+    const [password, setPassword] = useState('admin123');
     const dispatch = useDispatch();
 
     function onLogin(e) {
@@ -37,8 +37,24 @@ function Login (props) {
         if (error) {
 			return ;
 		}		
-		dispatch(loadingToggleAction(true));
-		dispatch(loginAction(email, password, navigate));
+
+		// old login method
+
+		// dispatch(loadingToggleAction(true));
+		// dispatch(loginAction(email, password, navigate));
+
+
+		// new temporary login method
+		const userFound = users.find(user => user.email === email && user.password === password);
+		if (userFound) {
+			localStorage.setItem('role', userFound.role);
+			dispatch(loadingToggleAction(true));
+			dispatch(loginAction('demo@example.com', '123456', navigate));
+
+		} else {
+			alert('Invalid email or password');
+		}
+		
     }
   	return (        
 		<div className="page-wraper">

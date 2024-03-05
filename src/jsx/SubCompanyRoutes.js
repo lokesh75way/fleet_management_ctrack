@@ -168,7 +168,7 @@ const TemperatureChart = React.lazy(() => import("./pages/company/charts/Tempera
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 const Permission = React.lazy(() => import("./pages/Permission"));
 const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
-const BusinessGroupRoutes = () => {
+const SubCompanyRoutes = () => {
 
   const allroutes = [
     { url: "dashboard", component: <Home /> },
@@ -359,4 +359,4 @@ const BusinessGroupRoutes = () => {
 };
 
 
-export default BusinessGroupRoutes;
+export default SubCompanyRoutes;
