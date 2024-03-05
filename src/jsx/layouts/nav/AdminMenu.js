@@ -1,43 +1,49 @@
 import { SVGICON } from "../../constant/theme";
 export const AdminMenuList = [
-  //Content
-  {
-    title: "YOUR COMPANY",
-    classsChange: "menu-title",
-  },
-  //Dashboard
-  {
-    title: "Dashboard",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Home,
-  },
-  { title: "Companay", iconStyle: SVGICON.Employe, to: "/company" },
-  { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
-  {
-    title: "Driver",
-    iconStyle: SVGICON.Employe,
-    to: "/driver",
-  },
-  {
-    title: "Vehicle",
-    iconStyle: SVGICON.Employe,
-    to: "/vehicle",
-  },
-  {
-    title: "Tracking",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Task,
-    content: [
-      {
-        title: "Companies",
-        to: "company-tracking",
-      },
-      {
-        title: "Drivers",
-        to: "driver-tracking",
-      },
-    ],
-  },
+    //Content
+    {
+        title: 'YOUR COMPANY',
+        classsChange: 'menu-title'
+    },
+    //Dashboard
+    {
+        title: 'Dashboard',
+        classsChange: 'mm-collapse',
+        iconStyle: SVGICON.Home,
+    },
+    {   title: 'Company',
+       iconStyle: SVGICON.Employe,
+       to: '/company',
+   },
+    {   title: 'SubUser',
+       iconStyle: SVGICON.Employe,
+       to: '/subUser',
+    },
+    {
+        title: 'Driver',
+        iconStyle: SVGICON.Employe,
+        to: '/driver',
+     },
+    {
+        title: 'Vehicle',
+        iconStyle: SVGICON.Employe,
+        to: '/vehicle',
+     },
+    {
+        title: 'Tracking',
+        classsChange: 'mm-collapse',
+        iconStyle: SVGICON.Task,
+        content: [
+            {
+                title: 'Companies',
+                to: 'company-tracking',
+            },
+            {
+                title: 'Drivers',
+                to: 'driver-tracking',
+            },
+        ]
+    },
   {
     title: "Reports",
     iconStyle: SVGICON.Reports,
