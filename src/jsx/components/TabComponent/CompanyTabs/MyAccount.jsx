@@ -10,7 +10,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isCheckCP, setIsCheckCP] = useState(false);
-  const [isCheckESP, setIsCheckEsP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -230,20 +229,20 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street2
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street2")}
-            className="form-control"
+            register={register}
+            label="Street2"
             name="street2"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Contact Person</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("contactPerson")}
-            className="form-control"
+            register={register}
+            label="Contact Person"
             name="contactPerson"
             placeholder=""
           />
@@ -252,10 +251,10 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Fax Number
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("faxNumber")}
-            className="form-control"
+            register={register}
+            label="Fax Number"
             name="faxNumber"
             placeholder=""
           />

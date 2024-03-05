@@ -13,10 +13,8 @@ import {
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
 
-const General = ({ handleNext, register, setValue, getValues, errors}) => {
-  const{control} = useForm()
-  
-  const [selectedOption, setSelectedOption] = useState(null);
+const General = ({ register, setValue, getValues, errors, control, handleSubmit, onSubmit}) => {
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -239,7 +237,7 @@ const General = ({ handleNext, register, setValue, getValues, errors}) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
       </div>
     </div>
   );

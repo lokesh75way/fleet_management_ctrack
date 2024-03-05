@@ -4,7 +4,7 @@ const Error = ({ errorName }) => {
   return (
     <>
       {errorName && (
-        <span className="text-danger text-sm m-2">{errorName.message}</span>
+        <span className="text-danger text-sm" style={{marginBottom:"1rem"}}>{errorName.message}</span>
       )}
     </>
   );
