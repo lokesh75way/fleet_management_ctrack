@@ -25,7 +25,7 @@ const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     <td>
                         <span>{item.gender}</span>
                     </td>
-                    <td><span className="text-primary">{item.drivingExperience}</span></td>
+                    <td><span className="text-primary ">{item.drivingExperience}</span></td>
                     <td>
                         <span>{item.location}</span>
                     </td>

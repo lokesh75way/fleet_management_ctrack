@@ -27,7 +27,7 @@ const Report = React.lazy(() => import("./components/Dashboard/Report"));
 const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
 const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
-const SubCompanyTracking = React.lazy(() => import("./pages/company/tracking/SubCompanyTracking"));
+// const SubCompanyTracking = React.lazy(() => import("./pages/company/tracking/SubCompanyTracking"));
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
@@ -136,7 +136,7 @@ const Pickers = React.lazy(() => import("./components/Forms/Pickers/Pickers"));
 const FormValidation = React.lazy(() => import("./components/Forms/FormValidation/FormValidation"));
 const Error404 = React.lazy(() => import("./pages/Error404"));
 const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
-const SubCompany = React.lazy(() => import("./pages/company/SubCompany"));
+// const SubCompany = React.lazy(() => import("./pages/company/SubCompany"));
 
 //Reports
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
@@ -181,7 +181,7 @@ const SubCompanyRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
     { url: "geofencemap", component: <GeofenceMap /> },
-    { url: "sub-company", component: <SubCompany /> },
+    // { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
@@ -222,10 +222,10 @@ const SubCompanyRoutes = () => {
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
     { url: "Technician", component: <Technician /> },
-    { url: "sub-company", component: <SubCompany /> },
+    // { url: "sub-company", component: <SubCompany /> },
     { url: "driver", component: <Driver /> },
     { url: "driver-tracking", component: <DriverTracking /> },
-    { url: "sub-company-tracking", component: <SubCompanyTracking /> },
+    // { url: "sub-company-tracking", component: <SubCompanyTracking /> },
 
     //Update Pages
     { url: "svg-icon", component: <SvgIcons /> },

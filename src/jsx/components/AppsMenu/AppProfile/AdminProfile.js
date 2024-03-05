@@ -1,39 +1,38 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
-import { FormProvider, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import { FormProvider } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
-import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
-import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
-import General from "../../../../components/TabComponent/VehicleTabs/General";
-import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link } from "react-router-dom";
+import Account from "../../TabComponent/ProfileTabs/Account";
+import DataAccess from "../../TabComponent/ProfileTabs/DataAccess";
+import MainPagetitle from "../../../layouts/MainPagetitle";
+import useDriverSubmit from "../../../../hooks/useDriverSubmit";
 
-const VehicleForm = ({ Title, editData, setEditData }) => {
+
+const AdminProfile = ({ Title, editData, setEditData }) => {
   const {
-    onSubmit,
     register,
+    onSubmit,
     handleSubmit,
-    setValue,
-    getValues,
     control,
     formState: { errors },
-  } = useVehicleSubmit();
+    setValue,
+    getValues,
+  } = useDriverSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Document"];
-  const component = [General, Profile, Document];
+  const tabHeading = ["Account", "Data Access"];
+  const component = [Account, DataAccess];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
   };
-
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
-        pageTitle={"Create"}
-        parentTitle={"Vehicle"}
+        mainTitle="My Profile"
+        pageTitle={"my-profile"}
+        parentTitle={"manage-profile"}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -65,14 +64,12 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
                       >
                         <Component
                           data={tabHeading}
-                          register={register}
-                          setValue={setValue}
-                          getValues={getValues}
                           control={control}
+                          setValue={setValue}
+                          register={register}
+                          getValues={getValues}
                           errors={errors}
                           handleNext={handleNext}
-                          handleSubmit={handleSubmit}
-                          onSubmit={onSubmit}
                         />
                       </Tab.Pane>
                     );
@@ -86,4 +83,4 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
     </>
   );
 };
-export default VehicleForm;
+export default AdminProfile;

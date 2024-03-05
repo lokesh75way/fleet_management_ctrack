@@ -11,9 +11,10 @@ import {
   unitOfDistanceOptions,
   speedDetectionOptions,
 } from "./Options";
+import CustomInput from "../../Input/CustomInput";
 
-const General = ({ handleNext, register, setValue}) => {
-  const{control, getValues,formState: errors} = useForm()
+const General = ({ handleNext, register, setValue, getValues, errors}) => {
+  const{control} = useForm()
   
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
@@ -51,12 +52,11 @@ const General = ({ handleNext, register, setValue}) => {
           <label className="form-label">
             Vehicle Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("vehicleName", {
-              required: "Vehicle Name is required",
-            })}
-            className="form-control"
+            required
+            register={register}
+            label='Vehicle Name'
             name="vehicleName"
             placeholder=""
           />
@@ -72,7 +72,7 @@ const General = ({ handleNext, register, setValue}) => {
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("deviceType", newValue.value)}
+                onChange={(newValue) => {setValue("deviceType", newValue.value); console.log(getValues('deviceType'))}}
                 options={deviceTypeOptions}
                 ref={ref}
                 name={name}
@@ -81,18 +81,18 @@ const General = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.deviceType} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             IMEI Number <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("IMEINumber", {
-              required: "IMEI Number is required",
-            })}
-            className="form-control"
+            required
+            register={register}
             name="IMEINumber"
+            label="IMEI Number"
             placeholder=""
           />
           <Error errorName={errors.IMEINumber} />
@@ -113,42 +113,44 @@ const General = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.copyFrom} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Server Address
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("serverAddress")}
-            className="form-control"
+            register={register}
             name="serverAddress"
             placeholder=""
           />
         </div>
+        <Error errorName={errors.serverAddress} />
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            SIM Number
+            SIM Number <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("simNumber")}
-            className="form-control"
+            required
+            register={register}
             name="simNumber"
             placeholder=""
           />
+          <Error errorName={errors.simNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Secondary SIM Number
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("secondarySimNumber")}
-            className="form-control"
+            register={register}
             name="secondarySimNumber"
             placeholder=""
           />
+          <Error errorName={errors.secondarySimNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -170,6 +172,7 @@ const General = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.distanceCounter} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -191,6 +194,7 @@ const General = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.unitOfDistance} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -212,55 +216,20 @@ const General = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          <Error errorName={errors.speedDetection} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Device Accuracy Tolerance
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("deviceAccuracyTolerance")}
-            className="form-control"
+            register={register}
             name="deviceAccuracyTolerance"
             placeholder=""
           />
+          <Error errorName={errors.deviceAccuracyTolerance} />
         </div>
-        {/* <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            Shift Group
-          </label>
-          <input
-            type="text"
-            {...register("shiftGroup")}
-            className="form-control"
-            name="shiftGroup"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            Shift Name
-          </label>
-          <input
-            type="text"
-            {...register("shiftName")}
-            className="form-control"
-            name="shiftName"
-            placeholder=""
-          />
-        </div> */}
-        {/* <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            QR Code
-          </label>
-          <input
-            type="text"
-            {...register("qrCode")}
-            className="form-control"
-            name="qrCode"
-            placeholder=""
-          />
-        </div> */}
       </div>
       <div
         style={{

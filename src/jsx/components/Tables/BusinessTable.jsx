@@ -4,7 +4,7 @@ import { FaEdit } from 'react-icons/fa';
 import DeleteModal from '../Modal/DeleteModal';
 import { Link } from 'react-router-dom';
 
-const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
+const BusinessTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
     return (
         <>
             {tableData.map((item, index) => (
@@ -33,7 +33,7 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                         <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status}</span>
                     </td>
                     <td>
-                        <Link to={`/business-group/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>
+                        <Link to={`/company/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
@@ -48,4 +48,4 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
     )
 }
 
-export default CompanyTable
+export default BusinessTable

@@ -1,39 +1,43 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
-import { FormProvider, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import { FormProvider } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
-import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
-import General from "../../../../components/TabComponent/VehicleTabs/General";
-import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link } from "react-router-dom";
+import useDriverSubmit from "../../../../../hooks/useDriverSubmit";
+import Email from "../../../../components/TabComponent/CompanyTabs/Email";
+import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
+import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 
-const VehicleForm = ({ Title, editData, setEditData }) => {
+const BranchForm = ({ Title, editData, setEditData }) => {
   const {
-    onSubmit,
     register,
+    onSubmit,
     handleSubmit,
-    setValue,
-    getValues,
     control,
     formState: { errors },
-  } = useVehicleSubmit();
+    setValue,
+    getValues,
+  } = useDriverSubmit();
 
+  // const nav = useNavigate();
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setEditData({ ...editData, [name]: value });
+  // };
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Document"];
-  const component = [General, Profile, Document];
+  const tabHeading = ["My Account", "User Setting", "Email"];
+  const component = [MyAccount, UserSetting, Email];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
   };
-
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
+        mainTitle="Branch"
         pageTitle={"Create"}
-        parentTitle={"Vehicle"}
+        parentTitle={"Branch"}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -65,14 +69,12 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
                       >
                         <Component
                           data={tabHeading}
-                          register={register}
-                          setValue={setValue}
-                          getValues={getValues}
                           control={control}
+                          setValue={setValue}
+                          register={register}
+                          getValues={getValues}
                           errors={errors}
                           handleNext={handleNext}
-                          handleSubmit={handleSubmit}
-                          onSubmit={onSubmit}
                         />
                       </Tab.Pane>
                     );
@@ -86,4 +88,4 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
     </>
   );
 };
-export default VehicleForm;
+export default BranchForm;

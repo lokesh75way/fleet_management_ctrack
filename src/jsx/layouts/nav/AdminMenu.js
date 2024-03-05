@@ -12,6 +12,7 @@ export const AdminMenuList = [
     iconStyle: SVGICON.Home,
     to: "/dashboard",
   },
+
   {
     title: "Business Group",
     classsChange: "mm-collapse",
