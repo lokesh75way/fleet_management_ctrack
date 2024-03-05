@@ -17,7 +17,7 @@ import Loader from "./components/Loader";
 import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
-// import Branch from "./pages/company/Branch";
+
 
 const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
 const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
@@ -138,6 +138,7 @@ const FormValidation = React.lazy(() => import("./components/Forms/FormValidatio
 const Error404 = React.lazy(() => import("./pages/Error404"));
 const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
 const Branch = React.lazy(() => import("./pages/company/Branch"));
+const BranchForm = React.lazy(() => import("./pages/admin/settings/CreateForms/BranchForm"));
 
 //Reports
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
@@ -196,6 +197,7 @@ const CompanyRoutes = () => {
     { url: "vehicle/create", component: <VehicleForm/> },
     { url: "driver/create", component: <DriverForm/> },
     { url: "technician/create", component: <TechnicianForm/> },
+    { url: "branch/create", component: <BranchForm/> },
     
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },

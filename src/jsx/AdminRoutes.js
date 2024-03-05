@@ -101,6 +101,7 @@ const AdminRoutes = () => {
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },
+    { url: "branch/create", component: <BusinessForm /> },
     { url: "branch", component: <Branch /> },
     { url: "user-groups", component: <UserGroups/> },
     { url: "user-groups/:id", component: <UserGroups/> },
