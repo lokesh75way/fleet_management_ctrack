@@ -44,7 +44,7 @@ const SideBar = () => {
     case 'businessgroup':
       MenuList = BusinessGroupMenuList;
       break;
-    case 'subcompany':
+    case 'branch':
       MenuList = SubCompanyMenuList;
       break;
     default:
