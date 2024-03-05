@@ -104,3 +104,27 @@ export const subUserAccuntSchema = yup
     passwordRecoveryEmail: yup.string().email(),
   })
   .required();
+export const alertSchema = yup
+  .object({
+   branch: yup.string().required("Select a Branch !!"),
+   basedOn: yup.string().required("Choose an option !!"),
+   object: yup.string().required("Select an option !!"),
+   alertName: yup.string().required("Alert Name is required !!"),
+   alertType: yup.string().required("Select an Alert Type !!"),
+   alertValue: yup.string().required("Choose an Alert Value !!"),
+   validDays: yup.string().required("Choose Valid day options !!"),
+  //  userName: yup.string().required("User Name is required !!"),
+  })
+  .required();
+export const expenseSchema = yup
+  .object({
+   branch: yup.string().required("Select a Branch !!"),
+   category: yup.string().required("Choose a Category !!"),
+   type: yup.string().required("Select a type !!"),
+   amount: yup.number().required("Enter an Amount !!"),
+   fromDate: yup.date().required("Enter the date !!"),
+   toDate: yup.date().required("Enter the date !!"),
+   referenceNumber: yup.number().required("Reference Number a required !!"),
+  //  userName: yup.string().required("User Name is required !!"),
+  })
+  .required();

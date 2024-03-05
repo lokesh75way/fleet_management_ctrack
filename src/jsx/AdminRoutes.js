@@ -10,21 +10,44 @@ import "./step.css";
 import ScrollToTop from "./layouts/ScrollToTop";
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
+import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
+import ChangePassword from "./pages/ChangePassword";
+import UserGroups from "./pages/businessUser/BusinessUser";
+import BusinessUser from "./pages/businessUser/BusinessUser";
+import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 
-const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
+const Performance = React.lazy(() =>
+  import("./components/Dashboard/Performance")
+);
 const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
-const TaskSummary = React.lazy(() => import("./components/Dashboard/TaskSummary"));
-const ManageClient = React.lazy(() => import("./components/Dashboard/ManageClient"));
+const TaskSummary = React.lazy(() =>
+  import("./components/Dashboard/TaskSummary")
+);
+const ManageClient = React.lazy(() =>
+  import("./components/Dashboard/ManageClient")
+);
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
 const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
 const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
-const CompanyTracking = React.lazy(() => import("./pages/admin/tracking/CompanyTracking"));
-const VehicleForm = React.lazy(() => import("./pages/admin/settings/CreateForms/VehicleForm"));
-const DriverForm = React.lazy(() => import("./pages/admin/settings/CreateForms/DriverForm"));
-const TechnicianForm = React.lazy(() => import("./pages/admin/settings/CreateForms/TechnicianForm"));
-const CompanyForm = React.lazy(() => import("./pages/admin/settings/CreateForms/CompanyForm"));
-const BusinessForm = React.lazy(() => import("./pages/admin/settings/CreateForms/BusinessForm"));
+const CompanyTracking = React.lazy(() =>
+  import("./pages/admin/tracking/CompanyTracking")
+);
+const VehicleForm = React.lazy(() =>
+  import("./pages/admin/settings/CreateForms/VehicleForm")
+);
+const DriverForm = React.lazy(() =>
+  import("./pages/admin/settings/CreateForms/DriverForm")
+);
+const TechnicianForm = React.lazy(() =>
+  import("./pages/admin/settings/CreateForms/TechnicianForm")
+);
+const CompanyForm = React.lazy(() =>
+  import("./pages/admin/settings/CreateForms/CompanyForm")
+);
+const BusinessForm = React.lazy(() =>
+  import("./pages/admin/settings/CreateForms/BusinessForm")
+);
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
@@ -48,9 +71,7 @@ const Branch = React.lazy(() => import("./pages/company/Branch"));
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 // import Permission from "./pages/Permission";
 
-
 const AdminRoutes = () => {
-
   const allroutes = [
     // Dashboard
     { url: "", component: <Home /> },
@@ -62,6 +83,7 @@ const AdminRoutes = () => {
     { url: "reports", component: <Report /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
+    { url: "company/:id", component: <Company /> },
     { url: "business", component: <Business /> },
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
@@ -82,28 +104,36 @@ const AdminRoutes = () => {
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },
+    { url: "branch/create", component: <BranchForm /> },
     { url: "branch", component: <Branch /> },
+    { url: "business-group", component: <BusinessUser/> },
+    { url: "business-group/:id", component: <BusinessUser/> },
+    { url: "branch", component: <Branch /> },
+    { url: "branch/:id", component: <Branch /> },
+    // Manage Profile
+    { url: "app-profile", component: <AdminProfile /> },
+    { url: "changepassword", component: <ChangePassword /> },
+
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "permission", component: <Permission /> },
   ];
 
-
   function NotFound() {
     const url = allroutes.map((route) => route.url);
-    let path = window.location.pathname
-    path = path.split('/')
-    path = path[path.length - 1]
+    let path = window.location.pathname;
+    path = path.split("/");
+    path = path[path.length - 1];
 
     if (url.indexOf(path) <= 0) {
-      return <Error404 />
+      return <Error404 />;
     }
   }
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route element={<AdminLayout />} >
+        <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => (
             <Route
               key={i}
@@ -113,12 +143,11 @@ const AdminRoutes = () => {
             />
           ))}
         </Route>
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTop />
     </Suspense>
   );
 };
-
 
 export default AdminRoutes;

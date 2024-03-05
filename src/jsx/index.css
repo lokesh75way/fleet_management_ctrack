@@ -710,3 +710,7 @@ button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--r
 	height: auto;
 	display: contents;
 }
+
+.badge-count{
+  background-color: #0d99ff30;
+}

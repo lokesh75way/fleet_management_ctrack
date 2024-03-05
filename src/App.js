@@ -16,6 +16,8 @@ import "./css/style.css";
 import BasicLayout from './jsx/layouts/BasicLayout';
 import AdminRoutes from './jsx/AdminRoutes';
 import CompanyRoutes from './jsx/CompanyRoutes';
+import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
+import SubCompanyRoutes from './jsx/SubCompanyRoutes';
 import ForgotPassword from './jsx/pages/ForgotPassword';
 import ResetPassword from './jsx/pages/ResetPassword';
 
@@ -60,15 +62,24 @@ function App(props) {
 
 
   if (props.isAuthenticated) {
-    console.log(role);
-    return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />;
+    console.log('from app.js',role);
+    
+    // return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />;
+    switch (role) {
+      case 'admin':
+        return <AdminRoutes />;
+      case 'businessgroup':
+        return <BusinessGroupRoutes />;
+      case 'branch':
+        return <SubCompanyRoutes />;
+      default:
+        return <CompanyRoutes />;
+    }
   }
 
   return (
     <div className="vh-100">
       <Routes>
-
-        
         <Route element={<BasicLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/page-register' element={<SignUp />} />

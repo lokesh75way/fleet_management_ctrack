@@ -1,6 +1,6 @@
 
 import React, {useState, useRef, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Route, useParams} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
@@ -18,6 +18,8 @@ const headers = [
     { label: "User Group", key: "usergroup" }
 ]
 const Branch = () => {
+    const {id} = useParams();
+    console.log("Branch id :- ",id)
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
@@ -29,7 +31,8 @@ const Branch = () => {
         username:'',
         status:'',
         location:'',
-        usergroup:''
+        usergroup:'',
+        companies : 0
     });
 
     const sort = 10;
@@ -92,8 +95,8 @@ const Branch = () => {
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                                         <h4 className="heading mb-0">Branches</h4>
                                         <div>
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={()=>subCompany.current.showModal()}
+                                            <Link to={"/branch/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                // onClick={()=>subCompany.current.showModal()}
                                             >+ Add Branch</Link> {" "}
                                         </div>
                                     </div>
@@ -108,6 +111,7 @@ const Branch = () => {
                                                     <th>Location</th>
                                                     <th>User Group</th>
                                                     <th>Status</th>
+                                                    <th>Companies</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

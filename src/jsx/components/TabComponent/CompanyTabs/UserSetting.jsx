@@ -13,10 +13,8 @@ import {
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
-import CustomInput from "../../Input/CustomInput";
 
-const UserSetting = ({ setValue, register, handleSubmit, onSubmit }) => {
-  const { formState: errors, control } = useForm();
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
 
   const customStyles = {
     control: (base) => ({

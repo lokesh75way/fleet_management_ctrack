@@ -1,38 +1,38 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
-import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import Account from "../../TabComponent/ProfileTabs/Account";
+import DataAccess from "../../TabComponent/ProfileTabs/DataAccess";
+import MainPagetitle from "../../../layouts/MainPagetitle";
+import useDriverSubmit from "../../../../hooks/useDriverSubmit";
 
-const BusinessForm = ({ Title, editData, setEditData }) => {
+
+const AdminProfile = ({ Title, editData, setEditData }) => {
+  const {
+    register,
+    onSubmit,
+    handleSubmit,
+    control,
+    formState: { errors },
+    setValue,
+    getValues,
+  } = useDriverSubmit();
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
-  const component = [MyAccount, UserSetting];
+  const tabHeading = ["Account", "Data Access"];
+  const component = [Account, DataAccess];
   const totalTabs = tabHeading.length;
-
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
-  })
-
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      return;
-    }
-    console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  const handleNext = () => {
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
+  };
   return (
     <>
       <MainPagetitle
-        mainTitle="Business User"
-        pageTitle={"Create"}
-        parentTitle={"Business User"}
+        mainTitle="My Profile"
+        pageTitle={"my-profile"}
+        parentTitle={"manage-profile"}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -69,8 +69,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
                           register={register}
                           getValues={getValues}
                           errors={errors}
-                          handleSubmit={handleSubmit}
-                          onSubmit={onSubmit}
+                          handleNext={handleNext}
                         />
                       </Tab.Pane>
                     );
@@ -84,15 +83,4 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     </>
   );
 };
-export default BusinessForm;
-
-
-
-
-
-
-
-
-
-
-
+export default AdminProfile;

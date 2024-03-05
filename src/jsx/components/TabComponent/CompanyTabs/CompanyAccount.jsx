@@ -4,19 +4,13 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import {
-  branchOptions,
-  employeeDesignationOptions,
-  tagViaOptions,
-  defaultObjectNumberOptions,
-} from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from '../../../../users.json'
-const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+
+const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const [tempValue,setTempValue] = useState();
   const [isCheckCP, setIsCheckCP] = useState(false);
+  const [isCheckESP, setIsCheckEsP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -24,57 +18,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
-  const businessUserOptions = DummyData.filter((item) => item.role === "business group").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
-
-  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
-          <Controller
-            name="businessUser"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("businessUser", newValue.value)}}
-                options={businessUserOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={businessUserOptions[0]}
-              />
-            )}
-          />
-        </div>
-
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Company</label>
-          <Controller
-            name="company"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.value)}}
-                options={companyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={companyOptions[0]}
-              />
-            )}
-          />
-        </div>
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
@@ -284,20 +230,20 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street2
           </label>
-          <CustomInput
+          <input
             type="text"
-            register={register}
-            label="Street2"
+            {...register("street2")}
+            className="form-control"
             name="street2"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Contact Person</label>
-          <CustomInput
+          <input
             type="text"
-            register={register}
-            label="Contact Person"
+            {...register("contactPerson")}
+            className="form-control"
             name="contactPerson"
             placeholder=""
           />
@@ -306,10 +252,10 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Fax Number
           </label>
-          <CustomInput
+          <input
             type="number"
-            register={register}
-            label="Fax Number"
+            {...register("faxNumber")}
+            className="form-control"
             name="faxNumber"
             placeholder=""
           />
@@ -332,4 +278,4 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
   );
 };
 
-export default MyAccount;
+export default CompanyAccount;

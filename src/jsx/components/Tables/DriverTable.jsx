@@ -25,12 +25,12 @@ const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     <td>
                         <span>{item.gender}</span>
                     </td>
-                    <td><span className="text-primary">{item.drivingExperience}</span></td>
+                    <td><span className="text-primary ">{item.drivingExperience}</span></td>
                     <td>
                         <span>{item.location}</span>
                     </td>
                     <td>
-                        <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} style={{ width: "45%" }}>{item.status}</span>
+                    <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} d-inline-block text-center`} style={{ width: '5rem' }}>{item.status}</span>                    
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>

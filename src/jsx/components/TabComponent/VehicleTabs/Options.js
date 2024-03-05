@@ -129,6 +129,9 @@ export const subCompanyOptions = [
   { value: "All", label: "All" },
   { value: "75 way", label: "75 way" },
 ];
+export const objectOptions = [
+  { value: "All", label: "All" }
+];
 export const preferredCurrencyUnitOptions = [
   { value: "All", label: "All" },
   { value: "75 way", label: "75 way" },

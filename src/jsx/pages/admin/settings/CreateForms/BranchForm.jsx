@@ -9,7 +9,8 @@ import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSet
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 
-const BusinessForm = ({ Title, editData, setEditData }) => {
+const BranchForm = () => {
+
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
@@ -30,9 +31,9 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Business User"
+        mainTitle="Branch"
         pageTitle={"Create"}
-        parentTitle={"Business User"}
+        parentTitle={"Branch"}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -84,15 +85,4 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     </>
   );
 };
-export default BusinessForm;
-
-
-
-
-
-
-
-
-
-
-
+export default BranchForm;
