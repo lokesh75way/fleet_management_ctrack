@@ -1,4 +1,5 @@
 import * as yup from "yup";
+
 export const vehicleSchema = yup
   .object({
     vehicleName: yup.string().required(),
@@ -27,6 +28,31 @@ export const vehicleSchema = yup
     distanceCost: yup.number().positive().integer(),
   })
   .required();
+
+export const forgetpasswordSchema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+});
+
+export const loginValidation = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
+
+export const resetPassword = yup.object().shape({
+  newPassword: yup
+    .string()
+    .required("New Password is required")
+    .min(6, "New Password must be at least 6 characters"),
+  confirmPassword: yup
+    .string()
+    .required("Confirm New Password is required")
+    .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+});
+
+
 export const companyAccountSchema = yup
   .object({
     // branch: yup.string().required(),
@@ -46,9 +72,15 @@ export const companyAccountSchema = yup
     passwordRecoveryEmail: yup.string().email(),
     helpDeskEmail: yup.string().email(),
 
-    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
-    whatsappContactNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
-    helpDeskTelephoneNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+    mobileNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    whatsappContactNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    helpDeskTelephoneNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
   })
   .required();
 export const companySettingSchema = yup

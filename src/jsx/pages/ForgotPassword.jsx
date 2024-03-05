@@ -2,14 +2,30 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 // image
 import logo from "../../images/logo/logo-full.png";
+import { useForm } from "react-hook-form";
+import { forgetpasswordSchema } from "../../yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 const ForgotPassword = ({ history }) => {
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    //history.push("/dashboard");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      email: "demo@example.com",
+    },
+    resolver: yupResolver(forgetpasswordSchema),
+  });
+
+  console.log(errors);
+
+  const onSubmit = (value) => {
     navigate("/page-resetpassword");
   };
+
   return (
     <div className="authincation h-100 p-meddle">
       <div className="container h-100">
@@ -26,7 +42,7 @@ const ForgotPassword = ({ history }) => {
                       </Link>
                     </div>
                     <h4 className="text-center mb-4 ">Forgot Password</h4>
-                    <form onSubmit={(e) => onSubmit(e)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="form-group">
                         <label className="">
                           <strong>Email</strong>
@@ -34,9 +50,15 @@ const ForgotPassword = ({ history }) => {
                         <input
                           type="email"
                           className="form-control"
-                          defaultValue="hello@example.com"
+                          {...register("email")}
                         />
+                        {errors.email && (
+                          <div className="text-danger fs-12">
+                            {errors.email.message}
+                          </div>
+                        )}
                       </div>
+
                       <div className="text-center">
                         <button
                           type="submit"
