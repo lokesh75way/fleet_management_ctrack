@@ -92,8 +92,8 @@ const Branch = () => {
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                                         <h4 className="heading mb-0">Branches</h4>
                                         <div>
-                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={()=>subCompany.current.showModal()}
+                                            <Link to={"/branch/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                // onClick={()=>subCompany.current.showModal()}
                                             >+ Add Branch</Link> {" "}
                                         </div>
                                     </div>

@@ -10,7 +10,7 @@ import {
   tagViaOptions,
   defaultObjectNumberOptions,
 } from "../VehicleTabs/Options";
-
+import DummyData from '../../../../users.json'
 const MyAccount = ({ setValue, register, handleNext }) => {
   const { formState: errors, control } = useForm();
   const [countryid, setCountryid] = useState(0);
@@ -24,9 +24,39 @@ const MyAccount = ({ setValue, register, handleNext }) => {
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+  const businessUserOptions = DummyData.filter((item) => item.role === "business group").map((item) => ({
+    label: item.email,
+    value: item.id,
+  }));
+
+  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+    label: item.email,
+    value: item.id,
+  }));
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">Business User</label>
+          <Select
+            options={businessUserOptions}
+            containerClassName="bg-white"
+            inputClassName="border border-white"
+            placeHolder="Select Country"
+          />
+        </div>
+
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">Company</label>
+          <Select
+          options={companyOptions}
+            containerClassName="bg-white"
+            inputClassName="border border-white"
+            placeHolder="Company"
+          />
+        </div>
+
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country</label>
           <CountrySelect
