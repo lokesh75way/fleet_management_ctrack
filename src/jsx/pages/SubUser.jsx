@@ -99,7 +99,7 @@ const SubUser = () => {
                                                     <th>User Name</th>
                                                     <th>Age</th>
                                                     <th>Mobile Number</th>
-                                                    <th>User Group</th>
+                                                    <th>Experience</th>
                                                    
                                                     <th>Location</th>
                                                     <th>Branches</th>
@@ -128,7 +128,7 @@ const SubUser = () => {
                                                             <span>{item.location}</span>
                                                         </td>
                                                         <td>
-                                                            <Link to={`/sub-company/${item.emplid}`} className="text-primary">
+                                                            <Link to={`/branch/${item.emplid}`} className="text-primary badge badge-count">
                                                                 {item.branches}
                                                             </Link>
                                                         </td>

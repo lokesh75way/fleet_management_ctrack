@@ -5,9 +5,8 @@ import { FormProvider } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import useDriverSubmit from "../../../../hooks/useDriverSubmit";
 import MainPagetitle from "../../../layouts/MainPagetitle";
-import Email from "../../../components/TabComponent/CompanyTabs/Email";
-import MyAccount from "../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../components/TabComponent/CompanyTabs/UserSetting";
+import CompanyAccount from "../../../components/TabComponent/CompanyTabs/CompanyAccount";
+import CompanySettings from "../../../components/TabComponent/CompanyTabs/CompanySetting";
 
 const AppProfile = ({ Title, editData, setEditData }) => {
   const {
@@ -21,8 +20,8 @@ const AppProfile = ({ Title, editData, setEditData }) => {
   } = useDriverSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting", "Email"];
-  const component = [MyAccount, UserSetting, Email];
+  const tabHeading = ["My Account", "User Setting"];
+  const component = [CompanyAccount, CompanySettings];
   const totalTabs = tabHeading.length;
   const handleNext = () => {
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
@@ -71,6 +70,8 @@ const AppProfile = ({ Title, editData, setEditData }) => {
                           getValues={getValues}
                           errors={errors}
                           handleNext={handleNext}
+                          handleSubmit={handleSubmit}
+                          onSubmit={onSubmit}
                         />
                       </Tab.Pane>
                     );

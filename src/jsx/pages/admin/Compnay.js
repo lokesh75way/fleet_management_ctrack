@@ -104,6 +104,7 @@ const Company = () => {
                                                     <th>User Group</th>
                                                     <th>Location</th>
                                                     <th>Payment Status</th>
+                                                    <th>User Groups</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

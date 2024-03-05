@@ -1,18 +1,18 @@
 import { IMAGES,SVGICON} from '../../constant/theme'; 
  
  export const CompanyData = [ 
- {id: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  location:'India',usergroup:'West Minister Company',},    
- {id: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil',usergroup:'West Minister Company'},    
- {id: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France',usergroup:'West Minister Company'},    
- {id: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company'},    
- {id: '1005', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA',usergroup:'West Minister Company'},    
- {id: '1006', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', location:'USA',usergroup:'West Minister Company'},    
- {id: '1007', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil',usergroup:'West Minister Company'},    
- {id: '1008', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', location:'France',usergroup:'West Minister Company'},    
- {id: '1009', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India',usergroup:'West Minister Company'},    
- {id: '1010', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company'},    
- {id: '1011', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil', usergroup:'West Minister Company'},    
- {id: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India', usergroup:'West Minister Company'}]
+ {id: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  location:'India',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1005', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1006', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', location:'USA',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1007', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1008', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', location:'France',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1009', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1010', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1011', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', location:'Brazil', usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India', usergroup:'West Minister Company', CompanyGroups : 5}]
  
  export const DriverData = [
     {id: '1001', age: 32, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    

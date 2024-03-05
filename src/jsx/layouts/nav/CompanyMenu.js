@@ -26,16 +26,6 @@ export const CompanyMenuList = [
         title: "Geofence-Address",
         to: "/reports/geofence-address",
       },
-     
-      {
-        title: "Alert",
-        to: "/alert",
-      },
-     
-      {
-        title: "Expense",
-        to: "/expense",
-      },
       {
         title: "Fuel",
         to: "/reports/fuel",
