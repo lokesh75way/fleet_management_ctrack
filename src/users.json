@@ -1,113 +1,113 @@
 [
-    {
-      "id": 1,
-      "email": "admin@example.com",
-      "password": "admin123",
-      "role": "admin"
-    },
-    {
-      "id": 2,
-      "email": "business1@example.com",
-      "password": "business123",
-      "role": "business group",
-      "parent": "admin"
-    },
-    {
-      "id": 3,
-      "email": "business2@example.com",
-      "password": "business123",
-      "role": "business group",
-      "parent": "admin"
-    },
-    {
-      "id": 4,
-      "email": "business3@example.com",
-      "password": "business123",
-      "role": "business group",
-      "parent": "admin"
-    },
-    {
-      "id": 5,
-      "email": "business4@example.com",
-      "password": "business123",
-      "role": "business group",
-      "parent": "admin"
-    },
-    {
-      "id": 6,
-      "email": "business5@example.com",
-      "password": "business123",
-      "role": "business group",
-      "parent": "admin"
-    },
-    {
-      "id": 7,
-      "email": "company1@example.com",
-      "password": "company123",
-      "role": "company",
-      "parent": "business1@example.com"
-    },
-    {
-      "id": 8,
-      "email": "company2@example.com",
-      "password": "company123",
-      "role": "company",
-      "parent": "business2@example.com"
-    },
-    {
-      "id": 9,
-      "email": "company3@example.com",
-      "password": "company123",
-      "role": "company",
-      "parent": "business3@example.com"
-    },
-    {
-      "id": 10,
-      "email": "company4@example.com",
-      "password": "company123",
-      "role": "company",
-      "parent": "business4@example.com"
-    },
-    {
-      "id": 11,
-      "email": "company5@example.com",
-      "password": "company123",
-      "role": "company",
-      "parent": "business5@example.com"
-    },
-    {
-      "id": 12,
-      "email": "branch1@example.com",
-      "password": "branch123",
-      "role": "branch",
-      "parent": "company1@example.com"
-    },
-    {
-      "id": 13,
-      "email": "branch2@example.com",
-      "password": "branch123",
-      "role": "branch",
-      "parent": "company2@example.com"
-    },
-    {
-      "id": 14,
-      "email": "branch3@example.com",
-      "password": "branch123",
-      "role": "branch",
-      "parent": "company3@example.com"
-    },
-    {
-      "id": 15,
-      "email": "branch4@example.com",
-      "password": "branch123",
-      "role": "branch",
-      "parent": "company4@example.com"
-    },
-    {
-      "id": 16,
-      "email": "branch5@example.com",
-      "password": "branch123",
-      "role": "branch",
-      "parent": "company5@example.com"
-    }
-  ]
+  {
+    "id": 1,
+    "email": "admin@example.com",
+    "password": "admin123",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "email": "business1@example.com",
+    "password": "business123",
+    "role": "businessgroup",
+    "parent": "admin"
+  },
+  {
+    "id": 3,
+    "email": "business2@example.com",
+    "password": "business123",
+    "role": "businessgroup",
+    "parent": "admin"
+  },
+  {
+    "id": 4,
+    "email": "business3@example.com",
+    "password": "business123",
+    "role": "businessgroup",
+    "parent": "admin"
+  },
+  {
+    "id": 5,
+    "email": "business4@example.com",
+    "password": "business123",
+    "role": "businessgroup",
+    "parent": "admin"
+  },
+  {
+    "id": 6,
+    "email": "business5@example.com",
+    "password": "business123",
+    "role": "businessgroup",
+    "parent": "admin"
+  },
+  {
+    "id": 7,
+    "email": "company1@example.com",
+    "password": "company123",
+    "role": "company",
+    "parent": "business1@example.com"
+  },
+  {
+    "id": 8,
+    "email": "company2@example.com",
+    "password": "company123",
+    "role": "company",
+    "parent": "business2@example.com"
+  },
+  {
+    "id": 9,
+    "email": "company3@example.com",
+    "password": "company123",
+    "role": "company",
+    "parent": "business3@example.com"
+  },
+  {
+    "id": 10,
+    "email": "company4@example.com",
+    "password": "company123",
+    "role": "company",
+    "parent": "business4@example.com"
+  },
+  {
+    "id": 11,
+    "email": "company5@example.com",
+    "password": "company123",
+    "role": "company",
+    "parent": "business5@example.com"
+  },
+  {
+    "id": 12,
+    "email": "branch1@example.com",
+    "password": "branch123",
+    "role": "branch",
+    "parent": "company1@example.com"
+  },
+  {
+    "id": 13,
+    "email": "branch2@example.com",
+    "password": "branch123",
+    "role": "branch",
+    "parent": "company2@example.com"
+  },
+  {
+    "id": 14,
+    "email": "branch3@example.com",
+    "password": "branch123",
+    "role": "branch",
+    "parent": "company3@example.com"
+  },
+  {
+    "id": 15,
+    "email": "branch4@example.com",
+    "password": "branch123",
+    "role": "branch",
+    "parent": "company4@example.com"
+  },
+  {
+    "id": 16,
+    "email": "branch5@example.com",
+    "password": "branch123",
+    "role": "branch",
+    "parent": "company5@example.com"
+  }
+]

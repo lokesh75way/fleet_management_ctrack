@@ -32,7 +32,7 @@ const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
                     </td>
                  
                     <td>
-                        <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
+                    <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} d-inline-block text-center`} style={{ width: '5rem' }}>{item.status}</span>
                     </td>
                     <td>
                         <Link to={`/company/${item.id}`} className='text-primary badge badge-count border-0'>{item.companies}</Link>

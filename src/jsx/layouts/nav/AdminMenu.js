@@ -10,111 +10,123 @@ export const AdminMenuList = [
     title: "Dashboard",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Home,
+    to: "/dashboard",
   },
-  { title: "Company", iconStyle: SVGICON.Employe, to: "/company" },
-  { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
+
   {
-    title: "Driver",
-    iconStyle: SVGICON.Employe,
-    to: "/driver",
-  },
-  {
-    title: "Vehicle",
-    iconStyle: SVGICON.Employe,
-    to: "/vehicle",
-  },
-  {
-    title : "Business Group",
-    to: "business-group",
-    iconStyle : SVGICON.Employe
-  },
-  {
-    title: "Branches",
-    iconStyle: SVGICON.Employe,
-    to: "branch",
-  },
-  {
-    title: "Tracking",
+    title: "Business Group",
     classsChange: "mm-collapse",
-    iconStyle: SVGICON.Task,
+    iconStyle: SVGICON.Employe,
+    to:"/business",
     content: [
       {
-        title: "Companies",
-        to: "company-tracking",
+        title: "Tracking",
+        classsChange: "mm-collapse",
+        iconStyle: SVGICON.Task,
+        content: [
+          {
+            title: "Companies",
+            to: "company-tracking",
+          },
+          {
+            title: "Drivers",
+            to: "driver-tracking",
+          },
+        ],
       },
-      {
-        title: "Drivers",
-        to: "driver-tracking",
-      },
-    ],
-  },
-  {
-    title: "Reports",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Reports,
-    content: [
       {
         title: "Reports",
+        iconStyle: SVGICON.Reports,
         to: "/reports",
       },
-      {
-        title: "Activity",
-        to: "/reports/activity",
-      },
-      {
-        title: "Geofence-Address",
-        to: "/reports/geofence-address",
-      },
 
+      // {
+      //     title: 'Manage Clients',
+      //     iconStyle: SVGICON.ManageClient,
+      //     to: '/manage-client',
+      // },
       {
-        title: "Fuel",
-        to: "/reports/fuel",
-      },
-
-      {
-        title: "Temperature",
-        to: "/reports/temperature",
-      },
-      {
-        title: "Driver Behaviour",
-        to: "/reports/driver-behaviour",
+        title: "Groups",
+        iconStyle: SVGICON.ManageClient,
+        to: "/groups",
       },
     ],
   },
-
   {
-    title: "Technician",
+    title: "Company",
+    classsChange: "mm-collapse",
+    iconStyle: SVGICON.Employe,
+    to:"/company",
+    content: [
+      {
+        title: "Alerts",
+        iconStyle: SVGICON.ManageClient,
+        to: "/alert",
+      },
+      {
+        title: "Expense",
+        iconStyle: SVGICON.ManageClient,
+        to: "/expense",
+      },
+      {
+        title: "Geofence",
+        iconStyle: SVGICON.ManageClient,
+        to: "/geofence",
+      },
+      {
+        title: "Classify Trips",
+        iconStyle: SVGICON.ManageClient,
+        to: "/classifyTrips",
+      },
+    ],
+  },
+  {
+    title: "Branch",
+    classsChange: "mm-collapse",
+    iconStyle: SVGICON.Employe,
+    to:"/branch",
+    content: [
+      {
+        title: "Driver",
+        iconStyle: SVGICON.Employe,
+        to: "/driver",
+      },
+      {
+        title: "Vehicle",
+        iconStyle: SVGICON.Employe,
+        to: "/vehicle",
+      },
+      {
+        title: "Technician",
+        classsChange: "mm-collapse",
+        iconStyle: SVGICON.Employe,
+        content: [
+          {
+            title: "Technician Details",
+            to: "/technician",
+          },
+          {
+            title: "Technician Tasks",
+            to: "/technicianTask",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Others",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Employe,
     content: [
-      {
-        title: "Technician Details",
-        to: "/technician",
-      },
-      {
-        title: "Technician Tasks",
-        to: "/technicianTask",
-      },
+      { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
     ],
   },
+
   {
     title: "Settings",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.SettingMenu,
     content: [
-      {
-        title: "Feature Templates",
-        iconStyle: SVGICON.ManageClient,
-        to: "/groups",
-      },
-      {
-        title: "Alert",
-        to: "/alert",
-      },
-      {
-        title: "Expense",
-        to: "/expense",
-      },
       {
         title: "General",
         to: "general",
@@ -126,16 +138,6 @@ export const AdminMenuList = [
       {
         title: "Technician",
         to: "technician",
-      },
-      {
-        title: "Geofence",
-        iconStyle: SVGICON.ManageClient,
-        to: "/geofence",
-      },
-      {
-        title: "Classify Trips",
-        iconStyle: SVGICON.ManageClient,
-        to: "/classifyTrips",
       },
     ],
   },
