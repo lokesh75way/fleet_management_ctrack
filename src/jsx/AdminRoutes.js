@@ -16,6 +16,16 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 
+const UpdateDriverForm = React.lazy(() =>
+  import("./pages/admin/settings/EditForm/UpdateDriverForm")
+);
+const UpdateVehicleForm = React.lazy(() =>
+  import("./pages/admin/settings/EditForm/UpdateVehicleForm")
+);
+const UpdateCompanyForm = React.lazy(() =>
+  import("./pages/admin/settings/EditForm/UpdateCompanyForm")
+);
+
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
 );
@@ -39,6 +49,7 @@ const VehicleForm = React.lazy(() =>
 const DriverForm = React.lazy(() =>
   import("./pages/admin/settings/CreateForms/DriverForm")
 );
+
 const TechnicianForm = React.lazy(() =>
   import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
@@ -67,6 +78,7 @@ const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
 const Branch = React.lazy(() => import("./pages/company/Branch"));
+const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 // import Permission from "./pages/Permission";
@@ -81,8 +93,10 @@ const AdminRoutes = () => {
     { url: "task-summary", component: <TaskSummary /> },
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
+    { url: "geofencemap", component: <GeofenceMap /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
+
     { url: "company/:id", component: <Company /> },
     { url: "business", component: <Business /> },
     { url: "general", component: <General /> },
@@ -91,7 +105,9 @@ const AdminRoutes = () => {
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
+    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
+    { url: "driver/edit/:id", component: <UpdateDriverForm /> },
     { url: "technician/create", component: <TechnicianForm /> },
     { url: "subUser/create", component: <SubUserForm /> },
     { url: "subUser", component: <SubUser /> },
@@ -103,11 +119,12 @@ const AdminRoutes = () => {
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
+    { url: "company/edit/:id", component: <UpdateCompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },
     { url: "branch/create", component: <BranchForm /> },
     { url: "branch", component: <Branch /> },
-    { url: "business-group", component: <BusinessUser/> },
-    { url: "business-group/:id", component: <BusinessUser/> },
+    { url: "business-group", component: <BusinessUser /> },
+    { url: "business-group/:id", component: <BusinessUser /> },
     { url: "branch", component: <Branch /> },
     { url: "branch/:id", component: <Branch /> },
     // Manage Profile

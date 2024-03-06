@@ -179,7 +179,7 @@ const CompanyRoutes = () => {
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
     { url: "blog-1", component: <HomeBlog /> },
-    { url: "manage-client", component: <ManageClient /> },
+    // { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
     { url: "geofencemap", component: <GeofenceMap /> },

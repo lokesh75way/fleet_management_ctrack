@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {VehicleData} from '../components/Tables/Tables'
 import VehicleTable from '../components/Tables/VehicleTable';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -7,6 +7,7 @@ import MainPagetitle from '../layouts/MainPagetitle';
 
 const Vehicle = () => {  
     const {setAddVehicle, addVehicle} = useContext(ThemeContext)
+    const navigate = useNavigate();
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -61,7 +62,8 @@ const Vehicle = () => {
         tableData.map((table)=>(
             table.id === item && setEditData(table)
         ))
-        vehicle.current.showModal();
+        navigate(`edit/${item}`);
+        // vehicle.current.showModal();
     }
 
     const handleSubmit=(e)=>{
