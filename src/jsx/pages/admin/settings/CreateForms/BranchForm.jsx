@@ -4,8 +4,8 @@ import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
+import MyAccount from "../../../../components/TabComponent/BranchTabs/MyAccount";
+import UserSetting from "../../../../components/TabComponent/BranchTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 

@@ -46,7 +46,10 @@ const NotificationBlog = ({ classChange }) => {
 };
 
 const Header = ({ onNote }) => {
-  const role = localStorage.getItem('role');
+  const loginDetailsRole = localStorage.getItem('loginDetails-role');
+  const loginDetailsEmail = localStorage.getItem('loginDetails-email');
+  const loginDetailsName = localStorage.getItem('loginDetails-name');
+  console.log(loginDetailsEmail)
   const [headerFix, setheaderFix] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -313,8 +316,8 @@ const Header = ({ onNote }) => {
                         <img src={IMAGES.Tab1} alt="" />
                       </div>
                       <div className="header-info">
-                        <h6>Thomas Fleming ({role})</h6>
-                        <p>info@gmail.com</p>
+                        <h6>{loginDetailsName} ({loginDetailsRole})</h6>
+                        <p>{loginDetailsEmail}</p>
                       </div>
                     </div>
                   </Dropdown.Toggle>

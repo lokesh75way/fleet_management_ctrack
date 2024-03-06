@@ -81,17 +81,22 @@ export const BusinessGroupMenuList = [
     iconStyle: SVGICON.SettingMenu,
     content: [
       {
-        title: "General",
-        to: "general",
+        title: "Feature Template",
+        iconStyle: SVGICON.ManageClient,
+        to: "/groups",
       },
-      {
-        title: "Master",
-        to: "master",
-      },
-      {
-        title: "Technician",
-        to: "technician",
-      },
+      // {
+      //   title: "General",
+      //   to: "general",
+      // },
+      // {
+      //   title: "Master",
+      //   to: "master",
+      // },
+      // {
+      //   title: "Technician",
+      //   to: "technician",
+      // },
     ],
   },
 ];

@@ -19,7 +19,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     }),
   };
 
-  const businessUserOptions = DummyData.filter((item) => item.role === "business group").map((item) => ({
+  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
     label: item.email,
     value: item.id,
   }));
@@ -68,7 +68,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             )}
           />
         </div>
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect

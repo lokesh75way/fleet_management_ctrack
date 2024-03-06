@@ -5,12 +5,13 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-
-const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors }) => {
+import DummyData from '../../../../users.json'
+import {parentOptions} from '../VehicleTabs/Options'
+const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [tempValue,setTempValue] = useState();
   const [isCheckCP, setIsCheckCP] = useState(false);
-  const [isCheckESP, setIsCheckEsP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -18,9 +19,75 @@ const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, 
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
+    label: item.email,
+    value: item.id,
+  }));
+
+  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+    label: item.email,
+    value: item.id,
+  }));
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">Business User</label>
+          <Controller
+            name="businessUser"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("businessUser", newValue.value)}}
+                options={businessUserOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={businessUserOptions[0]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">Company</label>
+          <Controller
+            name="company"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.value)}}
+                options={companyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={companyOptions[0]}
+              />
+            )}
+          />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">Parent</label>
+          <Controller
+            name="parent"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("parent", newValue.value)}}
+                options={parentOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={parentOptions[0]}
+              />
+            )}
+          />
+        </div>
+
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
@@ -192,58 +259,61 @@ const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City
+            City<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("city")}
-            className="form-control"
+            register={register}
+            label="City"
             name="city"
             placeholder=""
           />
+          <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+            Zip Code<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("zipCode")}
-            className="form-control"
+            register={register}
+            label="Zip Code"
             name="zipCode"
             placeholder=""
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1
+            Street1<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street1")}
-            className="form-control"
+            register={register}
+            label="Street1"
             name="street1"
             placeholder=""
           />
+          <Error errorName={errors.street1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street2
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street2")}
-            className="form-control"
+            register={register}
+            label="Street2"
             name="street2"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Contact Person</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("contactPerson")}
-            className="form-control"
+            register={register}
+            label="Contact Person"
             name="contactPerson"
             placeholder=""
           />
@@ -252,10 +322,10 @@ const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, 
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Fax Number
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("faxNumber")}
-            className="form-control"
+            register={register}
+            label="Fax Number"
             name="faxNumber"
             placeholder=""
           />
@@ -278,4 +348,4 @@ const CompanyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, 
   );
 };
 
-export default CompanyAccount;
+export default MyAccount;

@@ -8,9 +8,11 @@ import InviteCustomer from "../../constant/ModalList";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 import { CompanyData } from "../../components/Tables/Tables";
 import CompanyTable from "../../components/Tables/CompanyTable";
+import useStorage from "../../../hooks/useStorage";
 
 const Company = () => {
   const navigate = useNavigate();
+  // const {getData} = useStorage();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -123,6 +125,7 @@ const Company = () => {
                       <tbody>
                         <CompanyTable
                           tableData={tableData}
+                          // getData={getData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                         />
