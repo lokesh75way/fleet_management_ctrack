@@ -30,8 +30,8 @@ const AppProfile = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Company Details"
-        pageTitle={"Company Details"}
+        mainTitle="My Profile"
+        pageTitle={"my-profile"}
         parentTitle={"Manage Profile"}
       />
       <div className="m-2 p-2">

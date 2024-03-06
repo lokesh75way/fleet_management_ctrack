@@ -27,7 +27,7 @@ const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <span onClick={()=>editDrawerOpen(item.id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
                             <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
 
                         </span>

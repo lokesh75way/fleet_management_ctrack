@@ -70,11 +70,6 @@ export const SubCompanyMenuList = [
           },
         ],
       },
-      {
-        title: "Branch",
-        iconStyle: SVGICON.Employe,
-        to: "/sub-company",
-      },
       { title: "Staff Management", iconStyle: SVGICON.Employe, to: "/subUser" },
       {
         title: "Driver",
