@@ -59,6 +59,7 @@ const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/businessUser/profile/MyProfile"));
 const BusinessUserProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/BusinessUserProfile"));
+const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 
 const Error404 = React.lazy(() => import("./pages/Error404"));
 
@@ -100,6 +101,7 @@ const BusinessGroupRoutes = () => {
     { url: "classifyTrips", component: <ClassifyTrips /> },
     { url: "expense", component: <Expense /> },
     { url: "geofence", component: <Geofence /> },
+    { url: "geofencemap", component: <GeofenceMap /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },

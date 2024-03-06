@@ -39,9 +39,12 @@ function Login(props) {
 
 
 		// new temporary login method
-		const userFound = users.find(user => user.email === email && user.password === password);
-		if (userFound) {
-			localStorage.setItem('role', userFound.role);
+
+		const loginDetails = users.find(user => user.email === email && user.password === password);
+		if (loginDetails) {
+			localStorage.setItem('loginDetails-email', loginDetails.email);
+			localStorage.setItem('loginDetails-name', loginDetails.name);
+			localStorage.setItem('loginDetails-role', loginDetails.role);
 			dispatch(loadingToggleAction(true));
 			dispatch(loginAction('demo@example.com', '123456', navigate));
 

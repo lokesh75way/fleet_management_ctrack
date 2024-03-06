@@ -8,11 +8,12 @@ import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import useStorage from '../../../../../hooks/useStorage.js'
 
 const CompanyForm = () => {
-  
+  const {saveData} = useStorage();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
+  const tabHeading = ["Add Account", "User Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
@@ -22,6 +23,7 @@ const CompanyForm = () => {
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       console.log(data)
+      // saveData(data)
       return;
     }
     console.log(data)

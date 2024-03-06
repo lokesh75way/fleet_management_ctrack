@@ -175,4 +175,12 @@ export const tripStatusOptions = [
   { value: "Completed", label: "Completed" },
   { value: "Just Started", label: "Just Started" },
 ];
+export const parentOptions = [
+  { value: "branch1@example.com", label: "branch1@example.com" },
+  { value: "branch2@example.com", label: "branch2@example.com" },
+  { value: "branch3@example.com", label: "branch3@example.com" },
+  { value: "branch4@example.com", label: "branch4@example.com" },
+  { value: "branch5@example.com", label: "branch5@example.com" },
+  { value: "None", label: "None" },
+];
 export const options = [{ value: "West Company", label: "West Company" }];
