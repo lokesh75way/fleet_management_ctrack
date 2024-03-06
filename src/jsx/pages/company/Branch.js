@@ -68,6 +68,7 @@ const Branch = () => {
         tableData.map((table)=>(
             table.id === item && setEditData(table)
         ))
+        console.log(item)
         subCompany.current.showModal();
     }
     const handleSubmit=(e)=>{
