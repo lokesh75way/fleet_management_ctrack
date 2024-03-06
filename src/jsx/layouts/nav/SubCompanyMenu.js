@@ -15,7 +15,7 @@ export const SubCompanyMenuList = [
   },
   { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
-    title: "Branch",
+    title: "Sub Branch",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Task,
     to:"branch",
