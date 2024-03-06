@@ -26,9 +26,9 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="SubUser"
+        mainTitle="User"
         pageTitle={"Create"}
-        parentTitle={"SubUser"}
+        parentTitle={"User"}
       />
       <div className="m-2 p-2">
         <FormProvider>

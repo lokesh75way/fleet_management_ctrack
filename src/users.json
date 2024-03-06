@@ -9,35 +9,35 @@
       "id": 2,
       "email": "business1@example.com",
       "password": "business123",
-      "role": "business group",
+      "role": "businessgroup",
       "parent": "admin"
     },
     {
       "id": 3,
       "email": "business2@example.com",
       "password": "business123",
-      "role": "business group",
+      "role": "businessgroup",
       "parent": "admin"
     },
     {
       "id": 4,
       "email": "business3@example.com",
       "password": "business123",
-      "role": "business group",
+      "role": "businessgroup",
       "parent": "admin"
     },
     {
       "id": 5,
       "email": "business4@example.com",
       "password": "business123",
-      "role": "business group",
+      "role": "businessgroup",
       "parent": "admin"
     },
     {
       "id": 6,
       "email": "business5@example.com",
       "password": "business123",
-      "role": "business group",
+      "role": "businessgroup",
       "parent": "admin"
     },
     {
@@ -109,5 +109,40 @@
       "password": "branch123",
       "role": "branch",
       "parent": "company5@example.com"
+    },
+    {
+      "id": 17,
+      "email": "adminuser@example.com",
+      "password": "adminuser123",
+      "role": "user",
+      "parent": "admin"
+    },
+    {
+      "id": 18,
+      "email": "businessuser@example.com",
+      "password": "businessuser123",
+      "role": "user",
+      "parent": "businessgroup"
+    },
+    {
+      "id": 19,
+      "email": "companyuser@example.com",
+      "password": "companyuser123",
+      "role": "user",
+      "parent": "company"
+    },
+    {
+      "id": 20,
+      "email": "employeeuser@example.com",
+      "password": "employeeuser123",
+      "role": "user",
+      "parent": "employee"
+    },
+    {
+      "id": 21,
+      "email": "customeruser@example.com",
+      "password": "customeruser123",
+      "role": "user",
+      "parent": "customer"
     }
   ]

@@ -45,7 +45,8 @@ const NotificationBlog = ({ classChange }) => {
   );
 };
 
-const Header = ({ onNote, role }) => {
+const Header = ({ onNote }) => {
+  const role = localStorage.getItem('role');
   const [headerFix, setheaderFix] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
