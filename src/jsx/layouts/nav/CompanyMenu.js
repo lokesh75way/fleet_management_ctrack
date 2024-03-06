@@ -34,16 +34,8 @@ export const CompanyMenuList = [
             to: "/reports/geofence-address",
           },
           {
-            title: "Sensor",
-            to: "/reports/sensor",
-          },
-          {
             title: "Alert",
             to: "/alert",
-          },
-          {
-            title: "Reminder",
-            to: "/reports/reminder",
           },
           {
             title: "Expense",
@@ -54,44 +46,12 @@ export const CompanyMenuList = [
             to: "/reports/fuel",
           },
           {
-            title: "RPM",
-            to: "/reports/rpm",
-          },
-          {
             title: "Temperature",
             to: "/reports/temperature",
           },
           {
             title: "Driver Behaviour",
             to: "/reports/driver-behaviour",
-          },
-          {
-            title: "OBD",
-            to: "/reports/obd",
-          },
-          {
-            title: "Billing",
-            to: "/reports/billing",
-          },
-          {
-            title: "Customized",
-            to: "/reports/customized",
-          },
-          {
-            title: "Logs",
-            to: "/reports/logs",
-          },
-          {
-            title: "Hardware Maintenance",
-            to: "/reports/hardware-maintenance",
-          },
-          {
-            title: "Elock",
-            to: "/reports/elock",
-          },
-          {
-            title: "Trip Classification",
-            to: "/reports/trip-classification",
           },
         ],
       },
