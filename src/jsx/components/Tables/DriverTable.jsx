@@ -36,7 +36,6 @@ const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                         <span className='d-flex justify-content-center'>
                             <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
                             <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
-
                         </span>
                     </td>
                 </tr>

@@ -13,7 +13,7 @@ const CustomInput = ({
 }) => {
   const { errors } = useFormContext();
   return (
-    <div className="mb-3">
+    <div>
       <input
         {...register(`${name}`, {
           required: required ? false : `${label} is required!`,

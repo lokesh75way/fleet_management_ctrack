@@ -30,7 +30,7 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                     </td>
                     
                     <td>
-                        <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status}</span>
+                        <span style={{width:"5rem"}} className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status}</span>
                     </td>
                     <td>
                         <Link to={`/branch/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>

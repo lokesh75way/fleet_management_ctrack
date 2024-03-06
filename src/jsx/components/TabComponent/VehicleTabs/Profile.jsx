@@ -22,11 +22,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
   const [isCheckedCBO2, setIsCheckedCBO2] = useState(false);
   const [isCheckedWC, setIsCheckedWC] = useState(false);
   const [isCheckedGS, setIsCheckedGS] = useState(false);
+  const [tempValue, setTempValue] = useState();
 
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
+      padding: ".25rem 0 ", 
     }),
   };
   const handleChange = (e)=>{
@@ -38,7 +39,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Plate Number</label>
+          <label className="form-label">Plate Number<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -76,7 +77,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           </div>
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">DVIR Template</label>
+          <label className="form-label">DVIR Template<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -84,6 +85,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="DVIRTemplate"
             placeholder=""
           />
+          <Error errorName={errors.DVIRTemplate} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Purchase Amount</label>
@@ -125,7 +127,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Weight Capacity</label>
+          <label className="form-label">Weight Capacity<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -133,6 +135,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="weightCapacity"
             placeholder=""
           />
+          <Error errorName={errors.weightCapacity} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">GPS Installation Date</label>
@@ -152,7 +155,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            GPS Warranty
+            GPS Warranty<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -161,6 +164,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="GPSWarranty"
             placeholder=""
           />
+          <Error errorName={errors.GPSWarranty} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -175,14 +179,14 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Permit</label>
+          <label className="form-label">Permit<span className="text-danger">*</span></label>
           <Controller
             name="permit"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, rules, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("permit", newValue.value)}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("permit", newValue.value)}}
                 options={permitOptions}
                 ref={ref}
                 name={name}
@@ -191,7 +195,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               />
             )}
           />
-          <Error errorName={errors.permit} />
+          {!getValues('permit') && <Error errorName={errors.permit} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Installation Date</label>
@@ -209,7 +213,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Registration Number
+            Registration Number<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -221,13 +225,13 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.registrationNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Fuel Type</label>
+          <label className="form-label">Fuel Type<span className="text-danger">*</span></label>
           <Controller
             name="fuelType"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("fuelType", newValue.value)}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("fuelType", newValue.value)}}
                 options={fuelTypeOptions}
                 ref={ref}
                 name={name}
@@ -236,6 +240,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               />
             )}
           />
+          {!getValues('fuelType') && <Error errorName={errors.fuelType} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Distance based Fuel Consumption </label>
