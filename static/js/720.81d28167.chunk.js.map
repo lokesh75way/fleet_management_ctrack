@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/720.81d28167.chunk.js","mappings":"kJAEA,MAMA,EANcA,KAEVC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,S","sources":["jsx/pages/company/reports/Elock.jsx"],"sourcesContent":["import React from 'react'\n\nconst Elock = () => {\n  return (\n    <h1>Elock</h1>\n  )\n}\n\nexport default Elock"],"names":["Elock","_jsx","children"],"sourceRoot":""}

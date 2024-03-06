@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[4614],{24614:(s,e,a)=>{a.r(e),a.d(e,{default:()=>i});a(65043);var c=a(70579);const i=()=>(0,c.jsx)("h1",{children:"TripClassification"})}}]);
+//# sourceMappingURL=4614.34482b61.chunk.js.map
