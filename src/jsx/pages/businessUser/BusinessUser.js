@@ -89,7 +89,6 @@ const BusinessUser = () => {
                                         <div>
                                             
                                             <Link to={"/business/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
-                                                // onClick={()=>company.current.showModal()}
                                             >+ Add Business User</Link> {" "}
                                         </div>
                                     </div>          

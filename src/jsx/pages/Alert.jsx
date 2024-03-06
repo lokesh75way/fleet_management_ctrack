@@ -8,6 +8,9 @@ import AlertOffcanvas from '../constant/AlertOffcanvas';
 import useAlertSubmit from '../../hooks/useAlertSubmit'
 import {AlertData} from '../components/Tables/Tables'
 import AlertTable from '../components/Tables/AlertTable'
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import {alertSchema} from '../../yup'
 
 const headers = [
     { label: "Employee ID", key: "emplid" },
@@ -38,7 +41,13 @@ const Alert = () => {
         gender:'',
         location:''
     });
-    const {register, setValue, getValues,handleSubmit,onSubmit } = useAlertSubmit();
+    const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+        resolver: yupResolver(alertSchema)
+      })
+    
+      const onSubmit = (data)=>{
+        console.log(data)
+      }
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
@@ -198,6 +207,8 @@ const Alert = () => {
                 setValue={setValue}
                 onSubmit={onSubmit}
                 getValues={getValues}
+                control={control}
+                errors={errors}
                 handleSubmit={handleSubmit}
             />
         </>

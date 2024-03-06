@@ -13,9 +13,7 @@ const {
     clearErrors,
     control,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(vehicleSchema)
-  });
+  } = useForm();
   const {setAddVehicle} = useContext(ThemeContext)
 
   const onSubmit = async(data) =>{

@@ -4,8 +4,10 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Select from "react-select";
 import { licenseToDriveOptions } from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
+import Error from "../../Error/Error";
 
-const AdditionalInfo = ({ setValue, register, handleNext }) => {
+const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
   const { formState: errors, control, getValues } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
@@ -37,13 +39,14 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Age</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("age")}
-            className="form-control"
+            register={register}
+            label="Age"
             name="age"
             placeholder=""
           />
+          <Error errorName={errors.age} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Date of Joining</label>
@@ -75,13 +78,14 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Driving Experience Since</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("drivingExperienceSince")}
-            className="form-control"
+            register={register}
+            label="Driving Experience Since"
             name="drivingExperienceSince"
             placeholder=""
           />
+          <Error errorName={errors.drivingExperienceSince} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">License Available</label>
@@ -129,14 +133,15 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">License Number</label>
               <div className="d-flex align-items-center">
-                <input
+                <CustomInput
                   type="number"
-                  {...register("licenseNumber")}
-                  className="form-control"
+                  register={register}
+                  label="License Number"
                   style={{ marginRight: ".5rem" }}
                   name="licenseNumber"
                   placeholder=""
                 />
+                <Error errorName={errors.licenseNumber} />
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
@@ -155,8 +160,10 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
                     styles={customStyles}
                     defaultValue={licenseToDriveOptions[0]}
                   />
+                  
                 )}
-              />
+                />
+                { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">License Issued Date</label>
@@ -194,10 +201,10 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
         )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Life Insurance Number</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("lifeInsuranceNumber")}
-            className="form-control"
+            register={register}
+            label="Life Insurance Number"
             name="lifeInsuranceNumber"
             placeholder=""
           />
@@ -220,10 +227,10 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Mediclaim Number</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("mediclaimNumber")}
-            className="form-control"
+            register={register}
+            label="Mediclaim Number"
             name="mediclaimNumber"
             placeholder=""
           />
@@ -263,7 +270,7 @@ const AdditionalInfo = ({ setValue, register, handleNext }) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
           Next
         </Button>

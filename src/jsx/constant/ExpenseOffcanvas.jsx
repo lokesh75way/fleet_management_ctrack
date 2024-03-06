@@ -4,7 +4,7 @@ import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import Error from "../components/Error/Error";
 import {
   branchOptions,
@@ -12,6 +12,7 @@ import {
   TypeOptions,
   jobOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
+import CustomInput from "../components/Input/CustomInput";
 
 const ExpenseOffcanvas = forwardRef(
   (
@@ -24,10 +25,11 @@ const ExpenseOffcanvas = forwardRef(
       getValues,
       handleSubmit,
       onSubmit,
+      errors,
+      control,
     },
     ref
   ) => {
-    const { control, formState: errors } = useForm();
     const [startDate, setStartDate] = useState(new Date());
     const [startDate2, setStartDate2] = useState(new Date());
     const [addEmploye, setAddEmploye] = useState(false);
@@ -35,6 +37,7 @@ const ExpenseOffcanvas = forwardRef(
     const [isCheckCJ, setIsCheckCJ] = useState(false);
     const [selectedOption2, setSelectedOption2] = useState(null);
     const [selectedOption3, setSelectedOption3] = useState(null);
+    const [tempValue, setTempValue] = useState();
 
     useImperativeHandle(ref, () => ({
       showModal() {
@@ -83,17 +86,19 @@ const ExpenseOffcanvas = forwardRef(
           </div>
           <div className="offcanvas-body">
             <div className="container-fluid">
-              <form onClick={() => handleSubmit(onSubmit)}>
+              <FormProvider>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Branch</label>
+                    <label className="form-label">Branch<span className="text-danger">*</span></label>
                     <Controller
                       name="branch"
                       control={control}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("branch", newValue.value)
+                            {setTempValue(newValue.value);
+                            setValue("branch", newValue.value)}
                           }
                           options={branchOptions}
                           ref={ref}
@@ -103,29 +108,10 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       )}
                     />
+                    { !getValues('branch') && <Error errorName={errors.branch} />}
                   </div>
-
-                  {/* <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Object</label>
-                    <Controller
-                      name="object"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            setValue("object", newValue.value)
-                          }
-                          options={ObjectOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={ObjectOptions[0]}
-                        />
-                      )}
-                    />
-                  </div> */}
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Category</label>
+                    <label className="form-label">Category<span className="text-danger">*</span></label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input
@@ -158,6 +144,7 @@ const ExpenseOffcanvas = forwardRef(
                         </label>
                       </div>
                     </div>
+                    { !getValues('category') && <Error errorName={errors.category} />}
                   </div>
                   {selectedOption === "variable" && (
                     <div className="col-xl-6 mb-3">
@@ -270,14 +257,15 @@ const ExpenseOffcanvas = forwardRef(
                     </>
                   }
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Type</label>
+                    <label className="form-label">Type<span className="text-danger">*</span></label>
                     <Controller
                       name="type"
                       control={control}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("type", newValue.value)
+                            {setTempValue(newValue.value);
+                            setValue("type", newValue.value)}
                           }
                           options={TypeOptions}
                           ref={ref}
@@ -287,6 +275,7 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       )}
                     />
+                    { !getValues('type') && <Error errorName={errors.type} />}
                   </div>
                   {selectedOption === "fix" && (
                     <>
@@ -302,12 +291,13 @@ const ExpenseOffcanvas = forwardRef(
                               selected={getValues("fromDate") || new Date()}
                               className="form-control"
                               onChange={(newValue) =>
-                                setValue("fromDate", newValue)
+                                {setTempValue(newValue);
+                                setValue("fromDate", newValue)}
                               }
                             />
                           )}
                         />
-                        <Error errorName={errors.fromDate} />
+                        { !getValues('fromDate') && <Error errorName={errors.fromDate} />}
                       </div>
                       <div className="col-xl-6 mb-3">
                         <label className="form-label">
@@ -321,12 +311,13 @@ const ExpenseOffcanvas = forwardRef(
                               selected={getValues("toDate") || new Date()}
                               className="form-control"
                               onChange={(newValue) =>
-                                setValue("toDate", newValue)
+                                {setTempValue(newValue);
+                                setValue("toDate", newValue)}
                               }
                             />
                           )}
                         />
-                        <Error errorName={errors.toDate} />
+                        { !getValues('toDate') && <Error errorName={errors.toDate} />}
                       </div>
                     </>
                   )}
@@ -349,7 +340,7 @@ const ExpenseOffcanvas = forwardRef(
                           />
                         )}
                       />
-                      <Error errorName={errors.referenceNumber} />
+                      { !getValues('expenseDate') && <Error errorName={errors.expenseDate} />}
                     </div>
                   )}
                   <div className="col-xl-6 mb-3">
@@ -359,12 +350,10 @@ const ExpenseOffcanvas = forwardRef(
                     >
                       Amount <span className="text-danger">*</span>
                     </label>
-                    <input
+                    <CustomInput
                       type="number"
-                      {...register("amount", {
-                        required: "Number is required",
-                      })}
-                      className="form-control"
+                      register={register}
+                      label="Amount"
                       name="amount"
                       placeholder=""
                     />
@@ -377,13 +366,14 @@ const ExpenseOffcanvas = forwardRef(
                     >
                       Reference Number <span className="text-danger">*</span>
                     </label>
-                    <input
+                    <CustomInput
                       type="number"
-                      {...register("referenceNumber")}
-                      className="form-control"
+                      register={register}
+                      label="Reference Number"
                       name="referenceNumber"
                       placeholder=""
                     />
+                    <Error errorName={errors.referenceNumber} />
                   </div>
                   {selectedOption === "variable" && (
                     <>
@@ -394,10 +384,10 @@ const ExpenseOffcanvas = forwardRef(
                         >
                           Odometer
                         </label>
-                        <input
+                        <CustomInput
                           type="number"
-                          {...register("odometer")}
-                          className="form-control"
+                          register={register}
+                          label="Odometer"
                           name="odometer"
                           placeholder=""
                         />
@@ -409,10 +399,10 @@ const ExpenseOffcanvas = forwardRef(
                         >
                           Work Hour
                         </label>
-                        <input
+                        <CustomInput
                           type="time"
-                          {...register("workHour")}
-                          className="form-control"
+                          register={register}
+                          label="Work Hour"
                           name="workHour"
                           placeholder=""
                         />
@@ -426,10 +416,10 @@ const ExpenseOffcanvas = forwardRef(
                     >
                       Bill Upload
                     </label>
-                    <input
+                    <CustomInput
                       type="file"
-                      {...register("billUpload")}
-                      className="form-control"
+                      register={register}
+                      label="Bill Upload"
                       name="billUpload"
                       placeholder=""
                     />
@@ -441,10 +431,10 @@ const ExpenseOffcanvas = forwardRef(
                     >
                       Description
                     </label>
-                    <input
+                    <CustomInput
                       type="textarea"
-                      {...register("description")}
-                      className="form-control"
+                      register={register}
+                      label="Description"
                       name="description"
                       placeholder=""
                     />
@@ -453,7 +443,7 @@ const ExpenseOffcanvas = forwardRef(
                 <div>
                   <button
                     type="submit"
-                    onClick={() => setAddEmploye(false)}
+                    onClick={() => {handleSubmit(onSubmit)}}
                     className="btn btn-primary me-1"
                   >
                     Submit
@@ -467,6 +457,7 @@ const ExpenseOffcanvas = forwardRef(
                   </Link>
                 </div>
               </form>
+              </FormProvider>
             </div>
           </div>
         </Offcanvas>

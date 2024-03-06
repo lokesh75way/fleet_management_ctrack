@@ -266,6 +266,7 @@ const {
   const [groupsDataState,setGroupsDataState] = useState([]);
   const [lang,setLang] = useState("");
   const [isArabic,setIsArabic] = useState("");
+  const [role,setRole] = useState('superadmin')
 
   useEffect(() => {
 	const body = document.querySelector("body");
@@ -359,7 +360,9 @@ const {
         setLang,
         lang,
         setIsArabic,
-        isArabic
+        isArabic,
+        setRole,
+        role
 
 	}}
     >

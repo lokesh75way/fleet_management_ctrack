@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import {
-  loadingToggleAction,
-  loginAction,
-} from "../../store/actions/AuthActions";
+import React, { useState} from 'react'
+import { connect, useDispatch } from 'react-redux';
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { loadingToggleAction,loginAction,
+} from '../../store/actions/AuthActions';
+import users from '../../users.json'
 
 import { FormProvider, useForm } from "react-hook-form";
 import logo from "../../images/logo/logo-full.png";
@@ -32,8 +31,23 @@ function Login(props) {
   const dispatch = useDispatch();
 
   function onLogin({email , password}) {
-	dispatch(loadingToggleAction(true));
-	dispatch(loginAction(email, password, navigate));
+
+		// old login method
+
+		// dispatch(loadingToggleAction(true));
+		// dispatch(loginAction(email, password, navigate));
+
+
+		// new temporary login method
+		const userFound = users.find(user => user.email === email && user.password === password);
+		if (userFound) {
+			localStorage.setItem('role', userFound.role);
+			dispatch(loadingToggleAction(true));
+			dispatch(loginAction('demo@example.com', '123456', navigate));
+
+		} else {
+			alert('Invalid email or password');
+		}
   }
 
   return (

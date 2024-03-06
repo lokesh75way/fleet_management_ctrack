@@ -1,33 +1,28 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import useDriverSubmit from "../../../hooks/useDriverSubmit";
 import Account from "../../components/TabComponent/SubUserTab/Account";
-import DataAccess from "../../components/TabComponent/SubUserTab/DataAccess";
-import UserSetting from "../../components/TabComponent/SubUserTab/UserSetting";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import {subUserAccuntSchema} from '../../../yup'
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
-  const {
-    register,
-    onSubmit,
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue,
-    getValues,
-  } = useDriverSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Account", "Data Access"];
-  const component = [Account, DataAccess];
+  const tabHeading = ["Account"];
+  const component = [Account];
   const totalTabs = tabHeading.length;
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
-  };
+
+  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+    resolver: yupResolver( subUserAccuntSchema)
+  })
+
+  const onSubmit = (data)=>{
+    console.log(data)
+  }
   return (
     <>
       <MainPagetitle
@@ -70,7 +65,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
                           register={register}
                           getValues={getValues}
                           errors={errors}
-                          handleNext={handleNext}
+                          onSubmit={onSubmit}
+                          handleSubmit={handleSubmit}
                         />
                       </Tab.Pane>
                     );

@@ -4,8 +4,7 @@ import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-const Document = ({ register, setValue }) => {
-  const { control, getValues } = useForm();
+const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -627,7 +626,7 @@ const Document = ({ register, setValue }) => {
             margin: "2rem 0",
           }}
         >
-            <Button type="submit"> Submit</Button>
+            <Button type="submit" onClick={handleSubmit(onSubmit)} > Submit</Button>
         </div>
       </div>
     </div>

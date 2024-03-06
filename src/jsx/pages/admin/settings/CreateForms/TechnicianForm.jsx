@@ -1,32 +1,34 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
-import { FormProvider } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import useDriverSubmit from "../../../../../hooks/useDriverSubmit";
 import General from "../../../../components/TabComponent/TecnicianTab/General";
 import Address from "../../../../components/TabComponent/TecnicianTab/Address";
 import Leave from "../../../../components/TabComponent/TecnicianTab/Leave";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {technicianGeneralSchema,technicianAddressSchema,technicianLeaveSchema} from '../../../../../yup'
 
 const TechnicianForm = ({ Title, editData, setEditData }) => {
-  const {
-    register,
-    onSubmit,
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue,
-    getValues,
-  } = useDriverSubmit();
 
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Address", "Leave"];
   const component = [General, Address, Leave];
   const totalTabs = tabHeading.length;
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
-  };
+
+  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+    resolver: yupResolver(activeIndex === 0 ? technicianGeneralSchema: activeIndex === 1 ? technicianAddressSchema:technicianLeaveSchema)
+  })
+
+  const onSubmit = (data)=>{
+    if(activeIndex === (totalTabs -1)){
+      console.log(data)
+      return;
+    }
+    console.log(data)
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+  }
   return (
     <>
       <MainPagetitle
@@ -69,7 +71,8 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
                           register={register}
                           getValues={getValues}
                           errors={errors}
-                          handleNext={handleNext}
+                          handleSubmit={handleSubmit}
+                          onSubmit={onSubmit}
                         />
                       </Tab.Pane>
                     );

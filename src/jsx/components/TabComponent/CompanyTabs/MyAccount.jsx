@@ -10,15 +10,13 @@ import {
   tagViaOptions,
   defaultObjectNumberOptions,
 } from "../VehicleTabs/Options";
-import DummyData from '../../../../users.json'
 import CustomInput from "../../Input/CustomInput";
-
-const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , handleSubmit }) => {
-  const { formState: errors, control } = useForm();
+import DummyData from '../../../../users.json'
+const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [tempValue,setTempValue] = useState();
   const [isCheckCP, setIsCheckCP] = useState(false);
-  const [isCheckESP, setIsCheckEsP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -41,26 +39,44 @@ const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , han
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Business User</label>
-          <Select
-            options={businessUserOptions}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
+          <Controller
+            name="businessUser"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("businessUser", newValue.value)}}
+                options={businessUserOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={businessUserOptions[0]}
+              />
+            )}
           />
         </div>
 
         <div className="col-xl-6 mb-3">
           <label className="form-label">Company</label>
-          <Select
-          options={companyOptions}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Company"
+          <Controller
+            name="company"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.value)}}
+                options={companyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={companyOptions[0]}
+              />
+            )}
           />
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country</label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -268,20 +284,20 @@ const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , han
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street2
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street2")}
-            className="form-control"
+            register={register}
+            label="Street2"
             name="street2"
             placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Contact Person</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("contactPerson")}
-            className="form-control"
+            register={register}
+            label="Contact Person"
             name="contactPerson"
             placeholder=""
           />
@@ -290,10 +306,10 @@ const MyAccount = ({ setValue, register, handleNext , getValues , onSubmit , han
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Fax Number
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("faxNumber")}
-            className="form-control"
+            register={register}
+            label="Fax Number"
             name="faxNumber"
             placeholder=""
           />

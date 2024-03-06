@@ -14,8 +14,7 @@ import {
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
 
-const Profile = ({handleNext, register, setValue, errors}) => {
-  const { control, getValues } = useForm();
+const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, getValues}) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
@@ -778,7 +777,7 @@ const Profile = ({handleNext, register, setValue, errors}) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
       </div>
     </div>
   );

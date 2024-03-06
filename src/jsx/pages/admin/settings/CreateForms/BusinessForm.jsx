@@ -8,14 +8,17 @@ import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
+
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
   })
+
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       console.log(data)
