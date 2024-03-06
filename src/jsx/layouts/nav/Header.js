@@ -338,7 +338,7 @@ const Header = ({ onNote }) => {
                           to={"/app-profile"}
                           className="dropdown-item ai-icon "
                         >
-                          {SVGICON.User} <span className="ms-2">Company Details </span>
+                          {SVGICON.User} <span className="ms-2">My Profile </span>
                         </Link>
 
                         <Link

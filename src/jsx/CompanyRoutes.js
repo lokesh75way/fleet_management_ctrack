@@ -38,6 +38,7 @@ const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const MyProfile = React.lazy(() => import("./pages/company/profile/MyProfile"));
 
 
 //Update Pages
@@ -198,6 +199,7 @@ const CompanyRoutes = () => {
     { url: "driver/create", component: <DriverForm/> },
     { url: "technician/create", component: <TechnicianForm/> },
     { url: "branch/create", component: <BranchForm/> },
+    { url: "/company/my-profile/edit", component: <MyProfile/> },
     
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
