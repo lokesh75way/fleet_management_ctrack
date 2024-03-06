@@ -12,7 +12,7 @@ export const AdminMenuList = [
     iconStyle: SVGICON.Home,
     to: "/dashboard",
   },
-
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Business Group",
     classsChange: "mm-collapse",
@@ -46,7 +46,7 @@ export const AdminMenuList = [
       //     to: '/manage-client',
       // },
       {
-        title: "Groups",
+        title: "Feature Template",
         iconStyle: SVGICON.ManageClient,
         to: "/groups",
       },
@@ -113,15 +113,6 @@ export const AdminMenuList = [
       },
     ],
   },
-  {
-    title: "Others",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-      { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
-    ],
-  },
-
   {
     title: "Settings",
     classsChange: "mm-collapse",

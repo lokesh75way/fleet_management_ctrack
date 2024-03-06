@@ -75,7 +75,7 @@ const SubUser = () => {
     const edit = useRef();
     return (
         <>
-        <MainPagetitle mainTitle="SubUser" pageTitle={'SubUser'} parentTitle={'Home'} />
+        <MainPagetitle mainTitle="User" pageTitle={'User'} parentTitle={'Home'} />
             <div className="container-fluid">
 				<div className="row">
 			    	<div className="col-xl-12">
@@ -83,12 +83,12 @@ const SubUser = () => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">   
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Sub Users</h4>   
+                                        <h4 className="heading mb-0">Users</h4>   
                                         <div>
                                             
                                             <Link to={"/subUser/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
                                                 // onClick={()=>subuser.current.showModal()}
-                                            >+ Add Sub User</Link> {" "}
+                                            >+ Add User</Link> {" "}
                                         </div>                                      
                                     </div>          
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">

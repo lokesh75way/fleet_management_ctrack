@@ -12,6 +12,7 @@ export const BusinessGroupMenuList = [
     iconStyle: SVGICON.Home,
     to: "/dashboard",
   },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Company",
     classsChange: "mm-collapse",
@@ -74,15 +75,6 @@ export const BusinessGroupMenuList = [
       },
     ],
   },
-  {
-    title: "Others",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
-    content: [
-      { title: "SubUser", iconStyle: SVGICON.Employe, to: "/subUser" },
-    ],
-  },
-
   {
     title: "Settings",
     classsChange: "mm-collapse",
