@@ -79,13 +79,11 @@ const Home = () => {
       <div className="fluid container mt-3 mw-100">
         <div className="row" style={{ marginRight: "0.0rem" }}>
           <div className="col-xl-4 col-sm-12">
-            <div
-              className="card same-card p-2"
-              
-            >
+            <div className="card same-card p-2">
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Status</p>
               </div>
+
               <div className="card-body d-flex align-items-center  py-2">
                 <AllProjectDonutChart
                   labels={["Running", "Idle", "Stopped"]}
@@ -144,10 +142,7 @@ const Home = () => {
             </div>
           </div>
           <div className="col-xl-4 col-sm-12">
-            <div
-              className="card same-card p-2"
-            
-            >
+            <div className="card same-card p-2">
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Usage</p>
                 <div
@@ -168,16 +163,15 @@ const Home = () => {
                   <span className="text-black">72.97 km</span>
                 </p>
               </div>
-              <div className="mt-3">
-                {/* <GradientArea /> */}
-              </div>
+              <div className="mt-3">{/* <GradientArea /> */}</div>
             </div>
           </div>
-          <div className="col-xl-4 col-sm-12" style={{paddingInline : '0px'}}>
+
+          <div className="col-xl-4 col-sm-12" style={{ paddingInline: "0px" }}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               <div
                 className="card same-card mb-3 p-2"
-                style={{ cursor : 'pointer'  }}
+                style={{ cursor: "pointer" }}
                 onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
               >
                 <div className="d-flex justify-content-between">
@@ -217,145 +211,54 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div
-                className="fluid container"
-                style={{ marginTop: 0, padding: 0 }}
+                className="card same-card mb-3 p-2"
+                style={{ cursor: "pointer" }}
+                onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
               >
-                <div
-                  className="row pe-0 ps-0 mx-0 justify-content-between gap-2"
-                  style={{ flexWrap: "nowrap" }}
-                >
+                <div className="d-flex justify-content-between">
+                  <p className="text-black text-md">Fleet Fuel</p>
                   <div
-                    className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#90EE90",cursor : 'pointer'  }}
-                    onClick={() =>
-                      openModal(<StayInZoneTable />, "Stay In Zone")
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
                   >
-                    <div className="d-flex justify-content-between">
-                      <p
-                        className="text-black fs-4"
-                        style={{
-                          marginLeft: "0.3rem",
-                          whiteSpace: "nowrap", // Added: prevent text from wrapping
-                          overflow: "hidden", // Added: hide overflow
-                          textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                        }}
-                      >
-                        Stay In Zone
-                      </p>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <Select />
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                      <div
-                        className="d-flex align-items-end mb-2"
-                        style={{ height: "100%" }}
-                      >
-                        <SiGraphql color="white" size={50} />
-                      </div>
-                      <div>
-                        <div
-                          className="fs-2 text-white d-flex justify-content-end"
-                          style={{ marginTop: "2.5rem" }}
-                        >
-                          0
-                        </div>
-                        <div className="text-black d-flex justify-content-end">
-                          Alerts
-                        </div>
-                        <p
-                          className="d-flex justify-content-end"
-                          style={{
-                            color: "#808080",
-                            backgroundColor: "#4ee44e",
-                            borderRadius: "5px",
-                            outline: "none",
-                            paddingLeft: "3px",
-                            paddingRight: "3px",
-                          }}
-                        >
-                          0% Object
-                        </p>
-                      </div>
+                    <Select />
+                  </div>
+                </div>
+                <div className="d-flex justify-content-evenly">
+                  <div className="">
+                    <p >Total Fleet Fuel</p>
+                    <div className="d-flex justify-content-evenly align-items-center">
+                      <FaCar color="#b3b300" />
+                      <p style={{ color: "#b3b300" }}>O hr</p>
                     </div>
                   </div>
-                  <div
-                    className="card same-card p-2 col-6"
-                    style={{ backgroundColor: "#00FFFF",cursor : 'pointer' }}
-                    onClick={() =>
-                      openModal(<TemperatureTable />, "Temperature")
-                    }
-                  >
-                    <div className="d-flex justify-content-between">
-                      <p
-                        className="text-black fs-4"
-                        style={{
-                          marginLeft: "0.3rem",
-                          whiteSpace: "nowrap", // Added: prevent text from wrapping
-                          overflow: "hidden", // Added: hide overflow
-                          textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                        }}
-                      >
-                        Temperature
-                      </p>
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
-                      >
-                        <Select />
-                      </div>
+                  <div className="">
+                    <p>Approx Fuel Waste</p>
+                    <div className="d-flex justify-content-evenly align-items-center">
+                      <BsFuelPumpFill color="#ffcccb" />
+                      <p style={{ color: "red" }}>O ltr</p>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                      <div
-                        className="d-flex align-items-end mb-2"
-                        style={{ height: "100%" }}
-                      >
-                        <FaThermometerHalf color="white" size={50} />
-                      </div>
-                      <div>
-                        <div className="text-red fs-6 d-flex justify-content-end">
-                          Min Temp. 0.0 C
-                        </div>
-                        <div className="text-red fs-6 d-flex justify-content-end">
-                          Max Temp. 0.0 C
-                        </div>
-                        <div className="fs-2 text-white d-flex justify-content-end">
-                          0
-                        </div>
-                        <div className="text-black d-flex justify-content-end">
-                          Alerts
-                        </div>
-                        <p
-                          className="d-flex justify-content-end"
-                          style={{
-                            backgroundColor: "#00e6e6",
-                            color: "#ffb09c",
-                            borderRadius: "5px",
-                            outline: "none",
-                            paddingLeft: "3px",
-                            paddingRight: "3px",
-                          }}
-                        >
-                          0% Object
-                        </p>
-                      </div>
-                    </div>
+                  </div>
+                </div>
+                <div className="fs-6 text-align-center d-flex justify-content-between gap-1 mb-2">
+                  <div>
+                    <strong>Note:</strong>
+                  </div>
+                  <div className="fw-lighter">
+                   
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="row" style={{ marginRight: "0.2rem" }}>
-          <div className="col-xl-2 col-sm-12" style={{"paddingInline" : "4px"}}>
+
+        <div className="row " style={{ marginLeft: "0.2rem", justifyContent : 'space-between'  }}>
+          {/* Overspeed */}
+          <div className="col-xl-3 col-sm-12" style={{ paddingInline: "4px" }}>
             <div
               className="card same-card p-2"
               style={{ backgroundColor: "#ffb09c", cursor: "pointer" }}
@@ -417,13 +320,13 @@ const Home = () => {
               </div>
             </div>
           </div>
-          {/* <div className="col-xl-2 col-sm-12">
+
+          {/* Stay In Zone */}
+          <div className="col-xl-3 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#CBC3E3",cursor : 'pointer'  }}
-              onClick={() =>
-                openModal(<FenceOverstayTable />, "Fence Overstay")
-              }
+              style={{ backgroundColor: "#90EE90", cursor: "pointer" }}
+              onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
             >
               <div className="d-flex justify-content-between">
                 <p
@@ -435,7 +338,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Fence Overstay
+                  Stay In Zone
                 </p>
                 <div
                   onClick={(e) => {
@@ -450,16 +353,13 @@ const Home = () => {
                   className="d-flex align-items-end mb-2"
                   style={{ height: "100%" }}
                 >
-                  <GrLocation color="white" size={50} />
+                  <SiGraphql color="white" size={50} />
                 </div>
                 <div>
-                  <div className="text-red fs-6 d-flex justify-content-end">
-                    Max Overstay
-                  </div>
-                  <div className="text-red fs-6 d-flex justify-content-end">
-                    ---
-                  </div>
-                  <div className="fs-2 text-white d-flex justify-content-end">
+                  <div
+                    className="fs-2 text-white d-flex justify-content-end"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     0
                   </div>
                   <div className="text-black d-flex justify-content-end">
@@ -468,8 +368,8 @@ const Home = () => {
                   <p
                     className="d-flex justify-content-end"
                     style={{
-                      color: "#CBC3E3",
-                      backgroundColor: "#9e8fcb",
+                      color: "#808080",
+                      backgroundColor: "#4ee44e",
                       borderRadius: "5px",
                       outline: "none",
                       paddingLeft: "3px",
@@ -483,11 +383,12 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="col-xl-2 col-sm-12">
+          {/* Temperature */}
+          <div className="col-xl-3 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ backgroundColor: "#ADD8E6",cursor : 'pointer'  }}
-              onClick={() => openModal(<ACMisuseTable />, "AC Misuse")}
+              style={{ backgroundColor: "#00FFFF", cursor: "pointer" }}
+              onClick={() => openModal(<TemperatureTable />, "Temperature")}
             >
               <div className="d-flex justify-content-between">
                 <p
@@ -499,7 +400,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  AC Misuse
+                  Temperature
                 </p>
                 <div
                   onClick={(e) => {
@@ -514,26 +415,26 @@ const Home = () => {
                   className="d-flex align-items-end mb-2"
                   style={{ height: "100%" }}
                 >
-                  <TbAirConditioning color="white" size={50} />
+                  <FaThermometerHalf color="white" size={50} />
                 </div>
                 <div>
                   <div className="text-red fs-6 d-flex justify-content-end">
-                    Fuel Waste
+                    Min Temp. 0.0 C
                   </div>
                   <div className="text-red fs-6 d-flex justify-content-end">
-                    0 ltr
+                    Max Temp. 0.0 C
                   </div>
                   <div className="fs-2 text-white d-flex justify-content-end">
                     0
                   </div>
                   <div className="text-black d-flex justify-content-end">
-                    Hours
+                    Alerts
                   </div>
                   <p
                     className="d-flex justify-content-end"
                     style={{
-                      color: "#808080",
-                      backgroundColor: "#72bcd4",
+                      backgroundColor: "#00e6e6",
+                      color: "#ffb09c",
                       borderRadius: "5px",
                       outline: "none",
                       paddingLeft: "3px",
@@ -546,6 +447,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+
           {/* <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
@@ -606,20 +508,11 @@ const Home = () => {
               </div>
             </div>
           </div> */}
-          <div className="col-xl-4 col-sm-12">
-            <div className="card same-card p-2">
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Fleet Fuel
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="row" style={{ marginRight: "0.2rem" }}>
-          <div className="col-xl-2 col-sm-12">
+         
+         <div className="col-xl-3 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ height: "20vh" }}
+              // style={{ height: "20vh" }}
               onClick={() =>
                 openModal(<MaintenanceReminderTable />, "Maintenance Reminder")
               }
@@ -647,32 +540,34 @@ const Home = () => {
                 <div
                   style={{
                     display: "flex",
+                    flexDirection : 'column',
                     gap: "8px",
                   }}
                 >
                   <div className="mb-3">
-                    <SlCalender color="blue" size={20} />
+                    <SlCalender color="#3dace3" size={20} />
                   </div>
-                  <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
+                  <div style={{ color: "#3dace3", fontSize: "22px" }}>0</div>
                 </div>
                 <div
                   style={{
                     display: "flex",
+                    flexDirection : 'column',
                     gap: "8px",
                   }}
                 >
                   <div className="mb-3">
-                    <LuSiren color="blue" size={20} />
+                    <LuSiren color="#ff3811" size={20} />
                   </div>
-                  <div style={{ color: "#ff3811", fontSize :'22px' }}>0</div>
+                  <div style={{ color: "#ff3811", fontSize: "22px" }}>0</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-3 col-sm-12">
             <div
               className="card same-card p-2"
-              style={{ height: "20vh" }}
+              // style={{ height: "20vh" }}
               onClick={() =>
                 openModal(<MaintenanceReminderTable />, "Renewal Reminder")
               }
@@ -700,29 +595,30 @@ const Home = () => {
                 <div
                   style={{
                     display: "flex",
+                    flexDirection : 'column',
                     gap: "8px",
                   }}
                 >
                   <div className="mb-3">
-                    <SlCalender color="blue" size={20} />
+                    <SlCalender color="#3dace3" size={20} />
                   </div>
-                  <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
+                  <div style={{ color: "#3dace3", fontSize: "22px" }}>0</div>
                 </div>
                 <div
                   style={{
                     display: "flex",
+                    flexDirection : 'column',
                     gap: "8px",
                   }}
                 >
                   <div className="mb-3">
-                    <LuSiren color="blue" size={20} />
+                    <LuSiren color="#ff3811" size={20} />
                   </div>
-                  <div style={{ color: "#ff3811" , fontSize :'22px'}}>0</div>
+                  <div style={{ color: "#ff3811", fontSize: "22px" }}>0</div>
                 </div>
               </div>
             </div>
           </div>
-
           {/* <div className="col-xl-4 col-sm-12">
             <div className="card same-card p-2" style={{ height: "20vh" }}>
               <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
@@ -739,8 +635,12 @@ const Home = () => {
                 No Record Found
               </div>
             </div>
-          </div> */}
+          </div>
+           */}
+
         </div>
+
+
       </div>
     </>
   );
