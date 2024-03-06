@@ -28,22 +28,6 @@ import { TbAirConditioning } from "react-icons/tb";
 import { PiGraph } from "react-icons/pi";
 import { FaThermometerHalf } from "react-icons/fa";
 import { SiGraphql } from "react-icons/si";
-<<<<<<< HEAD
-
-// const DashboardComboChart = loadable(() =>
-// 	pMinDelay(import("./Dashboard/DashboardComboChart"), 1000)
-// );
-
-const Select = () => {
-  return (
-    <select style={{ width: "4.5rem", fontSize: "8px" , paddingBlock : "7px" }}>
-      <option>Today</option>
-      <option>Yesterday</option>
-      <option>Tomorrow</option>
-    </select>
-  );
-};
-=======
 import Select from "./Select";
 import UiModal from "../bootstrap/Modal";
 import CardModal from "./Model";
@@ -58,7 +42,6 @@ import StayInZoneTable from "../table/StayInZoneTable";
 import TemperatureTable from "../table/TemperatureTable";
 import FleetIdleTable from "../table/FleetIdleTable";
 import MaintenanceReminderTable from "../table/MaintenanceReminderTable";
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
 
 const Home = () => {
   const { changeBackground } = useContext(ThemeContext);
@@ -97,22 +80,18 @@ const Home = () => {
         <div className="row" style={{ marginRight: "0.0rem" }}>
           <div className="col-xl-4 col-sm-12">
             <div
-              className="card same-card pt-2"
-              style={{ paddingLeft: "1rem" }}
+              className="card same-card p-2"
+              
             >
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Status</p>
               </div>
               <div className="card-body d-flex align-items-center  py-2">
-<<<<<<< HEAD
-                <AllProjectDonutChart width={300} data={[12, 10, 15]} />
-=======
                 <AllProjectDonutChart
                   labels={["Running", "Idle", "Stopped"]}
                   width={300}
                   data={[12, 10, 15]}
                 />
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                 <ul className="project-list">
                   <li>
                     <svg
@@ -165,15 +144,9 @@ const Home = () => {
             </div>
           </div>
           <div className="col-xl-4 col-sm-12">
-<<<<<<< HEAD
-            <div className="card same-card p-2" style={{ paddingLeft: "1rem" }}>
-              <div className="d-flex justify-content-between align-items-center">
-                <p className="text-black text-md mb-0">Fleet Usage</p>
-                <Select />
-=======
             <div
-              className="card same-card pt-2"
-              style={{ paddingLeft: "1rem" }}
+              className="card same-card p-2"
+            
             >
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Usage</p>
@@ -184,7 +157,6 @@ const Home = () => {
                 >
                   <Select />
                 </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
               </div>
               <div className="mt-5">
                 <p>
@@ -204,16 +176,8 @@ const Home = () => {
           <div className="col-xl-4 col-sm-12" style={{paddingInline : '0px'}}>
             <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
               <div
-<<<<<<< HEAD
                 className="card same-card mb-3 p-2"
-                style={{ paddingLeft: "1rem" }}
-              >
-                <div className="d-flex justify-content-between">
-                  <p className="text-black text-md mb-0">Fleet Idle</p>
-                  <Select />
-=======
-                className="card same-card mb-3 pt-2"
-                style={{ paddingLeft: "1rem",cursor : 'pointer'  }}
+                style={{ cursor : 'pointer'  }}
                 onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
               >
                 <div className="d-flex justify-content-between">
@@ -225,7 +189,6 @@ const Home = () => {
                   >
                     <Select />
                   </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                 </div>
                 <div className="d-flex justify-content-evenly">
                   <div className="">
@@ -265,17 +228,6 @@ const Home = () => {
                 >
                   <div
                     className="card same-card p-2 col-6"
-<<<<<<< HEAD
-                    style={{ backgroundColor: "#90EE90" , marginInline : "0px" }}
-                  >
-                    <div className="d-flex justify-content-between">
-                      <p
-                        className="text-black fs-4 mb-0"
-                      >
-                        Stay In Zone
-                      </p>
-                      <Select />
-=======
                     style={{ backgroundColor: "#90EE90",cursor : 'pointer'  }}
                     onClick={() =>
                       openModal(<StayInZoneTable />, "Stay In Zone")
@@ -300,7 +252,6 @@ const Home = () => {
                       >
                         <Select />
                       </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                     </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
@@ -337,18 +288,6 @@ const Home = () => {
                   </div>
                   <div
                     className="card same-card p-2 col-6"
-<<<<<<< HEAD
-                    style={{ backgroundColor: "#00FFFF" , marginInline : "0px"}}
-                  >
-                    <div className="d-flex justify-content-between">
-                      <p
-                        className="text-black fs-4 mb-0"
-                        
-                      >
-                        Temperature
-                      </p>
-                      <Select />
-=======
                     style={{ backgroundColor: "#00FFFF",cursor : 'pointer' }}
                     onClick={() =>
                       openModal(<TemperatureTable />, "Temperature")
@@ -373,7 +312,6 @@ const Home = () => {
                       >
                         <Select />
                       </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                     </div>
                     <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                       <div
@@ -424,12 +362,6 @@ const Home = () => {
               onClick={() => openModal(<OverspeedTable />, "Overspeed")}
             >
               <div className="d-flex justify-content-between">
-<<<<<<< HEAD
-                <p className="text-black fs-4 mb-0" >
-                  Overspeed
-                </p>
-                <Select />
-=======
                 <p
                   className="text-black fs-4"
                   style={{
@@ -448,7 +380,6 @@ const Home = () => {
                 >
                   <Select />
                 </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -550,12 +481,8 @@ const Home = () => {
                 </div>
               </div>
             </div>
-<<<<<<< HEAD
-          </div> */}
-=======
           </div>
 
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
           <div className="col-xl-2 col-sm-12">
             <div
               className="card same-card p-2"
@@ -563,12 +490,6 @@ const Home = () => {
               onClick={() => openModal(<ACMisuseTable />, "AC Misuse")}
             >
               <div className="d-flex justify-content-between">
-<<<<<<< HEAD
-                <p className="text-black fs-4 mb-0" >
-                  AC Misuse
-                </p>
-                <Select />
-=======
                 <p
                   className="text-black fs-4"
                   style={{
@@ -587,7 +508,6 @@ const Home = () => {
                 >
                   <Select />
                 </div>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
                 <div
@@ -724,7 +644,6 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-<<<<<<< HEAD
                 <div
                   style={{
                     display: "flex",
@@ -733,16 +652,9 @@ const Home = () => {
                 >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
-=======
-                <div>
-                  <div className="mb-2">
-                    <SlCalender color="#3dace3" size={20} />
-                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>Due</p>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                   </div>
                   <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
                 </div>
-<<<<<<< HEAD
                 <div
                   style={{
                     display: "flex",
@@ -751,13 +663,6 @@ const Home = () => {
                 >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
-=======
-
-                <div>
-                  <div className="mb-2">
-                    <LuSiren color="#ff3811" size={20} />
-                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>OverDue</p>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                   </div>
                   <div style={{ color: "#ff3811", fontSize :'22px' }}>0</div>
                 </div>
@@ -792,7 +697,6 @@ const Home = () => {
                   height: "100%",
                 }}
               >
-<<<<<<< HEAD
                 <div
                   style={{
                     display: "flex",
@@ -801,16 +705,9 @@ const Home = () => {
                 >
                   <div className="mb-3">
                     <SlCalender color="blue" size={20} />
-=======
-                <div>
-                  <div className="mb-2">
-                    <SlCalender color="#3dace3" size={20} />
-                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>Due</p>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                   </div>
                   <div style={{ color: "#3dace3", fontSize :'22px' }}>0</div>
                 </div>
-<<<<<<< HEAD
                 <div
                   style={{
                     display: "flex",
@@ -819,12 +716,6 @@ const Home = () => {
                 >
                   <div className="mb-3">
                     <LuSiren color="blue" size={20} />
-=======
-                <div>
-                  <div className="mb-2">
-                    <LuSiren color="#ff3811" size={20} />
-                    <p style={{ color: "black", fontWeight: "500", padding: '8px' }}>OverDue</p>
->>>>>>> 8536c6a2efe782b8014a6d1068300b98ed942d9b
                   </div>
                   <div style={{ color: "#ff3811" , fontSize :'22px'}}>0</div>
                 </div>
