@@ -161,4 +161,10 @@ export const CompanyMenuList = [
     ],
   },
 
-];
+    // {
+    //     title: 'Manage Clients',
+    //     iconStyle: SVGICON.ManageClient,
+    //     to: '/manage-client',
+    // },
+
+]
