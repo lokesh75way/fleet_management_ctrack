@@ -4,34 +4,35 @@ import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import Error from "../components/Error/Error";
 import {
   branchOptions,
   alertTypeOptions,
+  objectOptions,
+  severityOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
+import CustomInput from "../components/Input/CustomInput";
 
 const AlertOffcanvas = forwardRef(
   (
     {
       Title,
-      editData,
-      setEditData,
       register,
       setValue,
       getValues,
+      control,
+      errors,
       handleSubmit,
       onSubmit,
     },
     ref
   ) => {
-    const { control, formState: errors } = useForm();
-    const [startDate, setStartDate] = useState(new Date());
-    const [startDate2, setStartDate2] = useState(new Date());
     const [addEmploye, setAddEmploye] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [selectedOption2, setSelectedOption2] = useState(null);
     const [selectedOption3, setSelectedOption3] = useState(null);
+    const [tempValue, setTempValue] = useState();
     useImperativeHandle(ref, () => ({
       showModal() {
         setAddEmploye(true);
@@ -44,7 +45,7 @@ const AlertOffcanvas = forwardRef(
     };
     const handleChange2 = (e) => {
       setSelectedOption2(e.target.value);
-      setValue("value", e.target.value);
+      setValue("alertValue", e.target.value);
     };
     const handleChange3 = (e) => {
       setSelectedOption3(e.target.value);
@@ -53,7 +54,7 @@ const AlertOffcanvas = forwardRef(
     const customStyles = {
       control: (base) => ({
         ...base,
-        padding: ".25rem 0 ", // Adjust the height as needed
+        padding: ".25rem 0 ", 
       }),
     };
 
@@ -79,27 +80,9 @@ const AlertOffcanvas = forwardRef(
           </div>
           <div className="offcanvas-body">
             <div className="container-fluid">
-              <form onClick={()=>handleSubmit(onSubmit)}>
+              <FormProvider>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  {/* <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Company</label>
-                    <Controller
-                      name="company"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            setValue("company", newValue.value)
-                          }
-                          options={branchOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={branchOptions[0]}
-                        />
-                      )}
-                    />
-                  </div> */}
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Branch</label>
                     <Controller
@@ -108,7 +91,8 @@ const AlertOffcanvas = forwardRef(
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("branch", newValue.value)
+                            {setTempValue(newValue.value);
+                            setValue("branch", newValue.value)}
                           }
                           options={branchOptions}
                           ref={ref}
@@ -118,6 +102,7 @@ const AlertOffcanvas = forwardRef(
                         />
                       )}
                     />
+                    { !getValues('branch') && <Error errorName={errors.branch} />}
                   </div>
 
                   <div className="col-xl-6 mb-3">
@@ -169,18 +154,55 @@ const AlertOffcanvas = forwardRef(
                         </label>
                       </div>
                     </div>
+                    { !getValues('basedOn') && <Error errorName={errors.basedOn} />}
                   </div>
-                  {selectedOption === 'vehicleGroup'}
+                  <div className="col-xl-6 mb-3 ">
+                    <label className="form-label">
+                      Object <span className="text-danger">*</span>
+                    </label>
+                    <Controller
+                      name="object"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            {setTempValue(newValue.value)
+                            setValue("object", newValue.value)}
+                          }
+                          options={objectOptions}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={objectOptions[0]}
+                        />
+                      )}
+                    />
+                   { !getValues('object') && <Error errorName={errors.object} />}
+                  </div>
+                  {selectedOption === 'vehicleGroup' && 
+                    <div className="col-xl-6 mb-3 ">
+                    <label className="form-label">
+                      Object Group <span className="text-danger">*</span>
+                    </label>
+                    <CustomInput
+                      type="text"
+                      register={register}
+                      label="Object Group"
+                      name="objectGroup"
+                      placeholder=""
+                    />
+                    <Error errorName={errors.objectGroup} />
+                  </div>
+                  }
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
                       Alert Name <span className="text-danger">*</span>
                     </label>
-                    <input
+                    <CustomInput
                       type="text"
-                      {...register("alertName", {
-                        required: "Alert Name is required",
-                      })}
-                      className="form-control"
+                      register={register}
+                      label="Alert Name"
                       name="alertName"
                       placeholder=""
                     />
@@ -197,7 +219,8 @@ const AlertOffcanvas = forwardRef(
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) =>
-                            setValue("alertType", newValue.value)
+                            {setTempValue(newValue.value);
+                            setValue("alertType", newValue.value)}
                           }
                           options={alertTypeOptions}
                           ref={ref}
@@ -207,7 +230,7 @@ const AlertOffcanvas = forwardRef(
                         />
                       )}
                     />
-                    <Error errorName={errors.alertType} />
+                    {!getValues('alertType') && <Error errorName={errors.alertType} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">Value</label>
@@ -258,6 +281,7 @@ const AlertOffcanvas = forwardRef(
                         </label>
                       </div>
                     </div>
+                    { !getValues('alertValue') && <Error errorName={errors.alertValue} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">Valid Days</label>
@@ -351,10 +375,34 @@ const AlertOffcanvas = forwardRef(
                     </div>
                   </div>
                 </div>
+                <div className="col-xl-6 mb-3 ">
+                    <label className="form-label">
+                      Severity <span className="text-danger">*</span>
+                    </label>
+                    <Controller
+                      name="severity"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            {setTempValue(newValue.value);
+                            setValue("severity", newValue.value)}
+                          }
+                          options={severityOptions}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={severityOptions[0]}
+                        />
+                      )}
+                    />
+                    {!getValues('severity') && <Error errorName={errors.severity} />}
+                  </div>
                 <div>
                   <button
                     type="submit"
-                    onClick={() => setAddEmploye(false)}
+                    onClick={() => {handleSubmit(onSubmit)}}
                     className="btn btn-primary me-1"
                   >
                     Submit
@@ -368,6 +416,7 @@ const AlertOffcanvas = forwardRef(
                   </Link>
                 </div>
               </form>
+              </FormProvider>
             </div>
           </div>
         </Offcanvas>

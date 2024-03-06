@@ -7,7 +7,10 @@ import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
 import {TechnicianTaskData} from '../components/Tables/Tables'
 import TechnicianTaskTable from '../components/Tables/TechnicianTaskTable';
-import TechnicianOffcanvas from '../constant/TechnicianTaskOffcanvas';
+import TechnicianTaskOffcanvas from '../constant/TechnicianTaskOffcanvas';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import {technicianTaskSchema} from '../../yup'
 
 const headers = [
     { label: "Employee ID", key: "emplid" },
@@ -77,17 +80,24 @@ const TechnicianTask = (ref) => {
         // setEditTableData(item);
         technicianTask.current.showModal();
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)   
-                return {...table, ...editData };
-            }
-            return table;
-        })
-        setTableData(updateTable)
-    }  
+    // const handleSubmit=(e)=>{
+    //     e.preventDefault();
+    //     const updateTable = tableData.map((table)=>{
+    //         if(table.id === editData.id) {
+    //             console.log(table.id)   
+    //             return {...table, ...editData };
+    //         }
+    //         return table;
+    //     })
+    //     setTableData(updateTable)
+    // } 
+    const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+        resolver: yupResolver(technicianTaskSchema )
+      })
+    
+      const onSubmit = (data)=>{
+        console.log(data)
+      } 
 
     const technicianTask = useRef();
     return (
@@ -182,9 +192,15 @@ const TechnicianTask = (ref) => {
                     </div>
                 </div>
             </div>
-            <TechnicianOffcanvas 
+            <TechnicianTaskOffcanvas 
                 ref={technicianTask}
                 editData={editData}
+                control={control}
+                setValue={setValue}
+                getValues={getValues}
+                onSubmit={onSubmit}
+                register={register}
+                errors={errors}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
                 Title={ editData.id === 0 ? "Add Task" : "Edit Task"}

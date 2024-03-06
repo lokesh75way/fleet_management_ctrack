@@ -6,33 +6,20 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import { leaveTimeOptions } from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
 
-const Leave = ({ handleNext, register, setValue }) => {
-  const { control, getValues, formState: errors } = useForm();
+const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control,errors,getValues }) => {
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOption2, setSelectedOption2] = useState(null);
-  const [selectedOption3, setSelectedOption3] = useState(null);
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const[tempValue,setTempValue] = useState()
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("fuelSensor", e.target.value);
-  };
-  const handleChange2 = (e) => {
-    setSelectedOption2(e.target.value);
-    setValue("verificationVia", e.target.value);
-  };
-  const handleChange3 = (e) => {
-    setSelectedOption3(e.target.value);
-    setValue("verificationVia", e.target.value);
-  };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -45,7 +32,7 @@ const Leave = ({ handleNext, register, setValue }) => {
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("leaveTime", newValue.value)}
+                onChange={(newValue) => {setTempValue(newValue.value);setValue("leaveTime", newValue.value)}}
                 options={leaveTimeOptions}
                 ref={ref}
                 name={name}
@@ -54,18 +41,20 @@ const Leave = ({ handleNext, register, setValue }) => {
               />
             )}
           />
+          {!getValues('leaveTime') &&<Error errorName={errors.leaveTime} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             No of Days
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("noOfDays")}
-            className="form-control"
+            register={register}
+            label="No Of Days"
             name="noOfDays"
             placeholder=""
           />
+          <Error errorName={errors.noOfDays} />
         </div>
         
       </div>
@@ -77,7 +66,7 @@ const Leave = ({ handleNext, register, setValue }) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
           Submit
         </Button>

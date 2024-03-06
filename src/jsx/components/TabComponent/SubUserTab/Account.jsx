@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
+import {  Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import {
   branchOptions,
 } from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
 
-const Account = ({ handleNext, register, setValue}) => {
-  const{control, getValues,formState: errors} = useForm()
+const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getValues, errors, control}) => {
   
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [tempValue, setTempValue] = useState();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -23,14 +23,14 @@ const Account = ({ handleNext, register, setValue}) => {
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch
+            Branch <span className="text-danger">*</span>
           </label>
           <Controller
             name="branch"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("branch", newValue.value)}
+                onChange={(newValue) =>{setTempValue(newValue.value); setValue("branch", newValue.value)}}
                 options={branchOptions}
                 ref={ref}
                 name={name}
@@ -39,17 +39,16 @@ const Account = ({ handleNext, register, setValue}) => {
               />
             )}
           />
+          { !getValues('branch') && <Error errorName={errors.branch} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             User Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("userName", {
-              required: "User Name is required",
-            })}
-            className="form-control"
+            register={register}
+            label="User Name"
             name="userName"
             placeholder=""
           />
@@ -59,12 +58,10 @@ const Account = ({ handleNext, register, setValue}) => {
           <label className="form-label">
             Confirm User Name <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("confirmUserName", {
-              required: "Confirm User Name is required",
-            })}
-            className="form-control"
+            register={register}
+            label="Confirm User Name"
             name="confirmUserName"
             placeholder=""
           />
@@ -74,46 +71,56 @@ const Account = ({ handleNext, register, setValue}) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
              Password <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="password"
-            {...register("password",{
-              required: "Password is required",
-            })}
-            className="form-control"
+            register={register}
+            label="Password"
             name="password"
             placeholder=""
           />
-           <Error errorName={errors.confirmUserName} />
+           <Error errorName={errors.password} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
           Retype password  <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="password"
-            {...register("retypePassword", {
-              required: "Retype Password is required",
-            })}
+            register={register}
+            label="Retype password"
             className="form-control"
             name="retypePassword"
             placeholder=""
           />
-           <Error errorName={errors.confirmUserName} />
+           <Error errorName={errors.retypePassword} />
         </div>
         
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Mobile Number  <span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("mobileNumber", {
-              required: "Mobile Number is required",
-            })}
-            className="form-control"
+            register={register}
+            label="Mobile Number"
             name="mobileNumber"
             placeholder=""
           />
+          <Error errorName={errors.mobileNumber} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+          Password Recovery Email  <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="password"
+            register={register}
+            label="Password Recovery Email"
+            className="form-control"
+            name="passwordRecoveryEmail"
+            placeholder=""
+          />
+           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         </div>
       <div
@@ -124,7 +131,7 @@ const Account = ({ handleNext, register, setValue}) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
       </div>
     </div>
   );

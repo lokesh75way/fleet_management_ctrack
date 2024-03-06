@@ -14,6 +14,7 @@ import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
 import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
+import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
@@ -103,7 +104,7 @@ const AdminRoutes = () => {
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },
-    { url: "branch/create", component: <BusinessForm /> },
+    { url: "branch/create", component: <BranchForm /> },
     { url: "branch", component: <Branch /> },
     { url: "business-group", component: <BusinessUser/> },
     { url: "business-group/:id", component: <BusinessUser/> },

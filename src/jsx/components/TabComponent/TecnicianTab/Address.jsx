@@ -6,13 +6,9 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import { adminOptions, resellerOptions } from "../VehicleTabs/Options";
+import CustomInput from "../../Input/CustomInput";
 
-const Address = ({ handleNext, register, setValue }) => {
-  const { control, getValues, formState: errors } = useForm();
-
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOption2, setSelectedOption2] = useState(null);
-  const [selectedOption3, setSelectedOption3] = useState(null);
+const Address = ({ register, setValue, getValues, errors, handleSubmit, control, onSubmit }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const customStyles = {
@@ -21,18 +17,7 @@ const Address = ({ handleNext, register, setValue }) => {
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("fuelSensor", e.target.value);
-  };
-  const handleChange2 = (e) => {
-    setSelectedOption2(e.target.value);
-    setValue("verificationVia", e.target.value);
-  };
-  const handleChange3 = (e) => {
-    setSelectedOption3(e.target.value);
-    setValue("verificationVia", e.target.value);
-  };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -40,22 +25,23 @@ const Address = ({ handleNext, register, setValue }) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street1
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street1")}
-            className="form-control"
+            register={register}
+            label="Street1"
             name="street1"
             placeholder=""
           />
+          <Error errorName={errors.street1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Street2
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street2")}
-            className="form-control"
+            register={register}
+            label="Street2"
             name="street2"
             placeholder=""
           />
@@ -64,25 +50,27 @@ const Address = ({ handleNext, register, setValue }) => {
           <label htmlFor="exampleFormControlInput3" className="form-label">
             City
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("city")}
-            className="form-control"
+            register={register}
+            label="City"
             name="city"
             placeholder=""
           />
+          <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             Zip Code
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("zipCode")}
-            className="form-control"
+            register={register}
+            label="Zip Code"
             name="zipCode"
             placeholder=""
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country</label>
@@ -95,14 +83,15 @@ const Address = ({ handleNext, register, setValue }) => {
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
+          {!getValues('country') &&<Error errorName={errors.country} />}
         </div>
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Mediclaim Number</label>
-          <input
+          <CustomInput
             type="text"
-            {...register("mediclaimNumber")}
-            className="form-control"
+            register={register}
+            label="Mediclaim Number"
             name="mediclaimNumber"
             placeholder=""
           />
@@ -132,7 +121,7 @@ const Address = ({ handleNext, register, setValue }) => {
           margin: "2rem 0",
         }}
       >
-        <Button onClick={handleNext} style={{ width: "10%" }}>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
           Next
         </Button>

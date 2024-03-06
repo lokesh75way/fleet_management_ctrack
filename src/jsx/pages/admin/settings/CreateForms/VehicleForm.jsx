@@ -8,25 +8,27 @@ import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
 
-const VehicleForm = ({ Title, editData, setEditData }) => {
-  const {
-    onSubmit,
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    control,
-    formState: { errors },
-  } = useVehicleSubmit();
+const VehicleForm = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
-  const handleNext = () => {
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1)); // Increment active tab index
-  };
+  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
+  })
+
+  const onSubmit = (data)=>{
+    if(activeIndex === (totalTabs -1)){
+      console.log(data)
+      return;
+    }
+    console.log(data)
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+  }
 
   return (
     <>
@@ -70,7 +72,6 @@ const VehicleForm = ({ Title, editData, setEditData }) => {
                           getValues={getValues}
                           control={control}
                           errors={errors}
-                          handleNext={handleNext}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
                         />

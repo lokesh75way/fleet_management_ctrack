@@ -9,7 +9,7 @@ import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSet
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 
-const CompanyForm = ({ Title, editData, setEditData }) => {
+const CompanyForm = () => {
   
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
