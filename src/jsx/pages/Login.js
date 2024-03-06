@@ -20,8 +20,8 @@ function Login(props) {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      email: "demo@example.com",
-      password: "123456",
+      email: "admin@example.com",
+      password: "admin123",
     },
     resolver: yupResolver(loginValidation),
   });
