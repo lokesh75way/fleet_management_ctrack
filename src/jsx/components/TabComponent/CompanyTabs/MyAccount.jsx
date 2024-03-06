@@ -4,12 +4,6 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import {
-  branchOptions,
-  employeeDesignationOptions,
-  tagViaOptions,
-  defaultObjectNumberOptions,
-} from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {

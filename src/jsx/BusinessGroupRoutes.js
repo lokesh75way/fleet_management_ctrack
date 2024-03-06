@@ -57,6 +57,8 @@ const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const MyProfile = React.lazy(() => import("./pages/businessUser/profile/MyProfile"));
+const BusinessUserProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/BusinessUserProfile"));
 
 const Error404 = React.lazy(() => import("./pages/Error404"));
 
@@ -109,6 +111,8 @@ const BusinessGroupRoutes = () => {
     { url: "business-group/:id", component: <BusinessUser/> },
     { url: "branch", component: <Branch /> },
     { url: "branch/:id", component: <Branch /> },
+    { url: "/businessUser/my-profile/edit", component: <MyProfile /> },
+    { url: "/app-profile", component: <BusinessUserProfile /> },
     // Manage Profile
     { url: "app-profile", component: <AdminProfile /> },
     { url: "changepassword", component: <ChangePassword /> },

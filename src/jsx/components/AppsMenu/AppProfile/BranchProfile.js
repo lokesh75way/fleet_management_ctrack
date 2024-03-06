@@ -1,18 +1,17 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Link } from "react-router-dom";
 import MainPagetitle from "../../../layouts/MainPagetitle";
-import { Badge } from "react-bootstrap";
 
-const AdminProfile = () => {
+const BranchProfile = () => {
 
   const data = {
-    admin:'Admin1',
+    branch:'Branch1',
     country:'India',
     state:"Punjab",
-    shortName:"Admin1",
-    userName:"Admin1",
-    passwordRecoveryEmail:"Company1@gmail.com",
-    helpDeskEmail:"Company1help@gmail.com",
+    shortName:"Branch1",
+    userName:"CompBranch1any1",
+    passwordRecoveryEmail:"Branch1@gmail.com",
+    helpDeskEmail:"Branch1help@gmail.com",
     helpDeskTelephoneNumber:"9876543210",
     mobileNumber:"1234567890",
     whatsappContactNumber:"1234567890",
@@ -41,7 +40,7 @@ const AdminProfile = () => {
                     <h4 className="heading mb-0">My Profile</h4>
                     <div>
                       <Link
-                        to={"/admin/my-profile/edit"}
+                        to={"/branch/my-profile/edit"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
@@ -62,11 +61,11 @@ const AdminProfile = () => {
                         <div className="col-xl-6 mb-3 ">
                           
                             <label className="m-2 fs-4 heading">
-                            Admin Name
+                            Branch Name
                           </label>
                          
                           <span className="fs-4 form-control">
-                            {data.admin}
+                            {data.branch}
                           </span>
                           
                         </div>
@@ -244,4 +243,4 @@ const AdminProfile = () => {
     </>
   );
 };
-export default AdminProfile;
+export default BranchProfile;

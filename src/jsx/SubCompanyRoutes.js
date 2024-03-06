@@ -38,6 +38,7 @@ const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const MyProfile = React.lazy(() => import("./pages/company/profile/MyProfile"));
 
 
 //Update Pages
@@ -48,7 +49,7 @@ const Contacts = React.lazy(() => import('./components/AppsMenu/Contacts'));
 const User = React.lazy(() => import('./components/AppsMenu/AppProfile/User'));
 const UserRoles = React.lazy(() => import('./components/AppsMenu/AppProfile/UserRoles'));
 const AddRole = React.lazy(() => import('./components/AppsMenu/AppProfile/AddRole'));
-const AppProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/AppProfile"));
+const BranchProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/BranchProfile"));
 const AppProfile2 = React.lazy(() => import("./components/AppsMenu/AppProfile/AppProfile2"));
 const EditProfile = React.lazy(() => import("./components/AppsMenu/AppProfile/EditProfile"));
 const PostDetails = React.lazy(() => import("./components/AppsMenu/AppProfile/PostDetails"));
@@ -198,6 +199,7 @@ const SubCompanyRoutes = () => {
     { url: "driver/create", component: <DriverForm/> },
     { url: "technician/create", component: <TechnicianForm/> },
     { url: "branch/create", component: <BranchForm/> },
+    { url: "/branch/my-profile/edit", component: <MyProfile/> },
     
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
@@ -259,7 +261,7 @@ const SubCompanyRoutes = () => {
     { url: "user", component: <User /> },
     { url: "user-roles", component: <UserRoles /> },
     { url: "add-role", component: <AddRole /> },
-    { url: "app-profile", component: <AppProfile /> },
+    { url: "app-profile", component: <BranchProfile /> },
     { url: "app-profile-2", component: <AppProfile2 /> },
     { url: "edit-profile", component: <EditProfile /> },
     { url: "post-details", component: <PostDetails /> },
