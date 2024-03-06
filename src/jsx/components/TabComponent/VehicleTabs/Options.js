@@ -170,4 +170,9 @@ export const toleranceOptions = [
   { value: "20", label: "20" },
   { value: "40", label: "40" },
 ];
+export const tripStatusOptions = [
+  { value: "OnGoing", label: "OnGoing" },
+  { value: "Completed", label: "Completed" },
+  { value: "Just Started", label: "Just Started" },
+];
 export const options = [{ value: "West Company", label: "West Company" }];

@@ -10,8 +10,6 @@ import CustomInput from "../../Input/CustomInput";
 
 const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control,errors,getValues }) => {
 
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
   const[tempValue,setTempValue] = useState()
   const customStyles = {
     control: (base) => ({

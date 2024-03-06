@@ -128,7 +128,7 @@ const Alert = () => {
                                                             <span>{item.location}</span>
                                                         </td>
                                                         <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"40%"}}>{item.status}</span>
+                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"5rem"}}>{item.status}</span>
                                                         </td>
                                                     </tr>
                                                 ))}

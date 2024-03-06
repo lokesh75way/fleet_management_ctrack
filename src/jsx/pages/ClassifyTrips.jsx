@@ -7,20 +7,26 @@ import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
 import ClassifyTripTable from '../components/Tables/ClassifyTripTable';
 import {ClassifyTripData} from '../components/Tables/Tables';
-
-const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Gender", key: "gender" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-]
+import ClassifyTripsFilterOffcanvas from '../constant/ClassifyTripsFilterOffcanvas'
+import ClassifyTripsOffcanvas from '../constant/ClassifyTripsOffcanvas'
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import {classifyTripsSchema} from '../../yup'
 
 const ClassifyTrip = (ref) => {
     const[tableData, setTableData] = useState(ClassifyTripData)
+    const {
+        register,
+        setValue,
+        getValues,
+        handleSubmit,
+        formState: { errors },
+        control,
+      } = useForm({
+        resolver: yupResolver(
+            classifyTripsSchema
+        ),
+      });
     const [editData , setEditData] = useState({
         id:0,
         status:'',    
@@ -74,21 +80,25 @@ const ClassifyTrip = (ref) => {
         ))
 
         // setEditTableData(item);
-        employe.current.showModal();
+        classifyTrips.current.showModal();
     }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)   
-                return {...table, ...editData };
-            }
-            return table;
-        })
-        setTableData(updateTable)
-    }  
+    // const handleSubmit=(e)=>{
+    //     e.preventDefault();
+    //     const updateTable = tableData.map((table)=>{
+    //         if(table.id === editData.id) {
+    //             console.log(table.id)   
+    //             return {...table, ...editData };
+    //         }
+    //         return table;
+    //     })
+    //     setTableData(updateTable)
+    // }
+    const onSubmit = (data) => {
+        console.log(data);
+      };  
 
-    const employe = useRef();
+    const classifyTrips = useRef();
+    const classifyTripsFilter = useRef();
     return (
         <>
             <MainPagetitle mainTitle="Classify Trip" pageTitle={'Classify Trip'} parentTitle={'Settings'} />
@@ -100,12 +110,15 @@ const ClassifyTrip = (ref) => {
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                                         <h4 className="heading mb-0">Classify Trip</h4>
-                                        <div>
+                                        <div className=''>
  
-                                            {/* <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
-                                                onClick={() => employe.current.showModal()}
-                                            >+ Add Driver</Link> {" "} */}
-                                           
+                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                onClick={() => classifyTripsFilter.current.showModal()}
+                                            >+ Filter</Link> {" "}
+ 
+                                            <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                                onClick={() => classifyTrips.current.showModal()}
+                                            >+ Add Trips</Link> {" "}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
@@ -183,6 +196,32 @@ const ClassifyTrip = (ref) => {
                     </div>
                 </div>
             </div>
+            <ClassifyTripsFilterOffcanvas 
+                ref={classifyTripsFilter}
+                // editData={editData}
+                // setEditData={setEditData}
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                control={control}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+                Title={"Add Filter"}
+            />
+            <ClassifyTripsOffcanvas 
+                ref={classifyTrips}
+                // editData={editData}
+                // setEditData={setEditData}
+                handleSubmit={handleSubmit}
+                onSubmit={onSubmit}
+                register={register}
+                control={control}
+                errors={errors}
+                setValue={setValue}
+                getValues={getValues}
+                Title={"Add Trips"}
+            />
         </>
     );
 };

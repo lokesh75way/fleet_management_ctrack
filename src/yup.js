@@ -1,6 +1,7 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
+    branch: yup.string().required(),
     vehicleName: yup.string().required(),
     serverAddress: yup.string(),
     deviceType: yup.string().required("Please select an option"),
@@ -17,9 +18,9 @@ export const vehicleGeneralSchema = yup
   .required();
 export const vehicleProfileSchema = yup
   .object({
-    DVIRTemplate: yup.string(),
+    DVIRTemplate: yup.string().required("DIVR Template is required !!"),
     purchaseAmount: yup.number().positive().integer(),
-    plateNumber: yup.string(),
+    plateNumber: yup.string().required("Plate Number is required !!"),
     registrationNumber: yup
       .number()
       .positive()
@@ -27,6 +28,11 @@ export const vehicleProfileSchema = yup
       .min(4, "Registration Number must be of 4 digit"),
     passengerSeats: yup.number().positive().integer(),
     distanceCost: yup.number().positive().integer(),
+    GPSWarranty: yup.string().required("GPS Warranty is required !!"),
+    weightCapacity: yup.number().positive().integer().required("Weight Capacity is required !!"),
+    registrationNumber: yup.number().positive().integer().required("Registration Number is required !!"),
+    fuelType: yup.string().required(" Select Fuel Type !!"),
+    permit: yup.string().required("Select Permit type !!"),
   })
   .required();
 
@@ -60,6 +66,9 @@ export const companyAccountSchema = yup
     shortName: yup.string().required("Please enter a Short Name"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
+    zipCode: yup.number().required("Zip Code is required !!"),
+    city: yup.string().required('Please enter a City !!'),
+    street1: yup.string().required('Please enter street1 address !!'),
     state: yup.string().required("Please select a State"),
     oldPassword: yup.string(),
     newPassword: yup
@@ -206,6 +215,16 @@ export const technicianLeaveSchema = yup
   .object({
    leaveTime: yup.string().required("Select type of leave !!"),
    noOfDays: yup.number().required("Enter total number of leaves !!"),
+
+  })
+  .required();
+export const classifyTripsSchema = yup
+  .object({
+    startTime: yup.string().required("Trip start time is required !!"),
+    startLocation: yup.string().required("Trip start Location is required !!"),
+    reachTime: yup.string().required("Trip reach time is required !!"),
+    reachLocation: yup.string().required("Trip reach Location is required !!"),
+    driver: yup.string().required("Driver name is required !!"),
 
   })
   .required();

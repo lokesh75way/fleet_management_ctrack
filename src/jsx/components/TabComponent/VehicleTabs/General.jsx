@@ -15,6 +15,7 @@ import CustomInput from "../../Input/CustomInput";
 
 const General = ({ register, setValue, getValues, errors, control, handleSubmit, onSubmit}) => {
 
+  const [tempValue,setTempValue] = useState()
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -35,7 +36,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("branch", newValue.value)}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("branch", newValue.value)}}
                 options={branchOptions}
                 ref={ref}
                 name={name}
@@ -44,7 +45,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
               />
             )}
           />
-          <Error errorName={errors.branch} />
+          {!getValues('branch') && <Error errorName={errors.branch} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -70,7 +71,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setValue("deviceType", newValue.value); console.log(getValues('deviceType'))}}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("deviceType", newValue.value);}}
                 options={deviceTypeOptions}
                 ref={ref}
                 name={name}
@@ -79,7 +80,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
               />
             )}
           />
-          <Error errorName={errors.deviceType} />
+          {!getValues('deviceType') && <Error errorName={errors.deviceType} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">

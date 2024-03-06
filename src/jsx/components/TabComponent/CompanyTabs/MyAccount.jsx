@@ -246,39 +246,42 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City
+            City<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("city")}
-            className="form-control"
+            register={register}
+            label="City"
             name="city"
             placeholder=""
           />
+          <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+            Zip Code<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="number"
-            {...register("zipCode")}
-            className="form-control"
+            register={register}
+            label="Zip Code"
             name="zipCode"
             placeholder=""
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1
+            Street1<span className="text-danger">*</span>
           </label>
-          <input
+          <CustomInput
             type="text"
-            {...register("street1")}
-            className="form-control"
+            register={register}
+            label="Street1"
             name="street1"
             placeholder=""
           />
+          <Error errorName={errors.street1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
