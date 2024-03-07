@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-
+import { ToastContainer } from 'react-toastify';
 import { connect, useDispatch } from "react-redux";
 import {
   Route,
@@ -96,7 +96,7 @@ function App(props) {
     }
   }
 
-  return (
+  return (<>
     <div className="vh-100">
       <Routes>
         <Route element={<BasicLayout />}>
@@ -107,7 +107,7 @@ function App(props) {
         </Route>
       </Routes>
     </div>
-  );
+    </>);
 }
 
 const mapStateToProps = (state) => {

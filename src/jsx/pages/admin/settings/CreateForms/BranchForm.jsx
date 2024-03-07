@@ -7,34 +7,45 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BranchTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/BranchTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BranchForm = () => {
-
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
-  const totalTabs = tabHeading.length;    
+  const totalTabs = tabHeading.length;
+  const navigate = useNavigate()
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0 ? companyAccountSchema : companySettingSchema
+    ),
+  });
 
-
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      const existingData = JSON.parse(localStorage.getItem('branchData'));
-      console.log(typeof(existingData));
-      console.log(existingData);
-      data.id  = existingData.length +1;
-      existingData.push(data)
-      localStorage.setItem('branchData',JSON.stringify(existingData))
-      return;
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        const existingData = JSON.parse(localStorage.getItem("branchData"));
+        data.id = existingData.length + 1;
+        existingData.push(data);
+        localStorage.setItem("branchData", JSON.stringify(existingData));
+        notifySuccess("Branch Added Successfully !!");
+        navigate("/branch");
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
     }
-    console.log(data)
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  };
   return (
     <>
       <MainPagetitle

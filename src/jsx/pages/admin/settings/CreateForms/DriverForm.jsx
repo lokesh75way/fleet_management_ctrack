@@ -8,38 +8,52 @@ import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { driverProfileSchema, driverInfoSchema } from '../../../../../yup' ;
+import { driverProfileSchema, driverInfoSchema } from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const DriverForm = () => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Profile", "Additional Info", "Document"];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? driverProfileSchema: driverInfoSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0 ? driverProfileSchema : driverInfoSchema
+    ),
+  });
 
   function generateRandomId() {
     const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
     const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
-    return timestamp + '-' + randomStr; // Combine timestamp and random string
+    return timestamp + "-" + randomStr; // Combine timestamp and random string
   }
 
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      const existingData = JSON.parse(localStorage.getItem('driverData'));
-      console.log(existingData);
-      data.id  = generateRandomId()
-      existingData.push(data)
-      localStorage.setItem('driverData',JSON.stringify(existingData))
-      navigate('/Driver')
-      return;
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        const existingData = JSON.parse(localStorage.getItem("driverData"));
+        data.id = generateRandomId();
+        existingData.push(data);
+        localStorage.setItem("driverData", JSON.stringify(existingData));
+        notifySuccess("Driver Added Successfully !!");
+        navigate("/Driver");
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
     }
-    console.log(data)
+    console.log(data);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  };
   return (
     <>
       <MainPagetitle

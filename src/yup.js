@@ -64,7 +64,42 @@ export const companyAccountSchema = yup
   .object({
     // branch: yup.string().required(),
     shortName: yup.string().required("Please enter a Short Name"),
+    company: yup.string().required("Company Name is required !!"),
     userName: yup.string().required("Please enter a User Name"),
+    country: yup.string().required("Please select a Country"),
+    zipCode: yup.number().required("Zip Code is required !!"),
+    city: yup.string().required('Please enter a City !!'),
+    street1: yup.string().required('Please enter street1 address !!'),
+    state: yup.string().required("Please select a State"),
+    oldPassword: yup.string(),
+    newPassword: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters"),
+    retypePassword: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20, "Password must be at most 20 characters"),
+    passwordRecoveryEmail: yup.string().email(),
+    helpDeskEmail: yup.string().email(),
+
+    mobileNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    whatsappContactNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    helpDeskTelephoneNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+  })
+  .required();
+export const businessGroupAccountSchema = yup
+  .object({
+    // branch: yup.string().required(),
+    shortName: yup.string().required("Please enter a Short Name"),
+    userName: yup.string().required("Please enter a User Name"),
+    businessUser: yup.string().required("Business User is required !!"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup.number().required("Zip Code is required !!"),
     city: yup.string().required('Please enter a City !!'),

@@ -7,29 +7,47 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import { businessGroupAccountSchema, companySettingSchema } from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
+  const navigate = useNavigate()
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0 ? businessGroupAccountSchema : companySettingSchema
+    ),
+  });
 
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      const existingData = JSON.parse(localStorage.getItem('businessData'));
-      data.id  = existingData.length + 1;
-      existingData.push(data)
-      localStorage.setItem('businessData',JSON.stringify(existingData))
-      return;
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        const existingData = JSON.parse(localStorage.getItem("businessData"));
+        data.id = existingData.length + 1;
+        existingData.push(data);
+        localStorage.setItem("businessData", JSON.stringify(existingData));
+        notifySuccess("Business Group Added Successfully !!");
+        navigate("/business");
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
+
     }
 
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  };
   return (
     <>
       <MainPagetitle
@@ -88,14 +106,3 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   );
 };
 export default BusinessForm;
-
-
-
-
-
-
-
-
-
-
-
