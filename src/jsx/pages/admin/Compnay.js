@@ -6,8 +6,6 @@ import CompanyTable from "../../components/Tables/CompanyTable";
 const Company = () => {
   const navigate = useNavigate();
   const CompanyData = JSON.parse(localStorage.getItem('companyData'))
-  console.log(CompanyData);
-  // const {getData} = useStorage();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );

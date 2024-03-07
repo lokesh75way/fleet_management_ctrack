@@ -6,7 +6,10 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
+import useStorage from "../../../../hooks/useStorage";
+
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+  const {checkRole, checkUser} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
@@ -28,18 +31,29 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.email,
     value: item.id,
   }));
+  
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Business User</label>
+          {checkRole() ? <CustomInput
+            type="text"
+            required
+            register={register}
+            lable="Parent"
+            name="parent"
+            placeholder=""
+            value={checkUser()}
+          />
+          :
           <Controller
-            name="businessUser"
+            name="parent"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -47,7 +61,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 defaultValue={businessUserOptions[0]}
               />
             )}
-          />
+          />}
         </div>
 
         <div className="col-xl-6 mb-3">

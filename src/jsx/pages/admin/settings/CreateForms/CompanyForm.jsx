@@ -7,8 +7,10 @@ import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import useStorage from "../../../../../hooks/useStorage";
 
 const CompanyForm = () => {
+  const{saveData} = useStorage()
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Add Account", "User Setting"];
   const component = [MyAccount, UserSetting];
@@ -16,23 +18,12 @@ const CompanyForm = () => {
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
   })
-  function generateRandomId() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
-    const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
-    return timestamp + '-' + randomStr; // Combine timestamp and random string
-  }
+
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      const existingData = JSON.parse(localStorage.getItem('companyData'));
-      console.log(typeof(existingData));
-      console.log(existingData);
-      data.id  = generateRandomId()
-      existingData.push(data)
-      localStorage.setItem('companyData',JSON.stringify(existingData))
+      saveData(data, 'companyData')
       return;
     }
-    console.log(data)
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
   return (
