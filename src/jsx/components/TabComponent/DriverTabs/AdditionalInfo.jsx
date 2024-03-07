@@ -38,7 +38,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Age</label>
+          <label className="form-label">Age<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -77,7 +77,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Driving Experience Since</label>
+          <label className="form-label">Driving Experience Since<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}

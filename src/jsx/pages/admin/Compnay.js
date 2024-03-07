@@ -1,14 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CSVLink } from "react-csv";
-
-import { IMAGES } from "../../constant/theme";
 import MainPagetitle from "../../layouts/MainPagetitle";
-import InviteCustomer from "../../constant/ModalList";
-import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
-// import { CompanyData } from "../../components/Tables/Tables";
 import CompanyTable from "../../components/Tables/CompanyTable";
-import useStorage from "../../../hooks/useStorage";
 
 const Company = () => {
   const navigate = useNavigate();

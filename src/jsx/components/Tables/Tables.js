@@ -22,23 +22,138 @@ import { IMAGES,SVGICON} from '../../constant/theme';
  {id: '1019', image:IMAGES.contact1,parent:"business4@example.com", mobileNumber:'+91 123 456 7890', company:"company4@example.com",zipCode:"908566", status:'Active' ,title: 'Gagan sir', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
  {id: '1020', image:IMAGES.contact1,parent:"business5@example.com", mobileNumber:'+91 123 456 7890', company:"company5@example.com",zipCode:"646454", status:'Inactive' ,title: 'Akshay', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5}]
  
+ 
  export const DriverData = [
-    {id: '1001', age: 32, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {id: '1002', age: 29, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil'},    
-    {id: '1003', age: 41, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France'},    
-    {id: '1004', age: 31, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai'},    
-    {id: '1005', age: 32, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA'},    
-    {id: '1006', age: 42, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA'},    
-    {id: '1007', age: 32, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil'},    
-    {id: '1008', age: 34, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France'},    
-    {id: '1009', age: 32, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
-    {id: '1010', age: 29, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai'},    
-    {id: '1011', age: 32, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil'},    
-    {id: '1012', age: 32, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India'},    
+  // Company 1 data
+  {
+      id: '1001',
+      branch: "company1@example.com",
+      firstName: 'Rahul',
+      lastName: "Verma",
+      status: true,
+      age: 34,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+91 123 456 7890',
+      city: 'Mumbai'
+  },
+  {
+      id: '1002',
+      branch: "company1@example.com",
+      firstName: 'John',
+      lastName: "Doe",
+      status: false,
+      age: 29,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+1 234 567 8901',
+      city: 'New York'
+  },
+  // 3 more entries for company1@example.com...
+
+  // Company 2 data
+  {
+      id: '2001',
+      branch: "company2@example.com",
+      firstName: 'David',
+      lastName: "Smith",
+      status: true,
+      age: 30,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+1 987 654 3210',
+      city: 'Los Angeles'
+  },
+  {
+      id: '2002',
+      branch: "company2@example.com",
+      firstName: 'Emma',
+      lastName: "Johnson",
+      status: false,
+      age: 27,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+44 987 654 3210',
+      city: 'London'
+  },
+  // 3 more entries for company2@example.com...
+
+  // Company 3 data
+  {
+      id: '3001',
+      branch: "company3@example.com",
+      firstName: 'Liam',
+      lastName: "Martin",
+      status: true,
+      age: 31,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+1 876 543 2109',
+      city: 'Sydney'
+  },
+  {
+      id: '3002',
+      branch: "company3@example.com",
+      firstName: 'Ava',
+      lastName: "Brown",
+      status: false,
+      age: 28,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+44 876 543 2109',
+      city: 'Manchester'
+  },
+  // 3 more entries for company3@example.com...
+
+  // Company 4 data
+  {
+      id: '4001',
+      branch: "company4@example.com",
+      firstName: 'Emma',
+      lastName: "Garcia",
+      status: true,
+      age: 28,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+1 765 432 1098',
+      city: 'Chicago'
+  },
+  {
+      id: '4002',
+      branch: "company4@example.com",
+      firstName: 'Olivia',
+      lastName: "Brown",
+      status: false,
+      age: 27,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+44 765 432 1098',
+      city: 'Birmingham'
+  },
+  // 3 more entries for company4@example.com...
+
+  // Company 5 data
+  {
+      id: '5001',
+      branch: "company5@example.com",
+      firstName: 'Noah',
+      lastName: "Martinez",
+      status: true,
+      age: 32,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+1 654 321 0987',
+      city: 'Houston'
+  },
+  {
+      id: '5002',
+      branch: "company5@example.com",
+      firstName: 'Sophia',
+      lastName: "Jones",
+      status: false,
+      age: 29,
+      drivingExperienceSince: 2015,
+      contactNumber1: '+44 654 321 0987',
+      city: 'Manchester'
+  },
+  // 3 more entries for company5@example.com...
 ];
 
+
+
 export const SubCompanyData = [
-    {id: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', location:'India', usergroup:'East Minister Company', branches : 1},    
+    {id: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky Antony', username: 'ra@gmail.com', country:'India', usergroup:'East Minister Company', branches : 1},    
     {id: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,reseller: 'Ankites Risher', username: 'abc@gmail.com', location:'Brazil', usergroup:'East Minister Company', branches : 1},    
     {id: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Ricky M', username: 'pqr@gmail.com', location:'France', usergroup:'East Minister Company', branches : 1},    
     {id: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,reseller: 'Elijah James', username: 'stuy@gmail.com', location:'Dubai', usergroup:'East Minister Company', branches : 1},    

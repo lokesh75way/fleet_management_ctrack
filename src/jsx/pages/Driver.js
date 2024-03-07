@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 
@@ -6,7 +6,6 @@ import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
-import { DriverData } from "../components/Tables/Tables";
 import DriverTable from "../components/Tables/DriverTable";
 
 const headers = [
@@ -22,7 +21,26 @@ const headers = [
 
 const Driver = (ref) => {
   const navigate = useNavigate();
-  const [tableData, setTableData] = useState(DriverData);
+  const driverDataFromLocalStorage = localStorage.getItem('driverData');
+  
+  const DriverDataMemoized = useMemo(() => {
+      return  driverDataFromLocalStorage ? JSON.parse(driverDataFromLocalStorage) : [];;
+  }, [driverDataFromLocalStorage]);
+
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(()=>{
+    const loginCompanyId  = localStorage.getItem('loginDetails-email');
+    console.log(DriverDataMemoized , loginCompanyId)
+    const data1 = DriverDataMemoized.filter((driver)=> driver.branch === loginCompanyId);
+    console.log(data1)
+    if(loginCompanyId === 'admin@example.com'){
+      setTableData(DriverDataMemoized)
+      return;
+    }
+    setTableData(data1)
+  },[])
+
   const [editData, setEditData] = useState({
     id: 0,
     status: "",
@@ -37,7 +55,7 @@ const Driver = (ref) => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const sort = 10;
-  const activePag = useRef(0);
+  const activePage = useRef(0);
   const [test, settest] = useState(0);
   const chageData = (frist, sec) => {
     for (var i = 0; i < data.length; ++i) {
@@ -53,15 +71,15 @@ const Driver = (ref) => {
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+  }, [test, tableData]);
 
-  activePag.current === 0 && chageData(0, sort);
+  activePage.current === 0 && chageData(0, sort);
   let paggination = Array(Math.ceil(data.length / sort))
     .fill()
     .map((_, i) => i + 1);
   const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
+    activePage.current = i;
+    chageData(activePage.current * sort, (activePage.current + 1) * sort);
     settest(i);
   };
   const onConfirmDelete = (id) => {
@@ -122,13 +140,12 @@ const Driver = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Employee ID</th>
+                          <th>ID</th>
                           <th>Employee Name</th>
                           <th>Age</th>
                           <th>Contact Number</th>
-                          <th>Gender</th>
-                          <th>Driving Experience</th>
-                          <th>Location</th>
+                          <th>Driving Experience Since</th>
+                          <th>City</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -145,9 +162,9 @@ const Driver = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
+                        Showing {activePage.current * sort + 1} to{" "}
+                        {data.length > (activePage.current + 1) * sort
+                          ? (activePage.current + 1) * sort
                           : data.length}{" "}
                         of {data.length} entries
                       </div>
@@ -159,8 +176,8 @@ const Driver = (ref) => {
                           className="paginate_button previous disabled"
                           to="/driver"
                           onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
+                            activePage.current > 0 &&
+                            onClick(activePage.current - 1)
                           }
                         >
                           <i className="fa-solid fa-angle-left" />
@@ -171,7 +188,7 @@ const Driver = (ref) => {
                               key={i}
                               to="/driver"
                               className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
+                                activePage.current === i ? "current" : ""
                               } `}
                               onClick={() => onClick(i)}
                             >
@@ -183,8 +200,8 @@ const Driver = (ref) => {
                           className="paginate_button next"
                           to="/driver"
                           onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
+                            activePage.current + 1 < paggination.length &&
+                            onClick(activePage.current + 1)
                           }
                         >
                           <i className="fa-solid fa-angle-right" />
@@ -198,13 +215,7 @@ const Driver = (ref) => {
           </div>
         </div>
       </div>
-      {/* <EmployeeOffcanvas 
-                ref={employe}
-                editData={editData}
-                setEditData={setEditData}
-                handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
-            /> */}
+    
     </>
   );
 };

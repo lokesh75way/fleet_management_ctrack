@@ -1,6 +1,5 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import React, { useState} from "react";
+import { Nav,  Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
@@ -8,10 +7,8 @@ import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
-import useStorage from '../../../../../hooks/useStorage.js'
 
 const CompanyForm = () => {
-  const {saveData} = useStorage();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Add Account", "User Setting"];
   const component = [MyAccount, UserSetting];

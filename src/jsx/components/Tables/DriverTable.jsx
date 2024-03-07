@@ -4,33 +4,31 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
 const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
+    console.log(tableData)
     return (
         <>
             {tableData.map((item, index) => (
-                <tr key={index}>
+                <tr key={item.id}>
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
                             <img src={item.image} className="avatar avatar-md" alt="" />
                             <div>
-                                <h6>{item.title}</h6>
-                                <span>Web Designer</span>
+                                <h6>{item.firstName} {item.lastName}</h6>
+                                <span>{item.employeeDesignation}</span>
                             </div>
                         </div>
                     </td>
                     <td><span>{item.age}</span></td>
                     <td>
-                        <span>{item.contact}</span>
+                        <span>{item.contactNumber1}</span>
+                    </td>
+                    <td><span className="text-primary ">{item.drivingExperienceSince}</span></td>
+                    <td>
+                        <span>{item.city}</span>
                     </td>
                     <td>
-                        <span>{item.gender}</span>
-                    </td>
-                    <td><span className="text-primary ">{item.drivingExperience}</span></td>
-                    <td>
-                        <span>{item.location}</span>
-                    </td>
-                    <td>
-                    <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} d-inline-block text-center`} style={{ width: '5rem' }}>{item.status}</span>                    
+                    <span className={`badge light border-0 ${item.status ? 'badge-success' : 'badge-danger'} d-inline-block text-center`} style={{ width: '5rem' }}>{item.status ? 'Active' : "InActive"}</span>                    
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>

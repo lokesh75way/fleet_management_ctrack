@@ -104,7 +104,6 @@ const SideBar = () => {
   }, [path]);
 
   const handleNonContentMenu = ()=>{
-    console.log('clicked');
     setState({active:""});
   }
 
@@ -120,7 +119,7 @@ const SideBar = () => {
         }`}
     >
       <div className="deznav-scroll">
-        <ul className="metismenu" id="menu" style={{height:"85vh"}}>
+        <ul className="metismenu" id="menu" style={{minHeight:"85vh"}}>
           {MenuList.map((data, index) => {
             let menuClass = data.classsChange;
             if (menuClass === "menu-title") {
