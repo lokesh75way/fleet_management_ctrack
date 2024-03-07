@@ -46,7 +46,7 @@ const NotificationBlog = ({ classChange }) => {
 };
 
 const Header = ({ onNote }) => {
-  const loginDetailsRole = localStorage.getItem('loginDetails-role');
+  const role = localStorage.getItem('role');
   const loginDetailsEmail = localStorage.getItem('loginDetails-email');
   const loginDetailsName = localStorage.getItem('loginDetails-name');
   console.log(loginDetailsEmail)
@@ -316,7 +316,7 @@ const Header = ({ onNote }) => {
                         <img src={IMAGES.Tab1} alt="" />
                       </div>
                       <div className="header-info">
-                        <h6>{loginDetailsName} ({loginDetailsRole})</h6>
+                        <h6>{loginDetailsName} ({role})</h6>
                         <p>{loginDetailsEmail}</p>
                       </div>
                     </div>
