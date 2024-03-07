@@ -22,7 +22,7 @@ const Vehicle = () => {
         distanceCounter:0
     })
 	const sort = 10;
-	const activePag = useRef(0);
+	const activePage = useRef(0);
 	const [test, settest] = useState(0);
 	const chageData = (frist, sec) => {
 		for (var i = 0; i < data.length; ++i) {
@@ -42,13 +42,13 @@ const Vehicle = () => {
         console.log("enter herer")
     },[])
 
-   activePag.current === 0 && chageData(0, sort);
+   activePage.current === 0 && chageData(0, sort);
    let paggination = Array(Math.ceil(data.length / sort))
       .fill()
       .map((_, i) => i + 1);
 	const onClick = (i) => {
-		activePag.current = i;
-		chageData(activePag.current * sort, (activePag.current + 1) * sort);
+		activePage.current = i;
+		chageData(activePage.current * sort, (activePage.current + 1) * sort);
 		settest(i);
 	};
     // delete function
@@ -123,9 +123,9 @@ const Vehicle = () => {
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
                                             <div className="dataTables_info">
-                                                Showing {activePag.current * sort + 1} to{" "}
-                                                {data.length > (activePag.current + 1) * sort
-                                                    ? (activePag.current + 1) * sort
+                                                Showing {activePage.current * sort + 1} to{" "}
+                                                {data.length > (activePage.current + 1) * sort
+                                                    ? (activePage.current + 1) * sort
                                                     : data.length}{" "}
                                                 of {data.length} entries
                                             </div>
@@ -137,8 +137,8 @@ const Vehicle = () => {
                                                     className="paginate_button previous disabled"
                                                     to="/general"
                                                     onClick={() =>
-                                                        activePag.current > 0 &&
-                                                        onClick(activePag.current - 1)
+                                                        activePage.current > 0 &&
+                                                        onClick(activePage.current - 1)
                                                     }
                                                 >
                                                     <i className="fa-solid fa-angle-left" />
@@ -149,7 +149,7 @@ const Vehicle = () => {
                                                         key={i}
                                                         to="/general"
                                                         className={`paginate_button  ${
-                                                            activePag.current === i ? "current" : ""
+                                                            activePage.current === i ? "current" : ""
                                                         } `}
                                                         onClick={() => onClick(i)}
                                                     >
@@ -161,8 +161,8 @@ const Vehicle = () => {
                                                     className="paginate_button next"
                                                     to="/general"
                                                     onClick={() =>
-                                                        activePag.current + 1 < paggination.length &&
-                                                        onClick(activePag.current + 1)
+                                                        activePage.current + 1 < paggination.length &&
+                                                        onClick(activePage.current + 1)
                                                     }
                                                 >
                                                     <i className="fa-solid fa-angle-right" />

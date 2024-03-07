@@ -1,5 +1,9 @@
 export const branchOptions = [
-  { value: "West Minister Company", label: "West Minister Company" },
+  { value: "company1@example.com", label: "Company 1" },
+  { value: "company2@example.com", label: "Company 2" },
+  { value: "company3@example.com", label: "Company 3" },
+  { value: "company4@example.com", label: "Company 4" },
+  { value: "company5@example.com", label: "Company 5" },
 ];
 export const deviceTypeOptions = [
   { value: "2G Camera Howen 5632", label: "2G Camera Howen 5632" },

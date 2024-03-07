@@ -11,7 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { driverProfileSchema, driverInfoSchema } from '../../../../../yup' ;
 
 const DriverForm = () => {
-
+ const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Profile", "Additional Info", "Document"];
   const component = [Profile, AdditionalInfo, Document];
@@ -21,9 +21,20 @@ const DriverForm = () => {
     resolver: yupResolver(activeIndex === 0 ? driverProfileSchema: driverInfoSchema)
   })
 
+  function generateRandomId() {
+    const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
+    const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
+    return timestamp + '-' + randomStr; // Combine timestamp and random string
+  }
+
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      console.log(data)
+      const existingData = JSON.parse(localStorage.getItem('driverData'));
+      console.log(existingData);
+      data.id  = generateRandomId()
+      existingData.push(data)
+      localStorage.setItem('driverData',JSON.stringify(existingData))
+      navigate('/Driver')
       return;
     }
     console.log(data)

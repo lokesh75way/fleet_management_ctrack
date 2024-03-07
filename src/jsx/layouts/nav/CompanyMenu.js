@@ -19,10 +19,7 @@ export const CompanyMenuList = [
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Task,
     to:"branch",
-    content: [
-
-
-    ],
+   
     
   },
   {
