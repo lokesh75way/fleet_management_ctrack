@@ -39,7 +39,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("businessUser", newValue.value)}}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -52,20 +52,13 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
 
         <div className="col-xl-6 mb-3">
           <label className="form-label">Company</label>
-          <Controller
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="Company"
             name="company"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.value)}}
-                options={companyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={companyOptions[0]}
-              />
-            )}
+            placeholder=""
           />
         </div>
         <div className="col-xl-6 mb-3">

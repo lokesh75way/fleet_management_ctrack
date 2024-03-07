@@ -6,16 +6,19 @@ import { IMAGES } from "../../constant/theme";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import InviteCustomer from "../../constant/ModalList";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
-import { CompanyData } from "../../components/Tables/Tables";
+// import { CompanyData } from "../../components/Tables/Tables";
 import CompanyTable from "../../components/Tables/CompanyTable";
 import useStorage from "../../../hooks/useStorage";
 
 const Company = () => {
   const navigate = useNavigate();
+  const CompanyData = JSON.parse(localStorage.getItem('companyData'))
+  console.log(CompanyData);
   // const {getData} = useStorage();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
+
   const [tableData, setTableData] = useState(CompanyData);
   const [editData, setEditData] = useState({
     id: 0,
@@ -112,13 +115,13 @@ const Company = () => {
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Reseller</th>
-                          <th>User Name</th>
+                          <th>Business Group</th>
+                          <th>Company Name</th>
                           <th>Mobile Number</th>
-                          <th>User Group</th>
                           <th>Location</th>
                           <th>Payment Status</th>
                           <th>Branches</th>
+                          <th>Zip Code</th>
                           <th>Action</th>
                         </tr>
                       </thead>

@@ -20,6 +20,7 @@ import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
 import SubCompanyRoutes from './jsx/SubCompanyRoutes';
 import ForgotPassword from './jsx/pages/ForgotPassword';
 import ResetPassword from './jsx/pages/ResetPassword';
+import { CompanyData } from './jsx/components/Tables/Tables';
 
 
 
@@ -32,6 +33,12 @@ const Login = lazy(() => {
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
+    useEffect(()=>{
+      const data = localStorage.getItem('companyData');
+      if(!data){
+        localStorage.setItem('companyData', JSON.stringify(CompanyData))
+      }
+    },[])
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();

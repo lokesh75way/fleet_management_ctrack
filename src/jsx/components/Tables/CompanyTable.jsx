@@ -3,6 +3,7 @@ import { MdDelete } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import DeleteModal from '../Modal/DeleteModal';
 import { Link } from 'react-router-dom';
+import { IMAGES,SVGICON} from '../../constant/theme'; 
 
 const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen, getData }) => {
     // const localData = getData()
@@ -14,22 +15,22 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen, getData }) => 
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item.id || 1}</span></td>
+                    <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
+                            <img src={item.image || IMAGES.contact1} className="avatar avatar-md" alt="" />
                             <div>
-                                <h6>{item.title || item.shortName}</h6>
+                                <h6>{item.parent || item.businessUser}</h6>
                             </div>
                         </div>
                     </td>
-                    <td><span className="text-primary">{item.email || item.userName}</span></td>
+                    <td><span className="text-primary">{item.company}</span></td>
                     <td>
                         <span>{item.contact || item.mobileNumber}</span>
                     </td>
-                    <td>
+                    {/* <td>
                         <span>{item.usergroup || item.shortName}</span>
-                    </td>
+                    </td> */}
                     <td>
                         <span>{item.location || item.city}</span>
                     </td>
@@ -39,6 +40,9 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen, getData }) => 
                     </td>
                     <td>
                         <Link to={`/branch/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups || "5"}</Link>
+                    </td>
+                    <td>
+                        <span>{item.zipCode}</span>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
