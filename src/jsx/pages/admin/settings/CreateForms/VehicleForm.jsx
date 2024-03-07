@@ -7,13 +7,15 @@ import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const VehicleForm = () => {
   const {saveData} = useStorage()
+  const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
   const component = [General, Profile, Document];
@@ -24,8 +26,15 @@ const VehicleForm = () => {
 
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      saveData(data, 'vehicleData')
+      try{
+        saveData(data, 'vehicleData')
+        notifySuccess("Vehicle Added Successfully !!")
+        navigate("/vehicle");
+        return;
+      }
+      catch(error){
+        notifyError("Some error occured !!")
+      }
       return;
     }
     console.log(data)

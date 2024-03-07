@@ -8,9 +8,12 @@ import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSet
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 import useStorage from "../../../../../hooks/useStorage";
+import {notifyError, notifySuccess} from '../../../../../utils/toast'
+import { useNavigate } from "react-router-dom";
 
 const CompanyForm = () => {
   const{saveData} = useStorage()
+  const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Add Account", "User Setting"];
   const component = [MyAccount, UserSetting];
@@ -21,8 +24,15 @@ const CompanyForm = () => {
 
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      saveData(data, 'companyData')
-      return;
+      try{
+        saveData(data, 'companyData')
+        notifySuccess("Company Added Successfully !!")
+        navigate("/company");
+        return;
+      }
+      catch(error){
+        notifyError("Some error occured !!")
+      }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }

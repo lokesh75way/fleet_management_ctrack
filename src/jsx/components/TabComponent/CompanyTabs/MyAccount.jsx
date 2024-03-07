@@ -65,7 +65,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Company</label>
+          <label className="form-label">Company<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -74,6 +74,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="company"
             placeholder=""
           />
+           <Error errorName={errors.company} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>

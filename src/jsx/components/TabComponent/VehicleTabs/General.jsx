@@ -5,6 +5,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import {
   deviceTypeOptions,
+  branchOptions,
   copyFromOptions,
   distanceCounterOptions,
   unitOfDistanceOptions,
@@ -23,7 +24,7 @@ const {checkRole, checkUser} = useStorage()
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const branchOptions = DummyData.filter((item) => item.parent === checkUser()).map((item) => ({
+  const branchOption = DummyData.filter((item) => item.parent === checkUser()).map((item) => ({
     label: item.email,
     value: item.id,
   }));
@@ -55,11 +56,11 @@ const {checkRole, checkUser} = useStorage()
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {setTempValue(newValue.label); setValue("branch", newValue.label)}}
-                options={branchOptions}
+                options={checkRole() === 'company' ? branchOption:branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={branchOptions[0]}
+                defaultValue={checkRole() === 'company' ?branchOption[0]:branchOptions[0]}
               />
             )}
           />

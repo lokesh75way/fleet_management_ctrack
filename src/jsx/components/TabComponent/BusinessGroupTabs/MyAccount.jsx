@@ -47,7 +47,7 @@ const user = localStorage.getItem('loginDetails-email')
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
+          <label className="form-label">Business User<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -56,6 +56,7 @@ const user = localStorage.getItem('loginDetails-email')
             name="businessUser"
             placeholder=""
           />
+           <Error errorName={errors.businessUser} />
         </div>
 
         <div className="col-xl-6 mb-3">
