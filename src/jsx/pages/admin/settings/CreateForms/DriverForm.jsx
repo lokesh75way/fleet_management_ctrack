@@ -21,17 +21,12 @@ const DriverForm = () => {
     resolver: yupResolver(activeIndex === 0 ? driverProfileSchema: driverInfoSchema)
   })
 
-  function generateRandomId() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
-    const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
-    return timestamp + '-' + randomStr; // Combine timestamp and random string
-  }
 
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       const existingData = JSON.parse(localStorage.getItem('driverData'));
       console.log(existingData);
-      data.id  = generateRandomId()
+      data.id  = existingData.length  + 1;
       existingData.push(data)
       localStorage.setItem('driverData',JSON.stringify(existingData))
       navigate('/Driver')
