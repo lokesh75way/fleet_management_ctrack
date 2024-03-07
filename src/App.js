@@ -27,6 +27,8 @@ import SubCompanyRoutes from './jsx/SubCompanyRoutes';
 import ForgotPassword from './jsx/pages/ForgotPassword';
 import ResetPassword from './jsx/pages/ResetPassword';
 import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/components/Tables/Tables";
+import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
+
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
@@ -38,6 +40,8 @@ const Login = lazy(() => {
 function withRouter(Component) {
 
   function ComponentWithRouterProp(props) {
+  
+
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
@@ -55,10 +59,18 @@ function App(props) {
     const vehicleData = localStorage.getItem('vehicleData');
     const driver = localStorage.getItem("driverData");
     const dataBranch = localStorage.getItem('branchData');
+    const businessData = localStorage.getItem('businessData');
+    const userData = localStorage.getItem('userData');
+    const technicianData = localStorage.getItem('technicianData');
+
     if(!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
     if(!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
     if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));   
     if(!dataBranch) localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
+    if(!businessData) localStorage.setItem('businessData', JSON.stringify(BusinessData))
+    if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
+    if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
+      
 
   },[role])
   const dispatch = useDispatch();

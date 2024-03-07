@@ -22,6 +22,11 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
 
   const onSubmit = (data)=>{
     console.log(data)
+    const existingData = JSON.parse(localStorage.getItem('userData'));
+    data.id  = existingData.length +1;
+    existingData.push(data)
+    localStorage.setItem('userData',JSON.stringify(existingData))
+    return;
   }
   return (
     <>
