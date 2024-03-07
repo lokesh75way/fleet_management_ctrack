@@ -44,7 +44,7 @@ function Login(props) {
 		if (loginDetails) {
 			localStorage.setItem('loginDetails-email', loginDetails.email);
 			localStorage.setItem('loginDetails-name', loginDetails.name);
-			localStorage.setItem('loginDetails-role', loginDetails.role);
+			localStorage.setItem('role', loginDetails.role);
 			dispatch(loadingToggleAction(true));
 			dispatch(loginAction('demo@example.com', '123456', navigate));
 
