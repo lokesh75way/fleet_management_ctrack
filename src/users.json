@@ -105,14 +105,14 @@
       "email": "branch3@example.com",
       "password": "branch123",
       "role": "branch",
-      "parent": "branch2@example.com"
+      "parent": "company3@example.com"
     },
     {
       "id": 15,
       "email": "branch4@example.com",
       "password": "branch123",
       "role": "branch",
-      "parent": "branch2@example.com"
+      "parent": "company4@example.com"
     },
     {
       "id": 16,

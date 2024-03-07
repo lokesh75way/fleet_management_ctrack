@@ -10,6 +10,7 @@ const CustomInput = ({
   register,
   type,
   style,
+  value
 }) => {
   const { errors } = useFormContext();
   return (
@@ -24,6 +25,7 @@ const CustomInput = ({
         style={style}
         placeholder={placeholder}
         className="form-control"
+        value={value}
         // defaultValue={defaultValue}
       />
     </div>

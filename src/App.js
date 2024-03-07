@@ -26,10 +26,8 @@ import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
 import SubCompanyRoutes from './jsx/SubCompanyRoutes';
 import ForgotPassword from './jsx/pages/ForgotPassword';
 import ResetPassword from './jsx/pages/ResetPassword';
-import { SubCompanyData } from './jsx/components/Tables/Tables';
-import { CompanyData, DriverData } from "./jsx/components/Tables/Tables";
+import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/components/Tables/Tables";
 
-console.log(DriverData);
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
   return new Promise((resolve) => {
@@ -38,28 +36,8 @@ const Login = lazy(() => {
 });
 
 function withRouter(Component) {
+
   function ComponentWithRouterProp(props) {
-    useEffect(() => {
-      const data = localStorage.getItem("companyData");
-      if (!data) {
-        localStorage.setItem("companyData", JSON.stringify(CompanyData));
-      }
-
-      const driver = localStorage.getItem("driverData");
-      if (!driver) {
-        localStorage.setItem("driverData", JSON.stringify(DriverData));
-      }
-      // return() => {
-      //   localStorage.removeItem("driverData");
-      // };
-    
-      const dataBranch = localStorage.getItem('branchData');
-      if(!dataBranch){
-        localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
-      }
-
-
-    },[])
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
@@ -71,10 +49,20 @@ function withRouter(Component) {
 }
 
 function App(props) {
+  const role = localStorage.getItem("role");
+  useEffect(()=>{
+    const companyData = localStorage.getItem('companyData');
+    const vehicleData = localStorage.getItem('vehicleData');
+    const driver = localStorage.getItem("driverData");
+    const dataBranch = localStorage.getItem('branchData');
+    if(!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
+    if(!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
+    if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));   
+    if(!dataBranch) localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
+
+  },[role])
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const role = localStorage.getItem("role");
 
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);

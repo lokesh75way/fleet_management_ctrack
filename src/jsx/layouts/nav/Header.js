@@ -49,7 +49,6 @@ const Header = ({ onNote }) => {
   const role = localStorage.getItem('role');
   const loginDetailsEmail = localStorage.getItem('loginDetails-email');
   const loginDetailsName = localStorage.getItem('loginDetails-name');
-  console.log(loginDetailsEmail)
   const [headerFix, setheaderFix] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {

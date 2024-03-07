@@ -3,10 +3,16 @@ import DeleteModal from "../Modal/DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaCar } from "react-icons/fa6";
+import useStorage from "../../../hooks/useStorage"; 
 
 const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  return tableData.map((item, index) => (
+  const {getData} = useStorage()
+    const filteredItems = getData(tableData);
+  return filteredItems.map((item, index) => (
     <tr key={item.id}>
+      <td>
+        <span className="text-primary">{item.branch}</span>
+      </td>
       <td>
         <span>{item.plateNumber}</span>
       </td>
@@ -26,15 +32,11 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <span>{item.IMEINumber}</span>
       </td>
-
       <td>
-        <span className="text-primary">{item.GPSDeviceType}</span>
+        <span className="text-primary">{item.registrationNumber}</span>
       </td>
       <td>
-        <span>{item.distanceCounter}</span>
-      </td>
-      <td>
-        <span>{item.speedDetection}</span>
+        <span>{item.DVIRTemplate}</span>
       </td>
       {/* <td>
                 <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>

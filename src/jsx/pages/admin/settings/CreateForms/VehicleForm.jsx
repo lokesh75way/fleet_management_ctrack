@@ -10,9 +10,10 @@ import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
+import useStorage from '../../../../../hooks/useStorage'
 
 const VehicleForm = () => {
-
+  const {saveData} = useStorage()
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
   const component = [General, Profile, Document];
@@ -24,6 +25,7 @@ const VehicleForm = () => {
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       console.log(data)
+      saveData(data, 'vehicleData')
       return;
     }
     console.log(data)
