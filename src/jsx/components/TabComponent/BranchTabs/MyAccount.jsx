@@ -40,7 +40,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("businessUser", newValue.value)}}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -59,7 +59,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.value)}}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.label)}}
                 options={companyOptions}
                 ref={ref}
                 name={name}
@@ -70,7 +70,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Parent</label>
+          <label className="form-label">Parent Branch</label>
           <Controller
             name="parent"
             control={control}
@@ -119,9 +119,10 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Short Name <span className="text-danger">*</span>
+            Branch Name <span className="text-danger">*</span>
           </label>
           <CustomInput
+          // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
             type="text"
             required
             register={register}
