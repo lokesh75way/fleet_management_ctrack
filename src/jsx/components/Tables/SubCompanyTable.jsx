@@ -3,6 +3,7 @@ import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
 import { Link } from 'react-router-dom'
+import { IMAGES,SVGICON} from '../../constant/theme'; 
 
 const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
     return (
@@ -12,30 +13,26 @@ const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
+                            <img src={item.image || IMAGES.contact1} className="avatar avatar-md" alt="" />
                             <div>
-                                <h6>{item.reseller}</h6>
-                                <span>Web Designer</span>
+                                <h6>{item.businessUser}</h6>
                             </div>
                         </div>
                     </td>
                     {/* <td><span>{item.application}</span></td> */}
-                    <td><span className="text-primary">{item.username}</span></td>
+                    <td><span className="text-primary">{item.company}</span></td>
                     <td>
-                        <span>{item.contact}</span>
+                        <span>{item.shortName}</span>
                     </td>
                     <td>
-                        <span>{item.location}</span>
+                        <span>{item.mobileNumber}</span>
                     </td>
                     <td>
-                        <span>{item.usergroup}</span>
+                        <span>{item.city}</span>
                     </td>
                  
                     <td>
-                    <span className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} d-inline-block text-center`} style={{ width: '5rem' }}>{item.status}</span>
-                    </td>
-                    <td>
-                        <Link to={`/branch/${item.id}`} className='text-primary badge badge-count border-0'>{item.branches}</Link>
+                    <span>{item.zipCode}</span>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>

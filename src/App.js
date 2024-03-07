@@ -19,13 +19,14 @@ import "./css/style.css";
 // const BasicLayout = lazy(() => import('./jsx/layouts/BasicLayout'));
 // const ForgotPassword = lazy(() => import('./jsx/pages/ForgotPassword'));
 // const ResetPassword = lazy(() => import('./jsx/pages/ResetPassword'));
-import BasicLayout from "./jsx/layouts/BasicLayout";
-import AdminRoutes from "./jsx/AdminRoutes";
-import CompanyRoutes from "./jsx/CompanyRoutes";
-import BusinessGroupRoutes from "./jsx/BusinessGroupRoutes";
-import SubCompanyRoutes from "./jsx/SubCompanyRoutes";
-import ForgotPassword from "./jsx/pages/ForgotPassword";
-import ResetPassword from "./jsx/pages/ResetPassword";
+import BasicLayout from './jsx/layouts/BasicLayout';
+import AdminRoutes from './jsx/AdminRoutes';
+import CompanyRoutes from './jsx/CompanyRoutes';
+import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
+import SubCompanyRoutes from './jsx/SubCompanyRoutes';
+import ForgotPassword from './jsx/pages/ForgotPassword';
+import ResetPassword from './jsx/pages/ResetPassword';
+import { SubCompanyData } from './jsx/components/Tables/Tables';
 import { CompanyData, DriverData } from "./jsx/components/Tables/Tables";
 
 console.log(DriverData);
@@ -51,7 +52,14 @@ function withRouter(Component) {
       // return() => {
       //   localStorage.removeItem("driverData");
       // };
-    }, []);
+    
+      const dataBranch = localStorage.getItem('branchData');
+      if(!dataBranch){
+        localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
+      }
+
+
+    },[])
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();

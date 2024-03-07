@@ -14,15 +14,22 @@ const BranchForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
-  const totalTabs = tabHeading.length;
+  const totalTabs = tabHeading.length;    
 
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
   })
 
+
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       console.log(data)
+      const existingData = JSON.parse(localStorage.getItem('branchData'));
+      console.log(typeof(existingData));
+      console.log(existingData);
+      data.id  = existingData.length +1;
+      existingData.push(data)
+      localStorage.setItem('branchData',JSON.stringify(existingData))
       return;
     }
     console.log(data)
