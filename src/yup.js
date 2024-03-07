@@ -140,8 +140,11 @@ export const subUserAccuntSchema = yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required("Mobile Number is required"),
     passwordRecoveryEmail: yup.string().email(),
+    country: yup.string().required("Please select a Country"),
+    age: yup.number().min(20, "Age must be at least 20").max(99, "Age must be at most 99"),
+    
   })
   .required();
 export const alertSchema = yup
@@ -196,10 +199,11 @@ export const technicianGeneralSchema = yup
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required !!"),
     technicianNumber: yup.number().required("Technician Number is required !!"),
-    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits').required("Mobile Number is required !!"),
+    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
     emergencyContact: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
     dateOfJoin: yup.string().required("Date of join is required"),
     dateOfBirth: yup.string().required("Date of birth is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
 
   })
   .required();

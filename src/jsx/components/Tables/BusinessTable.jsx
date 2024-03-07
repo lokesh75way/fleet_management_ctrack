@@ -3,6 +3,7 @@ import { MdDelete } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import DeleteModal from '../Modal/DeleteModal';
 import { Link } from 'react-router-dom';
+import { IMAGES,SVGICON} from '../../constant/theme'; 
 
 const BusinessTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
     return (
@@ -12,28 +13,26 @@ const BusinessTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
+                            <img src={item.image || IMAGES.contact1} className="avatar avatar-md" alt="" />
                             <div>
-                                <h6>{item.title}</h6>
+                                <h6>{item.parent}</h6>
                             </div>
                         </div>
                     </td>
-                    <td><span className="text-primary">{item.email}</span></td>
+                    <td><span className="text-primary">{item.businessUser}</span></td>
+               
                     <td>
-                        <span>{item.contact}</span>
+                        <span>{item.mobileNumber}</span>
                     </td>
                     <td>
-                        <span>{item.usergroup}</span>
-                    </td>
-                    <td>
-                        <span>{item.location}</span>
+                        <span>{item.location || item.city}</span>
                     </td>
                     
                     <td>
-                        <span style={{width:"5rem"}} className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status}</span>
+                        <span style={{width:"5rem"}} className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status || 'Inactive'}</span>
                     </td>
                     <td>
-                        <Link to={`/company/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups}</Link>
+                        <Link to={`/company/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups || 5}</Link>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>

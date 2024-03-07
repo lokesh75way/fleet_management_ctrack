@@ -77,7 +77,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
-              setValue("country", e.id);
+              setValue("country", e.name);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"

@@ -6,14 +6,15 @@ import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import InviteCustomer from '../../constant/ModalList';
 import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import {CompanyData} from "../../components/Tables/Tables";
+// import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from  "../../components/Tables/BusinessTable"
 
 const BusinessUser = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
-    const [tableData, setTableData] = useState(CompanyData);
+    const BusinessData = JSON.parse(localStorage.getItem('businessData'))
+    const [tableData, setTableData] = useState(BusinessData);
     const [editData , setEditData] = useState({
         id:0,
         title:'',
@@ -97,13 +98,12 @@ const BusinessUser = () => {
                                             <thead>
                                                 <tr>  
                                                 <th>ID</th>                                                 
-                                                    <th>Reseller</th>
-                                                    <th>User Name</th>
+                                                    <th>Parent</th>
+                                                    <th>Business User</th>
                                                     <th>Mobile Number</th>
-                                                    <th>User Group</th>
                                                     <th>Location</th>
                                                     <th>Payment Status</th>
-                                                    <th>Companies</th>
+                                                    <th>Branches</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -126,7 +126,7 @@ const BusinessUser = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/company"
+                                                    to="/business"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -138,7 +138,7 @@ const BusinessUser = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/company"
+                                                        to="/business"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -150,7 +150,7 @@ const BusinessUser = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/company"
+                                                    to="/business"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)

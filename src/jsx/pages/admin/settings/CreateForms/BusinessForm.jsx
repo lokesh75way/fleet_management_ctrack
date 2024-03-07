@@ -4,8 +4,8 @@ import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
+import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyAccount";
+import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 
@@ -21,10 +21,13 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
 
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      console.log(data)
+      const existingData = JSON.parse(localStorage.getItem('businessData'));
+      data.id  = existingData.length + 1;
+      existingData.push(data)
+      localStorage.setItem('businessData',JSON.stringify(existingData))
       return;
     }
-    console.log(data)
+
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
   return (

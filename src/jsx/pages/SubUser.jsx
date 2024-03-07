@@ -4,33 +4,14 @@ import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../constant/theme';
 import MainPagetitle from '../layouts/MainPagetitle';
+
+
+
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 
-const tableData = [
-    {emplid: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
-    {emplid: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 7, gender:'Male', location:'Brazil', branches : 4},    
-    {emplid: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 3, gender:'Male', location:'France', branches : 4},    
-    {emplid: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 5, gender:'Female', location:'Dubai', branches : 4},    
-    {emplid: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', drivingExperience : 5, gender:'Male', location:'USA', branches : 4},    
-    {emplid: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', drivingExperience : 9, gender:'Male', location:'USA', branches : 4},    
-    {emplid: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 5, gender:'Male', location:'Brazil', branches : 4},    
-    {emplid: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', drivingExperience : 4, gender:'Male', location:'France', branches : 4},    
-    {emplid: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
-    {emplid: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', drivingExperience : 8, gender:'Female', location:'Dubai', branches : 4},    
-    {emplid: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', drivingExperience : 3, gender:'Male', location:'Brazil', branches : 4},    
-    {emplid: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', drivingExperience : 5, gender:'Female', location:'India', branches : 4},    
-];
 
-const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Gender", key: "gender" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-]
+
+
 
 // const csvlink = {
 //     headers : headers,
@@ -39,6 +20,8 @@ const headers = [
 // }
 
 const SubUser = () => {  
+    const UserData = JSON.parse(localStorage.getItem('userData'))
+    const [tableData, setTableData] = useState(UserData);
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -100,7 +83,6 @@ const SubUser = () => {
                                                     <th>Age</th>
                                                     <th>Mobile Number</th>
                                                     <th>Experience</th>
-                                                   
                                                     <th>Location</th>
                                                     <th>Branches</th>
                                                 </tr>
@@ -108,12 +90,12 @@ const SubUser = () => {
                                             <tbody>
                                                 {tableData.map((item, index)=>(
                                                     <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
+                                                        <td><span>{item.id}</span></td>
                                                         <td>
                                                             <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
+                                                                <img src={item.image || IMAGES.contact1}  className="avatar avatar-md" alt="" />
                                                                 <div>
-                                                                    <h6>{item.title}</h6>
+                                                                    <h6>{item.userName}</h6>
                                                                     <span>Web Designer</span>	
                                                                 </div>	
                                                             </div>
@@ -123,13 +105,13 @@ const SubUser = () => {
                                                             <span>{item.contact}</span>
                                                         </td>
                                                         
-                                                        <td><span className="text-primary">{item.drivingExperience}</span></td>
+                                                        <td><span className="text-primary">{item.experience}</span></td>
                                                         <td>
-                                                            <span>{item.location}</span>
+                                                            <span>{item.country}</span>
                                                         </td>
                                                         <td>
                                                             <Link to={`/branch/${item.emplid}`} className="text-primary badge badge-count">
-                                                                {item.branches}
+                                                                {item.branches || 4}
                                                             </Link>
                                                         </td>
                                                         {/* <td>
@@ -178,7 +160,7 @@ const SubUser = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/general"
+                                                    to="/subUser"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)

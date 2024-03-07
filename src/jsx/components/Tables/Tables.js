@@ -23,6 +23,56 @@ import { IMAGES,SVGICON} from '../../constant/theme';
  {id: '1020', image:IMAGES.contact1,parent:"business5@example.com", mobileNumber:'+91 123 456 7890', company:"company20@example.com",zipCode:"646454", status:'Inactive' ,title: 'Akshay', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5}]
  
  
+ export const BusinessData = [ 
+ {id: '1001', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business1@example.com", mobileNumber:'+91 123 456 7890',zipCode:"125656", status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  city:'India',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1002', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business2@example.com", mobileNumber:'+91 123 456 7890',zipCode:"234346", status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', city:'Brazil',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1003', image:IMAGES.contact3,parent:"admin@example.com",businessUser:"business3@example.com", mobileNumber:'+91 123 456 7890',zipCode:"343226", status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  city:'France',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1004', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business4@example.com", mobileNumber:'+91 123 456 7890',zipCode:"145456", status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', city:'Dubai',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1005', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business5@example.com", mobileNumber:'+91 123 456 7890',zipCode:"123126", status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  city:'USA',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1006', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business6@example.com", mobileNumber:'+91 123 456 7890',zipCode:"897456", status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com', city:'USA',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1007', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business7@example.com", mobileNumber:'+91 123 456 7890',zipCode:"178636", status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  city:'Brazil',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1008', image:IMAGES.contact3,parent:"admin@example.com",businessUser:"business7@example.com", mobileNumber:'+91 123 456 7890',zipCode:"678936", status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com', city:'France',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1009', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business8@example.com", mobileNumber:'+91 123 456 7890',zipCode:"942546", status:'Inactive' ,title: 'Abhinav', email: 'ra@gmail.com', city:'India',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1010', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business9@example.com", mobileNumber:'+91 123 456 7890',zipCode:"685676", status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', city:'Dubai',usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1011', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business10@example.com", mobileNumber:'+91 123 456 7890',zipCode:"907334", status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', city:'Brazil', usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1012', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business11@example.com", mobileNumber:'+91 123 456 7890',zipCode:"934234", status:'Active' ,title: 'Kartik', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1013', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business12@example.com", mobileNumber:'+91 123 456 7890',zipCode:"134523", status:'Active' ,title: 'Sharad', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1014', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business13@example.com", mobileNumber:'+91 123 456 7890',zipCode:"904563", status:'Active' ,title: 'Arpit', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1015', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business14@example.com", mobileNumber:'+91 123 456 7890',zipCode:"178455", status:'Active' ,title: 'Krishna', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1016', image:IMAGES.contact2,parent:"admin@example.com",businessUser:"business15@example.com", mobileNumber:'+91 123 456 7890',zipCode:"452343", status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com', city:'Brazil', usergroup:'West Minister Company', CompanyGroups : 5},    
+ {id: '1017', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business16@example.com", mobileNumber:'+91 123 456 7890',zipCode:"463453", status:'Active' ,title: 'Piyush', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1018', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business17@example.com", mobileNumber:'+91 123 456 7890',zipCode:"123454", status:'Inactive' ,title: 'Milan', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1019', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business18@example.com", mobileNumber:'+91 123 456 7890',zipCode:"908566", status:'Active' ,title: 'Gagan sir', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5},
+ {id: '1020', image:IMAGES.contact1,parent:"admin@example.com",businessUser:"business19@example.com", mobileNumber:'+91 123 456 7890',zipCode:"646454", status:'Inactive' ,title: 'Akshay', email: 'ra@gmail.com', city:'India', usergroup:'West Minister Company', CompanyGroups : 5}]
+ 
+ export const UserData = [
+  {id: '1001', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,userName: 'Ricky Antony', experience : 5, gender:'Female', country:'India', branches : 4},    
+  {id: '1002', age: 29, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,userName: 'Ankites Risher', experience : 7, gender:'Male', country:'Brazil', branches : 4},    
+  {id: '1003', age: 41, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,userName: 'Ricky M', experience : 3, gender:'Male', country:'France', branches : 4},    
+  {id: '1004', age: 31, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,userName: 'Elijah James', experience : 5, gender:'Female', country:'Dubai', branches : 4},    
+  {id: '1005', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,userName: 'Honey Risher', experience : 5, gender:'Male', country:'USA', branches : 4},    
+  {id: '1006', age: 42, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,userName: 'Honey Risher', experience : 9, gender:'Male', country:'USA', branches : 4},    
+  {id: '1007', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,userName: 'Ankites Risher', experience : 5, gender:'Male', country:'Brazil', branches : 4},    
+  {id: '1008', age: 34, image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,userName: 'Ricky M', experience : 4, gender:'Male', country:'France', branches : 4},    
+  {id: '1009', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,userName: 'Ricky Antony', experience : 5, gender:'Female', country:'India', branches : 4},    
+  {id: '1010', age: 29, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,userName: 'Elijah James', experience : 8, gender:'Female', country:'Dubai', branches : 4},    
+  {id: '1011', age: 32, image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,userName: 'Ankites Risher', experience : 3, gender:'Male', country:'Brazil', branches : 4},    
+  {id: '1012', age: 32, image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,userName: 'Ricky Antony', experience : 5, gender:'Female', country:'India', branches : 4},    
+];
+export const TechnicianData = [
+  {id: '1001', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Ricky Antony', email: 'ra@gmail.com', country:'India'},    
+  {id: '1002', image:IMAGES.contact2, mobileNumber:'+91 123 456 7890',status:'Inactive' ,firstName: 'Ankites Risher', email: 'abc@gmail.com',  country:'Brazil'},    
+  {id: '1003', image:IMAGES.contact3, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Ricky M', email: 'pqr@gmail.com',  country:'France'},    
+  {id: '1004', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Elijah James', email: 'stuy@gmail.com', country:'Dubai'},    
+  {id: '1005', image:IMAGES.contact2, mobileNumber:'+91 123 456 7890',status:'Inactive' ,firstName: 'Honey Risher', email: 'xyz@gmail.com',  country:'USA'},    
+  {id: '1006', image:IMAGES.contact2, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Honey Risher', email: 'xyz@gmail.com',  country:'USA'},    
+  {id: '1007', image:IMAGES.contact2, mobileNumber:'+91 123 456 7890',status:'Inactive' ,firstName: 'Ankites Risher', email: 'abc@gmail.com',  country:'Brazil'},    
+  {id: '1008', image:IMAGES.contact3, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Ricky M', email: 'pqr@gmail.com',  country:'France'},    
+  {id: '1009', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Inactive' ,firstName: 'Ricky Antony', email: 'ra@gmail.com', country:'India'},    
+  {id: '1010', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Elijah James', email: 'stuy@gmail.com', country:'Dubai'},    
+  {id: '1011', image:IMAGES.contact2, mobileNumber:'+91 123 456 7890',status:'Inactive' ,firstName: 'Ankites Risher', email: 'abc@gmail.com',  country:'Brazil'},    
+  {id: '1012', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Ricky Antony', email: 'ra@gmail.com', country:'India'},    
+];
  export const DriverData = [
   // Company 1 data
   {
