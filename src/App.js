@@ -28,6 +28,7 @@ import ForgotPassword from './jsx/pages/ForgotPassword';
 import ResetPassword from './jsx/pages/ResetPassword';
 import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/components/Tables/Tables";
 import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
+import Loading from "./Loading";
 
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
@@ -98,6 +99,7 @@ function App(props) {
 
   return (<>
     <div className="vh-100">
+      {/* <Suspense fallback={<Loading/>} > */}
       <Routes>
         <Route element={<BasicLayout />}>
           <Route path="/login" element={<Login />} />
@@ -106,6 +108,7 @@ function App(props) {
           <Route path="/page-resetpassword" element={<ResetPassword />} />
         </Route>
       </Routes>
+      {/* </Suspense> */}
     </div>
     </>);
 }

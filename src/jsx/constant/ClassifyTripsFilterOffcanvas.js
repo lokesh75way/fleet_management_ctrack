@@ -80,7 +80,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(({ Title,errors,control,register
                       )}
                     />
                   </div>
-                  <div className="col-xl-12 mb-3">
+                  <div className="col-xl-12 mb-3 d-flex flex-column">
                     <label className="form-label">From Date</label>
                     <Controller
                       name="fromDate"
@@ -97,7 +97,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(({ Title,errors,control,register
                       )}
                     />
                   </div>
-                  <div className="col-xl-12 mb-3">
+                  <div className="col-xl-12 mb-3 d-flex flex-column">
                     <label className="form-label">To Date</label>
                     <Controller
                       name="toDate"

@@ -88,7 +88,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.DVIRTemplate} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Purchase Amount</label>
+          <label className="form-label">Purchase Amount<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -98,7 +98,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
           <Error errorName={errors.purchaseAmount} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Manufacture Date</label>
           <Controller
             name="manufactureDate"
@@ -112,7 +112,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Purchase Date</label>
           <Controller
             name="purchaseDate"
@@ -137,7 +137,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
           <Error errorName={errors.weightCapacity} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">GPS Installation Date</label>
           <Controller
             name="GPSInstallationDate"
@@ -197,7 +197,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
           {!getValues('permit') && <Error errorName={errors.permit} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Installation Date</label>
           <Controller
             name="installationDate"
@@ -248,7 +248,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <input
               type="checkbox"
               onChange={() => setIsCheckedDBFC(!isCheckedDBFC)}
-              className="form-check-input"
+              className="form-check-input border border-2"
             />
             <CustomInput
               type="number"
@@ -296,7 +296,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <input
               type="checkbox"
               onChange={() => setIsCheckedDBFC2(!isCheckedDBFC2)}
-              className="form-check-input"
+              className="form-check-input border border-2"
               id="customCheckBox1"
             />
             <CustomInput
@@ -361,7 +361,6 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Fuel Idling Consumption"
-              style={{ width:"50%" ,marginRight:"1rem" }}
               name="fuelIdlingConsumption"
               placeholder=""
             />
@@ -377,6 +376,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  className="ms-4"
                   defaultValue={distanceQuantitySelectOptions[0]}
                 />
               )}
@@ -460,7 +460,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of passenger seats
+            No of passenger seats<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -515,13 +515,13 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 placeholder=""
               />
               <span style={{ padding: " 0 .5rem" }}>$/Km</span>
-              <Error errorName={errors.distanceCost} />
             </div>
+              <Error errorName={errors.distanceCost} />
           </div>
         )}
         {isCheckedCBO2 && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">Duration</label>
+            <label className="form-label">Duration<span className="text-danger">*</span></label>
             <div className="d-flex align-items-center">
               <CustomInput
                 type="number"
@@ -549,6 +549,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               )}
             />
             </div>
+            <Error errorName={errors.durationCost} />
           </div>
         )}
         <div className="col-xl-6 mb-3">
@@ -593,7 +594,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <input
               type="checkbox"
               onChange={() => setIsCheckedWC(!isCheckedWC)}
-              className="form-check-input"
+              className="form-check-input border border-2"
               id="customCheckBox1"
             />
             <label
@@ -715,7 +716,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <input
               type="checkbox"
               onChange={() => setIsCheckedGS(!isCheckedGS)}
-              className="form-check-input"
+              className="form-check-input border border-2"
               id="customCheckBox1"
             />
             <label

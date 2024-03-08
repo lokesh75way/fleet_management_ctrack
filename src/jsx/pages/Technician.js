@@ -5,14 +5,7 @@ import { CSVLink } from 'react-csv';
 import { IMAGES } from '../constant/theme';
 import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
-// import { TechnicianData } from '../components/Tables/Tables';
-// import TechnicalOffCanvas from '../constant/TechnicalOffCanvas';
-
-
-
-
-
-
+import TechnicianTable from '../components/Tables/TechnicianTable';
 
 // const csvlink = {
 //     headers : headers,
@@ -23,6 +16,7 @@ import InviteCustomer from '../constant/ModalList';
 const Technician = () => {  
     const techData = JSON.parse(localStorage.getItem('technicianData'))
     const [tableData, setTableData ] = useState(techData)
+    const [editData, setEditData ] = useState()
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -52,6 +46,15 @@ const Technician = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
+    const onConfirmDelete = (id) => {
+        const updatedData = tableData.filter((item) => item.id !== id);
+        setTableData(updatedData);
+      };
+      const editDrawerOpen = (item) => {
+        tableData.map((table) => table.id === item && setEditData(table));
+        // navigate(`/driver/edit/${item}`);
+        // setEditTableData(item);
+      };
    
     const invite = useRef();
     const technical = useRef();
@@ -89,35 +92,11 @@ const Technician = () => {
                                                     <th>Contact Number</th>
                                                     <th>Location</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.id}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image || IMAGES.contact1}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.firstName}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        
-                                                        <td><span className="text-primary">{item.email}</span></td>
-                                                        <td>
-                                                            <span>{item.mobileNumber}</span>
-                                                        </td>
-                                                        	
-                                                        <td>
-                                                            <span>{item.country}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:'5rem'}}>{item.status || 'Inactive'}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <TechnicianTable onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} tableData={tableData}/>
                                             </tbody>
                                             
                                         </table>

@@ -67,7 +67,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Technician Number 
+            Technician Number <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -81,7 +81,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Email
+            Email<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -145,7 +145,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Emergency Contact 
+            Emergency Contact <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -156,8 +156,8 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           <Error errorName={errors.emergencyContact} />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Date of Join</label>
+        <div className="col-xl-6 mb-3 d-flex flex-column">
+          <label className="form-label">Date of Join<span className="text-danger">*</span></label>
           <Controller
             name="dateOfJoin"
             control={control}
@@ -171,8 +171,8 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           {!getValues('dateOfJoin') && <Error errorName={errors.dateOfJoin} />}
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label"> Date of Birth</label>
+        <div className="col-xl-6 mb-3 d-flex flex-column">
+          <label className="form-label"> Date of Birth<span className="text-danger">*</span></label>
           <Controller
             name="dateOfBirth"
             control={control}

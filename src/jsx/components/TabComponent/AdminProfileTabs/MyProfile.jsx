@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
@@ -6,14 +6,15 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
-import {parentOptions} from '../VehicleTabs/Options'
-import { useParams } from "react-router-dom";
-const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+import useStorage from "../../../../hooks/useStorage";
+
+const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, errors, control, isEdit, setIsEdit }) => {
+  const {checkRole, checkUser} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
   const [isCheckCP, setIsCheckCP] = useState(false);
-
+  const [adminData,setAdminData] = useState(data)
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -30,82 +31,37 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.email,
     value: item.id,
   }));
-
-
-    const { id } = useParams();
-
-
-    const companyData = JSON.parse(localStorage.getItem('branchData'))
+  console.log(data)
   
-    const newData = companyData.filter(data => data.id === id);
-  
-    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
-
-console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
-
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
-          <Controller
-            name="businessUser"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
-                options={businessUserOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={businessUserOptions[0]}
-              />
-            )}
+          <label className="form-label">User Name<span className="text-danger">*</span></label>
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="User Name"
+            name="userName"
+            disabled={!isEdit}
+            defaultValue={data?.userName}
           />
+           <Error errorName={errors.userName} />
         </div>
-
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Company<span className="text-danger">*</span></label>
-          <Controller
-            name="company"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.label)}}
-                options={companyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={companyOptions[0]}
-              />
-            )}
-          />
-          { !getValues('company') && <Error errorName={errors.company} />}
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Parent Branch</label>
-          <Controller
-            name="parent"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("parent", newValue.value)}}
-                options={parentOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={parentOptions[0]}
-              />
-            )}
-          />
-          { !getValues('parent') && <Error errorName={errors.parent} />}
-        </div>
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
+          {isEdit ? <CountrySelect
+            onChange={(e) => {
+              setCountryid(e.id);
+              setValue("country", e.id);
+            }}
+            // defaultValue={data?.country}
+            containerClassName="bg-white"
+            inputClassName="border border-white"
+            placeHolder="Select Country"
+          />
+          :
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -114,8 +70,7 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-            
-          />
+          />}
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
@@ -133,39 +88,6 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             />
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Branch Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-          // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].shortName : ''}
-
-          />
-           <Error errorName={errors.shortName} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="User Name"
-            name="userName"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
-            
-          />
-          <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Change Password</label>
@@ -189,7 +111,7 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
                 register={register}
                 name="oldPassword"
                 label="Old Password"
-                placeholder=""
+                disabled={!isEdit}
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -202,7 +124,7 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
                 register={register}
                 label="New Password"
                 name="newPassword"
-                placeholder=""
+                disabled={!isEdit}
               />
               <Error errorName={errors.newPassword} />
             </div>
@@ -215,20 +137,22 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
                 register={register}
                 label="Retype Passwor"
                 name="retypePassword"
-                placeholder=""
+                disabled={!isEdit}
               />
               <Error errorName={errors.retypePassword} />
             </div>
           </>
         )}
+        
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
+            defaultValue={data?.passwordRecoveryEmail}
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
-            placeholder=""
+            disabled={!isEdit}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -239,7 +163,8 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
-            placeholder=""
+            defaultValue={data?.helpDeskEmail}
+            disabled={!isEdit}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -248,24 +173,25 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           <CustomInput
             type="number"
             register={register}
+            defaultValue={data?.helpDeskTelephoneNumber}
             className="form-control"
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
-            placeholder=""
+            disabled={!isEdit}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
-            type="text"
+            type="number"
             register={register}
             name="mobileNumber"
+            defaultValue={data?.mobileNumber}
             label="Mobile Number"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
+            disabled={!isEdit}
           />
-          <Error errorName={errors.mobileNumber} />
+          {!getValues("mobileNumber") && <Error errorName={errors.mobileNumber} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
@@ -274,11 +200,10 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             register={register}
             className="form-control"
             label="Whatsapp Contact Number"
+            defaultValue={data?.whatsappContactNumber}
             name="whatsappContactNumber"
-            placeholder=""
-            defaultValue={2342342}
+            disabled={!isEdit} 
           />
-          <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -286,11 +211,11 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           </label>
           <CustomInput
             type="text"
+            defaultValue={data?.city}
             register={register}
             label="City"
             name="city"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].city : ''}
+            disabled={!isEdit}
           />
           <Error errorName={errors.city} />
         </div>
@@ -302,9 +227,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             type="number"
             register={register}
             label="Zip Code"
+            defaultValue={data?.zipCode}
             name="zipCode"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
+            disabled={!isEdit}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -316,8 +241,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             type="text"
             register={register}
             label="Street1"
+            defaultValue={data?.street1}
             name="street1"
-            placeholder=""
+            disabled={!isEdit}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -327,36 +253,15 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           </label>
           <CustomInput
             type="text"
+            defaultValue={data?.street2}
             register={register}
             label="Street2"
             name="street2"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Contact Person</label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Contact Person"
-            name="contactPerson"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput4" className="form-label">
-            Fax Number
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            label="Fax Number"
-            name="faxNumber"
-            placeholder=""
+            disabled={!isEdit}
           />
         </div>
       </div>
-      <div
+      {/* <div
         style={{
           width: "100%",
           display: "flex",
@@ -366,11 +271,11 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Submit
+          Next
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default MyAccount;
+export default MyProfile;

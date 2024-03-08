@@ -4,7 +4,6 @@ import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../layouts/MainPagetitle";
-import useDriverSubmit from "../../../hooks/useDriverSubmit";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {subUserAccuntSchema} from '../../../yup'
@@ -12,26 +11,36 @@ import { notifySuccess } from "../../../utils/toast";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
-  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Account"];
   const component = [Account];
   const totalTabs = tabHeading.length;
+  const navigate = useNavigate()
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver( subUserAccuntSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(subUserAccuntSchema),
+  });
 
-  const onSubmit = (data)=>{
-    console.log(data)
-    const existingData = JSON.parse(localStorage.getItem('userData'));
-    data.id  = existingData.length +1;
-    existingData.push(data)
-    localStorage.setItem('userData',JSON.stringify(existingData))
-    notifySuccess("Saved !")
-    navigate("/subUser");
-    return;
+  const onSubmit = (data) => {
+    try {
+      const existingData = JSON.parse(localStorage.getItem("userData"));
+      data.id = existingData.length + 1;
+      existingData.push(data);
+      localStorage.setItem("userData", JSON.stringify(existingData));
+      notifySuccess("User created successfully !!");
+      navigate('/subUser')
+    } catch (error) {
+      notifyError("Error Occured !!");
+    }
   }
+
   return (
     <>
       <MainPagetitle

@@ -1,4 +1,17 @@
 import { SVGICON } from "../../constant/theme";
+import { GrMoney } from "react-icons/gr";
+import { FaCar } from "react-icons/fa6";
+import { FaRegBuilding } from "react-icons/fa";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import { FaTools } from "react-icons/fa";
+import { GrUserPolice } from "react-icons/gr";
+import { BsPinMap } from "react-icons/bs";
+import { BiTask } from "react-icons/bi";
+import { FiAlertTriangle } from "react-icons/fi";
+import { BiTrip } from "react-icons/bi";
+import { PiWarningOctagonDuotone } from "react-icons/pi";
+import { TbFence } from "react-icons/tb";
+import { CgPoll } from "react-icons/cg";
 export const AdminMenuList = [
   //Content
   {
@@ -8,128 +21,83 @@ export const AdminMenuList = [
   //Dashboard
   {
     title: "Dashboard",
-    classsChange: "mm-collapse",
     iconStyle: SVGICON.Home,
     to: "/dashboard",
   },
-  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Business Group",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
+    iconStyle: SVGICON.BusinessGroup,
     to:"/business",
-    content: [
-      {
-        title: "Tracking",
-        classsChange: "mm-collapse",
-        iconStyle: SVGICON.Task,
-        content: [
-          {
-            title: "Companies",
-            to: "company-tracking",
-          },
-          {
-            title: "Drivers",
-            to: "driver-tracking",
-          },
-        ],
-      },
-      {
-        title: "Reports",
-        iconStyle: SVGICON.Reports,
-        to: "/reports",
-      },
-
-      // {
-      //     title: 'Manage Clients',
-      //     iconStyle: SVGICON.ManageClient,
-      //     to: '/manage-client',
-      // },
-    ],
   },
   {
     title: "Company",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
+    iconStyle: <HiOutlineBuildingOffice2 style={{ width:"22px",height:"22px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/company",
-    content: [
-      {
-        title: "Alerts",
-        iconStyle: SVGICON.ManageClient,
-        to: "/alert",
-      },
-      {
-        title: "Expense",
-        iconStyle: SVGICON.ManageClient,
-        to: "/expense",
-      },
-      {
-        title: "Geofence",
-        iconStyle: SVGICON.ManageClient,
-        to: "/geofence",
-      },
-      {
-        title: "Classify Trips",
-        iconStyle: SVGICON.ManageClient,
-        to: "/classifyTrips",
-      },
-    ],
   },
   {
     title: "Branch",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
+    iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/branch",
-    content: [
-      {
-        title: "Driver",
-        iconStyle: SVGICON.Employe,
-        to: "/driver",
-      },
-      {
-        title: "Vehicle",
-        iconStyle: SVGICON.Employe,
-        to: "/vehicle",
-      },
-      {
-        title: "Technician",
-        classsChange: "mm-collapse",
-        iconStyle: SVGICON.Employe,
-        content: [
-          {
-            title: "Technician Details",
-            to: "/technician",
-          },
-          {
-            title: "Technician Tasks",
-            to: "/technicianTask",
-          },
-        ],
-      },
-    ],
   },
   {
-    title: "Settings",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.SettingMenu,
-    content: [
-      // {
-      //   title: "General",
-      //   to: "general",
-      // },
-      // {
-      //   title: "Master",
-      //   to: "master",
-      // },
-      // {
-      //   title: "Technician",
-      //   to: "technician",
-      // },
-      {
-        title: "Feature Template",
-        iconStyle: SVGICON.ManageClient,
-        to: "/groups",
-      },
-    ],
+    title: "Technician",
+    iconStyle: <FaTools style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/technician",
+  },
+  {
+    title: "Driver",
+    iconStyle: <GrUserPolice style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/driver",
+  },
+  {
+    title: "Vehicle",
+    iconStyle: <FaCar style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/vehicle",
+  },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
+  {
+    title: "Company Tracking",
+    iconStyle: <BsPinMap style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "company-tracking",
+  },
+  {
+    title: "Driver Tracking",
+    iconStyle: <BsPinMap style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "driver-tracking",
+  },
+  {
+    title: "Technician Tasks",
+    iconStyle: <BiTask style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/technicianTask",
+  },
+  {
+    title: "Alerts",
+    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/alert",
+  },
+  {
+    title: "Expense",
+    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
+    to: "/expense",
+  },
+  {
+    title: "Feature Template",
+    iconStyle: <PiWarningOctagonDuotone style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/groups",
+  },
+  {
+    title: "Geofence",
+    iconStyle: <TbFence style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/geofence",
+  },
+  {
+    title: "Classify Trips",
+    iconStyle: <BiTrip style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/classifyTrips",
+  },
+  {
+    title: "Reports",
+    iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/reports",
   },
 ];

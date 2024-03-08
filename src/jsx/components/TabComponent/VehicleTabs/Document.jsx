@@ -54,7 +54,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="insuranceIssueDate"
@@ -131,7 +131,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="PUCIssueDate"
@@ -204,7 +204,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="registrationCertificateIssueDate"
@@ -285,7 +285,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="serviceContractIssueDate"
@@ -361,7 +361,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="nationalPermitIssueDate"
@@ -438,7 +438,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="statePermitIssueDate"
@@ -515,7 +515,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="RTOPassingIssueDate"
@@ -592,7 +592,7 @@ const Document = ({  setValue,handleSubmit, onSubmit, control, getValues }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Issue Date</label>
           <Controller
             name="roadTaxIssueDate"

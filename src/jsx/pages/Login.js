@@ -11,6 +11,7 @@ import LogoWhite from "../../images/logo/logofull-white.png";
 import bg6 from "../../images/background/bg6.jpg";
 import { loginValidation } from "../../yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { notifyError } from '../../utils/toast';
 
 function Login(props) {
   const [heartActive, setHeartActive] = useState(true);
@@ -49,7 +50,7 @@ function Login(props) {
 			dispatch(loginAction('demo@example.com', '123456', navigate));
 
 		} else {
-			alert('Invalid email or password');
+      notifyError("Invalid email or password")
 		}
   }
 
