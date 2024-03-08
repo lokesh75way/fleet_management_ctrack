@@ -12,7 +12,7 @@ import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
+  const tabHeading = ["New Business Group", "Settings"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
@@ -37,16 +37,19 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         data.id = existingData.length + 1;
         existingData.push(data);
         localStorage.setItem("businessData", JSON.stringify(existingData));
-        notifySuccess("Business Group Added Successfully !!");
+        notifySuccess("Saved !");
         navigate("/business");
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
-
+      
+      
     }
-
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    
+    notifySuccess("Saved !");
+    console.log(data);
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

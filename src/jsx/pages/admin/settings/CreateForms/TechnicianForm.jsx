@@ -30,16 +30,16 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
       data.id  = existingData.length + 1;
       existingData.push(data)
       localStorage.setItem('technicianData',JSON.stringify(existingData))
-        notifySuccess("Technician Added Successfully !!")
-        navigate("/technician");
-        return;
-      }
-      catch(error){
-        notifyError("Some error occured !!")
-      }
+      navigate("/technician");
+      return;
     }
+    catch(error){
+      notifyError("Some error occured !!")
+    }
+  }
+    notifySuccess("Saved !")
     console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
 
   }
   return (

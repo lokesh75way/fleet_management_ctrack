@@ -342,7 +342,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

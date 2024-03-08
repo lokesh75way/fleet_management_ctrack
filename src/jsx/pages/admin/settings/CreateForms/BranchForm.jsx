@@ -12,7 +12,7 @@ import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BranchForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
+  const tabHeading = ["New Branch", "Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
@@ -37,14 +37,17 @@ const BranchForm = () => {
         data.id = existingData.length + 1;
         existingData.push(data);
         localStorage.setItem("branchData", JSON.stringify(existingData));
-        notifySuccess("Branch Added Successfully !!");
+        // notifySuccess("Branch Added Successfully !!");
         navigate("/branch");
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
+      
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    notifySuccess("Saved!");
+    console.log('myaccount data',data);
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

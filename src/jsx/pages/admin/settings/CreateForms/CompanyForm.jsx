@@ -15,7 +15,7 @@ const CompanyForm = () => {
   const{saveData} = useStorage()
   const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Add Account", "User Setting"];
+  const tabHeading = ["New Company", "Settings"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
@@ -26,7 +26,7 @@ const CompanyForm = () => {
     if(activeIndex === (totalTabs -1)){
       try{
         saveData(data, 'companyData')
-        notifySuccess("Company Added Successfully !!")
+        notifySuccess("Saved !")
         navigate("/company");
         return;
       }
@@ -34,7 +34,9 @@ const CompanyForm = () => {
         notifyError("Some error occured !!")
       }
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    console.log(data);
+    notifySuccess("Saved !")
   }
   return (
     <>

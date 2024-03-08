@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
 import useStorage from "../../../../hooks/useStorage";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
   const {checkRole, checkUser} = useStorage()
@@ -31,12 +32,24 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.email,
     value: item.id,
   }));
+
+  const [disabledState, setDisabledState] = useState();
+
+  const role = localStorage.getItem('role');
+
   
+  useEffect(()=>{
+    if(role == 'admin') setDisabledState(true);
+    else setDisabledState(false);
+
+  },[])
+  // else setdisabledState(true);
+  console.log('ye he disabled',disabledState);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
+          <label className="form-label">Business Group</label>
           {checkRole() ? <CustomInput
             type="text"
             required
@@ -45,6 +58,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="parent"
             placeholder=""
             value={checkUser()}
+            isDisabled={disabledState}
           />
           :
           <Controller
@@ -104,20 +118,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             />
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Short Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-          />
-           <Error errorName={errors.shortName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -329,7 +329,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

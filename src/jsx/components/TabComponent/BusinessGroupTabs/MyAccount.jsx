@@ -35,19 +35,25 @@ const user = localStorage.getItem('loginDetails-email')
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       <div className="col-xl-6 mb-3">
           <label className="form-label">Admin</label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="Admin"
-            name="parent"
-            value = {user}
-            placeholder=""
+          <Controller
+            name="businessUser"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("admin", newValue.label)}}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={'admin'}
+                isDisabled = {true}
+              />
+            )}
           />
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User<span className="text-danger">*</span></label>
+          <label className="form-label">Business Group Name<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -91,20 +97,6 @@ const user = localStorage.getItem('loginDetails-email')
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Short Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-          />
-          <Error errorName={errors.shortName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -320,7 +312,7 @@ const user = localStorage.getItem('loginDetails-email')
           style={{ width: "10%" }}
         >
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

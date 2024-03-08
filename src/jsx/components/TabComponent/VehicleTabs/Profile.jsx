@@ -782,7 +782,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
       </div>
     </div>
   );
