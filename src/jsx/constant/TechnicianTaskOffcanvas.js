@@ -203,8 +203,9 @@ const TechnicianOffcanvas = forwardRef(
                       label="Service Location"
                       placeholder=""
                     />
+                    <Error errorName={errors.serviceLocation} />
                   </div>
-                  <div className="col-xl-6 mb-3">
+                  <div className="col-xl-6 mb-3 d-flex flex-column">
                     <label className="form-label">
                       Planned Reporting <span className="text-danger">*</span>
                     </label>
@@ -221,6 +222,7 @@ const TechnicianOffcanvas = forwardRef(
                         />
                       )}
                     />
+                    {!getValues("serviceLocation") && <Error errorName={errors.serviceLocation} />}
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">

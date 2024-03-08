@@ -97,17 +97,17 @@ const Driver = (ref) => {
     navigate(`/driver/edit/${item}`);
     // setEditTableData(item);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updateTable = tableData.map((table) => {
-      if (table.id === editData.id) {
-        console.log(table.id);
-        return { ...table, ...editData };
-      }
-      return table;
-    });
-    setTableData(updateTable);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const updateTable = tableData.map((table) => {
+  //     if (table.id === editData.id) {
+  //       console.log(table.id);
+  //       return { ...table, ...editData };
+  //     }
+  //     return table;
+  //   });
+  //   setTableData(updateTable);
+  // };
 
   const employe = useRef();
   return (

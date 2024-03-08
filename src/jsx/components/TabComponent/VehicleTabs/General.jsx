@@ -34,7 +34,7 @@ const {checkRole, checkUser} = useStorage()
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       {checkRole() === 'company' && <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company <span className="text-danger">*</span>
+            Company
           </label>
           <CustomInput
             type="text"
@@ -160,7 +160,7 @@ const {checkRole, checkUser} = useStorage()
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Secondary SIM Number
+            Secondary SIM Number<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -238,7 +238,7 @@ const {checkRole, checkUser} = useStorage()
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Device Accuracy Tolerance
+            Device Accuracy Tolerance<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"

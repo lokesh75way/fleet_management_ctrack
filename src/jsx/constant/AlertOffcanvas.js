@@ -106,7 +106,7 @@ const AlertOffcanvas = forwardRef(
                   </div>
 
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Based On</label>
+                    <label className="form-label">Based On<span className="text-danger">*</span></label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input
@@ -233,7 +233,7 @@ const AlertOffcanvas = forwardRef(
                     {!getValues('alertType') && <Error errorName={errors.alertType} />}
                   </div>
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Value</label>
+                    <label className="form-label">Value<span className="text-danger">*</span></label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input

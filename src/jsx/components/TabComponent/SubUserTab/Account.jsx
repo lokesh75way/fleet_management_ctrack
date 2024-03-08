@@ -9,9 +9,11 @@ import {
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import useStorage from "../../../../hooks/useStorage";
 
 const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getValues, errors, control}) => {
   
+  const {checkUser} = useStorage()
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -41,23 +43,16 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch <span className="text-danger">*</span>
+            Parent 
           </label>
-          <Controller
-            name="branch"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) =>{setTempValue(newValue.value); setValue("branch", newValue.value)}}
-                options={branchOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={branchOptions[0]}
-              />
-            )}
+          <CustomInput
+            type="text"
+            register={register}
+            label="Parent"
+            name="parent"
+            value={checkUser()}
+            placeholder=""
           />
-          { !getValues('branch') && <Error errorName={errors.branch} />}
         </div>
 
 
@@ -153,7 +148,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Experience <span className="text-danger">*</span>
+            Experience<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"

@@ -23,7 +23,7 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Leave Time 
+            Leave Time <span className="text-danger">*</span>
           </label>
           <Controller
             name="leaveTime"
@@ -43,7 +43,7 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of Days
+            No of Days<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"

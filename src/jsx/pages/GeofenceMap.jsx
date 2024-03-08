@@ -167,7 +167,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label htmlFor="contactNumber" className="form-label">
-                  Contact Number:
+                  Contact Number:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="number"
@@ -201,7 +201,7 @@ const GeofenceDetail = () => {
           </div> */}
 
               <div className="mb-3">
-                <label className="form-label">Tolerance:</label>
+                <label className="form-label">Tolerance:<span className="text-danger">*</span></label>
                 <Controller
                   name="tolerance"
                   control={control}

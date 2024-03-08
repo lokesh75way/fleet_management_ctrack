@@ -34,9 +34,11 @@ const SubUser = () => {
       }
     }
   };
+
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
+
   activePag.current === 0 && chageData(0, sort);
   let paggination = Array(Math.ceil(data.length / sort))
     .fill()
@@ -228,11 +230,12 @@ const SubUser = () => {
           </div>
         </div>
       </div>
-      {/* <CompanyOffcanvas
+      {/* <CompanyOffcanvas 
                 ref={subuser}
                 Title="Add Sub User"
             /> */}
     </>
   );
 };
+
 export default SubUser;

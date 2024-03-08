@@ -103,7 +103,7 @@ const Document = ({ setValue, register }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
         <label className="form-label">
             Issue Date 
           </label>
@@ -180,7 +180,7 @@ const Document = ({ setValue, register }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
         <label className="form-label">
             Issue Date 
           </label>
@@ -257,7 +257,7 @@ const Document = ({ setValue, register }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
         <label className="form-label">
             Issue Date 
           </label>
@@ -334,7 +334,7 @@ const Document = ({ setValue, register }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
         <label className="form-label">
             Issue Date 
           </label>
@@ -411,7 +411,7 @@ const Document = ({ setValue, register }) => {
             </form>
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
         <label className="form-label">
             Issue Date 
           </label>
