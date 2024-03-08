@@ -272,7 +272,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

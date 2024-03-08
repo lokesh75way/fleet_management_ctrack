@@ -1,6 +1,6 @@
 
 import React, {useState, useRef, useEffect} from 'react';
-import {Link, Route, json, useParams} from 'react-router-dom';
+import {Link, Route, json, useParams,useNavigate} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
@@ -18,6 +18,7 @@ const headers = [
     { label: "User Group", key: "usergroup" }
 ]
 const Branch = () => {
+    const navigate = useNavigate();
     const {id} = useParams();
     console.log("Branch id :- ",id)
     const [data, setData] = useState(
@@ -69,26 +70,37 @@ const Branch = () => {
     const onConfirmDelete = (id) => {
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
+
+        // Remove item from local storage
+     const updatedLocalStorageData = SubCompanyData.filter((item) => item.id !== id);
+     localStorage.setItem('branchData', JSON.stringify(updatedLocalStorageData));
     }
-    const editDrawerOpen = (item)=>{
-        console.log(item)
-        tableData.map((table)=>(
-            table.id === item && setEditData(table)
-            ))
-            console.log(item)
-            subCompany.current.showModal();
-        }
-        const handleSubmit=(e)=>{
-            e.preventDefault();
-            const updateTable = tableData.map((table)=>{
-                if(table.id === editData.id) {
-                    console.log(table.id)
-                    return {...table, ...editData };
-                }
-                return table;
-            })
-            setTableData(updateTable)
-        }
+
+    const editDrawerOpen = (item) => {
+        tableData.map((table) => table.id === item && setEditData(table));
+        navigate(`edit/${item}`);
+        // company.current.showModal();
+      };
+
+    // const editDrawerOpen = (item)=>{
+    //     console.log(item)
+    //     tableData.map((table)=>(
+    //         table.id === item && setEditData(table)
+    //         ))
+    //         console.log(item)
+    //         subCompany.current.showModal();
+    //     }
+    //     const handleSubmit=(e)=>{
+    //         e.preventDefault();
+    //         const updateTable = tableData.map((table)=>{
+    //             if(table.id === editData.id) {
+    //                 console.log(table.id)
+    //                 return {...table, ...editData };
+    //             }
+    //             return table;
+    //         })
+    //         setTableData(updateTable)
+    //     }
         const invite = useRef();
         const subCompany = useRef();
         useEffect(() => {
@@ -193,13 +205,13 @@ const Branch = () => {
                     </div>
                 </div>
             </div>
-            <SubCompanyOffcanvas
+            {/* <SubCompanyOffcanvas
                 ref={subCompany}
                 editData={editData}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
                 Title={ editData.id === 0 ? "Add Branch" : "Edit Branch"}
-            />
+            /> */}
         </>
     );
 };

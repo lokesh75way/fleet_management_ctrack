@@ -28,7 +28,6 @@ const VehicleForm = () => {
     if(activeIndex === (totalTabs -1)){
       try{
         saveData(data, 'vehicleData')
-        notifySuccess("Vehicle Added Successfully !!")
         navigate("/vehicle");
         return;
       }
@@ -37,8 +36,9 @@ const VehicleForm = () => {
       }
       return;
     }
+    notifySuccess("Saved !")
     console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
 
   return (

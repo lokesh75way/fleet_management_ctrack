@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import {  Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
+import { useParams } from "react-router-dom";
 import {
   branchOptions,
 } from "../VehicleTabs/Options";
@@ -21,6 +22,18 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+
+  const { id } = useParams();
+
+
+  const userData = JSON.parse(localStorage.getItem('userData'))
+
+  const newData = userData.filter(data => data.id === id);
+
+  const [filteredUserData,setFilteredUserData] = useState(newData);
+
+  
 
   return (
     <div className="p-4">
@@ -88,6 +101,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             label="User Name"
             name="userName"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].userName : ''}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -102,6 +116,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             label="Confirm User Name"
             name="confirmUserName"
             placeholder=""
+            
           />
           <Error errorName={errors.confirmUserName} />
         </div>
@@ -116,6 +131,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             label="Age"
             name="age"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].age : ''}
           />
           <Error errorName={errors.age} />
         </div>
@@ -130,6 +146,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             label="Mobile Number"
             name="mobileNumber"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].contact : ''}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -144,6 +161,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             label="Experience"
             name="experience"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].experience : ''}
           />
           <Error errorName={errors.experience} />
         </div>
@@ -154,7 +172,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           Password Recovery Email  <span className="text-danger">*</span>
           </label>
           <CustomInput
-            type="password"
+            type="email"
             register={register}
             label="Password Recovery Email"
             className="form-control"

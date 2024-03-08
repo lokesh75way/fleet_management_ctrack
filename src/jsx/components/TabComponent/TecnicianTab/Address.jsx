@@ -123,7 +123,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

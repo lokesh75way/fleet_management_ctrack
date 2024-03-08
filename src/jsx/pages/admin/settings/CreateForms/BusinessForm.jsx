@@ -1,5 +1,5 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -12,10 +12,23 @@ import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
+  const tabHeading = ["New Business Group", "Settings"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
+  const { id } = useParams(); 
+
+  // Fetch data from local storage when the id changes
+  useEffect(() => {
+    const existingData = JSON.parse(localStorage.getItem("businessData"));
+    console.log(existingData, id)
+    const businessData = existingData.find((item) => item.id === id);
+    console.log(businessData, 'nus')
+    if (businessData) {
+      reset(businessData);
+    }
+  }, [id]);
+
 
   const {
     register,
@@ -23,6 +36,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     setValue,
     getValues,
     control,
+    reset,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
@@ -34,19 +48,22 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     if (activeIndex === totalTabs - 1) {
       try {
         const existingData = JSON.parse(localStorage.getItem("businessData"));
-        data.id = existingData.length + 1;
+        data.id = `${existingData.length + 1}`;
         existingData.push(data);
         localStorage.setItem("businessData", JSON.stringify(existingData));
-        notifySuccess("Business Group Added Successfully !!");
+        notifySuccess("Saved !");
         navigate("/business");
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
-
+      
+      
     }
-
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    
+    notifySuccess("Saved !");
+    console.log(data);
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

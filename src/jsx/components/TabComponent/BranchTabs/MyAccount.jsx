@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
 import {parentOptions} from '../VehicleTabs/Options'
+import { useParams } from "react-router-dom";
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -29,6 +30,19 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.email,
     value: item.id,
   }));
+
+
+    const { id } = useParams();
+
+
+    const companyData = JSON.parse(localStorage.getItem('branchData'))
+  
+    const newData = companyData.filter(data => data.id === id);
+  
+    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
+
+console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -98,6 +112,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
+            
           />
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
@@ -129,6 +144,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             lable="Short Name"
             name="shortName"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].shortName : ''}
+
           />
            <Error errorName={errors.shortName} />
         </div>
@@ -143,6 +160,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="User Name"
             name="userName"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
+            
           />
           <Error errorName={errors.userName} />
         </div>
@@ -238,11 +257,12 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Mobile Number</label>
           <CustomInput
-            type="number"
+            type="text"
             register={register}
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -255,6 +275,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
+            defaultValue={2342342}
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -268,6 +289,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="City"
             name="city"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].city : ''}
           />
           <Error errorName={errors.city} />
         </div>
@@ -281,6 +303,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -342,7 +365,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

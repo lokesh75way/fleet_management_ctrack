@@ -44,15 +44,15 @@ const DriverForm = () => {
         data.id = generateRandomId();
         existingData.push(data);
         localStorage.setItem("driverData", JSON.stringify(existingData));
-        notifySuccess("Driver Added Successfully !!");
         navigate("/Driver");
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
+    notifySuccess("Saved !");
     console.log(data);
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

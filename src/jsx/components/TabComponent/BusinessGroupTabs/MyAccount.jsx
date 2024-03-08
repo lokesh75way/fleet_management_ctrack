@@ -28,32 +28,39 @@ const MyAccount = ({
   };
 
 const user = localStorage.getItem('loginDetails-email')
-
+console.log(getValues())
  
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       <div className="col-xl-6 mb-3">
           <label className="form-label">Admin</label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="Admin"
-            name="parent"
-            value = {user}
-            placeholder=""
+          <Controller
+            name="businessUser"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("admin", newValue.label)}}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={'admin'}
+                isDisabled = {true}
+              />
+            )}
           />
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User<span className="text-danger">*</span></label>
+          <label className="form-label">Business Group Name<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
             required
             label="businessUser"
             name="businessUser"
+            defaultValue={getValues('businessUser')}
             placeholder=""
           />
            <Error errorName={errors.businessUser} />
@@ -88,6 +95,7 @@ const user = localStorage.getItem('loginDetails-email')
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
+
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
@@ -103,6 +111,7 @@ const user = localStorage.getItem('loginDetails-email')
             lable="Short Name"
             name="shortName"
             placeholder=""
+            defaultValue={getValues('shortName')}
           />
           <Error errorName={errors.shortName} />
         </div>
@@ -117,6 +126,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="User Name"
             name="userName"
             placeholder=""
+            defaultValue={getValues('userName')}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -143,6 +153,7 @@ const user = localStorage.getItem('loginDetails-email')
                 name="oldPassword"
                 label="Old Password"
                 placeholder=""
+                defaultValue={getValues('oldPassword')}
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -156,6 +167,7 @@ const user = localStorage.getItem('loginDetails-email')
                 label="New Password"
                 name="newPassword"
                 placeholder=""
+                defaultValue={getValues('newPassword')}
               />
               <Error errorName={errors.newPassword} />
             </div>
@@ -183,6 +195,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
+            defaultValue={getValues('passwordRecoveryEmail')}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -194,6 +207,7 @@ const user = localStorage.getItem('loginDetails-email')
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
+            defaultValue={getValues('helpDeskEmail')}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -206,6 +220,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
+            defaultValue={getValues('helpDeskTelephoneNumber')}
+
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
@@ -217,6 +233,8 @@ const user = localStorage.getItem('loginDetails-email')
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            defaultValue={getValues('mobileNumber')}
+
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -229,6 +247,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
+            defaultValue={getValues('whatsappContactNumber')}
+
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -242,6 +262,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="City"
             name="city"
             placeholder=""
+            defaultValue={getValues('city')}
+
           />
           <Error errorName={errors.city} />
         </div>
@@ -255,6 +277,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            defaultValue={getValues('zipCode')}
+
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -268,6 +292,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Street1"
             name="street1"
             placeholder=""
+            defaultValue={getValues('street1')}
+
           />
           <Error errorName={errors.street1} />
         </div>
@@ -281,6 +307,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={getValues('street2')}
+
           />
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -291,6 +319,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Contact Person"
             name="contactPerson"
             placeholder=""
+            defaultValue={getValues('contactPerson')}
+
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -303,6 +333,8 @@ const user = localStorage.getItem('loginDetails-email')
             label="Fax Number"
             name="faxNumber"
             placeholder=""
+            defaultValue={getValues('faxNumber')}
+
           />
         </div>
       </div>
@@ -320,7 +352,7 @@ const user = localStorage.getItem('loginDetails-email')
           style={{ width: "10%" }}
         >
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

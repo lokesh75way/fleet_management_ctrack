@@ -8,9 +8,11 @@ import useDriverSubmit from "../../../hooks/useDriverSubmit";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {subUserAccuntSchema} from '../../../yup'
+import { notifySuccess } from "../../../utils/toast";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Account"];
   const component = [Account];
@@ -26,6 +28,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     data.id  = existingData.length +1;
     existingData.push(data)
     localStorage.setItem('userData',JSON.stringify(existingData))
+    notifySuccess("Saved !")
+    navigate("/subUser");
     return;
   }
   return (
