@@ -69,6 +69,10 @@ const Branch = () => {
     const onConfirmDelete = (id) => {
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
+
+        // Remove item from local storage
+     const updatedLocalStorageData = SubCompanyData.filter((item) => item.id !== id);
+     localStorage.setItem('branchData', JSON.stringify(updatedLocalStorageData));
     }
     const editDrawerOpen = (item)=>{
         console.log(item)

@@ -56,6 +56,10 @@ const Vehicle = () => {
     const onConfirmDelete =(id)=>{
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
+
+         // Remove item from local storage
+     const updatedLocalStorageData = VehicleData.filter((item) => item.id !== id);
+     localStorage.setItem('vehicleData', JSON.stringify(updatedLocalStorageData));
     
        }
     // Edit function
