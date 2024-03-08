@@ -28,6 +28,7 @@ const CustomInput = ({
         placeholder={placeholder}
         className="form-control"
         disabled={isdisabled}
+        defaultValue={defaultValue}
 
         // defaultValue={defaultValue}
       />

@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -16,6 +16,8 @@ const BranchForm = () => {
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
+
+
 
   const {
     register,

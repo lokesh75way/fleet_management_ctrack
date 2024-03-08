@@ -85,6 +85,12 @@ const Driver = (ref) => {
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
+
+     // Remove item from local storage
+  const updatedLocalStorageData = DriverDataMemoized.filter(
+    (item) => item.id !== id
+  );
+  localStorage.setItem("driverData", JSON.stringify(updatedLocalStorageData));
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));

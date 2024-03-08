@@ -8,6 +8,7 @@ import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
 import useStorage from "../../../../hooks/useStorage";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
+import { useParams } from "react-router-dom";
 
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
   const {checkRole, checkUser} = useStorage()
@@ -43,8 +44,18 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     else setDisabledState(false);
 
   },[])
-  // else setdisabledState(true);
-  console.log('ye he disabled',disabledState);
+
+  const { id } = useParams();
+
+    console.log("CompanyForm ID from params:", id);
+  
+  
+    const companyData = JSON.parse(localStorage.getItem('companyData'))
+  
+    const newData = companyData.filter(data => data.id === id);
+  
+    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
+  
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -87,6 +98,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Company"
             name="company"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].company : ''}
           />
            <Error errorName={errors.company} />
         </div>
@@ -130,6 +142,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="User Name"
             name="userName"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -156,6 +169,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 name="oldPassword"
                 label="Old Password"
                 placeholder=""
+                defaultValue={filteredCompanyData[0].oldPassword}
+                
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -196,6 +211,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ''}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -230,6 +246,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -268,6 +285,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
           />
           <Error errorName={errors.zipCode} />
         </div>
