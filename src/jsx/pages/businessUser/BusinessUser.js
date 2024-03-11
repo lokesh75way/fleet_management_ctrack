@@ -13,7 +13,10 @@ const BusinessUser = () => {
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
-    const BusinessData = JSON.parse(localStorage.getItem('businessData'))
+    
+    const userData = JSON.parse(localStorage.getItem('userJsonData'))
+    const BusinessData = userData.filter((item)=> item.role === 'businessgroup')
+       
     const [tableData, setTableData] = useState(BusinessData);
     const [editData , setEditData] = useState({
         id:0,
@@ -58,8 +61,8 @@ const onConfirmDelete = (id) => {
     setTableData(updatedData);
 
     // Remove item from local storage
-    const updatedLocalStorageData = BusinessData.filter((item) => item.id !== id);
-    localStorage.setItem('businessData', JSON.stringify(updatedLocalStorageData));
+    const updatedLocalStorageData = userData.filter((item) => item.id !== id);
+    localStorage.setItem('userJsonData', JSON.stringify(updatedLocalStorageData));
 };
    const editDrawerOpen = (item)=>{
     navigate(`/business/edit/${item.id}`);
@@ -102,9 +105,8 @@ const onConfirmDelete = (id) => {
                                                     <th>Parent</th>
                                                     <th>Business User</th>
                                                     <th>Mobile Number</th>
+                                                    <th>Email</th>
                                                     <th>Location</th>
-                                                    <th>Payment Status</th>
-                                                    <th>Branches</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>

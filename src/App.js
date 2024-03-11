@@ -60,7 +60,7 @@ function App(props) {
     const vehicleData = localStorage.getItem('vehicleData');
     const driver = localStorage.getItem("driverData");
     const dataBranch = localStorage.getItem('branchData');
-    const businessData = localStorage.getItem('businessData');
+  
     const userData = localStorage.getItem('userData');
     const technicianData = localStorage.getItem('technicianData');
     const userJsonData = localStorage.getItem('userJsonData')
@@ -69,7 +69,7 @@ function App(props) {
     if(!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
     if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));   
     if(!dataBranch) localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
-    if(!businessData) localStorage.setItem('businessData', JSON.stringify(BusinessData))
+   
     if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
     if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
     if(!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))

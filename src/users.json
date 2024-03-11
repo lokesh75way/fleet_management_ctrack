@@ -1,14 +1,14 @@
 [
   {
     "id": 1,
-    "UserName":"Admin",
+    "userName":"Admin",
     "email": "admin@example.com",
     "password": "admin123",
     "role": "admin",
     "country":"India",
     "state":"Kolkata",
-    "passwordRecoveryEmail":"business1@example.com",
-    "helpDeskEmail":"business1help@example.com",
+    "passwordRecoveryEmail":"admin@example.com",
+    "helpDeskEmail":"adminhelp@example.com",
     "mobileNumber":"1234567890",
     "whatsappNumber":"9876543210",
     "city":"Banglore",

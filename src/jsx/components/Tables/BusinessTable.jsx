@@ -26,34 +26,20 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             </div>
           </td>
           <td>
-            <span className="text-primary">{item.businessUser}</span>
+            <span className="text-primary">{item.userName}</span>
           </td>
 
           <td>
             <span>{item.mobileNumber}</span>
           </td>
           <td>
-            <span>{item.location || item.city}</span>
+            <span>{item.email}</span>
           </td>
+          <td>
+            <span>{item.country}</span>
+          </td>
+         
 
-          <td>
-            <span
-              style={{ width: "5rem" }}
-              className={`badge light border-0 ${
-                item.status === "Active" ? "badge-success" : "badge-danger"
-              } `}
-            >
-              {item.status || "Inactive"}
-            </span>
-          </td>
-          <td>
-            <Link
-              to={`/company/${item.id}`}
-              className="text-primary badge light border-0 badge-count"
-            >
-              {item.CompanyGroups || 5}
-            </Link>
-          </td>
           <td>
             <span className="d-flex justify-content-center">
               

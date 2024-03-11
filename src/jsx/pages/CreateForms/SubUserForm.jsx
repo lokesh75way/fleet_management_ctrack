@@ -7,7 +7,7 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {subUserAccuntSchema} from '../../../yup'
-import { notifySuccess } from "../../../utils/toast";
+import { notifyError, notifySuccess } from "../../../utils/toast";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
@@ -30,10 +30,10 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
 
   const onSubmit = (data) => {
     try {
-      const existingData = JSON.parse(localStorage.getItem("userData"));
+      const existingData = JSON.parse(localStorage.getItem("userJsonData"));
       data.id = existingData.length + 1;
       existingData.push(data);
-      localStorage.setItem("userData", JSON.stringify(existingData));
+      localStorage.setItem("userJsonData", JSON.stringify(existingData));
       notifySuccess("User created successfully !!");
       navigate('/subUser')
     } catch (error) {

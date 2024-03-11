@@ -32,7 +32,7 @@ const MyAccount = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       <div className="col-xl-6 mb-3">
-          <label className="form-label">Admin</label>
+          <label className="form-label">Admin<span className="text-danger">*</span></label>
           <Controller
             name="businessUser"
             control={control}
@@ -42,12 +42,14 @@ const MyAccount = ({
                 onChange={(newValue) => {setTempValue(newValue.label); setValue("admin", newValue.label)}}
                 ref={ref}
                 name={name}
+                options={[{value:'Admin', label : 'Admin' }]}
+
                 styles={customStyles}
                 defaultValue={'admin'}
-                isDisabled = {true}
               />
             )}
           />
+          <Error errorName={errors.admin} />
         </div>
 
         <div className="col-xl-6 mb-3">
