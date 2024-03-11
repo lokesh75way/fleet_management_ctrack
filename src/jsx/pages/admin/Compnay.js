@@ -5,7 +5,9 @@ import CompanyTable from "../../components/Tables/CompanyTable";
 
 const Company = () => {
   const navigate = useNavigate();
-  const CompanyData = JSON.parse(localStorage.getItem('companyData'))
+  const allData = JSON.parse(localStorage.getItem('userJsonData'))
+  const CompanyData = allData.filter((item)=> item.role === 'company')
+  console.log(CompanyData)
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -114,7 +116,7 @@ const Company = () => {
                           <th>Company Name</th>
                           <th>Mobile Number</th>
                           <th>Location</th>
-                          <th>Payment Status</th>
+                          <th>Email</th>
                           <th>Branches</th>
                           <th>Zip Code</th>
                           <th>Action</th>
