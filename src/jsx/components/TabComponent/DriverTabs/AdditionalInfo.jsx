@@ -6,8 +6,15 @@ import Select from "react-select";
 import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
+import { useParams } from "react-router-dom";
 
 const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues, control,errors }) => {
+
+  const { id } = useParams();
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+  const [filteredUserData, setFilteredUserData] = useState(newData);
+
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
     control: (base) => ({
@@ -44,6 +51,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             label="Age"
             name="age"
             placeholder=""
+            defaultValue={filteredUserData[0].age}
           />
           <Error errorName={errors.age} />
         </div>
@@ -83,6 +91,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             label="Driving Experience Since"
             name="drivingExperienceSince"
             placeholder=""
+            defaultValue={filteredUserData[0].drivingExperienceSince}
           />
           <Error errorName={errors.drivingExperienceSince} />
         </div>

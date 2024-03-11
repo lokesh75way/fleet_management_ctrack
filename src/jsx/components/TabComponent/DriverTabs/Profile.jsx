@@ -4,40 +4,56 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import { branchOptions, employeeDesignationOptions,tagViaOptions, defaultObjectNumberOptions } from "../VehicleTabs/Options";
+import {
+  branchOptions,
+  employeeDesignationOptions,
+  tagViaOptions,
+  defaultObjectNumberOptions,
+} from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors, }) => {
+const Profile = ({
+  setValue,
+  register,
+  handleSubmit,
+  onSubmit,
+  getValues,
+  errors,
+}) => {
   const { control } = useForm();
-  const[tempValue, setTempValue] = useState();
+  const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", 
+      padding: ".25rem 0 ",
     }),
   };
 
   const { id } = useParams();
-  const [defaultValues, setDefaultValues] = useState();
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+  const [filteredUserData, setFilteredUserData] = useState(newData);
+  console.log(filteredUserData[0])
 
-  const driver = JSON.parse(localStorage.getItem("driverData"));
-  useEffect(() => {
-    if (driver.length > 0) {
-      const thisDriver = driver.find((d) => d.id === id);
-      setDefaultValues(thisDriver);
-    }
-  }, [id],driver, defaultValues);
-console.log("Default valuees are,",defaultValues)
+  //   const [defaultValues, setDefaultValues] = useState();
+
+  //   const driver = JSON.parse(localStorage.getItem("driverData"));
+  //   useEffect(() => {
+  //     if (driver.length > 0) {
+  //       const thisDriver = driver.find((d) => d.id === id);
+  //       setDefaultValues(thisDriver);
+  //     }
+  //   }, [id],driver, defaultValues);
+  // console.log("Default valuees are,",defaultValues)
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-           
             Branch <span className="text-danger">*</span>
           </label>
           <Controller
@@ -46,16 +62,19 @@ console.log("Default valuees are,",defaultValues)
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("branch", newValue.value)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.value);
+                  setValue("branch", newValue.value);
+                }}
                 options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue= {defaultValues?.branch}
+                defaultValue={"company1@example.com"}
               />
             )}
           />
-           { !getValues('branch') && <Error errorName={errors.branch} />}
+          {!getValues("branch") && <Error errorName={errors.branch} />}
         </div>
         {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -87,7 +106,7 @@ console.log("Default valuees are,",defaultValues)
             label="First Name"
             name="firstName"
             placeholder="first name"
-            defaultValue={defaultValues?.firstName || "sd"}
+            defaultValue={filteredUserData[0]?.firstName || ""}
           />
           <Error errorName={errors.firstName} />
         </div>
@@ -101,6 +120,7 @@ console.log("Default valuees are,",defaultValues)
             label="Last Name"
             name="lastName"
             placeholder="last name"
+            defaultValue={filteredUserData[0]?.lastName || ""}
           />
           <Error errorName={errors.lastName} />
         </div>
@@ -114,6 +134,7 @@ console.log("Default valuees are,",defaultValues)
             label="Employee Number"
             name="employeeNumber"
             placeholder=""
+            defaultValue={filteredUserData[0]?.employeeNumber || ""}
           />
           <Error errorName={errors.employeeNumber} />
         </div>
@@ -124,13 +145,13 @@ console.log("Default valuees are,",defaultValues)
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
-              setValue('country',e.id)
+              setValue("country", e.id);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
-          { !getValues('country') && <Error errorName={errors.country} />}
+          {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
@@ -141,13 +162,13 @@ console.log("Default valuees are,",defaultValues)
               countryid={countryid}
               onChange={(e) => {
                 setstateid(e.id);
-                setValue('state',e.id)
+                setValue("state", e.id);
               }}
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
             />
-            { !getValues('state') && <Error errorName={errors.state} />}
+            {!getValues("state") && <Error errorName={errors.state} />}
           </div>
         </div>
         <div className="col-xl-6 mb-3">
@@ -160,8 +181,9 @@ console.log("Default valuees are,",defaultValues)
             label="City"
             name="city"
             placeholder=""
+            defaultValue={filteredUserData[0].city}
           />
-        <Error errorName={errors.city} />
+          <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
@@ -173,6 +195,7 @@ console.log("Default valuees are,",defaultValues)
             label="zipCode"
             name="zipCode"
             placeholder=""
+            defaultValue={filteredUserData[0].zipCode}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -186,12 +209,13 @@ console.log("Default valuees are,",defaultValues)
             label="Street1"
             name="street1"
             placeholder=""
+            defaultValue={filteredUserData[0].street1 || " "}
           />
           <Error errorName={errors.street1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2 
+            Street2
           </label>
           <CustomInput
             type="text"
@@ -199,6 +223,7 @@ console.log("Default valuees are,",defaultValues)
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={filteredUserData[0].street2 || " "}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -211,6 +236,7 @@ console.log("Default valuees are,",defaultValues)
             label="Contact Number1"
             name="contactNumber1"
             placeholder=""
+            defaultValue={filteredUserData[0].contactNumber1 || " "}
           />
           <Error errorName={errors.contactNumber1} />
         </div>
@@ -224,6 +250,7 @@ console.log("Default valuees are,",defaultValues)
             label="Contact Number2"
             name="contactNumber2"
             placeholder=""
+            defaultValue={filteredUserData[0].contactNumber2 || " "}
           />
           <Error errorName={errors.contactNumber2} />
         </div>
@@ -236,7 +263,14 @@ console.log("Default valuees are,",defaultValues)
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
+          {" "}
+          Submit
+        </Button>
       </div>
     </div>
   );
