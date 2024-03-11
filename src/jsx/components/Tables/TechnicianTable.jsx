@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdDelete } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import DeleteModal from '../Modal/DeleteModal';
 import { IMAGES,SVGICON} from '../../constant/theme'; 
+import {useParams} from 'react-router-dom'
 
 
 const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
+
+
   return (
     <>
       {tableData.map((item, index) => (
@@ -38,14 +41,7 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
             <span>{item.country}</span>
           </td>
           <td>
-            <span
-              className={`badge light border-0 ${
-                item.status === "Active" ? "badge-success" : "badge-danger"
-              } `}
-              style={{ width: "5rem" }}
-            >
-              {item.status || "Inactive"}
-            </span>
+            <span>{item.technicianNumber}</span>
           </td>
           <td>
             <span className="d-flex justify-content-center">

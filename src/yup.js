@@ -128,6 +128,7 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
+    admin:yup.string().required("Please select the field"),
     userName: yup.string().required("Please enter a User Name"),
     businessUser: yup.string().required("Business Group Name is required !!"),
     country: yup.string().required("Please select a Country"),
@@ -205,7 +206,7 @@ export const subUserAccuntSchema = yup
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
     mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
-    passwordRecoveryEmail: yup.string().email().required("Password recovery Email is required !!"),
+    email: yup.string().email().required("Email is required !!"),
     country: yup.string().required("Please select a Country"),
     state: yup.string().required("Please select a State"),
     experience: yup.number().required("Experience is required"),

@@ -29,9 +29,9 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
   const { id } = useParams();
 
 
-  const userData = JSON.parse(localStorage.getItem('userData'))
+  const userData = JSON.parse(localStorage.getItem('userJsonData'))
 
-  const newData = userData.filter(data => data.id === id);
+  const newData = userData.filter(data => data.id === parseInt(id,10));
 
   const [filteredUserData,setFilteredUserData] = useState(newData);
 
@@ -116,20 +116,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           <Error errorName={errors.confirmUserName} />
         </div>
 
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Age <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            label="Age"
-            name="age"
-            placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].age : ''}
-          />
-          <Error errorName={errors.age} />
-        </div>
+       
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -146,35 +133,19 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           <Error errorName={errors.mobileNumber} />
         </div>
 
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Experience<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Experience"
-            name="experience"
-            placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].experience : ''}
-          />
-          <Error errorName={errors.experience} />
-        </div>
-
-      
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          Password Recovery Email  <span className="text-danger">*</span>
+           Email  <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
             register={register}
-            label="Password Recovery Email"
+            label="Email"
             className="form-control"
-            name="passwordRecoveryEmail"
+            name="email"
             placeholder=""
           />
-           <Error errorName={errors.passwordRecoveryEmail} />
+           <Error errorName={errors.email} />
         </div>
         </div>
       <div

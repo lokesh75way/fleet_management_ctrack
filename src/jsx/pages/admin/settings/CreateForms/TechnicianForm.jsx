@@ -42,10 +42,11 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingData = JSON.parse(localStorage.getItem("technicianData"));
+        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
         data.id = existingData.length + 1;
+        data.Designation = 'Technician'
         existingData.push(data);
-        localStorage.setItem("technicianData", JSON.stringify(existingData));
+        localStorage.setItem("userJsonData", JSON.stringify(existingData));
         notifySuccess("Technician Added Successfully !!");
         navigate("/technician");
         return;
