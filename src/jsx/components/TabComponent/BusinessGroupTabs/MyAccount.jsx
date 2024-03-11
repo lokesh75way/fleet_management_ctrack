@@ -24,10 +24,12 @@ const MyAccount = ({
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", 
+      padding: ".25rem 0 ",
     }),
   };
 
+const user = localStorage.getItem('loginDetails-email')
+console.log(getValues())
  
   return (
     <div className="p-4">
@@ -40,12 +42,14 @@ const MyAccount = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("admin", newValue.label)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.label);
+                  setValue("admin", newValue.label);
+                }}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                options={[{value:data.parent, label:data.parent}]}
-                defaultValue={[{value:data.parent, label:data.parent}]}
+                defaultValue={'admin'}
                 isDisabled = {true}
               />
             )}
@@ -54,17 +58,19 @@ const MyAccount = ({
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group Name<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Business Group Name<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
             required
-            label="Business Group Name"
-            name="userName"
-            defaultValue={data.userName}
+            label="businessUser"
+            name="businessUser"
+            defaultValue={getValues('businessUser')}
             placeholder=""
           />
-           <Error errorName={errors.businessUser} />
+          <Error errorName={errors.businessUser} />
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -96,7 +102,6 @@ const MyAccount = ({
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
@@ -112,7 +117,7 @@ const MyAccount = ({
             lable="Short Name"
             name="shortName"
             placeholder=""
-            // defaultValue={getValues('shortName')}
+            defaultValue={getValues('shortName')}
           />
           <Error errorName={errors.shortName} />
         </div>
@@ -127,7 +132,7 @@ const MyAccount = ({
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={getValues('userName')}
+            defaultValue={getValues("userName")}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -154,7 +159,7 @@ const MyAccount = ({
                 name="oldPassword"
                 label="Old Password"
                 placeholder=""
-                defaultValue={getValues('oldPassword')}
+                defaultValue={getValues("oldPassword")}
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -168,7 +173,7 @@ const MyAccount = ({
                 label="New Password"
                 name="newPassword"
                 placeholder=""
-                defaultValue={getValues('newPassword')}
+                defaultValue={getValues("newPassword")}
               />
               <Error errorName={errors.newPassword} />
             </div>
@@ -196,8 +201,7 @@ const MyAccount = ({
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
-            // defaultValue={getValues('passwordRecoveryEmail')}
-            defaultValue={data.passwordRecoveryEmail}
+            defaultValue={getValues('passwordRecoveryEmail')}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -209,8 +213,7 @@ const MyAccount = ({
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            // defaultValue={getValues('helpDeskEmail')}
-            defaultValue={data.helpDeskEmail}
+            defaultValue={getValues('helpDeskEmail')}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -223,8 +226,7 @@ const MyAccount = ({
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
-            // defaultValue={getValues('helpDeskTelephoneNumber')}
-            defaultValue={data.helpDeskTelephoneNumber}
+            defaultValue={getValues('helpDeskTelephoneNumber')}
 
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
@@ -237,8 +239,7 @@ const MyAccount = ({
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            // defaultValue={getValues('mobileNumber')}
-            defaultValue={data.mobileNumber}
+            defaultValue={getValues('mobileNumber')}
 
           />
           <Error errorName={errors.mobileNumber} />
@@ -252,8 +253,7 @@ const MyAccount = ({
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            // defaultValue={getValues('whatsappContactNumber')}
-            defaultValue={data.whatsappContactNumber}
+            defaultValue={getValues('whatsappContactNumber')}
 
           />
           <Error errorName={errors.whatsappContactNumber} />
@@ -268,8 +268,7 @@ const MyAccount = ({
             label="City"
             name="city"
             placeholder=""
-            // defaultValue={getValues('city')}
-            defaultValue={data.city}
+            defaultValue={getValues('city')}
 
           />
           <Error errorName={errors.city} />
@@ -284,8 +283,7 @@ const MyAccount = ({
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            // defaultValue={getValues('zipCode')}
-            defaultValue={data.zipCode}
+            defaultValue={getValues('zipCode')}
 
           />
           <Error errorName={errors.zipCode} />
@@ -300,8 +298,7 @@ const MyAccount = ({
             label="Street1"
             name="street1"
             placeholder=""
-            // defaultValue={getValues('street1')}
-            defaultValue={data.street1}
+            defaultValue={getValues('street1')}
 
           />
           <Error errorName={errors.street1} />
@@ -316,8 +313,7 @@ const MyAccount = ({
             label="Street2"
             name="street2"
             placeholder=""
-            // defaultValue={getValues('street2')}
-            defaultValue={data.street2}
+            defaultValue={getValues('street2')}
 
           />
         </div>
@@ -329,8 +325,7 @@ const MyAccount = ({
             label="Contact Person"
             name="contactPerson"
             placeholder=""
-            defaultValue={getValues('contactPerson')}
-
+            defaultValue={getValues("contactPerson")}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -343,8 +338,7 @@ const MyAccount = ({
             label="Fax Number"
             name="faxNumber"
             placeholder=""
-            defaultValue={getValues('faxNumber')}
-
+            defaultValue={getValues("faxNumber")}
           />
         </div>
       </div>
