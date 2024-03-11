@@ -43,8 +43,6 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
           <td>
             <span>{item.technicianNumber}</span>
           </td>
-          
-          
           <td>
             <span className="d-flex justify-content-center">
               <span

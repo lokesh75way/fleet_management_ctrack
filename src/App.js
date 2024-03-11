@@ -73,7 +73,7 @@ function App(props) {
     if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
     if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
     if(!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
-      
+    
 
   },[role])
   const dispatch = useDispatch();
