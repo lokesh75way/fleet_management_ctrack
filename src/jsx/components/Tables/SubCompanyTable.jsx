@@ -5,10 +5,14 @@ import DeleteModal from '../Modal/DeleteModal'
 import { Link } from 'react-router-dom'
 import { IMAGES,SVGICON} from '../../constant/theme'; 
 
-const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
+const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawerOpen}) => {
+  var filterData = tableData;
+  if(tempValue){
+    filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
+  }
     return (
       <>
-        {tableData.map((item, index) => (
+        {filterData.map((item, index) => (
           <tr key={index}>
             <td>
               <span>{item.id}</span>

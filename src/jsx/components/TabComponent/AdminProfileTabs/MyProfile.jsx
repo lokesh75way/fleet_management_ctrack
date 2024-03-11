@@ -261,7 +261,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           />
         </div>
       </div>
-      {/* <div
+      <div
         style={{
           width: "100%",
           display: "flex",
@@ -273,7 +273,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           {" "}
           Next
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 };

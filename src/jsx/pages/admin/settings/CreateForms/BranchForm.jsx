@@ -31,6 +31,7 @@ const BranchForm = () => {
   });
 
   const onSubmit = (data) => {
+    console.log("hello world")
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
