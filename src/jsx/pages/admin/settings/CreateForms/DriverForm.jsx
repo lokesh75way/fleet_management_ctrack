@@ -37,7 +37,8 @@ const DriverForm = () => {
     return timestamp + "-" + randomStr; // Combine timestamp and random string
   }
 
-  const onSubmit = (data) => {
+  const onSubmitHanlder = (data) => {
+    console.log("Hello world")
     if (activeIndex === totalTabs - 1) {
       try {
         const existingData = JSON.parse(localStorage.getItem("driverData"));
@@ -63,7 +64,7 @@ const DriverForm = () => {
       />
       <div className="m-2 p-2">
         <FormProvider>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitHanlder)}>
             <div className="default-tab">
               <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
                 <Nav as="ul" className="nav-tabs">
@@ -97,7 +98,7 @@ const DriverForm = () => {
                           getValues={getValues}
                           errors={errors}
                           handleSubmit={handleSubmit}
-                          onSubmit={onSubmit}
+                          onSubmit={onSubmitHanlder}
                         />
                       </Tab.Pane>
                     );

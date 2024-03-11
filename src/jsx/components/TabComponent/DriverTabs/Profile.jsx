@@ -63,14 +63,15 @@ const Profile = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
-                  setValue("branch", newValue.value);
+                  console.log(newValue)
+                  setTempValue(newValue?.value);
+                  setValue("branch", newValue?.value);
                 }}
                 options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={"company1@example.com"}
+                defaultInputValue={filteredUserData[0]?.parentBranch}
               />
             )}
           />
@@ -181,7 +182,7 @@ const Profile = ({
             label="City"
             name="city"
             placeholder=""
-            defaultValue={filteredUserData[0].city}
+            defaultValue={filteredUserData[0]?.city || ""}
           />
           <Error errorName={errors.city} />
         </div>
@@ -195,7 +196,7 @@ const Profile = ({
             label="zipCode"
             name="zipCode"
             placeholder=""
-            defaultValue={filteredUserData[0].zipCode}
+            defaultValue={filteredUserData[0]?.zipCode}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -209,7 +210,7 @@ const Profile = ({
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={filteredUserData[0].street1 || " "}
+            defaultValue={filteredUserData[0]?.street1 || " "}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -223,7 +224,7 @@ const Profile = ({
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={filteredUserData[0].street2 || " "}
+            defaultValue={filteredUserData[0]?.street2 || " "}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -236,7 +237,7 @@ const Profile = ({
             label="Contact Number1"
             name="contactNumber1"
             placeholder=""
-            defaultValue={filteredUserData[0].contactNumber1 || " "}
+            defaultValue={filteredUserData[0]?.contactNumber1 || " "}
           />
           <Error errorName={errors.contactNumber1} />
         </div>
@@ -250,7 +251,7 @@ const Profile = ({
             label="Contact Number2"
             name="contactNumber2"
             placeholder=""
-            defaultValue={filteredUserData[0].contactNumber2 || " "}
+            defaultValue={filteredUserData[0]?.contactNumber2 || " "}
           />
           <Error errorName={errors.contactNumber2} />
         </div>
@@ -265,7 +266,7 @@ const Profile = ({
       >
         <Button
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          onClick={(handleSubmit(onSubmit))}
           style={{ width: "10%" }}
         >
           {" "}
