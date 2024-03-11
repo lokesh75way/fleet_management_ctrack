@@ -51,7 +51,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             label="Age"
             name="age"
             placeholder=""
-            defaultValue={filteredUserData[0].age}
+            defaultValue={filteredUserData[0]?.age || " "}
           />
           <Error errorName={errors.age} />
         </div>
@@ -91,7 +91,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             label="Driving Experience Since"
             name="drivingExperienceSince"
             placeholder=""
-            defaultValue={filteredUserData[0].drivingExperienceSince}
+            defaultValue={filteredUserData[0]?.drivingExperienceSince || ""}
           />
           <Error errorName={errors.drivingExperienceSince} />
         </div>
