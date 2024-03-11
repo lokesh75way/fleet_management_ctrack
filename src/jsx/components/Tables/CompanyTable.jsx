@@ -7,11 +7,12 @@ import { IMAGES,SVGICON} from '../../constant/theme';
 import useStorage from '../../../hooks/useStorage';
 
 const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
-    const {getData} = useStorage()
-    const filteredItems = getData(tableData);
+    const {getBranch} = useStorage()
+    // const filteredItems = getData(tableData);
+
     return (
         <>
-            {filteredItems.map((item, index) => (
+            {tableData.map((item, index) => (
                 <tr key={index}>
                     <td><span>{item.id}</span></td>
                     <td>
@@ -22,7 +23,7 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                             </div>
                         </div>
                     </td>
-                    <td><span className="text-primary">{item.company}</span></td>
+                    <td><span className="text-primary">{item.userName}</span></td>
                     <td>
                         <span>{item.mobileNumber}</span>
                     </td>
@@ -30,14 +31,17 @@ const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
                         <span>{item.usergroup || item.shortName}</span>
                     </td> */}
                     <td>
-                        <span>{item.location || item.city}</span>
+                        <span>{item.country}</span>
+                    </td>
+                    <td>
+                        <span>{item.email}</span>
                     </td>
                     
-                    <td>
+                    {/* <td>
                         <span style={{width:"5rem"}} className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status || "Inactive"}</span>
-                    </td>
+                    </td> */}
                     <td>
-                        <Link to={`/branch/${item.id}`} className='text-primary badge light border-0 badge-count'>{item.CompanyGroups || "5"}</Link>
+                        <Link to={`/branch/${item.id}`} className='text-primary badge light border-0 badge-count'>{getBranch(item.userName)}</Link>
                     </td>
                     <td>
                         <span>{item.zipCode}</span>
