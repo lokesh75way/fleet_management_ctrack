@@ -1,17 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from '../../../../users.json'
-import {parentOptions} from '../VehicleTabs/Options'
+import DummyData from "../../../../users.json";
+// import {parentOptions} from '../VehicleTabs/Options'
 import { useParams } from "react-router-dom";
-const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+const MyAccount = ({
+  setValue,
+  getValues,
+  register,
+  onSubmit,
+  handleSubmit,
+  errors,
+  control,
+}) => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const [tempValue,setTempValue] = useState();
+  const [tempValue, setTempValue] = useState();
   const [isCheckCP, setIsCheckCP] = useState(false);
 
   const customStyles = {
@@ -21,27 +29,58 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     }),
   };
 
-  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
+  const [businessUserOptions, setBusinessUserOptions] = useState([]);
+  const [companyOptions, setCompanyOptions] = useState([]);
+  const [parentOptions, setParentOptions] = useState([]);
 
-  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
+  const [businessUserValue, setBusinessUserValue] = useState([]);
+  const [companyValue, setCompanyValue] = useState([]);
+  const [parentValue, setParentValue] = useState();
 
+  useEffect(() => {
+    const tempbusinessUserOptions = DummyData.filter(
+      (item) => item.role === "businessgroup"
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
 
-    const { id } = useParams();
+    const tempcompanyOptions = DummyData.filter(
+      (item) => item.role === "company"
+    )
+      .filter((cp) => cp.parent === businessUserValue)
+      .map((item) => ({
+        label: item.userName,
+        value: item.id,
+      }));
 
+    const tempparentOptions = DummyData.filter((item) => item.role === "branch")
+      .filter((br) => br.parentCompany === companyValue)
+      .map((item) => ({
+        label: item.userName,
+        value: item.id,
+      }));
 
-    const companyData = JSON.parse(localStorage.getItem('branchData'))
-  
-    const newData = companyData.filter(data => data.id === id);
-  
-    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
+      tempparentOptions.push({label:'None',value:0})
 
-console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
+    setBusinessUserOptions(tempbusinessUserOptions);
+    setCompanyOptions(tempcompanyOptions);
+    setParentOptions(tempparentOptions);
+  }, [businessUserValue, companyValue, parentValue]);
+
+  const { id } = useParams();
+
+  const User = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const companyData = User.filter((item) => item.role === "branch");
+
+  const newData = companyData.filter((data) => data.id === id);
+
+  const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
+
+  console.log(
+    filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
+  );
 
   return (
     <div className="p-4">
@@ -54,7 +93,10 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
+                onChange={(newValue) => {
+                  setBusinessUserValue(newValue.label);
+                  setValue("parentBusinessGroup", newValue.label);
+                }}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -66,14 +108,19 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Company<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Company<span className="text-danger">*</span>
+          </label>
           <Controller
             name="company"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.label)}}
+                onChange={(newValue) => {
+                  setCompanyValue(newValue.label);
+                  setValue("parentCompany", newValue.label);
+                }}
                 options={companyOptions}
                 ref={ref}
                 name={name}
@@ -82,7 +129,7 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
               />
             )}
           />
-          { !getValues('company') && <Error errorName={errors.company} />}
+          {!getValues("company") && <Error errorName={errors.company} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Parent Branch</label>
@@ -92,7 +139,10 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("parent", newValue.value)}}
+                onChange={(newValue) => {
+                  setParentValue(newValue.value);
+                  setValue("parentBranch", newValue.value);
+                }}
                 options={parentOptions}
                 ref={ref}
                 name={name}
@@ -101,11 +151,13 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
               />
             )}
           />
-          { !getValues('parent') && <Error errorName={errors.parent} />}
+          {!getValues("parent") && <Error errorName={errors.parent} />}
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Country<span className="text-danger">*</span>
+          </label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -114,12 +166,13 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-            
           />
-         { !getValues('country') && <Error errorName={errors.country} />}
+          {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">State<span className="text-danger">*</span></label>
+          <label className="form-label">
+            State<span className="text-danger">*</span>
+          </label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -132,28 +185,12 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
               placeHolder="Select State"
             />
           </div>
-          {!getValues('state') && <Error errorName={errors.state} />}
+          {!getValues("state") && <Error errorName={errors.state} />}
         </div>
+
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-          // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].shortName : ''}
-
-          />
-           <Error errorName={errors.shortName} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -162,8 +199,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
-            
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
+            }
           />
           <Error errorName={errors.userName} />
         </div>
@@ -222,7 +260,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           </>
         )}
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Password Recovery Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -233,7 +273,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -244,7 +286,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Telephone Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -256,19 +300,25 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Mobile Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
+            }
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Whatsapp Contact Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -290,7 +340,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             label="City"
             name="city"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].city : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].city : ""
+            }
           />
           <Error errorName={errors.city} />
         </div>
@@ -304,7 +356,9 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
+            }
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -364,7 +418,11 @@ console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           Submit
         </Button>

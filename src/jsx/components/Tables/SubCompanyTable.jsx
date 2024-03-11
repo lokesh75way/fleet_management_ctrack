@@ -7,44 +7,62 @@ import { IMAGES,SVGICON} from '../../constant/theme';
 
 const SubCompanyTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
     return (
-        <>
-            {tableData.map((item, index) => (
-                <tr key={index}>
-                    <td><span>{item.id}</span></td>
-                    <td>
-                        <div className="products">
-                            <img src={item.image || IMAGES.contact1} className="avatar avatar-md" alt="" />
-                            <div>
-                                <h6>{item.businessUser}</h6>
-                            </div>
-                        </div>
-                    </td>
-                    {/* <td><span>{item.application}</span></td> */}
-                    <td><span className="text-primary">{item.company}</span></td>
-                    <td>
-                        <span>{item.shortName}</span>
-                    </td>
-                    <td>
-                        <span>{item.mobileNumber}</span>
-                    </td>
-                    <td>
-                        <span>{item.city}</span>
-                    </td>
-                 
-                    <td>
-                    <span>{item.zipCode}</span>
-                    </td>
-                    <td>
-                        <span className='d-flex justify-content-center'>
-                            <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
-                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
+      <>
+        {tableData.map((item, index) => (
+          <tr key={index}>
+            <td>
+              <span>{item.id}</span>
+            </td>
+            <td>
+              <div className="products">
+                <img
+                  src={item.image || IMAGES.contact1}
+                  className="avatar avatar-md"
+                  alt=""
+                />
+                <div>
+                  <h6>{item.parentBusinessGroup}</h6>
+                </div>
+              </div>
+            </td>
+            {/* <td><span>{item.application}</span></td> */}
+            <td>
+              <span className="text-primary">{item.parentCompany}</span>
+            </td>
+            <td>
+              <span>{item.userName}</span>
+            </td>
+            <td>
+              <span>{item.mobileNumber}</span>
+            </td>
+            <td>
+              <span>{item.city}</span>
+            </td>
 
-                        </span>
-                    </td>
-                </tr>
-            ))}
-        </>
-    )
+            <td>
+              <span>{item.zipCode}</span>
+            </td>
+            <td>
+              <span className="d-flex justify-content-center">
+                <span
+                  className="cursor-pointer"
+                  onClick={() => editDrawerOpen(item.id)}
+                >
+                  <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+                </span>
+                <DeleteModal
+                  className="cursor-pointer "
+                  onConfirmDelete={onConfirmDelete}
+                  id={item.id}
+                >
+                  <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
+                </DeleteModal>
+              </span>
+            </td>
+          </tr>
+        ))}
+      </>
+    );
 }
 
 export default SubCompanyTable

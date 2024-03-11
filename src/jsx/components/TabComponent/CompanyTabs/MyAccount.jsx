@@ -34,16 +34,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     value: item.id,
   }));
 
-  const [disabledState, setDisabledState] = useState();
 
-  const role = localStorage.getItem('role');
-
-  
-  useEffect(()=>{
-    if(role == 'admin') setDisabledState(true);
-    else setDisabledState(false);
-
-  },[])
 
   const { id } = useParams();
 
@@ -69,7 +60,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="parent"
             placeholder=""
             value={checkUser()}
-            isDisabled={disabledState}
+            disabled
           />
           :
           <Controller
