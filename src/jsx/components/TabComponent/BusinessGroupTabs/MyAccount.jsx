@@ -7,6 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 const MyAccount = ({
+  data,
   setValue,
   getValues,
   register,
@@ -27,16 +28,16 @@ const MyAccount = ({
     }),
   };
 
-  const user = localStorage.getItem("loginDetails-email");
-  console.log(getValues());
-
+const user = localStorage.getItem('loginDetails-email')
+console.log(getValues())
+ 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Admin</label>
           <Controller
-            name="businessUser"
+            name="parent"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
@@ -48,8 +49,8 @@ const MyAccount = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={"admin"}
-                isDisabled={true}
+                defaultValue={'admin'}
+                isDisabled = {true}
               />
             )}
           />
@@ -65,7 +66,7 @@ const MyAccount = ({
             required
             label="businessUser"
             name="businessUser"
-            defaultValue={getValues("businessUser")}
+            defaultValue={getValues('businessUser')}
             placeholder=""
           />
           <Error errorName={errors.businessUser} />
@@ -106,7 +107,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Short Name <span className="text-danger">*</span>
+            Short Name
           </label>
           <CustomInput
             type="text"
@@ -115,7 +116,7 @@ const MyAccount = ({
             lable="Short Name"
             name="shortName"
             placeholder=""
-            defaultValue={getValues("shortName")}
+            defaultValue={getValues('shortName')}
           />
           <Error errorName={errors.shortName} />
         </div>
@@ -192,31 +193,31 @@ const MyAccount = ({
         )}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email</label>
+          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
-            defaultValue={getValues("passwordRecoveryEmail")}
+            defaultValue={getValues('passwordRecoveryEmail')}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email</label>
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={getValues("helpDeskEmail")}
+            defaultValue={getValues('helpDeskEmail')}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number</label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -224,24 +225,26 @@ const MyAccount = ({
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
-            defaultValue={getValues("helpDeskTelephoneNumber")}
+            defaultValue={getValues('helpDeskTelephoneNumber')}
+
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number</label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={getValues("mobileNumber")}
+            defaultValue={getValues('mobileNumber')}
+
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -249,7 +252,8 @@ const MyAccount = ({
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            defaultValue={getValues("whatsappContactNumber")}
+            defaultValue={getValues('whatsappContactNumber')}
+
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -263,7 +267,8 @@ const MyAccount = ({
             label="City"
             name="city"
             placeholder=""
-            defaultValue={getValues("city")}
+            defaultValue={getValues('city')}
+
           />
           <Error errorName={errors.city} />
         </div>
@@ -277,7 +282,8 @@ const MyAccount = ({
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={getValues("zipCode")}
+            defaultValue={getValues('zipCode')}
+
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -291,7 +297,8 @@ const MyAccount = ({
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={getValues("street1")}
+            defaultValue={getValues('street1')}
+
           />
           <Error errorName={errors.street1} />
         </div>
@@ -305,7 +312,8 @@ const MyAccount = ({
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={getValues("street2")}
+            defaultValue={getValues('street2')}
+
           />
         </div>
         <div className="col-xl-6 mb-3 ">

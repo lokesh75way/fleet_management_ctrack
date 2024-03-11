@@ -8,23 +8,13 @@ import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import DriverTable from "../components/Tables/DriverTable";
 
-const headers = [
-  { label: "Employee ID", key: "emplid" },
-  { label: "Employee Name", key: "title" },
-  { label: "Department", key: "department" },
-  { label: "Email Address", key: "email" },
-  { label: "Contact Number", key: "contact" },
-  { label: "Gender", key: "gender" },
-  { label: "Location", key: "location" },
-  { label: "Status", key: "status" },
-];
-
 const Driver = (ref) => {
   const navigate = useNavigate();
-  const driverDataFromLocalStorage = localStorage.getItem('driverData');
-  
+  const allData = JSON.parse(localStorage.getItem('userJsonData'));
+  const driverDataFromLocalStorage = allData.filter((item)=> item.Designation === "Driver")
+  // const driverData =   
   const DriverDataMemoized = useMemo(() => {
-      return  driverDataFromLocalStorage ? JSON.parse(driverDataFromLocalStorage) : [];;
+      return  driverDataFromLocalStorage ? driverDataFromLocalStorage: [];
   }, [driverDataFromLocalStorage]);
 
   const [tableData, setTableData] = useState([]);

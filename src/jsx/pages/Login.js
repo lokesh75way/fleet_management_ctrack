@@ -44,7 +44,7 @@ function Login(props) {
 		const loginDetails = users.find(user => user.email === email && user.password === password);
 		if (loginDetails) {
 			localStorage.setItem('loginDetails-email', loginDetails.email);
-			localStorage.setItem('loginDetails-name', loginDetails.name);
+			localStorage.setItem('loginDetails-name', loginDetails.userName);
 			localStorage.setItem('role', loginDetails.role);
 			dispatch(loadingToggleAction(true));
 			dispatch(loginAction('demo@example.com', '123456', navigate));

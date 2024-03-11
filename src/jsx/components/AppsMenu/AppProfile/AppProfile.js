@@ -256,7 +256,7 @@ import { adminProfileAccountSchema } from '../../../../yup' ;
 import useStorage from '../../../../hooks/useStorage'
 
 const AppProfile = () => {
-  const {checkRole} = useStorage()
+  const {checkUserName} = useStorage()
   const AdminData = {
     admin:'Admin1',
     country:'India',
@@ -278,24 +278,19 @@ const AppProfile = () => {
   const component = [MyAccount];
   const totalTabs = tabHeading.length;
   const [isEdit, setIsEdit] = useState(false)
-  const role = checkRole();
-  var d,e,f,g;
-  if(role === "company"){
-    d = 'companyData'
-    e = JSON.parse(localStorage.getItem(d))
-    f = localStorage.getItem('loginDetails-email')
-    g = e.find(comp => comp.company === f);
 
-  }
-
-  const editData = g;
+  const userName = checkUserName();
+  const allData = JSON.parse(localStorage.getItem('userJsonData'))
+  const editData = allData.find((data)=> data.userName === userName)
+  console.log(editData)
+  
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(adminProfileAccountSchema)
   })
 
   const onSubmit = (data)=>{
       console.log(data)
-      localStorage.setItem('adminData',data)
+      // localStorage.setItem('adminData',data)
   }
   
   return (
@@ -306,7 +301,7 @@ const AppProfile = () => {
         parentTitle={"Manage Profile"}
       />
       <div className="m-2 p-2">
-        <Button onClick={()=>setIsEdit(!isEdit)} style={{marginLeft:"auto", display:"flex"}}>Edit</Button>
+        {/* <Button onClick={()=>setIsEdit(!isEdit)} style={{marginLeft:"auto", display:"flex"}}>Edit</Button> */}
         <FormProvider>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="default-tab">
