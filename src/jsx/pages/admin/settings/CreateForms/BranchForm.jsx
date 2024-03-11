@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -15,8 +15,8 @@ const BranchForm = () => {
   const tabHeading = ["New Branch", "Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  const { id } = useParams();
   const {
     register,
     formState: { errors },
@@ -30,29 +30,36 @@ const BranchForm = () => {
     ),
   });
 
-  
-
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
+        if (id) {
+          const val = JSON.parse(localStorage.getItem("userJsonData"));
 
-        data = {...data,role:'branch'};
-        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-        data.id = existingData.length + 1;
-        existingData.push(data);
-        localStorage.setItem("userJsonData", JSON.stringify(existingData));
-        // notifySuccess("Branch Added Successfully !!");
-        notifySuccess("New Branch Created!");
-        console.log('branch data',existingData);
-        navigate("/branch");
-        return;
+          const indexToUpdate = val.findIndex((item) => item.id == id);
+          if (indexToUpdate !== -1) {
+            val[indexToUpdate] = { ...data, id };
+            localStorage.setItem("userJsonData", JSON.stringify(val));
+            notifySuccess("Branch Updated!");
+            navigate("/branch");
+          }
+          return;
+        } else {
+          data = { ...data, role: "branch" };
+          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+          data.id = existingData.length + 1;
+          existingData.push(data);
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          // notifySuccess("Branch Added Successfully !!");
+          notifySuccess("New Branch Created!");
+          navigate("/branch");
+          return;
+        }
       } catch (error) {
         notifyError("Some error occured !!");
       }
-      
     }
     notifySuccess("Saved!");
-    console.log('myaccount data',data);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (

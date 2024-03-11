@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
@@ -9,15 +14,15 @@ import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/Addit
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { driverProfileSchema, driverInfoSchema } from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const UpdateDriverForm = () => {
-  
-
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Profile", "Additional Info", "Document"];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
-
+  const { id } = useParams();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -33,10 +38,34 @@ const UpdateDriverForm = () => {
 
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
-      console.log(data);
-      return;
+      try {
+        if (id) {
+          const val = JSON.parse(localStorage.getItem("userJsonData"));
+
+          const indexToUpdate = val.findIndex((item) => item.id == id);
+          if (indexToUpdate !== -1) {
+            val[indexToUpdate] = { ...data, id };
+            localStorage.setItem("userJsonData", JSON.stringify(val));
+            notifySuccess("Driver Updated!");
+            navigate("/driver");
+          }
+          return;
+        } else {
+          data = { ...data, designation: "driver", role: "user" };
+          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+          data.id = existingData.length + 1;
+          existingData.push(data);
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          // notifySuccess("Branch Added Successfully !!");
+          notifySuccess("New Driver Created!");
+          navigate("/driver");
+          return;
+        }
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
     }
-    console.log(data);
+    console.log("data from drivers", data);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
@@ -83,7 +112,6 @@ const UpdateDriverForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
-                        
                         />
                       </Tab.Pane>
                     );

@@ -266,7 +266,7 @@ const Profile = ({
       >
         <Button
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          onClick={(handleSubmit(onSubmit))}
           style={{ width: "10%" }}
         >
           {" "}

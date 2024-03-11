@@ -14,8 +14,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
-
+const UserSetting = ({ setValue, handleSubmit, onSubmit, errors, control }) => {
   const customStyles = {
     control: (base) => ({
       ...base,
