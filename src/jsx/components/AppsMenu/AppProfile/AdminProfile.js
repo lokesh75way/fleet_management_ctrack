@@ -25,6 +25,7 @@ const AdminProfile = () => {
 
   const onSubmit = (data)=>{
       // localStorage.setItem('adminData',data)
+      console.log("ddata on editing profile, ", data)
   }
 
   return (
@@ -35,7 +36,7 @@ const AdminProfile = () => {
         parentTitle={"Manage Profile"}
       />
       <div className="m-2 p-2">
-        {/* <Button onClick={()=>setIsEdit(!isEdit)} style={{marginLeft:"auto", display:"flex"}}>Edit</Button> */}
+        <Button onClick={()=>setIsEdit(!isEdit)} style={{marginLeft:"auto", display:"flex"}}>Edit</Button>
         <FormProvider>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="default-tab">

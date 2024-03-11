@@ -2,15 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import CompanyTable from "../../components/Tables/CompanyTable";
+import { Controller, useForm } from "react-hook-form";
+import Select from 'react-select'
 
 const Company = () => {
   const navigate = useNavigate();
-  const allData = JSON.parse(localStorage.getItem('userJsonData'))
-  const CompanyData = allData.filter((item)=> item.role === 'company')
-  console.log(CompanyData)
+  const allData = JSON.parse(localStorage.getItem("userJsonData"));
+  const CompanyData = allData.filter((item) => item.role === "company");
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
+  const[tempValue, setTempValue] = useState(null)
+  const{control,setValue, getValue} = useForm()
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: ".25rem 0 ",
+      marginRight:"1rem",
+      marginLeft:"1rem",
+      width:"15rem",
+      menuPortal: provided => ({ ...provided, zIndex: 9999 }),
+    menu: provided => ({ ...provided, zIndex: 9999 })
+    }),
+  };
 
   const [tableData, setTableData] = useState(CompanyData);
   const [editData, setEditData] = useState({
@@ -53,9 +67,14 @@ const Company = () => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
-     // Remove item from local storage
-     const updatedLocalStorageData = CompanyData.filter((item) => item.id !== id);
-     localStorage.setItem('companyData', JSON.stringify(updatedLocalStorageData));
+    // Remove item from local storage
+    const updatedLocalStorageData = CompanyData.filter(
+      (item) => item.id !== id
+    );
+    localStorage.setItem(
+      "companyData",
+      JSON.stringify(updatedLocalStorageData)
+    );
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
@@ -73,6 +92,11 @@ const Company = () => {
   //     })
   //     setTableData(updateTable)
   // }
+  const d = JSON.parse(localStorage.getItem('userJsonData'))
+  const businessGroupOptions = d.filter((item) => item.role === "businessgroup").map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
   const company = useRef();
   const edit = useRef();
   return (
@@ -90,8 +114,28 @@ const Company = () => {
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Companies</h4>
-                    <div>
-                      <Link
+                    <div className="d-flex align-items-center">
+                    <Controller
+                        name="parent"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, value, name, ref } }) => (
+                          <Select
+                            onChange={(newValue) => {
+                                setTempValue(newValue.label)
+                              setValue("companyOptions", newValue.label);
+                            }}
+                            ref={ref}
+                            menuPortalTarget={document.body}
+                            menuPosition={'fixed'} 
+                            name={name}
+                            styles={customStyles}
+                            options={businessGroupOptions}
+                            defaultValue={[{value:"All", label:"All"}]}
+                          />
+                        )}
+                      />
+                         <Link
                         to={"/company/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
@@ -125,6 +169,7 @@ const Company = () => {
                       <tbody>
                         <CompanyTable
                           tableData={tableData}
+                          tempValue={tempValue}
                           // getData={getData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
