@@ -7,7 +7,7 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BranchTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/BranchTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
+import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BranchForm = () => {
@@ -26,7 +26,7 @@ const BranchForm = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 0 ? companyAccountSchema : companySettingSchema
+      activeIndex === 0 ? branchAccountSchema : companySettingSchema
     ),
   });
 
@@ -35,11 +35,15 @@ const BranchForm = () => {
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingData = JSON.parse(localStorage.getItem("branchData"));
+
+        data = {...data,role:'branch'};
+        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
         data.id = existingData.length + 1;
         existingData.push(data);
-        localStorage.setItem("branchData", JSON.stringify(existingData));
+        localStorage.setItem("userJsonData", JSON.stringify(existingData));
         // notifySuccess("Branch Added Successfully !!");
+        notifySuccess("New Branch Created!");
+        console.log('branch data',existingData);
         navigate("/branch");
         return;
       } catch (error) {
@@ -49,7 +53,7 @@ const BranchForm = () => {
     }
     notifySuccess("Saved!");
     console.log('myaccount data',data);
-    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

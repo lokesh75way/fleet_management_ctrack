@@ -30,10 +30,10 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
 
   const onSubmit = (data) => {
     try {
-      const existingData = JSON.parse(localStorage.getItem("userData"));
+      const existingData = JSON.parse(localStorage.getItem("userJsonData"));
       data.id = existingData.length + 1;
       existingData.push(data);
-      localStorage.setItem("userData", JSON.stringify(existingData));
+      localStorage.setItem("userJsonData", JSON.stringify(existingData));
       notifySuccess("User created successfully !!");
       navigate('/subUser')
     } catch (error) {

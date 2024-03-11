@@ -78,7 +78,8 @@ const TechnicianTask = (ref) => {
         ))
 
         // setEditTableData(item);
-        technicianTask.current.showModal();
+        
+        
     }
     // const handleSubmit=(e)=>{
     //     e.preventDefault();

@@ -1,22 +1,12 @@
 
 import React, {useState, useRef, useEffect} from 'react';
-import {Link, Route, json, useParams,useNavigate} from 'react-router-dom';
-import { CSVLink } from 'react-csv';
-import { IMAGES } from '../../constant/theme';
+import {Link, useParams,useNavigate} from 'react-router-dom';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import SubCompanyTable from '../../components/Tables/SubCompanyTable'
-import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
 // import { SubCompanyData } from '../../components/Tables/Tables';
-const headers = [
-    { label: "Short Name", key: "shortname" },
-    { label: "Reseller", key: "reseller" },
-    { label: "Application", key: "application" },
-    { label: "User Name", key: "username" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-    { label: "User Group", key: "usergroup" }
-]
+
+
+
 const Branch = () => {
     const navigate = useNavigate();
     const {id} = useParams();
@@ -25,9 +15,12 @@ const Branch = () => {
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
     
-    const loggedinUser = localStorage.getItem('loginDetails-email');
-    const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
+    const loggedinUser = localStorage.getItem("loginDetails-name");
+    // const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
     const role = localStorage.getItem('role');
+
+    const userData = JSON.parse(localStorage.getItem("userJsonData"));
+    const SubCompanyData = userData.filter(item => item.role === 'branch');
 
     
     
@@ -105,16 +98,20 @@ const Branch = () => {
         const subCompany = useRef();
         useEffect(() => {
             
-            if(role == 'admin') return;
-            else if(role == 'businessgroup'){
-                const filteredData = SubCompanyData.filter(item => item.businessUser === loggedinUser);
+            if(role === 'admin') return;
+            else if(role === 'businessgroup'){
+                const filteredData = SubCompanyData.filter(
+                  (item) => item.parentBusinessGroup === loggedinUser
+                );
                 setTableData(filteredData);
             }
-            else if(role == 'company'){
-                const filteredData = SubCompanyData.filter(item=>item.company === loggedinUser);
+            else if(role === 'company'){
+                const filteredData = SubCompanyData.filter(
+                  (item) => item.parentCompany === loggedinUser
+                );
                 setTableData(filteredData);
             }
-        }, [loggedinUser]);
+        }, [loggedinUser, role, SubCompanyData]);
         return (
             <>
             <MainPagetitle mainTitle="Branch" pageTitle={'Branch'} parentTitle={'Home'} />

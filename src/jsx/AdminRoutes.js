@@ -110,6 +110,7 @@ const AdminRoutes = () => {
     { url: "driver/create", component: <DriverForm /> },
     { url: "driver/edit/:id", component: <DriverForm /> },
     { url: "technician/create", component: <TechnicianForm /> },
+    { url: "technician/edit/:id", component: <TechnicianForm /> },
     { url: "subUser/create", component: <SubUserForm /> },
     { url: "subUser", component: <SubUser /> },
     { url: "subUser/edit/:id", component: <SubUserForm /> },

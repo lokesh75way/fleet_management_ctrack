@@ -34,8 +34,8 @@ console.log(getValues())
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Admin</label>
+      <div className="col-xl-6 mb-3">
+          <label className="form-label">Admin<span className="text-danger">*</span></label>
           <Controller
             name="parent"
             control={control}
@@ -54,6 +54,7 @@ console.log(getValues())
               />
             )}
           />
+          <Error errorName={errors.admin} />
         </div>
 
         <div className="col-xl-6 mb-3">

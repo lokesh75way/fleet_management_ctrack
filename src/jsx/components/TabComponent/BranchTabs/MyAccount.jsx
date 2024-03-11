@@ -5,8 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from "../../../../users.json";
-import { parentOptions } from "../VehicleTabs/Options";
+import DummyData from '../../../../users.json'
+import {parentOptions} from '../VehicleTabs/Options'
 import { useParams } from "react-router-dom";
 const MyAccount = ({
   setValue,
@@ -29,31 +29,27 @@ const MyAccount = ({
     }),
   };
 
-  const businessUserOptions = DummyData.filter(
-    (item) => item.role === "businessgroup"
-  ).map((item) => ({
+  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
     label: item.email,
     value: item.id,
   }));
 
-  const companyOptions = DummyData.filter(
-    (item) => item.role === "company"
-  ).map((item) => ({
+  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
     label: item.email,
     value: item.id,
   }));
+
 
   const { id } = useParams();
 
-  const companyData = JSON.parse(localStorage.getItem("userJsonData"));
 
-  const newData = companyData.filter((data) => data.id === id);
+    const companyData = JSON.parse(localStorage.getItem('branchData'))
+  
+    const newData = companyData.filter(data => data.id === id);
+  
+    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
 
-  const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
-
-  console.log(
-    filteredCompanyData[0]
-  );
+console.log(filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : '');
 
   return (
     <div className="p-4">
@@ -66,10 +62,7 @@ const MyAccount = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.label);
-                  setValue("businessUser", newValue.label);
-                }}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -90,10 +83,7 @@ const MyAccount = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.value);
-                  setValue("company", newValue.label);
-                }}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("company", newValue.label)}}
                 options={companyOptions}
                 ref={ref}
                 name={name}
@@ -112,10 +102,7 @@ const MyAccount = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.value);
-                  setValue("parent", newValue.value);
-                }}
+                onChange={(newValue) => {setTempValue(newValue.value); setValue("parent", newValue.value)}}
                 options={parentOptions}
                 ref={ref}
                 name={name}
@@ -160,23 +147,23 @@ const MyAccount = ({
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
+
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch Name <span className="text-danger">*</span>
           </label>
           <CustomInput
-            // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
+          // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
             type="text"
             required
             register={register}
             lable="Short Name"
             name="shortName"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].shortName : ""
-            }
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].shortName : ''}
+
           />
-          <Error errorName={errors.shortName} />
+           <Error errorName={errors.shortName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
