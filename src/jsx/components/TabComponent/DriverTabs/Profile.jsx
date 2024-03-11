@@ -6,8 +6,10 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import { branchOptions, employeeDesignationOptions,tagViaOptions, defaultObjectNumberOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors}) => {
+const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors, }) => {
   const { control } = useForm();
   const[tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
@@ -18,11 +20,24 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
       padding: ".25rem 0 ", 
     }),
   };
+
+  const { id } = useParams();
+  const [defaultValues, setDefaultValues] = useState();
+
+  const driver = JSON.parse(localStorage.getItem("driverData"));
+  useEffect(() => {
+    if (driver.length > 0) {
+      const thisDriver = driver.find((d) => d.id === id);
+      setDefaultValues(thisDriver);
+    }
+  }, [id],driver, defaultValues);
+console.log("Default valuees are,",defaultValues)
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
+           
             Branch <span className="text-danger">*</span>
           </label>
           <Controller
@@ -36,7 +51,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={branchOptions[0]}
+                defaultValue= {defaultValues?.branch}
               />
             )}
           />
@@ -71,7 +86,8 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
             register={register}
             label="First Name"
             name="firstName"
-            placeholder=""
+            placeholder="first name"
+            defaultValue={defaultValues?.firstName || "sd"}
           />
           <Error errorName={errors.firstName} />
         </div>
@@ -84,7 +100,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
             register={register}
             label="Last Name"
             name="lastName"
-            placeholder=""
+            placeholder="last name"
           />
           <Error errorName={errors.lastName} />
         </div>

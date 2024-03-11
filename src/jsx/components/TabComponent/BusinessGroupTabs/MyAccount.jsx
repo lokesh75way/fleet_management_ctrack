@@ -23,17 +23,17 @@ const MyAccount = ({
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", 
+      padding: ".25rem 0 ",
     }),
   };
 
-const user = localStorage.getItem('loginDetails-email')
-console.log(getValues())
- 
+  const user = localStorage.getItem("loginDetails-email");
+  console.log(getValues());
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3">
           <label className="form-label">Admin</label>
           <Controller
             name="businessUser"
@@ -41,29 +41,34 @@ console.log(getValues())
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("admin", newValue.label)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.label);
+                  setValue("admin", newValue.label);
+                }}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={'admin'}
-                isDisabled = {true}
+                defaultValue={"admin"}
+                isDisabled={true}
               />
             )}
           />
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group Name<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Business Group Name<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
             required
             label="businessUser"
             name="businessUser"
-            defaultValue={getValues('businessUser')}
+            defaultValue={getValues("businessUser")}
             placeholder=""
           />
-           <Error errorName={errors.businessUser} />
+          <Error errorName={errors.businessUser} />
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -95,7 +100,6 @@ console.log(getValues())
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
@@ -111,7 +115,7 @@ console.log(getValues())
             lable="Short Name"
             name="shortName"
             placeholder=""
-            defaultValue={getValues('shortName')}
+            defaultValue={getValues("shortName")}
           />
           <Error errorName={errors.shortName} />
         </div>
@@ -126,7 +130,7 @@ console.log(getValues())
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={getValues('userName')}
+            defaultValue={getValues("userName")}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -153,7 +157,7 @@ console.log(getValues())
                 name="oldPassword"
                 label="Old Password"
                 placeholder=""
-                defaultValue={getValues('oldPassword')}
+                defaultValue={getValues("oldPassword")}
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -167,7 +171,7 @@ console.log(getValues())
                 label="New Password"
                 name="newPassword"
                 placeholder=""
-                defaultValue={getValues('newPassword')}
+                defaultValue={getValues("newPassword")}
               />
               <Error errorName={errors.newPassword} />
             </div>
@@ -195,7 +199,7 @@ console.log(getValues())
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
-            defaultValue={getValues('passwordRecoveryEmail')}
+            defaultValue={getValues("passwordRecoveryEmail")}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -207,7 +211,7 @@ console.log(getValues())
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={getValues('helpDeskEmail')}
+            defaultValue={getValues("helpDeskEmail")}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -220,8 +224,7 @@ console.log(getValues())
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
-            defaultValue={getValues('helpDeskTelephoneNumber')}
-
+            defaultValue={getValues("helpDeskTelephoneNumber")}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
@@ -233,8 +236,7 @@ console.log(getValues())
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={getValues('mobileNumber')}
-
+            defaultValue={getValues("mobileNumber")}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -247,8 +249,7 @@ console.log(getValues())
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            defaultValue={getValues('whatsappContactNumber')}
-
+            defaultValue={getValues("whatsappContactNumber")}
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -262,8 +263,7 @@ console.log(getValues())
             label="City"
             name="city"
             placeholder=""
-            defaultValue={getValues('city')}
-
+            defaultValue={getValues("city")}
           />
           <Error errorName={errors.city} />
         </div>
@@ -277,8 +277,7 @@ console.log(getValues())
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={getValues('zipCode')}
-
+            defaultValue={getValues("zipCode")}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -292,8 +291,7 @@ console.log(getValues())
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={getValues('street1')}
-
+            defaultValue={getValues("street1")}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -307,8 +305,7 @@ console.log(getValues())
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={getValues('street2')}
-
+            defaultValue={getValues("street2")}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -319,8 +316,7 @@ console.log(getValues())
             label="Contact Person"
             name="contactPerson"
             placeholder=""
-            defaultValue={getValues('contactPerson')}
-
+            defaultValue={getValues("contactPerson")}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -333,8 +329,7 @@ console.log(getValues())
             label="Fax Number"
             name="faxNumber"
             placeholder=""
-            defaultValue={getValues('faxNumber')}
-
+            defaultValue={getValues("faxNumber")}
           />
         </div>
       </div>
