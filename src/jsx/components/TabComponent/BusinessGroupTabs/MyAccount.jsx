@@ -49,7 +49,8 @@ console.log(getValues())
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={'admin'}
+                options={[{value:"Admin",label:"Admin"}]}
+                defaultValue={[{value:"Admin",label:"Admin"}]}
                 isDisabled = {true}
               />
             )}

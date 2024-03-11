@@ -45,6 +45,11 @@ const useStorage = () => {
     data.map((item)=>item.role === "branch" && item.parentCompany === name && ++count)
     return count
   }
+  const getAllCompany = ()=>{
+    const data = JSON.parse(localStorage.getItem('userJsonData'))
+    const companyData =  data.filter((item)=> item.role === 'company')
+    console.log(companyData)
+  }
 
   return {
     saveData,
@@ -52,7 +57,8 @@ const useStorage = () => {
     checkRole,
     checkUser,
     checkUserName,
-    getBranch
+    getBranch,
+    getAllCompany,
   }
 }
 

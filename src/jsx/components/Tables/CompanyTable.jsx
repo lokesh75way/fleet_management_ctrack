@@ -6,13 +6,16 @@ import { Link } from 'react-router-dom';
 import { IMAGES,SVGICON} from '../../constant/theme'; 
 import useStorage from '../../../hooks/useStorage';
 
-const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
+const CompanyTable = ({ tableData,tempValue,onConfirmDelete,editDrawerOpen }) => {
     const {getBranch} = useStorage()
-    // const filteredItems = getData(tableData);
+    var filterData = tableData;
+  if(tempValue){
+    filterData = tableData.filter((item)=> item.role === 'company' && item.parent === tempValue)
+  };
 
     return (
         <>
-            {tableData.map((item, index) => (
+            {filterData.map((item, index) => (
                 <tr key={index}>
                     <td><span>{item.id}</span></td>
                     <td>
