@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, use, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -8,27 +8,54 @@ import General from "../../../../components/TabComponent/TecnicianTab/General";
 import Address from "../../../../components/TabComponent/TecnicianTab/Address";
 import Leave from "../../../../components/TabComponent/TecnicianTab/Leave";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {technicianGeneralSchema,technicianAddressSchema,technicianLeaveSchema} from '../../../../../yup'
+import {
+  technicianGeneralSchema,
+  technicianAddressSchema,
+  technicianLeaveSchema,
+} from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const TechnicianForm = ({ Title, editData, setEditData }) => {
-
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
   const tabHeading = ["General", "Address", "Leave"];
   const component = [General, Address, Leave];
   const totalTabs = tabHeading.length;
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? technicianGeneralSchema: activeIndex === 1 ? technicianAddressSchema:technicianLeaveSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0
+        ? technicianGeneralSchema
+        : activeIndex === 1
+        ? technicianAddressSchema
+        : technicianLeaveSchema
+    ),
+  });
 
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      return;
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        const existingData = JSON.parse(localStorage.getItem("technicianData"));
+        data.id = existingData.length + 1;
+        existingData.push(data);
+        localStorage.setItem("technicianData", JSON.stringify(existingData));
+        notifySuccess("Technician Added Successfully !!");
+        navigate("/technician");
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
     }
-    console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+    console.log(data);
+    
+  };
   return (
     <>
       <MainPagetitle

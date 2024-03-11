@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/9785.b019261a.chunk.js","mappings":"oJAEA,MAMA,EANiBA,KAEbC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,Y","sources":["jsx/pages/company/reports/Activity.jsx"],"sourcesContent":["import React from 'react'\n\nconst Activity = () => {\n  return (\n    <h1>Activity</h1>\n  )\n}\n\nexport default Activity"],"names":["Activity","_jsx","children"],"sourceRoot":""}

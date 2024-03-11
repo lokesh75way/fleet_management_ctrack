@@ -1,32 +1,70 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
+import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyAccount";
+import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import { businessGroupAccountSchema, companySettingSchema } from "../../../../../yup";
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["My Account", "User Setting"];
+  const tabHeading = ["New Business Group", "Settings"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
+  const navigate = useNavigate()
+  const { id } = useParams(); 
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
-  })
-
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      return;
+  // Fetch data from local storage when the id changes
+  useEffect(() => {
+    const existingData = JSON.parse(localStorage.getItem("businessData"));
+    console.log(existingData, id)
+    const businessData = existingData.find((item) => item.id === id);
+    console.log(businessData, 'nus')
+    if (businessData) {
+      reset(businessData);
     }
-    console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  }, [id]);
+
+
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    reset,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0 ? businessGroupAccountSchema : companySettingSchema
+    ),
+  });
+
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        const existingData = JSON.parse(localStorage.getItem("businessData"));
+        data.id = `${existingData.length + 1}`;
+        existingData.push(data);
+        localStorage.setItem("businessData", JSON.stringify(existingData));
+        notifySuccess("Saved !");
+        navigate("/business");
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
+      
+      
+    }
+    
+    notifySuccess("Saved !");
+    console.log(data);
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+  };
   return (
     <>
       <MainPagetitle
@@ -85,14 +123,3 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   );
 };
 export default BusinessForm;
-
-
-
-
-
-
-
-
-
-
-

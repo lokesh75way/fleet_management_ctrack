@@ -7,8 +7,7 @@ import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
 
-const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
-  const { formState: errors, control, getValues } = useForm();
+const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues, control,errors }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
     control: (base) => ({
@@ -23,7 +22,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Date of Birth</label>
           <Controller
             name="dateOfBirth"
@@ -48,7 +47,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
           />
           <Error errorName={errors.age} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Date of Joining</label>
           <Controller
             name="dateOfJoining"
@@ -62,7 +61,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Date of Leaving</label>
           <Controller
             name="dateOfLeaving"
@@ -165,7 +164,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
                 />
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
-            <div className="col-xl-6 mb-3 ">
+            <div className="col-xl-6 mb-3 d-flex flex-column">
               <label className="form-label">License Issued Date</label>
               <Controller
                 name="licenseIssueDate"
@@ -181,7 +180,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
                 )}
               />
             </div>
-            <div className="col-xl-6 mb-3 ">
+            <div className="col-xl-6 mb-3 d-flex flex-column">
               <label className="form-label">License Expiry Date</label>
               <Controller
                 name="licenseExpiryDate"
@@ -209,7 +208,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Life Insurance Expiry Date</label>
           <Controller
                 name="lifeInsuranceExpiryDtae"
@@ -235,7 +234,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Mediclaim Expiry Date</label>
           <Controller
                 name="mediclaimExpiryDate"
@@ -272,7 +271,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit }) => {
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

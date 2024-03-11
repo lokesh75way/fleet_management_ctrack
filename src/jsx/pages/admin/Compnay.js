@@ -6,8 +6,6 @@ import CompanyTable from "../../components/Tables/CompanyTable";
 const Company = () => {
   const navigate = useNavigate();
   const CompanyData = JSON.parse(localStorage.getItem('companyData'))
-  console.log(CompanyData);
-  // const {getData} = useStorage();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -52,6 +50,10 @@ const Company = () => {
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
+
+     // Remove item from local storage
+     const updatedLocalStorageData = CompanyData.filter((item) => item.id !== id);
+     localStorage.setItem('companyData', JSON.stringify(updatedLocalStorageData));
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));

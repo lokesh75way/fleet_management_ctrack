@@ -1,6 +1,8 @@
 /// Menu
 import React, { useContext, useEffect, useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Collapse from 'react-bootstrap/Collapse';
+
 
 /// Link
 import { Link } from "react-router-dom";
@@ -19,7 +21,7 @@ const reducer = (previousState, updatedState) => ({
 });
 
 const initialState = {
-  active: "",
+  active: "Dashboard",
   activeSubmenu: "",
 }
 
@@ -30,6 +32,8 @@ const SideBar = () => {
     headerposition,
     sidebarLayout,
   } = useContext(ThemeContext);
+
+  const navigate = useNavigate();
 
   const role = localStorage.getItem('role');
 
@@ -71,6 +75,8 @@ const SideBar = () => {
     if (state.active === status) {
       setState({ active: "" });
     }
+   
+    
   }
   const handleSubmenuActive = (status) => {
 
@@ -103,8 +109,12 @@ const SideBar = () => {
     })
   }, [path]);
 
-  const handleNonContentMenu = ()=>{
-    setState({active:""});
+  const handleNonContentMenu = (status)=>{
+    // setState({active:""});
+    setState({ active: status });
+    if (state.active === status) {
+      setState({ active: "" });
+    }
   }
 
   return (
@@ -128,14 +138,15 @@ const SideBar = () => {
               )
             } else {
               return (
-                <li className={` ${state.active === data.title ? 'mm-active' : ''}`}
+                <li className={` ${state.active === data.title ? 'mm-active text-primary' :''}`}
                   key={index}
                 >
                   {data.content && data.content.length > 0 ?
                     <>
+
                       <Link to={data.to}
                         className="has-arrow"
-                        onClick={() => { handleMenuActive(data.title) }}
+                        onClick={() => { handleMenuActive(data.title)}}
                       >
                         <div className="menu-icon">
                           {data.iconStyle}
@@ -189,11 +200,11 @@ const SideBar = () => {
                       </Collapse>
                     </>
                     :
-                    <Link to={data.to} onClick={handleNonContentMenu} >
+                    <Link to={data.to} onClick={()=>handleNonContentMenu(data.title)} >
                       <div className="menu-icon">
                         {data.iconStyle}
                       </div>
-                      {" "}<span className="nav-text">{data.title}</span>
+                      {" "}<span className= 'nav-text'>{data.title}</span>
                       {
                         data.update && data.update.length > 0 ?
                           <span className="badge badge-xs badge-danger ms-2">{data.update}</span>

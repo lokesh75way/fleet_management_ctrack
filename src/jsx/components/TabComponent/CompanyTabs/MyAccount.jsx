@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
@@ -6,7 +6,12 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from '../../../../users.json'
+import useStorage from "../../../../hooks/useStorage";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+import { useParams } from "react-router-dom";
+
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+  const {checkRole, checkUser} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
@@ -28,18 +33,52 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.email,
     value: item.id,
   }));
+
+  const [disabledState, setDisabledState] = useState();
+
+  const role = localStorage.getItem('role');
+
+  
+  useEffect(()=>{
+    if(role == 'admin') setDisabledState(true);
+    else setDisabledState(false);
+
+  },[])
+
+  const { id } = useParams();
+
+    console.log("CompanyForm ID from params:", id);
+  
+  
+    const companyData = JSON.parse(localStorage.getItem('companyData'))
+  
+    const newData = companyData.filter(data => data.id === id);
+  
+    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
+  
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
+          <label className="form-label">Business Group</label>
+          {checkRole() ? <CustomInput
+            type="text"
+            required
+            register={register}
+            lable="Parent"
+            name="parent"
+            placeholder=""
+            value={checkUser()}
+            isDisabled={disabledState}
+          />
+          :
           <Controller
-            name="businessUser"
+            name="parent"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("businessUser", newValue.label)}}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
@@ -47,11 +86,11 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 defaultValue={businessUserOptions[0]}
               />
             )}
-          />
+          />}
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Company</label>
+          <label className="form-label">Company<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -59,7 +98,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Company"
             name="company"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].company : ''}
           />
+           <Error errorName={errors.company} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
@@ -92,20 +133,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Short Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-          />
-           <Error errorName={errors.shortName} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
             User Name <span className="text-danger">*</span>
           </label>
           <CustomInput
@@ -115,6 +142,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="User Name"
             name="userName"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -141,6 +169,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 name="oldPassword"
                 label="Old Password"
                 placeholder=""
+                defaultValue={filteredCompanyData[0].oldPassword}
+                
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -181,6 +211,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ''}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -215,6 +246,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -253,6 +285,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -314,7 +347,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

@@ -9,7 +9,9 @@ const CustomInput = ({
   placeholder,
   register,
   type,
+  value,
   style,
+  disabled
 }) => {
   const { errors } = useFormContext();
   return (
@@ -22,9 +24,11 @@ const CustomInput = ({
         type={type}
         label={label}
         style={style}
+        value={value}
         placeholder={placeholder}
         className="form-control"
-        // defaultValue={defaultValue}
+        defaultValue={defaultValue}
+        disabled={disabled}
       />
     </div>
   );

@@ -23,7 +23,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1
+            Street1<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -48,7 +48,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City
+            City<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -61,7 +61,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+            Zip Code<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -73,11 +73,11 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
           <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country</label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
-              setValue("country", e.id);
+              setValue("country", e.name);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -96,7 +96,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">Mediclaim Expiry Date</label>
           <Controller
             name="mediclaimExpiryDate"
@@ -123,7 +123,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-
+import { ToastContainer } from 'react-toastify';
 import { connect, useDispatch } from "react-redux";
 import {
   Route,
@@ -19,16 +19,18 @@ import "./css/style.css";
 // const BasicLayout = lazy(() => import('./jsx/layouts/BasicLayout'));
 // const ForgotPassword = lazy(() => import('./jsx/pages/ForgotPassword'));
 // const ResetPassword = lazy(() => import('./jsx/pages/ResetPassword'));
-import BasicLayout from "./jsx/layouts/BasicLayout";
-import AdminRoutes from "./jsx/AdminRoutes";
-import CompanyRoutes from "./jsx/CompanyRoutes";
-import BusinessGroupRoutes from "./jsx/BusinessGroupRoutes";
-import SubCompanyRoutes from "./jsx/SubCompanyRoutes";
-import ForgotPassword from "./jsx/pages/ForgotPassword";
-import ResetPassword from "./jsx/pages/ResetPassword";
-import { CompanyData, DriverData } from "./jsx/components/Tables/Tables";
+import BasicLayout from './jsx/layouts/BasicLayout';
+import AdminRoutes from './jsx/AdminRoutes';
+import CompanyRoutes from './jsx/CompanyRoutes';
+import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
+import SubCompanyRoutes from './jsx/SubCompanyRoutes';
+import ForgotPassword from './jsx/pages/ForgotPassword';
+import ResetPassword from './jsx/pages/ResetPassword';
+import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/components/Tables/Tables";
+import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
+import Loading from "./Loading";
 
-console.log(DriverData);
+
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
   return new Promise((resolve) => {
@@ -37,21 +39,10 @@ const Login = lazy(() => {
 });
 
 function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    useEffect(() => {
-      const data = localStorage.getItem("companyData");
-      if (!data) {
-        localStorage.setItem("companyData", JSON.stringify(CompanyData));
-      }
 
-      const driver = localStorage.getItem("driverData");
-      if (!driver) {
-        localStorage.setItem("driverData", JSON.stringify(DriverData));
-      }
-      // return() => {
-      //   localStorage.removeItem("driverData");
-      // };
-    }, []);
+  function ComponentWithRouterProp(props) {
+  
+
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
@@ -63,10 +54,28 @@ function withRouter(Component) {
 }
 
 function App(props) {
+  const role = localStorage.getItem("role");
+  useEffect(()=>{
+    const companyData = localStorage.getItem('companyData');
+    const vehicleData = localStorage.getItem('vehicleData');
+    const driver = localStorage.getItem("driverData");
+    const dataBranch = localStorage.getItem('branchData');
+    const businessData = localStorage.getItem('businessData');
+    const userData = localStorage.getItem('userData');
+    const technicianData = localStorage.getItem('technicianData');
+
+    if(!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
+    if(!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
+    if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));   
+    if(!dataBranch) localStorage.setItem('branchData',JSON.stringify(SubCompanyData))
+    if(!businessData) localStorage.setItem('businessData', JSON.stringify(BusinessData))
+    if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
+    if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
+      
+
+  },[role])
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const role = localStorage.getItem("role");
 
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);
@@ -88,8 +97,9 @@ function App(props) {
     }
   }
 
-  return (
+  return (<>
     <div className="vh-100">
+      {/* <Suspense fallback={<Loading/>} > */}
       <Routes>
         <Route element={<BasicLayout />}>
           <Route path="/login" element={<Login />} />
@@ -98,8 +108,9 @@ function App(props) {
           <Route path="/page-resetpassword" element={<ResetPassword />} />
         </Route>
       </Routes>
+      {/* </Suspense> */}
     </div>
-  );
+    </>);
 }
 
 const mapStateToProps = (state) => {

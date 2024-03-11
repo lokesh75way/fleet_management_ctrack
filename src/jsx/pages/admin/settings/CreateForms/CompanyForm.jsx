@@ -7,34 +7,41 @@ import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import useStorage from "../../../../../hooks/useStorage";
+import {notifyError, notifySuccess} from '../../../../../utils/toast'
+import { useNavigate } from "react-router-dom";
 
 const CompanyForm = () => {
+  const{saveData} = useStorage()
+  const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Add Account", "User Setting"];
+  const tabHeading = ["New Company", "Settings"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
   })
-  function generateRandomId() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
-    const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
-    return timestamp + '-' + randomStr; // Combine timestamp and random string
-  }
+
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
-      console.log(data)
-      const existingData = JSON.parse(localStorage.getItem('companyData'));
-      console.log(typeof(existingData));
-      console.log(existingData);
-      data.id  = generateRandomId()
-      existingData.push(data)
-      localStorage.setItem('companyData',JSON.stringify(existingData))
-      return;
+      try{
+        saveData(data, 'companyData')
+        notifySuccess("Saved !")
+        navigate("/company");
+        return;
+      }
+      catch(error){
+        notifyError("Some error occured !!")
+      }
     }
-    console.log(data)
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    console.log(data);
+    notifySuccess("Saved !")
   }
+
+
+
+
   return (
     <>
       <MainPagetitle

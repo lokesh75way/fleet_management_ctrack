@@ -1,19 +1,20 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import InviteCustomer from '../../constant/ModalList';
 import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
-import {CompanyData} from "../../components/Tables/Tables";
+// import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from  "../../components/Tables/BusinessTable"
 
 const BusinessUser = () => {  
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
-    const [tableData, setTableData] = useState(CompanyData);
+    const BusinessData = JSON.parse(localStorage.getItem('businessData'))
+    const [tableData, setTableData] = useState(BusinessData);
     const [editData , setEditData] = useState({
         id:0,
         title:'',
@@ -23,6 +24,7 @@ const BusinessUser = () => {
         location:'',
         usergroup:''
     });
+    const navigate = useNavigate();
 	const sort = 10;
 	const activePag = useRef(0);
 	const [test, settest] = useState(0);
@@ -49,18 +51,18 @@ const BusinessUser = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
-    // for deleting data in table
-   const onConfirmDelete =(id)=>{
-    const updatedData = tableData.filter(item => item.id !== id);
+
+const onConfirmDelete = (id) => {
+    // Remove item from state
+    const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
-   }
+    // Remove item from local storage
+    const updatedLocalStorageData = BusinessData.filter((item) => item.id !== id);
+    localStorage.setItem('businessData', JSON.stringify(updatedLocalStorageData));
+};
    const editDrawerOpen = (item)=>{
-    tableData.map((table)=>(
-        table.id === item && setEditData(table)
-    ))
-
-    company.current.showModal();
+    navigate(`/business/edit/${item.id}`);
 }
 // const handleSubmit=(e)=>{
 //     e.preventDefault();
@@ -88,7 +90,7 @@ const BusinessUser = () => {
                                         <h4 className="heading mb-0">BusinessUsers</h4>                                        
                                         <div>
                                             
-                                            <Link to={"/business/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
+                                            <Link to={{pathname : "/business/create", state: { editData }} } className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"                                            
                                             >+ Add Business User</Link> {" "}
                                         </div>
                                     </div>          
@@ -97,13 +99,12 @@ const BusinessUser = () => {
                                             <thead>
                                                 <tr>  
                                                 <th>ID</th>                                                 
-                                                    <th>Reseller</th>
-                                                    <th>User Name</th>
+                                                    <th>Parent</th>
+                                                    <th>Business User</th>
                                                     <th>Mobile Number</th>
-                                                    <th>User Group</th>
                                                     <th>Location</th>
                                                     <th>Payment Status</th>
-                                                    <th>Companies</th>
+                                                    <th>Branches</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -126,7 +127,7 @@ const BusinessUser = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/company"
+                                                    to="/business"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -138,7 +139,7 @@ const BusinessUser = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/company"
+                                                        to="/business"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -150,7 +151,7 @@ const BusinessUser = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/company"
+                                                    to="/business"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)

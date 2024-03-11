@@ -37,6 +37,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           <Error errorName={errors.firstName} />
         </div>
+
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Middle Name 
@@ -49,6 +50,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             placeholder=""
           />
         </div>
+
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Last Name <span className="text-danger">*</span>
@@ -62,9 +64,10 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           <Error errorName={errors.lastName} />
         </div>
+
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Technician Number 
+            Technician Number <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -75,6 +78,21 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           <Error errorName={errors.technicianNumber} />
         </div>
+
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            Email<span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="email"
+            register={register}
+            label="Email"
+            name="email"
+            placeholder=""
+          />
+          <Error errorName={errors.email} />
+        </div>
+
         <div className="col-xl-6 mb-3">
           <label className="form-label">Gender</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
@@ -127,7 +145,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Emergency Contact 
+            Emergency Contact <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -138,8 +156,8 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           <Error errorName={errors.emergencyContact} />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Date of Join</label>
+        <div className="col-xl-6 mb-3 d-flex flex-column">
+          <label className="form-label">Date of Join<span className="text-danger">*</span></label>
           <Controller
             name="dateOfJoin"
             control={control}
@@ -153,8 +171,8 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           />
           {!getValues('dateOfJoin') && <Error errorName={errors.dateOfJoin} />}
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label"> Date of Birth</label>
+        <div className="col-xl-6 mb-3 d-flex flex-column">
+          <label className="form-label"> Date of Birth<span className="text-danger">*</span></label>
           <Controller
             name="dateOfBirth"
             control={control}
@@ -178,7 +196,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
       </div>
     </div>
   );

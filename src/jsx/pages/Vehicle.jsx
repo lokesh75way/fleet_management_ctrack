@@ -7,6 +7,7 @@ import MainPagetitle from '../layouts/MainPagetitle';
 
 const Vehicle = () => {  
     const {setAddVehicle, addVehicle} = useContext(ThemeContext)
+    const VehicleData = JSON.parse(localStorage.getItem('vehicleData'))
     const navigate = useNavigate();
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
@@ -55,6 +56,10 @@ const Vehicle = () => {
     const onConfirmDelete =(id)=>{
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
+
+         // Remove item from local storage
+     const updatedLocalStorageData = VehicleData.filter((item) => item.id !== id);
+     localStorage.setItem('vehicleData', JSON.stringify(updatedLocalStorageData));
     
        }
     // Edit function
@@ -106,13 +111,13 @@ const Vehicle = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
+                                                    <th>Branch</th>
                                                     <th>Plate Number</th>
                                                     <th>Vehicle Name</th>
                                                     <th>SIM Number</th>
                                                     <th>IMEI Number</th>
-                                                    <th>GPS Device Type</th>
-                                                    <th>Distance Counter</th>
-                                                    <th>Speed Detection</th>
+                                                    <th>Registration Number</th>
+                                                    <th>DVIR Number</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -135,7 +140,7 @@ const Vehicle = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/general"
+                                                    to="/vehicle"
                                                     onClick={() =>
                                                         activePage.current > 0 &&
                                                         onClick(activePage.current - 1)
@@ -147,7 +152,7 @@ const Vehicle = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/general"
+                                                        to="/vehicle"
                                                         className={`paginate_button  ${
                                                             activePage.current === i ? "current" : ""
                                                         } `}
@@ -159,7 +164,7 @@ const Vehicle = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/general"
+                                                    to="/vehicle"
                                                     onClick={() =>
                                                         activePage.current + 1 < paggination.length &&
                                                         onClick(activePage.current + 1)

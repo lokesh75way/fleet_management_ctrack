@@ -4,29 +4,27 @@ import { FaEdit } from 'react-icons/fa';
 import DeleteModal from '../Modal/DeleteModal';
 import { Link } from 'react-router-dom';
 import { IMAGES,SVGICON} from '../../constant/theme'; 
+import useStorage from '../../../hooks/useStorage';
 
-const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen, getData }) => {
-    // const localData = getData()
-    // if(localData){
-    //     tableData.push(localData)
-    //     console.log(tableData)
-    // }
+const CompanyTable = ({ tableData,onConfirmDelete,editDrawerOpen }) => {
+    const {getData} = useStorage()
+    const filteredItems = getData(tableData);
     return (
         <>
-            {tableData.map((item, index) => (
+            {filteredItems.map((item, index) => (
                 <tr key={index}>
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
                             <img src={item.image || IMAGES.contact1} className="avatar avatar-md" alt="" />
                             <div>
-                                <h6>{item.parent || item.businessUser}</h6>
+                                <h6>{item.parent}</h6>
                             </div>
                         </div>
                     </td>
                     <td><span className="text-primary">{item.company}</span></td>
                     <td>
-                        <span>{item.contact || item.mobileNumber}</span>
+                        <span>{item.mobileNumber}</span>
                     </td>
                     {/* <td>
                         <span>{item.usergroup || item.shortName}</span>

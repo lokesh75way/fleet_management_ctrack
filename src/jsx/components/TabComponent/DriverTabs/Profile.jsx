@@ -42,7 +42,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
           />
            { !getValues('branch') && <Error errorName={errors.branch} />}
         </div>
-        <div className="col-xl-6 mb-3 ">
+        {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Employee Designation <span className="text-danger">*</span>
           </label>
@@ -61,7 +61,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
             )}
           />
           { !getValues('employeeDesignation') && <Error errorName={errors.employeeDesignation} />}
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             First Name <span className="text-danger">*</span>
@@ -90,7 +90,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Employee Number 
+            Employee Number <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -200,7 +200,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Contact Number2 
+            Contact Number2 <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -220,7 +220,7 @@ const Profile = ({ setValue, register, handleSubmit, onSubmit, getValues, errors
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
       </div>
     </div>
   );

@@ -5,33 +5,7 @@ import { CSVLink } from 'react-csv';
 import { IMAGES } from '../constant/theme';
 import MainPagetitle from '../layouts/MainPagetitle';
 import InviteCustomer from '../constant/ModalList';
-// import TechnicalOffCanvas from '../constant/TechnicalOffCanvas';
-
-const tableData = [
-    {emplid: '1001', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
-    {emplid: '1002', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1003', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
-    {emplid: '1004', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
-    {emplid: '1005', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
-    {emplid: '1006', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Active' ,title: 'Honey Risher', email: 'xyz@gmail.com',  location:'USA'},    
-    {emplid: '1007', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1008', image:IMAGES.contact3, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky M', email: 'pqr@gmail.com',  location:'France'},    
-    {emplid: '1009', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
-    {emplid: '1010', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Elijah James', email: 'stuy@gmail.com', location:'Dubai'},    
-    {emplid: '1011', image:IMAGES.contact2, contact:'+91 123 456 7890',status:'Inactive' ,title: 'Ankites Risher', email: 'abc@gmail.com',  location:'Brazil'},    
-    {emplid: '1012', image:IMAGES.contact1, contact:'+91 123 456 7890',status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com', location:'India'},    
-];
-
-const headers = [
-    { label: "Employee ID", key: "emplid" },
-    { label: "Employee Name", key: "title" },
-    { label: "Department", key: "department" },
-    { label: "Email Address", key: "email" },
-    { label: "Contact Number", key: "contact" },
-    { label: "Gender", key: "gender" },
-    { label: "Location", key: "location" },
-    { label: "Status", key: "status" },
-]
+import TechnicianTable from '../components/Tables/TechnicianTable';
 
 // const csvlink = {
 //     headers : headers,
@@ -40,6 +14,9 @@ const headers = [
 // }
 
 const Technician = () => {  
+    const techData = JSON.parse(localStorage.getItem('technicianData'))
+    const [tableData, setTableData ] = useState(techData)
+    const [editData, setEditData ] = useState()
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
 	);
@@ -69,6 +46,15 @@ const Technician = () => {
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
 		settest(i);
 	};
+    const onConfirmDelete = (id) => {
+        const updatedData = tableData.filter((item) => item.id !== id);
+        setTableData(updatedData);
+      };
+      const editDrawerOpen = (item) => {
+        tableData.map((table) => table.id === item && setEditData(table));
+        // navigate(`/driver/edit/${item}`);
+        // setEditTableData(item);
+      };
    
     const invite = useRef();
     const technical = useRef();
@@ -106,35 +92,11 @@ const Technician = () => {
                                                     <th>Contact Number</th>
                                                     <th>Location</th>
                                                     <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {tableData.map((item, index)=>(
-                                                    <tr key={index}>                                                       
-                                                        <td><span>{item.emplid}</span></td>
-                                                        <td>
-                                                            <div className="products">
-                                                                <img src={item.image}  className="avatar avatar-md" alt="" />
-                                                                <div>
-                                                                    <h6>{item.title}</h6>
-                                                                    <span>Web Designer</span>	
-                                                                </div>	
-                                                            </div>
-                                                        </td>
-                                                        
-                                                        <td><span className="text-primary">{item.email}</span></td>
-                                                        <td>
-                                                            <span>{item.contact}</span>
-                                                        </td>
-                                                        	
-                                                        <td>
-                                                            <span>{item.location}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `} style={{width:"45%"}}>{item.status}</span>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <TechnicianTable onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} tableData={tableData}/>
                                             </tbody>
                                             
                                         </table>

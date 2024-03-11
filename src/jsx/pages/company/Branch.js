@@ -1,12 +1,12 @@
 
 import React, {useState, useRef, useEffect} from 'react';
-import {Link, Route, useParams} from 'react-router-dom';
+import {Link, Route, json, useParams,useNavigate} from 'react-router-dom';
 import { CSVLink } from 'react-csv';
 import { IMAGES } from '../../constant/theme';
 import MainPagetitle from '../../layouts/MainPagetitle';
 import SubCompanyTable from '../../components/Tables/SubCompanyTable'
 import SubCompanyOffcanvas from '../../constant/SubCompanyOffcanvas';
-import { SubCompanyData } from '../../components/Tables/Tables';
+// import { SubCompanyData } from '../../components/Tables/Tables';
 const headers = [
     { label: "Short Name", key: "shortname" },
     { label: "Reseller", key: "reseller" },
@@ -18,11 +18,19 @@ const headers = [
     { label: "User Group", key: "usergroup" }
 ]
 const Branch = () => {
+    const navigate = useNavigate();
     const {id} = useParams();
     console.log("Branch id :- ",id)
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
+    
+    const loggedinUser = localStorage.getItem('loginDetails-email');
+    const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
+    const role = localStorage.getItem('role');
+
+    
+    
     const [tableData , setTableData] = useState(SubCompanyData);
     const [editData , setEditData] = useState({
         id:0,
@@ -34,7 +42,7 @@ const Branch = () => {
         usergroup:'',
         branches : 0
     });
-
+    
     const sort = 10;
     const activePag = useRef(0);
     const [test, settest] = useState(0);
@@ -47,13 +55,13 @@ const Branch = () => {
             }
         }
     };
-   useEffect(() => {
-      setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
+    useEffect(() => {
+        setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
     }, [test]);
-   activePag.current === 0 && chageData(0, sort);
-   let paggination = Array(Math.ceil(data.length / sort))
-      .fill()
-      .map((_, i) => i + 1);
+    activePag.current === 0 && chageData(0, sort);
+    let paggination = Array(Math.ceil(data.length / sort))
+    .fill()
+    .map((_, i) => i + 1);
     const onClick = (i) => {
         activePag.current = i;
         chageData(activePag.current * sort, (activePag.current + 1) * sort);
@@ -62,30 +70,53 @@ const Branch = () => {
     const onConfirmDelete = (id) => {
         const updatedData = tableData.filter(item => item.id !== id);
         setTableData(updatedData);
+
+        // Remove item from local storage
+     const updatedLocalStorageData = SubCompanyData.filter((item) => item.id !== id);
+     localStorage.setItem('branchData', JSON.stringify(updatedLocalStorageData));
     }
-    const editDrawerOpen = (item)=>{
-        console.log(item)
-        tableData.map((table)=>(
-            table.id === item && setEditData(table)
-        ))
-        console.log(item)
-        subCompany.current.showModal();
-    }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)
-                return {...table, ...editData };
+
+    const editDrawerOpen = (item) => {
+        tableData.map((table) => table.id === item && setEditData(table));
+        navigate(`edit/${item}`);
+        // company.current.showModal();
+      };
+
+    // const editDrawerOpen = (item)=>{
+    //     console.log(item)
+    //     tableData.map((table)=>(
+    //         table.id === item && setEditData(table)
+    //         ))
+    //         console.log(item)
+    //         subCompany.current.showModal();
+    //     }
+    //     const handleSubmit=(e)=>{
+    //         e.preventDefault();
+    //         const updateTable = tableData.map((table)=>{
+    //             if(table.id === editData.id) {
+    //                 console.log(table.id)
+    //                 return {...table, ...editData };
+    //             }
+    //             return table;
+    //         })
+    //         setTableData(updateTable)
+    //     }
+        const invite = useRef();
+        const subCompany = useRef();
+        useEffect(() => {
+            
+            if(role == 'admin') return;
+            else if(role == 'businessgroup'){
+                const filteredData = SubCompanyData.filter(item => item.businessUser === loggedinUser);
+                setTableData(filteredData);
             }
-            return table;
-        })
-        setTableData(updateTable)
-    }
-    const invite = useRef();
-    const subCompany = useRef();
-    return (
-        <>
+            else if(role == 'company'){
+                const filteredData = SubCompanyData.filter(item=>item.company === loggedinUser);
+                setTableData(filteredData);
+            }
+        }, [loggedinUser]);
+        return (
+            <>
             <MainPagetitle mainTitle="Branch" pageTitle={'Branch'} parentTitle={'Home'} />
             <div className="container-fluid">
                 <div className="row">
@@ -98,22 +129,21 @@ const Branch = () => {
                                         <div>
                                             <Link to={"/branch/create"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 // onClick={()=>subCompany.current.showModal()}
-                                            >+ Add Branch</Link> {" "}
+                                                >+ Add Branch</Link> {" "}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Short Name</th>
-                                                    <th>Reseller</th>
-                                                    <th>Username</th>
-                                                    <th>Contact Number</th>
-                                                    <th>Location</th>
-                                                    <th>User Group</th>
-                                                    <th>Status</th>
-                                                    <th>Branches</th>
-                                                    <th>Action</th>
+                                                <th>ID</th>
+                                                <th>Business Group</th>
+                                                <th>Company Name</th>
+                                                <th>Branch Name</th>
+                                                <th>Mobile Number</th>
+                                                <th>Location</th>
+                                                <th>Zip Code</th>
+                                                <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -134,7 +164,7 @@ const Branch = () => {
                                             >
                                                 <Link
                                                     className="paginate_button previous disabled"
-                                                    to="/sub-company"
+                                                    to="/branch"
                                                     onClick={() =>
                                                         activePag.current > 0 &&
                                                         onClick(activePag.current - 1)
@@ -146,7 +176,7 @@ const Branch = () => {
                                                     {paggination.map((number, i) => (
                                                     <Link
                                                         key={i}
-                                                        to="/sub-company"
+                                                        to="/branch"
                                                         className={`paginate_button  ${
                                                             activePag.current === i ? "current" : ""
                                                         } `}
@@ -158,7 +188,7 @@ const Branch = () => {
                                                 </span>
                                                 <Link
                                                     className="paginate_button next"
-                                                    to="/sub-company"
+                                                    to="/branch"
                                                     onClick={() =>
                                                         activePag.current + 1 < paggination.length &&
                                                         onClick(activePag.current + 1)
@@ -175,13 +205,13 @@ const Branch = () => {
                     </div>
                 </div>
             </div>
-            <SubCompanyOffcanvas
+            {/* <SubCompanyOffcanvas
                 ref={subCompany}
                 editData={editData}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
                 Title={ editData.id === 0 ? "Add Branch" : "Edit Branch"}
-            />
+            /> */}
         </>
     );
 };

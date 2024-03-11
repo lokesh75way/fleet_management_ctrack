@@ -4,17 +4,19 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import {
-  branchOptions,
   deviceTypeOptions,
+  branchOptions,
   copyFromOptions,
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
+import DummyData from '../../../../users.json'
+import useStorage from '../../../../hooks/useStorage'
 
 const General = ({ register, setValue, getValues, errors, control, handleSubmit, onSubmit}) => {
-
+const {checkRole, checkUser} = useStorage()
   const [tempValue,setTempValue] = useState()
   const customStyles = {
     control: (base) => ({
@@ -22,10 +24,27 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+  const branchOption = DummyData.filter((item) => item.parent === checkUser()).map((item) => ({
+    label: item.email,
+    value: item.id,
+  }));
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+      {checkRole() === 'company' && <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Company
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label='Company'
+            name="company"
+            placeholder=""
+            value={checkUser()}
+          />
+        </div>}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch <span className="text-danger">*</span>
@@ -36,12 +55,12 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("branch", newValue.value)}}
-                options={branchOptions}
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("branch", newValue.label)}}
+                options={checkRole() === 'company' ? branchOption:branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={branchOptions[0]}
+                defaultValue={checkRole() === 'company' ?branchOption[0]:branchOptions[0]}
               />
             )}
           />
@@ -141,7 +160,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Secondary SIM Number
+            Secondary SIM Number<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -219,7 +238,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Device Accuracy Tolerance
+            Device Accuracy Tolerance<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -238,7 +257,7 @@ const General = ({ register, setValue, getValues, errors, control, handleSubmit,
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Next</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
       </div>
     </div>
   );

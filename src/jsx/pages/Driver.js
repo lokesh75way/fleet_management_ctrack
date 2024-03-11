@@ -85,23 +85,29 @@ const Driver = (ref) => {
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
+
+     // Remove item from local storage
+  const updatedLocalStorageData = DriverDataMemoized.filter(
+    (item) => item.id !== id
+  );
+  localStorage.setItem("driverData", JSON.stringify(updatedLocalStorageData));
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
     navigate(`/driver/edit/${item}`);
     // setEditTableData(item);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updateTable = tableData.map((table) => {
-      if (table.id === editData.id) {
-        console.log(table.id);
-        return { ...table, ...editData };
-      }
-      return table;
-    });
-    setTableData(updateTable);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const updateTable = tableData.map((table) => {
+  //     if (table.id === editData.id) {
+  //       console.log(table.id);
+  //       return { ...table, ...editData };
+  //     }
+  //     return table;
+  //   });
+  //   setTableData(updateTable);
+  // };
 
   const employe = useRef();
   return (
