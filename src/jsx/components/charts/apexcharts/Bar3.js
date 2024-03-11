@@ -6,16 +6,16 @@ class ApexBar3 extends React.Component {
     super(props);
 
     this.state = {
-      series: [
-        {
-          name: "Income",
-          data: [420, 550, 850, 220, 650],
-        },
-        {
-          name: "Expenses",
-          data: [170, 850, 101, 90, 250],
-        },
-      ],
+      // series: [
+      //   {
+      //     name: "Income",
+      //     data: [420, 550, 850, 220, 650],
+      //   },
+      //   {
+      //     name: "Expenses",
+      //     data: [170, 850, 101, 90, 250],
+      //   },
+      // ],
       options: {
         chart: {
           type: "bar",
@@ -51,7 +51,7 @@ class ApexBar3 extends React.Component {
             strokeWidth: 0,
             radius: 19,
             strokeColor: "#fff",
-            fillColors: ["#fc8019", "var(--primary)"],
+            fillColors: ["var(--primary)", "#FF6347"],
             offsetX: 0,
             offsetY: 0,
           },
@@ -75,13 +75,13 @@ class ApexBar3 extends React.Component {
           categories: ["06", "07", "08", "09", "10"],
         },
         fill: {
-          colors: ["#fc8019", "var(--primary)"],
+          colors: ["var(--primary)", "#FF6347"],
           opacity: 1,
         },
         tooltip: {
           y: {
             formatter: function (val) {
-              return "$ " + val + " thousands";
+              return "" + val + " liter";
             },
           },
         },
@@ -90,13 +90,14 @@ class ApexBar3 extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div id="chart" className="line-chart-style bar-chart">
         <ReactApexChart
           options={this.state.options}
-          series={this.state.series}
+          series={this.props.series}
           type="bar"
-          height={300}
+          height={250}
         />
       </div>
     );

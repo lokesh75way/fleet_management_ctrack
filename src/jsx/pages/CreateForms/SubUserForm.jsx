@@ -7,7 +7,7 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {subUserAccuntSchema} from '../../../yup'
-import { notifySuccess } from "../../../utils/toast";
+import { notifyError, notifySuccess } from "../../../utils/toast";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 

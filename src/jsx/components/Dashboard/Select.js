@@ -18,7 +18,6 @@ const CustomSelect = (props) => {
           fontSize: '12px',
           marginRight: '0.2rem',
           borderRadius: '8px',
-          height : '-20px',
           border: '1px solid #ccc',
           backgroundColor: 'white',
           textDecoration : 'none',
