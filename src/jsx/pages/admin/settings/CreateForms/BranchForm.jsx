@@ -17,8 +17,6 @@ const BranchForm = () => {
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
 
-
-
   const {
     register,
     formState: { errors },
@@ -31,6 +29,8 @@ const BranchForm = () => {
       activeIndex === 0 ? companyAccountSchema : companySettingSchema
     ),
   });
+
+  
 
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {

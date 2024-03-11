@@ -71,7 +71,7 @@ const Profile = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={filteredUserData[0]?.parentCompany}
+                defaultInputValue={filteredUserData[0]?.parentBranch}
               />
             )}
           />
