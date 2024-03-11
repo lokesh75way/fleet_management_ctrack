@@ -10,36 +10,21 @@ import useStorage from '../../../../hooks/useStorage'
 
 const AdminProfile = () => {
   const {checkRole} = useStorage()
-  const AdminData = {
-    admin:'Admin1',
-    country:'India',
-    state:"Punjab",
-    userName:"Admin1",
-    passwordRecoveryEmail:"Company1@gmail.com",
-    helpDeskEmail:"Company1help@gmail.com",
-    helpDeskTelephoneNumber:"9876543210",
-    mobileNumber:"1234567890",
-    whatsappContactNumber:"1234567890",
-    city:"Mohali",
-    zipCode:'301019',
-    street1:'C-3, fixed Building',
-    street2:'Near Time Square',
-  }
-
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Profile"];
   const component = [MyAccount];
   const totalTabs = tabHeading.length;
   const [isEdit, setIsEdit] = useState(false);
-  const role = checkRole();
 
-  const editData = AdminData
+  const allData = JSON.parse(localStorage.getItem('userJsonData'))
+  const editData = allData.find((data)=> data.userName === 'Admin')
+
   const {register, formState:{errors}, setValue, getValues, control, reset, handleSubmit} = useForm({
     resolver: yupResolver(adminProfileAccountSchema)
   })
 
   const onSubmit = (data)=>{
-      localStorage.setItem('adminData',data)
+      // localStorage.setItem('adminData',data)
   }
 
   return (

@@ -7,6 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 const MyAccount = ({
+  data,
   setValue,
   getValues,
   register,
@@ -27,8 +28,6 @@ const MyAccount = ({
     }),
   };
 
-const user = localStorage.getItem('loginDetails-email')
-console.log(getValues())
  
   return (
     <div className="p-4">
@@ -36,7 +35,7 @@ console.log(getValues())
       <div className="col-xl-6 mb-3">
           <label className="form-label">Admin</label>
           <Controller
-            name="businessUser"
+            name="parent"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
@@ -45,7 +44,8 @@ console.log(getValues())
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={'admin'}
+                options={[{value:data.parent, label:data.parent}]}
+                defaultValue={[{value:data.parent, label:data.parent}]}
                 isDisabled = {true}
               />
             )}
@@ -58,9 +58,9 @@ console.log(getValues())
             type="text"
             register={register}
             required
-            label="businessUser"
-            name="businessUser"
-            defaultValue={getValues('businessUser')}
+            label="Business Group Name"
+            name="userName"
+            defaultValue={data.userName}
             placeholder=""
           />
            <Error errorName={errors.businessUser} />
@@ -102,7 +102,7 @@ console.log(getValues())
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Short Name <span className="text-danger">*</span>
+            Short Name
           </label>
           <CustomInput
             type="text"
@@ -111,7 +111,7 @@ console.log(getValues())
             lable="Short Name"
             name="shortName"
             placeholder=""
-            defaultValue={getValues('shortName')}
+            // defaultValue={getValues('shortName')}
           />
           <Error errorName={errors.shortName} />
         </div>
@@ -188,31 +188,33 @@ console.log(getValues())
         )}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email</label>
+          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
-            defaultValue={getValues('passwordRecoveryEmail')}
+            // defaultValue={getValues('passwordRecoveryEmail')}
+            defaultValue={data.passwordRecoveryEmail}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email</label>
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={getValues('helpDeskEmail')}
+            // defaultValue={getValues('helpDeskEmail')}
+            defaultValue={data.helpDeskEmail}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number</label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -220,26 +222,28 @@ console.log(getValues())
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
-            defaultValue={getValues('helpDeskTelephoneNumber')}
+            // defaultValue={getValues('helpDeskTelephoneNumber')}
+            defaultValue={data.helpDeskTelephoneNumber}
 
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number</label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={getValues('mobileNumber')}
+            // defaultValue={getValues('mobileNumber')}
+            defaultValue={data.mobileNumber}
 
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -247,7 +251,8 @@ console.log(getValues())
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            defaultValue={getValues('whatsappContactNumber')}
+            // defaultValue={getValues('whatsappContactNumber')}
+            defaultValue={data.whatsappContactNumber}
 
           />
           <Error errorName={errors.whatsappContactNumber} />
@@ -262,7 +267,8 @@ console.log(getValues())
             label="City"
             name="city"
             placeholder=""
-            defaultValue={getValues('city')}
+            // defaultValue={getValues('city')}
+            defaultValue={data.city}
 
           />
           <Error errorName={errors.city} />
@@ -277,7 +283,8 @@ console.log(getValues())
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={getValues('zipCode')}
+            // defaultValue={getValues('zipCode')}
+            defaultValue={data.zipCode}
 
           />
           <Error errorName={errors.zipCode} />
@@ -292,7 +299,8 @@ console.log(getValues())
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={getValues('street1')}
+            // defaultValue={getValues('street1')}
+            defaultValue={data.street1}
 
           />
           <Error errorName={errors.street1} />
@@ -307,7 +315,8 @@ console.log(getValues())
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={getValues('street2')}
+            // defaultValue={getValues('street2')}
+            defaultValue={data.street2}
 
           />
         </div>

@@ -35,12 +35,24 @@ const useStorage = () => {
     const user = localStorage.getItem('loginDetails-email')
     return user;
   }
+  const checkUserName = ()=>{
+    const user = localStorage.getItem('loginDetails-name')
+    return user;
+  }
+  const getBranch = (name)=>{
+    const data = JSON.parse(localStorage.getItem('userJsonData'))
+    var count =0;
+    data.map((item)=>item.role === "branch" && item.parentCompany === name && ++count)
+    return count
+  }
 
   return {
     saveData,
     getData,
     checkRole,
     checkUser,
+    checkUserName,
+    getBranch
   }
 }
 
