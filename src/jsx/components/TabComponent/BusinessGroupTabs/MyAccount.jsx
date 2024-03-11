@@ -27,8 +27,6 @@ const MyAccount = ({
     }),
   };
 
-const user = localStorage.getItem('loginDetails-email')
-console.log(getValues())
  
   return (
     <div className="p-4">
@@ -102,7 +100,7 @@ console.log(getValues())
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Short Name <span className="text-danger">*</span>
+            Short Name
           </label>
           <CustomInput
             type="text"
@@ -188,7 +186,7 @@ console.log(getValues())
         )}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email</label>
+          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -200,7 +198,7 @@ console.log(getValues())
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email</label>
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -212,7 +210,7 @@ console.log(getValues())
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number</label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -226,7 +224,7 @@ console.log(getValues())
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number</label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -239,7 +237,7 @@ console.log(getValues())
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
