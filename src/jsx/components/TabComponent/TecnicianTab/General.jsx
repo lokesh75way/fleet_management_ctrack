@@ -5,9 +5,17 @@ import { Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
+import { useParams } from "react-router-dom";
 
-const General = ({ register, setValue, control, errors,getValues, handleSubmit, onSubmit}) => {
-  
+const General = ({
+  register,
+  setValue,
+  control,
+  errors,
+  getValues,
+  handleSubmit,
+  onSubmit,
+}) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
   const customStyles = {
@@ -16,11 +24,18 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const handleChange = (e)=>{
-    setSelectedOption(e.target.value)
-    setValue('fuelSensor', e.target.value)
-  }
+  const handleChange = (e) => {
+    setSelectedOption(e.target.value);
+    setValue("fuelSensor", e.target.value);
+  };
 
+  const { id } = useParams();
+
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+
+  const [filteredUserData, setFilteredUserData] = useState(newData);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -34,20 +49,24 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="First Name"
             name="firstName"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].firstName : ""
+            }
           />
           <Error errorName={errors.firstName} />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Middle Name 
-          </label>
+          <label className="form-label">Middle Name</label>
           <CustomInput
             type="text"
             register={register}
             label="middleName"
             name="middleName"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].middleName : ""
+            }
           />
         </div>
 
@@ -61,6 +80,9 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="Last Name"
             name="lastName"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].lastName : ""
+            }
           />
           <Error errorName={errors.lastName} />
         </div>
@@ -75,6 +97,9 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="Technician Number"
             name="technicianNumber"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].technicianNumber : ""
+            }
           />
           <Error errorName={errors.technicianNumber} />
         </div>
@@ -89,6 +114,7 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="Email"
             name="email"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].email : ""}
           />
           <Error errorName={errors.email} />
         </div>
@@ -100,14 +126,11 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
               <input
                 type="radio"
                 className="form-check-input"
-                value='male'
-                checked={selectedOption === 'male'}
+                value="male"
+                checked={selectedOption === "male"}
                 onChange={handleChange}
               />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
+              <label className="form-check-label" style={{ marginBottom: "0" }}>
                 Male
               </label>
             </div>
@@ -115,19 +138,16 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
               <input
                 type="radio"
                 className="form-check-input"
-                value='female'
-                checked={selectedOption === 'female'}
+                value="female"
+                checked={selectedOption === "female"}
                 onChange={handleChange}
               />
-              <label
-                className="form-check-label"
-                style={{ marginBottom: "0" }}
-              >
+              <label className="form-check-label" style={{ marginBottom: "0" }}>
                 Female
               </label>
             </div>
           </div>
-          {!getValues('gender') && <Error errorName={errors.gender} />}
+          {!getValues("gender") && <Error errorName={errors.gender} />}
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -140,8 +160,11 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="Mobile Number"
             name="mobileNumber"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
+            }
           />
-           <Error errorName={errors.mobileNumber} />
+          <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -153,11 +176,16 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
             label="Emergency Contact"
             name="emergencyContact"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].emergencyContact : ""
+            }
           />
           <Error errorName={errors.emergencyContact} />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Date of Join<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Date of Join<span className="text-danger">*</span>
+          </label>
           <Controller
             name="dateOfJoin"
             control={control}
@@ -165,14 +193,23 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
               <DatePicker
                 selected={getValues("dateOfJoin") || new Date()}
                 className="form-control"
-                onChange={(newValue) => {setTempValue(newValue); setValue("dateOfJoin", newValue)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue);
+                  setValue("dateOfJoin", newValue);
+                }}
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].dateOfJoin : ""
+                }
               />
             )}
           />
-          {!getValues('dateOfJoin') && <Error errorName={errors.dateOfJoin} />}
+          {!getValues("dateOfJoin") && <Error errorName={errors.dateOfJoin} />}
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label"> Date of Birth<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {" "}
+            Date of Birth<span className="text-danger">*</span>
+          </label>
           <Controller
             name="dateOfBirth"
             control={control}
@@ -180,14 +217,21 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
               <DatePicker
                 selected={getValues("dateOfBirth") || new Date()}
                 className="form-control"
-                onChange={(newValue) => {setTempValue(newValue); setValue("dateOfBirth", newValue)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue);
+                  setValue("dateOfBirth", newValue);
+                }}
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].dateOfBirth : ""
+                }
               />
             )}
           />
-          {!getValues('dateOfBirth') && <Error errorName={errors.dateOfBirth} />}
+          {!getValues("dateOfBirth") && (
+            <Error errorName={errors.dateOfBirth} />
+          )}
         </div>
-
-        </div>
+      </div>
       <div
         style={{
           width: "100%",
@@ -196,7 +240,14 @@ const General = ({ register, setValue, control, errors,getValues, handleSubmit, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
+          {" "}
+          Submit
+        </Button>
       </div>
     </div>
   );

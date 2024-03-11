@@ -16,7 +16,9 @@ import { useNavigate } from "react-router-dom";
 // }
 const SubUser = () => {
     const navigate = useNavigate();
-  const UserData = JSON.parse(localStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const UserData = userData.filter((item)=> item.role === 'admin' || item.role === 'company' || item.role === 'businessgroup')
+
   const [tableData, setTableData] = useState(UserData);
   const [editData, setEditData] = useState();
   const [data, setData] = useState(
@@ -95,9 +97,8 @@ const SubUser = () => {
                         <tr>
                           <th>ID</th>
                           <th>User Name</th>
-                          <th>Age</th>
                           <th>Mobile Number</th>
-                          <th>Experience</th>
+                          <th>Email</th>
                           <th>Location</th>
                           <th>Branches</th>
                           <th>Action</th>
@@ -122,15 +123,13 @@ const SubUser = () => {
                                 </div>
                               </div>
                             </td>
-                            <td>
-                              <span>{item.age}</span>
-                            </td>
+                         
                             <td>
                               <span>{item.mobileNumber}</span>
                             </td>
                             <td>
                               <span className="text-primary">
-                                {item.experience}
+                                {item.email}
                               </span>
                             </td>
                             <td>

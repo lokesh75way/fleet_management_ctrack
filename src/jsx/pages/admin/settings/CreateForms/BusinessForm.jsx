@@ -20,10 +20,10 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
 
   // Fetch data from local storage when the id changes
   useEffect(() => {
-    const existingData = JSON.parse(localStorage.getItem("businessData"));
+    const existingData = JSON.parse(localStorage.getItem("userJsonData"));
     console.log(existingData, id)
-    const businessData = existingData.find((item) => item.id === id);
-    console.log(businessData, 'nus')
+    const businessData = existingData.find((item) => item.id === parseInt(id, 10));
+    console.log(businessData, 'nuslkasd')
     if (businessData) {
       reset(businessData);
     }
@@ -47,18 +47,17 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingData = JSON.parse(localStorage.getItem("businessData"));
-        data.id = `${existingData.length + 1}`;
-        existingData.push(data);
-        localStorage.setItem("businessData", JSON.stringify(existingData));
+        const existingUserData = JSON.parse(localStorage.getItem("userJsonData"));
+        data.id = `${existingUserData.length + 1}`;
+        data.role = 'businessgroup';
+        existingUserData.push(data);
+        localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
         notifySuccess("Saved !");
         navigate("/business");
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
-      
-      
     }
     
     notifySuccess("Saved !");
