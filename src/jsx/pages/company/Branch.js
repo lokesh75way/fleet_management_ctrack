@@ -23,7 +23,6 @@ const Branch = () => {
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ",
       marginRight: "1rem",
       marginLeft: "1rem",
       width: "15rem",
@@ -177,6 +176,7 @@ const Branch = () => {
                       <Link
                         to={"/branch/create"}
                         className="btn btn-primary btn-sm ms-1"
+                        style={{paddingBlock : '9px'}}
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subCompany.current.showModal()}
                       >

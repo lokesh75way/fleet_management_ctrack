@@ -18,6 +18,10 @@ const DriverForm = () => {
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
   const { id } = useParams();
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const newData = userData.filter((data) => data.id == parseInt(id, 10));
+  const [filteredUserData, setFilteredUserData] = useState(newData);
+  console.log(filteredUserData);
   const {
     register,
     formState: { errors },
@@ -26,11 +30,15 @@ const DriverForm = () => {
     control,
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      branch: filteredUserData[0]?.parentBranch || "",
+      company: filteredUserData[0]?.parentCompany || "",
+      business: filteredUserData[0]?.parentBusinessGroup || "",
+    },
     resolver: yupResolver(
       activeIndex === 0 ? driverProfileSchema : driverInfoSchema
     ),
   });
-
 
   const onSubmitHanlder = (data) => {
     if (activeIndex === totalTabs - 1) {
@@ -41,11 +49,13 @@ const DriverForm = () => {
           const indexToUpdate = val.findIndex((item) => item.id == id);
           if (indexToUpdate !== -1) {
             val[indexToUpdate] = {
+              ...filteredUserData[0],
               ...data,
               id,
               Designation: "Driver",
               role: "user",
             };
+
             localStorage.setItem("userJsonData", JSON.stringify(val));
             notifySuccess("Driver Updated!");
             navigate("/driver");
@@ -73,7 +83,7 @@ const DriverForm = () => {
     <>
       <MainPagetitle
         mainTitle="Driver"
-        pageTitle={"Create"}
+        pageTitle={id ? "edit" : "create"}
         parentTitle={"Driver"}
       />
       <div className="m-2 p-2">

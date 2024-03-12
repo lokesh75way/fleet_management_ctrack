@@ -285,6 +285,9 @@ const AppProfile = () => {
   console.log(editData)
   
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+    defaultValues :{
+      userName : "Rajveersf",
+    },
     resolver: yupResolver(adminProfileAccountSchema)
   })
 

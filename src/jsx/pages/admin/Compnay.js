@@ -37,7 +37,6 @@ const Company = () => {
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ",
       marginRight: "1rem",
       marginLeft: "1rem",
       width: "15rem",
@@ -170,6 +169,7 @@ const Company = () => {
                         to={"/company/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
+                        style={{paddingBlock : '9px'}}
                         // onClick={()=>company.current.showModal()}
                       >
                         + Add Company

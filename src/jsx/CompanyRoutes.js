@@ -17,6 +17,7 @@ import Loader from "./components/Loader";
 import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
+import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 
 
 const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
@@ -329,6 +330,9 @@ const CompanyRoutes = () => {
     { url: "groups", component: <CreateGroups /> },
     { url: "permission", component: <Permission /> },
 
+    // drivers
+    { url: "driver/edit/:id", component: <DriverForm /> },
+    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
   ];
 
 
