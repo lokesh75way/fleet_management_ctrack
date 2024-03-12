@@ -44,7 +44,7 @@ console.log(getValues())
               <Select
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
-                  setValue("admin", newValue.label);
+                  setValue("admin", "Admin");
                 }}
                 ref={ref}
                 name={name}

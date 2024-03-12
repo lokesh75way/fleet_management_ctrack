@@ -23,7 +23,7 @@ const UpdateVehicleForm = React.lazy(() =>
   import("./pages/admin/settings/EditForm/UpdateVehicleForm")
 );
 const UpdateCompanyForm = React.lazy(() =>
-  import("./pages/admin/settings/EditForm/UpdateCompanyForm")
+  import("./pages/admin/settings/CreateForms/CompanyForm")
 );
 
 const Performance = React.lazy(() =>
@@ -122,7 +122,7 @@ const AdminRoutes = () => {
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
     { url: "company/create", component: <CompanyForm /> },
-    { url: "company/edit/:id", component: <UpdateCompanyForm /> },
+    { url: "company/edit/:id", component: <CompanyForm /> },
  
     { url: "business/create", component: <BusinessForm /> },
     { url: "business/edit/:id", component: <BusinessForm  /> },

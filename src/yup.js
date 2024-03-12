@@ -64,7 +64,7 @@ export const resetPassword = yup.object().shape({
 export const companyAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    company: yup.string().required("Company Name is required !!"),
+    parent: yup.string().required("Please select a option"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup.number().required("Zip Code is required !!"),
@@ -74,6 +74,7 @@ export const companyAccountSchema = yup
     oldPassword: yup.string().min(8, "Password must be at least 8 characters")
     .max(20, "Password must be at most 20 characters"),
     passwordRecoveryEmail: yup.string().email().required("Password Recovery Email is required !!"),
+    email: yup.string().email().required("Email is required !!"),
     helpDeskEmail: yup.string().email().required("Help Desk Email is required !!"),
     newPassword: yup
       .string()
@@ -170,7 +171,7 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    admin:yup.string().required("Please select the field"),
+    // admin:yup.string().required("Please select the field"),
     userName: yup.string().required("Please enter a User Name"),
     businessUser: yup.string().required("Business Group Name is required !!"),
     country: yup.string().required("Please select a Country"),
