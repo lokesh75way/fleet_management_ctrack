@@ -11,7 +11,7 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
-  const {checkRole, checkUser} = useStorage()
+  const {checkRole, checkUserName} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
@@ -37,9 +37,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
 
 
   const { id } = useParams();
-    const companyData = JSON.parse(localStorage.getItem('companyData'))
+    const companyData = JSON.parse(localStorage.getItem('userJsonData'))
   
-    const newData = companyData.filter(data => data.id === id);
+    const newData = companyData.filter(data => data.id.toString() === id);
   
     const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
   
@@ -47,9 +47,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Parent<span className="text-danger">*</span></label>
+          <label className="form-label">Business Group<span className="text-danger">*</span></label>
           {
-          <Controller
+          checkRole() === "admin" ?<Controller
             name="parent"
             control={control}
             rules={{ required: true }}
@@ -63,7 +63,23 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 defaultValue={businessUserOptions[0]}
               />
             )}
-          />}
+          />:
+          <Controller
+            name="parent"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
+                options={[{value:checkUserName(),label:checkUserName()}]}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={[{value:checkUserName(),label:checkUserName()}]} 
+              />
+            )}
+          />
+          }
           { !getValues('parent') && <Error errorName={errors.parent} />}
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -212,6 +228,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ''}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -223,6 +240,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             className="form-control"
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskTelephoneNumber : ''}
             placeholder=""
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
@@ -248,6 +266,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].whatsappContactNumber : ''}
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -261,6 +280,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="City"
             name="city"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].city : ''}
           />
           <Error errorName={errors.city} />
         </div>
@@ -288,6 +308,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Street1"
             name="street1"
             placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].street1 : ''}
           />
           <Error errorName={errors.street1} />
         </div>
