@@ -1,13 +1,10 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../Modal/DeleteModal";
-import { Link } from "react-router-dom";
-import { IMAGES, SVGICON } from "../../constant/theme";
-import useStorage from "../../../hooks/useStorage";
+import DeleteModal from '../Modal/DeleteModal';
+import { IMAGES } from "../../constant/theme";
 
-const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  const {getCompany} = useStorage()
+const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
   return (
     <>
       {tableData.map((item, index) => (
@@ -24,6 +21,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
               />
               <div>
                 <h6>{item.userName}</h6>
+                <span>Web Designer</span>
               </div>
             </div>
           </td>
@@ -32,29 +30,24 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             <span>{item.mobileNumber}</span>
           </td>
           <td>
-            <span>{item.email}</span>
+            <span className="text-primary">{item.email}</span>
           </td>
           <td>
             <span>{item.country}</span>
           </td>
           <td>
-            <Link
-              to={`/company/${item.id}`}
-              className="text-primary badge light border-0 badge-count"
-            >
-              {getCompany(item.userName)}
-            </Link>
-          </td>
-
-          <td>
             <span className="d-flex justify-content-center">
               <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item)}
+                onClick={() => editDrawerOpen(item.id)}
               >
-                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+                <FaEdit
+                  style={{
+                    color: "green",
+                    fontSize: "1.2rem",
+                  }}
+                />
               </span>
-
               <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
@@ -70,4 +63,4 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   );
 };
 
-export default BusinessTable;
+export default SubUserTable;

@@ -50,6 +50,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         const existingUserData = JSON.parse(localStorage.getItem("userJsonData"));
         data.id = `${existingUserData.length + 1}`;
         data.role = 'businessgroup';
+        data.parent = 'admin';
         existingUserData.push(data);
         localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
         notifySuccess("New Business Group Created !");

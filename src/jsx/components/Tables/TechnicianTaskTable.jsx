@@ -11,10 +11,8 @@ const TechnicianTaskTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
                             <div>
                                 <h6>{item.taskName}</h6>
-                                <span>Web Designer</span>
                             </div>
                         </div>
                     </td>

@@ -113,7 +113,6 @@ const BusinessUser = () => {
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Parent</th>
                           <th>Business User</th>
                           <th>Mobile Number</th>
                           <th>Email</th>

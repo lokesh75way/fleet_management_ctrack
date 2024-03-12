@@ -41,6 +41,12 @@ export const distanceCounterOptions = [
   { value: "Relative Odometer", label: "Relative Odometer" },
   { value: "Tachograph", label: "Tachograph" },
 ];
+export const featureTemplateOptions = [
+  { value: "Template 1", label: "Template 1" },
+  { value: "Template 2", label: "Template 2" },
+  { value: "Template 3", label: "Template 3" },
+  { value: "Template 4", label: "Template 4" },
+];
 export const unitOfDistanceOptions = [
   { value: "Kilometer", label: "Kilometer" },
   { value: "Mile", label: "Mile" },
@@ -111,11 +117,6 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
 
-export const leaveTimeOptions = [
-  { value: "CL", label: "CL" },
-  { value: "PL", label: "PL" },
-  { value: "SL", label: "SL" },
-];
 export const ObjectOptions = [
   { value: "Test1", label: "Test1" },
   { value: "Test2", label: "Test2" },

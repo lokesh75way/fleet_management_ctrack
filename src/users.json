@@ -1001,6 +1001,390 @@
     "street1":"Chandigarh tower"
   }
   ,{
-  
+    "id":53,
+    "userName":"Mukesh Rana",
+    "email":"mukesh@gmail.com",
+    "type":"admin",
+"mobileNumber":"1234567890",
+    "role":"user",
+    "parent":"admin",
+    "country":"India",
+    "state":"Tamil Nadu"
+  },
+  {
+    "id":54,
+    "userName": "Santosh Markus",
+    "email": "santosh@gmail.com",
+    "type":"admin",
+"mobileNumber":"1234567890",
+    "role": "user",
+    "parent": "admin",
+    "country": "United States",
+    "state": "California"
+  },
+  {
+    "id":55,
+    "userName": "Ronalt Fin",
+    "email": "ronalt@gmail.com",
+    "type":"admin",
+"mobileNumber":"1234567890",
+    "role": "user",
+    "parent": "admin",
+    "country": "Canada",
+    "state": "Ontario"
+  },
+  {
+    "id":56,
+    "userName": "Tom Klone",
+    "email": "tom@gmail.com",
+    "type":"admin",
+"mobileNumber":"1234567890",
+    "role": "user",
+    "parent": "admin",
+    "country": "United Kingdom",
+    "state": "London"
+  },
+  {
+    "id":57,
+    "userName": "Mat Grow",
+    "email": "mat@gmail.com",
+    "type":"admin",
+"mobileNumber":"1234567890",
+    "role": "user",
+    "parent": "admin",
+    "country": "Australia",
+    "state": "New South Wales"
   }
+  ,
+  {
+    "id": 58,
+    "userName": "Tom Wade",
+    "email": "tom@gmail.com",
+    "country": "United States",
+    "state": "California",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group1"
+  },
+  {
+    "id": 59,
+    "userName": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "country": "Canada",
+    "state": "Ontario",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group1"
+  },
+  {
+    "id": 60,
+    "userName": "Michael Smith",
+    "email": "michael.smith@example.com",
+    "country": "United Kingdom",
+    "state": "London",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group1"
+  },
+  {
+    "id": 61,
+    "userName": "Emily Brown",
+    "email": "emily.brown@example.com",
+    "country": "Australia",
+    "state": "New South Wales",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group2"
+  },
+  {
+    "id": 62,
+    "userName": "Jack Wilson",
+    "email": "jack.wilson@example.com",
+    "country": "Germany",
+    "state": "Berlin",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group2"
+  },
+  {
+    "id": 63,
+    "userName": "Sophia Martinez",
+    "email": "sophia.martinez@example.com",
+    "country": "France",
+    "state": "Paris",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group2"
+  },
+  {
+    "id": 64,
+    "userName": "William Anderson",
+    "email": "william.anderson@example.com",
+    "country": "Italy",
+    "state": "Rome",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group3"
+  },
+  {
+    "id": 65,
+    "userName": "Olivia Taylor",
+    "email": "olivia.taylor@example.com",
+    "country": "Spain",
+    "state": "Madrid",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group3"
+  },
+  {
+    "id": 66,
+    "userName": "Benjamin Thomas",
+    "email": "benjamin.thomas@example.com",
+    "country": "Brazil",
+    "state": "Sao Paulo",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group3"
+  },
+  {
+    "id": 67,
+    "userName": "Isabella Hernandez",
+    "email": "isabella.hernandez@example.com",
+    "country": "China",
+    "state": "Beijing",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group4"
+  },
+  {
+    "id": 68,
+    "userName": "James Lee",
+    "email": "james.lee@example.com",
+    "country": "Japan",
+    "state": "Tokyo",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group4"
+  },
+  {
+    "id": 69,
+    "userName": "Charlotte Garcia",
+    "email": "charlotte.garcia@example.com",
+    "country": "Russia",
+    "state": "Moscow",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group4"
+  },
+  {
+    "id": 70,
+    "userName": "Logan Rodriguez",
+    "email": "logan.rodriguez@example.com",
+    "country": "India",
+    "state": "Maharashtra",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group5"
+  },
+  {
+    "id": 71,
+    "userName": "Amelia Wilson",
+    "email": "amelia.wilson@example.com",
+    "country": "United States",
+    "state": "Texas",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group5"
+  },
+  {
+    "id": 72,
+    "userName": "Liam Brown",
+    "email": "liam.brown@example.com",
+    "country": "Canada",
+    "state": "Quebec",
+    "type":"businessgroup",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Business Group5"
+  },
+  {
+    "id": 73,
+    "userName": "Emma Moore",
+    "email": "emma.moore@example.com",
+    "country": "United Kingdom",
+    "state": "Manchester",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company1"
+  },
+  {
+    "id": 74,
+    "userName": "Noah Perez",
+    "email": "noah.perez@example.com",
+    "country": "Australia",
+    "state": "Victoria",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company1"
+  },
+  {
+    "id": 75,
+    "userName": "Ava Gonzalez",
+    "email": "ava.gonzalez@example.com",
+    "country": "Germany",
+    "state": "Hamburg",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company1"
+  },
+  {
+    "id": 76,
+    "userName": "William Lopez",
+    "email": "william.lopez@example.com",
+    "country": "France",
+    "state": "Lyon",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company2"
+  },
+  {
+    "id": 77,
+    "userName": "Sophia Taylor",
+    "email": "sophia.taylor@example.com",
+    "country": "Italy",
+    "state": "Milan",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company2"
+  },
+  {
+    "id": 78,
+    "userName": "James Hernandez",
+    "email": "james.hernandez@example.com",
+    "country": "Spain",
+    "state": "Barcelona",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company2"
+  },
+  {
+    "id": 79,
+    "userName": "Olivia Martinez",
+    "email": "olivia.martinez@example.com",
+    "country": "Brazil",
+    "state": "Rio de Janeiro",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company3"
+  },
+  {
+    "id": 80,
+    "userName": "Logan Rodriguez",
+    "email": "logan.rodriguez@example.com",
+    "country": "China",
+    "state": "Shanghai",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company3"
+  },
+  {
+    "id": 81,
+    "userName": "Isabella Lee",
+    "email": "isabella.lee@example.com",
+    "country": "Japan",
+    "state": "Osaka",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company3"
+  },
+  {
+    "id": 82,
+    "userName": "Liam Hernandez",
+    "email": "liam.hernandez@example.com",
+    "country": "Russia",
+    "state": "Saint Petersburg",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company4"
+  },
+  {
+    "id": 83,
+    "userName": "Charlotte Smith",
+    "email": "charlotte.smith@example.com",
+    "country": "India",
+    "state": "Uttar Pradesh",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company4"
+  },
+  {
+    "id": 84,
+    "userName": "Elijah Brown",
+    "email": "elijah.brown@example.com",
+    "country": "United States",
+    "state": "Florida",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company4"
+  },
+  {
+    "id": 85,
+    "userName": "Ava Wilson",
+    "email": "ava.wilson@example.com",
+    "country": "Canada",
+    "state": "Alberta",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company5"
+  },
+  {
+    "id": 86,
+    "userName": "Oliver Perez",
+    "email": "oliver.perez@example.com",
+    "country": "United Kingdom",
+    "state": "Birmingham",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company5"
+  },
+  {
+    "id": 87,
+    "userName": "Sophia Johnson",
+    "email": "sophia.johnson@example.com",
+    "country": "Australia",
+    "state": "Queensland",
+    "type":"company",
+"mobileNumber":"9876543210",
+    "role": "user",
+    "parent": "Company5"
+  }
+  
 ]
