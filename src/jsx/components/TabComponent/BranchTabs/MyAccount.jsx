@@ -187,7 +187,7 @@ const MyAccount = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-            defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
+            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
             
           />
           {!getValues("country") && <Error errorName={errors.country} />}
@@ -206,7 +206,7 @@ const MyAccount = ({
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-              defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].state : "" }}
+              // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].state : "" }}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
