@@ -19,7 +19,6 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
-  const [isCheckCP, setIsCheckCP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -229,142 +228,6 @@ const MyAccount = ({
           <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Change Password</label>
-          <div className="form-check custom-checkbox mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="customCheckBox1"
-              onClick={() => setIsCheckCP(!isCheckCP)}
-            />
-          </div>
-        </div>
-        {isCheckCP && (
-          <>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Old Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                name="oldPassword"
-                label="Old Password"
-                placeholder=""
-              />
-              <Error errorName={errors.oldPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                New Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="New Password"
-                name="newPassword"
-                placeholder=""
-              />
-              <Error errorName={errors.newPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Retype Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="Retype Passwor"
-                name="retypePassword"
-                placeholder=""
-              />
-              <Error errorName={errors.retypePassword} />
-            </div>
-          </>
-        )}
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Password Recovery Email<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="email"
-            register={register}
-            label="Password Recovery Email"
-            name="passwordRecoveryEmail"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ""
-            }
-            
-          />
-          <Error errorName={errors.passwordRecoveryEmail} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Help Desk Email<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="email"
-            register={register}
-            name="helpDeskEmail"
-            label="Help Desk Email"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ""
-            }
-            
-          />
-          <Error errorName={errors.helpDeskEmail} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Help Desk Telephone Number<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            className="form-control"
-            label="Help Desk Telephone Number"
-            name="helpDeskTelephoneNumber"
-            placeholder=""
-            
-          />
-          <Error errorName={errors.helpDeskTelephoneNumber} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Mobile Number<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            name="mobileNumber"
-            label="Mobile Number"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
-            }
-          />
-          <Error errorName={errors.mobileNumber} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Whatsapp Contact Number<span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            className="form-control"
-            label="Whatsapp Contact Number"
-            name="whatsappContactNumber"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].whatsappContactNumber : ""
-            }
-          />
-          <Error errorName={errors.whatsappContactNumber} />
-        </div>
-        <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             City<span className="text-danger">*</span>
           </label>
@@ -422,28 +285,6 @@ const MyAccount = ({
             register={register}
             label="Street2"
             name="street2"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Contact Person</label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Contact Person"
-            name="contactPerson"
-            placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput4" className="form-label">
-            Fax Number
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            label="Fax Number"
-            name="faxNumber"
             placeholder=""
           />
         </div>

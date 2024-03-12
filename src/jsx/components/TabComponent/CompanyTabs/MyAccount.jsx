@@ -15,7 +15,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
-  const [isCheckCP, setIsCheckCP] = useState(false);
 
   const customStyles = {
     control: (base) => ({
@@ -139,62 +138,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Change Password</label>
-          <div className="form-check custom-checkbox mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="customCheckBox1"
-              onClick={() => setIsCheckCP(!isCheckCP)}
-            />
-          </div>
-        </div>
-        {isCheckCP && (
-          <>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Old Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                name="oldPassword"
-                label="Old Password"
-                placeholder=""
-                defaultValue={filteredCompanyData[0].oldPassword}
-                
-              />
-              <Error errorName={errors.oldPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                New Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="New Password"
-                name="newPassword"
-                placeholder=""
-              />
-              <Error errorName={errors.newPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Retype Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="Retype Passwor"
-                name="retypePassword"
-                placeholder=""
-              />
-              <Error errorName={errors.retypePassword} />
-            </div>
-          </>
-        )}
         
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Email<span className="text-danger">*</span></label>

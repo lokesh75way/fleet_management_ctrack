@@ -9,11 +9,12 @@ import UserSetting from "../../../../components/TabComponent/BranchTabs/UserSett
 import { yupResolver } from "@hookform/resolvers/yup";
 import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 
 const BranchForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Branch", "Setting"];
-  const component = [MyAccount, UserSetting];
+  const tabHeading = ["New Branch", "Setting","Change Password"];
+  const component = [MyAccount, UserSetting,ManagePassword];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate();
   const { id } = useParams();

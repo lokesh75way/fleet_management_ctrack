@@ -175,7 +175,7 @@ export const businessGroupAccountSchema = yup
     city: yup.string().required('Please enter a City !!'),
     street1: yup.string().required('Please enter street1 address !!'),
     state: yup.string().required("Please select a State"),
-    oldPassword: yup.string(),
+    oldPassword: yup.string().required("Please enter the old password"),
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")

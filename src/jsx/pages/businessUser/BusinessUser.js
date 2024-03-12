@@ -94,7 +94,7 @@ const BusinessUser = () => {
                           pathname: "/business/create",
                           state: { editData },
                         }}
-                        className="btn btn-primary btn-sm ms-1"
+                        className="btn btn-primary btn-sm ms-1 p-2"
                         data-bs-toggle="offcanvas"
                       >
                         + Add Business User
