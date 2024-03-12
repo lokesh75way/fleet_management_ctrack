@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, use, useNavigate } from "react-router-dom";
+import { Link, use, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -38,24 +38,38 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
         : technicianLeaveSchema
     ),
   });
-
+  const { id } = useParams();
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-        data.id = existingData.length + 1;
-        data.Designation = 'Technician'
-        existingData.push(data);
-        localStorage.setItem("userJsonData", JSON.stringify(existingData));
-        notifySuccess("Technician Added Successfully !!");
-        navigate("/technician");
-        return;
+        if (id) {
+          const val = JSON.parse(localStorage.getItem("userJsonData"));
+          const indexToUpdate = val.findIndex((item) => item.id == id);
+          if (indexToUpdate !== -1) {
+            val[indexToUpdate] = { ...data, id, Designation: "Technician" };
+            localStorage.setItem("userJsonData", JSON.stringify(val));
+            notifySuccess("Technician Updated!");
+            navigate("/technician");
+          }
+          return;
+        } else {
+          data = { ...data, Designation: "Technician" };
+          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+          data.id = existingData.length + 1;
+          existingData.push(data);
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          // notifySuccess("Branch Added Successfully !!");
+          notifySuccess("New Technician Created!");
+          navigate("/technician");
+          return;
+        }
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
+    notifySuccess('Saved !')
     console.log(data);
-    
   };
   return (
     <>
