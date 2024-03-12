@@ -31,7 +31,6 @@ const BranchForm = () => {
   });
 
   const onSubmit = (data) => {
-    console.log("hello world")
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
@@ -39,7 +38,7 @@ const BranchForm = () => {
 
           const indexToUpdate = val.findIndex((item) => item.id == id);
           if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id };
+            val[indexToUpdate] = { ...data, id , role : "branch"};
             localStorage.setItem("userJsonData", JSON.stringify(val));
             notifySuccess("Branch Updated!");
             navigate("/branch");

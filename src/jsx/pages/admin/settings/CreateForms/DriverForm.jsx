@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -17,7 +17,7 @@ const DriverForm = () => {
   const tabHeading = ["Profile", "Additional Info", "Document"];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
-
+  const { id } = useParams();
   const {
     register,
     formState: { errors },
@@ -31,29 +31,43 @@ const DriverForm = () => {
     ),
   });
 
-  function generateRandomId() {
-    const timestamp = Date.now().toString(36); // Convert current timestamp to base36 string
-    const randomStr = Math.random().toString(36).substr(2, 5); // Generate random string
-    return timestamp + "-" + randomStr; // Combine timestamp and random string
-  }
 
   const onSubmitHanlder = (data) => {
-    console.log("Hello world")
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingData = JSON.parse(localStorage.getItem("driverData"));
-        data.id = generateRandomId();
-        existingData.push(data);
-        localStorage.setItem("driverData", JSON.stringify(existingData));
-        navigate("/Driver");
-        return;
+        if (id) {
+          const val = JSON.parse(localStorage.getItem("userJsonData"));
+          console.log(id);
+          const indexToUpdate = val.findIndex((item) => item.id == id);
+          if (indexToUpdate !== -1) {
+            val[indexToUpdate] = {
+              ...data,
+              id,
+              Designation: "Driver",
+              role: "user",
+            };
+            localStorage.setItem("userJsonData", JSON.stringify(val));
+            notifySuccess("Driver Updated!");
+            navigate("/driver");
+          }
+          return;
+        } else {
+          data = { ...data, designation: "Driver", role: "user" };
+          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+          data.id = existingData.length + 1;
+          existingData.push(data);
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          // notifySuccess("Branch Added Successfully !!");
+          notifySuccess("New Driver Created!");
+          navigate("/driver");
+          return;
+        }
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
-    notifySuccess("Saved !");
-    console.log(data);
-    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    console.log("data from drivers", data);
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>

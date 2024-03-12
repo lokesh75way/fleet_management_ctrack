@@ -41,13 +41,18 @@ const UpdateDriverForm = () => {
       try {
         if (id) {
           const val = JSON.parse(localStorage.getItem("userJsonData"));
-
+          console.log(id);
           const indexToUpdate = val.findIndex((item) => item.id == id);
           if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id };
+            val[indexToUpdate] = {
+              ...data,
+              id,
+              designation: "driver",
+              role: "user",
+            };
             localStorage.setItem("userJsonData", JSON.stringify(val));
             notifySuccess("Driver Updated!");
-            navigate("/driver");
+            // navigate("/driver");
           }
           return;
         } else {

@@ -10,6 +10,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawer
   if(tempValue){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
+  console.log("In table company",tableData)
     return (
       <>
         {filterData.map((item, index) => (

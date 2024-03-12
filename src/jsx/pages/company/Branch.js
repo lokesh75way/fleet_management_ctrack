@@ -46,6 +46,7 @@ const Branch = () => {
     usergroup: "",
     branches: 0,
   });
+  console.log(tableData)
 
   const sort = 10;
   const activePag = useRef(0);
@@ -89,25 +90,6 @@ const Branch = () => {
     // company.current.showModal();
   };
 
-  // const editDrawerOpen = (item)=>{
-  //     console.log(item)
-  //     tableData.map((table)=>(
-  //         table.id === item && setEditData(table)
-  //         ))
-  //         console.log(item)
-  //         subCompany.current.showModal();
-  //     }
-  //     const handleSubmit=(e)=>{
-  //         e.preventDefault();
-  //         const updateTable = tableData.map((table)=>{
-  //             if(table.id === editData.id) {
-  //                 console.log(table.id)
-  //                 return {...table, ...editData };
-  //             }
-  //             return table;
-  //         })
-  //         setTableData(updateTable)
-  //     }
   const invite = useRef();
   const subCompany = useRef();
   const d = JSON.parse(localStorage.getItem('userJsonData'))
