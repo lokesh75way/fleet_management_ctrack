@@ -32,39 +32,68 @@ export const CompanyMenuList = [
   },
   {
     title: "Technician",
-    iconStyle: <FaTools style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/technician",
-  },
-  {
-    title: "Driver",
-    iconStyle: <GrUserPolice style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/driver",
+    iconStyle: (
+      <FaTools
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    content: [
+      {
+        title: "Technician Details",
+        to: "/technician",
+      },
+      {
+        title: "Technician Tasks",
+        to: "/technicianTask",
+      },
+    ],
   },
   {
     title: "Vehicle",
-    iconStyle: <FaCar style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    iconStyle: (
+      <FaCar
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
     to: "/vehicle",
   },
-  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
-    title: "Driver Tracking",
-    iconStyle: <BsPinMap style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "driver-tracking",
+    title: "Driver",
+    iconStyle: (
+      <GrUserPolice
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/driver",
   },
   {
-    title: "Technician Tasks",
-    iconStyle: <BiTask style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/technicianTask",
-  },
-  {
-    title: "Alerts",
-    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/alert",
-  },
-  {
-    title: "Expense",
-    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
-    to: "/expense",
+    title: "Reports",
+    iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/reports",
   },
   {
     title: "Feature Template",
@@ -72,81 +101,26 @@ export const CompanyMenuList = [
     to: "/groups",
   },
   {
+    title: "Alerts",
+    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/alert",
+  },
+  {
     title: "Geofence",
     iconStyle: <TbFence style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to: "/geofence",
   },
   {
+    title: "Expense",
+    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
+    to: "/expense",
+  },
+ 
+ 
+  {
     title: "Classify Trips",
     iconStyle: <BiTrip style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to: "/classifyTrips",
-  },
-  // {
-  //   title: "Reports",
-  //   iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-  //   to: "/reports",
-  // },
-  {
-    title: "Reports",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Reports,
-    content: [
-      {
-        title: "Activity",
-        to: "/reports/activity",
-      },
-      {
-        title: "Geofence-Address",
-        to: "/reports/geofence-address",
-      },
-      {
-        title: "Alert",
-        to: "/alert",
-      },
-      {
-        title: "Expense",
-        to: "/expense",
-      },
-      {
-        title: "Fuel",
-        to: "/reports/fuel",
-      },
-      {
-        title: "Temperature",
-        to: "/reports/temperature",
-      },
-      {
-        title: "Driver Behaviour",
-        to: "/reports/driver-behaviour",
-      },
-    ],
-  },
-  {
-    title: "Charts",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Charts,
-    content: [
-      {
-        title: "Activity",
-        to: "/charts/activity",
-      },
-      {
-        title: "Alert",
-        to: "/charts/alert",
-      },
-      {
-        title: "Fuel",
-        to: "/charts/fuel",
-      },
-      {
-        title: "Expense",
-        to: "/charts/expense",
-      },
-      {
-        title: "Temperature Chart",
-        to: "/charts/temperature-chart",
-      },
-    ],
   },
 
 ]
