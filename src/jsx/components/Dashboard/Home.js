@@ -44,11 +44,16 @@ import FleetIdleTable from "../table/FleetIdleTable";
 import MaintenanceReminderTable from "../table/MaintenanceReminderTable";
 import ApexBar3 from "../charts/apexcharts/Bar3";
 import LineChart1 from "../charts/Chartjs/line1";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Import the styles for the DatePicker
+import ChartPie from "../charts/Chartjs/pie";
+import DualLine from "../charts/Chartjs/dualLine";
 import {
   Sparklines,
   SparklinesLine,
   SparklinesReferenceLine,
 } from "react-sparklines";
+import BarChart5 from "../charts/Chartjs/bar5";
 
 const speed = {
   data: [
@@ -87,6 +92,8 @@ const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [data, setData] = useState({});
   const [selectedDataTable, setSelectedDataTable] = useState(null);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const openModal = (dataTableComponent, title) => {
     setSelectedDataTable(dataTableComponent);
@@ -98,6 +105,10 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
+  const dateRangeText = startDate && endDate
+    ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+    : "Select Date Range";
+
   return (
     <>
       {/* Modal component */}
@@ -106,24 +117,84 @@ const Home = () => {
           {selectedDataTable && React.cloneElement(selectedDataTable, { data })}
         </Model>
       )}
+
       <MainPagetitle
         mainTitle="Dashboard"
         pageTitle="Dashboard"
         parentTitle="Home"
-      />
+      >
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+          <div
+            className="d-flex justify-content-between align-items-center gap-2"
+            style={{ marginRight: "10px", width:'200px' }}
+          >
+            <label className="mr-2 mt-2 justify-content-between align-items-center">
+              Date:
+            </label>
+            <DatePicker
+              className="form-control"
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              onChange={(dates) => {
+                const [start, end] = dates;
+                setStartDate(start);
+                setEndDate(end);
+              }}
+              placeholderText={dateRangeText}
+            />
+
+          </div>
+        </div>
+      </MainPagetitle>
+
       <div className="fluid container mt-3 mw-100">
-        <div className="row" style={{ marginRight: "0.0rem" }}>
-          <div className="col-xl-6 col-sm-12">
+        <div className="row " style={{ marginRight: "0.0rem" }}>
+          <div className="col-xl-12 wid-100">
+            <div className="row" style={{padding:'1px'}}>
+              <CardWidget />
+            </div>
+          </div>
+
+          <div className="col-xl-7 col-sm-12">
+            <div className="card same-card p-2">
+              <div className="d-flex justify-content-between">
+                <p className="text-black text-md">Fleet Usage</p>
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  {/* <Select /> */}
+                </div>
+              </div>
+              <EarningBlog />
+
+              {/* <div className="mt-5">
+                <p>
+                  Total Fleet Usage:{" "}
+                  <span className="text-black">72.97 km</span>
+                </p>
+                <p>
+                  Avg. Distance / Object:{" "}
+                  <span className="text-black">72.97 km</span>
+                </p>
+              </div> */}
+              {/* <div className="mt-3"><GradientArea /></div> */}
+            </div>
+          </div>
+          <div className="col-xl-5 col-sm-12">
             <div className="card same-card p-2">
               <div className="d-flex justify-content-between">
                 <p className="text-black text-md">Fleet Status</p>
               </div>
 
-              <div className="card-body d-flex align-items-center  py-2">
+              <div className="card-body d-flex justify-content-center align-items-center  py-2">
                 <AllProjectDonutChart
-                  labels={["Running", "Idle", "Stopped"]}
+                  colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
+                  labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
                   width={300}
-                  data={[12, 10, 15]}
+                  data={[18, 19, 25, 23]}
                 />
                 <ul className="project-list">
                   <li>
@@ -136,8 +207,22 @@ const Home = () => {
                     >
                       <rect width="10" height="10" rx="3" fill="#3AC977" />
                     </svg>{" "}
-                    Running
+                    Completed
                   </li>
+
+                  <li>
+                    <svg
+                      width="10"
+                      height="10"
+                      viewBox="0 0 10 10"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="10" height="10" rx="3" fill="#FF9F00" />
+                    </svg>{" "}
+                    Progress
+                  </li>
+
                   <li>
                     <svg
                       width="10"
@@ -153,7 +238,7 @@ const Home = () => {
                         fill="var(--primary)"
                       />
                     </svg>{" "}
-                    Idle
+                    Yet To Start
                   </li>
                   <li>
                     <svg
@@ -163,49 +248,18 @@ const Home = () => {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <rect
-                        width="10"
-                        height="10"
-                        rx="3"
-                        fill="var(--secondary)"
-                      />
+                      <rect width="10" height="10" rx="3" fill="#FF5E5E" />
                     </svg>{" "}
-                    Stopped
+                    Cancelled
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-          <div className="col-xl-6 col-sm-12">
-            <div className="card same-card p-2">
-              <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Usage</p>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <Select />
-                </div>
-              </div>
-              <LineChart1 />
-              {/* <div className="mt-5">
-                <p>
-                  Total Fleet Usage:{" "}
-                  <span className="text-black">72.97 km</span>
-                </p>
-                <p>
-                  Avg. Distance / Object:{" "}
-                  <span className="text-black">72.97 km</span>
-                </p>
-              </div> */}
-              {/* <div className="mt-3"><GradientArea /></div> */}
-            </div>
-          </div>
         </div>
-        {/* <div className="col-xl-6 col-sm-12" style={{ paddingInline: "0px" }}> */}
+       
 
-        {/* </div> */}
+        
         <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
           <div className="col-xl-6">
             <div
@@ -220,7 +274,7 @@ const Home = () => {
                     e.stopPropagation();
                   }}
                 >
-                  <Select />
+                  {/* <Select /> */}
                 </div>
               </div>
               <ApexBar3
@@ -235,32 +289,6 @@ const Home = () => {
                   },
                 ]}
               />
-              {/* <div className="d-flex justify-content-evenly">
-                  <div className="">
-                    <p >Total Fleet Idle</p>
-                    <div className="d-flex justify-content-evenly align-items-center">
-                      <FaCar color="#b3b300" />
-                      <p style={{ color: "#b3b300" }}>O hr</p>
-                    </div>
-                  </div>
-                  <div className="">
-                    <p>Approx Fuel Waste</p>
-                    <div className="d-flex justify-content-evenly align-items-center">
-                      <BsFuelPumpFill color="#ffcccb" />
-                      <p style={{ color: "red" }}>O ltr</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="fs-6 text-align-center d-flex justify-content-between gap-1 mb-2">
-                  <div>
-                    <strong>Note:</strong>
-                  </div>
-                  <div className="fw-lighter">
-                    Generally an idling car uses between 1.89 to 2.64 liter of
-                    fuel per hour. Object with Movable category are considered
-                    in Analytics.
-                  </div>
-                </div> */}
             </div>
           </div>
           <div className="col-xl-6">
@@ -276,7 +304,7 @@ const Home = () => {
                     e.stopPropagation();
                   }}
                 >
-                  <Select />
+                  {/* <Select /> */}
                 </div>
               </div>
               <ApexBar3
@@ -291,193 +319,17 @@ const Home = () => {
                   },
                 ]}
               />
-              {/* <div className="d-flex justify-content-evenly">
-                  <div className="">
-                    <p >Total Fleet Fuel</p>
-                    <div className="d-flex justify-content-evenly align-items-center">
-                      <FaCar color="#b3b300" />
-                      <p style={{ color: "#b3b300" }}>O hr</p>
-                    </div>
-                  </div>
-                  <div className="">
-                    <p>Approx Fuel Waste</p>
-                    <div className="d-flex justify-content-evenly align-items-center">
-                      <BsFuelPumpFill color="#ffcccb" />
-                      <p style={{ color: "red" }}>O ltr</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="fs-6 text-align-center d-flex justify-content-between gap-1 mb-2">
-                  <div>
-                    <strong>Note:</strong>
-                  </div>
-                  <div className="fw-lighter">
-                   
-                  </div>
-                </div> */}
             </div>
           </div>
         </div>
 
-        <div
-          className="row "
-          style={{ marginLeft: "0.2rem", justifyContent: "space-between" }}
-        >
-          {/* Overspeed */}
-          <div className="col-xl-3 col-sm-4" style={{ paddingInline: "4px" }}>
-            <div
-              className="card same-card p-2"
-              style={{
-                backgroundColor: "rgb(241 156 135 / 56%)",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(<OverspeedTable />, "Overspeed")}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
-                  style={{
-                    marginBottom: "0rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Overspeed
-                </p>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <Select />
-                </div>
-              </div>
-              <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                <div>
-                  <div className="text-red fs-6 ">Max Speed</div>
-                  <div className="text-red fs-6 ">20 km/hr</div>
-                  {/* <div className="fs-2 text-white d-flex justify-content-end">
-                    0
-                  </div>
-                  <div className="text-black d-flex justify-content-end">
-                    Alerts
-                  </div>
-                  <p
-                    className="bg-danger d-flex justify-content-end"
-                    style={{
-                      color: "#ffb09c",
-                      borderRadius: "5px",
-                      outline: "none",
-                      paddingLeft: "3px",
-                      paddingRight: "3px",
-                    }}
-                  >
-                    0% Object
-                  </p> */}
-                </div>
-                <div
-                  className="d-flex align-items-end mb-2"
-                  style={{ height: "100%" }}
-                >
-                  {/* <SlSpeedometer color="white" size={50} /> */}
-                </div>
-              </div>
-              <Sparklines data={speed.data} height={100}>
-                <SparklinesLine color="var(--primary)" />
-                <SparklinesReferenceLine
-                  type="custom"
-                  value={speed.overSpeed}
-                  color="var(--primary)"
-                />
-              </Sparklines>
-            </div>
-          </div>
-
-          {/* Stay In Zone */}
-          <div className="col-xl-3 col-sm-4">
-            <div
-              className="card same-card p-2"
-              style={{
-                backgroundColor: "rgb(144 238 144 / 56%)",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
-                  style={{
-                    marginBottom: "0rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Stay In Zone
-                </p>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <Select />
-                </div>
-              </div>
-              <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                <div>
-                  <div className="text-red fs-6">Zone area</div>
-                  <div className="text-red fs-6">20 km</div>
-                </div>
-                <div
-                  className="d-flex align-items-end mb-2"
-                  style={{ height: "100%" }}
-                >
-                  {/* <SiGraphql color="white" size={50} />
-                </div>
-
-                {/* <div>
-                  <div
-                    className="fs-2 text-white d-flex justify-content-end"
-                    style={{ marginTop: "2.5rem" }}
-                  >
-                    0
-                  </div>
-                  <div className="text-black d-flex justify-content-end">
-                    Alerts
-                  </div>
-                  <p
-                    className="d-flex justify-content-end"
-                    style={{
-                      color: "#808080",
-                      backgroundColor: "#4ee44e",
-                      borderRadius: "5px",
-                      outline: "none",
-                      paddingLeft: "3px",
-                      paddingRight: "3px",
-                    }}
-                  >
-                    0% Object
-                  </p>*/}
-                </div>
-              </div>
-              <Sparklines data={zone.data} height={100}>
-                <SparklinesLine color="var(--primary)" />
-                <SparklinesReferenceLine
-                  type="custom"
-                  value={zone.stayInZone}
-                  color="var(--primary)"
-                />
-              </Sparklines>
-            </div>
-          </div>
-
+        <div className="row" style={{ marginLeft: "0.2rem" }}>
           {/* Temperature */}
-          <div className="col-xl-3 col-sm-4">
+          <div className="col-xl-7">
             <div
-              className="card same-card p-2"
+              className="card same-card mb-3 p-2"
               style={{
-                backgroundColor: "rgb(0 255 255 / 14%)",
+                // backgroundColor: "rgb(0 255 255 / 14%)",
                 cursor: "pointer",
               }}
               onClick={() => openModal(<TemperatureTable />, "Temperature")}
@@ -499,250 +351,176 @@ const Home = () => {
                     e.stopPropagation();
                   }}
                 >
-                  <Select />
+                  {/* <Select /> */}
                 </div>
               </div>
               <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                <div>
-                  <div className="text-red fs-6 d-flex justify-content-end">
-                    Min Temp. 20.0 C
-                  </div>
-                  <div className="text-red fs-6 d-flex justify-content-end">
-                    Max Temp. 50.0 C
-                  </div>
-                  {/* <div className="fs-2 text-white d-flex justify-content-end">
-                    0
-                  </div>
-                  <div className="text-black d-flex justify-content-end">
-                    Alerts
-                  </div>
-                  <p
-                    className="d-flex justify-content-end"
-                    style={{
-                      backgroundColor: "#00e6e6",
-                      color: "#ffb09c",
-                      borderRadius: "5px",
-                      outline: "none",
-                      paddingLeft: "3px",
-                      paddingRight: "3px",
-                    }}
-                  >
-                    0% Object
-                  </p> */}
-                </div>
-
-                <div
-                  className="d-flex align-items-end mb-2"
-                  style={{ height: "100%" }}
-                >
+                <div className="d-flex align-items-end mb-2">
                   {/* <FaThermometerHalf color="white" size={50} /> */}
                 </div>
               </div>
-                <Sparklines data={temp.data} height={100} >
-                  <SparklinesLine color="var(--primary)" />
-                  <SparklinesReferenceLine
-                    type="custom"
-                    value={temp.min}
-                    color="var(--primary)"
-                  />
-                  <SparklinesReferenceLine
-                    type="custom"
-                    value={temp.max}
-                    color="var(--primary)"
-                  />
-                </Sparklines>
+              <ProjectOverviewTab />
             </div>
           </div>
 
-          {/* <div className="col-xl-2 col-sm-12">
+          <div className="col-xl-5 justify-content-between">
             <div
-              className="card same-card p-2"
-              style={{ backgroundColor: "#FFE36E",cursor : 'pointer'  }}
-              onClick={() => openModal(<StayAwayTable />, "Stay Away From")}
+              className="card same-card mb-3 p-2"
+              style={{
+                cursor: "pointer",
+              }}
             >
-              <div className="d-flex justify-content-between">
+              <div className="d-flex align-items-center justify-content-between">
                 <p
                   className="text-black fs-4"
                   style={{
-                    marginLeft: "0.3rem",
+                    marginBottom: "4rem",
                     whiteSpace: "nowrap", // Added: prevent text from wrapping
                     overflow: "hidden", // Added: hide overflow
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Stay Away From
+                  Maintenance
+                </p>
+                
+              </div>
+              <div className="card-body d-flex justify-content-between align-items-center py-2">
+              
+                <div>
+                  <ChartPie />
+                </div>
+                <div>
+                  <ul className="project-list">
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#3AC977" />
+                      </svg>{" "}
+                      Renewal Due
+                    </li>
+
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#FF9F00" />
+                      </svg>{" "}
+                      Renewal Over-Due
+                    </li>
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#FF5E5E" />
+                      </svg>{" "}
+                      Maintenance Due
+                    </li>
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
+                          width="10"
+                          height="10"
+                          rx="3"
+                          fill="var(--primary)"
+                        />
+                      </svg>{" "}
+                      Maintenance Over-Due
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="row "
+          style={{ marginLeft: "0.2rem", justifyContent: "space-between" }}
+        >
+          {/* Overspeed */}
+          <div className="col-xl-6 col-sm-4" style={{ paddingInline: "4px" }}>
+            <div
+              className="card same-card p-2"
+              style={{
+                // backgroundColor: "rgb(241 156 135 / 56%)",
+                cursor: "pointer",
+              }}
+              onClick={() => openModal(<OverspeedTable />, "Overspeed")}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginBottom: "4rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  Overspeed
+                </p>
+                
+              </div>
+
+             <DualLine/>
+            </div>
+          </div>
+
+          {/* Stay In Zone */}
+          <div className="col-xl-6 col-sm-4">
+            <div
+              className="card same-card p-2"
+              style={{
+                // backgroundColor: "rgb(144 238 144 / 56%)",
+                cursor: "pointer",
+              }}
+              onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <p
+                  className="text-black fs-4"
+                  style={{
+                    marginBottom: "4rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  Stay In Zone
                 </p>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
                 >
-                  <Select />
+             
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                <div
-                  className="d-flex align-items-end mb-2"
-                  style={{ height: "100%" }}
-                >
-                  <PiGraph color="white" size={50} />
-                </div>
-                <div>
-                  <div
-                    className="fs-2 text-white d-flex justify-content-end"
-                    style={{ marginTop: "2.5rem" }}
-                  >
-                    0
-                  </div>
-                  <div className="text-black d-flex justify-content-end">
-                    Alerts
-                  </div>
-                  <p
-                    className="d-flex justify-content-end"
-                    style={{
-                      color: "#808080",
-                      backgroundColor: "#ffd422",
-                      borderRadius: "5px",
-                      outline: "none",
-                      paddingLeft: "3px",
-                      paddingRight: "3px",
-                    }}
-                  >
-                    0% Object
-                  </p>
-                </div>
-              </div>
+           
+              <BarChart5 />
             </div>
-          </div> */}
+          </div>
 
-          <div className="col-xl-3 col-sm-12">
-            <div
-              className="card same-card p-2"
-              // style={{ height: "20vh" }}
-              onClick={() =>
-                openModal(<MaintenanceReminderTable />, "Maintenance Reminder")
-              }
-            >
-              <p
-                className="text-black fs-4"
-                style={{
-                  marginLeft: "0.3rem",
-                  whiteSpace: "nowrap", // Added: prevent text from wrapping
-                  overflow: "hidden", // Added: hide overflow
-                  textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                }}
-              >
-                Maintenance Reminder
-              </p>
-              <div
-                className="text-center"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  <div className="mb-3">
-                    <SlCalender color="#3dace3" size={20} />
-                  </div>
-                  <div style={{ color: "#3dace3", fontSize: "22px" }}>0</div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  <div className="mb-3">
-                    <LuSiren color="#ff3811" size={20} />
-                  </div>
-                  <div style={{ color: "#ff3811", fontSize: "22px" }}>0</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-3 col-sm-12">
-            <div
-              className="card same-card p-2"
-              // style={{ height: "20vh" }}
-              onClick={() =>
-                openModal(<MaintenanceReminderTable />, "Renewal Reminder")
-              }
-            >
-              <p
-                className="text-black fs-4"
-                style={{
-                  marginLeft: "0.3rem",
-                  whiteSpace: "nowrap", // Added: prevent text from wrapping
-                  overflow: "hidden", // Added: hide overflow
-                  textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                }}
-              >
-                Renewal Reminder
-              </p>
-              <div
-                className="text-center"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                  height: "100%",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  <div className="mb-3">
-                    <SlCalender color="#3dace3" size={20} />
-                  </div>
-                  <div style={{ color: "#3dace3", fontSize: "22px" }}>0</div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  <div className="mb-3">
-                    <LuSiren color="#ff3811" size={20} />
-                  </div>
-                  <div style={{ color: "#ff3811", fontSize: "22px" }}>0</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* <div className="col-xl-4 col-sm-12">
-            <div className="card same-card p-2" style={{ height: "20vh" }}>
-              <p className="text-black fs-4" style={{ marginLeft: "0.3rem" }}>
-                Distance Classification
-              </p>
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                No Record Found
-              </div>
-            </div>
-          </div>
-           */}
+     
         </div>
       </div>
     </>

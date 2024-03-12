@@ -13,17 +13,17 @@ const  ProjectOverviewChart = () =>{
     const chartRef = useRef();
     const  series = [
         {
-            name: 'Number of Projects',
+            name: 'Avg Temp',
             type: 'column',
-            data: [75, 85, 72, 100, 50, 100, 80, 75, 95, 35, 75,100]
+            data: [27, 26, 28, 30, 26, 29, 30, 28, 26, 30, 27,28]
         }, {
-            name: 'Revenue',
+            name: 'Max Temp',
             type: 'area',
-            data: [44, 65, 55, 75, 45, 55, 40, 60, 75, 45, 50,42]
+            data: [32, 31, 34, 35, 30, 31,35, 32, 31, 33, 32,35]
         }, {
-            name: 'Active Projects',
+            name: 'Min Temp',
             type: 'line',
-            data: [30, 25, 45, 30, 25, 35, 20, 45, 35, 20, 35,20]
+            data: [20, 22, 24, 21, 23, 25, 21, 23, 22, 24, 25,20]
         }
     ]
       
@@ -39,9 +39,9 @@ const  ProjectOverviewChart = () =>{
         },
        
         stroke: {
+            dashArray: [0, 0, 5],
             width: [0, 1, 1],
             curve: 'straight',
-            dashArray: [0, 0, 5]
         },
         legend: {
           fontSize: '13px',
@@ -78,29 +78,29 @@ const  ProjectOverviewChart = () =>{
                   [
                       {
                         offset: 0,
-                        color: '#3AC977',
+                        color: '#FF5E5E',
                         opacity: 1
                       },
                       {
                         offset: 0.4,
-                        color: '#3AC977',
+                        color: '#FF5E5E',
                         opacity: .15
                       },
                       {
                         offset: 100,
-                        color: '#3AC977',
+                        color: '#FF5E5E',
                         opacity: 0
                       }
                   ],
                   [
                       {
                         offset: 0,
-                        color: '#FF5E5E',
+                        color: '#3AC977',
                         opacity: 1
                       },
                       {
                         offset: 100,
-                        color: '#FF5E5E',
+                        color: '#3AC977',
                         opacity: 1
                       }
                   ],
@@ -108,7 +108,7 @@ const  ProjectOverviewChart = () =>{
               stops: [0, 100, 100, 100]
             }
         },
-        colors:["var(--primary)","#3AC977","#FF5E5E"],
+        colors:["var(--primary)","#FF5E5E","#3AC977"],
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         markers: {
             size: 0
@@ -178,15 +178,15 @@ const  ProjectOverviewChart = () =>{
 			}
 			chartRef.current.chart.ctx.updateSeries([
           {
-            name: "Number of Projects",
+            name: "Average Temperature",
             type: 'column',
             data: columnData
           },{
-            name: 'Revenue',
+            name: 'Min Temp',
             type: 'area',
             data: areaData
           },{
-            name: 'Active Projects',
+            name: 'Max Temp',
             type: 'line',
             data: lineData
           }
@@ -197,7 +197,7 @@ const  ProjectOverviewChart = () =>{
       <>
           <Tab.Container defaultActiveKey={'Week'}>
             <div className="card-header border-0 pb-0 flex-wrap">
-                <h4 className="heading mb-0">Projects Overview</h4>                
+                <h4 className="heading mb-0">Temperature Overview</h4>                
                   <Nav as="ul" className="nav nav-pills mix-chart-tab">
                       {chartHeaderData.map((item, index)=>(
                         <Nav.Item as="li" className="nav-item" key={index}>
@@ -220,21 +220,18 @@ const  ProjectOverviewChart = () =>{
                 </div>                
                 <div className="ttl-project">
                     <div className="pr-data">
-                        <h5>12,721</h5>
-                        <span>Number of Projects</span>
+                        <h5>30</h5>
+                        <span>Average Temperature</span>
                     </div>
                     <div className="pr-data">
-                        <h5 className="text-primary">721</h5>
-                        <span>Active Projects</span>
+                        <h5 className="text-primary">26</h5>
+                        <span>Minimum Temperature</span>
                     </div>
                     <div className="pr-data">
-                        <h5>$2,50,523</h5>
-                        <span>Revenue</span>
+                        <h5>32</h5>
+                        <span>Maximum Temperature</span>
                     </div>
-                    <div className="pr-data">
-                        <h5 className="text-success">12,275h</h5>
-                        <span>Working Hours</span>
-                    </div>
+                  
                 </div>
             </div>
           </Tab.Container>

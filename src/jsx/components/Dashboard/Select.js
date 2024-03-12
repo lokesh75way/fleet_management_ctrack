@@ -14,7 +14,7 @@ const CustomSelect = (props) => {
       styles={{
         control: (provided) => ({
           ...provided,
-          width: '6rem',
+          width: '10rem',
           fontSize: '12px',
           marginRight: '0.2rem',
           borderRadius: '8px',
