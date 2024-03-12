@@ -7,6 +7,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import { adminOptions, resellerOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
+import {useParams} from 'react-router-dom'
 
 const Address = ({ register, setValue, getValues, errors, handleSubmit, control, onSubmit }) => {
   const [countryid, setCountryid] = useState(0);
@@ -17,7 +18,13 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+  const { id } = useParams();
 
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+
+  const [filteredUserData, setFilteredUserData] = useState(newData);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -31,6 +38,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             label="Street1"
             name="street1"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].street1 : ""
+            }
           />
           <Error errorName={errors.street1} />
         </div>
@@ -44,6 +54,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].street2 : ""
+            }
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -56,6 +69,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             label="City"
             name="city"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].city : ""
+            }
           />
           <Error errorName={errors.city} />
         </div>
@@ -69,6 +85,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].zipCode : ""
+            }
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -82,6 +101,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
+            
           />
           {!getValues('country') &&<Error errorName={errors.country} />}
         </div>
@@ -94,6 +114,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             label="Mediclaim Number"
             name="mediclaimNumber"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].mediclaimNumber : ""
+            }
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
@@ -107,6 +130,9 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
                 className="form-control"
                 onChange={(newValue) =>
                   setValue("mediclaimExpiryDate", newValue)
+                }
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].mediclaimExpiryDate : ""
                 }
               />
             )}
