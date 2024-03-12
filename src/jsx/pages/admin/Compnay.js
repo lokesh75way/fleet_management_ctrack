@@ -173,7 +173,7 @@ const Company = () => {
                         to={"/company/create"}
                         className="btn btn-primary btn-sm ms-1 p-2"
                         data-bs-toggle="offcanvas"
-                        
+                        style={{paddingBlock : '9px'}}
                         // onClick={()=>company.current.showModal()}
                       >
                         + Add Company

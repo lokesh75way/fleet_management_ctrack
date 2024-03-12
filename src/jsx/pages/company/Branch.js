@@ -215,7 +215,8 @@ const Branch = () => {
                       />
                       <Link
                         to={"/branch/create"}
-                        className="btn btn-primary btn-sm ms-1 p-2"
+                        className="btn btn-primary btn-sm ms-1"
+                        style={{paddingBlock : '9px'}}
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subCompany.current.showModal()}
                       >

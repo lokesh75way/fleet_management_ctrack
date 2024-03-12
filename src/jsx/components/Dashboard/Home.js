@@ -119,7 +119,7 @@ const Home = () => {
                 <p className="text-black text-md">Fleet Status</p>
               </div>
 
-              <div className="card-body d-flex align-items-center  py-2">
+              <div className="card-body d-flex align-items-center justify-content-center  py-2">
                 <AllProjectDonutChart
                   labels={["Running", "Idle", "Stopped"]}
                   width={300}

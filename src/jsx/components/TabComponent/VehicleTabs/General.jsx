@@ -10,21 +10,40 @@ import {
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
+  businessGroupOptions,
+  companyOptions,
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from '../../../../users.json'
-import useStorage from '../../../../hooks/useStorage'
+import DummyData from "../../../../users.json";
+import useStorage from "../../../../hooks/useStorage";
+import { useParams } from "react-router-dom";
 
-const General = ({ register, setValue, getValues, errors, control, handleSubmit, onSubmit}) => {
-const {checkRole, checkUser} = useStorage()
-  const [tempValue,setTempValue] = useState()
+const General = ({
+  register,
+  setValue,
+  getValues,
+  errors,
+  control,
+  handleSubmit,
+  onSubmit,
+}) => {
+  const { checkRole, checkUser } = useStorage();
+  const [tempValue, setTempValue] = useState();
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const branchOption = DummyData.filter((item) => item.parent === checkUser()).map((item) => ({
+  const {id} = useParams();
+  const loggedInUser = localStorage.getItem("loginDetails-name")
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const newData = userData.filter((data) => data.id == parseInt(id, 10));
+  const [filteredUserData, setFilteredUserData] = useState(newData);
+  const role = localStorage.getItem('role');
+  const branchOption = DummyData.filter(
+    (item) => item.parent === checkUser()
+  ).map((item) => ({
     label: item.email,
     value: item.id,
   }));
@@ -32,19 +51,64 @@ const {checkRole, checkUser} = useStorage()
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      {checkRole() === 'company' && <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company
+            Business Group <span className="text-danger">*</span>
           </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label='Company'
-            name="company"
-            placeholder=""
-            value={checkUser()}
+          <Controller
+            name="business"
+            control={control}
+            rules={{ required: true }}
+            disabled={true}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  console.log(newValue);
+                  setTempValue(newValue?.value);
+                  setValue("business", newValue?.value);
+                }}
+                isDisabled={role === "company" || role === "businessgroup"}
+                options={businessGroupOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultInputValue={
+                  filteredUserData[0]?.parentBusinessGroup ||
+                  (loggedInUser !== "Admin" ? loggedInUser : "")
+                }
+              />
+            )}
           />
-        </div>}
+          {!getValues("branch") && <Error errorName={errors.branch} />}
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Company <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="company"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  setTempValue(newValue?.value);
+                  setValue("company", newValue?.value);
+                }}
+                isDisabled={role === "company"}
+                options={companyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultInputValue={
+                  filteredUserData[0]?.parentCompany ||
+                  (loggedInUser !== "Admin" ? loggedInUser : " ")
+                }
+              />
+            )}
+          />
+          {!getValues("branch") && <Error errorName={errors.branch} />}
+        </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch <span className="text-danger">*</span>
@@ -55,16 +119,65 @@ const {checkRole, checkUser} = useStorage()
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("branch", newValue.label)}}
-                options={checkRole() === 'company' ? branchOption:branchOptions}
+                onChange={(newValue) => {
+                  console.log(newValue);
+                  setTempValue(newValue?.value);
+                  setValue("branch", newValue?.value);
+                }}
+                options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={checkRole() === 'company' ?branchOption[0]:branchOptions[0]}
+                defaultInputValue={
+                  filteredUserData[0]?.parentBranch ||
+                  (loggedInUser !== "Admin" ? loggedInUser : " ")
+                }
               />
             )}
           />
-          {!getValues('branch') && <Error errorName={errors.branch} />}
+          {!getValues("branch") && <Error errorName={errors.branch} />}
+        </div>
+
+        {checkRole() === "company" && (
+          <div className="col-xl-6 mb-3 ">
+            <label className="form-label">Company</label>
+            <CustomInput
+              type="text"
+              register={register}
+              label="Company"
+              name="company"
+              placeholder=""
+              value={checkUser()}
+            />
+          </div>
+        )}
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Branch <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="branch"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  setTempValue(newValue.label);
+                  setValue("branch", newValue.label);
+                }}
+                options={
+                  checkRole() === "company" ? branchOption : branchOptions
+                }
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={
+                  checkRole() === "company" ? branchOption[0] : branchOptions[0]
+                }
+              />
+            )}
+          />
+          {!getValues("branch") && <Error errorName={errors.branch} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -74,7 +187,7 @@ const {checkRole, checkUser} = useStorage()
             type="text"
             required
             register={register}
-            label='Vehicle Name'
+            label="Vehicle Name"
             name="vehicleName"
             placeholder=""
           />
@@ -90,7 +203,10 @@ const {checkRole, checkUser} = useStorage()
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("deviceType", newValue.value);}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.value);
+                  setValue("deviceType", newValue.value);
+                }}
                 options={deviceTypeOptions}
                 ref={ref}
                 name={name}
@@ -99,7 +215,7 @@ const {checkRole, checkUser} = useStorage()
               />
             )}
           />
-          {!getValues('deviceType') && <Error errorName={errors.deviceType} />}
+          {!getValues("deviceType") && <Error errorName={errors.deviceType} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -257,7 +373,14 @@ const {checkRole, checkUser} = useStorage()
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> Submit</Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
+          {" "}
+          Submit
+        </Button>
       </div>
     </div>
   );
