@@ -9,11 +9,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
 import useStorage from "../../../../../hooks/useStorage";
 import {notifyError, notifySuccess} from '../../../../../utils/toast'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CompanyForm = () => {
   const{saveData} = useStorage()
   const navigate = useNavigate()
+  const { id } = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["New Company", "Settings"];
   const component = [MyAccount, UserSetting];
@@ -23,19 +24,36 @@ const CompanyForm = () => {
   })
 
   const onSubmit = (data)=>{
+    console.log("HEllo")
     if(activeIndex === (totalTabs -1)){
       try{
-        saveData(data, 'companyData')
-        notifySuccess("Saved !")
-        navigate("/company");
-        return;
+        if (id) {
+          const val = JSON.parse(localStorage.getItem("userJsonData"));
+          console.log("Id is needed",id, data)
+          const indexToUpdate = val.findIndex((item) => item.id == id);
+          if (indexToUpdate !== -1) {
+            val[indexToUpdate] = { ...data, id , role : "company"};
+            localStorage.setItem("userJsonData", JSON.stringify(val));
+            notifySuccess("Company Updated!");
+            navigate("/company");
+          }
+          return;
+        } else {
+          data = { ...data, role: "company" };
+          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+          data.id = existingData.length + 1;
+          existingData.push(data);
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          notifySuccess("New Company Created!");
+          navigate("/company");
+          return;
+        }
       }
       catch(error){
         notifyError("Some error occured !!")
       }
     }
-    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    console.log(data);
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
     notifySuccess("Saved !")
   }
 

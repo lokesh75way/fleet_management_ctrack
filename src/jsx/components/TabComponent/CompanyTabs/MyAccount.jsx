@@ -25,22 +25,18 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
   };
 
   const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
-    label: item.email,
+    label: item.userName,
     value: item.id,
   }));
 
   const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
-    label: item.email,
+    label: item.userName,
     value: item.id,
   }));
 
 
 
   const { id } = useParams();
-
-    console.log("CompanyForm ID from params:", id);
-  
-  
     const companyData = JSON.parse(localStorage.getItem('companyData'))
   
     const newData = companyData.filter(data => data.id === id);
@@ -51,18 +47,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group</label>
-          {checkRole() ? <CustomInput
-            type="text"
-            required
-            register={register}
-            lable="Parent"
-            name="parent"
-            placeholder=""
-            value={checkUser()}
-            disabled
-          />
-          :
+          <label className="form-label">Parent<span className="text-danger">*</span></label>
+          {
           <Controller
             name="parent"
             control={control}
@@ -78,9 +64,24 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
               />
             )}
           />}
+          { !getValues('parent') && <Error errorName={errors.parent} />}
         </div>
-
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Company Name <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="User Name"
+            name="userName"
+            placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
+          />
+          <Error errorName={errors.userName} />
+        </div>
+        {/* <div className="col-xl-6 mb-3">
           <label className="form-label">Company<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
@@ -92,13 +93,13 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].company : ''}
           />
            <Error errorName={errors.company} />
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
-              setValue("country", e.id);
+              setValue("country", e.name);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -113,7 +114,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
               countryid={countryid}
               onChange={(e) => {
                 setstateid(e.id);
-                setValue("state", e.id);
+                setValue("state", e.name);
               }}
               containerClassName="bg-white"
               inputClassName="border border-white"
@@ -121,21 +122,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             />
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="User Name"
-            name="userName"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
-          />
-          <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Change Password</label>
@@ -195,7 +181,19 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         )}
         
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email</label>
+          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <CustomInput
+            type="email"
+            register={register}
+            label="Email"
+            name="email"
+            placeholder=""
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].email : ''}
+          />
+          <Error errorName={errors.email} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -207,7 +205,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email</label>
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -218,7 +216,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number</label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -230,7 +228,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number</label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -242,7 +240,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
