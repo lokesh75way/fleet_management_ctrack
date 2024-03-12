@@ -233,25 +233,14 @@ export const driverInfoSchema = yup
    licenseNumber: yup.string(),
   })
   .required();
-export const subUserAccuntSchema = yup
+export const subUserAccountSchema = yup
   .object({
    userName: yup.string().required("User Name is required !!"),
-   confirmUserName: yup.string().required("Confirm User Name please !!"),
-   password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    retypePassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+   featureTemplate: yup.string().required("Feature Template is required !!"),
     mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
     email: yup.string().email().required("Email is required !!"),
     country: yup.string().required("Please select a Country"),
-    state: yup.string().required("Please select a State"),
-    experience: yup.number().required("Experience is required"),
-    age: yup.number().min(20, "Age must be at least 20").max(99, "Age must be at most 99"),
-    
+    state: yup.string().required("Please select a State"),   
   })
   .required();
 export const alertSchema = yup
