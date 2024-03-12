@@ -6,14 +6,15 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
+import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { businessGroupAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Business Group", "Settings"];
-  const component = [MyAccount, UserSetting];
+  const tabHeading = ["New Business Group", "Settings","Change Password"];
+  const component = [MyAccount, UserSetting,ManagePassword];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
   const { id } = useParams(); 
@@ -40,7 +41,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 0 ? businessGroupAccountSchema : companySettingSchema
+      activeIndex === 1 ?  companySettingSchema : businessGroupAccountSchema
     ),
   });
 
