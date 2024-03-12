@@ -62,29 +62,7 @@ const TechnicianOffcanvas = forwardRef(
             <div className="container-fluid">
               <FormProvider>
               <form onSubmit={ handleSubmit(onSubmit)}>
-                <div className="row">
-                  <div className="col-xl-6 mb-3">
-                    <label className="form-label">
-                      Branch <span className="text-danger">*</span>
-                    </label>
-                    <Controller
-                      name="branch"
-                      control={control}
-                      rules={{ required: true }}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) => {setTempValue(newValue.value);setValue("branch", newValue.value)}}
-                          options={branchOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={branchOptions[0]}
-                        />
-                      )}
-                    />
-                    { !getValues('branch') && <Error errorName={errors.branch} />}
-                  </div>
-
+                <div className="row"> 
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Technicnan <span className="text-danger">*</span>

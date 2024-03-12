@@ -5,7 +5,6 @@ import { useForm, Controller } from "react-hook-form";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import { leaveTimeOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import {useParams} from 'react-router-dom'
 
@@ -30,43 +29,98 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Leave Time <span className="text-danger">*</span>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            Casual Leave
           </label>
-          <Controller
-            name="leaveTime"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value);setValue("leaveTime", newValue.value)}}
-                options={leaveTimeOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].mediclaimExpiryDate : leaveTimeOptions[0]
-                }
-              />
-            )}
+          <CustomInput
+            type="text"
+            register={register}
+            label="Casual Leave"
+            name="casualLeave"
+            placeholder=""
+            defaultValue="Casual Leave"
+            disabled
           />
-          {!getValues('leaveTime') &&<Error errorName={errors.leaveTime} />}
+          <Error errorName={errors.casualLeave} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of Days<span className="text-danger">*</span>
+            No of Days
           </label>
           <CustomInput
             type="text"
             register={register}
             label="No Of Days"
+            name="noOfDaysCL"
+            placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].noOfDaysCL : ""
+            }
+          />
+          <Error errorName={errors.noOfDaysCL} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            Sick Leave
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="Sick Leave"
+            name="sickLeave"
+            placeholder=""
+            defaultValue="Sick Leave"
+            disabled
+          />
+          <Error errorName={errors.sickLeave} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            No of Days
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="No Of DaysSL"
             name="noOfDays"
             placeholder=""
             defaultValue={
-              filteredUserData[0] ? filteredUserData[0].noOfDays : ""
+              filteredUserData[0] ? filteredUserData[0].noOfDaysSL : ""
             }
           />
-          <Error errorName={errors.noOfDays} />
+          <Error errorName={errors.noOfDaysSL} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            Privilege Leave
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="Privilege Leave"
+            name="privilegeLeave"
+            placeholder=""
+            defaultValue="Privilege Leave"
+            disabled
+          />
+          <Error errorName={errors.privilegeLeave} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+            No of Days
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="No Of Days"
+            name="noOfDaysPL"
+            placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].noOfDaysPL : ""
+            }
+          />
+          <Error errorName={errors.noOfDaysPL} />
         </div>
         
       </div>

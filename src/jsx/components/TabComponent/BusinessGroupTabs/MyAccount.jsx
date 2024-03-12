@@ -37,32 +37,7 @@ console.log(getValues())
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      <div className="col-xl-6 mb-3">
-          <label className="form-label">Admin<span className="text-danger">*</span></label>
-          <Controller
-            name="parent"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.label);
-                  setValue("parent", newValue.label);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                options={[{value:"Admin",label:"Admin"}]}
-                defaultValue={{value:"Admin",label:"Admin"}}
-                // isDisabled = {true}
-                
-              />
-            )}
-          />
-          <Error errorName={errors.admin} />
-        </div>
-
-        <div className="col-xl-6 mb-3 ">
+          <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Business Group Name <span className="text-danger">*</span>
           </label>

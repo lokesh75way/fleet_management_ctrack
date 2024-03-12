@@ -1,13 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
-import DeleteModal from "../components/Modal/DeleteModal";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-
 import { useNavigate } from "react-router-dom";
+import SubUserTable from "../components/Tables/SubUserTable";
+import useStorage from "../../hooks/useStorage";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
 //     headers : headers,
@@ -15,9 +12,20 @@ import { useNavigate } from "react-router-dom";
 //     filename: "csvfile.csv"
 // }
 const SubUser = () => {
-    const navigate = useNavigate();
+
+  const navigate = useNavigate();
+  const {checkRole,checkUserName} = useStorage()
+  const role = checkRole()
+  const userName = checkUserName()
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const UserData = userData.filter((item)=> item.role === 'admin' || item.role === 'company' || item.role === 'businessgroup')
+  var UserData;
+  if(checkRole() === 'company'){
+    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'company' && item.parent === userName))
+  }
+  else if(role === 'businessgroup'){
+    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
+  } 
+  else if(checkRole() === 'admin') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
 
   const [tableData, setTableData] = useState(UserData);
   const [editData, setEditData] = useState();
@@ -100,78 +108,11 @@ const SubUser = () => {
                           <th>Mobile Number</th>
                           <th>Email</th>
                           <th>Location</th>
-                          <th>Branches</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {tableData.map((item, index) => (
-                          <tr key={index}>
-                            <td>
-                              <span>{item.id}</span>
-                            </td>
-                            <td>
-                              <div className="products">
-                                <img
-                                  src={item.image || IMAGES.contact1}
-                                  className="avatar avatar-md"
-                                  alt=""
-                                />
-                                <div>
-                                  <h6>{item.userName}</h6>
-                                  <span>Web Designer</span>
-                                </div>
-                              </div>
-                            </td>
-                         
-                            <td>
-                              <span>{item.mobileNumber}</span>
-                            </td>
-                            <td>
-                              <span className="text-primary">
-                                {item.email}
-                              </span>
-                            </td>
-                            <td>
-                              <span>{item.country}</span>
-                            </td>
-                            <td>
-                              <Link
-                                to={`/branch/${item.emplid}`}
-                                className="text-primary badge badge-count"
-                              >
-                                {item.branches || 4}
-                              </Link>
-                            </td>
-                            <td>
-                              <span className="d-flex justify-content-center">
-                                <span
-                                  className="cursor-pointer"
-                                  onClick={() => editDrawerOpen(item.id)}
-                                >
-                                  <FaEdit
-                                    style={{
-                                      color: "green",
-                                      fontSize: "1.2rem",
-                                    }}
-                                  />
-                                </span>
-                                <DeleteModal
-                                  className="cursor-pointer "
-                                  onConfirmDelete={onConfirmDelete}
-                                  id={item.id}
-                                >
-                                  <MdDelete
-                                    style={{ color: "red", fontSize: "1.2rem" }}
-                                  />
-                                </DeleteModal>
-                              </span>
-                            </td>
-                            {/* <td>
-                                                            <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}>{item.status}</span>
-                                                        </td> */}
-                          </tr>
-                        ))}
+                        <SubUserTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">

@@ -103,9 +103,9 @@ const Permission = () => {
         </Card.Header>
 
           <div className="d-flex justify-content-between m-2 mt-4 p-3">
-            <input value={newGroupData.groupName} name="groupname" type="text" className="p-2" onChange={(e)=>handleInputChange(e)} style={{marginRight:"1rem", border:"#D3D3D3 1px solid", borderRadius:"0.3rem",width:"15rem" }}  placeholder="Group Name" />
+            <input value={newGroupData.groupName} name="groupname" type="text" className="p-2" onChange={(e)=>handleInputChange(e)} style={{marginRight:"1rem", border:"#D3D3D3 1px solid", borderRadius:"0.3rem",width:"15rem" }}  placeholder="Feature Template Name" />
             <div className="d-flex justify-content-center"  style={{width:"25rem"}}>
-            <Select options={selectOptions} placeholder="Select group to copy from" styles={{ control: (base) => ({ ...base, width: '18rem' }) }}>   </Select>            <button className="btn btn-primary p-2" style={{marginLeft:"1rem"}} >Copy</button>
+            <Select options={selectOptions} placeholder="Select a Feature Template" styles={{ control: (base) => ({ ...base, width: '18rem' }) }}>   </Select>            <button className="btn btn-primary p-2" style={{marginLeft:"1rem"}} >Copy</button>
             </div>
           </div>
 
