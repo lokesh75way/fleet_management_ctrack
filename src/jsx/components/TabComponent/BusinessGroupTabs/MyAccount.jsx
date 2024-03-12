@@ -30,6 +30,9 @@ const MyAccount = ({
 
 const user = localStorage.getItem('loginDetails-email')
 console.log(getValues())
+
+
+
  
   return (
     <div className="p-4">
@@ -44,34 +47,35 @@ console.log(getValues())
               <Select
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
-                  setValue("admin", "Admin");
+                  setValue("parent", newValue.label);
                 }}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 options={[{value:"Admin",label:"Admin"}]}
-                defaultValue={[{value:"Admin",label:"Admin"}]}
-                isDisabled = {true}
+                defaultValue={{value:"Admin",label:"Admin"}}
+                // isDisabled = {true}
+                
               />
             )}
           />
           <Error errorName={errors.admin} />
         </div>
 
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Business Group Name<span className="text-danger">*</span>
+            Business Group Name <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
             required
-            label="businessUser"
-            name="businessUser"
-            defaultValue={getValues('businessUser')}
+            label="User Name"
+            name="userName"
             placeholder=""
+            defaultValue={getValues("userName")}
           />
-          <Error errorName={errors.businessUser} />
+          <Error errorName={errors.userName} />
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -107,36 +111,7 @@ console.log(getValues())
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Short Name
-          </label>
-          <CustomInput
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-            defaultValue={getValues('shortName')}
-          />
-          <Error errorName={errors.shortName} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="User Name"
-            name="userName"
-            placeholder=""
-            defaultValue={getValues("userName")}
-          />
-          <Error errorName={errors.userName} />
-        </div>
+
         <div className="col-xl-6 mb-3">
           <label className="form-label">Change Password</label>
           <div className="form-check custom-checkbox mb-3">
@@ -205,6 +180,18 @@ console.log(getValues())
             defaultValue={getValues('passwordRecoveryEmail')}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <CustomInput
+            type="email"
+            register={register}
+            name="email"
+            label="email"
+            placeholder=""
+            defaultValue={getValues('email')}
+          />
+          <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
