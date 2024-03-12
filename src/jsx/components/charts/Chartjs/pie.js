@@ -8,20 +8,20 @@ const ChartPie = ({ color1, color2, color3, color4, height, width }) => {
             data: [45, 25, 20, 10],
             borderWidth: 0,
             backgroundColor: [
-               `${color1 ? color1 : "rgba(44, 44, 44,1)"}`,
-               `${color2 ? color2 : "rgba(44, 44, 44,0.7)"}`,
-               `${color3 ? color3 : "rgba(44, 44, 44,0.5)"}`,
-               `${color4 ? color4 : "rgba(0, 0, 0, 0.07)"}`,
+               `${color1 ? color1 : "#FF5E5E"}`,
+               `${color2 ? color2 : "#0d99ff"}`,
+               `${color3 ? color3 : "#3AC977"}`,
+               `${color4 ? color4 : "#FF9F00"}`,
             ],
             hoverBackgroundColor: [
-               `${color1 ? color1 : "rgba(44, 44, 44,1)"}`,
-               `${color2 ? color2 : "rgba(44, 44, 44,0.7)"}`,
-               `${color3 ? color3 : "rgba(44, 44, 44,0.5)"}`,
-               `${color4 ? color4 : "rgba(0, 0, 0, 0.07)"}`,
+               `${color1 ? color1 : "#FF5E5E"}`,
+               `${color2 ? color2 : "#0d99ff"}`,
+               `${color3 ? color3 : "#3AC977"}`,
+               `${color4 ? color4 : "#FF9F00"}`,
             ],
          },
       ],
-      labels: ["one", "two", "three"],
+      labels: ["Maintenance Due", "Maintenance Over-Due", "Renewal Due", "Renewal Over-Due"],
    };
 
    const options = {
@@ -35,7 +35,8 @@ const ChartPie = ({ color1, color2, color3, color4, height, width }) => {
 
    return (
       <>
-         <Pie data={data} height={height ? height : 300} options={options} />
+         <Pie data={data}  options={options} height={200} width={300}/>
+     
       </>
    );
 };
