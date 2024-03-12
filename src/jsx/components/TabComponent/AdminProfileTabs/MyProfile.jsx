@@ -79,6 +79,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <label className="form-label">State<span className="text-danger">*</span></label>
           <div style={{ background: "white" }}>
             <StateSelect
+            autocomplate="off"
               countryid={countryid}
               onChange={(e) => {
                 setstateid(e.id);

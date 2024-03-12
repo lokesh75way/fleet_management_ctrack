@@ -12,7 +12,6 @@ const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
                             <div>
                                 <h6>{item.firstName} {item.lastName}</h6>
                                 <span>{item.employeeDesignation}</span>
