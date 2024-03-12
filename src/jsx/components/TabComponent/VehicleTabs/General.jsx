@@ -35,12 +35,12 @@ const General = ({
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-  const {id} = useParams();
-  const loggedInUser = localStorage.getItem("loginDetails-name")
+  const { id } = useParams();
+  const loggedInUser = localStorage.getItem("loginDetails-name");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   const branchOption = DummyData.filter(
     (item) => item.parent === checkUser()
   ).map((item) => ({
@@ -72,9 +72,11 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={
+                defaultValue={{
+                  label : 
                   filteredUserData[0]?.parentBusinessGroup ||
                   (loggedInUser !== "Admin" ? loggedInUser : "")
+                }
                 }
               />
             )}
@@ -100,10 +102,11 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={
-                  filteredUserData[0]?.parentCompany ||
-                  (loggedInUser !== "Admin" ? loggedInUser : " ")
-                }
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentCompany ||
+                    (role === "company" ? loggedInUser : ""),
+                }}
               />
             )}
           />
@@ -128,10 +131,11 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={
-                  filteredUserData[0]?.parentBranch ||
-                  (loggedInUser !== "Admin" ? loggedInUser : " ")
-                }
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentBranch ||
+                    " "
+                }}
               />
             )}
           />

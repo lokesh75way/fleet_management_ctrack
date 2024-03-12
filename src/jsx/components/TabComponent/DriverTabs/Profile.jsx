@@ -6,7 +6,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import {
   branchOptions,
-  companyOptions, 
+  companyOptions,
   businessGroupOptions,
   employeeDesignationOptions,
   tagViaOptions,
@@ -36,13 +36,13 @@ const Profile = ({
   };
 
   const { id } = useParams();
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
 
-  const loggedInUser = localStorage.getItem("loginDetails-name")
+  const loggedInUser = localStorage.getItem("loginDetails-name");
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
- 
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -55,7 +55,6 @@ const Profile = ({
             control={control}
             rules={{ required: true }}
             disabled={true}
-            
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
@@ -63,12 +62,16 @@ const Profile = ({
                   setTempValue(newValue?.value);
                   setValue("business", newValue?.value);
                 }}
-                isDisabled={role === 'company' || role === 'businessgroup'}
+                isDisabled={role === "company" || role === "businessgroup"}
                 options={businessGroupOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={(filteredUserData[0]?.parentBusinessGroup) || (loggedInUser !== 'Admin'? loggedInUser : " ")}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentBusinessGroup ||
+                    (loggedInUser !== "Admin" ? loggedInUser : ""),
+                }}
               />
             )}
           />
@@ -88,12 +91,16 @@ const Profile = ({
                   setTempValue(newValue?.value);
                   setValue("company", newValue?.value);
                 }}
-                isDisabled={role === 'company'}
+                isDisabled={role === "company"}
                 options={companyOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={(filteredUserData[0]?.parentCompany) ||( loggedInUser !== 'Admin'? loggedInUser : "")}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentCompany ||
+                    (role === "company" ? loggedInUser : ""),
+                }}
               />
             )}
           />
@@ -107,8 +114,7 @@ const Profile = ({
             name="branch"
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => 
-            (
+            render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
                   console.log(newValue);
@@ -119,7 +125,11 @@ const Profile = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={(filteredUserData[0]?.parentBranch )|| (loggedInUser !== 'Admin'? loggedInUser : " ")}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentBranch ||
+                    " "
+                }}
               />
             )}
           />

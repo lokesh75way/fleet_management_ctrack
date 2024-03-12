@@ -25,44 +25,91 @@ export const BusinessGroupMenuList = [
   },
   {
     title: "Company",
-    iconStyle: <HiOutlineBuildingOffice2 style={{ width:"22px",height:"22px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to:"/company",
+    iconStyle: (
+      <HiOutlineBuildingOffice2
+        style={{
+          width: "22px",
+          height: "22px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1.5",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/company",
   },
   {
     title: "Branch",
     iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/branch",
   },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Technician",
-    iconStyle: <FaTools style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/technician",
-  },
-  {
-    title: "Driver",
-    iconStyle: <GrUserPolice style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/driver",
+    iconStyle: (
+      <FaTools
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    content: [
+      {
+        title: "Technician Details",
+        to: "/technician",
+      },
+      {
+        title: "Technician Tasks",
+        to: "/technicianTask",
+      },
+    ],
   },
   {
     title: "Vehicle",
-    iconStyle: <FaCar style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    iconStyle: (
+      <FaCar
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
     to: "/vehicle",
   },
-  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
-    title: "Technician Tasks",
-    iconStyle: <BiTask style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/technicianTask",
+    title: "Driver",
+    iconStyle: (
+      <GrUserPolice
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/driver",
   },
   {
-    title: "Alerts",
-    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/alert",
-  },
-  {
-    title: "Expense",
-    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
-    to: "/expense",
+    title: "Reports",
+    iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/reports",
   },
   {
     title: "Feature Template",
@@ -70,18 +117,26 @@ export const BusinessGroupMenuList = [
     to: "/groups",
   },
   {
+    title: "Alerts",
+    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    to: "/alert",
+  },
+  {
     title: "Geofence",
     iconStyle: <TbFence style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to: "/geofence",
   },
   {
+    title: "Expense",
+    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
+    to: "/expense",
+  },
+ 
+ 
+  {
     title: "Classify Trips",
     iconStyle: <BiTrip style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to: "/classifyTrips",
   },
-  {
-    title: "Reports",
-    iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/reports",
-  },
+
 ];
