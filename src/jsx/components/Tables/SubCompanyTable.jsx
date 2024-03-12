@@ -7,7 +7,7 @@ import { IMAGES,SVGICON} from '../../constant/theme';
 
 const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawerOpen}) => {
   var filterData = tableData;
-  if(tempValue){
+  if(tempValue!=='All'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
   console.log("In table company",tableData)

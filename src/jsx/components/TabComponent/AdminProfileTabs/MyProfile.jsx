@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import { CountrySelect, StateSelect } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
@@ -31,7 +32,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
     label: item.email,
     value: item.id,
   }));
-  console.log(data)
+  console.log("In profile",data)
   
   return (
     <div className="p-4">
@@ -44,14 +45,14 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             required
             label="User Name"
             name="userName"
-            disabled={!isEdit}
-            defaultValue={data?.userName}
+            // disabled={!isEdit}
+            defaultValue={data?.userName || " "}
           />
            <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
-          {isEdit ? <CountrySelect
+          {/* {isEdit ? <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.id);
@@ -61,16 +62,17 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
-          :
+          : */}
           <CountrySelect
             onChange={(e) => {
+              console.log(e)
               setCountryid(e.id);
               setValue("country", e.id);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-          />}
+          />
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
@@ -82,6 +84,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
                 setstateid(e.id);
                 setValue("state", e.id);
               }}
+              // defaultValue={{  name: data.state }}
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
@@ -111,7 +114,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
                 register={register}
                 name="oldPassword"
                 label="Old Password"
-                disabled={!isEdit}
+                // disabled={!isEdit}
               />
               <Error errorName={errors.oldPassword} />
             </div>
@@ -124,7 +127,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
                 register={register}
                 label="New Password"
                 name="newPassword"
-                disabled={!isEdit}
+                // disabled={!isEdit}
               />
               <Error errorName={errors.newPassword} />
             </div>
@@ -137,7 +140,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
                 register={register}
                 label="Retype Passwor"
                 name="retypePassword"
-                disabled={!isEdit}
+                // disabled={!isEdit}
               />
               <Error errorName={errors.retypePassword} />
             </div>
@@ -149,10 +152,10 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <CustomInput
             type="email"
             register={register}
-            defaultValue={data?.passwordRecoveryEmail}
+            defaultValue={data?.passwordRecoveryEmail || " "}
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -163,8 +166,8 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
-            defaultValue={data?.helpDeskEmail}
-            disabled={!isEdit}
+            defaultValue={data?.helpDeskEmail || " "}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -173,11 +176,11 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <CustomInput
             type="number"
             register={register}
-            defaultValue={data?.helpDeskTelephoneNumber}
+            defaultValue={data?.helpDeskTelephoneNumber || " "}
             className="form-control"
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
@@ -187,9 +190,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             type="number"
             register={register}
             name="mobileNumber"
-            defaultValue={data?.mobileNumber}
+            defaultValue={data?.mobileNumber || " "}
             label="Mobile Number"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           {!getValues("mobileNumber") && <Error errorName={errors.mobileNumber} />}
         </div>
@@ -200,7 +203,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             register={register}
             className="form-control"
             label="Whatsapp Contact Number"
-            defaultValue={data?.whatsappContactNumber}
+            defaultValue={data?.whatsappContactNumber || " "}
             name="whatsappContactNumber"
             disabled={!isEdit} 
           />
@@ -215,7 +218,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             register={register}
             label="City"
             name="city"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.city} />
         </div>
@@ -227,9 +230,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             type="number"
             register={register}
             label="Zip Code"
-            defaultValue={data?.zipCode}
+            defaultValue={data?.zipCode || " "}
             name="zipCode"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -241,9 +244,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             type="text"
             register={register}
             label="Street1"
-            defaultValue={data?.street1}
+            defaultValue={data?.street1 || " "}
             name="street1"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -253,11 +256,11 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           </label>
           <CustomInput
             type="text"
-            defaultValue={data?.street2}
+            defaultValue={data?.street2 || " "}
             register={register}
             label="Street2"
             name="street2"
-            disabled={!isEdit}
+            // disabled={!isEdit}
           />
         </div>
       </div>
@@ -269,9 +272,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
+        <Button type="submit" disabled={!isEdit} onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Next
+          Submit
         </Button>
       </div>
     </div>

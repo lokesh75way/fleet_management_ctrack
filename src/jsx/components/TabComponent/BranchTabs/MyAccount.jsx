@@ -6,7 +6,6 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
-// import {parentOptions} from '../VehicleTabs/Options'
 import { useParams } from "react-router-dom";
 const MyAccount = ({
   setValue,
@@ -127,7 +126,7 @@ const MyAccount = ({
             Company<span className="text-danger">*</span>
           </label>
           <Controller
-            name="company"
+            name="parentCompany"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (

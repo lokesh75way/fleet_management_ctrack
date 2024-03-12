@@ -7,6 +7,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import { leaveTimeOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
+import {useParams} from 'react-router-dom'
 
 const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control,errors,getValues }) => {
 
@@ -17,6 +18,14 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+  const { id } = useParams();
+
+  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+
+  const [filteredUserData, setFilteredUserData] = useState(newData);
 
   return (
     <div className="p-4">
@@ -35,7 +44,9 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={leaveTimeOptions[0]}
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].mediclaimExpiryDate : leaveTimeOptions[0]
+                }
               />
             )}
           />
@@ -51,6 +62,9 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
             label="No Of Days"
             name="noOfDays"
             placeholder=""
+            defaultValue={
+              filteredUserData[0] ? filteredUserData[0].noOfDays : ""
+            }
           />
           <Error errorName={errors.noOfDays} />
         </div>

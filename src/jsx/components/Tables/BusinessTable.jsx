@@ -4,8 +4,10 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { IMAGES, SVGICON } from "../../constant/theme";
+import useStorage from "../../../hooks/useStorage";
 
 const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
+  const {getCompany} = useStorage()
   return (
     <>
       {tableData.map((item, index) => (
@@ -38,15 +40,23 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
           <td>
             <span>{item.country}</span>
           </td>
-         
+          <td>
+            <Link
+              to={`/company/${item.id}`}
+              className="text-primary badge light border-0 badge-count"
+            >
+              {getCompany(item.userName)}
+            </Link>
+          </td>
 
           <td>
             <span className="d-flex justify-content-center">
-              
-                <span className="cursor-pointer" onClick={()=>editDrawerOpen(item)}>
-                  <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-                </span>
-        
+              <span
+                className="cursor-pointer"
+                onClick={() => editDrawerOpen(item)}
+              >
+                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+              </span>
 
               <DeleteModal
                 className="cursor-pointer "

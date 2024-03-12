@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
-import Select from 'react-select'
+import Select from "react-select";
 import useStorage from "../../../hooks/useStorage";
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -11,8 +11,12 @@ const Branch = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const {getAllCompany} = useStorage()
-  const [tempValue,setTempValue] = useState(null)
+  const { getAllCompany } = useStorage();
+  const [selectFilter, setFilter] = useState({
+    value: "All",
+    label: "All",
+  });
+  const [tempValue, setTempValue] = useState("All");
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -20,18 +24,31 @@ const Branch = () => {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ",
-      marginRight:"1rem",
-      marginLeft:"1rem",
-      width:"15rem",
-      menuPortal: provided => ({ ...provided, zIndex: 9999 }),
-    menu: provided => ({ ...provided, zIndex: 9999 })
+      marginRight: "1rem",
+      marginLeft: "1rem",
+      width: "15rem",
+      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
+      menu: (provided) => ({ ...provided, zIndex: 9999 }),
     }),
   };
+
+  useEffect(() => {
+    if (params.id) {
+      const user = JSON.parse(localStorage.getItem("userJsonData"));
+      const username = user.filter((data) => data.id == params.id)[0].userName;
+      console.log(username);
+      setFilter({
+        value: username,
+        label: username,
+      });
+      setTempValue(username);
+    }
+  }, [params.id]);
 
   const loggedinUser = localStorage.getItem("loginDetails-name");
   // const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
   const role = localStorage.getItem("role");
-  const{control,setValue, getValue} = useForm()
+  const { control, setValue, getValue } = useForm();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
@@ -46,7 +63,7 @@ const Branch = () => {
     usergroup: "",
     branches: 0,
   });
-  console.log(tableData)
+  console.log(tableData);
 
   const sort = 10;
   const activePag = useRef(0);
@@ -92,11 +109,15 @@ const Branch = () => {
 
   const invite = useRef();
   const subCompany = useRef();
-  const d = JSON.parse(localStorage.getItem('userJsonData'))
-    const companyOptions = d.filter((item) => item.role === "company").map((item) => ({
-        label: item.userName,
-        value: item.id,
-      }));
+  const d = JSON.parse(localStorage.getItem("userJsonData"));
+  let companyOptions = d
+    .filter((item) => item.role === "company")
+    .map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+
+  companyOptions = [...companyOptions, { label: "All", value: "All" }];
 
   useEffect(() => {
     if (role === "admin") return;
@@ -135,16 +156,21 @@ const Branch = () => {
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
                             onChange={(newValue) => {
-                                setTempValue(newValue.label)
+                              setTempValue(newValue.label);
                               setValue("companyOptions", newValue.label);
                             }}
                             ref={ref}
                             name={name}
                             menuPortalTarget={document.body}
-                            menuPosition={'fixed'} 
+                            menuPosition={"fixed"}
                             styles={customStyles}
                             options={companyOptions}
-                            defaultValue={[{value:"All", label:"All"}]}
+                            defaultValue={[
+                              {
+                                value: selectFilter.value,
+                                label: selectFilter.label,
+                              },
+                            ]}
                           />
                         )}
                       />
