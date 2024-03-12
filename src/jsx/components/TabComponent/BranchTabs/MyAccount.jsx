@@ -6,7 +6,6 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
-import { parentOptions } from "../VehicleTabs/Options";
 import { useParams } from "react-router-dom";
 const MyAccount = ({
   setValue,
@@ -29,27 +28,71 @@ const MyAccount = ({
     }),
   };
 
-  const businessUserOptions = DummyData.filter(
-    (item) => item.role === "businessgroup"
-  ).map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
+  const [businessUserOptions, setBusinessUserOptions] = useState([]);
+  const [companyOptions, setCompanyOptions] = useState([]);
+  const [parentOptions, setParentOptions] = useState([]);
 
-  const companyOptions = DummyData.filter(
-    (item) => item.role === "company"
-  ).map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
+  const [businessUserValue, setBusinessUserValue] = useState([]);
+  const [companyValue, setCompanyValue] = useState([]);
+  const [parentValue, setParentValue] = useState();
+
+  useEffect(() => {
+    const tempbusinessUserOptions = DummyData.filter(
+      (item) => item.role === "businessgroup"
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+
+    const tempcompanyOptions = DummyData.filter(
+      (item) => item.role === "company"
+    )
+      .filter((cp) => cp.parent === businessUserValue)
+      .map((item) => ({
+        label: item.userName,
+        value: item.id,
+      }));
+
+    const tempparentOptions = DummyData.filter((item) => item.role === "branch")
+      .filter((br) => br.parentCompany === companyValue)
+      .map((item) => ({
+        label: item.userName,
+        value: item.id,
+      }));
+
+      tempparentOptions.push({label:'None',value:0})
+
+    setBusinessUserOptions(tempbusinessUserOptions);
+    setCompanyOptions(tempcompanyOptions);
+    setParentOptions(tempparentOptions);
+  }, [businessUserValue, companyValue, parentValue]);
 
   const { id } = useParams();
 
-  const companyData = JSON.parse(localStorage.getItem("userJsonData"));
+  const User = JSON.parse(localStorage.getItem("userJsonData"));
 
-  const newData = companyData.filter((data) => data.id == id);
+  const branchData = User.filter((item) => item.role === "branch" && item.id == id);
 
-  const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
+
+  const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
+
+  console.log(
+    filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
+  );
+
+
+  console.log('This is id', id);
+  console.log('data to edit', filteredCompanyData);
+
+  useEffect(()=>{
+    setValue("parentBusinessGroup",filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : "" );
+    setValue("parentCompany",filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : "" );
+    setValue("parentBranch",filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : "" );
+    setValue("country",filteredCompanyData[0] ? filteredCompanyData[0].country : "" );
+    setValue("state",filteredCompanyData[0] ? filteredCompanyData[0].state : "" );
+
+  },[])
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -62,14 +105,17 @@ const MyAccount = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.label);
-                  setValue("businessUser", newValue.label);
+                  setBusinessUserValue(newValue.label);
+                  setValue("parentBusinessGroup", newValue.label);
                 }}
                 options={businessUserOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={businessUserOptions[0]}
+                defaultValue={{
+                  label: filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : "",
+                  value: filteredCompanyData[0] ? filteredCompanyData[0].id : "",
+                }}
               />
             )}
           />
@@ -80,20 +126,23 @@ const MyAccount = ({
             Company<span className="text-danger">*</span>
           </label>
           <Controller
-            name="company"
+            name="parentCompany"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
-                  setValue("company", newValue.label);
+                  setCompanyValue(newValue.label);
+                  setValue("parentCompany", newValue.label);
                 }}
                 options={companyOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={companyOptions[0]}
+                defaultValue={{
+                  label: filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : "",
+                  value: filteredCompanyData[0] ? filteredCompanyData[0].id : "",
+                }}
               />
             )}
           />
@@ -108,14 +157,17 @@ const MyAccount = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
-                  setValue("parent", newValue.value);
+                  setParentValue(newValue.value);
+                  setValue("parentBranch", newValue.value);
                 }}
                 options={parentOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={filteredCompanyData[0].parentBranch || " "}
+                defaultValue={{
+                  label: filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : "",
+                  value: filteredCompanyData[0] ? filteredCompanyData[0].id : "",
+                }}
               />
             )}
           />
@@ -134,7 +186,8 @@ const MyAccount = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-          
+            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
+            
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -149,11 +202,10 @@ const MyAccount = ({
                 setstateid(e.id);
                 setValue("state", e.id);
               }}
-              // defaultValue={filteredCompanyData[0].state}
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-              
+              // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].state : "" }}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
@@ -162,24 +214,6 @@ const MyAccount = ({
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            // bhai yaha yup ka schema vagera change kardena baad me, har jagha branchName kardena shortName ki jagha
-            type="text"
-            required
-            register={register}
-            lable="Short Name"
-            name="shortName"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].shortName : ""
-            }
-          />
-          <Error errorName={errors.shortName} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -258,6 +292,10 @@ const MyAccount = ({
             label="Password Recovery Email"
             name="passwordRecoveryEmail"
             placeholder=""
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ""
+            }
+            
           />
           <Error errorName={errors.passwordRecoveryEmail} />
         </div>
@@ -271,7 +309,10 @@ const MyAccount = ({
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={filteredCompanyData[0].helpDeskEmail}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ""
+            }
+            
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -286,6 +327,7 @@ const MyAccount = ({
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
+            
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
@@ -316,7 +358,9 @@ const MyAccount = ({
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            defaultValue={2342342}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].whatsappContactNumber : ""
+            }
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -362,7 +406,10 @@ const MyAccount = ({
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={filteredCompanyData[0].street1}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].street1 : ""
+            }
+            
           />
           <Error errorName={errors.street1} />
         </div>
@@ -423,3 +470,4 @@ const MyAccount = ({
 };
 
 export default MyAccount;
+

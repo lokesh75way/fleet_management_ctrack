@@ -35,7 +35,6 @@ const BranchForm = () => {
       try {
         if (id) {
           const val = JSON.parse(localStorage.getItem("userJsonData"));
-
           const indexToUpdate = val.findIndex((item) => item.id == id);
           if (indexToUpdate !== -1) {
             val[indexToUpdate] = { ...data, id , role : "branch"};
