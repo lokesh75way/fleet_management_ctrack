@@ -28,6 +28,9 @@ const CompanyTable = ({
             <span>{item.id}</span>
           </td>
           <td>
+            <span className="text-primary">{item.userName}</span>
+          </td>
+          <td>
             <div className="products">
               <img
                 src={item.image || IMAGES.contact1}
@@ -38,9 +41,6 @@ const CompanyTable = ({
                 <h6>{item.parent}</h6>
               </div>
             </div>
-          </td>
-          <td>
-            <span className="text-primary">{item.userName}</span>
           </td>
           <td>
             <span>{item.mobileNumber}</span>

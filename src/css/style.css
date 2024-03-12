@@ -57656,3 +57656,6 @@ html[dir="rtl"]
 }
 
 /*# sourceMappingURL=style.css.map */
+.menu-icon svg{
+  width: 22px;
+}

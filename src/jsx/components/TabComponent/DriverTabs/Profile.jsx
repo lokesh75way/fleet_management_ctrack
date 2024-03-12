@@ -6,6 +6,8 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import {
   branchOptions,
+  companyOptions,
+  businessGroupOptions,
   employeeDesignationOptions,
   tagViaOptions,
   defaultObjectNumberOptions,
@@ -34,23 +36,76 @@ const Profile = ({
   };
 
   const { id } = useParams();
+  const role = localStorage.getItem("role");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const loggedInUser = localStorage.getItem("loginDetails-name");
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
 
-  //   const [defaultValues, setDefaultValues] = useState();
-
-  //   const driver = JSON.parse(localStorage.getItem("driverData"));
-  //   useEffect(() => {
-  //     if (driver.length > 0) {
-  //       const thisDriver = driver.find((d) => d.id === id);
-  //       setDefaultValues(thisDriver);
-  //     }
-  //   }, [id],driver, defaultValues);
-  // console.log("Default valuees are,",defaultValues)
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Business Group <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="business"
+            control={control}
+            rules={{ required: true }}
+            disabled={true}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  console.log(newValue);
+                  setTempValue(newValue?.value);
+                  setValue("business", newValue?.value);
+                }}
+                isDisabled={role === "company" || role === "businessgroup"}
+                options={businessGroupOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentBusinessGroup ||
+                    (loggedInUser !== "Admin" ? loggedInUser : ""),
+                }}
+              />
+            )}
+          />
+          {!getValues("branch") && <Error errorName={errors.branch} />}
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Company <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="company"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  setTempValue(newValue?.value);
+                  setValue("company", newValue?.value);
+                }}
+                isDisabled={role === "company"}
+                options={companyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentCompany ||
+                    (role === "company" ? loggedInUser : ""),
+                }}
+              />
+            )}
+          />
+          {!getValues("branch") && <Error errorName={errors.branch} />}
+        </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Branch <span className="text-danger">*</span>
@@ -62,7 +117,7 @@ const Profile = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  console.log(newValue)
+                  console.log(newValue);
                   setTempValue(newValue?.value);
                   setValue("branch", newValue?.value);
                 }}
@@ -70,7 +125,11 @@ const Profile = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultInputValue={filteredUserData[0]?.parentBranch}
+                defaultValue={{
+                  label:
+                    filteredUserData[0]?.parentBranch ||
+                    " "
+                }}
               />
             )}
           />
@@ -265,7 +324,7 @@ const Profile = ({
       >
         <Button
           type="submit"
-          onClick={(handleSubmit(onSubmit))}
+          onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
           {" "}

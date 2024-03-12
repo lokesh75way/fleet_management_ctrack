@@ -6,6 +6,8 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import { useParams } from "react-router-dom";
+import DummyData from '../../../../users.json'
+import useStorage from "../../../../hooks/useStorage";
 
 const General = ({
   register,
@@ -18,6 +20,7 @@ const General = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
+  const {checkRole,checkUserName} = useStorage()
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -28,6 +31,22 @@ const General = ({
     setSelectedOption(e.target.value);
     setValue("fuelSensor", e.target.value);
   };
+  var companyOptions;
+  if(checkRole() === 'admin'){
+    companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+  }
+  else if(checkRole() === 'businessgroup'){
+    companyOptions = DummyData.filter((item) => item.role === "company" && item.parent === checkUserName() ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+  }
+  else if(checkRole()==='company'){
+    companyOptions = [{label: checkUserName(),value: checkUserName()}]
+  }
 
   const { id } = useParams();
 
@@ -39,6 +58,28 @@ const General = ({
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+      <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Company <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="parentCompany"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.value);setValue("parentCompany", newValue.value)}}
+                options={companyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].parentCompany : ""
+                }
+              />
+            )}
+          />
+          {!getValues('leaveTime') &&<Error errorName={errors.parentCompany} />}
+        </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             First Name <span className="text-danger">*</span>

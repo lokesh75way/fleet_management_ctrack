@@ -9,8 +9,8 @@ const Company = () => {
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const [selectFilter, setFilter] = useState({
-    value: "All",
-    label: "All",
+    value: "All Business Groups",
+    label: "All Business Groups",
   });
   const [tempValue, setTempValue] = useState("All");
   console.log("Filter valeus are", selectFilter);
@@ -29,6 +29,7 @@ const Company = () => {
         value: username,
         label: username,
       });
+      setValue('parent',username);
       setTempValue(username);
     }
   }, [id]);
@@ -37,10 +38,10 @@ const Company = () => {
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ",
       marginRight: "1rem",
       marginLeft: "1rem",
       width: "15rem",
+      height: "0.6rem",
       menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
       menu: (provided) => ({ ...provided, zIndex: 9999 }),
     }),
@@ -147,9 +148,11 @@ const Company = () => {
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
+                          
                             onChange={(newValue) => {
                               setTempValue(newValue.label);
                               setValue("companyOptions", newValue.label);
+                              setFilter({value:newValue.value,label:newValue.label})
                             }}
                             ref={ref}
                             menuPortalTarget={document.body}
@@ -157,10 +160,10 @@ const Company = () => {
                             name={name}
                             styles={customStyles}
                             options={businessGroupOptions}
-                            defaultValue={[
+                            value={[
                               {
-                                value: selectFilter?.value,
-                                label: selectFilter?.label,
+                                value: selectFilter.value,
+                                label: selectFilter.label,
                               },
                             ]}
                           />
@@ -168,8 +171,9 @@ const Company = () => {
                       />
                       <Link
                         to={"/company/create"}
-                        className="btn btn-primary btn-sm ms-1"
+                        className="btn btn-primary btn-sm ms-1 p-2"
                         data-bs-toggle="offcanvas"
+                        style={{paddingBlock : '9px'}}
                         // onClick={()=>company.current.showModal()}
                       >
                         + Add Company
@@ -187,8 +191,8 @@ const Company = () => {
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Business Group</th>
                           <th>Company Name</th>
+                          <th>Business Group</th>
                           <th>Mobile Number</th>
                           <th>Location</th>
                           <th>Email</th>

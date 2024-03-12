@@ -29,6 +29,7 @@ const CustomInput = ({
         className="form-control"
         defaultValue={defaultValue}
         disabled={disabled}
+        autoComplete="off"
       />
     </div>
   );

@@ -15,6 +15,7 @@ import ChangePassword from "./pages/ChangePassword";
 import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
+import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
@@ -95,6 +96,7 @@ const BusinessGroupRoutes = () => {
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
+    { url: "driver/edit/:id", component: <DriverForm /> },
     { url: "technician/create", component: <TechnicianForm /> },
     { url: "subUser/create", component: <SubUserForm /> },
     { url: "subUser", component: <SubUser /> },
@@ -106,6 +108,7 @@ const BusinessGroupRoutes = () => {
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
+    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
     { url: "company/create", component: <CompanyForm /> },
     { url: "company/edit/:id", component: <CompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },

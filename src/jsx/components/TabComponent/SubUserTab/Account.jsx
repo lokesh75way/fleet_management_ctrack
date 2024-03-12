@@ -5,7 +5,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import { useParams } from "react-router-dom";
 import {
-  branchOptions,
+  featureTemplateOptions,
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
@@ -40,22 +40,35 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-
-        <div className="col-xl-6 mb-3 ">
+      <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput3" className="form-label">
+           Email  <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="email"
+            register={register}
+            label="Email"
+            className="form-control"
+            name="email"
+            defaultValue={filteredUserData[0] ? filteredUserData[0].email : ''}
+            placeholder=""
+          />
+           <Error errorName={errors.email} />
+        </div>
+      <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Parent 
+            User Name <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
-            label="Parent"
-            name="parent"
-            value={checkUser()}
+            label="User Name"
+            name="userName"
             placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].userName : ''}
           />
+          <Error errorName={errors.userName} />
         </div>
-
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
@@ -85,39 +98,6 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
         </div>
-
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            User Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="User Name"
-            name="userName"
-            placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].userName : ''}
-          />
-          <Error errorName={errors.userName} />
-        </div>
-
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Confirm User Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Confirm User Name"
-            name="confirmUserName"
-            placeholder=""
-            
-          />
-          <Error errorName={errors.confirmUserName} />
-        </div>
-
-       
-
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Mobile Number <span className="text-danger">*</span>
@@ -132,21 +112,28 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           />
           <Error errorName={errors.mobileNumber} />
         </div>
-
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-           Email  <span className="text-danger">*</span>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Feature Template <span className="text-danger">*</span>
           </label>
-          <CustomInput
-            type="email"
-            register={register}
-            label="Email"
-            className="form-control"
-            name="email"
-            placeholder=""
+          <Controller
+            name="featureTemplate"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("featureTemplate", newValue.label)}}
+                options={featureTemplateOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={featureTemplateOptions[0]} 
+              />
+            )}
           />
-           <Error errorName={errors.email} />
+          {!getValues('featureTemplate') && <Error errorName={errors.featureTemplate} />}
         </div>
+        
         </div>
       <div
         style={{

@@ -10,26 +10,42 @@ import DriverTable from "../components/Tables/DriverTable";
 
 const Driver = (ref) => {
   const navigate = useNavigate();
-  const allData = JSON.parse(localStorage.getItem('userJsonData'));
-  const driverDataFromLocalStorage = allData.filter((item)=> item.Designation === "Driver")
-  // const driverData =   
+  const allData = JSON.parse(localStorage.getItem("userJsonData"));
+  const driverDataFromLocalStorage = allData.filter(
+    (item) => item.Designation === "Driver"
+  );
+  // const driverData =
   const DriverDataMemoized = useMemo(() => {
-      return  driverDataFromLocalStorage ? driverDataFromLocalStorage: [];
+    return driverDataFromLocalStorage ? driverDataFromLocalStorage : [];
   }, [driverDataFromLocalStorage]);
 
   const [tableData, setTableData] = useState([]);
 
-  useEffect(()=>{
-    const loginCompanyId  = localStorage.getItem('loginDetails-email');
-    console.log(DriverDataMemoized , loginCompanyId)
-    const data1 = DriverDataMemoized.filter((driver)=> driver.branch === loginCompanyId);
-    console.log(data1)
-    if(loginCompanyId === 'admin@example.com'){
-      setTableData(DriverDataMemoized)
-      return;
+  useEffect(() => {
+    const loginCompanyId = localStorage.getItem("loginDetails-name");
+    const role = localStorage.getItem("role");
+    console.log(DriverDataMemoized, loginCompanyId);
+    let data1;
+    if (role === "admin") {
+      data1 = DriverDataMemoized;
+    } else if (role === "businessgroup") {
+      data1 = DriverDataMemoized.filter(
+        (driver) => driver.parentBusinessGroup === loginCompanyId
+      );
     }
-    setTableData(data1)
-  },[])
+    else if(role === 'branch'){
+      data1 = DriverDataMemoized.filter(
+        (driver) => driver.parentBranch === loginCompanyId
+      );
+    }
+    else if(role === 'company'){
+      data1 = DriverDataMemoized.filter(
+        (driver) => driver.parentCompany === loginCompanyId
+      );
+    }
+  
+    setTableData(data1);
+  }, []);
 
   const [editData, setEditData] = useState({
     id: 0,
@@ -76,29 +92,18 @@ const Driver = (ref) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
-     // Remove item from local storage
-  const updatedLocalStorageData = DriverDataMemoized.filter(
-    (item) => item.id !== id
-  );
-  localStorage.setItem("driverData", JSON.stringify(updatedLocalStorageData));
+    // Remove item from local storage
+    const updatedLocalStorageData = DriverDataMemoized.filter(
+      (item) => item.id !== id
+    );
+    localStorage.setItem("driverData", JSON.stringify(updatedLocalStorageData));
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
     navigate(`/driver/edit/${item}`);
     // setEditTableData(item);
   };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const updateTable = tableData.map((table) => {
-  //     if (table.id === editData.id) {
-  //       console.log(table.id);
-  //       return { ...table, ...editData };
-  //     }
-  //     return table;
-  //   });
-  //   setTableData(updateTable);
-  // };
-
+  
   const employe = useRef();
   return (
     <>
@@ -211,7 +216,6 @@ const Driver = (ref) => {
           </div>
         </div>
       </div>
-    
     </>
   );
 };

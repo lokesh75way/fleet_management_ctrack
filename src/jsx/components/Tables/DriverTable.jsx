@@ -4,7 +4,6 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
 const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
-    console.log(tableData)
     return (
         <>
             {tableData.map((item, index) => (
@@ -12,7 +11,6 @@ const DriverTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     <td><span>{item.id}</span></td>
                     <td>
                         <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
                             <div>
                                 <h6>{item.firstName} {item.lastName}</h6>
                                 <span>{item.employeeDesignation}</span>

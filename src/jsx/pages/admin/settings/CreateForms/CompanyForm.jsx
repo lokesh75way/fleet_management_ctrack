@@ -10,17 +10,18 @@ import { companyAccountSchema, companySettingSchema } from '../../../../../yup' 
 import useStorage from "../../../../../hooks/useStorage";
 import {notifyError, notifySuccess} from '../../../../../utils/toast'
 import { useNavigate, useParams } from "react-router-dom";
+import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 
 const CompanyForm = () => {
   const{saveData} = useStorage()
   const navigate = useNavigate()
   const { id } = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Company", "Settings"];
-  const component = [MyAccount, UserSetting];
+  const tabHeading = ["New Company", "Settings","Change Password"];
+  const component = [MyAccount, UserSetting,ManagePassword];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
+    resolver: yupResolver(activeIndex === 1 ? companySettingSchema:companyAccountSchema )
   })
 
   const onSubmit = (data)=>{

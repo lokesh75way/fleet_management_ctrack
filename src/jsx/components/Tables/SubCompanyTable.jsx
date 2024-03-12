@@ -5,11 +5,20 @@ import DeleteModal from '../Modal/DeleteModal'
 import { Link } from 'react-router-dom'
 import { IMAGES,SVGICON} from '../../constant/theme'; 
 
-const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawerOpen}) => {
+const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen}) => {
   var filterData = tableData;
+
+  console.log("this is data",filterData,tempValue,tempValue2);
   if(tempValue!=='All'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
+  if(tempValue2!=='All'){
+    filterData = tableData.filter((item)=> item.role === 'branch' && item.parentBranch === tempValue2)
+  }
+
+  
+
+
   console.log("In table company",tableData)
     return (
       <>
@@ -17,6 +26,14 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawer
           <tr key={index}>
             <td>
               <span>{item.id}</span>
+            </td>
+
+            {/* <td><span>{item.application}</span></td> */}
+            <td>
+              <span className="text-primary">{item.userName}</span>
+            </td>
+            <td>
+              <span >{item.parentCompany}</span>
             </td>
             <td>
               <div className="products">
@@ -29,13 +46,6 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tableData,editDrawer
                   <h6>{item.parentBusinessGroup}</h6>
                 </div>
               </div>
-            </td>
-            {/* <td><span>{item.application}</span></td> */}
-            <td>
-              <span className="text-primary">{item.parentCompany}</span>
-            </td>
-            <td>
-              <span>{item.userName}</span>
             </td>
             <td>
               <span>{item.mobileNumber}</span>

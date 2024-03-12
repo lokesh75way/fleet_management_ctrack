@@ -1,10 +1,29 @@
-export const branchOptions = [
-  { value: "company1@example.com", label: "Company 1" },
-  { value: "company2@example.com", label: "Company 2" },
-  { value: "company3@example.com", label: "Company 3" },
-  { value: "company4@example.com", label: "Company 4" },
-  { value: "company5@example.com", label: "Company 5" },
+export const companyOptions = [
+  { value: "company1@example.com", label: "Company1" },
+  { value: "company2@example.com", label: "Company2" },
+  { value: "company3@example.com", label: "Company3" },
+  { value: "company4@example.com", label: "Company4" },
+  { value: "company5@example.com", label: "Company5" },
 ];
+
+export const branchOptions  = [
+  { value: "branch1@example.com", label: "Branch1" },
+  { value: "branch2@example.com", label: "Branch2" },
+  { value: "branch3@example.com", label: "Branch3" },
+  { value: "branch4@example.com", label: "Branch4" },
+  { value: "branch5@example.com", label: "Branch5" },
+]
+
+export const businessGroupOptions  = [
+  { value: "businessgroup1@example.com", label: "Business Group1" },
+  { value: "businessgroup2@example.com", label: "Business Group2" },
+  { value: "businessgroup3@example.com", label: "Business Group3" },
+  { value: "businessgroup4@example.com", label: "Business Group4" },
+  { value: "businessgroup5@example.com", label: "Business Group5" },
+]
+
+
+
 export const deviceTypeOptions = [
   { value: "2G Camera Howen 5632", label: "2G Camera Howen 5632" },
   { value: "2G Camera Howen 5633", label: "2G Camera Howen 5633" },
@@ -21,6 +40,12 @@ export const distanceCounterOptions = [
   { value: "CAN Odometer", label: "CAN Odometer" },
   { value: "Relative Odometer", label: "Relative Odometer" },
   { value: "Tachograph", label: "Tachograph" },
+];
+export const featureTemplateOptions = [
+  { value: "Template 1", label: "Template 1" },
+  { value: "Template 2", label: "Template 2" },
+  { value: "Template 3", label: "Template 3" },
+  { value: "Template 4", label: "Template 4" },
 ];
 export const unitOfDistanceOptions = [
   { value: "Kilometer", label: "Kilometer" },
@@ -92,11 +117,6 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
 
-export const leaveTimeOptions = [
-  { value: "CL", label: "CL" },
-  { value: "PL", label: "PL" },
-  { value: "SL", label: "SL" },
-];
 export const ObjectOptions = [
   { value: "Test1", label: "Test1" },
   { value: "Test2", label: "Test2" },

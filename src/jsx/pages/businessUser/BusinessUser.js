@@ -94,8 +94,9 @@ const BusinessUser = () => {
                           pathname: "/business/create",
                           state: { editData },
                         }}
-                        className="btn btn-primary btn-sm ms-1"
+                        className="btn btn-primary btn-sm ms-1 p-2"
                         data-bs-toggle="offcanvas"
+                        style={{paddingBlock : '9px'}}
                       >
                         + Add Business User
                       </Link>{" "}
@@ -112,7 +113,6 @@ const BusinessUser = () => {
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Parent</th>
                           <th>Business User</th>
                           <th>Mobile Number</th>
                           <th>Email</th>

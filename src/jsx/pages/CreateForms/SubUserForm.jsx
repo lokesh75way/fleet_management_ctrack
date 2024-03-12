@@ -6,12 +6,16 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {subUserAccuntSchema} from '../../../yup'
+import {subUserAccountSchema} from '../../../yup'
 import { notifyError, notifySuccess } from "../../../utils/toast";
+import useStorage from "../../../hooks/useStorage";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const {checkRole,checkUserName} = useStorage()
+  const role = checkRole()
+  const userName = checkUserName()
   const tabHeading = ["Account"];
   const component = [Account];
   const totalTabs = tabHeading.length;
@@ -25,19 +29,23 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     control,
     handleSubmit,
   } = useForm({
-    resolver: yupResolver(subUserAccuntSchema),
+    resolver: yupResolver(subUserAccountSchema),
   });
 
   const onSubmit = (data) => {
     try {
       const existingData = JSON.parse(localStorage.getItem("userJsonData"));
       data.id = existingData.length + 1;
+      data.role = "user";
+      data.parent = userName;
+      data.type = role;
       existingData.push(data);
       localStorage.setItem("userJsonData", JSON.stringify(existingData));
       notifySuccess("User created successfully !!");
       navigate('/subUser')
     } catch (error) {
       notifyError("Error Occured !!");
+      navigate('/subUser')
     }
   }
 
