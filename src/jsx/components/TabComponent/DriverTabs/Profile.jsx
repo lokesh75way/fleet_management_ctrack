@@ -35,9 +35,8 @@ const Profile = ({
 
   const { id } = useParams();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+  const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  console.log(filteredUserData[0])
 
   //   const [defaultValues, setDefaultValues] = useState();
 
