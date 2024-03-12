@@ -131,9 +131,6 @@ export const branchAccountSchema = yup
     whatsappContactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    helpDeskTelephoneNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
   })
   .required();
 export const adminProfileAccountSchema = yup
@@ -170,8 +167,7 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    admin:yup.string().required("Please select the field"),
-    userName: yup.string().required("Please enter a User Name"),
+    userName: yup.string().required("Please enter a Business Group Name"),
     businessUser: yup.string().required("Business Group Name is required !!"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup.number().required("Zip Code is required !!"),
@@ -189,6 +185,7 @@ export const businessGroupAccountSchema = yup
       .max(20, "Password must be at most 20 characters"),
     passwordRecoveryEmail: yup.string().email().required("Password Recovery Email is required !!"),
     helpDeskEmail: yup.string().email().required("Help Desk Email is required !!"),
+    email: yup.string().email().required("Email is required !!"),
 
     mobileNumber: yup
       .string()

@@ -52,7 +52,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         data.role = 'businessgroup';
         existingUserData.push(data);
         localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
-        notifySuccess("Saved !");
+        notifySuccess("New Business Group Created !");
         navigate("/business");
         return;
       } catch (error) {
@@ -61,8 +61,8 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     }
     
     notifySuccess("Saved !");
-    console.log(data);
-    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    console.log('business group data',data);
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>
