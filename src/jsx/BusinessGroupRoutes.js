@@ -92,6 +92,7 @@ const BusinessGroupRoutes = () => {
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
     { url: "technician", component: <Technician /> },
+    { url: "technician/edit/:id", component: <TechnicianForm /> },
     { url: "driver-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
