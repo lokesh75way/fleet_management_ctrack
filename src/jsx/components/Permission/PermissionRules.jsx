@@ -127,8 +127,8 @@ const Permission = () => {
               {" "}
             </Select>{" "}
             <button
-              className="btn btn-primary p-2 btn-sm"
-              style={{ marginLeft: "1rem" }}
+              className="btn btn-primary"
+              style={{ marginLeft: "1rem", padding: "7px 16px" }}
             >
               Copy
             </button>
@@ -194,7 +194,7 @@ const Permission = () => {
                 style={{ position: "sticky", top: 0, background: "white" }}
               >
                 <tr>
-                  <th scope="col" className="col-4">
+                  <th scope="col" className="col-4" style={{ width: "130px" }}>
                     SubModules
                   </th>
                   <th scope="col">Add</th>
@@ -209,7 +209,10 @@ const Permission = () => {
                   if (data[mindex].submodules.length == 0) {
                     return (
                       <tr key={index}>
-                        <td className="col-2"> {data[mindex].name}</td>
+                        <td className="col-2" style={{ width: "130px" }}>
+                          {" "}
+                          {data[mindex].name}
+                        </td>
                         <td>
                           <input
                             type="checkbox"
@@ -382,7 +385,11 @@ const Permission = () => {
           </div>
         </Card.Body>
         <div className="d-flex justify-content-end  p-3">
-          <button className="btn btn-primary " onClick={handleSave}>
+          <button
+            className="btn btn-primary"
+            style={{ marginLeft: "1rem", padding: "7px 16px" }}
+            onClick={handleSave}
+          >
             {" "}
             Save{" "}
           </button>

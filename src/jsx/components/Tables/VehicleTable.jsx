@@ -18,10 +18,10 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <div className="products">
           {/* <img  className="avatar avatar-md" alt="" /> */}
-          <FaCar
+          {/* <FaCar
             className="avatar avatar-md p-2"
             style={{ marginRight: ".4rem" }}
-          />
+          /> */}
           <div>
             <h6>{item.vehicleName}</h6>
             <span>Car</span>

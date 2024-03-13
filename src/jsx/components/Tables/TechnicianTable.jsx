@@ -18,11 +18,11 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
           </td>
           <td>
             <div className="products">
-              <img
+              {/* <img
                 src={item.image || IMAGES.contact1}
                 className="avatar avatar-md"
                 alt=""
-              />
+              /> */}
               <div>
                 <h6>{item.firstName}</h6>
                 <span>Web Designer</span>

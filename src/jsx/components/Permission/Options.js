@@ -60,7 +60,7 @@ export const staticoptions = [
     name: "Vehicle Tracking",
     submodules: [
       {
-        name: "drivers",
+        name: "Vechicle Tracking",
         permissions: {
           add: true,
           view: true,
@@ -74,66 +74,7 @@ export const staticoptions = [
   {
     name: "Reports",
     submodules: [
-      // {
-      //   name: "activity",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
-      // {
-      //   name: "alert",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
-      // {
-      //   name: "expense",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
-      // {
-      //   name: "fuel",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
-      // {
-      //   name: "temperature",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
-      // {
-      //   name: "driver behaviour",
-      //   permissions: {
-      //     add: true,
-      //     view: true,
-      //     modify: true,
-      //     delete: true,
-      //     export: true,
-      //   },
-      // },
+     
     ],
     permissions: {
       add: true,

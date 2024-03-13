@@ -32,11 +32,11 @@ const CompanyTable = ({
           </td>
           <td>
             <div className="products">
-              <img
+              {/* <img
                 src={item.image || IMAGES.contact1}
                 className="avatar avatar-md"
                 alt=""
-              />
+              /> */}
               <div>
                 <h6>{item.parent}</h6>
               </div>
