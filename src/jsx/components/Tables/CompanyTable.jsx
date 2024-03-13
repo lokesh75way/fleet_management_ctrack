@@ -11,6 +11,7 @@ const CompanyTable = ({
   tempValue,
   onConfirmDelete,
   editDrawerOpen,
+  setDataLength
 }) => {
   const { getBranch } = useStorage();
   var filterData = tableData;
@@ -19,7 +20,7 @@ const CompanyTable = ({
       (item) => item.role === "company" && item.parent === tempValue
     );
   }
-
+  setDataLength(filterData.length)
   return (
     <>
       {filterData.map((item, index) => (
