@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fleet_management_ctrack/static/css/main.a294f0f4.css",
-    "main.js": "/fleet_management_ctrack/static/js/main.6aba78ac.js",
+    "main.js": "/fleet_management_ctrack/static/js/main.3515701d.js",
     "static/js/1900.2dfecfd4.chunk.js": "/fleet_management_ctrack/static/js/1900.2dfecfd4.chunk.js",
     "static/js/9680.7137ea4a.chunk.js": "/fleet_management_ctrack/static/js/9680.7137ea4a.chunk.js",
     "static/js/9204.eb8a3cf4.chunk.js": "/fleet_management_ctrack/static/js/9204.eb8a3cf4.chunk.js",
@@ -29,10 +29,10 @@
     "static/js/4781.9664ebd0.chunk.js": "/fleet_management_ctrack/static/js/4781.9664ebd0.chunk.js",
     "static/js/1855.9d3632ac.chunk.js": "/fleet_management_ctrack/static/js/1855.9d3632ac.chunk.js",
     "static/js/6525.b1eebe9b.chunk.js": "/fleet_management_ctrack/static/js/6525.b1eebe9b.chunk.js",
-    "static/js/5160.3dd556e6.chunk.js": "/fleet_management_ctrack/static/js/5160.3dd556e6.chunk.js",
-    "static/js/206.c88ad5e8.chunk.js": "/fleet_management_ctrack/static/js/206.c88ad5e8.chunk.js",
+    "static/js/5160.a5b115a5.chunk.js": "/fleet_management_ctrack/static/js/5160.a5b115a5.chunk.js",
+    "static/js/206.9f48de98.chunk.js": "/fleet_management_ctrack/static/js/206.9f48de98.chunk.js",
     "static/js/8488.1d1d92ab.chunk.js": "/fleet_management_ctrack/static/js/8488.1d1d92ab.chunk.js",
-    "static/js/8995.ef386b0e.chunk.js": "/fleet_management_ctrack/static/js/8995.ef386b0e.chunk.js",
+    "static/js/8995.5ea2f9e3.chunk.js": "/fleet_management_ctrack/static/js/8995.5ea2f9e3.chunk.js",
     "static/js/3619.6d42b3bb.chunk.js": "/fleet_management_ctrack/static/js/3619.6d42b3bb.chunk.js",
     "static/js/8547.168a634f.chunk.js": "/fleet_management_ctrack/static/js/8547.168a634f.chunk.js",
     "static/js/2754.2acacb50.chunk.js": "/fleet_management_ctrack/static/js/2754.2acacb50.chunk.js",
@@ -278,7 +278,7 @@
     "index.html": "/fleet_management_ctrack/index.html",
     "static/media/england.svg": "/fleet_management_ctrack/static/media/england.2fc90f00163fc7f083be186003b9b1ba.svg",
     "main.a294f0f4.css.map": "/fleet_management_ctrack/static/css/main.a294f0f4.css.map",
-    "main.6aba78ac.js.map": "/fleet_management_ctrack/static/js/main.6aba78ac.js.map",
+    "main.3515701d.js.map": "/fleet_management_ctrack/static/js/main.3515701d.js.map",
     "1900.2dfecfd4.chunk.js.map": "/fleet_management_ctrack/static/js/1900.2dfecfd4.chunk.js.map",
     "9680.7137ea4a.chunk.js.map": "/fleet_management_ctrack/static/js/9680.7137ea4a.chunk.js.map",
     "9204.eb8a3cf4.chunk.js.map": "/fleet_management_ctrack/static/js/9204.eb8a3cf4.chunk.js.map",
@@ -306,10 +306,10 @@
     "4781.9664ebd0.chunk.js.map": "/fleet_management_ctrack/static/js/4781.9664ebd0.chunk.js.map",
     "1855.9d3632ac.chunk.js.map": "/fleet_management_ctrack/static/js/1855.9d3632ac.chunk.js.map",
     "6525.b1eebe9b.chunk.js.map": "/fleet_management_ctrack/static/js/6525.b1eebe9b.chunk.js.map",
-    "5160.3dd556e6.chunk.js.map": "/fleet_management_ctrack/static/js/5160.3dd556e6.chunk.js.map",
-    "206.c88ad5e8.chunk.js.map": "/fleet_management_ctrack/static/js/206.c88ad5e8.chunk.js.map",
+    "5160.a5b115a5.chunk.js.map": "/fleet_management_ctrack/static/js/5160.a5b115a5.chunk.js.map",
+    "206.9f48de98.chunk.js.map": "/fleet_management_ctrack/static/js/206.9f48de98.chunk.js.map",
     "8488.1d1d92ab.chunk.js.map": "/fleet_management_ctrack/static/js/8488.1d1d92ab.chunk.js.map",
-    "8995.ef386b0e.chunk.js.map": "/fleet_management_ctrack/static/js/8995.ef386b0e.chunk.js.map",
+    "8995.5ea2f9e3.chunk.js.map": "/fleet_management_ctrack/static/js/8995.5ea2f9e3.chunk.js.map",
     "3619.6d42b3bb.chunk.js.map": "/fleet_management_ctrack/static/js/3619.6d42b3bb.chunk.js.map",
     "8547.168a634f.chunk.js.map": "/fleet_management_ctrack/static/js/8547.168a634f.chunk.js.map",
     "2754.2acacb50.chunk.js.map": "/fleet_management_ctrack/static/js/2754.2acacb50.chunk.js.map",
@@ -473,6 +473,6 @@
   },
   "entrypoints": [
     "static/css/main.a294f0f4.css",
-    "static/js/main.6aba78ac.js"
+    "static/js/main.3515701d.js"
   ]
 }
