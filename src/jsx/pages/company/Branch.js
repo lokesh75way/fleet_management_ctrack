@@ -8,9 +8,6 @@ import useStorage from "../../../hooks/useStorage";
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
 const Branch = () => {
-
-
-
   const navigate = useNavigate();
   const params = useParams();
 
@@ -20,11 +17,11 @@ const Branch = () => {
     label: "All Companies",
   });
   const [selectFilter2, setFilter2] = useState({
-    value: "All",
-    label: "All",
+    value: "All Branches",
+    label: "All Branches",
   });
-  const [tempValue, setTempValue] = useState("All");
-  const [tempValue2, setTempValue2] = useState("All");
+  const [tempValue, setTempValue] = useState("All Companies");
+  const [tempValue2, setTempValue2] = useState("All Branches");
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -41,15 +38,29 @@ const Branch = () => {
   };
 
   useEffect(() => {
-    if (params.id) {
+    const str = window.location.pathname;
+    
+    if (str.includes('cid')) {
       const user = JSON.parse(localStorage.getItem("userJsonData"));
       const username = user.filter((data) => data.id == params.id)[0].userName;
-      console.log("this is user name bro",username);
 
       setFilter({
         value: username,
         label: username,
       });
+      setTempValue(username)
+
+      setValue('parent',username);
+    }
+    if (str.includes('bid')) {
+      const user = JSON.parse(localStorage.getItem("userJsonData"));
+      const username = user.filter((data) => data.id == params.id)[0].userName;
+
+      setFilter2({
+        value: username,
+        label: username,
+      });
+      setTempValue2(username)
 
       setValue('parent',username);
     }
@@ -73,7 +84,6 @@ const Branch = () => {
     usergroup: "",
     branches: 0,
   });
-  console.log(tableData);
 
   const sort = 10;
   const activePag = useRef(0);
@@ -120,21 +130,40 @@ const Branch = () => {
   const invite = useRef();
   const subCompany = useRef();
   const d = JSON.parse(localStorage.getItem("userJsonData"));
+  
   let companyOptions = d
     .filter((item) => item.role === "company")
     .map((item) => ({
       label: item.userName,
       value: item.id,
     }));
-  let branchOptions = d
+
+
+  let allbranchOptions  = d
     .filter((item) => item.role === "branch")
     .map((item) => ({
       label: item.userName,
       value: item.id,
     }));
+    allbranchOptions = [...allbranchOptions, { label: "All Branches", value: "All Branches" }];
+    const [branchOptions,setBranchOptions] = useState(allbranchOptions)
 
-  companyOptions = [...companyOptions, { label: "All Companies", value: "All" }];
-  branchOptions = [...branchOptions, { label: "All Branches", value: "All" }];
+  useEffect(()=>{
+    
+    let tempoptions = d
+    .filter((item) => item.role === "branch" && tempValue !== 'All Companies' && item.parentCompany === tempValue)
+    .map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+
+    if(tempValue !== 'All Companies') setBranchOptions(tempoptions)
+
+  },[tempValue])
+
+
+  companyOptions = [...companyOptions, { label: "All Companies", value: "All Companies" }];
+  
 
   useEffect(() => {
     if (role === "admin") return;
@@ -151,8 +180,6 @@ const Branch = () => {
     }
   }, [loggedinUser, role, SubCompanyData]);
   
-
-  console.log('this is filter data',selectFilter);
   return (
     <>
       <MainPagetitle
@@ -177,8 +204,9 @@ const Branch = () => {
                           <Select
                             onChange={(newValue) => {
                               setTempValue2(newValue.label);
-                              setTempValue('All');
+                              setTempValue('All Companies');
                               setValue("parentBranch", newValue.label);
+                              setFilter2({value:newValue.value,label:newValue.label})
                             }}
                             ref={ref}
                             name={name}
@@ -186,7 +214,7 @@ const Branch = () => {
                             menuPosition={"fixed"}
                             styles={customStyles}
                             options={branchOptions}
-                            defaultValue={{value:'All Branches',label:'All Branches'}}
+                            value={selectFilter2}
                           />
                         )}
                       />
@@ -198,7 +226,7 @@ const Branch = () => {
                           <Select
                             onChange={(newValue) => {
                               setTempValue(newValue.label);
-                              setTempValue2("All");
+                              setTempValue2("All Branches");
                               setValue("parent", newValue.label);
                               setFilter({value:newValue.value,label:newValue.label})
                             }}
@@ -241,7 +269,7 @@ const Branch = () => {
                           <th>Business Group</th>
                           <th>Mobile Number</th>
                           <th>Location</th>
-                          <th>Zip Code</th>
+                          <th>Child Branches</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -249,7 +277,6 @@ const Branch = () => {
                         <SubCompanyTable
                           tempValue={tempValue}
                           tempValue2={tempValue2}
-                          params={params}
                           editData={editData}
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}

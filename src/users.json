@@ -1455,6 +1455,42 @@
 "confirmPassword":"user123",
     "role": "user",
     "parent": "Company5"
+  },
+  {
+    "id": 88,
+    "userName":"Branch9",
+    "email": "branch9@example.com",
+    "role": "branch",
+    "parentCompany": "Company2",
+    "parentBranch":"Branch2",
+    "parentBusinessGroup":"Business Group2",
+    "country":"India",
+    "state":"Himachal Pradesh",
+    "passwordRecoveryEmail":"branch9@example.com",
+    "helpDeskEmail":"branch9help@example.com",
+    "mobileNumber":"1234567890",
+    "whatsappContactNumber":"9876543210",
+    "city":"Kalka",
+    "zipCode":"345344",
+    "street1":"Kalka street"
+  },
+  {
+    "id": 89,
+    "userName":"Branch10",
+    "email": "branch10@example.com",
+    "role": "branch",
+    "parentCompany": "Company4",
+    "parentBranch":"Branch4",
+    "parentBusinessGroup":"Business Group4",
+    "country":"India",
+    "state":"Himachal Pradesh",
+    "passwordRecoveryEmail":"branch10@example.com",
+    "helpDeskEmail":"branch10help@example.com",
+    "mobileNumber":"1234567890",
+    "whatsappContactNumber":"9876543210",
+    "city":"Kalka",
+    "zipCode":"345344",
+    "street1":"Kalka street"
   }
   
 ]

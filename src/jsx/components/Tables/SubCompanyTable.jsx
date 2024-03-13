@@ -8,20 +8,20 @@ import useStorage from '../../../hooks/useStorage'
 
 const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen}) => {
   var filterData = tableData;
-  const{getBranch} = useStorage()
 
   console.log("this is data",filterData,tempValue,tempValue2);
-  if(tempValue!=='All'){
+  if(tempValue!=='All Companies'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
-  if(tempValue2!=='All'){
+  if(tempValue2!=='All Branches'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentBranch === tempValue2)
   }
-
-  
-
-
-  console.log("In table company",tableData)
+  console.log("this is data after filter",filterData,tempValue,tempValue2);
+  var branchCount = []
+  for(var i=0;i<filterData.length;i++){
+    const branchName = filterData[i].userName
+    branchCount[i] = filterData.filter((item)=> item.parentBranch === branchName).length
+  }
     return (
       <>
         {filterData.map((item, index) => (
@@ -41,16 +41,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
               <span >{item.parentCompany}</span>
             </td>
             <td>
-              <div className="products">
-                <img
-                  src={item.image || IMAGES.contact1}
-                  className="avatar avatar-md"
-                  alt=""
-                />
-                <div>
-                  <h6>{item.parentBusinessGroup}</h6>
-                </div>
-              </div>
+              <span >{item.parentBusinessGroup}</span>
             </td>
             <td>
               <span>{item.mobileNumber}</span>
@@ -61,10 +52,10 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
 
             <td>
             <Link
-              to={`/branch/${item.id}`}
+              to={`/branch/bid/${item.id}`}
               className="text-primary badge light border-0 badge-count"
             >
-              {getBranch(item.userName)}
+              {branchCount[index]}
             </Link>
           </td>
             <td>

@@ -132,7 +132,8 @@ const AdminRoutes = () => {
     { url: "business-group", component: <BusinessUser /> },
     { url: "business-group/:id", component: <BusinessUser /> },
     { url: "branch", component: <Branch /> },
-    { url: "branch/:id", component: <Branch /> },
+    { url: "branch/cid/:id", component: <Branch /> },
+    { url: "branch/bid/:id", component: <Branch /> },
     { url: "/admin/my-profile/edit", component: <MyProfile /> },
     // Manage Profile
     { url: "app-profile", component: <AdminProfile /> },
