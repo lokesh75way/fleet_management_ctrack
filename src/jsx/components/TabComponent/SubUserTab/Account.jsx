@@ -22,7 +22,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: "25rem 0 ", // Adjust the height as needed
+      padding: "0.25rem 0 ", // Adjust the height as needed
     }),
   };
 

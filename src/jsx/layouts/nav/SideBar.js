@@ -141,13 +141,7 @@ const SideBar = () => {
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
           {MenuList.map((data, index) => {
             let menuClass = data.classsChange;
-            if (menuClass === "menu-title") {
-              return (
-                <li className={menuClass} key={index}>
-                  {data.title}
-                </li>
-              );
-            } else {
+            if (menuClass !== "menu-title"){
               return (
                 <li
                   className={` ${
