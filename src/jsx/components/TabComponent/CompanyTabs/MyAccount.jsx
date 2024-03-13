@@ -72,6 +72,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
                 options={[{value:checkUserName(),label:checkUserName()}]}
                 ref={ref}
+                isDisabled={localStorage.getItem('role') !== 'Admin'}
                 name={name}
                 styles={customStyles}
                 defaultValue={[{value:checkUserName(),label:checkUserName()}]} 

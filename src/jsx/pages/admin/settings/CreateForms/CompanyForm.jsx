@@ -25,7 +25,6 @@ const CompanyForm = () => {
   })
 
   const onSubmit = (data)=>{
-    console.log("HEllo")
     if(activeIndex === (totalTabs -1)){
       try{
         if (id) {
