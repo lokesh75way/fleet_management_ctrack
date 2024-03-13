@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { IMAGES,SVGICON} from '../../constant/theme'; 
 import useStorage from '../../../hooks/useStorage'
 
-const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen}) => {
+const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
   var filterData = tableData;
 
   console.log("this is data",filterData,tempValue,tempValue2);
@@ -22,6 +22,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
     const branchName = filterData[i].userName
     branchCount[i] = filterData.filter((item)=> item.parentBranch === branchName).length
   }
+  setDataLength(filterData.length)
     return (
       <>
         {filterData.map((item, index) => (
