@@ -40,9 +40,18 @@ const SideBar = () => {
 
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem('role');
+  const type = localStorage.getItem('type');
 
   let MenuList;
+  // if(role === "user"){
+  //   if(type === "admin") MenuList = AdminMenuList;
+  //   else if(type === "businessgroup") MenuList = BusinessGroupMenuList;
+  //   else if(type === "company") MenuList = CompanyMenuList;
+  // }
+  // else if(role === "admin") MenuList = AdminMenuList;
+  // else if(role === "businessgroup") MenuList = BusinessGroupMenuList;
+  // else if(role === "company") MenuList = CompanyMenuList;
   switch (role) {
     case "company":
       MenuList = CompanyMenuList;

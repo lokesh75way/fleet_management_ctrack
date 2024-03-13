@@ -60,7 +60,7 @@ const CompanyTable = ({
                     </td> */}
           <td>
             <Link
-              to={`/branch/${item.id}`}
+              to={`/branch/cid/${item.id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {getBranch(item.userName)}

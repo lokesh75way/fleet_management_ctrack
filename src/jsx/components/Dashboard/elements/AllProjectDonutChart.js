@@ -11,9 +11,9 @@ class AllProjectDonutChart extends React.Component {
       options: {
         chart: {
           type: "donut",
-          width: 150,
+          width: 140,
         },
-        colors: ["#3AC977", "var(--primary)", "var(--secondary)"],
+        colors: props.colors,
         labels: props.labels,
         dataLabels: {
           enabled: false,
@@ -25,7 +25,7 @@ class AllProjectDonutChart extends React.Component {
         plotOptions: {
           pie: {
             donut: {
-              size: "50%",
+              size: "80%",
               labels: {
                 show: true,
                 name: {

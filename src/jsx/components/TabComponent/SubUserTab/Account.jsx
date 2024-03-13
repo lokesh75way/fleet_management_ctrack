@@ -114,6 +114,34 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
+            Password <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="password"
+            register={register}
+            label="Password"
+            name="password"
+            placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].password : ''}
+          />
+          <Error errorName={errors.password} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Confirm Password <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="password"
+            register={register}
+            label="Confirm Password"
+            name="confirmPassword"
+            placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].confirmPassword : ''}
+          />
+          <Error errorName={errors.confirmPassword} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
             Feature Template <span className="text-danger">*</span>
           </label>
           <Controller

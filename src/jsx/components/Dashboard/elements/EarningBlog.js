@@ -4,10 +4,10 @@ import EarningChart from './EarningChart';
 const EarningBlog = () => {
     return (
         <>
-            <div className="card">
-                <div className="card-header border-0 pb-0">
+            <div className="">
+                {/* <div className="card-header border-0 pb-0">
                     <h4 className="heading mb-0">Total Earning</h4>
-                </div>                
+                </div>                 */}
                 <EarningChart />
             </div>
         </>

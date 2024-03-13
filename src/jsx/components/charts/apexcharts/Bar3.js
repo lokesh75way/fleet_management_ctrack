@@ -65,10 +65,11 @@ class ApexBar3 extends React.Component {
               fontWeight: 100,
             },
           },
+         
         },
         stroke: {
           show: true,
-          width: 2,
+          width: 1,
           colors: ["transparent"],
         },
         xaxis: {

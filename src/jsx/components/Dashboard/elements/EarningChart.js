@@ -75,7 +75,7 @@ const  EarningChart = () =>{
 		},
 		xaxis: {
 			
-			categories: ['','May ', 'June', 'July', 'Aug', 'Sep ', 'Oct', ""],
+			categories: ['','1 ', '2', '3', '4', '5 ', '6', ""],
 			overwriteCategories: undefined,
 			axisBorder: {
 				show: false,
@@ -159,7 +159,7 @@ const  EarningChart = () =>{
     return (
 		<div className="card-body px-0 overflow-hidden">
 			<div className="total-earning">
-				<h2>$6,743.00</h2>
+				{/* <h2>$6,743.00</h2> */}
 				<Tab.Container defaultActiveKey={'Day'}>
 					<Nav as="ul" className="nav nav-pills mb-3 earning-tab earning-chart" >
 						{EarningTab.map((item, ind)=>(
@@ -176,7 +176,7 @@ const  EarningChart = () =>{
 							options={options}
 							series={series}
 							type="area"
-							height={350}	
+							height={200}	
 							ref={earningRef}	
 							width={width+55}
 						/>
