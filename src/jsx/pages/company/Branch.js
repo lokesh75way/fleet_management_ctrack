@@ -236,6 +236,7 @@ const Branch = () => {
                         <tr>
                           <th>ID</th>
                           <th>Branch Name</th>
+                          <th>Parent Branch</th>
                           <th>Company Name</th>
                           <th>Business Group</th>
                           <th>Mobile Number</th>

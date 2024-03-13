@@ -4,9 +4,11 @@ import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
 import { Link } from 'react-router-dom'
 import { IMAGES,SVGICON} from '../../constant/theme'; 
+import useStorage from '../../../hooks/useStorage'
 
 const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen}) => {
   var filterData = tableData;
+  const{getBranch} = useStorage()
 
   console.log("this is data",filterData,tempValue,tempValue2);
   if(tempValue!=='All'){
@@ -33,6 +35,9 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
               <span className="text-primary">{item.userName}</span>
             </td>
             <td>
+              <span >{item.parentBranch !== 'none' ? item.parentBranch: <span className='ps-4'>-</span> }</span>
+            </td>
+            <td>
               <span >{item.parentCompany}</span>
             </td>
             <td>
@@ -55,8 +60,13 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
             </td>
 
             <td>
-              <span>{item.zipCode}</span>
-            </td>
+            <Link
+              to={`/branch/${item.id}`}
+              className="text-primary badge light border-0 badge-count"
+            >
+              {getBranch(item.userName)}
+            </Link>
+          </td>
             <td>
               <span className="d-flex justify-content-center">
                 <span

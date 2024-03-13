@@ -1006,6 +1006,8 @@
     "email":"mukesh@gmail.com",
     "type":"admin",
 "mobileNumber":"1234567890",
+"password":"user123",
+"confirmPassword":"user123",
     "role":"user",
     "parent":"admin",
     "country":"India",
@@ -1017,6 +1019,8 @@
     "email": "santosh@gmail.com",
     "type":"admin",
 "mobileNumber":"1234567890",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "admin",
     "country": "United States",
@@ -1028,6 +1032,8 @@
     "email": "ronalt@gmail.com",
     "type":"admin",
 "mobileNumber":"1234567890",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "admin",
     "country": "Canada",
@@ -1039,6 +1045,8 @@
     "email": "tom@gmail.com",
     "type":"admin",
 "mobileNumber":"1234567890",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "admin",
     "country": "United Kingdom",
@@ -1050,6 +1058,8 @@
     "email": "mat@gmail.com",
     "type":"admin",
 "mobileNumber":"1234567890",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "admin",
     "country": "Australia",
@@ -1064,6 +1074,8 @@
     "state": "California",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group1"
   },
@@ -1075,6 +1087,8 @@
     "state": "Ontario",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group1"
   },
@@ -1086,6 +1100,8 @@
     "state": "London",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group1"
   },
@@ -1097,6 +1113,8 @@
     "state": "New South Wales",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group2"
   },
@@ -1108,6 +1126,8 @@
     "state": "Berlin",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group2"
   },
@@ -1119,6 +1139,8 @@
     "state": "Paris",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group2"
   },
@@ -1130,6 +1152,8 @@
     "state": "Rome",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group3"
   },
@@ -1141,6 +1165,8 @@
     "state": "Madrid",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group3"
   },
@@ -1152,6 +1178,8 @@
     "state": "Sao Paulo",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group3"
   },
@@ -1163,6 +1191,8 @@
     "state": "Beijing",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group4"
   },
@@ -1174,6 +1204,8 @@
     "state": "Tokyo",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group4"
   },
@@ -1185,6 +1217,8 @@
     "state": "Moscow",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group4"
   },
@@ -1196,6 +1230,8 @@
     "state": "Maharashtra",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group5"
   },
@@ -1207,6 +1243,8 @@
     "state": "Texas",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group5"
   },
@@ -1218,6 +1256,8 @@
     "state": "Quebec",
     "type":"businessgroup",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Business Group5"
   },
@@ -1229,6 +1269,8 @@
     "state": "Manchester",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company1"
   },
@@ -1240,6 +1282,8 @@
     "state": "Victoria",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company1"
   },
@@ -1251,6 +1295,8 @@
     "state": "Hamburg",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company1"
   },
@@ -1262,6 +1308,8 @@
     "state": "Lyon",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company2"
   },
@@ -1273,6 +1321,8 @@
     "state": "Milan",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company2"
   },
@@ -1284,6 +1334,8 @@
     "state": "Barcelona",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company2"
   },
@@ -1295,6 +1347,8 @@
     "state": "Rio de Janeiro",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company3"
   },
@@ -1306,6 +1360,8 @@
     "state": "Shanghai",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company3"
   },
@@ -1317,6 +1373,8 @@
     "state": "Osaka",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company3"
   },
@@ -1328,6 +1386,8 @@
     "state": "Saint Petersburg",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company4"
   },
@@ -1339,6 +1399,8 @@
     "state": "Uttar Pradesh",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company4"
   },
@@ -1350,6 +1412,8 @@
     "state": "Florida",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company4"
   },
@@ -1361,6 +1425,8 @@
     "state": "Alberta",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company5"
   },
@@ -1372,6 +1438,8 @@
     "state": "Birmingham",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company5"
   },
@@ -1383,6 +1451,8 @@
     "state": "Queensland",
     "type":"company",
 "mobileNumber":"9876543210",
+"password":"user123",
+"confirmPassword":"user123",
     "role": "user",
     "parent": "Company5"
   }
