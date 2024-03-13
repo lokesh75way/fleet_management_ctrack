@@ -57659,3 +57659,15 @@ html[dir="rtl"]
 .menu-icon svg{
   width: 22px;
 }
+
+#feature_template  th{
+  width: 70px;
+}
+
+.feature_template_table th{
+  width: 70px;
+}
+
+.feature_template_table td{
+  width: 60px;
+}

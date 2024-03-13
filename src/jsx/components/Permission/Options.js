@@ -1,234 +1,242 @@
-
-
-export const groupsData = [{groupName:"",groupPermissions:[]}]
-
-
-
+export const groupsData = [{ groupName: "", groupPermissions: [] }];
 
 export const staticoptions = [
-    {
-      name: "Dashboard",
-      submodules: [],
-      permissions: {
-        add: true,
-        view: true,
-        modify: true,
-        delete: true,
-        export: true,
+  {
+    name: "Dashboard",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
+    },
+  },
+  {
+    name: "Business Groups",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
+    },
+  },
+  {
+    name: "Companies",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
+    },
+  },
+  {
+    name: "Branches",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
+    },
+  },
+  {
+    name: "Driver",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
+    },
+  },
+  {
+    name: "Vehicle Tracking",
+    submodules: [
+      {
+        name: "drivers",
+        permissions: {
+          add: true,
+          view: true,
+          modify: true,
+          delete: true,
+          export: true,
+        },
       },
+    ],
+  },
+  {
+    name: "Reports",
+    submodules: [
+      // {
+      //   name: "activity",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+      // {
+      //   name: "alert",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+      // {
+      //   name: "expense",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+      // {
+      //   name: "fuel",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+      // {
+      //   name: "temperature",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+      // {
+      //   name: "driver behaviour",
+      //   permissions: {
+      //     add: true,
+      //     view: true,
+      //     modify: true,
+      //     delete: true,
+      //     export: true,
+      //   },
+      // },
+    ],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
     },
-    {
-      name: "Business Groups",
-      submodules: [],
-      permissions: {
-        add: true,
-        view: true,
-        modify: true,
-        delete: true,
-        export: true,
-      },
+  },
+
+  {
+    name: "Geofence",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
     },
-    {
-      name: "Companies",
-      submodules: [],
-      permissions: {
-        add: true,
-        view: true,
-        modify: true,
-        delete: true,
-        export: true,
-      },
+  },
+  {
+    name: "Classify Trips",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
     },
-    {
-      name: "Branches",
-      submodules: [],
-      permissions: {
-        add: true,
-        view: true,
-        modify: true,
-        delete: true,
-        export: true,
-      },
+  },
+
+  {
+    name: "Alert",
+    submodules: [],
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
     },
-    {
-      name: "Driver",
-      submodules: [],
-      permissions: {
-        add: true,
-        view: true,
-        modify: true,
-        delete: true,
-        export: true,
-      },
+  },
+  // {
+  //   name: "Fuel",
+  //   permissions: {
+  //     add: true,
+  //     view: true,
+  //     modify: true,
+  //     delete: true,
+  //     export: true,
+  //   },
+  // },
+  {
+    name: "Expense",
+    submodules: [],
+
+    permissions: {
+      add: true,
+      view: true,
+      modify: true,
+      delete: true,
+      export: true,
     },
-    {
-      name: "Driver Tracking",
-      submodules: [
-        {
-          name: "drivers",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
+  },
+  // {
+  //   name: "Temperature Chart",
+  //   permissions: {
+  //     add: true,
+  //     view: true,
+  //     modify: true,
+  //     delete: true,
+  //     export: true,
+  //   },
+  //   //   },
+  //   // ],
+  // },
+  {
+    name: "Technician",
+    submodules: [
+      {
+        name: "Technician Details",
+        permissions: {
+          add: true,
+          view: true,
+          modify: true,
+          delete: true,
+          export: true,
         },
-      ],
-    },
-    {
-      name: "Reports",
-      submodules: [
-        {
-          name: "activity",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "geofence address",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "alert",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "expense",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "fuel",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "temperature",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "driver behaviour",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-        {
-          name: "trip classification",
-          permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
-          },
-        },
-       
-      ],
-    },
-    {
-        name: "Charts",
-        submodules: [
-          {
-            name: "Activity",
-            permissions: {
-                add: true,
-                view: true,
-                modify: true,
-                delete: true,
-                export: true,
-            },
-          },
-          {
-            name: "Alert",
-            permissions: {
-                add: true,
-                view: true,
-                modify: true,
-                delete: true,
-                export: true,
-            },
-          },
-          {
-            name: "Fuel",
-            permissions: {
-                add: true,
-                view: true,
-                modify: true,
-                delete: true,
-                export: true,
-            },
-          },
-          {
-            name: "Expense",
-            permissions: {
-                add: true,
-                view: true,
-                modify: true,
-                delete: true,
-                export: true,
-            },
-          },
-          {
-            name: "Temperature Chart",
-            permissions: {
-                add: true,
-                view: true,
-                modify: true,
-                delete: true,
-                export: true,
-            },
-          },
-        ],
       },
       {
-        name: "Technician",
-        submodules: [],
+        name: "Techinian Tasks",
         permissions: {
-            add: true,
-            view: true,
-            modify: true,
-            delete: true,
-            export: true,
+          add: true,
+          view: true,
+          modify: true,
+          delete: true,
+          export: true,
         },
       },
-
-  ];
+    ],
+  },
+];
 
 export const reset = JSON.parse(JSON.stringify(staticoptions));
