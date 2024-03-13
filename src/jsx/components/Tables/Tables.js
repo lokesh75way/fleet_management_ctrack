@@ -344,7 +344,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "John Doe",
       serviceLocation: "Auto Shop A",
-      reportingTime: "2024-02-23T08:00:00"
+      reportingTime: "2024-02-23 8:00 AM"
     },
     {
       id: 1002,
@@ -352,7 +352,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "Alice Smith",
       serviceLocation: "Auto Shop B",
-      reportingTime: "2024-02-22T09:30:00"
+      reportingTime: "2024-02-22 9:30 AM"
     },
     {
       id: 1003,
@@ -360,7 +360,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "Michael Johnson",
       serviceLocation: "Auto Shop C",
-      reportingTime: "2024-02-21T10:15:00"
+      reportingTime: "2024-02-21 10:15 AM"
     },
     {
       id: 1004,
@@ -368,7 +368,7 @@ export const VehicleData = [
       taskCategory: "Cleaning",
       technicianName: "Emily Brown",
       serviceLocation: "Auto Spa X",
-      reportingTime: "2024-02-20T11:45:00"
+      reportingTime: "2024-02-20 11:45 AM"
     },
     {
       id: 1005,
@@ -376,7 +376,7 @@ export const VehicleData = [
       taskCategory: "Repair",
       technicianName: "David Wilson",
       serviceLocation: "Auto Shop Y",
-      reportingTime: "2024-02-19T13:20:00"
+      reportingTime: "2024-02-19 1:20 PM"
     },
     {
       id: 1006,
@@ -384,7 +384,7 @@ export const VehicleData = [
       taskCategory: "Repair",
       technicianName: "Jessica Martinez",
       serviceLocation: "Auto Shop Z",
-      reportingTime: "2024-02-18T14:10:00"
+      reportingTime: "2024-02-18 2:10 PM"
     },
     {
       id: 1007,
@@ -392,7 +392,7 @@ export const VehicleData = [
       taskCategory: "Repair",
       technicianName: "Chris Lee",
       serviceLocation: "Garage A",
-      reportingTime: "2024-02-17T16:00:00"
+      reportingTime: "2024-02-17 4:00 PM"
     },
     {
       id: 1008,
@@ -400,7 +400,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "Sophia Taylor",
       serviceLocation: "Auto Shop D",
-      reportingTime: "2024-02-16T08:30:00"
+      reportingTime: "2024-02-16 8:30 AM"
     },
     {
       id: 1009,
@@ -408,7 +408,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "Daniel Anderson",
       serviceLocation: "Auto Shop E",
-      reportingTime: "2024-02-15T09:00:00"
+      reportingTime: "2024-02-15 9:00 AM"
     },
     {
       id: 1010,
@@ -416,7 +416,7 @@ export const VehicleData = [
       taskCategory: "Cleaning",
       technicianName: "Olivia Garcia",
       serviceLocation: "Auto Spa B",
-      reportingTime: "2024-02-14T11:20:00"
+      reportingTime: "2024-02-14 11:20 AM"
     },
     {
       id: 1011,
@@ -424,7 +424,7 @@ export const VehicleData = [
       taskCategory: "Repair",
       technicianName: "James Hernandez",
       serviceLocation: "Auto Shop F",
-      reportingTime: "2024-02-13T13:45:00"
+      reportingTime: "2024-02-13 1:45 PM"
     },
     {
       id: 1012,
@@ -432,7 +432,7 @@ export const VehicleData = [
       taskCategory: "Maintenance",
       technicianName: "Emma Rodriguez",
       serviceLocation: "Auto Shop G",
-      reportingTime: "2024-02-12T15:30:00"
+      reportingTime: "2024-02-12 3:30 PM"
     }
   ];
   export const AlertData = [
@@ -548,9 +548,9 @@ export const VehicleData = [
   export const ClassifyTripData = [
     {
       tripId: 1001,
-      startTime: "2024-02-23T08:00:00",
+      startTime: "2-23-2024 8:00:00 AM",
       startLocation: "City A",
-      reachTime: "2024-02-23T10:00:00",
+      reachTime: "2-23-2024 10:00:00 AM",
       reachLocation: "City B",
       distance: 150,
       fuelConsumption: 10,
@@ -558,9 +558,9 @@ export const VehicleData = [
     },
     {
       tripId: 1002,
-      startTime: "2024-02-22T09:00:00",
+      startTime: "2-22-2024 9:00:00 AM",
       startLocation: "City B",
-      reachTime: "2024-02-22T11:30:00",
+      reachTime: "2-22-2024 11:30:00 AM",
       reachLocation: "City C",
       distance: 200,
       fuelConsumption: 15,
@@ -568,9 +568,9 @@ export const VehicleData = [
     },
     {
       tripId: 1003,
-      startTime: "2024-02-21T11:30:00",
+      startTime: "2-21-2024 11:30:00 AM",
       startLocation: "City C",
-      reachTime: "2024-02-21T14:00:00",
+      reachTime: "2-21-2024 2:00:00 PM",
       reachLocation: "City D",
       distance: 180,
       fuelConsumption: 12,
@@ -578,9 +578,9 @@ export const VehicleData = [
     },
     {
       tripId: 1004,
-      startTime: "2024-02-20T10:00:00",
+      startTime: "2-20-2024 10:00:00 AM",
       startLocation: "City D",
-      reachTime: "2024-02-20T12:30:00",
+      reachTime: "2-20-2024 12:30:00 PM",
       reachLocation: "City E",
       distance: 220,
       fuelConsumption: 18,
@@ -588,9 +588,9 @@ export const VehicleData = [
     },
     {
       tripId: 1005,
-      startTime: "2024-02-19T08:30:00",
+      startTime: "2-19-2024 8:30:00 AM",
       startLocation: "City E",
-      reachTime: "2024-02-19T11:00:00",
+      reachTime: "2-19-2024 11:00:00 AM",
       reachLocation: "City F",
       distance: 190,
       fuelConsumption: 14,
@@ -598,9 +598,9 @@ export const VehicleData = [
     },
     {
       tripId: 1006,
-      startTime: "2024-02-18T07:45:00",
+      startTime: "2-18-2024 7:45:00 AM",
       startLocation: "City F",
-      reachTime: "2024-02-18T10:15:00",
+      reachTime: "2-18-2024 10:15:00 AM",
       reachLocation: "City G",
       distance: 210,
       fuelConsumption: 16,
@@ -608,9 +608,9 @@ export const VehicleData = [
     },
     {
       tripId: 1007,
-      startTime: "2024-02-17T09:15:00",
+      startTime: "2-17-2024 9:15:00 AM",
       startLocation: "City G",
-      reachTime: "2024-02-17T11:45:00",
+      reachTime: "2-17-2024 11:45:00 AM",
       reachLocation: "City H",
       distance: 180,
       fuelConsumption: 12,
@@ -618,9 +618,9 @@ export const VehicleData = [
     },
     {
       tripId: 1008,
-      startTime: "2024-02-16T10:30:00",
+      startTime: "2-16-2024 10:30:00 AM",
       startLocation: "City H",
-      reachTime: "2024-02-16T13:00:00",
+      reachTime: "2-16-2024 1:00:00 PM",
       reachLocation: "City I",
       distance: 240,
       fuelConsumption: 20,
@@ -628,9 +628,9 @@ export const VehicleData = [
     },
     {
       tripId: 1009,
-      startTime: "2024-02-15T08:45:00",
+      startTime: "2-15-2024 8:45:00 AM",
       startLocation: "City I",
-      reachTime: "2024-02-15T11:15:00",
+      reachTime: "2-15-2024 11:15:00 AM",
       reachLocation: "City J",
       distance: 200,
       fuelConsumption: 15,
@@ -638,9 +638,9 @@ export const VehicleData = [
     },
     {
       tripId: 1010,
-      startTime: "2024-02-14T11:00:00",
+      startTime: "2-14-2024 11:00:00 AM",
       startLocation: "City J",
-      reachTime: "2024-02-14T13:30:00",
+      reachTime: "2-14-2024 1:30:00 PM",
       reachLocation: "City K",
       distance: 180,
       fuelConsumption: 12,
@@ -648,9 +648,9 @@ export const VehicleData = [
     },
     {
       tripId: 1011,
-      startTime: "2024-02-13T07:30:00",
+      startTime: "2-13-2024 7:30:00 AM",
       startLocation: "City K",
-      reachTime: "2024-02-13T10:00:00",
+      reachTime: "2-13-2024 10:00:00 AM",
       reachLocation: "City L",
       distance: 220,
       fuelConsumption: 18,
@@ -658,15 +658,15 @@ export const VehicleData = [
     },
     {
       tripId: 1012,
-      startTime: "2024-02-12T09:45:00",
+      startTime: "2-12-2024 9:45:00 AM",
       startLocation: "City L",
-      reachTime: "2024-02-12T12:15:00",
+      reachTime: "2-12-2024 12:15:00 PM",
       reachLocation: "City M",
       distance: 210,
       fuelConsumption: 16,
       driver: "Emma Wilson"
     }
-  ];
+  ]
   export const GeofenceData = [
     {
       id: 1001,

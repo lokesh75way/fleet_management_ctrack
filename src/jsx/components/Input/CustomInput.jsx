@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import '../../../scss/pages/_driver-tracking.scss'
 import Error from "../Error/Error";
 const CustomInput = ({
   name,
@@ -23,7 +24,7 @@ const CustomInput = ({
         name={name}
         type={type}
         label={label}
-        style={style}
+        style={{...style, height : "46px"}}
         value={value}
         placeholder={placeholder}
         className="form-control"

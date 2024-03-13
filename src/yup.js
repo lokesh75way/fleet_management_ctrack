@@ -310,15 +310,13 @@ export const expenseSchema = yup
   .required();
 export const technicianTaskSchema = yup
   .object({
-    branch: yup.string().required("Select a Branch !!"),
     technician: yup.string().required("Select a Technician !!"),
     taskCategory: yup.string().required("Select a Category !!"),
     taskPriority: yup.string().required("Select a task priority !!"),
     taskName: yup.string().required("Task Name is required !!"),
     serviceLocation: yup.string().required("Service Location is required !!"),
-    contactPersonNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    reportingTime: yup.string().required("Reporting Time is required !!"),
+    plannedReportingDate: yup.string().required("Planned Reporting Date is required !!"),
   })
   .required();
 export const geofenceMapSchema = yup
