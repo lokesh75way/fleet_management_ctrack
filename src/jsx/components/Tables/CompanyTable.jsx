@@ -11,6 +11,7 @@ const CompanyTable = ({
   tempValue,
   onConfirmDelete,
   editDrawerOpen,
+  setDataLength
 }) => {
   const { getBranch } = useStorage();
   var filterData = tableData;
@@ -19,7 +20,7 @@ const CompanyTable = ({
       (item) => item.role === "company" && item.parent === tempValue
     );
   }
-
+  setDataLength(filterData.length)
   return (
     <>
       {filterData.map((item, index) => (
@@ -32,11 +33,11 @@ const CompanyTable = ({
           </td>
           <td>
             <div className="products">
-              <img
+              {/* <img
                 src={item.image || IMAGES.contact1}
                 className="avatar avatar-md"
                 alt=""
-              />
+              /> */}
               <div>
                 <h6>{item.parent}</h6>
               </div>
@@ -60,7 +61,7 @@ const CompanyTable = ({
                     </td> */}
           <td>
             <Link
-              to={`/branch/${item.id}`}
+              to={`/branch/cid/${item.id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {getBranch(item.userName)}

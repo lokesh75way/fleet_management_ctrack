@@ -30,7 +30,6 @@ import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/compon
 import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
 import UserJsonData from './users.json'
 
-
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
   return new Promise((resolve) => {
@@ -54,7 +53,8 @@ function withRouter(Component) {
 }
 
 function App(props) {
-  const role = localStorage.getItem("role");
+  let role = localStorage.getItem("role");
+  let type = localStorage.getItem('type')
   useEffect(()=>{
     const companyData = localStorage.getItem('companyData');
     const vehicleData = localStorage.getItem('vehicleData');
@@ -84,17 +84,25 @@ function App(props) {
   }, []);
 
   if (props.isAuthenticated) {
-    console.log("from app.js", role);
+    console.log("from app.js role", role);
+    console.log("from app.js type", type);
 
     // return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />;
+    // if(role === "user"){
+    //   if(type === "admin") return <AdminRoutes />;
+    //   else if(type === "businessgroup") return <BusinessGroupRoutes />;
+    //   else if(type === "company") return <CompanyRoutes />;
+    // }
+    // else if(role === "admin") return <AdminRoutes />;
+    // else if(role === "businessgroup") return <BusinessGroupRoutes />;
+    // else if(role === "company") return <CompanyRoutes />;
+
     switch (role) {
       case "admin":
         return <AdminRoutes />;
       case "businessgroup":
         return <BusinessGroupRoutes />;
-      case "branch":
-        return <SubCompanyRoutes />;
-      default:
+      case "company":
         return <CompanyRoutes />;
     }
   }

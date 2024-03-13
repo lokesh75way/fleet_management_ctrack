@@ -3,29 +3,36 @@ import DeleteModal from "../Modal/DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaCar } from "react-icons/fa6";
-import useStorage from "../../../hooks/useStorage"; 
+import useStorage from "../../../hooks/useStorage";
 
 const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  const {getData} = useStorage()
-    const filteredItems = getData(tableData);
+  const { getData } = useStorage();
+
+  const filteredItems = getData(tableData);
   return filteredItems.map((item, index) => (
     <tr key={item.id}>
-      <td>
-        <span className="text-primary">{item.branch}</span>
-      </td>
-      <td>
-        <span>{item.plateNumber}</span>
-      </td>
+    
+
       <td>
         <div className="products">
           {/* <img  className="avatar avatar-md" alt="" /> */}
-          <FaCar className="avatar avatar-md p-2" style={{marginRight:".4rem"}}  />
+          {/* <FaCar
+            className="avatar avatar-md p-2"
+            style={{ marginRight: ".4rem" }}
+          /> */}
           <div>
             <h6>{item.vehicleName}</h6>
             <span>Car</span>
           </div>
         </div>
       </td>
+      <td>
+        <span>{item.plateNumber}</span>
+      </td>
+      <td>
+        <span className="text-primary">{item.branch}</span>
+      </td>
+      
       <td>
         <span>{item.simNumber}</span>
       </td>

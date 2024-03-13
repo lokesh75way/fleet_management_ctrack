@@ -8,9 +8,6 @@ import useStorage from "../../../hooks/useStorage";
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
 const Branch = () => {
-
-
-
   const navigate = useNavigate();
   const params = useParams();
 
@@ -20,11 +17,11 @@ const Branch = () => {
     label: "All Companies",
   });
   const [selectFilter2, setFilter2] = useState({
-    value: "All",
-    label: "All",
+    value: "All Branches",
+    label: "All Branches",
   });
-  const [tempValue, setTempValue] = useState("All");
-  const [tempValue2, setTempValue2] = useState("All");
+  const [tempValue, setTempValue] = useState("All Companies");
+  const [tempValue2, setTempValue2] = useState("All Branches");
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -41,15 +38,29 @@ const Branch = () => {
   };
 
   useEffect(() => {
-    if (params.id) {
+    const str = window.location.pathname;
+    
+    if (str.includes('cid')) {
       const user = JSON.parse(localStorage.getItem("userJsonData"));
       const username = user.filter((data) => data.id == params.id)[0].userName;
-      console.log("this is user name bro",username);
 
       setFilter({
         value: username,
         label: username,
       });
+      setTempValue(username)
+
+      setValue('parent',username);
+    }
+    if (str.includes('bid')) {
+      const user = JSON.parse(localStorage.getItem("userJsonData"));
+      const username = user.filter((data) => data.id == params.id)[0].userName;
+
+      setFilter2({
+        value: username,
+        label: username,
+      });
+      setTempValue2(username)
 
       setValue('parent',username);
     }
@@ -63,6 +74,7 @@ const Branch = () => {
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
   const [tableData, setTableData] = useState(SubCompanyData);
+  const [dataLength, setDataLength] = useState(SubCompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
     reseller: "",
@@ -73,7 +85,6 @@ const Branch = () => {
     usergroup: "",
     branches: 0,
   });
-  console.log(tableData);
 
   const sort = 10;
   const activePag = useRef(0);
@@ -120,21 +131,41 @@ const Branch = () => {
   const invite = useRef();
   const subCompany = useRef();
   const d = JSON.parse(localStorage.getItem("userJsonData"));
+  
   let companyOptions = d
     .filter((item) => item.role === "company")
     .map((item) => ({
       label: item.userName,
       value: item.id,
     }));
-  let branchOptions = d
+
+
+  let allbranchOptions  = d
     .filter((item) => item.role === "branch")
     .map((item) => ({
       label: item.userName,
       value: item.id,
     }));
+    allbranchOptions = [...allbranchOptions, { label: "All Branches", value: "All Branches" }];
+    const [branchOptions,setBranchOptions] = useState(allbranchOptions)
 
-  companyOptions = [...companyOptions, { label: "All Companies", value: "All" }];
-  branchOptions = [...branchOptions, { label: "All Branches", value: "All" }];
+  useEffect(()=>{
+    
+    let tempoptions = d
+    .filter((item) => item.role === "branch" && tempValue !== 'All Companies' && item.parentCompany === tempValue)
+    .map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+
+    if(tempValue !== 'All Companies') setBranchOptions(tempoptions)
+    else setBranchOptions(allbranchOptions);
+
+  },[tempValue])
+
+
+  companyOptions = [...companyOptions, { label: "All Companies", value: "All Companies" }];
+  
 
   useEffect(() => {
     if (role === "admin") return;
@@ -151,8 +182,6 @@ const Branch = () => {
     }
   }, [loggedinUser, role, SubCompanyData]);
   
-
-  console.log('this is filter data',selectFilter);
   return (
     <>
       <MainPagetitle
@@ -169,24 +198,28 @@ const Branch = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Branches</h4>
                     <div className="d-flex align-items-center">
-                      <Controller
+                    <Controller
                         name="parent"
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
                             onChange={(newValue) => {
-                              setTempValue2(newValue.label);
-                              setTempValue('All');
-                              setValue("parentBranch", newValue.label);
+                              setTempValue(newValue.label);
+                              setTempValue2("All Branches");
+                              setValue("parent", newValue.label);
+                              setFilter({value:newValue.value,label:newValue.label})
+                              setFilter2({value:'All Branches',label:"All Branches"})
                             }}
                             ref={ref}
                             name={name}
                             menuPortalTarget={document.body}
                             menuPosition={"fixed"}
                             styles={customStyles}
-                            options={branchOptions}
-                            defaultValue={{value:'All Branches',label:'All Branches'}}
+                            options={companyOptions}
+                            value= {selectFilter}
+                            
+                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
                           />
                         )}
                       />
@@ -197,19 +230,18 @@ const Branch = () => {
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
                             onChange={(newValue) => {
-                              setTempValue(newValue.label);
-                              setTempValue2("All");
-                              setValue("parent", newValue.label);
-                              setFilter({value:newValue.value,label:newValue.label})
+                              setTempValue2(newValue.label);
+                              setTempValue('All Companies');
+                              setValue("parentBranch", newValue.label);
+                              setFilter2({value:newValue.value,label:newValue.label})
                             }}
                             ref={ref}
                             name={name}
                             menuPortalTarget={document.body}
                             menuPosition={"fixed"}
                             styles={customStyles}
-                            options={companyOptions}
-                            value= {selectFilter}
-                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
+                            options={branchOptions}
+                            value={selectFilter2}
                           />
                         )}
                       />
@@ -236,19 +268,20 @@ const Branch = () => {
                         <tr>
                           <th>ID</th>
                           <th>Branch Name</th>
+                          <th>Parent Branch</th>
                           <th>Company Name</th>
                           <th>Business Group</th>
                           <th>Mobile Number</th>
                           <th>Location</th>
-                          <th>Zip Code</th>
+                          <th>Child Branches</th>
                           <th>Action</th>
                         </tr>
                       </thead>
                       <tbody>
                         <SubCompanyTable
                           tempValue={tempValue}
+                          setDataLength={setDataLength}
                           tempValue2={tempValue2}
-                          params={params}
                           editData={editData}
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}
@@ -260,10 +293,10 @@ const Branch = () => {
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         Showing {activePag.current * sort + 1} to{" "}
-                        {data.length > (activePag.current + 1) * sort
+                        {dataLength.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        of {data.length} entries
+                          : dataLength}{" "}
+                        of {dataLength} entries
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

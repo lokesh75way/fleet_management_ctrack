@@ -28,6 +28,7 @@ const Profile = ({
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [isStateDisabled, setIsStateDisabled] = useState(true);
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -205,6 +206,7 @@ const Profile = ({
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.id);
+              setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -212,7 +214,7 @@ const Profile = ({
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">
             State <span className="text-danger">*</span>
           </label>

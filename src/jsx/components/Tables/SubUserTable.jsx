@@ -14,11 +14,11 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
           </td>
           <td>
             <div className="products">
-              <img
+              {/* <img
                 src={item.image || IMAGES.contact1}
                 className="avatar avatar-md"
                 alt=""
-              />
+              /> */}
               <div>
                 <h6>{item.userName}</h6>
                 <span>Web Designer</span>

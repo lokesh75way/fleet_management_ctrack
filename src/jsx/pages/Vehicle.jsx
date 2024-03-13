@@ -7,7 +7,8 @@ import MainPagetitle from '../layouts/MainPagetitle';
 
 const Vehicle = () => {  
     const {setAddVehicle, addVehicle} = useContext(ThemeContext)
-    const VehicleData = JSON.parse(localStorage.getItem('vehicleData'))
+    const userData = JSON.parse(localStorage.getItem("userJsonData"));
+    const VehicleData = userData.filter((item)=>item.designation === 'vehicle')
     const navigate = useNavigate();
     const [data, setData] = useState(
 		document.querySelectorAll("#employee-tbl_wrapper tbody tr")
@@ -111,9 +112,9 @@ const Vehicle = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
-                                                    <th>Branch</th>
-                                                    <th>Plate Number</th>
                                                     <th>Vehicle Name</th>
+                                                    <th>Plate Number</th>
+                                                    <th>Branch</th>
                                                     <th>SIM Number</th>
                                                     <th>IMEI Number</th>
                                                     <th>Registration Number</th>
