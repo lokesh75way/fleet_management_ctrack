@@ -112,9 +112,9 @@ const Vehicle = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>                                                   
-                                                    <th>Branch</th>
                                                     <th>Vehicle Name</th>
                                                     <th>Plate Number</th>
+                                                    <th>Branch</th>
                                                     <th>SIM Number</th>
                                                     <th>IMEI Number</th>
                                                     <th>Registration Number</th>

@@ -11,9 +11,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   const filteredItems = getData(tableData);
   return filteredItems.map((item, index) => (
     <tr key={item.id}>
-      <td>
-        <span className="text-primary">{item.branch}</span>
-      </td>
+    
 
       <td>
         <div className="products">
@@ -31,6 +29,10 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <span>{item.plateNumber}</span>
       </td>
+      <td>
+        <span className="text-primary">{item.branch}</span>
+      </td>
+      
       <td>
         <span>{item.simNumber}</span>
       </td>
