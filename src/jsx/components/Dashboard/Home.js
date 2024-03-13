@@ -105,9 +105,10 @@ const Home = () => {
     setIsModalOpen(false);
   };
 
-  const dateRangeText = startDate && endDate
-    ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
-    : "Select Date Range";
+  const dateRangeText =
+    startDate && endDate
+      ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
+      : "Select Date Range";
 
   return (
     <>
@@ -126,7 +127,7 @@ const Home = () => {
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
           <div
             className="d-flex justify-content-between align-items-center gap-2"
-            style={{ marginRight: "10px", width:'200px' }}
+            style={{ marginRight: "10px", width: "200px" }}
           >
             <label className="mr-2 mt-2 justify-content-between align-items-center">
               Date:
@@ -143,7 +144,6 @@ const Home = () => {
               }}
               placeholderText={dateRangeText}
             />
-
           </div>
         </div>
       </MainPagetitle>
@@ -151,7 +151,7 @@ const Home = () => {
       <div className="fluid container mt-3 mw-100">
         <div className="row " style={{ marginRight: "0.0rem" }}>
           <div className="col-xl-12 wid-100">
-            <div className="row" style={{padding:'1px'}}>
+            <div className="row" style={{ padding: "1px" }}>
               <CardWidget />
             </div>
           </div>
@@ -159,7 +159,7 @@ const Home = () => {
           <div className="col-xl-7 col-sm-12">
             <div className="card same-card p-2">
               <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Usage</p>
+                <h4 className="text-black text-md p-3">Fleet Usage</h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -186,10 +186,10 @@ const Home = () => {
           <div className="col-xl-5 col-sm-12">
             <div className="card same-card p-2">
               <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Status</p>
+                <h4 className="text-black text-md p-3">Fleet Status</h4>
               </div>
 
-              <div className="card-body d-flex align-items-center justify-content-center  py-2">
+              <div className="card-body d-flex align-items-center justify-content-center  py-2 " style={{flexWrap : "wrap"}}>
                 <AllProjectDonutChart
                   colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
                   labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
@@ -257,18 +257,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-       
 
-        
         <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
-          <div className="col-xl-6">
+          <div className="col-xl-6" style={{paddingLeft:0}}>
             <div
               className="card same-card mb-3 p-2"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
             >
               <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Idle</p>
+                <h4 className="text-black text-md p-3">Fleet Idle</h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -293,12 +291,12 @@ const Home = () => {
           </div>
           <div className="col-xl-6">
             <div
-              className="card same-card mb-3 p-2 "
+              className="card same-card mb-3 p-2"
               style={{ cursor: "pointer" }}
               onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
             >
               <div className="d-flex justify-content-between">
-                <p className="text-black text-md">Fleet Fuel</p>
+                <h4 className="text-black text-md p-3">Fleet Fuel</h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -325,7 +323,7 @@ const Home = () => {
 
         <div className="row" style={{ marginLeft: "0.2rem" }}>
           {/* Temperature */}
-          <div className="col-xl-7">
+          <div className="col-xl-7" style={{paddingLeft:0}}>
             <div
               className="card same-card mb-3 p-2"
               style={{
@@ -335,62 +333,46 @@ const Home = () => {
               onClick={() => openModal(<TemperatureTable />, "Temperature")}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
-                  style={{
-                    marginBottom: "0rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Temperature
-                </p>
+                
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
                 >
-                  {/* <Select /> */}
+          
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center p-1 mb-2">
-                <div className="d-flex align-items-end mb-2">
-                  {/* <FaThermometerHalf color="white" size={50} /> */}
-                </div>
-              </div>
+              
               <ProjectOverviewTab />
             </div>
           </div>
 
-          <div className="col-xl-5 justify-content-between">
+          <div className="col-xl-5 col-md-12"  >
             <div
               className="card same-card mb-3 p-2"
               style={{
                 cursor: "pointer",
               }}
             >
-              <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
+              <div className="d-flex align-items-center">
+                <h4
+                  className="text-black fs-4 p-3"
                   style={{
-                    marginBottom: "4rem",
+                    // marginBottom: "4rem",
                     whiteSpace: "nowrap", // Added: prevent text from wrapping
                     overflow: "hidden", // Added: hide overflow
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
                   Maintenance
-                </p>
-                
+                </h4>
               </div>
-              <div className="card-body d-flex justify-content-between align-items-center py-2">
-              
+              <div className="card-body d-flex justify-content-center align-items-center py-2" style={{flexWrap : "wrap"}}> 
                 <div>
                   <ChartPie />
                 </div>
                 <div>
-                  <ul className="project-list">
+                  <ul className="project-list p-3">
                     <li>
                       <svg
                         width="10"
@@ -457,7 +439,7 @@ const Home = () => {
           style={{ marginLeft: "0.2rem", justifyContent: "space-between" }}
         >
           {/* Overspeed */}
-          <div className="col-xl-6 col-sm-4" style={{ paddingInline: "4px" }}>
+          <div className="col-xl-6 col-md-12" style={{paddingLeft : 0}}>
             <div
               className="card same-card p-2"
               style={{
@@ -467,8 +449,8 @@ const Home = () => {
               onClick={() => openModal(<OverspeedTable />, "Overspeed")}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
+                <h4
+                  className="text-black fs-4 p-3"
                   style={{
                     marginBottom: "4rem",
                     whiteSpace: "nowrap", // Added: prevent text from wrapping
@@ -477,16 +459,15 @@ const Home = () => {
                   }}
                 >
                   Overspeed
-                </p>
-                
+                </h4>
               </div>
 
-             <DualLine/>
+              <DualLine />
             </div>
           </div>
 
           {/* Stay In Zone */}
-          <div className="col-xl-6 col-sm-4">
+          <div className="col-xl-6 col-md-12">
             <div
               className="card same-card p-2"
               style={{
@@ -496,8 +477,8 @@ const Home = () => {
               onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <p
-                  className="text-black fs-4"
+                <h4
+                  className="text-black fs-4 p-3"
                   style={{
                     marginBottom: "4rem",
                     whiteSpace: "nowrap", // Added: prevent text from wrapping
@@ -506,21 +487,17 @@ const Home = () => {
                   }}
                 >
                   Stay In Zone
-                </p>
+                </h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                >
-             
-                </div>
+                ></div>
               </div>
-           
+
               <BarChart5 />
             </div>
           </div>
-
-     
         </div>
       </div>
     </>

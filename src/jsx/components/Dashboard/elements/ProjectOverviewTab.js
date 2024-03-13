@@ -4,7 +4,7 @@ import ProjectOverviewChart from './ProjectOverviewChart';
 const ProjectOverviewTab = () => {
     return (
         <>
-            <div className="card overflow-hidden">                
+            <div className="overflow-hidden">                
                 <ProjectOverviewChart />
             </div>   
         </>

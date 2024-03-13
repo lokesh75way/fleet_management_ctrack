@@ -107,7 +107,7 @@ const CardWidget = () => {
 
             <div className="col-xl-3 col-sm-6 same-card">
                 <div className="card">
-                    <div className="card-body depostit-card">
+                    <div className="card-body depostit-card" style={{zIndex:0}}>
                         <div className="depostit-card-media d-flex justify-content-between style-1">
                             <div>
                                 <h6>Total Users</h6>
