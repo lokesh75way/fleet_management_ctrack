@@ -114,6 +114,7 @@ const BusinessGroupRoutes = () => {
     { url: "company/edit/:id", component: <CompanyForm /> },
     { url: "business/create", component: <BusinessForm /> },
     { url: "branch/create", component: <BranchForm /> },
+    { url: "branch/edit/:id", component: <BranchForm  /> },
     { url: "branch", component: <Branch /> },
     { url: "business-group", component: <BusinessUser/> },
     { url: "business-group/:id", component: <BusinessUser/> },
