@@ -347,7 +347,7 @@
     "lastName": "Sinha",
     "employeeNumber": "100001",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -367,7 +367,7 @@
     "lastName": "Bisht",
     "employeeNumber": "100002",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -387,7 +387,7 @@
     "lastName": "Khanulia",
     "employeeNumber": "100003",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -407,7 +407,7 @@
     "lastName": "Pratap",
     "employeeNumber": "100004",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -427,7 +427,7 @@
     "lastName": "Bisht",
     "employeeNumber": "100005",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -447,7 +447,7 @@
     "lastName": "Khanulia",
     "employeeNumber": "100006",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -467,7 +467,7 @@
     "lastName": "Henry",
     "employeeNumber": "100007",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -487,7 +487,7 @@
     "lastName": "Bisht",
     "employeeNumber": "100008",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -507,7 +507,7 @@
     "lastName": "Khanulia",
     "employeeNumber": "100009",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -527,7 +527,7 @@
     "lastName": "Singh",
     "employeeNumber": "100010",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -547,7 +547,7 @@
     "lastName": "Bisht",
     "employeeNumber": "100011",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -567,7 +567,7 @@
     "lastName": "Khanulia",
     "employeeNumber": "100012",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -587,7 +587,7 @@
     "lastName": "Ronard",
     "employeeNumber": "100013",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
@@ -607,7 +607,7 @@
     "lastName": "Rana",
     "employeeNumber": "100014",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
@@ -627,7 +627,7 @@
     "lastName": "Khanulia",
     "employeeNumber": "100015",
     "Designation": "Driver",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
@@ -648,7 +648,7 @@
     "technicianNumber": "100001",
     "Designation": "Technician",
     "email": "arpit@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -669,7 +669,7 @@
     "technicianNumber": "100002",
     "Designation": "Technician",
     "email": "kartik@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -689,7 +689,7 @@
     "technicianNumber": "100003",
     "Designation": "Technician",
     "email": "sharad@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company1",
     "parentBusinessGroup": "Business Group1",
     "parentBranch": "Branch1",
@@ -709,7 +709,7 @@
     "technicianNumber": "100004",
     "Designation": "Technician",
     "email": "arpit@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -730,7 +730,7 @@
     "technicianNumber": "100005",
     "Designation": "Technician",
     "email": "aman@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -750,7 +750,7 @@
     "technicianNumber": "100006",
     "Designation": "Technician",
     "email": "harsh@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company2",
     "parentBusinessGroup": "Business Group2",
     "parentBranch": "Branch2",
@@ -770,7 +770,7 @@
     "technicianNumber": "100007",
     "Designation": "Technician",
     "email": "arpit@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -791,7 +791,7 @@
     "technicianNumber": "100008",
     "Designation": "Technician",
     "email": "gaurav@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -811,7 +811,7 @@
     "technicianNumber": "100009",
     "Designation": "Technician",
     "email": "harsh@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company3",
     "parentBusinessGroup": "Business Group3",
     "parentBranch": "Branch3",
@@ -831,7 +831,7 @@
     "technicianNumber": "1000010",
     "Designation": "Technician",
     "email": "aadarsh@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -852,7 +852,7 @@
     "technicianNumber": "100011",
     "Designation": "Technician",
     "email": "gaurav@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -872,7 +872,7 @@
     "technicianNumber": "100012",
     "Designation": "Technician",
     "email": "jacob@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company4",
     "parentBusinessGroup": "Business Group4",
     "parentBranch": "Branch4",
@@ -892,7 +892,7 @@
     "technicianNumber": "1000013",
     "Designation": "Technician",
     "email": "aadarsh@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
@@ -913,7 +913,7 @@
     "technicianNumber": "100014",
     "Designation": "Technician",
     "email": "gaurav@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
@@ -933,7 +933,7 @@
     "technicianNumber": "100015",
     "Designation": "Technician",
     "email": "jacob@gmail.com",
-    "role": "user",
+    
     "parentCompany": "Company5",
     "parentBusinessGroup": "Business Group5",
     "parentBranch": "Branch5",
