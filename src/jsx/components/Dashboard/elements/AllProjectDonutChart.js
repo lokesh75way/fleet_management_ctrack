@@ -44,7 +44,7 @@ class AllProjectDonutChart extends React.Component {
                   fontSize: "11px",
                   fontWeight: "500",
                   fontFamily: "Arial",
-                  label: "Compete",
+                  label: props.completeLabel || 'Complete',
                   color: "var(--primary)",
 
                   formatter: function (w) {
