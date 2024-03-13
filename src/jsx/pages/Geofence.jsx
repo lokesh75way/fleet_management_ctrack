@@ -103,7 +103,7 @@ const Driver = (ref) => {
                                         <h4 className="heading mb-0">Geofence</h4>
                                         <div>
  
-                                            <Link to={"/geofencemap"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
+                                            <Link to={"/geofence/map"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 // onClick={() => employe.current.showModal()}
                                             >+ Show Map</Link> {" "}
                                            

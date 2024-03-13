@@ -105,7 +105,7 @@ const BusinessGroupRoutes = () => {
     { url: "classifyTrips", component: <ClassifyTrips /> },
     { url: "expense", component: <Expense /> },
     { url: "geofence", component: <Geofence /> },
-    { url: "geofencemap", component: <GeofenceMap /> },
+    { url: "geofence/map", component: <GeofenceMap /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },

@@ -94,7 +94,7 @@ const AdminRoutes = () => {
     { url: "task-summary", component: <TaskSummary /> },
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
-    { url: "geofencemap", component: <GeofenceMap /> },
+    
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
 
@@ -118,6 +118,7 @@ const AdminRoutes = () => {
     { url: "classifyTrips", component: <ClassifyTrips /> },
     { url: "expense", component: <Expense /> },
     { url: "geofence", component: <Geofence /> },
+    { url: "geofence/map", component: <GeofenceMap /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "TechnicianTask", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
