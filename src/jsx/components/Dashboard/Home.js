@@ -48,6 +48,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the styles for the DatePicker
 import ChartPie from "../charts/Chartjs/pie";
 import DualLine from "../charts/Chartjs/dualLine";
+import {Controller} from 'react-hook-form'
 import {
   Sparklines,
   SparklinesLine,
@@ -94,6 +95,13 @@ const Home = () => {
   const [selectedDataTable, setSelectedDataTable] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: "20rem 0 ", // Adjust the height as needed,
+      width:"130%"
+    }),
+  };
 
   const openModal = (dataTableComponent, title) => {
     setSelectedDataTable(dataTableComponent);
@@ -110,6 +118,8 @@ const Home = () => {
       ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
       : "Select Date Range";
 
+      
+
   return (
     <>
       {/* Modal component */}
@@ -125,14 +135,15 @@ const Home = () => {
         parentTitle="Home"
       >
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-          <div
+          {/* <div
             className="d-flex justify-content-between align-items-center gap-2"
-            style={{ marginRight: "10px", width: "200px" }}
-          >
+            style={{ marginRight: "10px" }}
+          > */}
             <label className="mr-2 mt-2 justify-content-between align-items-center">
               Date:
             </label>
             <DatePicker
+            width='280px'
               className="form-control"
               startDate={startDate}
               endDate={endDate}
@@ -142,16 +153,17 @@ const Home = () => {
                 setStartDate(start);
                 setEndDate(end);
               }}
+              dateFormat="dd/MM/yy"
               placeholderText={dateRangeText}
             />
-          </div>
+          {/* </div> */}
         </div>
       </MainPagetitle>
 
       <div className="fluid container mt-3 mw-100">
         <div className="row " style={{ marginRight: "0.0rem" }}>
           <div className="col-xl-12 wid-100">
-            <div className="row" style={{ padding: "1px" }}>
+            <div className="row" style={{ padding: "1px", marginTop:'1rem' }}>
               <CardWidget />
             </div>
           </div>
@@ -189,12 +201,16 @@ const Home = () => {
                 <h4 className="text-black text-md p-3">Fleet Status</h4>
               </div>
 
-              <div className="card-body d-flex align-items-center justify-content-center  py-2 " style={{flexWrap : "wrap"}}>
+              <div
+                className="card-body d-flex align-items-center justify-content-center  py-2 "
+                style={{ flexWrap: "wrap" }}
+              >
                 <AllProjectDonutChart
                   colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
                   labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
                   width={300}
                   data={[18, 19, 25, 23]}
+                  completeLabel = 'Total'
                 />
                 <ul className="project-list">
                   <li>
@@ -259,7 +275,7 @@ const Home = () => {
         </div>
 
         <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
-          <div className="col-xl-6" style={{paddingLeft:0}}>
+          <div className="col-xl-6" style={{ paddingLeft: 0 }}>
             <div
               className="card same-card mb-3 p-2"
               style={{ cursor: "pointer" }}
@@ -323,7 +339,7 @@ const Home = () => {
 
         <div className="row" style={{ marginLeft: "0.2rem" }}>
           {/* Temperature */}
-          <div className="col-xl-7" style={{paddingLeft:0}}>
+          <div className="col-xl-7" style={{ paddingLeft: 0 }}>
             <div
               className="card same-card mb-3 p-2"
               style={{
@@ -333,21 +349,18 @@ const Home = () => {
               onClick={() => openModal(<TemperatureTable />, "Temperature")}
             >
               <div className="d-flex align-items-center justify-content-between">
-                
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
-                >
-          
-                </div>
+                ></div>
               </div>
-              
+
               <ProjectOverviewTab />
             </div>
           </div>
 
-          <div className="col-xl-5 col-md-12"  >
+          <div className="col-xl-5 col-md-12">
             <div
               className="card same-card mb-3 p-2"
               style={{
@@ -367,7 +380,10 @@ const Home = () => {
                   Maintenance
                 </h4>
               </div>
-              <div className="card-body d-flex justify-content-center align-items-center py-2" style={{flexWrap : "wrap"}}> 
+              <div
+                className="card-body d-flex justify-content-center align-items-center py-2"
+                style={{ flexWrap: "wrap" }}
+              >
                 <div>
                   <ChartPie />
                 </div>
@@ -439,7 +455,7 @@ const Home = () => {
           style={{ marginLeft: "0.2rem", justifyContent: "space-between" }}
         >
           {/* Overspeed */}
-          <div className="col-xl-6 col-md-12" style={{paddingLeft : 0}}>
+          <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
             <div
               className="card same-card p-2"
               style={{
