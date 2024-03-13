@@ -183,7 +183,7 @@ const SubCompanyRoutes = () => {
     { url: "manage-client", component: <ManageClient /> },
     { url: "reports", component: <Report /> },
     { url: "Technician", component: <Technician /> },
-    { url: "geofencemap", component: <GeofenceMap /> },
+    { url: "geofence/map", component: <GeofenceMap /> },
     { url: "branch/:id", component: <Branch /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
