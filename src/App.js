@@ -30,7 +30,6 @@ import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/compon
 import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
 import UserJsonData from './users.json'
 
-
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
   return new Promise((resolve) => {
