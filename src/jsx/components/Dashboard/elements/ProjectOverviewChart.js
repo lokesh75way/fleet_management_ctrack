@@ -197,7 +197,7 @@ const  ProjectOverviewChart = () =>{
       <>
           <Tab.Container defaultActiveKey={'Week'}>
             <div className="card-header border-0 pb-0 flex-wrap">
-                <h4 className="heading mb-0">Temperature Overview</h4>                
+                <h4 className="heading mb-0 text-black">Temperature Overview</h4>                
                   <Nav as="ul" className="nav nav-pills mix-chart-tab">
                       {chartHeaderData.map((item, index)=>(
                         <Nav.Item as="li" className="nav-item" key={index}>
