@@ -39,7 +39,6 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
     DriverTabComponent1,
     DriverTabComponent2,
     DriverTabComponent3,
-    DriverTabComponent4,
   ];
   return (
     <>
@@ -329,120 +328,6 @@ const DriverTabComponent2 = (props) => {
   );
 };
 const DriverTabComponent3 = (props) => {
-  const { drivers } = props.data;
-  return (
-    <>
-      <div className="d-flex mt-2">
-        <div className="search-driver-tab">
-          <input
-            type="text"
-            placeholder="search"
-            className="form-control-driver-tab"
-          />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
-        </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "1.6rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <MdAddLocationAlt
-          style={{
-            fontSize: "1.6rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FiUpload
-          style={{
-            fontSize: "1.6rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.6rem",
-            padding: "3px",
-            margin: "0 .3rem",
-          }}
-        />
-      </div>
-      <div className="d-flex mt-2 mb-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div className=" bg-white w-100 p-1 d-flex justify-content-between">
-          <span>All</span>
-          <span className="text-end">[1]</span>
-        </div>
-      </div>
-      {drivers.map((d, index) => {
-        return (
-          <div className="d-flex align-items-center mb-1">
-            <div
-              className="form-check custom-checkbox"
-              style={{ marginRight: "5px" }}
-            >
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="customCheckBox1"
-                required
-              />
-            </div>
-            <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-              <span>{d.name}</span>
-              <div className="d-flex justify-content-around">
-                <IoIosNavigate
-                  style={{
-                    fontSize: "1.5rem",
-                    padding: "2px",
-                    margin: "0 .3rem",
-                    background: "white",
-                  }}
-                />
-                <FaEdit
-                  style={{
-                    fontSize: "1.5rem",
-                    padding: "2px",
-                    margin: "0 .3rem",
-                    background: "white",
-                  }}
-                />
-                <MdDelete
-                  style={{
-                    fontSize: "1.5rem",
-                    padding: "2px",
-                    margin: "0 .3rem",
-                    background: "white",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        );
-      })}
-      <div className="text-center  pt-2 mt-2 border-top border-dark">
-        <Button className="me-2" variant="primary btn-sm">
-          Save Selection
-        </Button>
-      </div>
-    </>
-  );
-};
-
-const DriverTabComponent4 = (props) => {
   const { drivers } = props.data;
   return (
     <>
