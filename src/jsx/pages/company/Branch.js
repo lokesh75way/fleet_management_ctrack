@@ -158,6 +158,7 @@ const Branch = () => {
     }));
 
     if(tempValue !== 'All Companies') setBranchOptions(tempoptions)
+    else setBranchOptions(allbranchOptions);
 
   },[tempValue])
 
@@ -196,6 +197,31 @@ const Branch = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Branches</h4>
                     <div className="d-flex align-items-center">
+                    <Controller
+                        name="parent"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, value, name, ref } }) => (
+                          <Select
+                            onChange={(newValue) => {
+                              setTempValue(newValue.label);
+                              setTempValue2("All Branches");
+                              setValue("parent", newValue.label);
+                              setFilter({value:newValue.value,label:newValue.label})
+                              setFilter2({value:'All Branches',label:"All Branches"})
+                            }}
+                            ref={ref}
+                            name={name}
+                            menuPortalTarget={document.body}
+                            menuPosition={"fixed"}
+                            styles={customStyles}
+                            options={companyOptions}
+                            value= {selectFilter}
+                            
+                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
+                          />
+                        )}
+                      />
                       <Controller
                         name="parent"
                         control={control}
@@ -215,29 +241,6 @@ const Branch = () => {
                             styles={customStyles}
                             options={branchOptions}
                             value={selectFilter2}
-                          />
-                        )}
-                      />
-                      <Controller
-                        name="parent"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
-                            onChange={(newValue) => {
-                              setTempValue(newValue.label);
-                              setTempValue2("All Branches");
-                              setValue("parent", newValue.label);
-                              setFilter({value:newValue.value,label:newValue.label})
-                            }}
-                            ref={ref}
-                            name={name}
-                            menuPortalTarget={document.body}
-                            menuPosition={"fixed"}
-                            styles={customStyles}
-                            options={companyOptions}
-                            value= {selectFilter}
-                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
                           />
                         )}
                       />

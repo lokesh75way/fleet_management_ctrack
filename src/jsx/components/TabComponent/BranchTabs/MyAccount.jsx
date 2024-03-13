@@ -37,6 +37,7 @@ const MyAccount = ({
   const [businessUserValue, setBusinessUserValue] = useState([]);
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
+  const [isStateDisabled, setIsStateDisabled] = useState(true);
 
   useEffect(() => {
     const tempbusinessUserOptions = DummyData.filter(
@@ -248,7 +249,23 @@ const MyAccount = ({
           />
           {!getValues("parent") && <Error errorName={errors.parent} />}
         </div>
-
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Branch Name <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="User Name"
+            name="userName"
+            placeholder=""
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
+            }
+          />
+          <Error errorName={errors.userName} />
+        </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
             Country<span className="text-danger">*</span>
@@ -257,6 +274,7 @@ const MyAccount = ({
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.id);
+              setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -265,7 +283,7 @@ const MyAccount = ({
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">
             State<span className="text-danger">*</span>
           </label>
@@ -283,24 +301,6 @@ const MyAccount = ({
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
-        </div>
-
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Branch Name <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="User Name"
-            name="userName"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
-            }
-          />
-          <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
