@@ -40,6 +40,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
     DriverTabComponent2,
     DriverTabComponent3,
   ];
+  console.log(isOutside)
   return (
     <>
       <div
@@ -47,6 +48,12 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
           isOutside ? "toggleBarInside" : "toggleBarOutside"
         }`}
       >
+        <button
+          onClick={handleToggleCardPosition}
+          className="driver_tracking_button"
+        >
+          {!isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />}
+        </button>
         <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
           <Nav as="ul" className="nav-tabs">
             {tabData.map((data, i) => {
@@ -72,22 +79,6 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
             })}
           </Tab.Content>
         </Tab.Container>
-        <button
-          onClick={handleToggleCardPosition}
-          style={{
-            position: "absolute",
-            borderBottomRightRadius: "2rem",
-            borderTopRightRadius: "2rem",
-            left: "100.5%",
-            top: "35%",
-            fontSize: "1.2rem",
-            height: "5rem",
-            background: "rgb(232,245,255)",
-          }}
-        >{
-          isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />
-        }
-        </button>
       </div>
     </>
   );

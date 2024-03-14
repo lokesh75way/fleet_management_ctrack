@@ -34,7 +34,7 @@ function AdminLayout() {
         <Nav role="admin" />
         <div
           className="content-body"
-          style={{ minHeight: window.screen.height - 45 }}
+          // style={{ minHeight: window.screen.height - 45 }}
         >
           <Outlet />
         </div>

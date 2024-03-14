@@ -7,6 +7,7 @@ import { TbLocationFilled } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdFence } from "react-icons/md";
+import "../../scss/pages/_driver-tracking.scss"
 
 const DriverTracking = () => {
   const {currentPosition, setCurrentPosition} = useContext(ThemeContext)
@@ -31,9 +32,11 @@ const DriverTracking = () => {
   // useEffect(() => {
   //   getCurrentPosition()
   // }, []);
+  console.log(isOutside)
   return (
     <>
       <MainPagetitle mainTitle="Vehicle Tracking" pageTitle={'Vehicle Tracking'} parentTitle={'Tracking'} />
+      <div className={`backdrop ${isOutside ? 'd-none' : 'd-block'}`} onClick={()=> setIsOutside(true)}/>
       <div className='p-2'>
         <ShowMap data={data}/>
       </div>

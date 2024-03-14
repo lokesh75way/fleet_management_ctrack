@@ -1,48 +1,83 @@
-.panel{
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    width: 2.5rem;
-    padding: 1px;
-    position:absolute;
-    top: 16%;
-    right: 1%;
-    border-radius: .6rem;
+.vehicle_tracking {
+  position: relative;
 }
-.modes{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 2.5rem;
-    border-top: 1px solid rgb(201, 198, 198);
-    border-bottom: 1px solid rgb(201, 198, 198);
+
+.backdrop {
+  position: fixed;
+  width: 100vw;
+  background: black;
+  height: 100vh;
+  inset: 0;
+  z-index: 10;
+  opacity: 0.5;
 }
-.modes_icon{
-    font-size: 1.5rem;
-    padding: 1px;
+
+.panel {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  width: 2.5rem;
+  padding: 1px;
+  position: absolute;
+  top: 16%;
+  left: 1%;
+  border-radius: 0.6rem;
 }
-.modes:hover{
-    background-color: rgb(245, 241, 241);
-    // background-color: rgb(201, 198, 198);
+.modes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  border-top: 1px solid rgb(201, 198, 198);
+  border-bottom: 1px solid rgb(201, 198, 198);
 }
-.outer-container{
-    width: 28rem;
-    font-size: .8rem;
-    border: 1px solid grey;
-    border-radius: .5rem;
-    padding: 5px;
-    background-color: rgb(232,245,255);
+.modes_icon {
+  font-size: 1.5rem;
+  padding: 1px;
+}
+.modes:hover {
+  background-color: rgb(245, 241, 241);
+  // background-color: rgb(201, 198, 198);
+}
+.outer-container {
+  width: 50rem;
+  font-size: 0.8rem;
+  border: 1px solid grey;
+  //   border-radius: 0.5rem;
+  height: 100vh;
+  padding: 5px;
+  background-color: #f5f5f5;
+  position: absolute;
+  margin-left: 1rem;
+  top: 0%;
+  right: 0;
+  bottom: 0;
+  //   transform: translateY(-50%);
+  z-index: 10;
+  .driver_tracking_button {
+    font-size: 1.2rem;
     position: absolute;
-    margin-left: 1rem;
-    top: 16%;   
+    height: 5rem;
+    background: #f5f5f5;
+    left: -18px;
+    border-left: 1px solid black;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 1px solid black;
+    border-right: none;
+  }
 }
-.tab-icon{
-    margin:0 2px;
+
+.tab-icon {
+  margin: 0 2px;
 }
-.form-control-driver-tab{
+.form-control-driver-tab {
   display: block;
   width: 90%;
-  padding: 0.2rem 0.4rem ;
+  padding: 0.2rem 0.4rem;
   font-size: 0.8rem;
   font-weight: 300;
   color: var(--bs-body-color);
@@ -53,28 +88,38 @@
   color: black;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.search-driver-tab{
-    display: flex;
-    width: 80%;
-    background-color: white;
+.search-driver-tab {
+  display: flex;
+  width: 80%;
+  background-color: white;
 }
-.search-driver-tab2{
-    display: flex;
-    width: 60%;
-    background-color: white;
+.search-driver-tab2 {
+  display: flex;
+  width: 60%;
+  background-color: white;
 }
-.accordian-header-driver-tab{
-    margin: 0;
-    padding: 0;
+.accordian-header-driver-tab {
+  margin: 0;
+  padding: 0;
 }
-.accordion-button{
-    padding: 1px .75rem;
+.accordion-button {
+  padding: 1px 0.75rem;
 }
-.toggleBarInside{
-    transform: translate(-104%, 0%);
-    transition: transform 0.5s ease, opacity 0.5s ease;
+.toggleBarInside {
+  transform: translate(100%, 0%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
-.toggleBarOutside{
-    transform: translate(0%, 0%);
-    transition: transform 0.5s ease, opacity 0.5s ease;
+.toggleBarOutside {
+  transform: translate(0%, 0%);
+
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.default-tab .nav-link.active{
+  color: white;
+  background-color: var(--primary);
+}
+.default-tab .nav-link:hover{
+  color: white;
+  background-color: var(--primary);
 }
