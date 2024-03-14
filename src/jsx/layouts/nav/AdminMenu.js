@@ -82,11 +82,11 @@ export const AdminMenuList = [
     content: [
       {
         title: "Technician Details",
-        to: "/technician",
+        to: "technician/details",
       },
       {
         title: "Technician Tasks",
-        to: "/technicianTask",
+        to: "technician/tasks",
       },
     ],
   },
