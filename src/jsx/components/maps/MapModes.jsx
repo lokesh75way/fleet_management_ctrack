@@ -10,6 +10,7 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { GrCluster } from "react-icons/gr";
 import { IoLocationOutline } from "react-icons/io5";
 import { ThemeContext } from '../../../context/ThemeContext';
+
 const MapModes = () => {
   const { isTrafficClick, setIsTrafficClick} = useContext(ThemeContext)
   const handleTraffic = (e)=>{

@@ -718,3 +718,8 @@ button.react-calendar__tile.react-calendar__tile--active.react-calendar__tile--r
 .tbl-caption div a, .tbl-caption div button{
   padding-block: 9px;
 }
+
+body{
+  overflow-x: hidden;
+}
+

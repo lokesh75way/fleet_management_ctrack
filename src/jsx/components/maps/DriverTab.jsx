@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion, Badge, Button, Nav, Tab } from "react-bootstrap";
 import "../../../scss/pages/_driver-tracking.scss";
 import {
@@ -10,6 +10,7 @@ import {
   FaBatteryFull,
   FaEdit,
 } from "react-icons/fa";
+import { GrUserPolice } from "react-icons/gr";
 import { BsArrowRepeat } from "react-icons/bs";
 import { RiAddBoxFill } from "react-icons/ri";
 import { FaKey } from "react-icons/fa6";
@@ -17,6 +18,8 @@ import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import CompanyItem from "../Tracking/CompanyItem";
 
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
@@ -40,6 +43,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
     DriverTabComponent2,
     DriverTabComponent3,
   ];
+
   return (
     <>
       <div
@@ -47,8 +51,14 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
           isOutside ? "toggleBarInside" : "toggleBarOutside"
         }`}
       >
+        <button
+          onClick={handleToggleCardPosition}
+          className="driver_tracking_button"
+        >
+          {!isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />}
+        </button>
         <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
-          <Nav as="ul" className="nav-tabs">
+          <Nav as="ul" className="nav-tabs tracking_navTabs">
             {tabData.map((data, i) => {
               const Icon = data.icon;
               return (
@@ -61,7 +71,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content className="p-1">
+          <Tab.Content className="p-2 py-4" style={{ background: "#f5f5f5" }}>
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
@@ -72,22 +82,6 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
             })}
           </Tab.Content>
         </Tab.Container>
-        <button
-          onClick={handleToggleCardPosition}
-          style={{
-            position: "absolute",
-            borderBottomRightRadius: "2rem",
-            borderTopRightRadius: "2rem",
-            left: "100.5%",
-            top: "35%",
-            fontSize: "1.2rem",
-            height: "5rem",
-            background: "rgb(232,245,255)",
-          }}
-        >{
-          isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />
-        }
-        </button>
       </div>
     </>
   );
@@ -107,58 +101,77 @@ const DriverTabComponent1 = (props) => {
     statusData[driver.status]++;
   });
   const { running, idle, stopped, inactive, nodata, total } = statusData;
+  const [selectValue, setSelectValue] = useState(["All"]);
+  const handleClick = (value) => {
+    if (selectValue.includes(value)) {
+      setSelectValue(selectValue.filter((item) => item !== value));
+    } else {
+      setSelectValue([...selectValue, value]);
+    }
+  };
   return (
     <>
-      <div className="row px-2">
-        <Badge bg="" className="badge-success light col-lg-2 fs-9">
-          <span>
-            <p>{running}</p>
-            <span>Running</span>
-          </span>
-        </Badge>
-        <Badge bg="" className="badge-warning light col-lg-2 fs-9">
-          <span>
+      <div className="vehicle_tracking-object">
+        <span
+          className={`light fs-9 ${
+            selectValue.includes("Running") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Running")}
+        >
+          <p>{running}</p>
+          <span>Running</span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("Idle") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Idle")}
+        >
             <p>{idle}</p>
             <span>Idle</span>
-          </span>
-        </Badge>
-        <Badge bg="" className="badge-danger light col-lg-2 fs-9">
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("Stopped") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Stopped")}
+        >
             <p>{stopped}</p>
             <span>Stopped</span>
-          </span>
-        </Badge>
-        <Badge bg="" className="badge-info light col-lg-2 fs-9">
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes('InActive') && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("InActive")}
+        >
             <p>{inactive}</p>
             <span>InActive</span>
-          </span>
-        </Badge>
-        <Badge bg="" className="badge-dark light col-lg-2 fs-9">
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("NoData") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("NoData")}
+        >
             <p>{nodata}</p>
             <span>NoData</span>
-          </span>
-        </Badge>
-        <Badge bg="" className="badge-light light col-lg-2 fs-9">
-          <span>
-            <p>{total}</p>
-            <span>Total</span>
-          </span>
-        </Badge>
-      </div>
-      <div className="d-flex mt-2">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
+        </span>
+        <span
+          className={`light fs-9 ${
+            selectValue.includes("All") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("All")}
         >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
+          <p>{total}</p>
+            <span>Total</span>
+        </span>
+      </div>
+      <div className="d-flex mt-2 mb-4">
         <div className="search-driver-tab2">
           <input
             type="text"
@@ -167,90 +180,11 @@ const DriverTabComponent1 = (props) => {
           />
           <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
         </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FiUpload
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.5rem",
-            padding: "3px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaSortAlphaDown
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
       </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-          <span>Company 1</span>
-          <span className="text-end">[1]</span>
-        </div>
-      </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div className="bg-white w-100 d-flex align-items-center">
-          <FaCircle
-            style={{
-              fontSize: "1.2rem",
-              padding: "2px",
-              margin: "0 .3rem",
-              background: "white",
-              color: "rgb(39,129,0)",
-            }}
-          />
-          <div
-            className="bg-white w-50 p-1 d-flex flex-column justify-content-between"
-            style={{ fontSize: ".8rem" }}
-          >
-            <span>Test1</span>
-            <span>22-02-2024 3:00 PM</span>
-          </div>
-          <div className="d-flex w-50 justify-content-evenly">
-            <span>11</span>
-            <FaWifi />
-            <FaKey />
-            <FaBatteryFull />
-          </div>
-        </div>
-      </div>
-      <div className="text-center  pt-2 mt-2 border-top border-dark">
+      <CompanyItem />
+      {/* <CompanyItem /> */}
+      {/* <CompanyItem /> */}
+      <div className="text-center  pt-4 mt-4 border-top border-dark">
         <Button className="me-2" variant="primary btn-sm">
           Save Selection
         </Button>
@@ -260,68 +194,149 @@ const DriverTabComponent1 = (props) => {
 };
 
 const DriverTabComponent2 = (props) => {
-  const { allocatedDriver, notAllocatedDriver, totalDriver, drivers } =
-    props.data;
+  const [selectValue, setSelectValue] = useState("All");
+  const [selectDriver, setSelectDriver] = useState([]);
+  const jsonData = JSON.parse(localStorage.getItem("userJsonData"));
+  const [drivers, setDrivers] = useState(
+    jsonData.filter((item) => item.designation === "Driver")
+  );
+  const allocated = drivers.filter(
+    (item) => item.activityStatus === "Allocated"
+  ).length;
+  const notAllocated = drivers.filter(
+    (item) => item.activityStatus === "Not Allocated"
+  ).length;
+  const [searchedDriver, setSearchedDriver] = useState({});
+  const total = drivers.length;
+
+  const handleOnSelect = (results) => {
+    setSearchedDriver({
+      id: results.id,
+      name: results.name,
+    });
+  };
+  const handleOnSearch = (string,results) => {
+    if(string === '') setDrivers(jsonData.filter((item) => item.designation === "Driver"))
+  };
+
+  useEffect(() => {
+    if (searchedDriver?.id)
+      setDrivers(jsonData.filter((item) => item.id === searchedDriver.id));
+    else if (selectValue === "Allocated")
+      setDrivers(
+        jsonData.filter(
+          (item) =>
+            item.designation === "Driver" && item.activityStatus === "Allocated"
+        )
+      );
+    else if (selectValue === "Not Allocated")
+      setDrivers(
+        jsonData.filter(
+          (item) =>
+            item.designation === "Driver" &&
+            item.activityStatus === "Not Allocated"
+        )
+      );
+    else if (selectValue === "Total" || !searchedDriver?.id)
+      setDrivers(jsonData.filter((item) => item.designation === "Driver"));
+  }, [searchedDriver, selectValue]);
+
+  const items = jsonData
+    .filter((item) => item.designation === "Driver")
+    .map((item) => {
+      return { id: item.id, name: item.firstName + " " + item.lastName };
+    });
   return (
     <>
-      <div className="row px-2">
-        <Badge bg="" className="badge-success light col-lg-4">
+      <div className="px-2 driver_tracking-object">
+        <Badge
+          bg=""
+          pill
+          className={`light border fs-9 ${
+            selectValue === "Allocated" && "vehicle_tracking-active"
+          }`}
+          onClick={() => setSelectValue("Allocated")}
+        >
           <span>
+            <p>{allocated}</p>
             <span>Allocated</span>
-            <p>{allocatedDriver}</p>
           </span>
         </Badge>
-        <Badge bg="" className="badge-danger light col-lg-4">
+        <Badge
+          bg=""
+          pill
+          className={`light border fs-9 ${
+            selectValue === "Not Allocated" && "vehicle_tracking-active"
+          }`}
+          onClick={() => setSelectValue("Not Allocated")}
+        >
           <span>
+            <p>{notAllocated}</p>
             <span>Not Allocated</span>
-            <p>{notAllocatedDriver}</p>
           </span>
         </Badge>
-        <Badge bg="" className="badge-dark light col-lg-4">
-          <span>
+        <Badge
+          bg=""
+          pill
+          className={`light border fs-9 ${
+            selectValue === "Total" && "vehicle_tracking-active"
+          }`}
+          onClick={() => setSelectValue("Total")}
+        >
+          <span >
+            <p>{total}</p>
             <span>Total</span>
-            <p>{totalDriver}</p>
           </span>
         </Badge>
       </div>
-      <div className="d-flex mt-2">
-        <div className="search-driver-tab">
-          <input type="text" className="form-control-driver-tab" />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
-        </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
+      <div className="d-flex mt-4 mb-4">
+          <ReactSearchAutocomplete
+            items={items}
+            className="w-100"
+            onSearch={handleOnSearch}
+            onSelect={handleOnSelect}
+          />
       </div>
       <div
-        className="d-flex flex-column bg-white"
-        style={{ border: " 1px solid white", marginTop: ".5rem" }}
+        className="d-flex flex-column bg-white p-2"
+        style={{
+          border: " 1px solid white",
+          marginTop: ".5rem",
+          height: "65vh",
+          overflowY: "scroll",
+        }}
       >
         {drivers.length === 0 ? (
-          <span className="p-1 text-center fs-4 ">No Record Found</span>
+          <span className="p-2 text-center fs-4 ">No Record Found</span>
         ) : (
           drivers.map((d, index) => {
-            return <span className="p-1 fs-6">{d.name}</span>;
+            return (
+              <div
+                key={index}
+                onClick={()=>{setSelectDriver(selectDriver.concat(d.id)); console.log(selectDriver);}}
+                className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
+              >
+                <div
+                  className="form-check custom-checkbox ms-3 me-3"
+                >
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    required
+                  />
+                </div>
+                <GrUserPolice className="m-2 driver-select-object" />
+                <span className="fs-4 ms-2">
+                  {d.firstName} {d.lastName}
+                </span>
+              </div>
+            );
           })
         )}
       </div>
       <div className="mt-3 text-center" style={{ width: "100%" }}>
-        <Button className="me-2" variant="primary btn-sm">
+        <Button className="w-50" variant="primary btn-lg">
           XLS
-        </Button>
-        <Button className="me-2" variant="primary btn-sm">
-          PDF
         </Button>
       </div>
     </>
