@@ -13,6 +13,7 @@ import {
   severityOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
+import '../../scss/pages/_driver-tracking.scss'
 
 const AlertOffcanvas = forwardRef(
   (
@@ -320,20 +321,20 @@ const AlertOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Valid Time From</label>
-                    <div className="d-flex align-items-center">
-                      <input
+                    <div className="d-flex align-items-center justify-content-evenly">
+                      <CustomInput
                         type="time"
-                        {...register("validTimeFrom")}
-                        className="form-control"
-                        name="validTimeFrom"
+                        register={register}
+                        label="Valid time From"
+                        name="validTimeFrom1"
                         placeholder=""
                       />
                       <span className="px-2">To</span>
-                      <input
+                      <CustomInput
                         type="time"
-                        {...register("validTimeFrom")}
-                        className="form-control"
-                        name="validTimeFrom"
+                        register={register}
+                        label="Valid Time From"
+                        name="validTimeFrom2"
                         placeholder=""
                       />
                     </div>

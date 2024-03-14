@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Error from "../../Error/Error";
+import '../../../../scss/pages/_driver-tracking.scss'
 import {
   options,
   permitOptions,
@@ -106,7 +107,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("manufactureDate") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("manufactureDate", newValue)}
               />
             )}
@@ -120,7 +121,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("purchaseDate") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("purchaseDate", newValue)}
               />
             )}
@@ -145,7 +146,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("GPSInstallationDate") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) =>
                   setValue("GPSInstallationDate", newValue)
                 }
@@ -205,7 +206,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("installationDate") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("installationDate", newValue)}
               />
             )}

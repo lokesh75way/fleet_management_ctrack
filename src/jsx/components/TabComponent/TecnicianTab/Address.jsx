@@ -5,9 +5,9 @@ import { useForm, Controller } from "react-hook-form";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import { adminOptions, resellerOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import {useParams} from 'react-router-dom'
+import '../../../../scss/pages/_driver-tracking.scss'
 
 const Address = ({ register, setValue, getValues, errors, handleSubmit, control, onSubmit }) => {
   const [countryid, setCountryid] = useState(0);
@@ -99,7 +99,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
               setValue("country", e.name);
             }}
             containerClassName="bg-white"
-            inputClassName="border border-white"
+            inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
             
           />

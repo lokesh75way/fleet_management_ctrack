@@ -78,3 +78,17 @@
     transform: translate(0%, 0%);
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
+.customSelectHeight{
+    height: 2.2rem;
+}
+.customDateHeight{
+    height: 2.9rem;
+}
+@media screen and (max-width: 1600px) {
+    .customSelectHeight{
+        height: 2.4rem;
+    }
+    .customDateHeight{
+        height: 3.2rem;
+    }
+  }
