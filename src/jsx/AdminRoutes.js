@@ -103,7 +103,7 @@ const AdminRoutes = () => {
     { url: "general", component: <General /> },
     { url: "master", component: <Master /> },
     { url: "technician", component: <Technician /> },
-    { url: "driver-tracking", component: <DriverTracking /> },
+    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
@@ -142,7 +142,7 @@ const AdminRoutes = () => {
 
     // groups
     { url: "groups", component: <CreateGroups /> },
-    { url: "permission", component: <Permission /> },
+    { url: "groups/permission", component: <Permission /> },
   ];
 
   function NotFound() {

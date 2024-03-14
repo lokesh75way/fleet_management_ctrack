@@ -33,7 +33,7 @@ const DriverTracking = () => {
   // }, []);
   return (
     <>
-      <MainPagetitle mainTitle="Driver Tracking" pageTitle={'Driver Tracking'} parentTitle={'Tracking'} />
+      <MainPagetitle mainTitle="Vehicle Tracking" pageTitle={'Vehicle Tracking'} parentTitle={'Tracking'} />
       <div className='p-2'>
         <ShowMap data={data}/>
       </div>

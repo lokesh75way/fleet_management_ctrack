@@ -124,7 +124,6 @@ const SideBar = () => {
   };
 
   const url = useBaseUrl();
-
   return (
     <div
       className={`deznav  border-right ${iconHover} ${
@@ -149,6 +148,7 @@ const SideBar = () => {
                   }`}
                   key={index}
                 >
+                
                   {data.content && data.content.length > 0 ? (
                     <>
                       <Link
@@ -178,11 +178,12 @@ const SideBar = () => {
                         >
                           {data.content &&
                             data.content.map((data, index) => {
+                              
                               return (
                                 <li
                                   key={index}
                                   className={`${
-                                    state.activeSubmenu === data.title
+                                    data.to === url
                                       ? "mm-active"
                                       : ""
                                   }`}
@@ -220,7 +221,7 @@ const SideBar = () => {
                                                 <li key={ind}>
                                                   <Link
                                                     className={`${
-                                                      path === data.to
+                                                      url === data.to
                                                         ? "mm-active"
                                                         : ""
                                                     }`}
@@ -238,10 +239,10 @@ const SideBar = () => {
                                     <Link
                                       to={data.to}
                                       className={`${
-                                        data.to === path ? "mm-active" : ""
+                                        data.to === url ? "mm-active" : ""
                                       }`}
                                     >
-                                      {data.title}
+                                   {data.title}
                                     </Link>
                                   )}
                                 </li>
