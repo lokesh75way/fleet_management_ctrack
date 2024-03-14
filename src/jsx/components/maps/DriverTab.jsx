@@ -9,6 +9,7 @@ import {
   FaWifi,
   FaBatteryFull,
   FaEdit,
+  FaTrashAlt,
 } from "react-icons/fa";
 import { BsArrowRepeat } from "react-icons/bs";
 import { RiAddBoxFill } from "react-icons/ri";
@@ -17,6 +18,11 @@ import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useNavigate  } from 'react-router-dom'
+import DeleteModal from "../Modal/DeleteModal";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
+import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
@@ -292,114 +298,179 @@ const DriverTabComponent2 = (props) => {
     </>
   );
 };
+// const DriverTabComponent3 = (props) => {
+//   // const { drivers } = props.data;
+
+//   const geoData = JSON.parse(localStorage.getItem('geofenceData'))
+//   const [tableData, setTableData] = useState(geoData)
+//   const navigate = useNavigate();
+
+//   const onConfirmDelete = (id) => {
+//     // Remove item from state
+//     const updatedData = tableData.filter((item) => item.id !== id);
+//     setTableData(updatedData);
+
+//     // Remove item from local storage
+//     const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
+//     localStorage.setItem(
+//       "geofenceData",
+//       JSON.stringify(updatedLocalStorageData)
+//     );
+//   };
+//   const editDrawerOpen = (d)=>{
+//     navigate(`/geofence/map/edit/${d.id}`)
+//   }
+
+//   return (
+//     <>
+//       <div className="d-flex mt-2 fs-6 align-items-center">
+//         <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
+//           <input type="checkbox" className="form-check-input" id="customCheckBox1" required />
+//         </div>
+//         <div className=" bg-white p-2 d-flex justify-content-between" style={{ width: "80%" }}>
+//           <span>Company 1</span>
+//         </div>
+//       </div>
+//       <Accordion className="accordian accordion-solid-bg mt-4" defaultActiveKey="0" flush>
+//         <Accordion.Item eventKey="0">
+//           <Accordion.Header>All</Accordion.Header>
+//           {tableData.map((d, index) => (
+//             <Accordion.Body className="p-2" key={index}>
+//               <div className="d-flex align-items-center">
+//                 <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
+//                   <input type="checkbox" className="form-check-input" id={`customCheckBox${index}`} required />
+//                 </div>
+//                 <div className=" bg-white w-100 p-2 d-flex justify-content-between">
+//                   <span>{d.name}</span>
+//                   <div className="d-flex justify-content-around">
+//                     <IoIosNavigate
+//                       style={{
+//                         fontSize: "2rem",
+//                         padding: "2px",
+//                         margin: "0 .3rem",
+//                         background: "white",
+//                       }}
+//                     />
+//                     <FaEdit
+//                       style={{
+//                         fontSize: "2rem",
+//                         padding: "2px",
+//                         margin: "0 .3rem",
+//                         background: "white",
+//                       }}
+//                       onClick={() => editDrawerOpen(d)}
+//                     />
+//                     <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
+//                       <MdDelete
+//                         style={{
+//                           fontSize: "2rem",
+//                           padding: "2px",
+//                           margin: "0 .3rem",
+//                           background: "white",
+//                         }}
+//                       />
+//                     </DeleteModal>
+//                   </div>
+//                 </div>
+//               </div>
+//             </Accordion.Body>
+//           ))}
+//         </Accordion.Item>
+//       </Accordion>
+
+      
+//     </>
+//   );
+// };
 const DriverTabComponent3 = (props) => {
-  const { drivers } = props.data;
+  const geoData = JSON.parse(localStorage.getItem("geofenceData"));
+  const [tableData, setTableData] = useState(geoData);
+  const navigate = useNavigate();
+
+  const onConfirmDelete = (id) => {
+    // Remove item from state
+    const updatedData = tableData.filter((item) => item.id !== id);
+    setTableData(updatedData);
+
+    // Remove item from local storage
+    const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
+    localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
+  };
+
+  const editDrawerOpen = (d) => {
+    navigate(`/geofence/map/edit/${d.id}`);
+  };
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: ".25rem 0 ", // Adjust the height as needed
+    }),
+  };
   return (
     <>
-      <div className="d-flex mt-2">
-        <div className="search-driver-tab">
-          <input type="text" className="form-control-driver-tab" />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
+      <div className=" d-flex mt-2 fs-6 align-items-center">
+        <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
+          <input type="checkbox" className=" form-check-input border" id="customCheckBox1" required />
         </div>
-        <MdFence
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.5rem",
-            padding: "3px",
-            margin: "0 .3rem",
-          }}
-        />
-      </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div
-          className=" bg-white p-2 d-flex justify-content-between"
-          style={{ width: "80%" }}
-        >
-          <span>Company 1</span>
-        </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "2.2rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-      </div>
-      <Accordion
-        className="accordian accordion-solid-bg mt-4"
-        defaultActiveKey="0"
-        flush
-      >
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>All</Accordion.Header>
-          {drivers.map((d, index) => {
-            return (
-              <Accordion.Body className="p-2">
-                <div className="d-flex align-items-center">
-                  <div
-                    className="form-check custom-checkbox"
-                    style={{ marginRight: "5px" }}
-                  >
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="customCheckBox1"
-                      required
-                    />
-                  </div>
-                  <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-                    <span>{d.name}</span>
-                    <div className="d-flex justify-content-around">
-                      <IoIosNavigate
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                      <FaEdit
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                      <MdDelete
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                    </div>
-                  </div>
+        {/* <div className="bg-white p-2 d-flex justify-content-between" style={{ width: "80%", borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}> */}
+        <div className="col-xl-6 mb-1 justify-content-between" style={{ width: "80%", borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
+
+                <Select     
+                styles={customStyles}  
+                options={companyOptions}        
+                />
                 </div>
-              </Accordion.Body>
-            );
-          })}
-        </Accordion.Item>
-      </Accordion>
+             
+        {/* </div> */}
+      </div>
+      <div className="mt-4">
+        {tableData.map((d, index) => (
+          <div className="bg-white d-flex align-items-center mt-3" key={index} style={{ borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
+            <div className="bg-white form-check custom-checkbox" style={{ marginRight: "5px", marginLeft : '5px'  }}>
+              <input type="checkbox" className=" form-check-input border" id={`customCheckBox${index}`} required />
+            </div>
+            <div className="bg-white w-100 p-2 d-flex justify-content-between" style={{ alignItems: "center", borderRadius: "5px" }}>
+              <span>{d.name}</span>
+              <div className="d-flex justify-content-around">
+                <IoIosNavigate
+                  style={{
+                    fontSize: "2rem",
+                    padding: "2px",
+                    margin: "0 .3rem",
+                    background: "white",
+                    color:'blue'
+                  }}
+                />
+                <FaEdit
+                  style={{
+                    fontSize: "2rem",
+                    padding: "2px",
+                    margin: "0 .3rem",
+                    background: "white",
+                    color: "green", // Change the color to your desired edit icon color
+                    cursor: "pointer", // Add cursor pointer on hover
+                  }}
+                  onClick={() => editDrawerOpen(d)}
+                />
+                <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
+                  <FaTrashAlt
+                    style={{
+                      fontSize: "2rem",
+                      padding: "2px",
+                      margin: "0 .3rem",
+                      background: "white",
+                      color: "red", // Change the color to your desired delete icon color
+                      cursor: "pointer", // Add cursor pointer on hover
+                    }}
+                  />
+                </DeleteModal>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
+
 export default DriverTab;

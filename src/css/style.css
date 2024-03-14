@@ -48911,16 +48911,16 @@ table.dataTable thead .sorting_asc {
 }
 .chart-grd:after {
   content: "";
-  position: absolute;
+  position: absolute; 
   top: 0;
   height: 100%;
   width: 5rem;
   left: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0.8) 0%,
     rgba(255, 255, 255, 0) 100%
-  );
+  ); */
   z-index: 1;
   pointer-events: none;
 }

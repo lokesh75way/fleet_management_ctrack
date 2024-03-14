@@ -119,6 +119,7 @@ const AdminRoutes = () => {
     { url: "expense", component: <Expense /> },
     { url: "geofence", component: <Geofence /> },
     { url: "geofence/map", component: <GeofenceMap /> },
+    { url: "geofence/map/edit/:id", component: <GeofenceMap /> },
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },

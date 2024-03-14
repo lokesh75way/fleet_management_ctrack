@@ -39,7 +39,7 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Business User</h6>
@@ -129,7 +129,7 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Companies</h6>
@@ -158,13 +158,13 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0" >
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Users</h6>
                         <h3>10</h3>
                       </div>
-                      <div className="icon-box bg-danger-light">
+                      <div className="icon-box bg-danger-ligh">
                         {SVGICON.Employe}
                       </div>
                     </div>
@@ -177,7 +177,7 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Branches</h6>
@@ -206,7 +206,7 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Technician</h6>
@@ -235,7 +235,7 @@ const CardWidget = () => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0" style={{zIndex:0}}>
+                  <div className="card-body depostit-card p-0 z-0" >
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>Total Driver</h6>

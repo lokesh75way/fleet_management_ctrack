@@ -98,8 +98,8 @@ const Home = () => {
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: "20rem 0 ", // Adjust the height as needed,
-      width:"130%"
+      zIndex:'3'
+     
     }),
   };
 
@@ -134,7 +134,7 @@ const Home = () => {
         pageTitle="Dashboard"
         parentTitle="Home"
       >
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 z-3">
           {/* <div
             className="d-flex justify-content-between align-items-center gap-2"
             style={{ marginRight: "10px" }}
@@ -153,6 +153,8 @@ const Home = () => {
                 setStartDate(start);
                 setEndDate(end);
               }}
+              calendarIconClassName='datePickerZindex'
+              style={customStyles}
               dateFormat="dd/MM/yy"
               placeholderText={dateRangeText}
             />
