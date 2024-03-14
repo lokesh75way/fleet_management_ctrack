@@ -13,9 +13,9 @@ export const vehicleGeneralSchema = yup
   .required();
 export const vehicleProfileSchema = yup
   .object({
-    DVIRTemplate: yup.string().required("DIVR Template is required !!"),
+    DVIRTemplate: yup.string().required("DIVR Template is required "),
     purchaseAmount: yup.number().positive().integer(),
-    plateNumber: yup.string().required("Plate Number is required !!"),
+    plateNumber: yup.string().required("Plate Number is required "),
     registrationNumber: yup
       .number()
       .positive()
@@ -24,19 +24,19 @@ export const vehicleProfileSchema = yup
     passengerSeats: yup.number().positive().integer(),
     distanceCost: yup.number().positive().integer(),
     durationCost: yup.number().positive().integer(),
-    GPSWarranty: yup.string().required("GPS Warranty is required !!"),
+    GPSWarranty: yup.string().required("GPS Warranty is required "),
     weightCapacity: yup
       .number()
       .positive()
       .integer()
-      .required("Weight Capacity is required !!"),
+      .required("Weight Capacity is required "),
     registrationNumber: yup
       .number()
       .positive()
       .integer()
-      .required("Registration Number is required !!"),
-    fuelType: yup.string().required(" Select Fuel Type !!"),
-    permit: yup.string().required("Select Permit type !!"),
+      .required("Registration Number is required "),
+    fuelType: yup.string().required(" Select Fuel Type "),
+    permit: yup.string().required("Select Permit type "),
   })
   .required();
 
@@ -69,9 +69,9 @@ export const companyAccountSchema = yup
     parent: yup.string().required("Please select a option"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    zipCode: yup.number().required("Zip Code is required "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
     state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
@@ -80,12 +80,12 @@ export const companyAccountSchema = yup
     passwordRecoveryEmail: yup
       .string()
       .email()
-      .required("Password Recovery Email is required !!"),
-    email: yup.string().email().required("Email is required !!"),
+      .required("Password Recovery Email is required "),
+    email: yup.string().email().required("Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
-      .required("Help Desk Email is required !!"),
+      .required("Help Desk Email is required "),
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -109,12 +109,12 @@ export const companyAccountSchema = yup
 export const branchAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    parentCompany: yup.string().required("Company Name is required !!"),
+    parentCompany: yup.string().required("Company Name is required "),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    zipCode: yup.number().required("Zip Code is required "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
     state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
@@ -123,11 +123,11 @@ export const branchAccountSchema = yup
     passwordRecoveryEmail: yup
       .string()
       .email()
-      .required("Password Recovery Email is required !!"),
+      .required("Password Recovery Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
-      .required("Help Desk Email is required !!"),
+      .required("Help Desk Email is required "),
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -148,9 +148,9 @@ export const adminProfileAccountSchema = yup
   .object({
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    zipCode: yup.number().required("Zip Code is required "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
     state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
@@ -159,11 +159,11 @@ export const adminProfileAccountSchema = yup
     passwordRecoveryEmail: yup
       .string()
       .email()
-      .required("Password Recovery Email is required !!"),
+      .required("Password Recovery Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
-      .required("Help Desk Email is required !!"),
+      .required("Help Desk Email is required "),
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -187,11 +187,11 @@ export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
     userName: yup.string().required("Please enter a Business Group Name"),
-    businessUser: yup.string().required("Business Group Name is required !!"),
+    businessUser: yup.string().required("Business Group Name is required "),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    zipCode: yup.number().required("Zip Code is required "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
     state: yup.string().required("Please select a State"),
     oldPassword: yup.string().required("Please enter the old password"),
     newPassword: yup
@@ -205,12 +205,12 @@ export const businessGroupAccountSchema = yup
     passwordRecoveryEmail: yup
       .string()
       .email()
-      .required("Password Recovery Email is required !!"),
+      .required("Password Recovery Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
-      .required("Help Desk Email is required !!"),
-    email: yup.string().email().required("Email is required !!"),
+      .required("Help Desk Email is required "),
+    email: yup.string().email().required("Email is required "),
 
     mobileNumber: yup
       .string()
@@ -234,27 +234,27 @@ export const companySettingSchema = yup
 
 export const driverProfileSchema = yup
   .object({
-    company: yup.string().required("Company is required !!"),
-    business: yup.string().required("Business group is required !!"),
-    branch: yup.string().required("Branch is required !!"),
+    company: yup.string().required("Company is required "),
+    business: yup.string().required("Business group is required "),
+    branch: yup.string().required("Branch is required "),
     employeeDesignation: yup
       .string()
-      .required("Employee Designation is required !!"),
-    firstName: yup.string().required("First Name is required !!"),
-    lastName: yup.string().required("Last Name is required !!"),
+      .required("Employee Designation is required "),
+    firstName: yup.string().required("First Name is required "),
+    lastName: yup.string().required("Last Name is required "),
     employeeNumber: yup.number(),
-    zipCode: yup.number().required("Zip Code is required !!"),
+    zipCode: yup.number().required("Zip Code is required "),
     contactNumber1: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
-      .required("Contact Number1 is required !!"),
+      .required("Contact Number1 is required "),
     contactNumber2: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    country: yup.string().required("Please select a Country !!"),
-    state: yup.string().required("Please select a State !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    country: yup.string().required("Please select a Country "),
+    state: yup.string().required("Please select a State "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
   })
   .required();
 export const driverInfoSchema = yup
@@ -267,8 +267,8 @@ export const driverInfoSchema = yup
   .required();
 export const subUserAccountSchema = yup
   .object({
-   userName: yup.string().required("User Name is required !!"),
-   featureTemplate: yup.string().required("Feature Template is required !!"),
+   userName: yup.string().required("User Name is required "),
+   featureTemplate: yup.string().required("Feature Template is required "),
    password: yup
     .string()
     .required("Password is required")
@@ -278,55 +278,53 @@ export const subUserAccountSchema = yup
     .required("Password is required")
     .min(8, "Password must be at least 8 characters"),
     mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
-    email: yup.string().email().required("Email is required !!"),
+    email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
     state: yup.string().required("Please select a State"),   
   })
   .required();
 export const alertSchema = yup
   .object({
-    branch: yup.string().required("Select a Branch !!"),
-    basedOn: yup.string().required("Choose an option !!"),
-    object: yup.string().required("Select an option !!"),
-    alertName: yup.string().required("Alert Name is required !!"),
-    alertType: yup.string().required("Select an Alert Type !!"),
-    alertValue: yup.string().required("Choose an Alert Value !!"),
-    validDays: yup.string().required("Choose Valid day options !!"),
-    severity: yup.string().required("Choose Severity options !!"),
-    //  userName: yup.string().required("User Name is required !!"),
+    branch: yup.string().required("Select a Branch "),
+    basedOn: yup.string().required("Choose an option "),
+    object: yup.string().required("Select an option "),
+    alertName: yup.string().required("Alert Name is required "),
+    alertType: yup.string().required("Select an Alert Type "),
+    alertValue: yup.string().required("Choose an Alert Value "),
+    validDays: yup.string().required("Choose Valid day options "),
+    severity: yup.string().required("Choose Severity options "),
+    //  userName: yup.string().required("User Name is required "),
   })
   .required();
 export const expenseSchema = yup
   .object({
-    branch: yup.string().required("Select a Branch !!"),
-    category: yup.string().required("Choose a Category !!"),
-    type: yup.string().required("Select a type !!"),
-    amount: yup.number().required("Enter an Amount !!"),
-    fromDate: yup.date().required("Enter the date !!"),
-    toDate: yup.date().required("Enter the date !!"),
-    referenceNumber: yup.number().required("Reference Number a required !!"),
-    //  userName: yup.string().required("User Name is required !!"),
+    branch: yup.string().required("Select a Branch "),
+    category: yup.string().required("Choose a Category "),
+    type: yup.string().required("Select a type "),
+    amount: yup.number().required("Enter an Amount "),
+    fromDate: yup.date().required("Enter the date "),
+    toDate: yup.date().required("Enter the date "),
+    referenceNumber: yup.number().required("Reference Number a required "),
+    //  userName: yup.string().required("User Name is required "),
   })
   .required();
 export const technicianTaskSchema = yup
   .object({
-    branch: yup.string().required("Select a Branch !!"),
-    technician: yup.string().required("Select a Technician !!"),
-    taskCategory: yup.string().required("Select a Category !!"),
-    taskPriority: yup.string().required("Select a task priority !!"),
-    taskName: yup.string().required("Task Name is required !!"),
-    serviceLocation: yup.string().required("Service Location is required !!"),
-    contactPersonNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    technician: yup.string().required("Select a Technician "),
+    taskCategory: yup.string().required("Select a Category "),
+    taskPriority: yup.string().required("Select a task priority "),
+    taskName: yup.string().required("Task Name is required "),
+    serviceLocation: yup.string().required("Service Location is required "),
+    reportingTime: yup.string().required("Reporting Time is required "),
+    plannedReportingDate: yup.string().required("Planned Reporting Date is required "),
   })
   .required();
 export const geofenceMapSchema = yup
   .object({
-    company: yup.string().required("Enter company name !!"),
-    name: yup.string().required("Enter Geofence name !!"),
-    category: yup.string().required("Select a Category !!"),
-    geofenceAccess: yup.string().required("Choose access method !!"),
+    company: yup.string().required("Enter company name "),
+    name: yup.string().required("Enter Geofence name "),
+    category: yup.string().required("Select a Category "),
+    geofenceAccess: yup.string().required("Choose access method "),
     contactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
@@ -334,10 +332,10 @@ export const geofenceMapSchema = yup
   .required();
 export const technicianGeneralSchema = yup
   .object({
-    firstName: yup.string().required("First Name is required !!"),
+    firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
-    lastName: yup.string().required("Last Name is required !!"),
-    technicianNumber: yup.number().required("Technician Number is required !!"),
+    lastName: yup.string().required("Last Name is required "),
+    technicianNumber: yup.number().required("Technician Number is required "),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
@@ -351,24 +349,24 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup.number().required("Zip Code is required !!"),
-    country: yup.string().required("Please select a Country !!"),
-    city: yup.string().required("Please enter a City !!"),
-    street1: yup.string().required("Please enter street1 address !!"),
+    zipCode: yup.number().required("Zip Code is required "),
+    country: yup.string().required("Please select a Country "),
+    city: yup.string().required("Please enter a City "),
+    street1: yup.string().required("Please enter street1 address "),
   })
   .required();
 export const technicianLeaveSchema = yup
   .object({
-    leaveTime: yup.string().required("Select type of leave !!"),
-    noOfDays: yup.number().required("Enter total number of leaves !!"),
+    leaveTime: yup.string().required("Select type of leave "),
+    noOfDays: yup.number().required("Enter total number of leaves "),
   })
   .required();
 export const classifyTripsSchema = yup
   .object({
-    startTime: yup.string().required("Trip start time is required !!"),
-    startLocation: yup.string().required("Trip start Location is required !!"),
-    reachTime: yup.string().required("Trip reach time is required !!"),
-    reachLocation: yup.string().required("Trip reach Location is required !!"),
-    driver: yup.string().required("Driver name is required !!"),
+    startTime: yup.string().required("Trip start time is required "),
+    startLocation: yup.string().required("Trip start Location is required "),
+    reachTime: yup.string().required("Trip reach time is required "),
+    reachLocation: yup.string().required("Trip reach Location is required "),
+    driver: yup.string().required("Driver name is required "),
   })
   .required();

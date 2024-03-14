@@ -19,6 +19,7 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
+  const [isStateDisabled, setIsStateDisabled] = useState(true);
 
 
   const customStyles = {
@@ -52,41 +53,6 @@ console.log(getValues())
           />
           <Error errorName={errors.userName} />
         </div>
-
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Country<span className="text-danger">*</span>
-          </label>
-          <CountrySelect
-            onChange={(e) => {
-              setCountryid(e.id);
-              setValue("country", e.id);
-            }}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
-          />
-          {!getValues("country") && <Error errorName={errors.country} />}
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            State<span className="text-danger">*</span>
-          </label>
-          <div style={{ background: "white" }}>
-            <StateSelect
-              countryid={countryid}
-              onChange={(e) => {
-                setstateid(e.id);
-                setValue("state", e.id);
-              }}
-              containerClassName="bg-white"
-              inputClassName="border border-white"
-              placeHolder="Select State"
-            />
-          </div>
-          {!getValues("state") && <Error errorName={errors.state} />}
-        </div>
-
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
           <CustomInput
@@ -163,6 +129,40 @@ console.log(getValues())
 
           />
           <Error errorName={errors.whatsappContactNumber} />
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">
+            Country<span className="text-danger">*</span>
+          </label>
+          <CountrySelect
+            onChange={(e) => {
+              setCountryid(e.id);
+              setValue("country", e.id);
+              setIsStateDisabled(false)
+            }}
+            containerClassName="bg-white"
+            inputClassName="border border-white"
+            placeHolder="Select Country"
+          />
+          {!getValues("country") && <Error errorName={errors.country} />}
+        </div>
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
+          <label className="form-label">
+            State<span className="text-danger">*</span>
+          </label>
+          <div style={{ background: "white" }}>
+            <StateSelect
+              countryid={countryid}
+              onChange={(e) => {
+                setstateid(e.id);
+                setValue("state", e.id);
+              }}
+              containerClassName="bg-white"
+              inputClassName="border border-white"
+              placeHolder="Select State"
+            />
+          </div>
+          {!getValues("state") && <Error errorName={errors.state} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">

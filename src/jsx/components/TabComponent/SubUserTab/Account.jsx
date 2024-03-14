@@ -17,11 +17,12 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const [isStateDisabled, setIsStateDisabled] = useState(true);
 
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
+      padding: "0.25rem 0 ", // Adjust the height as needed
     }),
   };
 
@@ -69,12 +70,27 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           />
           <Error errorName={errors.userName} />
         </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            Mobile Number <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="Mobile Number"
+            name="mobileNumber"
+            placeholder=""
+            defaultValue={filteredUserData[0] ? filteredUserData[0].contact : ''}
+          />
+          <Error errorName={errors.mobileNumber} />
+        </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.name);
+              setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -82,7 +98,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
           />
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">State<span className="text-danger">*</span></label>
           <div style={{ background: "white" }}>
             <StateSelect
@@ -97,20 +113,6 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
             />
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Mobile Number <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Mobile Number"
-            name="mobileNumber"
-            placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].contact : ''}
-          />
-          <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">

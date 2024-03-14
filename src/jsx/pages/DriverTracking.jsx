@@ -12,8 +12,7 @@ const DriverTracking = () => {
   const {currentPosition, setCurrentPosition} = useContext(ThemeContext)
   const data = [{lat:30.7099475,lng:76.6900474},{lat:30.7333,lng:76.7794}]
   const [isOutside, setIsOutside] = useState(false);
-  const tabData = [{name:"Object", icon:TbLocationFilled},{name:"Driver", icon:FaUser},
-    {name:"Address", icon:FaMapLocationDot},{name:"Geofence", icon:MdFence},]
+  const tabData = [{name:"Object", icon:TbLocationFilled},{name:"Driver", icon:FaUser},{name:"Geofence", icon:MdFence},]
 
 
   const handleToggleCardPosition = () => {

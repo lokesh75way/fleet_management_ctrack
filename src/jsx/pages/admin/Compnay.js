@@ -48,6 +48,7 @@ const Company = () => {
   };
 
   const [tableData, setTableData] = useState(CompanyData);
+  const [dataLength, setDataLength] = useState(CompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
     title: "",
@@ -171,7 +172,7 @@ const Company = () => {
                       />
                       <Link
                         to={"/company/create"}
-                        className="btn btn-primary btn-sm ms-1 p-2"
+                        className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                         style={{paddingBlock : '9px'}}
                         // onClick={()=>company.current.showModal()}
@@ -205,6 +206,7 @@ const Company = () => {
                         <CompanyTable
                           tableData={tableData}
                           tempValue={tempValue}
+                          setDataLength={setDataLength}
                           // getData={getData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
@@ -214,10 +216,10 @@ const Company = () => {
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         Showing {activePag.current * sort + 1} to{" "}
-                        {data.length > (activePag.current + 1) * sort
+                        {dataLength > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        of {data.length} entries
+                          : dataLength}{" "}
+                        of {dataLength} entries
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

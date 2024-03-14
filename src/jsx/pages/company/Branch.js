@@ -74,6 +74,7 @@ const Branch = () => {
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
   const [tableData, setTableData] = useState(SubCompanyData);
+  const [dataLength, setDataLength] = useState(SubCompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
     reseller: "",
@@ -158,6 +159,7 @@ const Branch = () => {
     }));
 
     if(tempValue !== 'All Companies') setBranchOptions(tempoptions)
+    else setBranchOptions(allbranchOptions);
 
   },[tempValue])
 
@@ -196,6 +198,31 @@ const Branch = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Branches</h4>
                     <div className="d-flex align-items-center">
+                    <Controller
+                        name="parent"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { onChange, value, name, ref } }) => (
+                          <Select
+                            onChange={(newValue) => {
+                              setTempValue(newValue.label);
+                              setTempValue2("All Branches");
+                              setValue("parent", newValue.label);
+                              setFilter({value:newValue.value,label:newValue.label})
+                              setFilter2({value:'All Branches',label:"All Branches"})
+                            }}
+                            ref={ref}
+                            name={name}
+                            menuPortalTarget={document.body}
+                            menuPosition={"fixed"}
+                            styles={customStyles}
+                            options={companyOptions}
+                            value= {selectFilter}
+                            
+                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
+                          />
+                        )}
+                      />
                       <Controller
                         name="parent"
                         control={control}
@@ -215,29 +242,6 @@ const Branch = () => {
                             styles={customStyles}
                             options={branchOptions}
                             value={selectFilter2}
-                          />
-                        )}
-                      />
-                      <Controller
-                        name="parent"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
-                            onChange={(newValue) => {
-                              setTempValue(newValue.label);
-                              setTempValue2("All Branches");
-                              setValue("parent", newValue.label);
-                              setFilter({value:newValue.value,label:newValue.label})
-                            }}
-                            ref={ref}
-                            name={name}
-                            menuPortalTarget={document.body}
-                            menuPosition={"fixed"}
-                            styles={customStyles}
-                            options={companyOptions}
-                            value= {selectFilter}
-                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
                           />
                         )}
                       />
@@ -276,6 +280,7 @@ const Branch = () => {
                       <tbody>
                         <SubCompanyTable
                           tempValue={tempValue}
+                          setDataLength={setDataLength}
                           tempValue2={tempValue2}
                           editData={editData}
                           tableData={tableData}
@@ -288,10 +293,10 @@ const Branch = () => {
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         Showing {activePag.current * sort + 1} to{" "}
-                        {data.length > (activePag.current + 1) * sort
+                        {dataLength.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        of {data.length} entries
+                          : dataLength}{" "}
+                        of {dataLength} entries
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

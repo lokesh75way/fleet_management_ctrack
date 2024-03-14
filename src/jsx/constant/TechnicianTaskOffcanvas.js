@@ -202,6 +202,17 @@ const TechnicianOffcanvas = forwardRef(
                     />
                     {!getValues("serviceLocation") && <Error errorName={errors.serviceLocation} />}
                   </div>
+                  <div className="col-xl-6 mb-3 ">
+                    <label className="form-label">Reporting Time <span className="text-danger">*</span></label>
+                      <CustomInput
+                        type="time"
+                        register={register}
+                        name="reportingTime"
+                        label="Reporting Time"
+                        placeholder=""
+                      />
+                      <Error errorName={errors.reportingTime} />
+                      </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
                       Description 
