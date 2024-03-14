@@ -130,8 +130,7 @@
   // color: white;
   // background-color: var(--primary);
   background-color: rgba(13, 153, 255, 0.05);
-  border: 1px solid var(--primary) !important;
-  border-top: 0px !important;
+  border-bottom: 2px solid var(--primary) !important;
 }
 .default-tab .nav-link:hover {
   // color: white;
