@@ -1,6 +1,5 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import '../../../scss/pages/_driver-tracking.scss'
 import Error from "../Error/Error";
 const CustomInput = ({
   name,

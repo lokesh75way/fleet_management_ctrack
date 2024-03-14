@@ -10,7 +10,7 @@ import {
   tripStatusOptions
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
-
+import '../../scss/pages/_driver-tracking.scss'
 const ClassifyTripsOffcanvas = forwardRef(
   (
     {
@@ -203,7 +203,7 @@ const ClassifyTripsOffcanvas = forwardRef(
                         render={({ value, name }) => (
                           <DatePicker
                             selected={getValues("lastModifiedDate") || new Date()}
-                            className="form-control"
+                            className="form-control customDateHeight"
                             onChange={(newValue) =>
                               {setTempValue(newValue.value)
                               setValue("lastModifiedDate", newValue)}

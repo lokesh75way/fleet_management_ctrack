@@ -8,7 +8,7 @@ import CustomInput from "../../Input/CustomInput";
 import { useParams } from "react-router-dom";
 import DummyData from '../../../../users.json'
 import useStorage from "../../../../hooks/useStorage";
-
+import '../../../../scss/pages/_driver-tracking.scss'
 const General = ({
   register,
   setValue,
@@ -233,7 +233,7 @@ const General = ({
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("dateOfJoin") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => {
                   setTempValue(newValue);
                   setValue("dateOfJoin", newValue);
@@ -257,7 +257,7 @@ const General = ({
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("dateOfBirth") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => {
                   setTempValue(newValue);
                   setValue("dateOfBirth", newValue);

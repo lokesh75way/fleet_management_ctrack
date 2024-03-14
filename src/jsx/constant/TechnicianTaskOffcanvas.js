@@ -12,6 +12,7 @@ import { useForm, Controller, FormProvider } from "react-hook-form";
 import Select from "react-select";
 import Error from "../components/Error/Error";
 import CustomInput from "../components/Input/CustomInput";
+import '../../scss/pages/_driver-tracking.scss'
 import {taskCategoryOptions, severityOptions, technicianOptions, branchOptions} from '../components/TabComponent/VehicleTabs/Options'
 
 const TechnicianOffcanvas = forwardRef(
@@ -195,7 +196,7 @@ const TechnicianOffcanvas = forwardRef(
                           selected={
                             getValues("plannedReportingDate") || new Date()
                           }
-                          className="form-control"
+                          className="form-control customDateHeight"
                           onChange={(newValue) => setValue("plannedReportingDate", newValue)}
                         />
                       )}
