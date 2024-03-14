@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Badge, Button, Nav, Tab } from "react-bootstrap";
 import "../../../scss/pages/_driver-tracking.scss";
 import {
@@ -40,7 +40,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
     DriverTabComponent2,
     DriverTabComponent3,
   ];
-  console.log(isOutside)
+
   return (
     <>
       <div
@@ -55,7 +55,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
           {!isOutside ? <IoIosArrowForward /> : <IoIosArrowBack />}
         </button>
         <Tab.Container defaultActiveKey={tabData[0].name.toLowerCase()}>
-          <Nav as="ul" className="nav-tabs">
+          <Nav as="ul" className="nav-tabs tracking_navTabs">
             {tabData.map((data, i) => {
               const Icon = data.icon;
               return (
@@ -68,7 +68,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content className="p-1">
+          <Tab.Content className="p-2 py-4">
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
@@ -98,40 +98,42 @@ const DriverTabComponent1 = (props) => {
     statusData[driver.status]++;
   });
   const { running, idle, stopped, inactive, nodata, total } = statusData;
+  const [selectValue,setSelectValue] = useState('All');
+  console.log(selectValue)
   return (
     <>
-      <div className="row px-2">
-        <Badge bg="" className="badge-success light col-lg-2 fs-9">
+      <div className="row  vehicle_tracking-object">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Running' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Running')}>
           <span>
             <p>{running}</p>
             <span>Running</span>
           </span>
         </Badge>
-        <Badge bg="" className="badge-warning light col-lg-2 fs-9">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Idle' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Idle')}>
           <span>
             <p>{idle}</p>
             <span>Idle</span>
           </span>
         </Badge>
-        <Badge bg="" className="badge-danger light col-lg-2 fs-9">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Stopped' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Stopped')}>
           <span>
             <p>{stopped}</p>
             <span>Stopped</span>
           </span>
         </Badge>
-        <Badge bg="" className="badge-info light col-lg-2 fs-9">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'InActive' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('InActive')}>
           <span>
             <p>{inactive}</p>
             <span>InActive</span>
           </span>
         </Badge>
-        <Badge bg="" className="badge-dark light col-lg-2 fs-9">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'NoData' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('NoData')}>
           <span>
             <p>{nodata}</p>
             <span>NoData</span>
           </span>
         </Badge>
-        <Badge bg="" className="badge-light light col-lg-2 fs-9">
+        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'All' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('All')}>
           <span>
             <p>{total}</p>
             <span>Total</span>
@@ -158,34 +160,6 @@ const DriverTabComponent1 = (props) => {
           />
           <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
         </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FiUpload
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.5rem",
-            padding: "3px",
-            margin: "0 .3rem",
-          }}
-        />
-        <FaSortAlphaDown
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
       </div>
       <div className="d-flex mt-2 fs-6 align-items-center">
         <div
@@ -231,7 +205,7 @@ const DriverTabComponent1 = (props) => {
             style={{ fontSize: ".8rem" }}
           >
             <span>Test1</span>
-            <span>22-02-2024 3:00 PM</span>
+            <span>22-02-2022 3:00 PM</span>
           </div>
           <div className="d-flex w-50 justify-content-evenly">
             <span>11</span>
@@ -241,7 +215,7 @@ const DriverTabComponent1 = (props) => {
           </div>
         </div>
       </div>
-      <div className="text-center  pt-2 mt-2 border-top border-dark">
+      <div className="text-center  pt-4 mt-4 border-top border-dark">
         <Button className="me-2" variant="primary btn-sm">
           Save Selection
         </Button>
