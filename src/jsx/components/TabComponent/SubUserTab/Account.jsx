@@ -10,6 +10,7 @@ import {
 import CustomInput from "../../Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import useStorage from "../../../../hooks/useStorage";
+import '../../../../scss/pages/_driver-tracking.scss'
 
 const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getValues, errors, control}) => {
   
@@ -93,7 +94,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
               setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
-            inputClassName="border border-white"
+            inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
           />
          { !getValues('country') && <Error errorName={errors.country} />}
@@ -108,7 +109,7 @@ const Account = ({ handleNext, register, setValue, onSubmit, handleSubmit, getVa
                 setValue("state", e.name);
               }}
               containerClassName="bg-white"
-              inputClassName="border border-white"
+              inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"
             />
           </div>

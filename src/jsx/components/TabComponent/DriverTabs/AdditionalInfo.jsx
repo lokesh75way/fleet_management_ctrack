@@ -7,6 +7,7 @@ import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
 import { useParams } from "react-router-dom";
+import '../../../../scss/pages/_driver-tracking.scss'
 
 const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues, control,errors }) => {
 
@@ -37,7 +38,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("dateOfBirth") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("dateOfBirth", newValue)}
               />
             )}
@@ -63,7 +64,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("dateOfJoining") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("dateOfJoining", newValue)}
               />
             )}
@@ -77,7 +78,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             render={({ value, name }) => (
               <DatePicker
                 selected={getValues("dateOfLeaving") || new Date()}
-                className="form-control"
+                className="form-control customDateHeight"
                 onChange={(newValue) => setValue("dateOfLeaving", newValue)}
               />
             )}
@@ -181,7 +182,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 render={({ value, name }) => (
                   <DatePicker
                     selected={getValues("licenseIssueDate") || new Date()}
-                    className="form-control"
+                    className="form-control customDateHeight"
                     onChange={(newValue) =>
                       setValue("licenseIssueDate", newValue)
                     }
@@ -197,7 +198,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 render={({ value, name }) => (
                   <DatePicker
                     selected={getValues("licenseExpiryDate") || new Date()}
-                    className="form-control"
+                    className="form-control customDateHeight"
                     onChange={(newValue) =>
                       setValue("licenseExpiryDate", newValue)
                     }
@@ -225,7 +226,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 render={({ value, name }) => (
                   <DatePicker
                     selected={getValues("lifeInsuranceExpiryDtae") || new Date()}
-                    className="form-control"
+                    className="form-control customDateHeight"
                     onChange={(newValue) =>
                       setValue("lifeInsuranceExpiryDtae", newValue)
                     }
@@ -251,7 +252,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 render={({ value, name }) => (
                   <DatePicker
                     selected={getValues("mediclaimExpiryDate") || new Date()}
-                    className="form-control"
+                    className="form-control customDateHeight"
                     onChange={(newValue) =>
                       setValue("mediclaimExpiryDate", newValue)
                     }

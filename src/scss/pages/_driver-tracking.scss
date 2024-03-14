@@ -123,3 +123,17 @@
   color: white;
   background-color: var(--primary);
 }
+.customSelectHeight{
+    height: 2.2rem;
+}
+.customDateHeight{
+    height: 2.9rem;
+}
+@media screen and (max-width: 1600px) {
+    .customSelectHeight{
+        height: 2.4rem;
+    }
+    .customDateHeight{
+        height: 3.2rem;
+    }
+  }

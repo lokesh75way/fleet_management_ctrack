@@ -6,6 +6,7 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
+import '../../../../scss/pages/_driver-tracking.scss'
 const MyAccount = ({
   data,
   setValue,
@@ -141,7 +142,7 @@ console.log(getValues())
               setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
-            inputClassName="border border-white"
+            inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
           />
           {!getValues("country") && <Error errorName={errors.country} />}
@@ -158,7 +159,7 @@ console.log(getValues())
                 setValue("state", e.id);
               }}
               containerClassName="bg-white"
-              inputClassName="border border-white"
+              inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"
             />
           </div>
