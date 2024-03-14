@@ -93,7 +93,7 @@ const BusinessGroupRoutes = () => {
     { url: "master", component: <Master /> },
     { url: "technician", component: <Technician /> },
     { url: "technician/edit/:id", component: <TechnicianForm /> },
-    { url: "driver-tracking", component: <DriverTracking /> },
+    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
@@ -128,7 +128,7 @@ const BusinessGroupRoutes = () => {
 
     // groups
     { url: "groups", component: <CreateGroups /> },
-    { url: "permission", component: <Permission /> },
+    { url: "groups/permission", component: <Permission /> },
   ];
 
   function NotFound() {

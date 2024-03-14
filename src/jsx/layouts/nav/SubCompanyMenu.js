@@ -71,7 +71,7 @@ export const SubCompanyMenuList = [
       },
       {
         title: "Drivers",
-        to: "driver-tracking",
+        to: "vehicle-tracking",
       },
     ],
   },

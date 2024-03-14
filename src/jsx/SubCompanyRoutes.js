@@ -229,7 +229,7 @@ const SubCompanyRoutes = () => {
     { url: "Technician", component: <Technician /> },
     { url: "branch", component: <Branch /> },
     { url: "driver", component: <Driver /> },
-    { url: "driver-tracking", component: <DriverTracking /> },
+    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -327,7 +327,7 @@ const SubCompanyRoutes = () => {
 
     // groups
     { url: "groups", component: <CreateGroups /> },
-    { url: "permission", component: <Permission /> },
+    { url: "groups/permission", component: <Permission /> },
 
   ];
 

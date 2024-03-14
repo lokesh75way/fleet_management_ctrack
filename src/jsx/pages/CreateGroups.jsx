@@ -87,7 +87,7 @@ const CreateGroups = () => {
     
 
     const handleAddGroup = ()=>{
-        navigate('/permission');
+        navigate('permission');
     }
 
 

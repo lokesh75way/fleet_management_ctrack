@@ -156,7 +156,7 @@ export const AdminMenuList = [
         }}
       />
     ),
-    to: "driver-tracking",
+    to: "/vehicle-tracking",
   },
   {
     title: "Reports",
