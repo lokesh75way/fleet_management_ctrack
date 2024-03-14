@@ -17,6 +17,7 @@ import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { FiUpload } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import CompanyItem from "../Tracking/CompanyItem";
 
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
@@ -68,7 +69,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content className="p-2 py-4">
+          <Tab.Content className="p-2 py-4" style={{ background: "#f5f5f5" }}>
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
@@ -98,60 +99,79 @@ const DriverTabComponent1 = (props) => {
     statusData[driver.status]++;
   });
   const { running, idle, stopped, inactive, nodata, total } = statusData;
-  const [selectValue,setSelectValue] = useState('All');
-  console.log(selectValue)
+  const [selectValue, setSelectValue] = useState(["All"]);
+
+  const handleClick = (value) => {
+    if (selectValue.includes(value)) {
+      setSelectValue(selectValue.filter((item) => item !== value));
+    } else {
+      setSelectValue([...selectValue, value]);
+    }
+  };
+
   return (
     <>
-      <div className="row  vehicle_tracking-object">
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Running' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Running')}>
-          <span>
-            <p>{running}</p>
-            <span>Running</span>
-          </span>
-        </Badge>
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Idle' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Idle')}>
-          <span>
+      <div className="vehicle_tracking-object">
+        <span
+          className={`light fs-9 ${
+            selectValue.includes("Running") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Running")}
+        >
+          <p>{running}</p>
+          <span>Running</span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("Idle") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Idle")}
+        >
             <p>{idle}</p>
             <span>Idle</span>
-          </span>
-        </Badge>
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'Stopped' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('Stopped')}>
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("Stopped") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("Stopped")}
+        >
             <p>{stopped}</p>
             <span>Stopped</span>
-          </span>
-        </Badge>
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'InActive' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('InActive')}>
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes('InActive') && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("InActive")}
+        >
             <p>{inactive}</p>
             <span>InActive</span>
-          </span>
-        </Badge>
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'NoData' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('NoData')}>
-          <span>
+        </span>
+        <span
+          pill
+          className={`light fs-9 ${
+            selectValue.includes("NoData") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("NoData")}
+        >
             <p>{nodata}</p>
             <span>NoData</span>
-          </span>
-        </Badge>
-        <Badge bg="" className={`light col-lg-2 fs-9 ${selectValue === 'All' && 'vehicle_tracking-active'}`} onClick={()=> setSelectValue('All')}>
-          <span>
-            <p>{total}</p>
-            <span>Total</span>
-          </span>
-        </Badge>
-      </div>
-      <div className="d-flex mt-2">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
+        </span>
+        <span
+          className={`light fs-9 ${
+            selectValue.includes("All") && "vehicle_tracking-active"
+          }`}
+          onClick={() => handleClick("All")}
         >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
+          <p>{total}</p>
+            <span>Total</span>
+        </span>
+      </div>
+      <div className="d-flex mt-2 mb-4">
         <div className="search-driver-tab2">
           <input
             type="text"
@@ -161,60 +181,11 @@ const DriverTabComponent1 = (props) => {
           <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
         </div>
       </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-          <span>Company 1</span>
-          <span className="text-end">[1]</span>
-        </div>
-      </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div className="bg-white w-100 d-flex align-items-center">
-          <FaCircle
-            style={{
-              fontSize: "1.2rem",
-              padding: "2px",
-              margin: "0 .3rem",
-              background: "white",
-              color: "rgb(39,129,0)",
-            }}
-          />
-          <div
-            className="bg-white w-50 p-1 d-flex flex-column justify-content-between"
-            style={{ fontSize: ".8rem" }}
-          >
-            <span>Test1</span>
-            <span>22-02-2022 3:00 PM</span>
-          </div>
-          <div className="d-flex w-50 justify-content-evenly">
-            <span>11</span>
-            <FaWifi />
-            <FaKey />
-            <FaBatteryFull />
-          </div>
-        </div>
-      </div>
+
+      <CompanyItem />
+      {/* <CompanyItem /> */}
+      {/* <CompanyItem /> */}
+
       <div className="text-center  pt-4 mt-4 border-top border-dark">
         <Button className="me-2" variant="primary btn-sm">
           Save Selection

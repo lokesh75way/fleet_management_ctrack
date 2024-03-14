@@ -51,7 +51,7 @@
   top: 0%;
   right: 0;
   bottom: 0;
-  //   transform: translateY(-50%);
+  //  overflow: scroll;
   z-index: 10;
   .driver_tracking_button {
     font-size: 1.2rem;
@@ -97,9 +97,16 @@
 .search-driver-tab2 {
   display: flex;
   width: 100%;
+  align-items: center;
   background-color: white;
-  input{
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  overflow: hidden;
+  margin-top: 8px;
+  padding-right: 8px;
+  input {
     flex: 1;
+    padding: 10px;
   }
 }
 .accordian-header-driver-tab {
@@ -120,12 +127,15 @@
 }
 
 .default-tab .nav-link.active {
-  color: white;
-  background-color: var(--primary);
+  // color: white;
+  // background-color: var(--primary);
+  background-color: rgba(13, 153, 255, 0.05);
+  border: 1px solid var(--primary) !important;
+  border-top: 0px !important;
 }
 .default-tab .nav-link:hover {
-  color: white;
-  background-color: var(--primary);
+  // color: white;
+  background-color: rgba(13, 153, 255, 0.05);
 }
 .customSelectHeight {
   height: 2.2rem;
@@ -141,21 +151,60 @@
 }
 
 .vehicle_tracking-object {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
   margin-inline: 0px;
   > span {
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border: 0.0625rem solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     cursor: pointer;
+    border-radius: 20px;
     color: var(--primary);
-    background-color: white;
+    background-color: rgba(13, 153, 255, 0.05);
+
+    p {
+      margin-bottom: 0px;
+    }
 
     &:hover {
       background-color: rgba(13, 153, 255, 0.05);
     }
-
-   
   }
 }
-.vehicle_tracking-active{
-  background-color: rgba(13, 153, 255, 0.05)!important;
+.vehicle_tracking-active {
+  color: white !important;
+  background-color: var(--primary) !important;
+  // border: 1px solid var(--primary) !important;
+}
+
+.rct-text {
+  padding: 10px 0px;
+
+  .rct-collapse-btn {
+    color: var(--primary);
+  }
+}
+
+.custom-leaf-node {
+  color: red !important;
+  background-color: red !important;
+}
+// .rct-title {
+//   font-size: 16px;
+//   font-weight: 500;
+//   color: var(--primary);
+// }
+.rct-icons-fa4 .rct-icon-check::before {
+  color: var(--primary);
 }
 
 @media screen and (max-width: 1600px) {
