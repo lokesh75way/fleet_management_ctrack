@@ -10,6 +10,7 @@ import {
   FaBatteryFull,
   FaEdit,
   FaTrashAlt,
+  FaLocationArrow,
 } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 import { BsArrowRepeat } from "react-icons/bs";
@@ -348,11 +349,11 @@ const DriverTabComponent2 = (props) => {
     </>
   );
 };
-// const DriverTabComponent3 = (props) => {
-//   // const { drivers } = props.data;
 
-//   const geoData = JSON.parse(localStorage.getItem('geofenceData'))
-//   const [tableData, setTableData] = useState(geoData)
+
+// const DriverTabComponent3 = (props) => {
+//   const geoData = JSON.parse(localStorage.getItem("geofenceData"));
+//   const [tableData, setTableData] = useState(geoData);
 //   const navigate = useNavigate();
 
 //   const onConfirmDelete = (id) => {
@@ -362,79 +363,75 @@ const DriverTabComponent2 = (props) => {
 
 //     // Remove item from local storage
 //     const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
-//     localStorage.setItem(
-//       "geofenceData",
-//       JSON.stringify(updatedLocalStorageData)
-//     );
+//     localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
 //   };
-//   const editDrawerOpen = (d)=>{
-//     navigate(`/geofence/map/edit/${d.id}`)
-//   }
+
+//   const editDrawerOpen = (d) => {
+//     navigate(`/geofence/map/edit/${d.id}`);
+//   };
+
+//   // Group tableData by company name
+//   const groupedData = tableData.reduce((acc, cur) => {
+//     if (!acc[cur.company]) {
+//       acc[cur.company] = [];
+//     }
+//     acc[cur.company].push(cur);
+//     return acc;
+//   }, {});
 
 //   return (
 //     <>
-//       <div className="d-flex mt-2 fs-6 align-items-center">
-//         <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
-//           <input type="checkbox" className="form-check-input" id="customCheckBox1" required />
-//         </div>
-//         <div className=" bg-white p-2 d-flex justify-content-between" style={{ width: "80%" }}>
-//           <span>Company 1</span>
-//         </div>
-//       </div>
-//       <Accordion className="accordian accordion-solid-bg mt-4" defaultActiveKey="0" flush>
-//         <Accordion.Item eventKey="0">
-//           <Accordion.Header>All</Accordion.Header>
-//           {tableData.map((d, index) => (
-//             <Accordion.Body className="p-2" key={index}>
-//               <div className="d-flex align-items-center">
-//                 <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
-//                   <input type="checkbox" className="form-check-input" id={`customCheckBox${index}`} required />
-//                 </div>
-//                 <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-//                   <span>{d.name}</span>
-//                   <div className="d-flex justify-content-around">
-//                     <IoIosNavigate
-//                       style={{
-//                         fontSize: "2rem",
-//                         padding: "2px",
-//                         margin: "0 .3rem",
-//                         background: "white",
-//                       }}
-//                     />
-//                     <FaEdit
-//                       style={{
-//                         fontSize: "2rem",
-//                         padding: "2px",
-//                         margin: "0 .3rem",
-//                         background: "white",
-//                       }}
-//                       onClick={() => editDrawerOpen(d)}
-//                     />
-//                     <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
-//                       <MdDelete
-//                         style={{
-//                           fontSize: "2rem",
-//                           padding: "2px",
-//                           margin: "0 .3rem",
-//                           background: "white",
-//                         }}
-//                       />
-//                     </DeleteModal>
+//       <div className="mt-4">
+//         <Accordion className="accordion accordion-primary" defaultActiveKey="0">
+//           {Object.keys(groupedData).map((company, index) => (
+//             <Accordion.Item  className="accordion-item"  eventKey={index.toString()} key={index}>
+//               <Accordion.Header className="accordion-header rounded-lg">{company}</Accordion.Header>
+//               <Accordion.Body>
+//                 {groupedData[company].map((d, i) => (
+//                   <div className="bg-white d-flex align-items-center mt-3" key={i} style={{ borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
+//                     <div className="bg-white form-check custom-checkbox" style={{ marginRight: "5px", marginLeft: '5px' }}>
+//                       <input type="checkbox" className="form-check-input border" id={`customCheckBox${i}`} required />
+//                     </div>
+//                     <div className="bg-white w-100 p-2 d-flex justify-content-between" style={{ alignItems: "center", borderRadius: "5px" }}>
+//                       <span className="fs-4">{d.name}</span>
+//                       {/* <span className="d-flex justify-content-center">
+//                         <span className="cursor-pointer">
+//                           <FaLocationArrow
+//                             style={{
+//                               fontSize: "1.2rem",
+//                               color: "#0d99ff",
+//                               marginRight: '1rem'
+//                             }}
+//                           />
+//                         </span>
+//                         <span
+//                           className="cursor-pointer"
+//                           onClick={() => editDrawerOpen(d.id)}
+//                         >
+//                           <FaEdit style={{ color: "green", fontSize: "1.2rem", marginRight: '1rem' }} />
+//                         </span>
+//                         <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
+//                           <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
+//                         </DeleteModal>
+//                       </span> */}
+//                     </div>
 //                   </div>
-//                 </div>
-//               </div>
-//             </Accordion.Body>
+//                 ))}
+//               </Accordion.Body>
+//             </Accordion.Item>
 //           ))}
-//         </Accordion.Item>
-//       </Accordion>
-
-      
+//         </Accordion>
+//       </div>
 //     </>
 //   );
 // };
+
+
 const DriverTabComponent3 = (props) => {
   const geoData = JSON.parse(localStorage.getItem("geofenceData"));
   const [tableData, setTableData] = useState(geoData);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+
   const navigate = useNavigate();
 
   const onConfirmDelete = (id) => {
@@ -450,77 +447,101 @@ const DriverTabComponent3 = (props) => {
   const editDrawerOpen = (d) => {
     navigate(`/geofence/map/edit/${d.id}`);
   };
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
+
+  const toggleAllData = (company) => {
+    let newSelectedCompanies;
+    if (selectedCompanies.includes(company)) {
+      newSelectedCompanies = selectedCompanies.filter((c) => c !== company);
+    } else {
+      newSelectedCompanies = [...selectedCompanies, company];
+    }
+    setSelectedCompanies(newSelectedCompanies);
+
+    const updatedData = tableData.map((item) => {
+      if (item.company === company) {
+        return { ...item, selected: !selectedCompanies.includes(company) };
+      }
+      return item;
+    });
+    setTableData(updatedData);
   };
+
+  const toggleSingleData = (id) => {
+    const updatedData = tableData.map((item) => {
+      if (item.id === id) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+    setTableData(updatedData);
+  };
+
+  // Group tableData by company name
+  const groupedData = tableData.reduce((acc, cur) => {
+    if (!acc[cur.company]) {
+      acc[cur.company] = [];
+    }
+    acc[cur.company].push(cur);
+    return acc;
+  }, {});
+
   return (
     <>
-      <div className=" d-flex mt-2 fs-6 align-items-center">
-        <div className="form-check custom-checkbox" style={{ marginRight: "5px" }}>
-          <input type="checkbox" className=" form-check-input border" id="customCheckBox1" required />
-        </div>
-        {/* <div className="bg-white p-2 d-flex justify-content-between" style={{ width: "80%", borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}> */}
-        <div className="col-xl-6 mb-1 justify-content-between" style={{ width: "80%", borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
-
-                <Select     
-                styles={customStyles}  
-                options={companyOptions}        
-                />
-                </div>
-             
-        {/* </div> */}
+      <div className="d-flex mt-4 mb-4">
+        <ReactSearchAutocomplete
+          // items={items}
+          className="w-100"
+          // onSearch={handleOnSearch}
+          // onSelect={handleOnSelect}
+        />
       </div>
-      <div className="mt-4">
-        {tableData.map((d, index) => (
-          <div className="bg-white d-flex align-items-center mt-3" key={index} style={{ borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
-            <div className="bg-white form-check custom-checkbox" style={{ marginRight: "5px", marginLeft : '5px'  }}>
-              <input type="checkbox" className=" form-check-input border" id={`customCheckBox${index}`} required />
-            </div>
-            <div className="bg-white w-100 p-2 d-flex justify-content-between" style={{ alignItems: "center", borderRadius: "5px" }}>
-              <span>{d.name}</span>
-              <div className="d-flex justify-content-around">
-                <IoIosNavigate
-                  style={{
-                    fontSize: "2rem",
-                    padding: "2px",
-                    margin: "0 .3rem",
-                    background: "white",
-                    color:'blue'
-                  }}
-                />
-                <FaEdit
-                  style={{
-                    fontSize: "2rem",
-                    padding: "2px",
-                    margin: "0 .3rem",
-                    background: "white",
-                    color: "green", // Change the color to your desired edit icon color
-                    cursor: "pointer", // Add cursor pointer on hover
-                  }}
-                  onClick={() => editDrawerOpen(d)}
-                />
-                <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
-                  <FaTrashAlt
-                    style={{
-                      fontSize: "2rem",
-                      padding: "2px",
-                      margin: "0 .3rem",
-                      background: "white",
-                      color: "red", // Change the color to your desired delete icon color
-                      cursor: "pointer", // Add cursor pointer on hover
-                    }}
+      <div
+        className="d-flex flex-column bg-white p-2"
+        style={{
+          border: " 1px solid white",
+          marginTop: ".5rem",
+          height: "65vh",
+          overflowY: "scroll",
+        }}
+      >
+        <Accordion className="accordion accordion-primary" defaultActiveKey="0">
+          {Object.keys(groupedData).map((company, index) => (
+            <Accordion.Item className="accordion-item" eventKey={index.toString()} key={index}>
+              <Accordion.Header className="accordion-header rounded-lg">
+                <div className="form-check" onClick={(e)=>{
+                  e.stopPropagation();
+                }}>
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={`companyCheckbox${index}`}
+                    checked={selectedCompanies.includes(company)}
+                    onChange={() => toggleAllData(company)}
                   />
-                </DeleteModal>
-              </div>
-            </div>
-          </div>
-        ))}
+                </div>
+                <span>{company}</span>
+              </Accordion.Header>
+              <Accordion.Body>
+                {groupedData[company].map((d, i) => (
+                  <div className={`d-flex align-items-center border-bottom heading driver-select-object p-2`} key={i} >
+                   
+                      <input
+                        type="checkbox"
+                        className="form-check"
+                        id={`customCheckBox${i}`}
+                        checked={d.selected || false}
+                        onChange={() => toggleSingleData(d.id)}
+                        required
+                      />
+                      <span className="fs-4 ms-2">{d.name}</span>
+                  </div>
+                ))}
+              </Accordion.Body>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </div>
     </>
   );
 };
-
 export default DriverTab;

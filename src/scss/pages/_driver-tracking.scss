@@ -456,6 +456,12 @@
     }
   }
 }
+.accordion-header {
+  > button{
+    height: 2.5rem;
+    font-size: 1.2rem;
+  }
+}
 @media screen and (max-width: 1600px) {
   .customSelectHeight {
     height: 2.4rem;
