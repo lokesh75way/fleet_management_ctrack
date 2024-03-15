@@ -35,6 +35,7 @@ const CompanyItem = (props) => {
 
   return (
     <>
+    <div className="checkboxTree">
       <CheckboxTree
         nodes={nodes}
         checked={checked}
@@ -71,9 +72,10 @@ const CompanyItem = (props) => {
           ),
         }}
       />
+      </div>
       <div className="text-center  pt-2 ">
         <Button
-          className="me-2 mb-5"
+          className=" mb-5"
           variant="primary btn-md "
           type="submit"
           onClick={handleSubmit}
