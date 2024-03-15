@@ -185,8 +185,8 @@ const DriverTabComponent1 = (props) => {
       <CompanyItem />
       {/* <CompanyItem /> */}
       {/* <CompanyItem /> */}
-      <div className="text-center  pt-4 mt-4 ">
-        <Button className="me-2" variant="primary btn-sm">
+      <div className="text-center  pt-4 mt-4 border-top border-dark">
+        <Button className="me-2" variant="primary btn-md">
           Save Selection
         </Button>
       </div>
@@ -251,45 +251,40 @@ const DriverTabComponent2 = (props) => {
   return (
     <>
       <div className="px-2 driver_tracking-object">
-        <Badge
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Allocated")}
         >
-          <span>
             <p>{allocated}</p>
             <span>Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Not Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Not Allocated")}
         >
-          <span>
+
             <p>{notAllocated}</p>
             <span>Not Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Total" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Total")}
         >
-          <span>
             <p>{total}</p>
             <span>Total</span>
-          </span>
-        </Badge>
+        </span>
       </div>
       <div className="d-flex mt-4 mb-4">
         <ReactSearchAutocomplete
@@ -320,7 +315,6 @@ const DriverTabComponent2 = (props) => {
                 key={index}
                 onClick={() => {
                   setSelectDriver(selectDriver.concat(d.id));
-                  console.log(selectDriver);
                 }}
                 className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
               >
@@ -340,8 +334,8 @@ const DriverTabComponent2 = (props) => {
           })
         )}
       </div>
-      <div className="mt-3 text-center" style={{ width: "100%" }}>
-        <Button className="w-50" variant="primary btn-lg">
+      <div className="mt-3 text-center">
+        <Button className="w-25 btn-md" variant="primary btn-md">
           XLS
         </Button>
       </div>
