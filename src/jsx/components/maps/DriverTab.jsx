@@ -12,15 +12,13 @@ import {
 } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 import { BsArrowRepeat } from "react-icons/bs";
-import { RiAddBoxFill } from "react-icons/ri";
-import { FaKey } from "react-icons/fa6";
 import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
-import { FiUpload } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
 import Position from "rsuite/esm/internals/Overlay/Position";
+import { getVehicles, statusData } from "../../../utils/selectValues";
 
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
@@ -72,12 +70,19 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content className="p-2 py-4" style={{ background: "#f5f5f5" }}>
+          <Tab.Content
+            className="p-2 py-4"
+            style={{
+              background: "#f5f5f5",
+              height: "100vh",
+              overflowY: "auto",
+            }}
+          >
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
                 <Tab.Pane eventKey={data.name.toLowerCase()} key={i}>
-                  <Component data={componentData} />
+                  <Component data={componentData} handleToggleCardPosition={handleToggleCardPosition} />
                 </Tab.Pane>
               );
             })}
@@ -89,105 +94,123 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
 };
 
 const DriverTabComponent1 = (props) => {
-  const { drivers } = props.data;
-  let statusData = {
-    running: 0,
-    idle: 0,
-    stopped: 0,
-    inactive: 0,
-    nodata: 0,
-    total: drivers.length,
+  const status = statusData();
+  const { Running, Idle, Stopped, Inactive, nodata, total } = status;
+  const [selectValue, setSelectValue] = useState("All");
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect(() => {
+    const data = getVehicles(selectValue);
+    setVehicles(data);
+  }, [selectValue]);
+
+  const items = JSON.parse(localStorage.getItem("userJsonData"))
+    .filter((item) => item.designation === "vehicle")
+    .map((data) => ({
+      id: data.id,
+      name: data.vehicleName,
+    }));
+
+  const handleSearch = (item) => {
+    const vehicleData = getVehicles(selectValue);
+    console.log(vehicleData)
+    const filteredData = Object.entries(vehicleData).filter((vehicle) => {
+      const vec = vehicle[1].filter((data) => data.id == item.id);
+      return vec.length > 0;
+    });
+    const convertedData = filteredData.reduce((acc, [company, dataArray]) => {
+      dataArray.map((data) => {
+        if (data.vehicleName === item.name) {
+          acc[company] = [data];
+        }
+      });
+      return acc;
+    }, {});
+    setVehicles(convertedData);
   };
-  drivers.forEach((driver) => {
-    statusData[driver.status]++;
-  });
-  const { running, idle, stopped, inactive, nodata, total } = statusData;
-  const [selectValue, setSelectValue] = useState(["All"]);
-  const handleClick = (value) => {
-    if (selectValue.includes(value)) {
-      setSelectValue(selectValue.filter((item) => item !== value));
-    } else {
-      setSelectValue([...selectValue, value]);
-    }
-  };
+
   return (
     <>
       <div className="vehicle_tracking-object">
         <span
           className={`light fs-9 ${
-            selectValue.includes("Running") && "vehicle_tracking-active"
+            selectValue === "Running" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Running")}
+          onClick={() => setSelectValue("Running")}
         >
-          <p>{running}</p>
+          <p>{Running}</p>
           <span>Running</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("Idle") && "vehicle_tracking-active"
+            selectValue === "Idle" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Idle")}
+          onClick={() => setSelectValue("Idle")}
         >
-          <p>{idle}</p>
+          <p>{Idle}</p>
           <span>Idle</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("Stopped") && "vehicle_tracking-active"
+            selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Stopped")}
+          onClick={() => setSelectValue("Stopped")}
         >
-          <p>{stopped}</p>
+          <p>{Stopped}</p>
           <span>Stopped</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("InActive") && "vehicle_tracking-active"
+            selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("InActive")}
+          onClick={() => setSelectValue("Inactive")}
         >
-          <p>{inactive}</p>
+          <p>{Inactive}</p>
           <span>InActive</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("NoData") && "vehicle_tracking-active"
+            selectValue === "NoData" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("NoData")}
+          onClick={() => setSelectValue("NoData")}
         >
           <p>{nodata}</p>
           <span>NoData</span>
         </span>
         <span
           className={`light fs-9 ${
-            selectValue.includes("All") && "vehicle_tracking-active"
+            selectValue === "All" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("All")}
+          onClick={() => setSelectValue("All")}
         >
           <p>{total}</p>
           <span>Total</span>
         </span>
       </div>
-      <div className="d-flex mt-4 mb-4 w-100">
+      <div className="d-flex mt-4 mb-4">
         <ReactSearchAutocomplete
-          // items={}
+          items={items}
           className="w-100"
-          onSearch={() => {}}
-          onSelect={() => {}}
+          styling={{
+            height: "30px",
+            marginRight: "10px",
+            fontSize : "12px",
+            color :"#4a4646"
+          }}
+          onSearch={(string) => {
+            if (string === "") {
+              const data = getVehicles(selectValue);
+              setVehicles(data);
+            }
+          }}
+          onSelect={handleSearch}
         />
       </div>
-      <CompanyItem />
-      {/* <CompanyItem /> */}
-      {/* <CompanyItem /> */}
-      <div className="text-center  pt-4 mt-4 border-top border-dark">
-        <Button className="me-2" variant="primary btn-md">
-          Save Selection
-        </Button>
-      </div>
+      {<CompanyItem vehicles={vehicles} handleToggleCardPositionHandler={props.handleToggleCardPosition} />}
     </>
   );
 };
@@ -237,20 +260,26 @@ const DriverTabComponent2 = (props) => {
   };
 
   const handleSelectAll = (id,company,drivers, index) => {
-      setSelectAll(!selectAll);
+  
       var checkboxArray = [...selectedDrivers]
-      if (!selectAll) {
+      if (!selectAll[index]) {
         drivers.map((item)=> checkboxArray[index].push(item.id) )
-        console.log(checkboxArray)
       } else {
         checkboxArray[index] = []
         setSelectedDrivers(checkboxArray);
       }
+      console.log(checkboxArray)
   };
   const handleSelect = (ind)=>{
-    if(selectAll[ind]=== false){
-      selectAll[ind]= true
-    }
+    // if(selectAll[ind]=== false){
+    //   selectAll[ind]= true
+    // }
+    // else selectAll[ind] = false
+    setSelectAll(prev => {
+      const newArr = [...prev];
+      newArr[ind] = !newArr[ind]
+      return newArr
+    })
   }
 
   const handleDriverSelect = (id, ind) => {
@@ -258,9 +287,12 @@ const DriverTabComponent2 = (props) => {
       if (updatedDrivers[ind].includes(id)) {
           const index = updatedDrivers[ind].indexOf(id);
           updatedDrivers[ind].splice(index, 1);
+          setSelectAll(!selectAll[ind])
+          
       } else {
           updatedDrivers[ind].push(id);
       }
+      console.log(updatedDrivers)
       setSelectedDrivers(updatedDrivers);
   };
 
