@@ -225,7 +225,6 @@
   > span {
     line-height: 1.5;
     border-radius: 0.25rem;
-    width: 8rem;
     font-size: 12px;
     font-weight: 500;
     padding: 5px 12px;
@@ -245,6 +244,14 @@
       background-color: rgba(13, 153, 255, 0.05);
     }
   }
+}
+.accordian-header{
+  button{
+    padding: 1rem;
+  }
+}
+.accordian-body{
+  padding: .2rem 0;
 }
 @media screen and (max-width: 1600px) {
   .customSelectHeight {
