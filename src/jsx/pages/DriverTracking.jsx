@@ -49,10 +49,10 @@ const DriverTracking = () => {
         className={`backdrop ${isOutside ? "d-none" : "d-block"}`}
         onClick={() => setIsOutside(true)}
       />
-      <div className="p-2">
+      <div className="p-2" >
         <ShowMap data={data} />
       </div>
-      <div >
+      <div style={{zIndex : 20}}>
         <DriverTab
           tabData={tabData}
           handleToggleCardPosition={handleToggleCardPosition}
