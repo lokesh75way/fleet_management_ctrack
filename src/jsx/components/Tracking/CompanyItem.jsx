@@ -52,10 +52,12 @@ const CompanyItem = () => {
         onCheck={handleCheck}
         onExpand={handleExpand}
         showNodeIcon={false}
+        
         icons={{
-          check: <span className="rct-icon rct-icon-check" />,
+          // uncheck: (
+          //   <i class="fa-thin fa-square-check"></i>
+          // ),
         }}
-        customClass={customClass}
       />
 
       {/* <button onClick={handleSubmit}>Submit</button> */}
