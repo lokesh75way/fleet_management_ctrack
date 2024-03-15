@@ -15,7 +15,7 @@ const DriverTracking = () => {
     { lat: 30.7099475, lng: 76.6900474 },
     { lat: 30.7333, lng: 76.7794 },
   ];
-  const [isOutside, setIsOutside] = useState(false);
+  const [isOutside, setIsOutside] = useState(true);
   const tabData = [
     { name: "Object", icon: TbLocationFilled },
     { name: "Driver", icon: FaUser },
@@ -52,13 +52,13 @@ const DriverTracking = () => {
       <div className="p-2" >
         <ShowMap data={data} />
       </div>
-      <div style={{zIndex : 20}}>
+      {/* <div style={{zIndex : 20}}> */}
         <DriverTab
           tabData={tabData}
           handleToggleCardPosition={handleToggleCardPosition}
           isOutside={isOutside}
         />
-      </div>
+      {/* </div> */}
     </>
   );
 };
