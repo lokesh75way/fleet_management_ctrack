@@ -197,6 +197,8 @@ const DriverTabComponent1 = (props) => {
           styling={{
             height: "30px",
             marginRight: "10px",
+            fontSize : "12px",
+            color :"#4a4646"
           }}
           onSearch={(string) => {
             if (string === "") {
