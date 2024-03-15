@@ -126,16 +126,16 @@
 //   transition: transform 0.5s ease, opacity 0.5s ease;
 // }
 
-// .default-tab .nav-link.active {
-//   // color: white;
-//   // background-color: var(--primary);
-//   background-color: rgba(13, 153, 255, 0.05);
-//   border-bottom: 2px solid var(--primary) !important;
-// }
-// .default-tab .nav-link:hover {
-//   // color: white;
-//   background-color: rgba(13, 153, 255, 0.05);
-// }
+.default-tab .nav-link.active {
+  // color: white;
+  // background-color: var(--primary);
+  background-color: rgba(13, 153, 255, 0.05);
+  border-bottom: 2px solid var(--primary) !important;
+}
+.default-tab .nav-link:hover {
+  // color: white;
+  background-color: rgba(13, 153, 255, 0.05);
+}
 // .customSelectHeight {
 //   height: 2.2rem;
 // }
@@ -185,18 +185,17 @@
 //   // border: 1px solid var(--primary) !important;
 // }
 
-// .react-checkbox-tree{
-//   padding: 10px;
-// }
+.react-checkbox-tree{
+  padding: 10px;
+}
 
-// .rct-node  ol{
-//   background-color: white;
-// }
-// .rct-text {
-//   padding: 10px 0px;
-//   background-color: white;
-//   color: var(--primary);
-
+.rct-node  ol{
+  background-color: white;
+}
+.rct-text {
+  padding: 10px 0px;
+  background-color: white;
+}
  
 
 //   .rct-collapse-btn {
@@ -217,14 +216,7 @@
 //   color: var(--primary);
 // }
 
-// @media screen and (max-width: 1600px) {
-//   .customSelectHeight {
-//     height: 2.4rem;
-//   }
-//   .customDateHeight {
-//     height: 3.2rem;
-//   }
-// }
+
 .vehicle_tracking {
   position: relative;
 }

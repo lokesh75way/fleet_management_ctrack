@@ -172,14 +172,14 @@ const DriverTabComponent1 = (props) => {
         </span>
       </div>
       <div className="d-flex mt-2 mb-4">
-        <div className="search-driver-tab2">
-          <input
-            type="text"
-            placeholder="search"
-            className="form-control-driver-tab"
+      <div className="d-flex mt-4 mb-4 w-100">
+          <ReactSearchAutocomplete
+            // items={}
+            className="w-100"
+            onSearch={()=>{}}
+            onSelect={()=>{}}
           />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
-        </div>
+      </div>
       </div>
       <CompanyItem />
       {/* <CompanyItem /> */}
