@@ -128,8 +128,8 @@ const DriverTabComponent1 = (props) => {
           }`}
           onClick={() => handleClick("Idle")}
         >
-            <p>{idle}</p>
-            <span>Idle</span>
+          <p>{idle}</p>
+          <span>Idle</span>
         </span>
         <span
           pill
@@ -138,18 +138,18 @@ const DriverTabComponent1 = (props) => {
           }`}
           onClick={() => handleClick("Stopped")}
         >
-            <p>{stopped}</p>
-            <span>Stopped</span>
+          <p>{stopped}</p>
+          <span>Stopped</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes('InActive') && "vehicle_tracking-active"
+            selectValue.includes("InActive") && "vehicle_tracking-active"
           }`}
           onClick={() => handleClick("InActive")}
         >
-            <p>{inactive}</p>
-            <span>InActive</span>
+          <p>{inactive}</p>
+          <span>InActive</span>
         </span>
         <span
           pill
@@ -158,8 +158,8 @@ const DriverTabComponent1 = (props) => {
           }`}
           onClick={() => handleClick("NoData")}
         >
-            <p>{nodata}</p>
-            <span>NoData</span>
+          <p>{nodata}</p>
+          <span>NoData</span>
         </span>
         <span
           className={`light fs-9 ${
@@ -168,24 +168,22 @@ const DriverTabComponent1 = (props) => {
           onClick={() => handleClick("All")}
         >
           <p>{total}</p>
-            <span>Total</span>
+          <span>Total</span>
         </span>
       </div>
-      <div className="d-flex mt-2 mb-4">
       <div className="d-flex mt-4 mb-4 w-100">
-          <ReactSearchAutocomplete
-            // items={}
-            className="w-100"
-            onSearch={()=>{}}
-            onSelect={()=>{}}
-          />
-      </div>
+        <ReactSearchAutocomplete
+          // items={}
+          className="w-100"
+          onSearch={() => {}}
+          onSelect={() => {}}
+        />
       </div>
       <CompanyItem />
       {/* <CompanyItem /> */}
       {/* <CompanyItem /> */}
       <div className="text-center  pt-4 mt-4 border-top border-dark">
-        <Button className="me-2" variant="primary btn-sm">
+        <Button className="me-2" variant="primary btn-md">
           Save Selection
         </Button>
       </div>
@@ -215,8 +213,9 @@ const DriverTabComponent2 = (props) => {
       name: results.name,
     });
   };
-  const handleOnSearch = (string,results) => {
-    if(string === '') setDrivers(jsonData.filter((item) => item.designation === "Driver"))
+  const handleOnSearch = (string, results) => {
+    if (string === "")
+      setDrivers(jsonData.filter((item) => item.designation === "Driver"));
   };
 
   useEffect(() => {
@@ -249,53 +248,48 @@ const DriverTabComponent2 = (props) => {
   return (
     <>
       <div className="px-2 driver_tracking-object">
-        <Badge
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Allocated")}
         >
-          <span>
             <p>{allocated}</p>
             <span>Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Not Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Not Allocated")}
         >
-          <span>
+
             <p>{notAllocated}</p>
             <span>Not Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
+          className={`light fs-9 ${
             selectValue === "Total" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Total")}
         >
-          <span >
             <p>{total}</p>
             <span>Total</span>
-          </span>
-        </Badge>
+        </span>
       </div>
       <div className="d-flex mt-4 mb-4">
-          <ReactSearchAutocomplete
-            items={items}
-            className="w-100"
-            onSearch={handleOnSearch}
-            onSelect={handleOnSelect}
-          />
+        <ReactSearchAutocomplete
+          items={items}
+          className="w-100"
+          onSearch={handleOnSearch}
+          onSelect={handleOnSelect}
+        />
       </div>
       <div
         className="d-flex flex-column bg-white p-2"
@@ -313,12 +307,12 @@ const DriverTabComponent2 = (props) => {
             return (
               <div
                 key={index}
-                onClick={()=>{setSelectDriver(selectDriver.concat(d.id)); console.log(selectDriver);}}
+                onClick={() => {
+                  setSelectDriver(selectDriver.concat(d.id));
+                }}
                 className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
               >
-                <div
-                  className="form-check custom-checkbox ms-3 me-3"
-                >
+                <div className="form-check custom-checkbox ms-3 me-3">
                   <input
                     type="checkbox"
                     className="form-check-input"
@@ -334,8 +328,8 @@ const DriverTabComponent2 = (props) => {
           })
         )}
       </div>
-      <div className="mt-3 text-center" style={{ width: "100%" }}>
-        <Button className="w-50" variant="primary btn-lg">
+      <div className="mt-3 text-center">
+        <Button className="w-25 btn-md" variant="primary btn-md">
           XLS
         </Button>
       </div>
