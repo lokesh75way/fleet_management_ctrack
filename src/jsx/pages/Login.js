@@ -3,7 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { loadingToggleAction,loginAction,
 } from '../../store/actions/AuthActions';
-import users from '../../users.json'
+// import users from '../../users.json'
 
 import {  useForm } from "react-hook-form";
 import logo from "../../images/logo/logo-full.png";
@@ -14,6 +14,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { notifyError } from '../../utils/toast';
 
 function Login(props) {
+
+  const users = JSON.parse(localStorage.getItem('userJsonData'));
   const [heartActive, setHeartActive] = useState(true);
   const {
     register,

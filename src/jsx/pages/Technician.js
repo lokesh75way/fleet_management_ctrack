@@ -15,7 +15,7 @@ import TechnicianTable from "../components/Tables/TechnicianTable";
 
 const Technician = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-const techData = userData.filter((item)=>item.Designation === 'Technician')
+const techData = userData.filter((item)=>item.designation === 'Technician')
 
   const [tableData, setTableData] = useState(techData);
   const [editData, setEditData] = useState();

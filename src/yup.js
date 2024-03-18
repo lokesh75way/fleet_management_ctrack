@@ -1,7 +1,8 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
-    branch: yup.string().required(),
+    company: yup.string().required(),
+    business: yup.string().required(),
     vehicleName: yup.string().required(),
     serverAddress: yup.string(),
     deviceType: yup.string().required("Please select an option"),
@@ -69,18 +70,12 @@ export const companyAccountSchema = yup
     parent: yup.string().required("Please select a option"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    passwordRecoveryEmail: yup
-      .string()
-      .email()
-      .required("Password Recovery Email is required "),
     email: yup.string().email().required("Email is required "),
     helpDeskEmail: yup
       .string()
@@ -95,9 +90,6 @@ export const companyAccountSchema = yup
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
     mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    whatsappContactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     helpDeskTelephoneNumber: yup
@@ -112,18 +104,12 @@ export const branchAccountSchema = yup
     parentCompany: yup.string().required("Company Name is required "),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    passwordRecoveryEmail: yup
-      .string()
-      .email()
-      .required("Password Recovery Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
@@ -137,9 +123,6 @@ export const branchAccountSchema = yup
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
     mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    whatsappContactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
   })
@@ -148,18 +131,12 @@ export const adminProfileAccountSchema = yup
   .object({
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    state: yup.string().required("Please select a State"),
     oldPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    passwordRecoveryEmail: yup
-      .string()
-      .email()
-      .required("Password Recovery Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
@@ -173,9 +150,6 @@ export const adminProfileAccountSchema = yup
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
     mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    whatsappContactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     helpDeskTelephoneNumber: yup
@@ -187,25 +161,18 @@ export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
     userName: yup.string().required("Please enter a Business Group Name"),
-    businessUser: yup.string().required("Business Group Name is required "),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup.number().required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    state: yup.string().required("Please select a State"),
-    oldPassword: yup.string().required("Please enter the old password"),
-    newPassword: yup
+    // oldPassword: yup.string().required("Please enter the old password"),
+    password: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    retypePassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    passwordRecoveryEmail: yup
-      .string()
-      .email()
-      .required("Password Recovery Email is required "),
+    // retypePassword: yup
+    //   .string()
+    //   .min(8, "Password must be at least 8 characters")
+    //   .max(20, "Password must be at most 20 characters"),
     helpDeskEmail: yup
       .string()
       .email()
@@ -213,9 +180,6 @@ export const businessGroupAccountSchema = yup
     email: yup.string().email().required("Email is required "),
 
     mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    whatsappContactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     helpDeskTelephoneNumber: yup
@@ -243,7 +207,6 @@ export const driverProfileSchema = yup
     firstName: yup.string().required("First Name is required "),
     lastName: yup.string().required("Last Name is required "),
     employeeNumber: yup.number(),
-    zipCode: yup.number().required("Zip Code is required "),
     contactNumber1: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
@@ -252,7 +215,6 @@ export const driverProfileSchema = yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     country: yup.string().required("Please select a Country "),
-    state: yup.string().required("Please select a State "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
   })
@@ -263,6 +225,11 @@ export const driverInfoSchema = yup
     drivingExperienceSince: yup.number(),
     licenseToDrive: yup.string(),
     licenseNumber: yup.string(),
+  })
+  .required();
+export const driverDocumentSchema = yup
+  .object({
+    
   })
   .required();
 export const subUserAccountSchema = yup
@@ -280,7 +247,6 @@ export const subUserAccountSchema = yup
     mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
-    state: yup.string().required("Please select a State"),   
   })
   .required();
 export const alertSchema = yup
@@ -349,7 +315,6 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup.number().required("Zip Code is required "),
     country: yup.string().required("Please select a Country "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
