@@ -267,7 +267,11 @@ const {
   const [lang,setLang] = useState("");
   const [isArabic,setIsArabic] = useState("");
   const [role,setRole] = useState('superadmin')
-
+  const [showCardWidget, setShowCardWidget] = useState(true);
+  const [showProjectOverviewTab, setShowProjectOverviewTab] = useState(true);
+  const [showEarningBlog, setShowEarningBlog] = useState(true);
+  const [showActiveUserMap, setShowActiveUserMap] = useState(true);
+  const [showAllProjectDonutChart, setShowAllProjectDonutChart] = useState(true);
   useEffect(() => {
 	const body = document.querySelector("body");
     body.setAttribute("data-typography", "poppins");
@@ -362,9 +366,19 @@ const {
         setIsArabic,
         isArabic,
         setRole,
-        role
+        role,
+        showCardWidget, 
+        setShowCardWidget,
+        showProjectOverviewTab, 
+        setShowProjectOverviewTab,
+        showEarningBlog, 
+        setShowEarningBlog,
+        showActiveUserMap,
+         setShowActiveUserMap,
+         showAllProjectDonutChart, setShowAllProjectDonutChart,
 
 	}}
+  
     >
       {props.children}
     </ThemeContext.Provider>
@@ -372,5 +386,3 @@ const {
 };
 
 export default ThemeContextProvider;
-
-

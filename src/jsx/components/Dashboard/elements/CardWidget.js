@@ -11,9 +11,9 @@ const CardWidget = () => {
   const role = localStorage.getItem("role");
   // Define the order for each role
   const roleOrders = {
-    admin: ["businessgroup", "allvehicles", "company", "users"],
-    businessgroup: ["company", "allvehicles", "branches", "technician"],
-    company: ["branches", "allvehicles", "technician", "driver"],
+    admin: ["allvehicles","businessgroup", "company", "users"],
+    businessgroup: [ "allvehicles","company", "branches", "technician"],
+    company: [ "allvehicles", "branches","technician", "driver"],
   };
 
   // Get the order for the current role or use the default order

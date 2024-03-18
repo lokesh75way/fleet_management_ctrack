@@ -1,230 +1,23 @@
-// .vehicle_tracking {
-//   position: relative;
-// }
-
-// .backdrop {
-//   position: fixed;
-//   width: 100vw;
-//   background: black;
-//   height: 100vh;
-//   inset: 0;
-//   z-index: 10;
-//   opacity: 0.5;
-// }
-
-// .panel {
-//   background-color: rgb(255, 255, 255);
-//   display: flex;
-//   flex-direction: column;
-//   width: 2.5rem;
-//   padding: 1px;
-//   position: absolute;
-//   top: 16%;
-//   left: 1%;
-//   border-radius: 0.6rem;
-// }
-// .modes {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 2.5rem;
-//   border-top: 1px solid rgb(201, 198, 198);
-//   border-bottom: 1px solid rgb(201, 198, 198);
-// }
-// .modes_icon {
-//   font-size: 1.5rem;
-//   padding: 1px;
-// }
-// .modes:hover {
-//   background-color: rgb(245, 241, 241);
-//   // background-color: rgb(201, 198, 198);
-// }
-// .outer-container {
-//   width: 50rem;
-//   font-size: 0.8rem;
-//   border: 1px solid grey;
-//   height: 100vh;
-//   padding: 0px;
-//   background-color: #f5f5f5;
-//   position: absolute;
-//   margin-left: 1rem;
-//   top: 0%;
-//   right: 0;
-//   bottom: 0;
-//   //  overflow: scroll;
-//   z-index: 10;
-//   .driver_tracking_button {
-//     font-size: 1.2rem;
-//     position: absolute;
-//     height: 5rem;
-//     background: var(--primary);
-//     left: -18px;
-//     // border-left: 1px solid black;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     border: none;
-//     border-top-left-radius: 10px;
-//     border-bottom-left-radius: 10px;
-//     // border: 1px solid black;
-//     border-right: none;
-//     color: white;
-//     border-right: 1px solid var(--primary);
-//   }
-// }
-
-// .tab-icon {
-//   margin: 0 2px;
-// }
-// .form-control-driver-tab {
-//   display: block;
-//   width: 95%;
-//   padding: 0.2rem 0.6rem;
-//   font-size: 0.8rem;
-//   font-weight: 300;
-//   color: var(--bs-body-color);
-//   background-color: white;
-//   background-clip: padding-box;
-//   border: var(--bs-border-width) solid white;
-//   appearance: none;
-//   color: black;
-//   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-// }
-// .search-driver-tab {
-//   display: flex;
-//   width: 100%;
-//   padding: .5rem 0;
-// }
-// .search-driver-tab2 {
-//   display: flex;
-//   width: 100%;
-//   align-items: center;
-//   background-color: white;
-//   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-//   border-radius: 50px;
-//   overflow: hidden;
-//   margin-top: 8px;
-//   padding-right: 8px;
-//   input {
-//     flex: 1;
-//     padding: 10px;
-//   }
-// }
-// .accordian-header-driver-tab {
-//   margin: 0;
-//   padding: 0;
-// }
-// .accordion-button {
-//   padding: 1px 0.75rem;
-// }
-// .toggleBarInside {
-//   transform: translate(100%, 0%);
-//   transition: transform 0.5s ease, opacity 0.5s ease;
-// }
-// .toggleBarOutside {
-//   transform: translate(0%, 0%);
-
-//   transition: transform 0.5s ease, opacity 0.5s ease;
-// }
-
-// .default-tab .nav-link.active {
-//   // color: white;
-//   // background-color: var(--primary);
-//   background-color: rgba(13, 153, 255, 0.05);
-//   border-bottom: 2px solid var(--primary) !important;
-// }
-// .default-tab .nav-link:hover {
-//   // color: white;
-//   background-color: rgba(13, 153, 255, 0.05);
-// }
-// .customSelectHeight {
-//   height: 2.2rem;
-// }
-// .customDateHeight {
-//   height: 2.9rem;
-// }
-
-// .tracking_navTabs a {
-//   border-radius: 0px !important;
-//   border: none !important;
-//   padding: 12px 25px;
-// }
-
-// .vehicle_tracking-object {
-//   display: flex;
-//   align-items: start;
-//   justify-content: start;
-//   gap: 10px;
-//   margin-inline: 0px;
-//   > span {
-//     line-height: 1.5;
-//     border-radius: 0.25rem;
-//     font-size: 12px;
-//     font-weight: 500;
-//     padding: 5px 12px;
-//     border: 0.0625rem solid transparent;
-//     display: flex;
-//     align-items: center;
-//     gap: 5px;
-//     cursor: pointer;
-//     border-radius: 20px;
-//     color: var(--primary);
-//     background-color: rgba(13, 153, 255, 0.05);
-
-//     p {
-//       margin-bottom: 0px;
-//     }
-
-//     &:hover {
-//       background-color: rgba(13, 153, 255, 0.05);
-//     }
-//   }
-// }
-// .vehicle_tracking-active {
-//   color: white !important;
-//   background-color: var(--primary) !important;
-//   // border: 1px solid var(--primary) !important;
-// }
-
-// .react-checkbox-tree{
-//   padding: 10px;
-// }
-
-// .rct-node  ol{
-//   background-color: white;
-// }
-// .rct-text {
-//   padding: 10px 0px;
-//   background-color: white;
-//   color: var(--primary);
-
- 
-
-//   .rct-collapse-btn {
-//     color: var(--primary);
-//   }
-// }
-
-// .custom-leaf-node {
-//   color: red !important;
-//   background-color: red !important;
-// }
-// // .rct-title {
-// //   font-size: 16px;
-// //   font-weight: 500;
-// //   color: var(--primary);
-// // }
-// .rct-icons-fa4 .rct-icon-check::before {
-//   color: var(--primary);
-// }
-
-// @media screen and (max-width: 1600px) {
-//   .customSelectHeight {
-//     height: 2.4rem;
-//   }
-//   .customDateHeight {
-//     height: 3.2rem;
-//   }
-// }
+.default-tab .nav-link.active {
+  // color: white;
+  // background-color: var(--primary);
+  background-color: rgba(13, 153, 255, 0.05);
+  border-bottom: 2px solid var(--primary) !important;
+}
+.default-tab .nav-link:hover {
+  // color: white;
+  background-color: rgba(13, 153, 255, 0.05);
+}
+.react-checkbox-tree{
+  padding: 0px 10px;
+}
+.rct-node  ol{
+  background-color: white;
+}
+.rct-text {
+  padding: 10px 0px;
+  background-color: white;
+}
 .vehicle_tracking {
   position: relative;
 }
@@ -274,13 +67,12 @@
   border: 1px solid grey;
   padding: 0px;
   background-color: #F5F5F5;
-  position: absolute;
+  position: fixed;
   margin-left: 1rem;
   top: 0%;
   right: 0;
   bottom: 0;
-  //  overflow: scroll;
-  z-index: 10;
+  z-index: 1001;
   .driver_tracking_button {
     font-size: 1.2rem;
     position: absolute;
@@ -345,16 +137,9 @@
   transform: translate(0%, 0%);
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
-.default-tab .nav-link.active {
-  // color: white;
-  // background-color: var(--primary);
-  background-color: rgba(13, 153, 255, 0.05);
-  border: 1px solid var(--primary);
-  border-bottom: 0px;
-}
-.default-tab .nav-link:hover {
-  // color: white;
-  // background-color: var(--primary);
+.tracking_navTabs .nav-link.active {
+  background-color: transparent !important;
+  border-bottom: 2px solid var(--primary) !important;
 }
 .customSelectHeight {
   height: 2.2rem;
@@ -400,44 +185,100 @@
   background-color: var(--primary) !important;
   // border: 1px solid var(--primary) !important;
 }
+// companyItem component
+.react-checkbox-tree {
+  padding: 0px 3px;
+}
+.rct-node ol {
+  background-color: white;
+  padding-left: 0px;
+}
 .rct-text {
   padding: 10px 0px;
-  .rct-collapse-btn {
-    color: var(--primary);
+  background-color: white;
+}
+.rct-text {
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+.rct-node-parent {
+  margin-bottom: 1.25rem;
+}
+.rct-node-leaf:last-child {
+  border-bottom: 0px;
+}
+.rct-collapse-btn {
+  flex: 1;
+  text-align: end;
+}
+.react-checkbox-tree label:hover {
+  background-color: transparent !important;
+}
+.rct-node-parent {
+  > span {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 0.375rem;
+    padding: 0.7rem 0.75rem;
+    .rct-title {
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 }
-.custom-leaf-node {
-  color: red !important;
-  background-color: red !important;
+.rct-node-parent.rct-node-collapsed{
+  >span{
+    background-color: #0d99ff1a;
+    color : var(--primary);
+    border-color: var(--rgba-primary-1)
+  }
 }
-// .rct-title {
-//   font-size: 16px;
-//   font-weight: 500;
-//   color: var(--primary);
-// }
-.rct-icons-fa4 .rct-icon-check::before {
-  color: var(--primary);
+.rct-node-leaf{
+  i{
+    color: var(--primary);
+  }
+  >span{
+    padding: 0.7rem 0.75rem;
+    .rct-title{
+      color: black;
+      font-weight: 400;
+    }
+  }
 }
-
-.driver-select-object{
+.react-checkbox-tree ol ol{
+  padding-left: 0px !important;
+  li{
+    border-bottom: 1px solid #2222;
+  }
+}
+.ewTnKk{
+  margin-top: 0px !important;
+}
+.checkboxTree{
+  min-height: 62vh;
+}
+//End  companyItem component
+.driver-select-object {
   &:hover {
     background-color: rgba(13, 153, 255, 0.1);
   }
 }
-.pillBadge{
+.pillBadge {
   width: "33%";
 }
 .driver_tracking-object {
   display: flex;
   align-items: start;
   justify-content: start;
-  width: 100%;
   gap: 10px;
   margin-inline: 0px;
   > span {
     line-height: 1.5;
     border-radius: 0.25rem;
-    width: 33%;
     font-size: 12px;
     font-weight: 500;
     padding: 5px 12px;
@@ -458,6 +299,17 @@
     }
   }
 }
+.accordian-header{
+  button{
+    padding: 1rem;
+  }
+}
+.accordian-body{
+  padding: .2rem 0;
+}
+
+  
+
 @media screen and (max-width: 1600px) {
   .customSelectHeight {
     height: 2.4rem;

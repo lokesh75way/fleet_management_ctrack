@@ -1,50 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import CheckboxTree from "react-checkbox-tree";
 import "../../../scss/pages/_driver-tracking.scss";
-
-const CompanyItem = () => {
+import { Button } from "react-bootstrap";
+const CompanyItem = (props) => {
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
-  const nodes = [
-    {
-      value: "company1@example.com",
-      label: "Company 1",
-      children: [
-        { value: "driver1@example.com", label: "driver 1" },
-        { value: "driver2@example.com", label: "driver 2" },
-      ],
-    },
-    {
-      value: "company2@example.com",
-      label: "Company 2",
-      children: [
-        { value: "driver3@example.com", label: "driver 1" },
-        { value: "driver4@example.com", label: "driver 2" },
-      ],
-    },
-  ];
+  const [nodes, setNodes] = useState([]);
 
+  useEffect(() => {
+    const data = Object.entries(props.vehicles).map((data) => {
+      const childNode = data[1].map((data) => {
+        return { label: data.vehicleName, value: data.id };
+      });
+
+      return { value: data[0], label: data[0], children: childNode };
+    });
+    setNodes([...data]);
+  }, [props.vehicles]);
   const handleCheck = (checked) => {
     setChecked(checked);
   };
-
   const handleExpand = (expanded) => {
     setExpanded(expanded);
   };
-
-  const customClass = {
-    leaf: "custom-leaf-node",
-  };
-
   const handleSubmit = () => {
-    // Retrieve the selected values from the checked state
-    console.log("Selected values:", checked);
-    // You can perform any further processing or submit the selected values as needed
+    const selectedObject = checked.map((data) => JSON.parse(data));
+    console.log(selectedObject)
+    props.handleToggleCardPositionHandler();
   };
-
   return (
     <>
+    <div className="checkboxTree">
       <CheckboxTree
         nodes={nodes}
         checked={checked}
@@ -53,14 +40,57 @@ const CompanyItem = () => {
         onExpand={handleExpand}
         showNodeIcon={false}
         icons={{
-          check: <span className="rct-icon rct-icon-check" />,
+          expandOpen: <i class="fa-solid fa-minus"></i>,
+          expandClose: <i class="fa-solid fa-plus"></i>,
+          uncheck: (
+            <i
+              class="fa-regular fa-square"
+              style={{
+                fontSize: "16px",
+              }}
+            ></i>
+          ),
+          check: (
+            <i
+              class="fa-solid fa-square-check"
+              style={{
+                fontSize: "16px",
+              }}
+            ></i>
+          ),
+          halfCheck: (
+            <i
+              class="fa-regular fa-square-minus"
+              style={{
+                fontSize: "16px",
+              }}
+            ></i>
+          ),
         }}
-        customClass={customClass}
       />
-
-      {/* <button onClick={handleSubmit}>Submit</button> */}
+      </div>
+      <div className="text-center  pt-2 ">
+        <Button
+          className=" mb-5"
+          variant="primary btn-md "
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Save Selection
+        </Button>
+      </div>
     </>
   );
 };
-
 export default CompanyItem;
+
+
+
+
+
+
+
+
+
+
+

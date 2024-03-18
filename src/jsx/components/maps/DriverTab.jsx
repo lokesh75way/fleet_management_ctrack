@@ -24,7 +24,10 @@ import Select from "react-select";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
-
+import { getVehicles, statusData } from "../../../utils/selectValues";
+import CheckboxTree from 'react-checkbox-tree'
+import DriverCompanyItem from "../Tracking/DriverTabComponent3";
+import GeoFenceItem from "../Tracking/DriverTabComponent3";
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
     name: "Company1",
@@ -91,24 +94,22 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   );
 };
 
+
 const DriverTabComponent1 = (props) => {
   const status = statusData();
   const { Running, Idle, Stopped, Inactive, nodata, total } = status;
   const [selectValue, setSelectValue] = useState("All");
   const [vehicles, setVehicles] = useState([]);
-
   useEffect(() => {
     const data = getVehicles(selectValue);
     setVehicles(data);
   }, [selectValue]);
-
   const items = JSON.parse(localStorage.getItem("userJsonData"))
     .filter((item) => item.designation === "vehicle")
     .map((data) => ({
       id: data.id,
       name: data.vehicleName,
     }));
-
   const handleSearch = (item) => {
     const vehicleData = getVehicles(selectValue);
     console.log(vehicleData)
@@ -126,97 +127,86 @@ const DriverTabComponent1 = (props) => {
     }, {});
     setVehicles(convertedData);
   };
-  drivers.forEach((driver) => {
-    statusData[driver.status]++;
-  });
-  // const { running, idle, stopped, inactive, nodata, total } = statusData;
-  // const [selectValue, setSelectValue] = useState(["All"]);
-  const handleClick = (value) => {
-    if (selectValue.includes(value)) {
-      setSelectValue(selectValue.filter((item) => item !== value));
-    } else {
-      setSelectValue([...selectValue, value]);
-    }
-  };
   return (
     <>
       <div className="vehicle_tracking-object">
         <span
           className={`light fs-9 ${
-            selectValue.includes("Running") && "vehicle_tracking-active"
+            selectValue === "Running" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Running")}
+          onClick={() => setSelectValue("Running")}
         >
-          <p>{running}</p>
+          <p>{Running}</p>
           <span>Running</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("Idle") && "vehicle_tracking-active"
+            selectValue === "Idle" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Idle")}
+          onClick={() => setSelectValue("Idle")}
         >
-            <p>{idle}</p>
-            <span>Idle</span>
+          <p>{Idle}</p>
+          <span>Idle</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("Stopped") && "vehicle_tracking-active"
+            selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("Stopped")}
+          onClick={() => setSelectValue("Stopped")}
         >
-            <p>{stopped}</p>
-            <span>Stopped</span>
+          <p>{Stopped}</p>
+          <span>Stopped</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes('InActive') && "vehicle_tracking-active"
+            selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("InActive")}
+          onClick={() => setSelectValue("Inactive")}
         >
-            <p>{inactive}</p>
-            <span>InActive</span>
+          <p>{Inactive}</p>
+          <span>InActive</span>
         </span>
         <span
           pill
           className={`light fs-9 ${
-            selectValue.includes("NoData") && "vehicle_tracking-active"
+            selectValue === "NoData" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("NoData")}
+          onClick={() => setSelectValue("NoData")}
         >
-            <p>{nodata}</p>
-            <span>NoData</span>
+          <p>{nodata}</p>
+          <span>NoData</span>
         </span>
         <span
           className={`light fs-9 ${
-            selectValue.includes("All") && "vehicle_tracking-active"
+            selectValue === "All" && "vehicle_tracking-active"
           }`}
-          onClick={() => handleClick("All")}
+          onClick={() => setSelectValue("All")}
         >
           <p>{total}</p>
-            <span>Total</span>
+          <span>Total</span>
         </span>
       </div>
-      <div className="d-flex mt-2 mb-4">
-        <div className="search-driver-tab2">
-          <input
-            type="text"
-            placeholder="search"
-            className="form-control-driver-tab"
-          />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
-        </div>
-      </div>
-      <CompanyItem />
-      {/* <CompanyItem /> */}
-      {/* <CompanyItem /> */}
-      <div className="text-center  pt-4 mt-4 border-top border-dark">
-        <Button className="me-2" variant="primary btn-sm">
-          Save Selection
-        </Button>
+      <div className="d-flex mt-4 mb-4">
+        <ReactSearchAutocomplete
+          items={items}
+          className="w-100"
+          styling={{
+            height: "30px",
+            marginRight: "10px",
+            fontSize : "12px",
+            color :"#4A4646"
+          }}
+          onSearch={(string) => {
+            if (string === "") {
+              const data = getVehicles(selectValue);
+              setVehicles(data);
+            }
+          }}
+          onSelect={handleSearch}
+        />
       </div>
       {<CompanyItem vehicles={vehicles} handleToggleCardPositionHandler={props.handleToggleCardPosition} />}
     </>
@@ -245,8 +235,52 @@ const DriverTabComponent2 = (props) => {
       name: results.name,
     });
   };
-  const handleOnSearch = (string,results) => {
-    if(string === '') setDrivers(jsonData.filter((item) => item.designation === "Driver"))
+  
+  const handleOnSearch = (string, results) => {
+    setSelectValue("All");
+    setIsDisable(false);
+    setFilterApplied(false);
+    setDrivers(jsonData.filter((item) => item.designation === "Driver"));
+    setCompany(jsonData.filter((item) => item.role === "company"));
+  };
+
+  const handleSelectAll = (id,company,drivers, index) => {
+  
+      var checkboxArray = [...selectedDrivers]
+      if (!selectAll[index]) {
+        drivers.map((item)=> checkboxArray[index].push(item.id) )
+      } else {
+        checkboxArray[index] = []
+        setSelectedDrivers(checkboxArray);
+      }
+      console.log(checkboxArray)
+  };
+  const handleSelect = (ind)=>{
+    console.log(selectAll)
+    setSelectAll(prev => {
+      const newArr = [...prev];
+      newArr[ind] = !newArr[ind]
+      return newArr
+    })
+  }
+
+  const handleDriverSelect = (id, ind) => {
+      const updatedDrivers = [...selectedDrivers];
+      if (updatedDrivers[ind].includes(id)) {
+          const index = updatedDrivers[ind].indexOf(id);
+          updatedDrivers[ind].splice(index, 1);
+          if(updatedDrivers[ind].length === 2){
+            handleSelect(ind)
+          }
+          
+      } else {
+          updatedDrivers[ind].push(id);
+          if(updatedDrivers[ind].length === 3){
+            handleSelect(ind)
+          }
+      }
+      console.log(updatedDrivers)
+      setSelectedDrivers(updatedDrivers);
   };
 
   useEffect(() => {
@@ -374,101 +408,38 @@ const DriverTabComponent2 = (props) => {
 };
 
 
-// const DriverTabComponent3 = (props) => {
-//   const geoData = JSON.parse(localStorage.getItem("geofenceData"));
-//   const [tableData, setTableData] = useState(geoData);
-//   const navigate = useNavigate();
-
-//   const onConfirmDelete = (id) => {
-//     // Remove item from state
-//     const updatedData = tableData.filter((item) => item.id !== id);
-//     setTableData(updatedData);
-
-//     // Remove item from local storage
-//     const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
-//     localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
-//   };
-
-//   const editDrawerOpen = (d) => {
-//     navigate(`/geofence/map/edit/${d.id}`);
-//   };
-
-//   // Group tableData by company name
-//   const groupedData = tableData.reduce((acc, cur) => {
-//     if (!acc[cur.company]) {
-//       acc[cur.company] = [];
-//     }
-//     acc[cur.company].push(cur);
-//     return acc;
-//   }, {});
-
-//   return (
-//     <>
-//       <div className="mt-4">
-//         <Accordion className="accordion accordion-primary" defaultActiveKey="0">
-//           {Object.keys(groupedData).map((company, index) => (
-//             <Accordion.Item  className="accordion-item"  eventKey={index.toString()} key={index}>
-//               <Accordion.Header className="accordion-header rounded-lg">{company}</Accordion.Header>
-//               <Accordion.Body>
-//                 {groupedData[company].map((d, i) => (
-//                   <div className="bg-white d-flex align-items-center mt-3" key={i} style={{ borderRadius: "5px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
-//                     <div className="bg-white form-check custom-checkbox" style={{ marginRight: "5px", marginLeft: '5px' }}>
-//                       <input type="checkbox" className="form-check-input border" id={`customCheckBox${i}`} required />
-//                     </div>
-//                     <div className="bg-white w-100 p-2 d-flex justify-content-between" style={{ alignItems: "center", borderRadius: "5px" }}>
-//                       <span className="fs-4">{d.name}</span>
-//                       {/* <span className="d-flex justify-content-center">
-//                         <span className="cursor-pointer">
-//                           <FaLocationArrow
-//                             style={{
-//                               fontSize: "1.2rem",
-//                               color: "#0d99ff",
-//                               marginRight: '1rem'
-//                             }}
-//                           />
-//                         </span>
-//                         <span
-//                           className="cursor-pointer"
-//                           onClick={() => editDrawerOpen(d.id)}
-//                         >
-//                           <FaEdit style={{ color: "green", fontSize: "1.2rem", marginRight: '1rem' }} />
-//                         </span>
-//                         <DeleteModal onConfirmDelete={onConfirmDelete} id={d.id}>
-//                           <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-//                         </DeleteModal>
-//                       </span> */}
-//                     </div>
-//                   </div>
-//                 ))}
-//               </Accordion.Body>
-//             </Accordion.Item>
-//           ))}
-//         </Accordion>
-//       </div>
-//     </>
-//   );
-// };
-
 
 const DriverTabComponent3 = (props) => {
   const geoData = JSON.parse(localStorage.getItem("geofenceData"));
   const [tableData, setTableData] = useState(geoData);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const navigate = useNavigate();
+  // Function to handle search
+  const handleSearch = (query) => {
+    console.log("Search Query:", query);
+    setSearchQuery(query);
+  };
 
+  // Function to reset search
+  const resetSearch = () => {
+    setSearchQuery("");
+  };
+
+   // Filter tableData based on searchQuery
+   const filteredTableData = tableData.filter((item) =>
+   item.company.toLowerCase().includes(searchQuery.toLowerCase())
+ );
   const onConfirmDelete = (id) => {
-    // Remove item from state
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
-    // Remove item from local storage
     const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
     localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
   };
 
   const editDrawerOpen = (d) => {
-    navigate(`/geofence/map/edit/${d.id}`);
+    // navigate(`/geofence/map/edit/${d.id}`);
   };
 
   const toggleAllData = (company) => {
@@ -511,11 +482,18 @@ const DriverTabComponent3 = (props) => {
   return (
     <>
       <div className="d-flex mt-4 mb-4">
+     
         <ReactSearchAutocomplete
-          // items={items}
+          onSearch={handleSearch}
           className="w-100"
-          // onSearch={handleOnSearch}
-          // onSelect={handleOnSelect}
+          placeholder="Search by company name"
+          styling={{
+            height: "30px",
+            marginRight: "10px",
+            fontSize: "12px",
+            color: "#red",
+          }}
+          // onSelect={handleSearch}
         />
       </div>
       <div
@@ -527,42 +505,12 @@ const DriverTabComponent3 = (props) => {
           overflowY: "scroll",
         }}
       >
-        <Accordion className="accordion accordion-primary" defaultActiveKey="0">
-          {Object.keys(groupedData).map((company, index) => (
-            <Accordion.Item className="accordion-item" eventKey={index.toString()} key={index}>
-              <Accordion.Header className="accordion-header rounded-lg">
-                <div className="form-check" onClick={(e)=>{
-                  e.stopPropagation();
-                }}>
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id={`companyCheckbox${index}`}
-                    checked={selectedCompanies.includes(company)}
-                    onChange={() => toggleAllData(company)}
-                  />
-                </div>
-                <span>{company}</span>
-              </Accordion.Header>
-              <Accordion.Body>
-                {groupedData[company].map((d, i) => (
-                  <div className={`d-flex align-items-center border-bottom heading driver-select-object p-2`} key={i} >
-                   
-                      <input
-                        type="checkbox"
-                        className="form-check"
-                        id={`customCheckBox${i}`}
-                        checked={d.selected || false}
-                        onChange={() => toggleSingleData(d.id)}
-                        required
-                      />
-                      <span className="fs-4 ms-2">{d.name}</span>
-                  </div>
-                ))}
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
+      
+            <GeoFenceItem
+              geoFences={groupedData}
+              handleToggleCardPositionHandler={props.handleToggleCardPosition}
+            />
+        
       </div>
     </>
   );

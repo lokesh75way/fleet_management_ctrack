@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-//import loadable from "@loadable/component";
-//import pMinDelay from "p-min-delay";
 
-//Import Components
 import { ThemeContext } from "../../../context/ThemeContext";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import CardWidget from "./elements/CardWidget";
@@ -18,7 +15,7 @@ import ActiveUserMap from "./elements/ActiveUserMap";
 import UpcomingBlog from "./elements/UpcomingBlog";
 import AllProjectDonutChart from "./elements/AllProjectDonutChart";
 // import GradientArea from "../charts/Chartjs/gradinetArea";
-import { FaCar } from "react-icons/fa";
+import { FaCar, FaCog } from "react-icons/fa";
 import { BsFuelPumpFill } from "react-icons/bs";
 import { SlCalender } from "react-icons/sl";
 import { LuSiren } from "react-icons/lu";
@@ -48,13 +45,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the styles for the DatePicker
 import ChartPie from "../charts/Chartjs/pie";
 import DualLine from "../charts/Chartjs/dualLine";
-import {Controller} from 'react-hook-form'
+import { Controller } from "react-hook-form";
 import {
   Sparklines,
   SparklinesLine,
   SparklinesReferenceLine,
 } from "react-sparklines";
 import BarChart5 from "../charts/Chartjs/bar5";
+import { SVGICON } from "../../constant/theme";
+import Setting from "../../layouts/Setting";
+import CompSetting from "../../layouts/CompSetting";
 
 const speed = {
   data: [
@@ -91,16 +91,33 @@ const Home = () => {
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [data, setData] = useState({});
   const [selectedDataTable, setSelectedDataTable] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+
+  const {
+    showCardWidget,
+    showAllProjectDonutChart,
+    showEarningBlog,
+    showActiveUserMap,
+    showProjectOverviewTab
+  } = useContext(ThemeContext);
+
   const customStyles = {
     control: (base) => ({
       ...base,
-      zIndex:'3'
-     
+      zIndex: "3",
     }),
+  };
+  const openModalSetting = () => {
+    setIsSettingModalOpen(true);
+  };
+  // Function to close modal
+  const closeSettingModal = () => {
+    setIsSettingModalOpen(false);
   };
 
   const openModal = (dataTableComponent, title) => {
@@ -118,7 +135,7 @@ const Home = () => {
       ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
       : "Select Date Range";
 
-      
+  const role = localStorage.getItem("role");
 
   return (
     <>
@@ -135,146 +152,165 @@ const Home = () => {
         parentTitle="Home"
       >
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 z-3">
-          {/* <div
-            className="d-flex justify-content-between align-items-center gap-2"
-            style={{ marginRight: "10px" }}
-          > */}
-            <label className="mr-2 mt-2 justify-content-between align-items-center">
-              Date:
-            </label>
-            <DatePicker
-            width='280px'
-              className="form-control"
-              startDate={startDate}
-              endDate={endDate}
-              selectsRange
-              onChange={(dates) => {
-                const [start, end] = dates;
-                setStartDate(start);
-                setEndDate(end);
-              }}
-              calendarIconClassName='datePickerZindex'
-              style={customStyles}
-              dateFormat="dd/MM/yy"
-              placeholderText={dateRangeText}
-            />
-          {/* </div> */}
+          <label className="mr-2 mt-2 justify-content-between align-items-center">
+            Date:
+          </label>
+          <DatePicker
+            width="280px"
+            className="form-control"
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            onChange={(dates) => {
+              const [start, end] = dates;
+              setStartDate(start);
+              setEndDate(end);
+            }}
+            calendarIconClassName="datePickerZindex"
+            style={customStyles}
+            dateFormat="dd/MM/yy"
+            placeholderText={dateRangeText}
+          />
         </div>
+
+        <CompSetting />
       </MainPagetitle>
 
       <div className="fluid container mt-3 mw-100">
         <div className="row " style={{ marginRight: "0.0rem" }}>
-          <div className="col-xl-12 wid-100">
-            <div className="row" style={{ padding: "1px", marginTop:'1rem' }}>
-              <CardWidget />
+          {showCardWidget && (
+            <div className="col-xl-12 wid-100">
+              <div
+                className="row"
+                style={{ padding: "1px", marginTop: "1rem" }}
+              >
+                <CardWidget />
+              </div>
             </div>
-          </div>
+          )}
+        </div>
 
-          <div className="col-xl-7 col-sm-12">
-            <div className="card same-card p-2">
-              <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Fleet Usage</h4>
+        {role === "admin" ? (
+          <div className="row" style={{ marginRight: "0.0rem" }}>
+            {showActiveUserMap && (
+              <div className="col-xl-12">
                 <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
+                  className="row"
+                  style={{ marginLeft: ".2rem", marginRight: ".2rem" }}
                 >
-                  {/* <Select /> */}
+                  <ActiveUserMap />
                 </div>
               </div>
-              <EarningBlog />
-
-              {/* <div className="mt-5">
-                <p>
-                  Total Fleet Usage:{" "}
-                  <span className="text-black">72.97 km</span>
-                </p>
-                <p>
-                  Avg. Distance / Object:{" "}
-                  <span className="text-black">72.97 km</span>
-                </p>
-              </div> */}
-              {/* <div className="mt-3"><GradientArea /></div> */}
-            </div>
+            )}
           </div>
-          <div className="col-xl-5 col-sm-12">
-            <div className="card same-card p-2">
-              <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Fleet Status</h4>
+        ) : (
+          <div className="row " style={{ marginRight: "0.0rem" }}>
+            {showEarningBlog && (
+              <div className="col-xl-7 col-sm-12">
+                <div className="card same-card p-2">
+                  <div className="d-flex justify-content-between">
+                    <h4 className="text-black text-md p-3">Fleet Usage</h4>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    ></div>
+                  </div>
+                  <EarningBlog />
+                </div>
               </div>
+            )}
+            {showAllProjectDonutChart && (
+              <div className="col-xl-5 col-sm-12">
+                <div className="card same-card p-2">
+                  <div className="d-flex justify-content-between">
+                    <h4 className="text-black text-md p-3">Fleet Status</h4>
+                  </div>
 
-              <div
-                className="card-body d-flex align-items-center justify-content-center  py-2 "
-                style={{ flexWrap: "wrap" }}
-              >
-                <AllProjectDonutChart
-                  colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
-                  labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
-                  width={300}
-                  data={[18, 19, 25, 23]}
-                  completeLabel = 'Total'
-                />
-                <ul className="project-list">
-                  <li>
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="10" height="10" rx="3" fill="#3AC977" />
-                    </svg>{" "}
-                    Completed
-                  </li>
+                  <div
+                    className="card-body d-flex align-items-center justify-content-center  py-2 "
+                    style={{ flexWrap: "wrap" }}
+                  >
+                    <AllProjectDonutChart
+                      colors={[
+                        "#FF5E5E",
+                        "var(--primary)",
+                        "#3AC977",
+                        "#FF9F00",
+                      ]}
+                      labels={[
+                        "Cancelled",
+                        "Yet To Start",
+                        "Complete",
+                        "Progress",
+                      ]}
+                      width={300}
+                      data={[18, 19, 25, 23]}
+                      completeLabel="Total"
+                    />
+                    <ul className="project-list">
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#3AC977" />
+                        </svg>{" "}
+                        Completed
+                      </li>
 
-                  <li>
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                    </svg>{" "}
-                    Progress
-                  </li>
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#FF9F00" />
+                        </svg>{" "}
+                        Progress
+                      </li>
 
-                  <li>
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        width="10"
-                        height="10"
-                        rx="3"
-                        fill="var(--primary)"
-                      />
-                    </svg>{" "}
-                    Yet To Start
-                  </li>
-                  <li>
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect width="10" height="10" rx="3" fill="#FF5E5E" />
-                    </svg>{" "}
-                    Cancelled
-                  </li>
-                </ul>
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            width="10"
+                            height="10"
+                            rx="3"
+                            fill="var(--primary)"
+                          />
+                        </svg>{" "}
+                        Yet To Start
+                      </li>
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#FF5E5E" />
+                        </svg>{" "}
+                        Cancelled
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        </div>
+        )}
 
         <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
           <div className="col-xl-6" style={{ paddingLeft: 0 }}>
@@ -341,26 +377,29 @@ const Home = () => {
 
         <div className="row" style={{ marginLeft: "0.2rem" }}>
           {/* Temperature */}
-          <div className="col-xl-7" style={{ paddingLeft: 0 }}>
-            <div
-              className="card same-card mb-3 p-2"
-              style={{
-                // backgroundColor: "rgb(0 255 255 / 14%)",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(<TemperatureTable />, "Temperature")}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                ></div>
-              </div>
 
-              <ProjectOverviewTab />
+          {showProjectOverviewTab && (
+            <div className="col-xl-7" style={{ paddingLeft: 0 }}>
+              <div
+                className="card same-card mb-3 p-2"
+                style={{
+                  // backgroundColor: "rgb(0 255 255 / 14%)",
+                  cursor: "pointer",
+                }}
+                onClick={() => openModal(<TemperatureTable />, "Temperature")}
+              >
+                <div className="d-flex align-items-center justify-content-between">
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  ></div>
+                </div>
+
+                <ProjectOverviewTab />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="col-xl-5 col-md-12">
             <div

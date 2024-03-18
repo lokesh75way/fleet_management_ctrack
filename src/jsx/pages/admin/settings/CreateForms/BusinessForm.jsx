@@ -42,8 +42,8 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   } = useForm({
     resolver: yupResolver(
       activeIndex === 1 ?  companySettingSchema : businessGroupAccountSchema
-    ),
-  });
+  ),
+    });
 
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {
