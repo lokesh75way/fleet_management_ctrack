@@ -28,6 +28,7 @@ const VehicleForm = () => {
     if(activeIndex === (totalTabs -1)){
       try{
         saveData(data, 'vehicleData')
+        console.log(data)
         navigate("/vehicle");
         return;
       }
