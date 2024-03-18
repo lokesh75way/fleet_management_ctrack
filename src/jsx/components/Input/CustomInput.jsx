@@ -12,15 +12,15 @@ const CustomInput = ({
   value,
   style,
   disabled,
-  onChange
 }) => {
   const { errors } = useFormContext();
   return (
     <div>
       <input
-        {...register(`${name}`, {
-          required: required ? false : `${label} is required!`,
-        })}
+        {...register(`${name}`)}
+        // {...register(`${name}`, {
+        //   required: required ? false : `${label} is required!`,
+        // })}
         name={name}
         type={type}
         label={label}
@@ -31,7 +31,6 @@ const CustomInput = ({
         defaultValue={defaultValue}
         disabled={disabled}
         autoComplete="off"
-        onChange={onChange}
       />
     </div>
   );

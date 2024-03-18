@@ -46,7 +46,6 @@ console.log(getValues())
           <CustomInput
             type="text"
             register={register}
-            required
             label="User Name"
             name="userName"
             placeholder=""

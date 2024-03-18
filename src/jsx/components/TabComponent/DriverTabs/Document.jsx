@@ -91,12 +91,13 @@ const Document = ({
                   <label className="form-label">
                     Document Name
                   </label>
-                  <CustomInput
+                  <input
                     type="text"
-                    register={register}
+                    {...register(`documentName${index}`)}
                     label="Document Name"
                     name={`documentName${index}`}
                     onChange={handleChange}
+                    className="form-control"
                     value={tempValue}
                   />
                 </div>{" "}
