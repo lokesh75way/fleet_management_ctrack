@@ -11,16 +11,16 @@ const CustomInput = ({
   type,
   value,
   style,
-  disabled
+  disabled,
 }) => {
   const { errors } = useFormContext();
   return (
     <div>
       <input
+        {...register(`${name}`)}
         // {...register(`${name}`, {
         //   required: required ? false : `${label} is required!`,
         // })}
-        {...register(`${name}`)}
         name={name}
         type={type}
         label={label}

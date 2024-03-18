@@ -46,7 +46,6 @@ const user = localStorage.getItem('loginDetails-email')
           <CustomInput
             type="text"
             register={register}
-            required
             label="User Name"
             name="userName"
             placeholder=""
