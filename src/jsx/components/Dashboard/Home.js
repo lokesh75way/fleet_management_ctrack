@@ -48,7 +48,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the styles for the DatePicker
 import ChartPie from "../charts/Chartjs/pie";
 import DualLine from "../charts/Chartjs/dualLine";
-import {Controller} from 'react-hook-form'
+import { Controller } from "react-hook-form";
 import {
   Sparklines,
   SparklinesLine,
@@ -99,7 +99,7 @@ const Home = () => {
     control: (base) => ({
       ...base,
       padding: "20rem 0 ", // Adjust the height as needed,
-      width:"130%"
+      width: "130%",
     }),
   };
 
@@ -117,8 +117,6 @@ const Home = () => {
     startDate && endDate
       ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`
       : "Select Date Range";
-
-      
 
   return (
     <>
@@ -139,23 +137,23 @@ const Home = () => {
             className="d-flex justify-content-between align-items-center gap-2"
             style={{ marginRight: "10px" }}
           > */}
-            <label className="mr-2 mt-2 justify-content-between align-items-center">
-              Date:
-            </label>
-            <DatePicker
-            width='280px'
-              className="form-control"
-              startDate={startDate}
-              endDate={endDate}
-              selectsRange
-              onChange={(dates) => {
-                const [start, end] = dates;
-                setStartDate(start);
-                setEndDate(end);
-              }}
-              dateFormat="dd/MM/yy"
-              placeholderText={dateRangeText}
-            />
+          <label className="mr-2 mt-2 justify-content-between align-items-center">
+            Date:
+          </label>
+          <DatePicker
+            width="280px"
+            className="form-control"
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            onChange={(dates) => {
+              const [start, end] = dates;
+              setStartDate(start);
+              setEndDate(end);
+            }}
+            dateFormat="dd/MM/yy"
+            placeholderText={dateRangeText}
+          />
           {/* </div> */}
         </div>
       </MainPagetitle>
@@ -163,7 +161,7 @@ const Home = () => {
       <div className="fluid container mt-3 mw-100">
         <div className="row " style={{ marginRight: "0.0rem" }}>
           <div className="col-xl-12 wid-100">
-            <div className="row" style={{ padding: "1px", marginTop:'1rem' }}>
+            <div className="row" style={{ padding: "1px", marginTop: "1rem" }}>
               <CardWidget />
             </div>
           </div>
@@ -210,7 +208,7 @@ const Home = () => {
                   labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
                   width={300}
                   data={[18, 19, 25, 23]}
-                  completeLabel = 'Total'
+                  completeLabel="Total"
                 />
                 <ul className="project-list">
                   <li>

@@ -19,6 +19,6 @@ const DeleteModal = ({ onConfirmDelete, children, id
       }
     })
   }
-  return (<span className='cursor-pointer col-xl-6' onClick={onDelete}>{children}</span>)
+  return (<span className='cursor-pointer ' onClick={onDelete}>{children}</span>)
 }
 export default DeleteModal;

@@ -86,7 +86,7 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                                                 Export Report
                                             </CSVLink>  */}
                       <Link
-                        to={"/technician/create"}
+                        to={"/technician/details/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
