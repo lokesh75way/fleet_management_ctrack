@@ -40,6 +40,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       data.parent = userName;
       data.type = role;
       existingData.push(data);
+      console.log('this is dataaaaaaaaaaaaaaaaa',data);
       localStorage.setItem("userJsonData", JSON.stringify(existingData));
       notifySuccess("User created successfully !!");
       navigate('/subUser')
