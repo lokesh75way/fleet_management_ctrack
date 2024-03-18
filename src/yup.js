@@ -1,7 +1,8 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
-    branch: yup.string().required(),
+    company: yup.string().required(),
+    business: yup.string().required(),
     vehicleName: yup.string().required(),
     serverAddress: yup.string(),
     deviceType: yup.string().required("Please select an option"),
@@ -263,6 +264,11 @@ export const driverInfoSchema = yup
     drivingExperienceSince: yup.number(),
     licenseToDrive: yup.string(),
     licenseNumber: yup.string(),
+  })
+  .required();
+export const driverDocumentSchema = yup
+  .object({
+    
   })
   .required();
 export const subUserAccountSchema = yup

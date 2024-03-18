@@ -8,7 +8,7 @@ import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { driverProfileSchema, driverInfoSchema } from "../../../../../yup";
+import { driverProfileSchema, driverInfoSchema, driverDocumentSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
 const DriverForm = () => {
@@ -21,7 +21,6 @@ const DriverForm = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  console.log(filteredUserData);
   const {
     register,
     formState: { errors },
@@ -36,7 +35,7 @@ const DriverForm = () => {
       business: filteredUserData[0]?.parentBusinessGroup || "",
     },
     resolver: yupResolver(
-      activeIndex === 0 ? driverProfileSchema : driverInfoSchema
+      activeIndex === 0 ? driverProfileSchema : activeIndex === 1 ?  driverInfoSchema: driverDocumentSchema
     ),
   });
 
@@ -62,6 +61,7 @@ const DriverForm = () => {
           }
           return;
         } else {
+          console.log(data)
           data = { ...data, designation: "Driver", role: "user" };
           const existingData = JSON.parse(localStorage.getItem("userJsonData"));
           data.id = existingData.length + 1;

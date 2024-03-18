@@ -271,10 +271,7 @@ const DriverTabComponent2 = (props) => {
       console.log(checkboxArray)
   };
   const handleSelect = (ind)=>{
-    // if(selectAll[ind]=== false){
-    //   selectAll[ind]= true
-    // }
-    // else selectAll[ind] = false
+    console.log(selectAll)
     setSelectAll(prev => {
       const newArr = [...prev];
       newArr[ind] = !newArr[ind]
@@ -287,10 +284,15 @@ const DriverTabComponent2 = (props) => {
       if (updatedDrivers[ind].includes(id)) {
           const index = updatedDrivers[ind].indexOf(id);
           updatedDrivers[ind].splice(index, 1);
-          setSelectAll(!selectAll[ind])
+          if(updatedDrivers[ind].length === 2){
+            handleSelect(ind)
+          }
           
       } else {
           updatedDrivers[ind].push(id);
+          if(updatedDrivers[ind].length === 3){
+            handleSelect(ind)
+          }
       }
       console.log(updatedDrivers)
       setSelectedDrivers(updatedDrivers);

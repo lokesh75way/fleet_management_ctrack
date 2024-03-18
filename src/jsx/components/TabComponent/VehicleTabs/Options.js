@@ -41,6 +41,15 @@ export const distanceCounterOptions = [
   { value: "Relative Odometer", label: "Relative Odometer" },
   { value: "Tachograph", label: "Tachograph" },
 ];
+export const driverDocumentOptions = [
+  { value: "Driving License", label: "Driving License" },
+  { value: "Aadhar Card", label: "Aadhar Card" },
+  { value: "PAN Card", label: "PAN Card" },
+  { value: "Bank Account", label: "Bank Account" },
+  { value: "Mediclaim", label: "Mediclaim" },
+  { value: "Custom", label: "Custom" },
+
+];
 export const featureTemplateOptions = [
   { value: "Template 1", label: "Template 1" },
   { value: "Template 2", label: "Template 2" },

@@ -5,13 +5,11 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import {
   deviceTypeOptions,
-  branchOptions,
   copyFromOptions,
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
   businessGroupOptions,
-  companyOptions,
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
@@ -27,7 +25,7 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
-  const { checkRole, checkUser } = useStorage();
+  const { checkRole, checkUserName } = useStorage();
   const [tempValue, setTempValue] = useState();
   const customStyles = {
     control: (base) => ({
@@ -41,12 +39,43 @@ const General = ({
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const role = localStorage.getItem("role");
-  const branchOption = DummyData.filter(
-    (item) => item.parent === checkUser()
-  ).map((item) => ({
-    label: item.email,
-    value: item.id,
-  }));
+
+  let companyOptions,branchOptions;
+  if(role === 'admin'){
+    companyOptions = DummyData.filter((item)=> item.role === 'company').map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+    branchOptions = DummyData.filter(
+      (item) => item.role === 'branch'
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+  }
+  else if(role === 'businessgroup'){
+    companyOptions = DummyData.filter((item)=> item.role === 'company' && item.parent === checkUserName()).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+    branchOptions = DummyData.filter(
+      (item) => item.parentBusinessGroup === checkUserName() && item.role === 'branch'
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+  }
+  else if(role === 'company'){
+    branchOptions = DummyData.filter(
+      (item) => item.parentCompany === checkUserName() && item.role === 'branch'
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+    companyOptions = DummyData.filter(
+      (item) => item.userName === checkUserName()
+    )
+  }
 
   return (
     <div className="p-4">
@@ -72,16 +101,19 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={{
+                value={{
                   label : 
                   filteredUserData[0]?.parentBusinessGroup ||
-                  (loggedInUser !== "Admin" ? loggedInUser : "")
+                  (role === "admin" ? '' : role === "businessgroup" ? loggedInUser : companyOptions[0].parent ),
+                  value : 
+                  filteredUserData[0]?.parentBusinessGroup ||
+                  (loggedInUser !== "Admin" ? loggedInUser : companyOptions[0].parent )
                 }
                 }
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
+          {!getValues("business") && <Error errorName={errors.business} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -102,86 +134,40 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={{
+                value={{
                   label:
                     filteredUserData[0]?.parentCompany ||
                     (role === "company" ? loggedInUser : ""),
+                  value:
+                    filteredUserData[0]?.parentCompany ||
+                    (role === "company" ? loggedInUser : "")
                 }}
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Branch <span className="text-danger">*</span>
-          </label>
-          <Controller
-            name="branch"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  console.log(newValue);
-                  setTempValue(newValue?.value);
-                  setValue("branch", newValue?.value);
-                }}
-                options={branchOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={{
-                  label:
-                    filteredUserData[0]?.parentBranch ||
-                    " "
-                }}
-              />
-            )}
-          />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
+          {!getValues("company") && <Error errorName={errors.company} />}
         </div>
 
-        {checkRole() === "company" && (
-          <div className="col-xl-6 mb-3 ">
-            <label className="form-label">Company</label>
-            <CustomInput
-              type="text"
-              register={register}
-              label="Company"
-              name="company"
-              placeholder=""
-              value={checkUser()}
-            />
-          </div>
-        )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch <span className="text-danger">*</span>
+            Branch
           </label>
           <Controller
             name="branch"
             control={control}
-            rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
                   setValue("branch", newValue.label);
                 }}
-                options={
-                  checkRole() === "company" ? branchOption : branchOptions
-                }
+                options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={
-                  checkRole() === "company" ? branchOption[0] : branchOptions[0]
-                }
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
