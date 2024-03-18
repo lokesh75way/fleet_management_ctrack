@@ -24042,6 +24042,10 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 }
 li.mm-active> a > .menu-icon svg{
   color: #0d99ff !important;
+  
+}
+li.mm-active > a > .menu-icon svg circle{
+  stroke: var(--primary);
 }
 [data-sidebarbg="color_2"][data-theme-version="dark"]
   .deznav

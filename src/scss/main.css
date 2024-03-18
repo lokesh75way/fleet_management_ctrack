@@ -29479,3 +29479,7 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
       color: #fff; }
 
 /*# sourceMappingURL=main.css.map */
+/* .mm-active .menu-icon svg {
+  color: var(--primary) !important;
+}
+  */

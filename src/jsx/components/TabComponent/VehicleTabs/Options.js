@@ -4,6 +4,7 @@ export const companyOptions = [
   { value: "company3@example.com", label: "Company3" },
   { value: "company4@example.com", label: "Company4" },
   { value: "company5@example.com", label: "Company5" },
+  {value : 'All Companies', label : "All Companies"}
 ];
 
 export const branchOptions  = [

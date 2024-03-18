@@ -723,3 +723,18 @@ body{
   overflow-x: hidden;
 }
 
+.classify-trips .nav-link.active {
+  color: var(--primary);
+  border-color : transparent;
+  border-bottom: 2px solid var(--primary);
+  background-color: rgba(13, 153, 255, 0.05);
+}
+
+.classify-trips  div:first-child{
+  display: flex;
+  flex: 1;
+}
+
+.classify_trip-container .container-fluid{
+  padding-inline: 0px !important;
+}
