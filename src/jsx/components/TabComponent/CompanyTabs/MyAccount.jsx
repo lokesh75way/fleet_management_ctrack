@@ -125,18 +125,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
-          <CustomInput
-            type="email"
-            register={register}
-            label="Password Recovery Email"
-            name="passwordRecoveryEmail"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ''}
-          />
-          <Error errorName={errors.passwordRecoveryEmail} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
@@ -174,7 +162,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
+          <label className="form-label">Whatsapp Contact Number</label>
           <CustomInput
             type="number"
             register={register}
@@ -201,7 +189,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">State<span className="text-danger">*</span></label>
+          <label className="form-label">State</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -232,7 +220,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code<span className="text-danger">*</span>
+            Zip Code
           </label>
           <CustomInput
             type="number"

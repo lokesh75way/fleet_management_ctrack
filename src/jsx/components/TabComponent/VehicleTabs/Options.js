@@ -164,6 +164,41 @@ export const unitOfFuelOptions = [
   { value: "litre", label: "Litre" },
   { value: "gallon", label: "Gallon" },
 ];
+
+export const dayOptions = [
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+  { value: "Sunday", label: "Sunday" },
+];
+
+export const statusOptions = [
+  { value: "Active", label: "Active" },
+  { value: "Inactive", label: "Inactive" },
+];
+
+export const languageOptions = [
+  { value: "English", label: "English" },
+  { value: "Arabic", label: "Arabic" },
+  { value: "French", label: "French" },
+  { value: "Portugese", label: "Portugese" },
+];
+
+
+
+export const currencyOptions = [
+  { value: "AED", label: "AED" },
+  { value: "USD", label: "USD" },
+  { value: "EURO", label: "EURO" },
+  { value: "XOF", label: "XOF" },
+  { value: "CFA", label: "CFA" },
+  { value: "Dalasi", label: "Dalasi" },
+  { value: "Shilling", label: "Shilling" },
+];
+
 export const fuelEconomyScalingOptions = [
   { value: "km/i", label: "Km/I" },
   { value: "i/100", label: "I/100" },
