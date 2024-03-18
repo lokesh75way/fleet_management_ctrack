@@ -17,7 +17,6 @@ import { IoIosNavigate } from "react-icons/io";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
-import { getVehicles, statusData } from "../../../utils/selectValues";
 
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
@@ -216,52 +215,70 @@ const DriverTabComponent1 = (props) => {
 
 const DriverTabComponent2 = (props) => {
   const [selectValue, setSelectValue] = useState("All");
+  const [selectAll, setSelectAll] = useState([]);
+  const [selectedDrivers, setSelectedDrivers] = useState([]);
   const [selectDriver, setSelectDriver] = useState([]);
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
   const jsonData = JSON.parse(localStorage.getItem("userJsonData"));
+  const [company, setCompany] = useState(
+    jsonData.filter((item) => item.role === "company")
+  );
   const [drivers, setDrivers] = useState(
     jsonData.filter((item) => item.designation === "Driver")
   );
   const allocated = drivers.filter(
     (item) => item.activityStatus === "Allocated"
-  ).length;
+  );
   const notAllocated = drivers.filter(
     (item) => item.activityStatus === "Not Allocated"
-  ).length;
-  const [searchedDriver, setSearchedDriver] = useState({});
+  );
   const total = drivers.length;
 
   const handleOnSelect = (results) => {
-    setSearchedDriver({
-      id: results.id,
-      name: results.name,
-    });
+    setSelectValue("All");
+    setFilterApplied(true);
+    setIsDisable(true);
+    var companyDriver = jsonData.filter(
+      (item) => item.designation === "Driver" && item.id === results.id
+    );
+    var search = company.filter(
+      (item) => item.userName === companyDriver[0].parentCompany
+    );
+    setDrivers(companyDriver);
+    setCompany(search);
   };
-  const handleOnSearch = (string, results) => {
-    if (string === "")
-      setDrivers(jsonData.filter((item) => item.designation === "Driver"));
+  const handleOnSearch = (string,results) => {
+    if(string === '') setDrivers(jsonData.filter((item) => item.designation === "Driver"))
   };
 
   useEffect(() => {
-    if (searchedDriver?.id)
-      setDrivers(jsonData.filter((item) => item.id === searchedDriver.id));
-    else if (selectValue === "Allocated")
-      setDrivers(
-        jsonData.filter(
-          (item) =>
-            item.designation === "Driver" && item.activityStatus === "Allocated"
-        )
-      );
-    else if (selectValue === "Not Allocated")
-      setDrivers(
-        jsonData.filter(
-          (item) =>
-            item.designation === "Driver" &&
-            item.activityStatus === "Not Allocated"
-        )
-      );
-    else if (selectValue === "Total" || !searchedDriver?.id)
-      setDrivers(jsonData.filter((item) => item.designation === "Driver"));
-  }, [searchedDriver, selectValue]);
+    if (selectValue !== "All") {
+      setCompany(jsonData.filter((item) => item.role === "company"));
+      setFilterApplied(true);
+      if (selectValue === "Allocated") {
+        const companyName = allocated
+          .map((item) => item.parentCompany)
+          .filter((value, index, array) => array.indexOf(value) === index);
+        setCompany(
+          company.filter((item1) =>
+            companyName.some((item2) => item2 === item1.userName)
+          )
+        );
+      }
+      if (selectValue === "Not Allocated") {
+        const companyName = notAllocated
+          .map((item) => item.parentCompany)
+          .filter((value, index, array) => array.indexOf(value) === index);
+        setCompany(
+          company.filter((item1) =>
+            companyName.some((item2) => item2 === item1.userName)
+          )
+        );
+      }
+    } else setFilterApplied(false);
+  }, [selectValue]);
+
 
   const items = jsonData
     .filter((item) => item.designation === "Driver")
@@ -274,29 +291,33 @@ const DriverTabComponent2 = (props) => {
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light border fs-9 ${
             selectValue === "Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Allocated")}
         >
-          <p>{allocated}</p>
-          <span>Allocated</span>
-        </span>
-        <span
+          <span>
+            <p>{allocated}</p>
+            <span>Allocated</span>
+          </span>
+        </Badge>
+        <Badge
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light border fs-9 ${
             selectValue === "Not Allocated" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Not Allocated")}
         >
-          <p>{notAllocated}</p>
-          <span>Not Allocated</span>
-        </span>
-        <span
+          <span>
+            <p>{notAllocated}</p>
+            <span>Not Allocated</span>
+          </span>
+        </Badge>
+        <Badge
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light border fs-9 ${
             selectValue === "Total" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Total")}
@@ -306,15 +327,12 @@ const DriverTabComponent2 = (props) => {
         </span>
       </div>
       <div className="d-flex mt-4 mb-4">
-        <ReactSearchAutocomplete
-          styling={{
-            height: "30px",
-          }}
-          items={items}
-          className="w-100"
-          onSearch={handleOnSearch}
-          onSelect={handleOnSelect}
-        />
+          <ReactSearchAutocomplete
+            items={items}
+            className="w-100"
+            onSearch={handleOnSearch}
+            onSelect={handleOnSelect}
+          />
       </div>
       <div
         className="d-flex flex-column bg-white p-2"
@@ -332,12 +350,12 @@ const DriverTabComponent2 = (props) => {
             return (
               <div
                 key={index}
-                onClick={() => {
-                  setSelectDriver(selectDriver.concat(d.id));
-                }}
+                onClick={()=>{setSelectDriver(selectDriver.concat(d.id)); console.log(selectDriver);}}
                 className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
               >
-                <div className="form-check custom-checkbox ms-3 me-3">
+                <div
+                  className="form-check custom-checkbox ms-3 me-3"
+                >
                   <input
                     type="checkbox"
                     className="form-check-input"

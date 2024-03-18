@@ -1,7 +1,24 @@
-
+.default-tab .nav-link.active {
+  // color: white;
+  // background-color: var(--primary);
+  background-color: rgba(13, 153, 255, 0.05);
+  border-bottom: 2px solid var(--primary) !important;
+}
 .default-tab .nav-link:hover {
   // color: white;
   background-color: rgba(13, 153, 255, 0.05);
+}
+
+.react-checkbox-tree{
+  padding: 0px 10px;
+}
+
+.rct-node  ol{
+  background-color: white;
+}
+.rct-text {
+  padding: 10px 0px;
+  background-color: white;
 }
 
 .vehicle_tracking {
@@ -301,7 +318,14 @@
     }
   }
 }
-
+.accordian-header{
+  button{
+    padding: 1rem;
+  }
+}
+.accordian-body{
+  padding: .2rem 0;
+}
 @media screen and (max-width: 1600px) {
   .customSelectHeight {
     height: 2.4rem;
