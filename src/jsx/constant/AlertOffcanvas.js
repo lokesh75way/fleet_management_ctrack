@@ -417,6 +417,7 @@ const AlertOffcanvas = forwardRef(
                   </Link>
                 </div>
               </form>
+              
               </FormProvider>
             </div>
           </div>

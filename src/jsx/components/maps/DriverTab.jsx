@@ -14,11 +14,8 @@ import {
 } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 import { BsArrowRepeat } from "react-icons/bs";
-import { RiAddBoxFill } from "react-icons/ri";
-import { FaKey } from "react-icons/fa6";
 import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
-import { FiUpload } from "react-icons/fi";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useNavigate  } from 'react-router-dom'
 import DeleteModal from "../Modal/DeleteModal";
@@ -83,7 +80,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               const Component = components[i];
               return (
                 <Tab.Pane eventKey={data.name.toLowerCase()} key={i}>
-                  <Component data={componentData} />
+                  <Component data={componentData} handleToggleCardPosition={handleToggleCardPosition} />
                 </Tab.Pane>
               );
             })}
@@ -95,20 +92,45 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
 };
 
 const DriverTabComponent1 = (props) => {
-  const { drivers } = props.data;
-  let statusData = {
-    running: 0,
-    idle: 0,
-    stopped: 0,
-    inactive: 0,
-    nodata: 0,
-    total: drivers.length,
+  const status = statusData();
+  const { Running, Idle, Stopped, Inactive, nodata, total } = status;
+  const [selectValue, setSelectValue] = useState("All");
+  const [vehicles, setVehicles] = useState([]);
+
+  useEffect(() => {
+    const data = getVehicles(selectValue);
+    setVehicles(data);
+  }, [selectValue]);
+
+  const items = JSON.parse(localStorage.getItem("userJsonData"))
+    .filter((item) => item.designation === "vehicle")
+    .map((data) => ({
+      id: data.id,
+      name: data.vehicleName,
+    }));
+
+  const handleSearch = (item) => {
+    const vehicleData = getVehicles(selectValue);
+    console.log(vehicleData)
+    const filteredData = Object.entries(vehicleData).filter((vehicle) => {
+      const vec = vehicle[1].filter((data) => data.id == item.id);
+      return vec.length > 0;
+    });
+    const convertedData = filteredData.reduce((acc, [company, dataArray]) => {
+      dataArray.map((data) => {
+        if (data.vehicleName === item.name) {
+          acc[company] = [data];
+        }
+      });
+      return acc;
+    }, {});
+    setVehicles(convertedData);
   };
   drivers.forEach((driver) => {
     statusData[driver.status]++;
   });
-  const { running, idle, stopped, inactive, nodata, total } = statusData;
-  const [selectValue, setSelectValue] = useState(["All"]);
+  // const { running, idle, stopped, inactive, nodata, total } = statusData;
+  // const [selectValue, setSelectValue] = useState(["All"]);
   const handleClick = (value) => {
     if (selectValue.includes(value)) {
       setSelectValue(selectValue.filter((item) => item !== value));
@@ -196,6 +218,7 @@ const DriverTabComponent1 = (props) => {
           Save Selection
         </Button>
       </div>
+      {<CompanyItem vehicles={vehicles} handleToggleCardPositionHandler={props.handleToggleCardPosition} />}
     </>
   );
 };
