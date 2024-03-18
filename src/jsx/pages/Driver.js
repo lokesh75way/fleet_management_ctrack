@@ -12,7 +12,7 @@ const Driver = (ref) => {
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const driverDataFromLocalStorage = allData.filter(
-    (item) => item.Designation === "Driver"
+    (item) => item.designation === "Driver"
   );
   // const driverData =
   const DriverDataMemoized = useMemo(() => {
@@ -24,10 +24,11 @@ const Driver = (ref) => {
   useEffect(() => {
     const loginCompanyId = localStorage.getItem("loginDetails-name");
     const role = localStorage.getItem("role");
-    console.log(DriverDataMemoized, loginCompanyId);
+   
     let data1;
     if (role === "admin") {
       data1 = DriverDataMemoized;
+      console.log(data1)
     } else if (role === "businessgroup") {
       data1 = DriverDataMemoized.filter(
         (driver) => driver.parentBusinessGroup === loginCompanyId

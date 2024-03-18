@@ -11,7 +11,8 @@ const CustomInput = ({
   type,
   value,
   style,
-  disabled
+  disabled,
+  onChange
 }) => {
   const { errors } = useFormContext();
   return (
@@ -30,6 +31,7 @@ const CustomInput = ({
         defaultValue={defaultValue}
         disabled={disabled}
         autoComplete="off"
+        onChange={onChange}
       />
     </div>
   );

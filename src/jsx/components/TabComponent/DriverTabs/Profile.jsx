@@ -8,9 +8,6 @@ import {
   branchOptions,
   companyOptions,
   businessGroupOptions,
-  employeeDesignationOptions,
-  tagViaOptions,
-  defaultObjectNumberOptions,
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import { useParams } from "react-router-dom";
