@@ -110,6 +110,8 @@ const Home = () => {
     control: (base) => ({
       ...base,
       zIndex: "3",
+      padding: "20rem 0 ", // Adjust the height as needed,
+      width: "130%",
     }),
   };
   const openModalSetting = () => {

@@ -79,14 +79,15 @@ export const AdminMenuList = [
         }}
       />
     ),
+    url : "/technician",
     content: [
       {
         title: "Technician Details",
-        to: "technician/details",
+        to: "/technician/details",
       },
       {
         title: "Technician Tasks",
-        to: "technician/tasks",
+        to: "/technician/tasks",
       },
     ],
   },
@@ -158,23 +159,7 @@ export const AdminMenuList = [
     ),
     to: "/vehicle-tracking",
   },
-  {
-    title: "Reports",
-    iconStyle: (
-      <CgPoll
-        style={{
-          width: "20px",
-          height: "20px",
-          stroke: "#888888",
-          color: "#888888",
-          strokeWidth: "1",
-          clipRule: "evenodd",
-          fillRule: "evenodd",
-        }}
-      />
-    ),
-    to: "/reports",
-  },
+
   {
     title: "Feature Template",
     iconStyle: (
@@ -193,69 +178,68 @@ export const AdminMenuList = [
     to: "/groups",
   },
   {
-    title: "Alerts",
+    title: "Settings",
+    url : "/settings",
+    iconStyle: SVGICON.SettingMenu,
+    content: [
+      {
+        title: "Alerts",
+        to: "/settings/alert",
+      },
+
+      {
+        title: "Expense",
+        to: "/settings/expense",
+      },
+      {
+        title: "Geofence",
+        to: "/settings/geofence",
+      },
+
+      {
+        title: "Classify Trips",
+        to: "/settings/classifyTrips",
+      },
+    ],
+  },
+  {
+    title: "Reports",
     iconStyle: (
-      <FiAlertTriangle
+      <CgPoll
         style={{
           width: "20px",
           height: "20px",
           stroke: "#888888",
           color: "#888888",
-          strokeWidth: "1.5",
-          clipRule: "evenodd",
-          fillRule: "evenodd",
-        }}
-      />
-    ),
-    to: "/alert",
-  },
-  {
-    title: "Expense",
-    iconStyle: (
-      <GrMoney
-        style={{
-          width: "20px",
-          height: "20px",
-          stroke: "#888888",
           strokeWidth: "1",
           clipRule: "evenodd",
           fillRule: "evenodd",
         }}
       />
     ),
-    to: "/expense",
-  },
-
-  {
-    title: "Geofence",
-    iconStyle: (
-      <TbFence
-        style={{
-          width: "20px",
-          height: "20px",
-          stroke: "#888888",
-          strokeWidth: "1.5",
-          clipRule: "evenodd",
-          fillRule: "evenodd",
-        }}
-      />
-    ),
-    to: "/geofence",
-  },
-  {
-    title: "Classify Trips",
-    iconStyle: (
-      <BiTrip
-        style={{
-          width: "20px",
-          height: "20px",
-          stroke: "#888888",
-          strokeWidth: "1",
-          clipRule: "evenodd",
-          fillRule: "evenodd",
-        }}
-      />
-    ),
-    to: "/classifyTrips",
+    url: "/reports",
+    content: [
+    
+      {
+        title: "Activity",
+        to: "/reports/activity",
+      },
+      {
+        title: "Reports",
+        to: "/reports/generated",
+      },
+      {
+        title: "Geofence-Address",
+        to: "/reports/geofence-address",
+      },
+      {
+        title: "Temperature",
+        to: "/reports/temperature",
+      },
+      {
+        title: "Driver Behaviour",
+        to: "/reports/driver-behaviour",
+      },
+    ],
   },
 ];

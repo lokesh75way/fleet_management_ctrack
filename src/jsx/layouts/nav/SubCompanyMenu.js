@@ -1,4 +1,6 @@
+import { FaTools } from "react-icons/fa";
 import { SVGICON } from "../../constant/theme";
+import { CgPoll } from "react-icons/cg";
 
 export const SubCompanyMenuList = [
   //Content
@@ -18,48 +20,10 @@ export const SubCompanyMenuList = [
     title: "Sub Branch",
     classsChange: "mm-collapse",
     iconStyle: SVGICON.Task,
-    to:"branch",
-    content: [
-
-
-    ],
-    
+    to: "branch",
+    content: [],
   },
-  {
-    title: "Reports",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Reports,
-    content: [
-      {
-        title: "Activity",
-        to: "/reports/activity",
-      },
-      {
-        title: "Geofence-Address",
-        to: "/reports/geofence-address",
-      },
-      {
-        title: "Alert",
-        to: "/alert",
-      },
-      {
-        title: "Expense",
-        to: "/expense",
-      },
-      {
-        title: "Fuel",
-        to: "/reports/fuel",
-      },
-      {
-        title: "Temperature",
-        to: "/reports/temperature",
-      },
-      {
-        title: "Driver Behaviour",
-        to: "/reports/driver-behaviour",
-      },
-    ],
-  },
+
   {
     title: "Tracking",
     classsChange: "mm-collapse",
@@ -85,82 +49,130 @@ export const SubCompanyMenuList = [
     iconStyle: SVGICON.Employe,
     to: "/vehicle",
   },
- 
-  
-  {
-    title: "Charts",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Charts,
-    content: [
-      {
-        title: "Activity",
-        to: "/charts/activity",
-      },
-      {
-        title: "Alert",
-        to: "/charts/alert",
-      },
-      {
-        title: "Fuel",
-        to: "/charts/fuel",
-      },
-      {
-        title: "Expense",
-        to: "/charts/expense",
-      },
-      {
-        title: "Temperature Chart",
-        to: "/charts/temperature-chart",
-      },
-    ],
-  },
+
+  // {
+  //   title: "Charts",
+  //   classsChange: "mm-collapse",
+  //   iconStyle: SVGICON.Charts,
+  //   content: [
+  //     {
+  //       title: "Activity",
+  //       to: "/charts/activity",
+  //     },
+  //     {
+  //       title: "Alert",
+  //       to: "/charts/alert",
+  //     },
+  //     {
+  //       title: "Fuel",
+  //       to: "/charts/fuel",
+  //     },
+  //     {
+  //       title: "Expense",
+  //       to: "/charts/expense",
+  //     },
+  //     {
+  //       title: "Temperature Chart",
+  //       to: "/charts/temperature-chart",
+  //     },
+  //   ],
+  // },
   {
     title: "Technician",
-    classsChange: "mm-collapse",
-    iconStyle: SVGICON.Employe,
+
+    iconStyle: (
+      <FaTools
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    url: "/technician",
     content: [
       {
         title: "Technician Details",
-        to: "/technician",
+        to: "/technician/details",
       },
       {
         title: "Technician Tasks",
-        to: "/technicianTask",
+        to: "/technician/tasks",
       },
     ],
   },
   {
     title: "Settings",
-    classsChange: "mm-collapse",
+    url: "/settings",
     iconStyle: SVGICON.SettingMenu,
     content: [
       {
-        title: "Feature Templates",
-        to: "/groups",
-      },
-      {
         title: "Alerts",
-        to: "/alert",
+        to: "/settings/alert",
       },
+
       {
         title: "Expense",
-        to: "/expense",
+        to: "/settings/expense",
       },
       {
         title: "Geofence",
-        to: "/geofence",
+        to: "/settings/geofence",
       },
+
       {
         title: "Classify Trips",
-        to: "/classifyTrips",
+        to: "/settings/classifyTrips",
       },
     ],
   },
-
-    // {
-    //     title: 'Manage Clients',
-    //     iconStyle: SVGICON.ManageClient,
-    //     to: '/manage-client',
-    // },
-
-]
+  {
+    title: "Reports",
+    iconStyle: (
+      <CgPoll
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    url: "/reports",
+    content: [
+     
+      {
+        title: "Activity",
+        to: "/reports/activity",
+      },
+      {
+        title: "Reports",
+        to: "/reports/generated",
+      },
+      {
+        title: "Geofence-Address",
+        to: "/reports/geofence-address",
+      },
+      {
+        title: "Temperature",
+        to: "/reports/temperature",
+      },
+      {
+        title: "Driver Behaviour",
+        to: "/reports/driver-behaviour",
+      },
+    ],
+  },
+  // {
+  //     title: 'Manage Clients',
+  //     iconStyle: SVGICON.ManageClient,
+  //     to: '/manage-client',
+  // },
+];
