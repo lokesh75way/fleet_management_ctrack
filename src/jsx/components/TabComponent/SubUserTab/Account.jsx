@@ -33,6 +33,8 @@ const Account = ({
       ...base,
       padding: "0.25rem 0 ", // Adjust the height as needed
     }),
+
+    
   };
 
 
@@ -47,6 +49,17 @@ const Account = ({
 
   const { id } = useParams();
   const User = JSON.parse(localStorage.getItem("userJsonData"));
+  const role = localStorage.getItem("role");
+  const loggedinemail = localStorage.getItem("loginDetails-name");
+
+  
+  
+  let parentbgname;
+  if(role === 'company') {
+    const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
+    parentbgname = parentbgnamefilter[0].parentBusinessGroup;
+  }
+  
   const branchData = User.filter(
     (item) => item.role === "branch" && item.id == id
   );
@@ -74,27 +87,68 @@ const Account = ({
       value: item.id,
     }));
 
+    let tempcompanyOptions;
+    if(role === "businessgroup"){
 
-    const tempcompanyOptions = DummyData.filter(
-      (item) => item.role === "company"
-    )
-      .filter((cp) => cp.parent === businessUserValue)
-      .map((item) => ({
-        label: item.userName,
+      tempcompanyOptions = DummyData.filter(
+        (item) => item.role === "company"
+      )
+        .filter((cp) => cp.parent === loggedinemail)
+        .map((item) => ({
+          label: item.userName,
+          value: item.id,
+        }));
+        
+      }else{
+        
+        tempcompanyOptions = DummyData.filter(
+          (item) => item.role === "company"
+        )
+          .filter((cp) => cp.parent === businessUserValue)
+          .map((item) => ({
+            label: item.userName,
+            value: item.id,
+          }));
+        
+    }
+
+
+    let tempparentOptions;
+
+    if(role === 'company') {
+      tempparentOptions = DummyData.filter((item) => item.role === "branch")
+        .filter((br) => br.parentCompany === loggedinemail)
+        .map((item) => ({
+          label: item.userName,
+          value: item.id,
+        }));
+      }else{
+        tempparentOptions = DummyData.filter((item) => item.role === "branch")
+          .filter((br) => br.parentCompany === companyValue)
+          .map((item) => ({
+            label: item.userName,
+            value: item.id,
+          }));
+    }
+
+    let tempvehicleOptions;
+    if(role === 'company') {
+      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === loggedinemail ).map((item) => ({
+        label: item.vehicleName,
         value: item.id,
       }));
-
-    const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-      .filter((br) => br.parentCompany === companyValue)
-      .map((item) => ({
-        label: item.userName,
+      
+    }else{
+      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === companyValue ).map((item) => ({
+        label: item.vehicleName,
         value: item.id,
       }));
+      
 
-    const tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === companyValue ).map((item) => ({
-      label: item.vehicleName,
-      value: item.id,
-    }));
+    }
+
+
+
     tempcompanyOptions.push({ label: "None", value: 0 });
 
     setBusinessUserOptions(tempbusinessUserOptions);
@@ -108,6 +162,8 @@ const Account = ({
       setCompanyOptions([...defaultCompanyOptions,{ label: "None", value: 0 }]);
     }
     setVehiclesOptions(tempvehicleOptions);
+
+
     setParentOptions(tempparentOptions);
   }, [businessUserValue, companyValue, parentValue]);
 
@@ -136,6 +192,9 @@ const Account = ({
     );
   }, []);
 
+
+  
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -156,15 +215,24 @@ const Account = ({
                 isDisabled={defaultValues.business.disabled}
                 name={name}
                 styles={customStyles}
+                defaultValue={role === 'company' && {
+                  label: parentbgname,
+                  value: parentbgname,
+                } 
+              }
                 
               />
             )}
           />
         </div>
 
+
+        
+
+
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Company<span className="text-danger">*</span>
+            Company
           </label>
 
           <Controller
@@ -182,6 +250,11 @@ const Account = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
+
+                defaultValue={role === 'company' && {
+                  label: loggedinemail,
+                  value: loggedinemail,
+                } }
 
                 
               />
@@ -213,7 +286,7 @@ const Account = ({
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">vehicle</label>
+          <label className="form-label">Vehicle</label>
           <Controller
             name="accessibleVehicles"
             control={control}

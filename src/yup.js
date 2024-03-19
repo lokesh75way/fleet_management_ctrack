@@ -72,20 +72,12 @@ export const companyAccountSchema = yup
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    oldPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
     email: yup.string().email().required("Email is required "),
     helpDeskEmail: yup
       .string()
       .email()
       .required("Help Desk Email is required "),
-    newPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    retypePassword: yup
+    password: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
@@ -106,19 +98,11 @@ export const branchAccountSchema = yup
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    oldPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
     helpDeskEmail: yup
       .string()
       .email()
       .required("Help Desk Email is required "),
     newPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    retypePassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),

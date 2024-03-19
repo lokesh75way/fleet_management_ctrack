@@ -107,7 +107,7 @@ const MyAccount = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label>
+          <label className="form-label">Business User</label><span className="text-danger">*</span>
           {/* {
              checkRole() === "admin" ? 
           } */}
@@ -285,7 +285,7 @@ const MyAccount = ({
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">
-            State<span className="text-danger">*</span>
+            State
           </label>
           <div style={{ background: "white" }}>
             <StateSelect
@@ -320,7 +320,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code<span className="text-danger">*</span>
+            Zip Code
           </label>
           <CustomInput
             type="number"
