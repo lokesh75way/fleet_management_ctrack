@@ -1,38 +1,52 @@
-import React, { useState} from "react";
-import { Nav,  Tab } from "react-bootstrap";
+import React, { useState } from "react";
+import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../../yup' ;
+import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
-import {notifyError, notifySuccess} from '../../../../../utils/toast'
+import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 
 const CompanyForm = () => {
-  const{saveData} = useStorage()
-  const navigate = useNavigate()
+  const { saveData } = useStorage();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Company", "Settings","Change Password"];
-  const component = [MyAccount, UserSetting,ManagePassword];
-  const totalTabs = tabHeading.length;
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 1 ? companySettingSchema:companyAccountSchema )
-  })
+  let tabHeading = ["New Company", "Settings", "Change Password"];
+  let component = [MyAccount, UserSetting, ManagePassword];
+  if (!id) {
+    tabHeading.pop();
+    component.pop();
+  }
 
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      try{
+  const totalTabs = tabHeading.length;
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 1 ? companySettingSchema : companyAccountSchema
+    ),
+  });
+
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
         if (id) {
           const val = JSON.parse(localStorage.getItem("userJsonData"));
-          console.log("Id is needed",id, data)
+          console.log("Id is needed", id, data);
           const indexToUpdate = val.findIndex((item) => item.id == id);
           if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id , role : "company"};
+            val[indexToUpdate] = { ...data, id, role: "company" };
             localStorage.setItem("userJsonData", JSON.stringify(val));
             notifySuccess("Company Updated!");
             navigate("/company");
@@ -48,23 +62,19 @@ const CompanyForm = () => {
           navigate("/company");
           return;
         }
-      }
-      catch(error){
-        notifyError("Some error occured !!")
+      } catch (error) {
+        notifyError("Some error occured !!");
       }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    notifySuccess("Saved !")
-  }
-
-
-
+    notifySuccess("Saved !");
+  };
 
   return (
     <>
       <MainPagetitle
         mainTitle="Company"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Company"}
       />
       <div className="m-2 p-2">

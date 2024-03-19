@@ -6,8 +6,12 @@ import LogoutPage from "./Logout";
 import { HiOutlineLanguage } from "react-icons/hi2";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import Logoutbtn from "./Logoutbtn";
+import {useTranslation} from 'react-i18next'
 
 const NotificationBlog = ({ classChange }) => {
+
+  
+  
   return (
     <>
       <li>
@@ -46,6 +50,7 @@ const NotificationBlog = ({ classChange }) => {
 };
 
 const Header = ({ onNote }) => {
+  const {i18n} = useTranslation();
   const role = localStorage.getItem('role');
   const loginDetailsEmail = localStorage.getItem('loginDetails-email');
   const loginDetailsName = localStorage.getItem('loginDetails-name');
@@ -290,14 +295,14 @@ const Header = ({ onNote }) => {
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => setLang("ar")}
+                    onClick={() => {i18n.changeLanguage("ar"); setLang('ar')}}
                   >
                     Arabic
                   </Link>
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => setLang("en")}
+                    onClick={() => {i18n.changeLanguage("en"); setLang('en')}}
                   >
                     English
                   </Link>

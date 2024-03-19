@@ -18,7 +18,7 @@ const useBaseUrl = () => {
   const { pathname } = location;
   const segments = pathname.split("/");
 
-  // Extract the base URL
+  
   const baseUrl = segments.slice(0, 2).join("/");
 
   return baseUrl;

@@ -4,26 +4,25 @@ export const companyOptions = [
   { value: "company3@example.com", label: "Company3" },
   { value: "company4@example.com", label: "Company4" },
   { value: "company5@example.com", label: "Company5" },
-  {value : 'All Companies', label : "All Companies"}
+  { value: "All Companies", label: "All Companies" },
 ];
 
-export const branchOptions  = [
+export const branchOptions = [
   { value: "branch1@example.com", label: "Branch1" },
   { value: "branch2@example.com", label: "Branch2" },
   { value: "branch3@example.com", label: "Branch3" },
   { value: "branch4@example.com", label: "Branch4" },
   { value: "branch5@example.com", label: "Branch5" },
-]
+];
 
-export const businessGroupOptions  = [
+export const businessGroupOptions = [
   { value: "businessgroup1@example.com", label: "Business Group1" },
   { value: "businessgroup2@example.com", label: "Business Group2" },
   { value: "businessgroup3@example.com", label: "Business Group3" },
   { value: "businessgroup4@example.com", label: "Business Group4" },
   { value: "businessgroup5@example.com", label: "Business Group5" },
-]
-
-
+  { value: "All Groups", label: "All Groups" },
+];
 
 export const deviceTypeOptions = [
   { value: "2G Camera Howen 5632", label: "2G Camera Howen 5632" },
@@ -32,9 +31,7 @@ export const deviceTypeOptions = [
   { value: "2G Camera Howen 5635", label: "2G Camera Howen 5635" },
   { value: "2G Camera Howen 5636", label: "2G Camera Howen 5636" },
 ];
-export const copyFromOptions = [
-  { value: "Test", label: "Test" },
-];
+export const copyFromOptions = [{ value: "Test", label: "Test" }];
 export const distanceCounterOptions = [
   { value: "GPS", label: "GPS" },
   { value: "OBD", label: "OBD" },
@@ -49,7 +46,6 @@ export const driverDocumentOptions = [
   { value: "Bank Account", label: "Bank Account" },
   { value: "Mediclaim", label: "Mediclaim" },
   { value: "Custom", label: "Custom" },
-
 ];
 export const featureTemplateOptions = [
   { value: "Template 1", label: "Template 1" },
@@ -60,7 +56,7 @@ export const featureTemplateOptions = [
 export const unitOfDistanceOptions = [
   { value: "Kilometer", label: "Kilometer" },
   { value: "Mile", label: "Mile" },
-  { value: "Nautical mile", label: "Nautical mile" }
+  { value: "Nautical mile", label: "Nautical mile" },
 ];
 export const speedDetectionOptions = [
   { value: "From Device", label: "From Device" },
@@ -78,19 +74,19 @@ export const fuelTypeOptions = [
   { value: "Petrol", label: "Petrol" },
   { value: "Diesel", label: "Diesel" },
   { value: "Gas", label: "Gas" },
-  { value: "Electric", label: "Electric" }
+  { value: "Electric", label: "Electric" },
 ];
 export const distanceQuantitySelectOptions = [
   { value: "Litre", label: "Litre" },
-  { value: "Gallon", label: "Gallon" }
+  { value: "Gallon", label: "Gallon" },
 ];
 export const durationSelectOptions = [
   { value: "MM", label: "MM" },
-  { value: "HH:MM", label: "HH:MM" }
+  { value: "HH:MM", label: "HH:MM" },
 ];
 export const durationCostSelectOptions = [
   { value: "Day", label: "Day" },
-  { value: "Hour", label: "Hour" }
+  { value: "Hour", label: "Hour" },
 ];
 export const employeeDesignationOptions = [
   { value: "Driver", label: "Driver" },
@@ -101,14 +97,10 @@ export const employeeDesignationOptions = [
 ];
 export const tagViaOptions = [
   { value: "Beacon", label: "Beacon" },
-  { value: "RFID/Ibutton", label: "RFID/Ibutton" }
+  { value: "RFID/Ibutton", label: "RFID/Ibutton" },
 ];
-export const defaultObjectNumberOptions = [
-  { value: "Test", label: "Test" },
-];
-export const adminOptions = [
-  { value: "Timeline", label: "Timeline" },
-];
+export const defaultObjectNumberOptions = [{ value: "Test", label: "Test" }];
+export const adminOptions = [{ value: "Timeline", label: "Timeline" }];
 export const resellerOptions = [
   { value: "Test Timeline", label: "Test Timeline" },
 ];
@@ -139,9 +131,7 @@ export const TypeOptions = [
   { value: "Maintainance", label: "Maintainance" },
   { value: "Fuel", label: "Fuel" },
 ];
-export const jobOptions = [
-  { value: "Job1", label: "Job1" },
-];
+export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
   { value: "dd-MM-yyyy", label: "dd-MM-yyyy" },
   { value: "MM-dd-yyyy", label: "MM-dd-yyyy" },
@@ -163,9 +153,7 @@ export const subCompanyOptions = [
   { value: "All", label: "All" },
   { value: "75 way", label: "75 way" },
 ];
-export const objectOptions = [
-  { value: "All", label: "All" }
-];
+export const objectOptions = [{ value: "All", label: "All" }];
 export const preferredCurrencyUnitOptions = [
   { value: "All", label: "All" },
   { value: "75 way", label: "75 way" },
@@ -196,8 +184,6 @@ export const languageOptions = [
   { value: "French", label: "French" },
   { value: "Portugese", label: "Portugese" },
 ];
-
-
 
 export const currencyOptions = [
   { value: "AED", label: "AED" },

@@ -6,7 +6,8 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
+import { useParams } from "react-router-dom";
 const MyAccount = ({
   data,
   setValue,
@@ -22,6 +23,7 @@ const MyAccount = ({
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
 
+  const { id } = useParams();
 
   const customStyles = {
     control: (base) => ({
@@ -30,16 +32,12 @@ const MyAccount = ({
     }),
   };
 
-const user = localStorage.getItem('loginDetails-email')
+  const user = localStorage.getItem("loginDetails-email");
 
-
-
-
- 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-          <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             Business Group Name <span className="text-danger">*</span>
           </label>
@@ -54,43 +52,53 @@ const user = localStorage.getItem('loginDetails-email')
           <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
             name="email"
             label="email"
             placeholder=""
-            defaultValue={getValues('email')}
+            defaultValue={getValues("email")}
           />
           <Error errorName={errors.email} />
         </div>
+        {!id && (
+          <div className="col-xl-6 mb-3 ">
+            <label className="form-label">
+              Password<span className="text-danger">*</span>
+            </label>
+            <CustomInput
+              type="password"
+              register={register}
+              name="password"
+              label="password"
+              placeholder=""
+              defaultValue={getValues("password")}
+            />
+            <Error errorName={errors.password} />
+          </div>
+        )}
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password<span className="text-danger">*</span></label>
-          <CustomInput
-            type="password"
-            register={register}
-            name="password"
-            label="password"
-            placeholder=""
-            defaultValue={getValues('password')}
-          />
-          <Error errorName={errors.password} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={getValues('helpDeskEmail')}
+            defaultValue={getValues("helpDeskEmail")}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Telephone Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -98,21 +106,21 @@ const user = localStorage.getItem('loginDetails-email')
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
-            defaultValue={getValues('helpDeskTelephoneNumber')}
-
+            defaultValue={getValues("helpDeskTelephoneNumber")}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Mobile Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={getValues('mobileNumber')}
-
+            defaultValue={getValues("mobileNumber")}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -125,8 +133,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
-            defaultValue={getValues('whatsappContactNumber')}
-
+            defaultValue={getValues("whatsappContactNumber")}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -145,10 +152,12 @@ const user = localStorage.getItem('loginDetails-email')
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">
-            State
-          </label>
+        <div
+          className={`${
+            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+          }`}
+        >
+          <label className="form-label">State</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -172,8 +181,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="City"
             name="city"
             placeholder=""
-            defaultValue={getValues('city')}
-
+            defaultValue={getValues("city")}
           />
           <Error errorName={errors.city} />
         </div>
@@ -187,9 +195,9 @@ const user = localStorage.getItem('loginDetails-email')
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={getValues('zipCode')}
-
+            defaultValue={getValues("zipCode")}
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -201,8 +209,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={getValues('street1')}
-
+            defaultValue={getValues("street1")}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -216,8 +223,7 @@ const user = localStorage.getItem('loginDetails-email')
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={getValues('street2')}
-
+            defaultValue={getValues("street2")}
           />
         </div>
         <div className="col-xl-6 mb-3 ">

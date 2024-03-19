@@ -5,7 +5,12 @@ import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 
-const ClassifyTripTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
+const ClassifyTripTable = ({
+  tableData,
+  onConfirmDelete,
+  editDrawerOpen,
+  active,
+}) => {
   console.log("Table data ", tableData);
   return (
     <>
@@ -38,13 +43,15 @@ const ClassifyTripTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
 
           <td>
             <span className="d-flex justify-content-center">
-              <span className="cursor-pointer" title="tracking">
-                <Link to={`/vehicle-tracking/${item.tripId}`}>
-                  <FaLocationDot
-                    style={{ color: "#ff9f00", fontSize: "18px" }}
-                  />
-                </Link>
-              </span>
+              {active && (
+                <span className="cursor-pointer" title="tracking">
+                  <Link to={`/vehicle-tracking/${item.tripId}`}>
+                    <FaLocationDot
+                      style={{ color: "#ff9f00", fontSize: "18px" }}
+                    />
+                  </Link>
+                </span>
+              )}
               <span
                 className="cursor-pointer"
                 style={{ marginRight: "3px", marginLeft: "7px" }}

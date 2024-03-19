@@ -30,6 +30,7 @@ export const CompanyMenuList = [
     iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/branch",
   },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Technician",
     iconStyle: (
@@ -137,15 +138,29 @@ export const CompanyMenuList = [
         }}
       />
     ),
-    url: "/reports",
+    url : '/reports',
     content: [
       {
         title: "Activity",
         to: "/reports/activity",
       },
       {
+        title: "Alert",
+        to: "/reports/alert",
+      },
+      {
+        title: "Fuel",
+        to: "/reports/fuel",
+      },
+      
+      {
+        title: "Trip Classification",
+        to: "/reports/trip-classification",
+      },
+
+      {
         title: "Reports",
-        to: "/reports",
+        to: "/reports/generated",
       },
       {
         title: "Geofence-Address",
@@ -158,6 +173,10 @@ export const CompanyMenuList = [
       {
         title: "Driver Behaviour",
         to: "/reports/driver-behaviour",
+      },
+      {
+        title: "Billing",
+        to: "/reports/billing",
       },
     ],
   },
