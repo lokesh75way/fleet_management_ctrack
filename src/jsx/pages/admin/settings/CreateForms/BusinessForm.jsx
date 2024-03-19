@@ -69,9 +69,9 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Business User"
-        pageTitle={"Create"}
-        parentTitle={"Business User"}
+        mainTitle="Business Group"
+        pageTitle={id?"Edit":"Create"}
+        parentTitle={"Business Group"}
       />
       <div className="m-2 p-2">
         <FormProvider>

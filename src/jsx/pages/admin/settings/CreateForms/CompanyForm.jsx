@@ -64,7 +64,7 @@ const CompanyForm = () => {
     <>
       <MainPagetitle
         mainTitle="Company"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Company"}
       />
       <div className="m-2 p-2">

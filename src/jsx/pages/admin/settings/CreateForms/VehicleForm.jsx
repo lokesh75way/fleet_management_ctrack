@@ -7,11 +7,12 @@ import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+
 
 const VehicleForm = () => {
   const {saveData} = useStorage()
@@ -42,11 +43,13 @@ const VehicleForm = () => {
     // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
 
+  const {id} = useParams();
+
   return (
     <>
       <MainPagetitle
         mainTitle="Vehicle"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Vehicle"}
       />
       <div className="m-2 p-2">
