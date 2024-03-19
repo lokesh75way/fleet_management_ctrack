@@ -9,17 +9,25 @@ import {
   FaWifi,
   FaBatteryFull,
   FaEdit,
+  FaTrashAlt,
+  FaLocationArrow,
 } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 import { BsArrowRepeat } from "react-icons/bs";
 import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useNavigate  } from 'react-router-dom'
+import DeleteModal from "../Modal/DeleteModal";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
+import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
-import Position from "rsuite/esm/internals/Overlay/Position";
 import { getVehicles, statusData } from "../../../utils/selectValues";
-
+import CheckboxTree from 'react-checkbox-tree'
+import DriverCompanyItem from "../Tracking/DriverTabComponent3";
+import GeoFenceItem from "../Tracking/DriverTabComponent3";
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
     name: "Company1",
@@ -70,14 +78,7 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content
-            className="p-2 py-4"
-            style={{
-              background: "#f5f5f5",
-              height: "100vh",
-              overflowY: "auto",
-            }}
-          >
+          <Tab.Content className="p-2 py-4" style={{ background: "#f5f5f5" }}>
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
@@ -93,24 +94,22 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   );
 };
 
+
 const DriverTabComponent1 = (props) => {
   const status = statusData();
   const { Running, Idle, Stopped, Inactive, nodata, total } = status;
   const [selectValue, setSelectValue] = useState("All");
   const [vehicles, setVehicles] = useState([]);
-
   useEffect(() => {
     const data = getVehicles(selectValue);
     setVehicles(data);
   }, [selectValue]);
-
   const items = JSON.parse(localStorage.getItem("userJsonData"))
     .filter((item) => item.designation === "vehicle")
     .map((data) => ({
       id: data.id,
       name: data.vehicleName,
     }));
-
   const handleSearch = (item) => {
     const vehicleData = getVehicles(selectValue);
     console.log(vehicleData)
@@ -128,7 +127,6 @@ const DriverTabComponent1 = (props) => {
     }, {});
     setVehicles(convertedData);
   };
-
   return (
     <>
       <div className="vehicle_tracking-object">
@@ -199,7 +197,7 @@ const DriverTabComponent1 = (props) => {
             height: "30px",
             marginRight: "10px",
             fontSize : "12px",
-            color :"#4a4646"
+            color :"#4A4646"
           }}
           onSearch={(string) => {
             if (string === "") {
@@ -236,7 +234,6 @@ const DriverTabComponent2 = (props) => {
     (item) => item.activityStatus === "Not Allocated"
   );
   const total = drivers.length;
-
   const handleOnSelect = (results) => {
     setSelectValue("All");
     setFilterApplied(true);
@@ -250,7 +247,6 @@ const DriverTabComponent2 = (props) => {
     setDrivers(companyDriver);
     setCompany(search);
   };
-  
   const handleOnSearch = (string, results) => {
     setSelectValue("All");
     setIsDisable(false);
@@ -258,9 +254,7 @@ const DriverTabComponent2 = (props) => {
     setDrivers(jsonData.filter((item) => item.designation === "Driver"));
     setCompany(jsonData.filter((item) => item.role === "company"));
   };
-
   const handleSelectAll = (id,company,drivers, index) => {
-  
       var checkboxArray = [...selectedDrivers]
       if (!selectAll[index]) {
         drivers.map((item)=> checkboxArray[index].push(item.id) )
@@ -278,7 +272,6 @@ const DriverTabComponent2 = (props) => {
       return newArr
     })
   }
-
   const handleDriverSelect = (id, ind) => {
       const updatedDrivers = [...selectedDrivers];
       if (updatedDrivers[ind].includes(id)) {
@@ -287,7 +280,6 @@ const DriverTabComponent2 = (props) => {
           if(updatedDrivers[ind].length === 2){
             handleSelect(ind)
           }
-          
       } else {
           updatedDrivers[ind].push(id);
           if(updatedDrivers[ind].length === 3){
@@ -297,7 +289,6 @@ const DriverTabComponent2 = (props) => {
       console.log(updatedDrivers)
       setSelectedDrivers(updatedDrivers);
   };
-
   useEffect(() => {
     if (selectValue !== "All") {
       setCompany(jsonData.filter((item) => item.role === "company"));
@@ -324,8 +315,6 @@ const DriverTabComponent2 = (props) => {
       }
     } else setFilterApplied(false);
   }, [selectValue]);
-
-
   const items = jsonData
     .filter((item) => item.designation === "Driver")
     .map((item) => {
@@ -418,7 +407,6 @@ const DriverTabComponent2 = (props) => {
                 item.parentCompany === d.userName
             );
           }
-
           return (
             <Accordion
               className="accordion accordion-primary"
@@ -446,7 +434,6 @@ const DriverTabComponent2 = (props) => {
                   </div>
                   {d.userName}
                 </Accordion.Header>
-
                 {driver.length === 0 ? (
                   <Accordion.Body className="p-2 text-center fs-4 heading ">
                     No Record Found
@@ -495,113 +482,112 @@ const DriverTabComponent2 = (props) => {
     </>
   );
 };
+
+
+
 const DriverTabComponent3 = (props) => {
-  const { drivers } = props.data;
+  const geoData = JSON.parse(localStorage.getItem("geofenceData"));
+  const [tableData, setTableData] = useState(geoData);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Function to handle search
+  const handleSearch = (query) => {
+    console.log("Search Query:", query);
+    setSearchQuery(query);
+  };
+
+  // Function to reset search
+  const resetSearch = () => {
+    setSearchQuery("");
+  };
+
+   // Filter tableData based on searchQuery
+   const filteredTableData = tableData.filter((item) =>
+   item.company.toLowerCase().includes(searchQuery.toLowerCase())
+ );
+  const onConfirmDelete = (id) => {
+    const updatedData = tableData.filter((item) => item.id !== id);
+    setTableData(updatedData);
+
+    const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
+    localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
+  };
+
+  const editDrawerOpen = (d) => {
+    // navigate(`/geofence/map/edit/${d.id}`);
+  };
+
+  const toggleAllData = (company) => {
+    let newSelectedCompanies;
+    if (selectedCompanies.includes(company)) {
+      newSelectedCompanies = selectedCompanies.filter((c) => c !== company);
+    } else {
+      newSelectedCompanies = [...selectedCompanies, company];
+    }
+    setSelectedCompanies(newSelectedCompanies);
+
+    const updatedData = tableData.map((item) => {
+      if (item.company === company) {
+        return { ...item, selected: !selectedCompanies.includes(company) };
+      }
+      return item;
+    });
+    setTableData(updatedData);
+  };
+
+  const toggleSingleData = (id) => {
+    const updatedData = tableData.map((item) => {
+      if (item.id === id) {
+        return { ...item, selected: !item.selected };
+      }
+      return item;
+    });
+    setTableData(updatedData);
+  };
+
+  // Group tableData by company name
+  const groupedData = tableData.reduce((acc, cur) => {
+    if (!acc[cur.company]) {
+      acc[cur.company] = [];
+    }
+    acc[cur.company].push(cur);
+    return acc;
+  }, {});
+
   return (
     <>
-      <div className="d-flex mt-2">
-        <div className="search-driver-tab">
-          <input type="text" className="form-control-driver-tab" />
-          <FaSearch style={{ fontSize: "1.5rem", padding: "2px" }} />
-        </div>
-        <MdFence
-          style={{
-            fontSize: "1.5rem",
-            padding: "2px",
-            margin: "0 .3rem",
+      <div className="d-flex mt-4 mb-4">
+     
+        <ReactSearchAutocomplete
+          onSearch={handleSearch}
+          className="w-100"
+          placeholder="Search by company name"
+          styling={{
+            height: "30px",
+            marginRight: "10px",
+            fontSize: "12px",
+            color: "#red",
           }}
-        />
-        <FaFilter
-          style={{
-            fontSize: "1.5rem",
-            padding: "3px",
-            margin: "0 .3rem",
-          }}
+          // onSelect={handleSearch}
         />
       </div>
-      <div className="d-flex mt-2 fs-6 align-items-center">
-        <div
-          className="form-check custom-checkbox"
-          style={{ marginRight: "5px" }}
-        >
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="customCheckBox1"
-            required
-          />
-        </div>
-        <div
-          className=" bg-white p-2 d-flex justify-content-between"
-          style={{ width: "80%" }}
-        >
-          <span>Company 1</span>
-        </div>
-        <BsArrowRepeat
-          style={{
-            fontSize: "2.2rem",
-            padding: "2px",
-            margin: "0 .3rem",
-          }}
-        />
-      </div>
-      <Accordion
-        className="accordian accordion-solid-bg mt-4"
-        defaultActiveKey="0"
-        flush
+      <div
+        className="d-flex flex-column bg-white p-2"
+        style={{
+          border: " 1px solid white",
+          marginTop: ".5rem",
+          height: "65vh",
+          overflowY: "scroll",
+        }}
       >
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>All</Accordion.Header>
-          {drivers.map((d, index) => {
-            return (
-              <Accordion.Body className="p-2">
-                <div className="d-flex align-items-center">
-                  <div
-                    className="form-check custom-checkbox"
-                    style={{ marginRight: "5px" }}
-                  >
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="customCheckBox1"
-                      required
-                    />
-                  </div>
-                  <div className=" bg-white w-100 p-2 d-flex justify-content-between">
-                    <span>{d.name}</span>
-                    <div className="d-flex justify-content-around">
-                      <IoIosNavigate
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                      <FaEdit
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                      <MdDelete
-                        style={{
-                          fontSize: "1.5rem",
-                          padding: "2px",
-                          margin: "0 .3rem",
-                          background: "white",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Accordion.Body>
-            );
-          })}
-        </Accordion.Item>
-      </Accordion>
+      
+            <GeoFenceItem
+              geoFences={groupedData}
+              handleToggleCardPositionHandler={props.handleToggleCardPosition}
+            />
+        
+      </div>
     </>
   );
 };

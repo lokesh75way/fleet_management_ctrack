@@ -18,6 +18,10 @@ const BranchForm = () => {
   const totalTabs = tabHeading.length;
   const navigate = useNavigate();
   const { id } = useParams();
+  if(!id){
+    component.pop();
+    tabHeading.pop();
+  }
   const {
     register,
     formState: { errors },
@@ -66,7 +70,7 @@ const BranchForm = () => {
     <>
       <MainPagetitle
         mainTitle="Branch"
-        pageTitle={"Create"}
+        pageTitle={id? "Edit" : "Create"}
         parentTitle={"Branch"}
       />
       <div className="m-2 p-2">

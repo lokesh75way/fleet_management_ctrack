@@ -360,8 +360,8 @@
     "age": 32,
     "drivingExperienceSince": 7,
     "coordinate": {
-      "latitude": 30.7361,
-      "longitude": 76.7831
+      "latitude": 30.7362,
+      "longitude": 76.7832
     },
     "activityStatus": "Not Allocated"
   },
@@ -432,8 +432,8 @@
     "age": 38,
     "drivingExperienceSince": 3,
     "coordinate": {
-      "latitude": 30.713,
-      "longitude": 76.7829
+      "latitude": 30.723,
+      "longitude": 76.7889
     },
     "activityStatus": "Allocated"
   },
@@ -456,8 +456,8 @@
     "age": 33,
     "drivingExperienceSince": 9,
     "coordinate": {
-      "latitude": 30.728,
-      "longitude": 76.7881
+      "latitude": 30.723,
+      "longitude": 76.7889
     },
     "activityStatus": "Not Allocated"
   },
@@ -1459,8 +1459,8 @@
     "DVIRTemplate": "CAR-457",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7375,
-      "longitude": 76.7955
+      "latitude": 30.7377,
+      "longitude": 76.7957
     },
     "status": "Running"
   },
@@ -1476,8 +1476,8 @@
     "DVIRTemplate": "CAR-545",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7273,
-      "longitude": 76.7920
+      "latitude": 30.7275,
+      "longitude": 76.7921
     },
     "status": "Running"
   },
@@ -1493,8 +1493,8 @@
     "DVIRTemplate": "CAR-467",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7234,
-      "longitude": 76.7887
+      "latitude": 30.723,
+      "longitude": 76.7889
     },
     "status": "Running"
   },
@@ -1510,8 +1510,8 @@
     "DVIRTemplate": "CAR-345",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7575,
-      "longitude": 76.7815
+      "latitude": 30.7573,
+      "longitude": 76.7812
     },
     "status": "Running"
   },
@@ -1697,8 +1697,8 @@
     "DVIRTemplate": "CAGR-567",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7363,
-      "longitude": 76.7833
+      "latitude": 30.7362,
+      "longitude": 76.7832
     },
     "status": "Idle"
   },
@@ -1714,8 +1714,8 @@
     "DVIRTemplate": "CAQR-567",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7376,
-      "longitude": 76.7956
+      "latitude": 30.7377,
+      "longitude": 76.7957
     },
     "status": "Idle"
   },
@@ -1765,8 +1765,8 @@
     "DVIRTemplate": "CART-8567",
     "designation": "vehicle",
     "coordinate": {
-      "latitude": 30.7574,
-      "longitude": 76.7811
+      "latitude": 30.7573,
+      "longitude": 76.7812
     },
     "status": "Idle"
   }

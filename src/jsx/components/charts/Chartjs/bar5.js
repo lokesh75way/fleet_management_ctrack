@@ -3,54 +3,57 @@ import { Bar } from "react-chartjs-2";
 
 class BarChart5 extends Component {
   render() {
-    const data = {
+    const { labels, data, backgroundColor, hoverBackgroundColor, barThickness } = this.props;
+
+    const chartData = {
       defaultFontFamily: "Poppins",
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      labels: labels,
       datasets: [
         {
           label: "My First dataset",
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: data,
           borderColor: "rgba(44, 44, 44, 1)",
           borderWidth: "0",
-          backgroundColor: "rgba(44, 44, 44, 0.5)",
-          hoverBackgroundColor: "rgba(44, 44, 44, 0.5)",
-		      barThickness: 40
+          backgroundColor: backgroundColor,
+          hoverBackgroundColor: hoverBackgroundColor,
+          barThickness: barThickness
         },
       ],
     };
+
     const options = {
-		plugins:{
-		  legend: false,
-		},
+      plugins: {
+        legend: false,
+      },
       scales: {
-        y: 
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-            grid:{
-              color:"rgba(255, 255, 255, 0.1)"
-            }
+        x: {
+          ticks: {
+            beginAtZero: true,
           },
-        
-        x: 
-          {
-            // Change here
-            barPercentage: 0.5,
-            grid:{
-              color:"rgba(255, 255, 255, 0.1)"
-            }
-          },
-        
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)"
+          }
+        },
+        y: {
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)"
+          }
+        },
       },
     };
 
+    const horizontalOptions = {
+      ...options,
+      indexAxis: "y", // This makes the chart horizontal
+    };
+
     return (
-      <>
-        <Bar data={data} height={150} options={options} />
-      </>
+      <div>
+        <Bar data={chartData} height={150} options={horizontalOptions} />
+      </div>
     );
   }
 }
 
 export default BarChart5;
+

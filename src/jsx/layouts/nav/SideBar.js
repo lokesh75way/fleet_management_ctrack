@@ -18,7 +18,7 @@ const useBaseUrl = () => {
   const { pathname } = location;
   const segments = pathname.split("/");
 
-  // Extract the base URL
+  
   const baseUrl = segments.slice(0, 2).join("/");
 
   return baseUrl;
@@ -40,8 +40,8 @@ const SideBar = () => {
 
   const navigate = useNavigate();
 
-  const role = localStorage.getItem('role');
-  const type = localStorage.getItem('type');
+  const role = localStorage.getItem("role");
+  const type = localStorage.getItem("type");
 
   let MenuList;
   // if(role === "user"){
@@ -124,6 +124,7 @@ const SideBar = () => {
   };
 
   const url = useBaseUrl();
+  const { pathname: url2 } = useLocation();
   return (
     <div
       className={`deznav  border-right ${iconHover} ${
@@ -140,20 +141,22 @@ const SideBar = () => {
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
           {MenuList.map((data, index) => {
             let menuClass = data.classsChange;
-            if (menuClass !== "menu-title"){
+            if (menuClass !== "menu-title") {
               return (
                 <li
                   className={` ${
-                    url === data.to ? "mm-active text-primary" : ""
+                    url === data.to || url === "/" + data?.to?.split("/")[0] || data.url === url
+                      ? "mm-active text-primary"
+                      : ""
                   }`}
                   key={index}
                 >
-                
+                 
                   {data.content && data.content.length > 0 ? (
                     <>
                       <Link
                         to={data.to}
-                        className="has-arrow"
+                        className={`has-arrow  `}
                         onClick={() => {
                           handleMenuActive(data.title);
                         }}
@@ -178,13 +181,12 @@ const SideBar = () => {
                         >
                           {data.content &&
                             data.content.map((data, index) => {
-                              
                               return (
                                 <li
                                   key={index}
                                   className={`${
-                                    data.to === url
-                                      ? "mm-active"
+                                    data.to === url || data.to === url2
+                                      ? "mm-active text-primary"
                                       : ""
                                   }`}
                                 >
@@ -221,7 +223,8 @@ const SideBar = () => {
                                                 <li key={ind}>
                                                   <Link
                                                     className={`${
-                                                      url === data.to
+                                                      url === data.to ||
+                                                      url2 === data.to
                                                         ? "mm-active"
                                                         : ""
                                                     }`}
@@ -239,10 +242,17 @@ const SideBar = () => {
                                     <Link
                                       to={data.to}
                                       className={`${
-                                        data.to === url ? "mm-active" : ""
+                                        data.to === url ||
+                                        data.to === url2 ||
+                                       url2.substring(
+                                          0,
+                                         url2.lastIndexOf("/")
+                                        ) === data.to
+                                          ? "mm-active"
+                                          : ""
                                       }`}
                                     >
-                                   {data.title}
+                                      {data.title}
                                     </Link>
                                   )}
                                 </li>

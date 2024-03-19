@@ -29,6 +29,8 @@ import ResetPassword from './jsx/pages/ResetPassword';
 import { CompanyData, DriverData,VehicleData,SubCompanyData } from "./jsx/components/Tables/Tables";
 import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
 import UserJsonData from './users.json'
+import GeofenceData from './geofenceData.json'
+import { GiLabCoat } from "react-icons/gi";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
@@ -65,6 +67,8 @@ function App(props) {
     const technicianData = localStorage.getItem('technicianData');
     const userJsonData = localStorage.getItem('userJsonData')
 
+    const geoData = localStorage.getItem('geofenceData')
+
     if(!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
     if(!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
     if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));   
@@ -73,6 +77,7 @@ function App(props) {
     if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
     if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
     if(!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
+    if(!geoData) localStorage.setItem('geofenceData', JSON.stringify(GeofenceData))
     
 
   },[role])

@@ -13,15 +13,15 @@ const  ProjectOverviewChart = () =>{
     const chartRef = useRef();
     const  series = [
         {
-            name: 'Avg Temp',
+            name: 'Avg Freq',
             type: 'column',
             data: [27, 26, 28, 30, 26, 29, 30, 28, 26, 30, 27,28]
         }, {
-            name: 'Max Temp',
+            name: 'Max Freq',
             type: 'area',
             data: [32, 31, 34, 35, 30, 31,35, 32, 31, 33, 32,35]
         }, {
-            name: 'Min Temp',
+            name: 'Min Freq',
             type: 'line',
             data: [20, 22, 24, 21, 23, 25, 21, 23, 22, 24, 25,20]
         }
@@ -109,7 +109,7 @@ const  ProjectOverviewChart = () =>{
             }
         },
         colors:["var(--primary)","#FF5E5E","#3AC977"],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: ['0', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         markers: {
             size: 0
         },
@@ -176,28 +176,28 @@ const  ProjectOverviewChart = () =>{
             areaData = [44, 65, 55, 75, 45, 55, 40, 60, 75, 45, 50,42];
             lineData = [30, 25, 45, 30, 25, 35, 20, 45, 35, 30, 35,20];
 			}
-			chartRef.current.chart.ctx.updateSeries([
-          {
-            name: "Average Temperature",
-            type: 'column',
-            data: columnData
-          },{
-            name: 'Min Temp',
-            type: 'area',
-            data: areaData
-          },{
-            name: 'Max Temp',
-            type: 'line',
-            data: lineData
-          }
-			]);
+			// chartRef.current.chart.ctx.updateSeries([
+      //     {
+      //       name: "Average Temperature",
+      //       type: 'column',
+      //       data: columnData
+      //     },{
+      //       name: 'Min Temp',
+      //       type: 'area',
+      //       data: areaData
+      //     },{
+      //       name: 'Max Temp',
+      //       type: 'line',
+      //       data: lineData
+      //     }
+			// ]);
    }
     
     return (
       <>
           <Tab.Container defaultActiveKey={'Week'}>
             <div className="card-header border-0 pb-0 flex-wrap">
-                <h4 className="heading mb-0">Temperature Overview</h4>                
+                <h4 className="heading mb-0">Data Frequency</h4>                
                   <Nav as="ul" className="nav nav-pills mix-chart-tab">
                       {chartHeaderData.map((item, index)=>(
                         <Nav.Item as="li" className="nav-item" key={index}>
@@ -218,7 +218,7 @@ const  ProjectOverviewChart = () =>{
                     height={300}
                   />
                 </div>                
-                <div className="ttl-project">
+                {/* <div className="ttl-project">
                     <div className="pr-data">
                         <h5>30</h5>
                         <span>Average Temperature</span>
@@ -232,7 +232,7 @@ const  ProjectOverviewChart = () =>{
                         <span>Maximum Temperature</span>
                     </div>
                   
-                </div>
+                </div> */}
             </div>
           </Tab.Container>
       </>

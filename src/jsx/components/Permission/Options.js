@@ -167,7 +167,7 @@ export const staticoptions = [
         },
       },
       {
-        name: "Techinian Tasks",
+        name: "Technician Tasks",
         permissions: {
           add: true,
           view: true,

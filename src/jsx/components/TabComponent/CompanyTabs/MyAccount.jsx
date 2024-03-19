@@ -17,6 +17,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
   const [tempValue,setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
 
+  const role = localStorage.getItem('role');
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -33,6 +35,15 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     label: item.userName,
     value: item.id,
   }));
+
+  
+  useEffect(()=>{
+    
+      if(role === 'businessgroup'){
+      setTempValue(localStorage.getItem('loginDetails-name')); 
+      setValue("parent", localStorage.getItem('loginDetails-name'))
+      }
+  },[])
 
 
 
@@ -60,7 +71,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={businessUserOptions[0]}
               />
             )}
           />:
@@ -125,16 +135,16 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
+          <label className="form-label">Password<span className="text-danger">*</span></label>
           <CustomInput
-            type="email"
+            type="password"
             register={register}
-            label="Password Recovery Email"
-            name="passwordRecoveryEmail"
+            name="password"
+            label="password"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].passwordRecoveryEmail : ''}
+            defaultValue={getValues('password')}
           />
-          <Error errorName={errors.passwordRecoveryEmail} />
+          <Error errorName={errors.password} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
@@ -174,7 +184,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
+          <label className="form-label">Whatsapp Contact Number</label>
           <CustomInput
             type="number"
             register={register}
@@ -201,7 +211,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">State<span className="text-danger">*</span></label>
+          <label className="form-label">State</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -232,7 +242,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code<span className="text-danger">*</span>
+            Zip Code
           </label>
           <CustomInput
             type="number"
@@ -290,6 +300,15 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Fax Number"
             name="faxNumber"
             placeholder=""
+          />
+        </div>
+        <div className="col-xl-6 mb-3" >
+          <label className="form-label">Upload File</label>
+          <input
+            type="file"
+            label="Document Name"
+            name={`documentFile`}
+            className="form-control"
           />
         </div>
       </div>

@@ -53,11 +53,11 @@ export const getVehicles = (filter) => {
   }
 
   const groupedData = vehicle.reduce(
-    (acc, { company, vehicleName, coordinate, status , id }) => {
+    (acc, { company, vehicleName, coordinate, status, id }) => {
       if (!acc[company]) {
         acc[company] = [];
       }
-      acc[company].push({ vehicleName, coordinate, status , id });
+      acc[company].push({ vehicleName, coordinate, status, id });
       return acc;
     },
     {}
@@ -77,12 +77,52 @@ export const statusData = () => {
     total: vehicle.length,
   };
   vehicle.forEach((vehicle) => {
-    if(vehicle.status){
+    if (vehicle.status) {
       status[vehicle.status]++;
-    }
-    else{
-      status['nodata']++;
+    } else {
+      status["nodata"]++;
     }
   });
   return status;
 };
+
+export function filterAlerts(startDateStr, endDateStr, companyName, parentBusinessName, data = []) {
+  if (!Array.isArray(data)) {
+    console.error("Data is not an array.");
+    return [];
+  }
+  let startDate = startDateStr ? new Date(startDateStr) : new Date(0); // Default to epoch if startDate is not provided
+  let endDate = endDateStr ? new Date(endDateStr) : new Date(); // Default to current date if endDate is not provided
+  
+  return data.filter(item => {
+    let currentDate = new Date(item.createdDate);
+    let isDateInRange = (currentDate >= startDate) && (currentDate <= endDate);
+    
+    let isCompanyMatch = companyName === "All Companies" ? true : item.parentCompany === companyName;
+    let isParentBusinessMatch = parentBusinessName === "All Groups" ? true : item.parentBusiness === parentBusinessName;
+
+    return isDateInRange && isCompanyMatch && isParentBusinessMatch;
+  });
+}
+
+
+export function findHighestAndLowestDates(data) {
+  if (!Array.isArray(data) || data.length === 0) {
+    return { highestDate: null, lowestDate: null };
+  }
+
+  let highestDate = new Date(data[0].createdDate);
+  let lowestDate = new Date(data[0].createdDate);
+
+  for (let i = 1; i < data.length; i++) {
+    let currentDate = new Date(data[i].createdDate);
+    if (currentDate > highestDate) {
+      highestDate = currentDate;
+    }
+    if (currentDate < lowestDate) {
+      lowestDate = currentDate;
+    }
+  }
+
+  return { highestDate, lowestDate };
+}

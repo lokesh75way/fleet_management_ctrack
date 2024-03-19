@@ -17,6 +17,25 @@ import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 
+
+const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
+const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
+const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
+const Logs = React.lazy(() => import("./pages/company/reports/Logs"));
+const Customized = React.lazy(() => import("./pages/company/reports/Customized"));
+const OBD = React.lazy(() => import("./pages/company/reports/OBD"));
+const Billing = React.lazy(() => import("./pages/company/reports/Billing"));
+const RPM = React.lazy(() => import("./pages/company/reports/RPM"));
+const Temperature = React.lazy(() => import("./pages/company/reports/Temperature"));
+const DriverBehaviour = React.lazy(() => import("./pages/company/reports/DriverBehaviour"));
+const ActivityReport = React.lazy(() => import("./pages/company/reports/Activity"));
+const GeofenceAddress = React.lazy(() => import("./pages/company/reports/GeofenceAddress"));
+const Sensor = React.lazy(() => import("./pages/company/reports/Sensor"));
+const AlertReport = React.lazy(() => import("./pages/company/reports/Alert"));
+const Reminder = React.lazy(() => import("./pages/company/reports/Reminder"));
+const ExpenseReport = React.lazy(() => import("./pages/company/reports/Expense"));
+const FuelReport = React.lazy(() => import("./pages/company/reports/Fuel"));
+
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
 );
@@ -84,7 +103,7 @@ const BusinessGroupRoutes = () => {
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },
     { url: "manage-client", component: <ManageClient /> },
-    { url: "reports", component: <Report /> },
+    { url: "reports/generated", component: <Report /> },
     { url: "driver", component: <Driver /> },
     { url: "company", component: <Company /> },
     { url: "company/:id", component: <Company /> },
@@ -94,18 +113,21 @@ const BusinessGroupRoutes = () => {
     { url: "technician/details", component: <Technician /> },
     { url: "technician/edit/:id", component: <TechnicianForm /> },
     { url: "vehicle-tracking", component: <DriverTracking /> },
+    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
     { url: "company-tracking", component: <CompanyTracking /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
     { url: "driver/edit/:id", component: <DriverForm /> },
-    { url: "technician/create", component: <TechnicianForm /> },
+    { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "subUser/create", component: <SubUserForm /> },
     { url: "subUser", component: <SubUser /> },
-    { url: "alert", component: <Alert /> },
-    { url: "classifyTrips", component: <ClassifyTrips /> },
-    { url: "expense", component: <Expense /> },
-    { url: "geofence", component: <Geofence /> },
-    { url: "geofence/map", component: <GeofenceMap /> },
+
+    { url: "/settings/alert", component: <Alert /> },
+    { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
+    { url: "/settings/expense", component: <Expense /> },
+    { url: "/settings/geofence", component: <Geofence /> },
+    { url: "/settings/geofence/map", component: <GeofenceMap /> },
+
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },
@@ -129,6 +151,25 @@ const BusinessGroupRoutes = () => {
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "groups/permission", component: <Permission /> },
+
+     //Reports
+     { url: "/reports/activity", component: <ActivityReport /> },
+     { url: "/reports/geofence-address", component: <GeofenceAddress /> },
+     { url: "/reports/sensor", component: <Sensor /> },
+     { url: "/reports/alert", component: <AlertReport /> },
+     { url: "/reports/reminder", component: <Reminder /> },
+     { url: "/reports/expense", component: <ExpenseReport /> },
+     { url: "/reports/fuel", component: <FuelReport /> },
+     { url: "/reports/rpm", component: <RPM /> },
+     { url: "/reports/temperature", component: <Temperature /> },
+     { url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
+     { url: "/reports/obd", component: <OBD /> },
+     { url: "/reports/billing", component: <Billing /> },
+     { url: "/reports/customized", component: <Customized /> },
+     { url: "/reports/logs", component: <Logs /> },
+     { url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
+     { url: "/reports/elock", component: <Elock /> },
+     { url: "/reports/trip-classification", component: <TripClassification /> },
   ];
 
   function NotFound() {

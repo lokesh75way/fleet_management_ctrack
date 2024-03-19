@@ -30,6 +30,7 @@ export const CompanyMenuList = [
     iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/branch",
   },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
   {
     title: "Technician",
     iconStyle: (
@@ -45,14 +46,15 @@ export const CompanyMenuList = [
         }}
       />
     ),
+    url : '/technician',
     content: [
       {
         title: "Technician Details",
-        to: "/technician",
+        to: "/technician/details",
       },
       {
         title: "Technician Tasks",
-        to: "/technicianTask",
+        to: "/technician/tasks",
       },
     ],
   },
@@ -90,37 +92,93 @@ export const CompanyMenuList = [
     ),
     to: "/driver",
   },
-  {
-    title: "Reports",
-    iconStyle: <CgPoll style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/reports",
-  },
+ 
   {
     title: "Feature Template",
     iconStyle: <PiWarningOctagonDuotone style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to: "/groups",
   },
   {
-    title: "Alerts",
-    iconStyle: <FiAlertTriangle style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/alert",
+    title: "Settings",
+    url : "/settings",
+    iconStyle: SVGICON.SettingMenu,
+    content: [
+      {
+        title: "Alerts",
+        to: "/settings/alert",
+      },
+
+      {
+        title: "Expense",
+        to: "/settings/expense",
+      },
+      {
+        title: "Geofence",
+        to: "/settings/geofence",
+      },
+
+      {
+        title: "Classify Trips",
+        to: "/settings/classifyTrips",
+      },
+    ],
   },
   {
-    title: "Geofence",
-    iconStyle: <TbFence style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1.5',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/geofence",
-  },
-  {
-    title: "Expense",
-    iconStyle: <GrMoney style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}} />,
-    to: "/expense",
-  },
- 
- 
-  {
-    title: "Classify Trips",
-    iconStyle: <BiTrip style={{ width:"20px",height:"20px",stroke:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to: "/classifyTrips",
+    title: "Reports",
+    iconStyle: (
+      <CgPoll
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    url : '/reports',
+    content: [
+      {
+        title: "Activity",
+        to: "/reports/activity",
+      },
+      {
+        title: "Alert",
+        to: "/reports/alert",
+      },
+      {
+        title: "Fuel",
+        to: "/reports/fuel",
+      },
+      
+      {
+        title: "Trip Classification",
+        to: "/reports/trip-classification",
+      },
+
+      {
+        title: "Reports",
+        to: "/reports/generated",
+      },
+      {
+        title: "Geofence-Address",
+        to: "/reports/geofence-address",
+      },
+      {
+        title: "Temperature",
+        to: "/reports/temperature",
+      },
+      {
+        title: "Driver Behaviour",
+        to: "/reports/driver-behaviour",
+      },
+      {
+        title: "Billing",
+        to: "/reports/billing",
+      },
+    ],
   },
 
 ]
