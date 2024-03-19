@@ -71,11 +71,17 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
     notifySuccess('Saved !')
     console.log(data);
   };
+
+
+  if(!id){
+    component.pop();
+    tabHeading.pop();
+  }
   return (
     <>
       <MainPagetitle
         mainTitle="Technician"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit" : "Create"}
         parentTitle={"Technician"}
       />
       <div className="m-2 p-2">

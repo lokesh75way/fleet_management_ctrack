@@ -7,7 +7,7 @@ import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
@@ -23,7 +23,7 @@ const VehicleForm = () => {
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
   })
-
+  const { id } = useParams();
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       try{
@@ -42,11 +42,17 @@ const VehicleForm = () => {
     // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
 
+  if (!id) {
+    tabHeading.pop();
+    component.pop();
+  }
+
+
   return (
     <>
       <MainPagetitle
         mainTitle="Vehicle"
-        pageTitle={"Create"}
+        pageTitle={id ? "Edit" : "Create"}
         parentTitle={"Vehicle"}
       />
       <div className="m-2 p-2">

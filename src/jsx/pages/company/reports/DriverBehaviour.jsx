@@ -7,7 +7,10 @@ import MainPagetitle from "../../../layouts/MainPagetitle";
 import { DriverData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import DriverTable from "../../../components/Tables/DriverTable";
-import { filterAlerts, findHighestAndLowestDates } from "../../../../utils/selectValues";
+import {
+  filterAlerts,
+  findHighestAndLowestDates,
+} from "../../../../utils/selectValues";
 import { companyOptions } from "../../../components/TabComponent/VehicleTabs/Options";
 
 const headers = [
@@ -22,15 +25,14 @@ const headers = [
 ];
 
 const DriverBehaviour = (ref) => {
-    const [startDate, setStartDate] = useState(new Date(0));
-    const [endDate, setEndDate] = useState(new Date(0));
-  
-    const dateRangeText = startDate.toLocaleDateString();
-  
-    const [selectFilter, setFilter] = useState({
-      value: "All Companies",
-      label: "All Companies",
-    });
+  const [date, setDate] = useState({
+    startDate: new Date(0),
+    endDate: new Date(0),
+  });
+  const [businessFilter, setBusinessFilter] = useState('All Groups');
+  const [companyFilter, setFilterCompany] = useState('All Companies');
+
+  // console.log("company is ", businessFilter, companyFilter, date);
 
   const [tableData, setTableData] = useState(DriverData);
   const [editData, setEditData] = useState({
@@ -59,38 +61,19 @@ const DriverBehaviour = (ref) => {
     }
   };
 
- 
   useEffect(() => {
-    const dates = findHighestAndLowestDates(DriverData);
-    setStartDate(dates.lowestDate);
-    setEndDate(dates.highestDate);
-  }, []);
-
-  useEffect(() => {
-    console.log(startDate);
-    if (startDate && endDate) {
-      const data = filterAlerts(
-        startDate,
-        endDate,
-        selectFilter.label,
+    if (date?.startDate && date?.endDate) {
+    const data = filterAlerts(
+        date?.startDate,
+        date?.endDate,
+        companyFilter,
+        businessFilter,
         DriverData
       );
       setTableData(data);
     }
-  }, [startDate, endDate, selectFilter.value]);
+  }, [date?.startDate, date?.endDate, companyFilter, businessFilter]);
 
-
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
 
 
   useEffect(() => {
@@ -112,8 +95,6 @@ const DriverBehaviour = (ref) => {
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
-
-    // setEditTableData(item);
     filter.current.showModal();
   };
   const handleSubmit = (e) => {
@@ -145,38 +126,6 @@ const DriverBehaviour = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">DriverBehaviour</h4>
                     <div className="d-flex">
-                      <DatePicker
-                        // width="0px"
-                        className="form-control"
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        onChange={(dates) => {
-                          const [start, end] = dates;
-                          setStartDate(start);
-                          setEndDate(end);
-                        }}
-                        dateFormat="dd/MM/yy"
-                        placeholderText={dateRangeText}
-                      />
-                      <Select
-                        onChange={(newValue) => {
-                          setFilter({
-                            value: newValue.value,
-                            label: newValue.label,
-                          });
-                        }}
-                        name={"parent"}
-                        menuPortalTarget={document.body}
-                        menuPosition={"fixed"}
-                        styles={customStyles}
-                        options={companyOptions}
-                        value={selectFilter}
-                        defaultValue={{
-                          label: "All Companies",
-                          value: "All Companies",
-                        }}
-                      />
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"
@@ -273,8 +222,12 @@ const DriverBehaviour = (ref) => {
         </div>
       </div>
       <FilterOffcanvas
+        data={DriverData}
         ref={filter}
         editData={editData}
+        setBusinessHandler={setBusinessFilter}
+        setCompanyHandler={setFilterCompany}
+        setDatehandler={setDate}
         setEditData={setEditData}
         handleSubmit={handleSubmit}
         Title={editData.id === 0 ? "Add Filter" : "Edit Filter"}

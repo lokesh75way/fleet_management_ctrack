@@ -301,6 +301,7 @@ const ActiveTab = () => {
                     </thead>
                     <tbody>
                       <ClassifyTripTable
+                        active={true}
                         editData={editData}
                         tableData={tableData}
                         onConfirmDelete={onConfirmDelete}
@@ -471,6 +472,7 @@ const PlannedTab = () => {
                     </thead>
                     <tbody>
                       <ClassifyTripTable
+                        active={false}
                         editData={editData}
                         tableData={tableData}
                         onConfirmDelete={onConfirmDelete}
@@ -651,6 +653,7 @@ const CompletedTab = () => {
                     </thead>
                     <tbody>
                       <ClassifyTripTable
+                         active={false}
                         editData={editData}
                         tableData={tableData}
                         onConfirmDelete={onConfirmDelete}

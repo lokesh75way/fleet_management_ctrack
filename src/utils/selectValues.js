@@ -86,31 +86,28 @@ export const statusData = () => {
   return status;
 };
 
-export function filterAlerts(startDateStr, endDateStr, companyName, data = []) {
+export function filterAlerts(startDateStr, endDateStr, companyName, parentBusinessName, data = []) {
   if (!Array.isArray(data)) {
     console.error("Data is not an array.");
     return [];
   }
-
-  let startDate = startDateStr ? startDateStr : new Date(0); // Default to epoch if startDate is not provided
-  let endDate = endDateStr ? endDateStr : new Date(); // Default to current date if endDate is not provided
-  return data.filter((item) => {
+  let startDate = startDateStr ? new Date(startDateStr) : new Date(0); // Default to epoch if startDate is not provided
+  let endDate = endDateStr ? new Date(endDateStr) : new Date(); // Default to current date if endDate is not provided
+  
+  return data.filter(item => {
     let currentDate = new Date(item.createdDate);
-    let isDateInRange = (startDate <= currentDate) &&  (currentDate <= endDate);
+    let isDateInRange = (currentDate >= startDate) && (currentDate <= endDate);
+    
+    let isCompanyMatch = companyName === "All Companies" ? true : item.parentCompany === companyName;
+    let isParentBusinessMatch = parentBusinessName === "All Groups" ? true : item.parentBusiness === parentBusinessName;
 
-    if (companyName === "All Companies") {
-      console.log(startDate , currentDate, startDate < currentDate)
-      return startDate < currentDate;
-    }
-
-    let isCompanyMatch = !companyName || item.parentCompany === companyName;
-    return isDateInRange && isCompanyMatch;
+    return isDateInRange && isCompanyMatch && isParentBusinessMatch;
   });
 }
 
+
 export function findHighestAndLowestDates(data) {
   if (!Array.isArray(data) || data.length === 0) {
-    console.error("Data is either not an array or empty.");
     return { highestDate: null, lowestDate: null };
   }
 

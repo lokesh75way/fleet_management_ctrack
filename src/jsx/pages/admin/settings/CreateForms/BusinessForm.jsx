@@ -19,12 +19,16 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   const navigate = useNavigate()
   const { id } = useParams(); 
 
+  if(!id){
+    component.pop();
+    tabHeading.pop();
+  }
+
   // Fetch data from local storage when the id changes
   useEffect(() => {
     const existingData = JSON.parse(localStorage.getItem("userJsonData"));
     console.log(existingData, id)
     const businessData = existingData.find((item) => item.id === parseInt(id, 10));
-    console.log(businessData, 'nuslkasd')
     if (businessData) {
       reset(businessData);
     }
@@ -70,7 +74,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     <>
       <MainPagetitle
         mainTitle="Business User"
-        pageTitle={"Create"}
+        pageTitle={id? "Edit" : "Create"}
         parentTitle={"Business User"}
       />
       <div className="m-2 p-2">

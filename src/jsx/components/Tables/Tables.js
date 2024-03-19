@@ -74,7 +74,6 @@ export const TechnicianData = [
   {id: '1012', image:IMAGES.contact1, mobileNumber:'+91 123 456 7890',status:'Active' ,firstName: 'Ricky Antony', email: 'ra@gmail.com', country:'India'},    
 ];
  export const DriverData = [
-  // Company 1 data
   {
       id: '1001',
       branch: "company1@example.com",
@@ -86,7 +85,8 @@ export const TechnicianData = [
       contactNumber1: '+91 123 456 7890',
       createdDate: "2024-02-23",
       city: 'Mumbai',
-      parentCompany : 'Company4'
+      parentCompany : 'Company4',
+      parentBusiness : "Business Group1"
   },
   {
       id: '1002',
@@ -99,11 +99,11 @@ export const TechnicianData = [
       contactNumber1: '+1 234 567 8901',
       createdDate : '2024-02-21',
       city: 'New York',
-      parentCompany : 'Company4'
-  },
-  // 3 more entries for company1@example.com...
+      parentCompany : 'Company4',
+      parentBusiness : "Business Group2"
 
-  // Company 2 data
+  },
+  
   {
       id: '2001',
       branch: "company2@example.com",
@@ -115,7 +115,9 @@ export const TechnicianData = [
       contactNumber1: '+1 987 654 3210',
       createdDate : '2024-03-10',
       city: 'Los Angeles',
-      parentCompany : 'Company3'
+      parentCompany : 'Company3',
+      parentBusiness : "Business Group3"
+
   },
 
   {
@@ -129,11 +131,11 @@ export const TechnicianData = [
       contactNumber1: '+44 987 654 3210',
       createdDate : '2024-01-24',
       city: 'London',
-      parentCompany : 'Company3'
-  },
-  // 3 more entries for company2@example.com...
+      parentCompany : 'Company3',
+      parentBusiness : "Business Group4"
 
-  // Company 3 data
+  },
+  
   {
       id: '3001',
       branch: "company3@example.com",
@@ -145,7 +147,9 @@ export const TechnicianData = [
       contactNumber1: '+1 876 543 2109',
       createdDate : '2024-02-11',
       city: 'Sydney',
-      parentCompany : 'Company2'
+      parentCompany : 'Company2',
+      parentBusiness : "Business Group5"
+
   },
   {
       id: '3002',
@@ -158,11 +162,10 @@ export const TechnicianData = [
       contactNumber1: '+44 876 543 2109',
       createdDate : '2024-02-15',
       city: 'Manchester',
-      parentCompany : 'Company2'
-  },
-  // 3 more entries for company3@example.com...
+      parentCompany : 'Company2',
+      parentBusiness : "Business Group1"
 
-  // Company 4 data
+  },
   {
       id: '4001',
       branch: "company4@example.com",
@@ -174,7 +177,9 @@ export const TechnicianData = [
       contactNumber1: '+1 765 432 1098',
       createdDate : '2024-02-21',
       city: 'Chicago',
-      parentCompany : 'Company2'
+      parentCompany : 'Company2',
+      parentBusiness : "Business Group1"
+
   },
   {
       id: '4002',
@@ -187,11 +192,11 @@ export const TechnicianData = [
       contactNumber1: '+44 765 432 1098',
       createdDate : '2024-02-11',
       city: 'Birmingham',
-      parentCompany : 'Company1'
-  },
-  // 3 more entries for company4@example.com...
+      parentCompany : 'Company1',
+      parentBusiness : "Business Group2"
 
-  // Company 5 data
+  },
+  
   {
       id: '5001',
       branch: "company5@example.com",
@@ -203,7 +208,9 @@ export const TechnicianData = [
       contactNumber1: '+1 654 321 0987',
       createdDate : '2024-03-12',
       city: 'Houston',
-      parentCompany : 'Company1'
+      parentCompany : 'Company1',
+      parentBusiness : "Business Group3"
+
   },
   {
       id: '5002',
@@ -216,10 +223,288 @@ export const TechnicianData = [
       contactNumber1: '+44 654 321 0987',
       createdDate : '2024-02-11',
       city: 'Manchester',
-      parentCompany : 'Company1'
+      parentCompany : 'Company1',
+      parentBusiness : "Business Group3"
+
   },
-  // 3 more entries for company5@example.com...
 ];
+
+export const FuelData = [
+  {
+      id: '1001',
+      createdDate: "2024-02-23",
+      parentCompany: 'Company4',
+      parentBusiness: "Business Group1",
+      vehicleName: "Vehicle A",
+      fuelConsumed: 50, // in liters
+      mileage: 12, // in kilometers per liter
+      drain: false,
+      duration: 2, // in hours
+      maxStoppage: 30, // in minutes
+      distance: 120 // in kilometers
+  },
+  {
+      id: '1002',
+      createdDate: '2024-02-21',
+      parentCompany: 'Company4',
+      parentBusiness: "Business Group2",
+      vehicleName: "Vehicle B",
+      fuelConsumed: 60,
+      mileage: 15,
+      drain: true,
+      duration: 2.5,
+      maxStoppage: 45,
+      distance: 150
+  },
+  {
+      id: '2001',
+      createdDate: '2024-03-10',
+      parentCompany: 'Company3',
+      parentBusiness: "Business Group3",
+      vehicleName: "Vehicle C",
+      fuelConsumed: 70,
+      mileage: 14,
+      drain: false,
+      duration: 3,
+      maxStoppage: 60,
+      distance: 200
+  },
+  {
+      id: '2002',
+      createdDate: '2024-01-24',
+      parentCompany: 'Company3',
+      parentBusiness: "Business Group4",
+      vehicleName: "Vehicle D",
+      fuelConsumed: 55,
+      mileage: 11,
+      drain: true,
+      duration: 2.5,
+      maxStoppage: 45,
+      distance: 150
+  },
+  {
+      id: '3001',
+      createdDate: '2024-02-11',
+      parentCompany: 'Company2',
+      parentBusiness: "Business Group5",
+      vehicleName: "Vehicle E",
+      fuelConsumed: 65,
+      mileage: 13,
+      drain: false,
+      duration: 3,
+      maxStoppage: 60,
+      distance: 195
+  },
+  {
+      id: '3002',
+      createdDate: '2024-02-15',
+      parentCompany: 'Company2',
+      parentBusiness: "Business Group1",
+      vehicleName: "Vehicle F",
+      fuelConsumed: 75,
+      mileage: 15,
+      drain: true,
+      duration: 3.5,
+      maxStoppage: 45,
+      distance: 225
+  },
+  {
+      id: '4001',
+      createdDate: '2024-02-21',
+      parentCompany: 'Company2',
+      parentBusiness: "Business Group1",
+      vehicleName: "Vehicle G",
+      fuelConsumed: 70,
+      mileage: 14,
+      drain: false,
+      duration: 3,
+      maxStoppage: 60,
+      distance: 210
+  },
+  {
+      id: '4002',
+      createdDate: '2024-02-11',
+      parentCompany: 'Company1',
+      parentBusiness: "Business Group2",
+      vehicleName: "Vehicle H",
+      fuelConsumed: 60,
+      mileage: 12,
+      drain: true,
+      duration: 2.5,
+      maxStoppage: 45,
+      distance: 180
+  },
+  {
+      id: '5001',
+      createdDate: '2024-03-12',
+      parentCompany: 'Company1',
+      parentBusiness: "Business Group3",
+      vehicleName: "Vehicle I",
+      fuelConsumed: 80,
+      mileage: 16,
+      drain: false,
+      duration: 4,
+      maxStoppage: 90,
+      distance: 240
+  },
+  {
+      id: '5002',
+      createdDate: '2024-02-11',
+      parentCompany: 'Company1',
+      parentBusiness: "Business Group3",
+      vehicleName: "Vehicle J",
+      fuelConsumed: 55,
+      mileage: 11,
+      drain: true,
+      duration: 2.5,
+      maxStoppage: 45,
+      distance: 165
+  }
+];
+
+export const tripData = [
+  {
+    id: '1001',
+    firstName: 'Rahul',
+    lastName: 'Verma',
+    parentCompany: 'Company4',
+    parentBusiness: 'Business Group1',
+    activeTrips: 3,
+    plannedTrips: 15,
+    completedTrips: 8,
+    totalTrips: 26,
+    totalDuration: 320, 
+    totalDistance: 180 ,
+    createdDate : '2024-02-11',
+  },
+  {
+    id: '1002',
+    firstName: 'John',
+    parentCompany: 'Company4',
+    parentBusiness: 'Business Group2',
+    activeTrips: 6,
+    plannedTrips: 18,
+    completedTrips: 12,
+    totalTrips: 36,
+    totalDuration: 420,
+    totalDistance: 250,
+    createdDate : '2024-02-11',
+  },
+  {
+    id: '2001',
+    firstName: 'David',
+    lastName: 'Smith',
+    parentCompany: 'Company3',
+    parentBusiness: 'Business Group3',
+    activeTrips: 4,
+    plannedTrips: 12,
+    completedTrips: 10,
+    totalTrips: 26,
+    totalDuration: 380,
+    totalDistance: 220,
+    createdDate : '2023-12-11',
+  },
+  {
+    id: '2002',
+    firstName: 'Emma',
+    lastName: 'Johnson',
+    parentCompany: 'Company3',
+    parentBusiness: 'Business Group4',
+    activeTrips: 2,
+    plannedTrips: 10,
+    completedTrips: 6,
+    totalTrips: 18,
+    totalDuration: 280,
+    totalDistance: 150,
+    createdDate : '2024-01-01',
+  },
+  {
+    id: '3001',
+    firstName: 'Liam',
+    lastName: 'Martin',
+    parentCompany: 'Company2',
+    parentBusiness: 'Business Group5',
+    activeTrips: 5,
+    plannedTrips: 20,
+    completedTrips: 15,
+    totalTrips: 40,
+    totalDuration: 480,
+    totalDistance: 300,
+    createdDate : '2024-01-05',
+  },
+  {
+    id: '3002',
+    firstName: 'Ava',
+    lastName: 'Brown',
+    parentCompany: 'Company2',
+    parentBusiness: 'Business Group1',
+    activeTrips: 7,
+    plannedTrips: 22,
+    completedTrips: 18,
+    totalTrips: 47,
+    totalDuration: 560,
+    totalDistance: 320,
+    createdDate : '2024-02-24',
+  },
+  {
+    id: '4001',
+    firstName: 'Emma',
+    lastName: 'Garcia',
+    parentCompany: 'Company2',
+    parentBusiness: 'Business Group1',
+    activeTrips: 4,
+    plannedTrips: 16,
+    completedTrips: 12,
+    totalTrips: 32,
+    totalDuration: 420,
+    totalDistance: 280,
+    createdDate : '2024-1-26',
+  },
+  {
+    id: '4002',
+    firstName: 'Olivia',
+    lastName: 'Brown',
+    parentCompany: 'Company1',
+    parentBusiness: 'Business Group2',
+    activeTrips: 3,
+    plannedTrips: 14,
+    completedTrips: 10,
+    totalTrips: 27,
+    totalDuration: 360,
+    totalDistance: 200,
+    createdDate : '2024-01-21',
+  },
+  {
+    id: '5001',
+    firstName: 'Noah',
+    lastName: 'Martinez',
+    parentCompany: 'Company1',
+    parentBusiness: 'Business Group3',
+    activeTrips: 6,
+    plannedTrips: 18,
+    completedTrips: 14,
+    totalTrips: 38,
+    totalDuration: 460,
+    totalDistance: 260,
+    createdDate : '2024-01-31',
+  },
+  {
+    id: '5002',
+    firstName: 'Sophia',
+    lastName: 'Jones',
+    parentCompany: 'Company1',
+    parentBusiness: 'Business Group3',
+    activeTrips: 8,
+    plannedTrips: 20,
+    completedTrips: 16,
+    totalTrips: 44,
+    totalDuration: 520,
+    totalDistance: 300,
+    createdDate : '2024-01-08',
+  }
+];
+
+
 
 export const SubCompanyData = [ 
   {id: '1001', image:IMAGES.contact1,businessUser:"business1@example.com", mobileNumber:'+91 123 456 7890', company:"company1@example.com",shortName:"branch1@example.com",parentbranch:"branch1@example.com",zipCode:"125656", status:'Active' ,title: 'Ricky Antony', email: 'ra@gmail.com',  city:'India',usergroup:'West Minister Company', CompanyGroups : 5},    
@@ -465,7 +750,9 @@ export const VehicleData = [
       notification: "Emergency",
       reason: "Medical emergency",
       timezone: "GMT-5:00",
-      parentCompany : 'Company1'
+      parentCompany : 'Company1',
+      parentBusiness : "Business Group1"
+
     },
     {
       id: 1002,
@@ -475,7 +762,9 @@ export const VehicleData = [
       notification: "Critical",
       reason: "Vehicle collision",
       timezone: "GMT-8:00",
-      parentCompany : 'Company1'
+      parentCompany : 'Company1',
+      parentBusiness : "Business Group1"
+
 
     },
     {
@@ -506,7 +795,9 @@ export const VehicleData = [
       notification: "Emergency",
       reason: "Heavy rainfall",
       timezone: "GMT+2:00",
-      parentCompany : 'Company2'
+      parentCompany : 'Company2',
+      parentBusiness : "Business Group2"
+
     },
     {
       id: 1006,
@@ -516,7 +807,8 @@ export const VehicleData = [
       notification: "Urgent",
       reason: "Electrical failure",
       timezone: "GMT+1:00",
-      parentCompany : 'Company2'
+      parentCompany : 'Company2',
+      parentBusiness : "Business Group3"
     },
     {
       id: 1007,
@@ -526,7 +818,8 @@ export const VehicleData = [
       notification: "Emergency",
       reason: "Seismic activity detected",
       timezone: "GMT-6:00",
-      parentCompany : 'Company3'
+      parentCompany : 'Company3',
+      parentBusiness : "Business Group3"
     },
     {
       id: 1008,
@@ -536,7 +829,9 @@ export const VehicleData = [
       notification: "Urgent",
       reason: "Severe weather",
       timezone: "GMT-5:00",
-      parentCompany : 'Company3'
+      parentCompany : 'Company3',
+      parentBusiness : "Business Group2"
+
     },
     {
       id: 1009,
@@ -546,7 +841,9 @@ export const VehicleData = [
       notification: "Critical",
       reason: "Gas detected",
       timezone: "GMT-7:00",
-      parentCompany : 'Company3'
+      parentCompany : 'Company3',
+      parentBusiness : "Business Group2"
+
     },
     {
       id: 1010,
@@ -556,7 +853,9 @@ export const VehicleData = [
       notification: "Emergency",
       reason: "Security breach detected",
       timezone: "GMT-8:00",
-      parentCompany : 'Company4'
+      parentCompany : 'Company4',
+      parentBusiness : "Business Group3"
+
     },
     {
       id: 1011,
@@ -566,7 +865,9 @@ export const VehicleData = [
       notification: "Urgent",
       reason: "Extreme weather conditions",
       timezone: "GMT+3:00",
-      parentCompany : 'Company4'
+      parentCompany : 'Company4',
+      parentBusiness : "Business Group3"
+
     },
     {
       id: 1012,
@@ -576,7 +877,9 @@ export const VehicleData = [
       notification: "Routine",
       reason: "Heavy traffic",
       timezone: "GMT-4:00",
-      parentCompany : 'Company4'
+      parentCompany : 'Company4',
+      parentBusiness : "Business Group4"
+
     }
   ];
   export const ClassifyTripData = [
@@ -589,7 +892,8 @@ export const VehicleData = [
       reachLocation: "City B",
       distance: 150,
       fuelConsumption: 10,
-      driver: "John Doe"
+      driver: "John Doe",
+
     },
     {
       status : 'active',
@@ -723,6 +1027,7 @@ export const VehicleData = [
       description: "Restricted area for employees only",
       geofenceAccess: "Allowed",
       parentCompany : "Company1",
+      parentBusiness : "Business Group3",
       createdDate: "2024-02-23",
 
     },
@@ -735,6 +1040,8 @@ export const VehicleData = [
       description: "Safe zone for family members",
       geofenceAccess: "Allowed",
       parentCompany : "Company2",
+      parentBusiness : "Business Group3",
+
       createdDate: "2024-02-21",
     },
     {
@@ -745,6 +1052,7 @@ export const VehicleData = [
       address: "789 Oak Street, City C",
       description: "Restricted area for students and staff",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group3",
       parentCompany : "Company2",
       createdDate: "2024-02-22",
     },
@@ -757,6 +1065,8 @@ export const VehicleData = [
       description: "Public park for recreational activities",
       geofenceAccess: "Allowed",
       parentCompany : "Company3",
+      parentBusiness : "Business Group3",
+
       createdDate: "2024-01-23",
     },
     {
@@ -768,6 +1078,8 @@ export const VehicleData = [
       description: "Shopping mall for customers",
       geofenceAccess: "Allowed",
       parentCompany : "Company3",
+      parentBusiness : "Business Group1",
+
       createdDate: "2024-02-17",
     },
     {
@@ -778,6 +1090,8 @@ export const VehicleData = [
       address: "303 Cedar Street, City F",
       description: "Restricted area for medical personnel",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group1",
+
       parentCompany : "Company3",
       createdDate: "2024-02-10",
     },
@@ -789,6 +1103,8 @@ export const VehicleData = [
       address: "404 Birch Street, City G",
       description: "Restricted area for airport staff",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group1",
+
       parentCompany : "Company3",
       createdDate: "2024-01-10",
     },
@@ -801,6 +1117,8 @@ export const VehicleData = [
       description: "Restricted area for gym members",
       geofenceAccess: "Allowed",
       parentCompany : "Company4",
+      parentBusiness : "Business Group1",
+
       createdDate: "2024-02-12",
     },
     {
@@ -811,6 +1129,7 @@ export const VehicleData = [
       address: "606 Maple Avenue, City I",
       description: "Restaurant for dining",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group1",
       parentCompany : "Company4",
       createdDate: "2024-01-13",
     },
@@ -823,6 +1142,8 @@ export const VehicleData = [
       description: "Restricted area for construction workers",
       geofenceAccess: "Allowed",
       parentCompany : "Company4",
+      parentBusiness : "Business Group1",
+
       createdDate: "2024-02-10",
     },
     {
@@ -833,6 +1154,8 @@ export const VehicleData = [
       address: "808 Oak Street, City K",
       description: "Public library for reading",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group1",
+
       parentCompany : "Company4",
       createdDate: "2024-01-13",
     },
@@ -844,6 +1167,8 @@ export const VehicleData = [
       address: "909 Pine Street, City L",
       description: "Restricted area for warehouse employees",
       geofenceAccess: "Allowed",
+      parentBusiness : "Business Group2",
+
       parentCompany : "Company4",
       createdDate: "2024-02-20",
     }

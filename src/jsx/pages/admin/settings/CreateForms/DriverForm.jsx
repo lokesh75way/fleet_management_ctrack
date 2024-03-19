@@ -39,6 +39,12 @@ const DriverForm = () => {
     ),
   });
 
+
+  if(!id){
+    component.pop();
+    tabHeading.pop();
+  }
+
   const onSubmitHanlder = (data) => {
     if (activeIndex === totalTabs - 1) {
       try {

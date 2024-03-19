@@ -7,8 +7,7 @@ import MainPagetitle from "../../../layouts/MainPagetitle";
 import { GeofenceData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import GeofenceTable from "../../../components/Tables/GeofenceTable";
-import { companyOptions } from "../../../components/TabComponent/VehicleTabs/Options";
-import { filterAlerts, findHighestAndLowestDates } from "../../../../utils/selectValues";
+import { filterAlerts } from "../../../../utils/selectValues";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -22,28 +21,12 @@ const headers = [
 ];
 
 const GeofenceAddress = (ref) => {
-    const [startDate, setStartDate] = useState(new Date(0));
-    const [endDate, setEndDate] = useState(new Date(0));
-  
-    const dateRangeText = startDate.toLocaleDateString();
-  
-    const [selectFilter, setFilter] = useState({
-      value: "All Companies",
-      label: "All Companies",
-    });
-
-
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
+  const [date, setDate] = useState({
+    startDate: new Date(0),
+    endDate: new Date(0),
+  });
+  const [businessFilter, setBusinessFilter] = useState("All Groups");
+  const [companyFilter, setFilterCompany] = useState("All Companies");
 
   const [tableData, setTableData] = useState(GeofenceData);
   const [editData, setEditData] = useState({
@@ -73,23 +56,18 @@ const GeofenceAddress = (ref) => {
   };
 
   useEffect(() => {
-    const dates = findHighestAndLowestDates(GeofenceData);
-    setStartDate(dates.lowestDate);
-    setEndDate(dates.highestDate);
-  }, []);
-
-  useEffect(() => {
-    console.log(startDate);
-    if (startDate && endDate) {
+    if (date?.startDate && date?.endDate) {
       const data = filterAlerts(
-        startDate,
-        endDate,
-        selectFilter.label,
+        date?.startDate,
+        date?.endDate,
+        companyFilter,
+        businessFilter,
         GeofenceData
       );
       setTableData(data);
     }
-  }, [startDate, endDate, selectFilter.value]);
+  }, [date?.startDate, date?.endDate, companyFilter, businessFilter]);
+
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -142,38 +120,6 @@ const GeofenceAddress = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">GeofenceAddress</h4>
                     <div className="d-flex">
-                      <DatePicker
-                        // width="0px"
-                        className="form-control"
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        onChange={(dates) => {
-                          const [start, end] = dates;
-                          setStartDate(start);
-                          setEndDate(end);
-                        }}
-                        dateFormat="dd/MM/yy"
-                        placeholderText={dateRangeText}
-                      />
-                      <Select
-                        onChange={(newValue) => {
-                          setFilter({
-                            value: newValue.value,
-                            label: newValue.label,
-                          });
-                        }}
-                        name={"parent"}
-                        menuPortalTarget={document.body}
-                        menuPosition={"fixed"}
-                        styles={customStyles}
-                        options={companyOptions}
-                        value={selectFilter}
-                        defaultValue={{
-                          label: "All Companies",
-                          value: "All Companies",
-                        }}
-                      />
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"
@@ -240,7 +186,7 @@ const GeofenceAddress = (ref) => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/geofenceAddress"
+                              to="/settings/geofenceAddress"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -252,7 +198,7 @@ const GeofenceAddress = (ref) => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/geofenceAddress"
+                          to="/settings/geofenceAddress"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)
@@ -271,6 +217,10 @@ const GeofenceAddress = (ref) => {
       </div>
       <FilterOffcanvas
         ref={filter}
+        data={GeofenceData}
+        setBusinessHandler={setBusinessFilter}
+        setCompanyHandler={setFilterCompany}
+        setDatehandler={setDate}
         editData={editData}
         setEditData={setEditData}
         handleSubmit={handleSubmit}

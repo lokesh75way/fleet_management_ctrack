@@ -32,15 +32,7 @@ const headers = [
 ];
 
 const Alert = () => {
-  const [startDate, setStartDate] = useState(new Date(0));
-  const [endDate, setEndDate] = useState(new Date(0));
-
-  const dateRangeText = startDate.toLocaleDateString();
-
-  const [selectFilter, setFilter] = useState({
-    value: "All Companies",
-    label: "All Companies",
-  });
+ 
   const [tableData, setTableData] = useState(AlertData);
   const [editData, setEditData] = useState({
     id: 0,
@@ -81,28 +73,7 @@ const Alert = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const dates = findHighestAndLowestDates(AlertData);
-    setStartDate(dates.lowestDate);
-    setEndDate(dates.highestDate);
-  }, []);
-
-  useEffect(() => {
-    console.log(startDate)
-    if (startDate && endDate) {
-      const data = filterAlerts(
-        startDate,
-        endDate,
-        selectFilter.label,
-        AlertData
-      );
-      setTableData(data);
-    }
-  }, [startDate, endDate, selectFilter.value]);
-
-  // const[formData, setFormData] = useState()
-
+ 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -126,17 +97,7 @@ const Alert = () => {
     // setEditTableData(item);
     alert.current.showModal();
   };
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
+ 
   const invite = useRef();
   // const employe = useRef();
   const alert = useRef();
@@ -159,45 +120,6 @@ const Alert = () => {
                       Alert
                     </h4>
                     <div className="d-flex">
-                      <DatePicker
-                        // width="0px"
-                        className="form-control"
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        onChange={(dates) => {
-                          const [start, end] = dates;
-                          setStartDate(start);
-                          setEndDate(end);
-                        }}
-                        dateFormat="dd/MM/yy"
-                        placeholderText={dateRangeText}
-                      />
-
-                      <Controller
-                        name="parent"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
-                            onChange={(newValue) => {
-                              setFilter({
-                                value: newValue.value,
-                                label: newValue.label,
-                              });
-                            }}
-                            ref={ref}
-                            name={name}
-                            menuPortalTarget={document.body}
-                            menuPosition={"fixed"}
-                            styles={customStyles}
-                            options={companyOptions}
-                            value={selectFilter}
-
-                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
-                          />
-                        )}
-                      />
                       <div>
                         <Link
                           to={"#"}
@@ -265,7 +187,7 @@ const Alert = () => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/alert"
+                              to="/settings/alert"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -277,7 +199,7 @@ const Alert = () => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/alert"
+                          to="/settings/alert"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)
