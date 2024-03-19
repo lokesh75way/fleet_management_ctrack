@@ -2,91 +2,53 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 class ApexLine4 extends React.Component {
-  constructor(props) {
-    super(props);
+  render() {
+    const { height, categories, series } = this.props; // Destructure props
 
-    this.state = {
-      series: [
-        {
-          name: "Yoga",
-          data: [65, 65, 65, 120, 120, 80, 120, 100, 100, 120, 120, 120],
-        },
-        {
-          name: "Cycling",
-          data: [50, 100, 35, 35, 0, 0, 80, 20, 40, 40, 40, 40],
-        },
-        {
-          name: "Running",
-          data: [20, 40, 20, 80, 40, 40, 20, 60, 60, 20, 110, 60],
-        },
-      ],
-      options: {
-        chart: {
-          height: 350,
-          type: "line",
-          toolbar: {
-            show: false,
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-
-        stroke: {
-          width: [4, 4, 4],
-          colors: ["var(--primary)", "#1EA7C5", "#FF9432"],
-          curve: "straight",
-        },
-        legend: {
+    const options = {
+      chart: {
+        height: height,
+        type: "line",
+        toolbar: {
           show: false,
         },
-        xaxis: {
-          type: "text",
-          categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        width: [4, 4, 4, 4],
+        colors: ["var(--primary)", "#d30c0c", "#FF9432", "#9FFF33"],
+        curve: "straight",
+      },
+      legend: {
+        show: false,
+      },
+      xaxis: {
+        type: "text",
+        categories: categories,
+      },
+      colors: ["var(--primary)", "#d30c0c", "#FF9432", "#9FFF33"],
+      markers: {
+        size: [8, 8, 6],
+        strokeWidth: [0, 0, 4],
+        strokeColors: ["var(--primary)", "#d30c0c", "#FF9432", "#9FFF33"],
+        border: 0,
+        colors: ["var(--primary)", "#d30c0c", "#fff", "#9FFF33"],
+        hover: {
+          size: 10,
         },
-        colors: ["var(--primary)", "#1EA7C5", "#FF9432"],
-
-        markers: {
-          size: [8, 8, 6],
-          strokeWidth: [0, 0, 4],
-          strokeColors: ["var(--primary)", "#1EA7C5", "#FF9432"],
-          border: 0,
-          colors: ["var(--primary)", "#1EA7C5", "#fff"],
-          hover: {
-            size: 10,
-          },
-        },
-        yaxis: {
-          title: {
-            text: "",
-          },
+      },
+      yaxis: {
+        title: {
+          text: "",
         },
       },
     };
-  }
 
-  render() {
     return (
       <div id="chart" className="bar-chart">
-        <ReactApexChart
-          options={this.state.options}
-          series={this.state.series}
-          type="line"
-          height={300}
-        />
+        <ReactApexChart options={options} series={series} type="line" height={300} />
       </div>
     );
   }

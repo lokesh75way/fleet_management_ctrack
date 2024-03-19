@@ -15,37 +15,41 @@ const CompSetting = () => {
     backgroundOption,
     sidebarposition,
     headerPositions,
-    // containerPosition,
-    fontFamily,
-    changePrimaryColor,
-    // changeSecondaryColor,
-    changeNavigationHader,
-    sideBarStyle,
-    changeSideBarStyle,
-    changeSideBarPostion,
-    sidebarpositions,
-    changeHeaderPostion,
-    headerposition,
-    changeSideBarLayout,
-    sidebarLayout,
-    colors,
-    chnageHaderColor,
-    chnageSidebarColor,
-    changeBackground,
-    background,
     // changeContainerPosition,
     // containerPosition_,
     setDemoTheme,
-	showCardWidget,
-	showProjectOverviewTab,
-	showEarningBlog,
-	showActiveUserMap,
-	showAllProjectDonutChart,
+    showCardWidget,
+    showProjectOverviewTab,
+    showEarningBlog,
+    showActiveUserMap,
+    showAllProjectDonutChart,
     setShowCardWidget,
     setShowProjectOverviewTab,
     setShowEarningBlog,
     setShowActiveUserMap,
     setShowAllProjectDonutChart,
+    showDataFrequency,
+    setShowDataFrequency,
+    showFleetStatus,
+    setShowFleetStatus,
+    showFaultyDevices,
+    setShowFaultyDevices,
+    showDevicesVsProject,
+    setDevicesVsProject,
+    showCategoryWiseStatus,
+    setCategoryWiseStatus,
+    showWebVsMobileUser,
+    setWebVsMobileUser,
+    showApplicationUsage,
+    setApplicationUsage,
+    showModelWiseDevices,
+    setModelWiseDevices,
+    showObjectType,
+    setObjectType,
+    showNumberOfTasks,
+    setNumberOfTasks,
+    showInactiveDevices,
+    setInactiveDevices,
   } = useContext(ThemeContext);
 
   // Function to toggle component visibility
@@ -66,6 +70,39 @@ const CompSetting = () => {
       case "AllProjectDonutChart":
         setShowAllProjectDonutChart(value);
         break;
+      case "DataFrequency":
+        setShowDataFrequency(value);
+        break;
+      case "FleetStatus":
+        setShowFleetStatus(value);
+        break;
+      case "FaultyDevices":
+        setShowFaultyDevices(value);
+        break;
+      case "DevicesVsProject":
+        setDevicesVsProject(value);
+        break;
+      case "CategoryWiseStatus":
+        setCategoryWiseStatus(value);
+        break;
+      case "WebVsMobileUser":
+        setWebVsMobileUser(value);
+        break;
+      case "ApplicationUsage":
+        setApplicationUsage(value);
+        break;
+      case "ModelWiseDevices":
+        setModelWiseDevices(value);
+        break;
+      case "ObjectType":
+        setObjectType(value);
+        break;
+      case "NumberOfTasks":
+        setNumberOfTasks(value);
+        break;
+      case "InactiveDevices":
+        setInactiveDevices(value);
+        break;
       // Add cases for other components
       default:
         break;
@@ -75,22 +112,18 @@ const CompSetting = () => {
   //   Function to render checkboxes and handle visibility toggle
   const renderComponentCheckbox = (componentName) => {
     return (
-	<div key={componentName} className="form-check custom-checkbox mb-3">
-	<input
-	  type="checkbox"
-	  className="form-check-input"
-	  id="customCheckBox1"
-	  checked={eval(`show${componentName}`)}
-	  onChange={(e) => toggleComponent(componentName, e.target.checked)}
-	/>
-	<label
-	  className="form-check-label fs-18"
-	  htmlFor="customCheckBox1"
-	>
-	  {componentName}
-	</label>
-  </div>
-	  
+      <div key={componentName} className="form-check custom-checkbox mb-2">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          id="customCheckBox1"
+          checked={eval(`show${componentName}`)}
+          onChange={(e) => toggleComponent(componentName, e.target.checked)}
+        />
+        <label className="form-check-label fs-18" htmlFor="customCheckBox1">
+          {componentName}
+        </label>
+      </div>
     );
   };
 
@@ -139,13 +172,23 @@ const CompSetting = () => {
               </Nav>
             </div>
             <Tab.Content className="">
-              <Tab.Pane className="tab-pane fade " eventKey="Theme">
+              <Tab.Pane className="tab-pane fade overflow-scroll" eventKey="Theme">
                 {[
                   "CardWidget",
                   "ProjectOverviewTab",
                   "EarningBlog",
                   "ActiveUserMap",
-                  "AllProjectDonutChart",
+                  "DataFrequency",
+                  "FleetStatus",
+                  "FaultyDevices",
+                  "DevicesVsProject",
+                  "CategoryWiseStatus",
+                  "WebVsMobileUser",
+                  "ApplicationUsage",
+                  "ModelWiseDevices",
+                  "ObjectType",
+                  "NumberOfTasks",
+                  "InactiveDevices",
                 ].map((componentName) =>
                   renderComponentCheckbox(componentName)
                 )}

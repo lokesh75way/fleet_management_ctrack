@@ -1,5 +1,5 @@
-import React, { createContext, useEffect,useState,  useReducer } from "react";
-import {dezThemeSet} from './ThemeDemo';
+import React, { createContext, useEffect, useState, useReducer } from "react";
+import { dezThemeSet } from "./ThemeDemo";
 
 export const ThemeContext = createContext();
 const reducer = (previousState, updatedState) => ({
@@ -8,18 +8,18 @@ const reducer = (previousState, updatedState) => ({
 });
 
 const initialState = {
-  sideBarStyle : { value: "full", label: "Full"},
-  sidebarposition : { value: "fixed", label: "Fixed"},
-  headerposition : { value: "fixed", label: "Fixed"},
-  sidebarLayout : { value: "vertical", label: "Vertical"},
-  direction:{ value: "ltr", label: "LTR" },
-  primaryColor : "color_1",
-  secondaryColor : "color_1",
+  sideBarStyle: { value: "full", label: "Full" },
+  sidebarposition: { value: "fixed", label: "Fixed" },
+  headerposition: { value: "fixed", label: "Fixed" },
+  sidebarLayout: { value: "vertical", label: "Vertical" },
+  direction: { value: "ltr", label: "LTR" },
+  primaryColor: "color_1",
+  secondaryColor: "color_1",
   navigationHader: "color_4",
   haderColor: "color_4",
   sidebarColor: "color_1",
-  background : {value:"light", label:"Light"},
-  containerPositionSize: {value: "wide-boxed", label: "Wide Boxed"},
+  background: { value: "light", label: "Light" },
+  containerPositionSize: { value: "wide-boxed", label: "Wide Boxed" },
   iconHover: false,
   menuToggle: false,
   windowWidth: 0,
@@ -27,41 +27,40 @@ const initialState = {
 };
 
 const ThemeContextProvider = (props) => {
-
-const [state, dispatch] = useReducer(reducer, initialState);	
-const { 
-    sideBarStyle, 
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    sideBarStyle,
     sidebarposition,
     headerposition,
     sidebarLayout,
     direction,
-    primaryColor , 
+    primaryColor,
     secondaryColor,
-    navigationHader, 
+    navigationHader,
     haderColor,
     sidebarColor,
     background,
-    containerPositionSize,        
+    containerPositionSize,
     iconHover,
     menuToggle,
     windowWidth,
     windowHeight,
-} = state;
+  } = state;
 
-	//const [sideBarStyle, setSideBarStyle] = useState({ value: "full", label: "Full",});
-	//const [sidebarposition, setSidebarposition] = useState({ value: "fixed",	label: "Fixed",});
+  //const [sideBarStyle, setSideBarStyle] = useState({ value: "full", label: "Full",});
+  //const [sidebarposition, setSidebarposition] = useState({ value: "fixed",	label: "Fixed",});
   //const [headerposition, setHeaderposition] = useState({ value: "fixed", label: "Fixed", });
   //const [sidebarLayout, setSidebarLayout] = useState({ value: "vertical", label: "Vertical",});
-	//const [direction, setDirection] = useState({ value: "ltr", label: "LTR" });
-	//const [primaryColor, setPrimaryColor] = useState("color_1");
-	//const [secondaryColor, setSecondaryColor] = useState("color_1");
-	//const [navigationHader, setNavigationHader] = useState("color_3");
-	//const [haderColor, setHaderColor] = useState("color_3");
-	//const [sidebarColor, setSidebarColor] = useState("color_1");
-	//const [iconHover, setIconHover] = useState(false);
-	//const [menuToggle, setMenuToggle] = useState(false);
-	//const [background, setBackground] = useState({ value: "light",	label: "Light",});
-	//const [containerPosition_, setcontainerPosition_] = useState({value: "wide-boxed", label: "Wide Boxed",});
+  //const [direction, setDirection] = useState({ value: "ltr", label: "LTR" });
+  //const [primaryColor, setPrimaryColor] = useState("color_1");
+  //const [secondaryColor, setSecondaryColor] = useState("color_1");
+  //const [navigationHader, setNavigationHader] = useState("color_3");
+  //const [haderColor, setHaderColor] = useState("color_3");
+  //const [sidebarColor, setSidebarColor] = useState("color_1");
+  //const [iconHover, setIconHover] = useState(false);
+  //const [menuToggle, setMenuToggle] = useState(false);
+  //const [background, setBackground] = useState({ value: "light",	label: "Light",});
+  //const [containerPosition_, setcontainerPosition_] = useState({value: "wide-boxed", label: "Wide Boxed",});
   const body = document.querySelector("body");
   //const [windowWidth, setWindowWidth] = useState(0);
   //const [windowHeight, setWindowHeight] = useState(0);
@@ -125,38 +124,38 @@ const {
     { value: "HelveticaNeue", label: "HelveticaNeue" },
   ];
   const changePrimaryColor = (name) => {
-	//setPrimaryColor(name);
-    dispatch({primaryColor: name});
+    //setPrimaryColor(name);
+    dispatch({ primaryColor: name });
     body.setAttribute("data-primary", name);
   };
   const changeSecondaryColor = (name) => {
-	  //setSecondaryColor(name);
-    dispatch({secondaryColor: name});
+    //setSecondaryColor(name);
+    dispatch({ secondaryColor: name });
     body.setAttribute("data-secondary", name);
   };
   const changeNavigationHader = (name) => {
     //setNavigationHader(name);
-    dispatch({navigationHader : name});
+    dispatch({ navigationHader: name });
     body.setAttribute("data-nav-headerbg", name);
   };
   const chnageHaderColor = (name) => {
     //setHaderColor(name);
-    dispatch({haderColor: name});
+    dispatch({ haderColor: name });
     body.setAttribute("data-headerbg", name);
   };
   const chnageSidebarColor = (name) => {
     //setSidebarColor(name);
-    dispatch({sidebarColor: name});
+    dispatch({ sidebarColor: name });
     body.setAttribute("data-sidebarbg", name);
   };
   const changeSideBarPostion = (name) => {
     //setSidebarposition(name);
-    dispatch({sidebarposition: name});
+    dispatch({ sidebarposition: name });
     body.setAttribute("data-sidebar-position", name.value);
   };
   const changeDirectionLayout = (name) => {
     //setDirection(name);
-    dispatch({direction: name});
+    dispatch({ direction: name });
     body.setAttribute("direction", name.value);
     let html = document.querySelector("html");
     html.setAttribute("dir", name.value);
@@ -164,116 +163,121 @@ const {
   };
   const changeSideBarLayout = (name) => {
     if (name.value === "horizontal") {
-      if (sideBarStyle.value === "overlay") {        
-        dispatch({sidebarLayout: name});
-        body.setAttribute("data-layout", name.value);        
-        dispatch({sideBarStyle : {value:'full', label:'Full'}});
+      if (sideBarStyle.value === "overlay") {
+        dispatch({ sidebarLayout: name });
+        body.setAttribute("data-layout", name.value);
+        dispatch({ sideBarStyle: { value: "full", label: "Full" } });
         body.setAttribute("data-sidebar-style", "full");
-      } else {        
-        dispatch({sidebarLayout: name});
+      } else {
+        dispatch({ sidebarLayout: name });
         body.setAttribute("data-layout", name.value);
       }
-    } else {      
-      dispatch({sidebarLayout: name});
+    } else {
+      dispatch({ sidebarLayout: name });
       body.setAttribute("data-layout", name.value);
     }
-
   };
   const changeSideBarStyle = (name) => {
     if (sidebarLayout.value === "horizontal") {
       if (name.value === "overlay") {
         alert("Sorry! Overlay is not possible in Horizontal layout.");
-      } else {        
-        dispatch({sideBarStyle: name});        
-        dispatch({iconHover: name.value === "icon-hover" ? "_i-hover" : ""});
+      } else {
+        dispatch({ sideBarStyle: name });
+        dispatch({ iconHover: name.value === "icon-hover" ? "_i-hover" : "" });
         body.setAttribute("data-sidebar-style", name.value);
       }
-    } else {      
-      dispatch({sideBarStyle: name});      
-      dispatch({iconHover: name.value === "icon-hover" ? "_i-hover" : ""});
+    } else {
+      dispatch({ sideBarStyle: name });
+      dispatch({ iconHover: name.value === "icon-hover" ? "_i-hover" : "" });
       body.setAttribute("data-sidebar-style", name.value);
     }
   };
 
-  const changeHeaderPostion = (name) => {    
-    dispatch({headerposition: name});
+  const changeHeaderPostion = (name) => {
+    dispatch({ headerposition: name });
     body.setAttribute("data-header-position", name.value);
   };
 
   const openMenuToggle = () => {
-    
-    sideBarStyle.value === "overly"  
-      ? dispatch({menuToggle : true})
-      : dispatch({menuToggle: false})
+    sideBarStyle.value === "overly"
+      ? dispatch({ menuToggle: true })
+      : dispatch({ menuToggle: false });
   };
 
   const changeBackground = (name) => {
     body.setAttribute("data-theme-version", name.value);
-    dispatch({background: name});
+    dispatch({ background: name });
   };
 
   const changeContainerPosition = (name) => {
-    dispatch({containerPositionSize: name});
+    dispatch({ containerPositionSize: name });
     body.setAttribute("data-container", name.value);
     name.value === "boxed" &&
       changeSideBarStyle({ value: "overlay", label: "Overlay" });
   };
-  
-  const setDemoTheme = (theme,direction) => {
 
-	var setAttr = {};	
-	
-	
-	var themeSettings = dezThemeSet[theme];	
-		
-	body.setAttribute("data-typography", themeSettings.typography);
- 
-	setAttr.value = themeSettings.version;
-	changeBackground(setAttr);
-	
-	setAttr.value = themeSettings.layout;
-	changeSideBarLayout(setAttr);
-	
-	changePrimaryColor(themeSettings.primary);
-	changeSecondaryColor(themeSettings.secondary);
-	
-	changeNavigationHader(themeSettings.navheaderBg);
-	
-	chnageHaderColor(themeSettings.headerBg);
-	
-	setAttr.value = themeSettings.sidebarStyle;
-	changeSideBarStyle(setAttr);
-	
-	chnageSidebarColor(themeSettings.sidebarBg);
-	
-	setAttr.value = themeSettings.sidebarPosition;
-	changeSideBarPostion(setAttr);
-	
-	setAttr.value = themeSettings.headerPosition;
-	changeHeaderPostion(setAttr);
-	
-	setAttr.value = themeSettings.containerLayout;
-	changeContainerPosition(setAttr);
-	
-	setAttr.value = direction;
-	changeDirectionLayout(setAttr); 
-	
-	};
+  const setDemoTheme = (theme, direction) => {
+    var setAttr = {};
 
-  const [addVehicle, setAddVehicle] = useState({})
-  const [currentPosition, setCurrentPosition] = useState({})
-  const [isTrafficClick, setIsTrafficClick] = useState(false)
-  const [groupsDataState,setGroupsDataState] = useState([]);
-  const [lang,setLang] = useState("");
-  const [isArabic,setIsArabic] = useState("");
-  const [role,setRole] = useState('superadmin')
+    var themeSettings = dezThemeSet[theme];
+
+    body.setAttribute("data-typography", themeSettings.typography);
+
+    setAttr.value = themeSettings.version;
+    changeBackground(setAttr);
+
+    setAttr.value = themeSettings.layout;
+    changeSideBarLayout(setAttr);
+
+    changePrimaryColor(themeSettings.primary);
+    changeSecondaryColor(themeSettings.secondary);
+
+    changeNavigationHader(themeSettings.navheaderBg);
+
+    chnageHaderColor(themeSettings.headerBg);
+
+    setAttr.value = themeSettings.sidebarStyle;
+    changeSideBarStyle(setAttr);
+
+    chnageSidebarColor(themeSettings.sidebarBg);
+
+    setAttr.value = themeSettings.sidebarPosition;
+    changeSideBarPostion(setAttr);
+
+    setAttr.value = themeSettings.headerPosition;
+    changeHeaderPostion(setAttr);
+
+    setAttr.value = themeSettings.containerLayout;
+    changeContainerPosition(setAttr);
+
+    setAttr.value = direction;
+    changeDirectionLayout(setAttr);
+  };
+
+  const [addVehicle, setAddVehicle] = useState({});
+  const [currentPosition, setCurrentPosition] = useState({});
+  const [isTrafficClick, setIsTrafficClick] = useState(false);
+  const [groupsDataState, setGroupsDataState] = useState([]);
+  const [lang, setLang] = useState("");
+  const [isArabic, setIsArabic] = useState("");
+  const [role, setRole] = useState("superadmin");
   const [showCardWidget, setShowCardWidget] = useState(true);
   const [showProjectOverviewTab, setShowProjectOverviewTab] = useState(true);
   const [showEarningBlog, setShowEarningBlog] = useState(true);
   const [showActiveUserMap, setShowActiveUserMap] = useState(true);
-  const [showAllProjectDonutChart, setShowAllProjectDonutChart] = useState(true);
+  const [showFleetStatus, setShowFleetStatus] = useState(true);
+  const [showDataFrequency, setShowDataFrequency] = useState(true);
+  const [showFaultyDevices, setShowFaultyDevices] = useState(true);
+  const [showDevicesVsProject, setDevicesVsProject] = useState(true);
+  const [showCategoryWiseStatus, setCategoryWiseStatus] = useState(true);
+  const [showWebVsMobileUser, setWebVsMobileUser] = useState(true);
+  const [showApplicationUsage, setApplicationUsage] = useState(true);
+  const [showModelWiseDevices, setModelWiseDevices] = useState(true);
+  const [showObjectType, setObjectType] = useState(true);
+  const [showNumberOfTasks, setNumberOfTasks] = useState(true);
+  const [showInactiveDevices, setInactiveDevices] = useState(true);
   useEffect(() => {
-	const body = document.querySelector("body");
+    const body = document.querySelector("body");
     body.setAttribute("data-typography", "poppins");
     body.setAttribute("data-theme-version", "light");
     body.setAttribute("data-layout", "vertical");
@@ -282,28 +286,25 @@ const {
     body.setAttribute("data-headerbg", "color_4");
     body.setAttribute("data-sidebar-style", "overlay");
     body.setAttribute("data-sidebarbg", "color_1");
-	  body.setAttribute("data-secondary", "color_1");
+    body.setAttribute("data-secondary", "color_1");
     body.setAttribute("data-sidebar-position", "fixed");
     body.setAttribute("data-header-position", "fixed");
     body.setAttribute("data-container", "wide");
     body.setAttribute("direction", "ltr");
-		let resizeWindow = () => {			
-      dispatch({windowWidth : window.innerWidth});
-      dispatch({windowHeight : window.innerHeight});
-			if(window.innerWidth >= 768 && window.innerWidth < 1024)
-			{
-        body.setAttribute("data-sidebar-style", "mini")
-      }
-			else if(window.innerWidth <= 768){
-        body.setAttribute("data-sidebar-style", "overlay") 
-        body.setAttribute("data-layout", "vertical")
-      } 
-      else{
+    let resizeWindow = () => {
+      dispatch({ windowWidth: window.innerWidth });
+      dispatch({ windowHeight: window.innerHeight });
+      if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+        body.setAttribute("data-sidebar-style", "mini");
+      } else if (window.innerWidth <= 768) {
+        body.setAttribute("data-sidebar-style", "overlay");
+        body.setAttribute("data-layout", "vertical");
+      } else {
         body.setAttribute("data-sidebar-style", "full");
       }
 
       // if(window.windowWidth > )
-		};
+    };
     resizeWindow();
     window.addEventListener("resize", resizeWindow);
     return () => window.removeEventListener("resize", resizeWindow);
@@ -321,11 +322,11 @@ const {
         containerPosition,
         directionPosition,
         fontFamily,
-	    	primaryColor,
+        primaryColor,
         secondaryColor,
         navigationHader,
-		    windowWidth,
-		    windowHeight,
+        windowWidth,
+        windowHeight,
         changePrimaryColor,
         changeSecondaryColor,
         changeNavigationHader,
@@ -352,7 +353,7 @@ const {
         background,
         //containerPosition_,
         containerPositionSize,
-		    setDemoTheme,
+        setDemoTheme,
         setCurrentPosition,
         currentPosition,
         setIsTrafficClick,
@@ -367,18 +368,37 @@ const {
         isArabic,
         setRole,
         role,
-        showCardWidget, 
+        showCardWidget,
         setShowCardWidget,
-        showProjectOverviewTab, 
+        showProjectOverviewTab,
         setShowProjectOverviewTab,
-        showEarningBlog, 
+        showEarningBlog,
         setShowEarningBlog,
         showActiveUserMap,
-         setShowActiveUserMap,
-         showAllProjectDonutChart, setShowAllProjectDonutChart,
-
-	}}
-  
+        setShowActiveUserMap,
+        showDataFrequency,
+        setShowDataFrequency,
+        showFleetStatus,
+        setShowFleetStatus,
+        showFaultyDevices,
+        setShowFaultyDevices,
+        showDevicesVsProject,
+        setDevicesVsProject,
+        showCategoryWiseStatus,
+        setCategoryWiseStatus,
+        showWebVsMobileUser,
+        setWebVsMobileUser,
+        showApplicationUsage,
+        setApplicationUsage,
+        showModelWiseDevices,
+        setModelWiseDevices,
+        showObjectType,
+        setObjectType,
+        showNumberOfTasks,
+        setNumberOfTasks,
+        showInactiveDevices,
+        setInactiveDevices,
+      }}
     >
       {props.children}
     </ThemeContext.Provider>
