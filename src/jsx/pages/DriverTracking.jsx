@@ -8,7 +8,6 @@ import { FaUser } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdFence } from "react-icons/md";
 import "../../scss/pages/_driver-tracking.scss";
-
 const DriverTracking = () => {
   const { currentPosition, setCurrentPosition } = useContext(ThemeContext);
   const data = [
@@ -21,11 +20,9 @@ const DriverTracking = () => {
     { name: "Driver", icon: FaUser },
     { name: "Geofence", icon: MdFence },
   ];
-
   const handleToggleCardPosition = () => {
     setIsOutside(!isOutside);
   };
-
   // const getCurrentPosition = () => {
   //   navigator.geolocation.getCurrentPosition((position) => {
   //     setCurrentPosition({
@@ -62,5 +59,4 @@ const DriverTracking = () => {
     </>
   );
 };
-
 export default DriverTracking;

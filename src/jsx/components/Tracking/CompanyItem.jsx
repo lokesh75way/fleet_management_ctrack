@@ -3,36 +3,32 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import CheckboxTree from "react-checkbox-tree";
 import "../../../scss/pages/_driver-tracking.scss";
 import { Button } from "react-bootstrap";
-
 const CompanyItem = (props) => {
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
+
   useEffect(() => {
     const data = Object.entries(props.vehicles).map((data) => {
       const childNode = data[1].map((data) => {
         return { label: data.vehicleName, value: data.id };
       });
+
       return { value: data[0], label: data[0], children: childNode };
     });
-
     setNodes([...data]);
   }, [props.vehicles]);
-
   const handleCheck = (checked) => {
     setChecked(checked);
   };
-
   const handleExpand = (expanded) => {
     setExpanded(expanded);
   };
-
   const handleSubmit = () => {
     const selectedObject = checked.map((data) => JSON.parse(data));
     console.log(selectedObject)
     props.handleToggleCardPositionHandler();
   };
-
   return (
     <>
     <div className="checkboxTree">
@@ -86,5 +82,15 @@ const CompanyItem = (props) => {
     </>
   );
 };
-
 export default CompanyItem;
+
+
+
+
+
+
+
+
+
+
+

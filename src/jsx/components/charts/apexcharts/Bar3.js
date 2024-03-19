@@ -27,7 +27,7 @@ class ApexBar3 extends React.Component {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: "55%",
+            columnWidth: "50%",
             endingShape: "rounded",
           },
         },
@@ -51,7 +51,7 @@ class ApexBar3 extends React.Component {
             strokeWidth: 0,
             radius: 19,
             strokeColor: "#fff",
-            fillColors: ["var(--primary)", "#FF6347"],
+            fillColors: ["#b261dc", "#9a979a"],
             offsetX: 0,
             offsetY: 0,
           },
@@ -73,10 +73,10 @@ class ApexBar3 extends React.Component {
           colors: ["transparent"],
         },
         xaxis: {
-          categories: ["06", "07", "08", "09", "10"],
+          categories: ["Compeleted", "Incomplete", "Mixed", "Upcoming"],
         },
         fill: {
-          colors: ["var(--primary)", "#FF6347"],
+          colors: ["#b261dc", "#9a979a"],
           opacity: 1,
         },
         tooltip: {

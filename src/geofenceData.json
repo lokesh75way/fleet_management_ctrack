@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "category": "Stay In Zone",
+    "company": "company 1",
+    "contactNumber": "1234567890",
+    "geofenceAccess": "public",
+    "name": "75 way geofence",
+    "tolerance": "20",
+    "address": "This is address 1",
+    "description": "This is description 1"
+  },
+  {
+    "id": 2,
+    "category": "Stay Away Zone",
+    "company": "company 2",
+    "contactNumber": "1234567890",
+    "geofenceAccess": "private",
+    "name": "75 way geofence 2",
+    "tolerance": "10",
+    "address": "This is address 2",
+    "description": "This is description 2"
+  },
+  {
+    "id": 3,
+    "category": "Stay Away Zone",
+    "company": "company 3",
+    "contactNumber": "1234567890",
+    "geofenceAccess": "public",
+    "name": "75 way geofence 3",
+    "tolerance": "25",
+    "address": "This is address 3",
+    "description": "This is description 3"
+  },
+  {
+    "id": 4,
+    "category": "Stay Away Zone",
+    "company": "company 4",
+    "contactNumber": "1234567890",
+    "geofenceAccess": "private",
+    "name": "75 way geofence 4",
+    "tolerance": "22",
+    "address": "This is address 4",
+    "description": "This is description 4"
+  }
+]

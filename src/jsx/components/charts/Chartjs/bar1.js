@@ -25,15 +25,15 @@ class BarChart1 extends Component {
   render() {
     const data = {
       defaultFontFamily: "Poppins",
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      labels: ["0", "3", "5", "7", "9", "11", "13"],
       datasets: [
         {
           label: "My First dataset",
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: "rgba(44, 44, 44, 1)",
+          data: [3, 1, 2, 3, 4, 5, 6],
+          borderColor: "rgba(194, 100, 24, 1)",
           borderWidth: "0",
-          backgroundColor: "rgba(44, 44, 44, 1)",
-		      barThickness: 40
+          backgroundColor: "rgba(194, 100, 24, 1)",
+		      barThickness: 20
 		   
         },
       ],
@@ -69,7 +69,10 @@ class BarChart1 extends Component {
 
     return (
       <>
+      <div className="m-3">
+
         <Bar data={data} height={150} options={options} />
+      </div>
       </>
     );
   }

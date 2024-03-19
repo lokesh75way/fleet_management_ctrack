@@ -14,10 +14,14 @@ import {
 } from "../components/TabComponent/VehicleTabs/Options";
 import { Button } from "react-bootstrap";
 import Error from "../components/Error/Error";
+import { notifyError, notifySuccess } from "../../utils/toast";
+import { useNavigate, useParams } from "react-router-dom";
 
 const GeofenceDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
+  const navigate = useNavigate();
+  const { id } = useParams();
   const mapContainerStyle = {
     height: "100%",
     width: "100%",
@@ -52,6 +56,7 @@ const GeofenceDetail = () => {
   // const handleColorChange = (color) => {
   //   setFormData((prevData) => ({ ...prevData, color: color.hex }));
   // };
+
   const {
     register,
     formState: { errors },
@@ -68,11 +73,40 @@ const GeofenceDetail = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    try {
+      if (id) {
+        const val = JSON.parse(localStorage.getItem("geofenceData"));
+        const indexToUpdate = val.findIndex((item) => item.id == id);
+        if (indexToUpdate !== -1) {
+          val[indexToUpdate] = { ...data, id };
+          localStorage.setItem("geofenceData", JSON.stringify(val));
+          notifySuccess("Geofence Updated!");
+          navigate("/vehicle-tracking");
+        }
+        return;
+      } else {
+        data = { ...data };
+        const existingData = JSON.parse(localStorage.getItem("geofenceData"));
+        data.id = existingData.length + 1;
+        existingData.push(data);
+        localStorage.setItem("geofenceData", JSON.stringify(existingData));
+
+        notifySuccess("New Geofence Created!");
+        navigate("/vehicle-tracking");
+        return;
+      }
+    } catch (error) {
+      notifyError("Some error occured !!");
+    }
   };
 
+  const Geofence = JSON.parse(localStorage.getItem("geofenceData"));
+  const GeoData = Geofence.filter((item) => item.id == id);
+
+  const [filteredGeoData, setFilteredGeoData] = useState(GeoData);
+
   return (
-    <div >
+    <div>
       <div style={{ padding: "10px", backgroundColor: "#FFFDFD" }}>
         <h2 style={{ fontSize: "20px" }}>Geofence Detail</h2>
       </div>
@@ -84,7 +118,7 @@ const GeofenceDetail = () => {
             padding: "15px",
             boxShadow: "9px 0 4px rgba(0, 0, 0, 0.1)",
             backgroundColor: "#fff",
-            overflow:"auto"
+            overflow: "auto",
           }}
         >
           <FormProvider>
@@ -98,6 +132,9 @@ const GeofenceDetail = () => {
                   name="company"
                   register={register}
                   label="Company"
+                  defaultValue={
+                    filteredGeoData[0] ? filteredGeoData[0].company : ""
+                  }
                 />
                 <Error errorName={errors.company} />
               </div>
@@ -110,12 +147,17 @@ const GeofenceDetail = () => {
                   label="Name"
                   register={register}
                   name="name"
+                  defaultValue={
+                    filteredGeoData[0] ? filteredGeoData[0].name : ""
+                  }
                 />
                 <Error errorName={errors.name} />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Category:<span className="text-danger">*</span></label>
+                <label className="form-label">
+                  Category:<span className="text-danger">*</span>
+                </label>
                 <Controller
                   name="category"
                   control={control}
@@ -130,14 +172,22 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      defaultValue={categoryOptions[0]}
+                      defaultValue={
+                        filteredGeoData[0]
+                          ? filteredGeoData[0].name
+                          : categoryOptions[0]
+                      }
                     />
                   )}
                 />
-                {!getValues('category') && <Error errorName={errors.category} />}
+                {!getValues("category") && (
+                  <Error errorName={errors.category} />
+                )}
               </div>
               <div className="mb-3">
-                <label className="form-label">Geofence Access:<span className="text-danger">*</span></label>
+                <label className="form-label">
+                  Geofence Access:<span className="text-danger">*</span>
+                </label>
                 <div
                   style={{ display: "flex", flexDirection: "row", gap: "5rem" }}
                 >
@@ -162,7 +212,9 @@ const GeofenceDetail = () => {
                     <label className="form-check-label">Private</label>
                   </div>
                 </div>
-                { !getValues('geofenceAccess') && <Error errorName={errors.geofenceAccess} />}
+                {!getValues("geofenceAccess") && (
+                  <Error errorName={errors.geofenceAccess} />
+                )}
               </div>
 
               <div className="mb-3">
@@ -174,6 +226,9 @@ const GeofenceDetail = () => {
                   register={register}
                   label="Contact Number"
                   name="contactNumber"
+                  defaultValue={
+                    filteredGeoData[0] ? filteredGeoData[0].contactNumber : ""
+                  }
                 />
                 <Error errorName={errors.contactNumber} />
               </div>
@@ -184,24 +239,19 @@ const GeofenceDetail = () => {
                 </label>
                 <textarea
                   className="form-control"
-                  {...register}
+                  {...register("address")}
                   label="Address"
                   name="address"
+                  defaultValue={
+                    filteredGeoData[0] ? filteredGeoData[0].address : ""
+                  }
                 />
               </div>
 
-              {/* <div className="mb-3">
-            <label htmlFor="color" className="form-label">
-              Color:
-            </label>
-            <ChromePicker
-              color={formData.color}
-              onChangeComplete={(color) => handleColorChange(color)}
-            />
-          </div> */}
-
               <div className="mb-3">
-                <label className="form-label">Tolerance:<span className="text-danger">*</span></label>
+                <label className="form-label">
+                  Tolerance:<span className="text-danger">*</span>
+                </label>
                 <Controller
                   name="tolerance"
                   control={control}
@@ -216,38 +266,44 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      defaultValue={toleranceOptions[0]}
+                      defaultValue={
+                        filteredGeoData[0]
+                          ? filteredGeoData[0].name
+                          : toleranceOptions[0]
+                      }
                     />
                   )}
                 />
-                {!getValues('contactNunber') &&<Error errorName={errors.contactNumber} />}
+                {!getValues("contactNunber") && (
+                  <Error errorName={errors.contactNumber} />
+                )}
               </div>
 
               <div className="mb-3">
                 <label className="form-label">Description:</label>
                 <textarea
                   className="form-control"
+                  {...register("description")}
                   name="description"
-                  {...register}
                   label="Description"
+                  defaultValue={
+                    filteredGeoData[0] ? filteredGeoData[0].description : ""
+                  }
                 />
               </div>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    margin: "2rem 0",
-                  }}
-                >
-                  <Button
-                    type="submit"
-                    onClick={handleSubmit(onSubmit)}
-                  >
-                    {" "}
-                    Next
-                  </Button>
-                </div>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "2rem 0",
+                }}
+              >
+                <Button type="submit" onClick={handleSubmit(onSubmit)}>
+                  {" "}
+                  Next
+                </Button>
+              </div>
             </form>
           </FormProvider>
         </div>
