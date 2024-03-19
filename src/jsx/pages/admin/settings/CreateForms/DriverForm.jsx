@@ -46,6 +46,7 @@ const DriverForm = () => {
   }
 
   const onSubmitHanlder = (data) => {
+    console.log({activeIndex});
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
@@ -67,7 +68,7 @@ const DriverForm = () => {
           }
           return;
         } else {
-          console.log(data)
+          console.log({data})
           data = { ...data, designation: "Driver", role: "user" };
           const existingData = JSON.parse(localStorage.getItem("userJsonData"));
           data.id = existingData.length + 1;

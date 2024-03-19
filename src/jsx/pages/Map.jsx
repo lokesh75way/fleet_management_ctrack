@@ -1,49 +1,32 @@
-import React from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-
+import React, { useState, useEffect, useContext } from "react";
+import { createRoot } from 'react-dom/client';
+import { MapContainer, TileLayer, GeoJSON,Marker,Popup ,Tooltip} from 'react-leaflet';
+import EditControlFC from '../components/maps/EditControl';
 
 const Map = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyA_nkYS3LnLGLrj4Qmky4NntAE97ivSxP8"
+  const [geojson, setGeojson] = React.useState({
+    type: 'FeatureCollection',
+    features: [],
   });
 
-  const containerStyle = {
-    width: '100%',
-    height: '100%'
-  };
+  return (
+    <div style={{ display: 'flex', height: '85vh' }}>
+    <div style={{ width: '100%' }}>
+      <MapContainer
+        center={[ 25.2233, 55.2869]}
+        zoom={14}
+        zoomControl={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        />
+        <Marker styles={{background:'red'}} position={[ 25.2233, 55.2869]} ><Popup>Dubai Trade Center</Popup><Tooltip>Dubai Trade Center</Tooltip></Marker>
+        <EditControlFC geojson={geojson} setGeojson={setGeojson} />
+      </MapContainer>
+    </div>
+  </div>
+  );
+}
 
-  const center = {
-    lat: 30.7099127700684,
-    lng: 76.69003904617821,
-  };
-
-  const [map, setMap] = React.useState(null);
-
-  const onLoad = React.useCallback(function callback(map) {
-    // This is just an example of getting and using the map instance!!! don't just blindly copy!
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-
-    setMap(map);
-  }, [center]);
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
-  return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={10}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
-    <Marker position={center}/>
-      <></>
-    </GoogleMap>
-  ) : <></>;
-};
-
-export default Map;
+export default Map
