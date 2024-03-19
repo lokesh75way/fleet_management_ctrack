@@ -8,7 +8,7 @@ import "./chart.css";
 import "./step.css";
 
 import ScrollToTop from "./layouts/ScrollToTop";
-import Home from "./components/Dashboard/Home";
+import AdminHome from "./components/Dashboard/AdminHome";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
@@ -105,8 +105,8 @@ const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 const AdminRoutes = () => {
   const allroutes = [
     // Dashboard
-    { url: "", component: <Home /> },
-    { url: "dashboard", component: <Home /> },
+    { url: "", component: <AdminHome /> },
+    { url: "dashboard", component: <AdminHome /> },
     { url: "performance", component: <Performance /> },
     { url: "project", component: <Projects /> },
     { url: "task-summary", component: <TaskSummary /> },

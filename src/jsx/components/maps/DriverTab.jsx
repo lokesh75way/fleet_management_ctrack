@@ -215,27 +215,38 @@ const DriverTabComponent1 = (props) => {
 
 const DriverTabComponent2 = (props) => {
   const [selectValue, setSelectValue] = useState("All");
+  const [selectAll, setSelectAll] = useState([]);
+  const [selectedDrivers, setSelectedDrivers] = useState([]);
   const [selectDriver, setSelectDriver] = useState([]);
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [isDisable, setIsDisable] = useState(false);
   const jsonData = JSON.parse(localStorage.getItem("userJsonData"));
+  const [company, setCompany] = useState(
+    jsonData.filter((item) => item.role === "company")
+  );
   const [drivers, setDrivers] = useState(
     jsonData.filter((item) => item.designation === "Driver")
   );
   const allocated = drivers.filter(
     (item) => item.activityStatus === "Allocated"
-  ).length;
+  );
   const notAllocated = drivers.filter(
     (item) => item.activityStatus === "Not Allocated"
-  ).length;
-  const [searchedDriver, setSearchedDriver] = useState({});
+  );
   const total = drivers.length;
-
   const handleOnSelect = (results) => {
-    setSearchedDriver({
-      id: results.id,
-      name: results.name,
-    });
+    setSelectValue("All");
+    setFilterApplied(true);
+    setIsDisable(true);
+    var companyDriver = jsonData.filter(
+      (item) => item.designation === "Driver" && item.id === results.id
+    );
+    var search = company.filter(
+      (item) => item.userName === companyDriver[0].parentCompany
+    );
+    setDrivers(companyDriver);
+    setCompany(search);
   };
-  
   const handleOnSearch = (string, results) => {
     setSelectValue("All");
     setIsDisable(false);
@@ -243,9 +254,7 @@ const DriverTabComponent2 = (props) => {
     setDrivers(jsonData.filter((item) => item.designation === "Driver"));
     setCompany(jsonData.filter((item) => item.role === "company"));
   };
-
   const handleSelectAll = (id,company,drivers, index) => {
-  
       var checkboxArray = [...selectedDrivers]
       if (!selectAll[index]) {
         drivers.map((item)=> checkboxArray[index].push(item.id) )
@@ -263,7 +272,6 @@ const DriverTabComponent2 = (props) => {
       return newArr
     })
   }
-
   const handleDriverSelect = (id, ind) => {
       const updatedDrivers = [...selectedDrivers];
       if (updatedDrivers[ind].includes(id)) {
@@ -272,7 +280,6 @@ const DriverTabComponent2 = (props) => {
           if(updatedDrivers[ind].length === 2){
             handleSelect(ind)
           }
-          
       } else {
           updatedDrivers[ind].push(id);
           if(updatedDrivers[ind].length === 3){
@@ -282,29 +289,32 @@ const DriverTabComponent2 = (props) => {
       console.log(updatedDrivers)
       setSelectedDrivers(updatedDrivers);
   };
-
   useEffect(() => {
-    if (searchedDriver?.id)
-      setDrivers(jsonData.filter((item) => item.id === searchedDriver.id));
-    else if (selectValue === "Allocated")
-      setDrivers(
-        jsonData.filter(
-          (item) =>
-            item.designation === "Driver" && item.activityStatus === "Allocated"
-        )
-      );
-    else if (selectValue === "Not Allocated")
-      setDrivers(
-        jsonData.filter(
-          (item) =>
-            item.designation === "Driver" &&
-            item.activityStatus === "Not Allocated"
-        )
-      );
-    else if (selectValue === "Total" || !searchedDriver?.id)
-      setDrivers(jsonData.filter((item) => item.designation === "Driver"));
-  }, [searchedDriver, selectValue]);
-
+    if (selectValue !== "All") {
+      setCompany(jsonData.filter((item) => item.role === "company"));
+      setFilterApplied(true);
+      if (selectValue === "Allocated") {
+        const companyName = allocated
+          .map((item) => item.parentCompany)
+          .filter((value, index, array) => array.indexOf(value) === index);
+        setCompany(
+          company.filter((item1) =>
+            companyName.some((item2) => item2 === item1.userName)
+          )
+        );
+      }
+      if (selectValue === "Not Allocated") {
+        const companyName = notAllocated
+          .map((item) => item.parentCompany)
+          .filter((value, index, array) => array.indexOf(value) === index);
+        setCompany(
+          company.filter((item1) =>
+            companyName.some((item2) => item2 === item1.userName)
+          )
+        );
+      }
+    } else setFilterApplied(false);
+  }, [selectValue]);
   const items = jsonData
     .filter((item) => item.designation === "Driver")
     .map((item) => {
@@ -313,53 +323,54 @@ const DriverTabComponent2 = (props) => {
   return (
     <>
       <div className="px-2 driver_tracking-object">
-        <Badge
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
-            selectValue === "Allocated" && "vehicle_tracking-active"
+          className={`light fs-9 ${
+            selectValue === "Allocated"
+              ? "vehicle_tracking-active"
+              : isDisable && "pe-none"
           }`}
           onClick={() => setSelectValue("Allocated")}
         >
-          <span>
-            <p>{allocated}</p>
-            <span>Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+          <p>{allocated.length}</p>
+          <span>Allocated</span>
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
-            selectValue === "Not Allocated" && "vehicle_tracking-active"
+          className={`light fs-9 ${
+            selectValue === "Not Allocated"
+              ? "vehicle_tracking-active"
+              : isDisable && "pe-none"
           }`}
           onClick={() => setSelectValue("Not Allocated")}
         >
-          <span>
-            <p>{notAllocated}</p>
-            <span>Not Allocated</span>
-          </span>
-        </Badge>
-        <Badge
+          <p>{notAllocated.length}</p>
+          <span>Not Allocated</span>
+        </span>
+        <span
           bg=""
           pill
-          className={`light border fs-9 ${
-            selectValue === "Total" && "vehicle_tracking-active"
+          className={`light fs-9 ${
+            selectValue === "Total"
+              ? "vehicle_tracking-active"
+              : isDisable && "pe-none"
           }`}
           onClick={() => setSelectValue("Total")}
         >
-          <span >
-            <p>{total}</p>
-            <span>Total</span>
-          </span>
-        </Badge>
+          <p>{total}</p>
+          <span>Total</span>
+        </span>
       </div>
       <div className="d-flex mt-4 mb-4">
-          <ReactSearchAutocomplete
-            items={items}
-            className="w-100"
-            onSearch={handleOnSearch}
-            onSelect={handleOnSelect}
-          />
+        <ReactSearchAutocomplete
+          items={items}
+          className="w-100"
+          styling={{ position: "absolute", zIndex: 999 }}
+          onSearch={handleOnSearch}
+          onSelect={handleOnSelect}
+        />
       </div>
       <div
         className="d-flex flex-column bg-white p-2"
@@ -370,36 +381,101 @@ const DriverTabComponent2 = (props) => {
           overflowY: "scroll",
         }}
       >
-        {drivers.length === 0 ? (
-          <span className="p-2 text-center fs-4 ">No Record Found</span>
-        ) : (
-          drivers.map((d, index) => {
-            return (
-              <div
-                key={index}
-                onClick={()=>{setSelectDriver(selectDriver.concat(d.id)); console.log(selectDriver);}}
-                className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
-              >
-                <div
-                  className="form-check custom-checkbox ms-3 me-3"
-                >
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    required
-                  />
-                </div>
-                <GrUserPolice className="m-2 driver-select-object" />
-                <span className="fs-4 ms-2">
-                  {d.firstName} {d.lastName}
-                </span>
-              </div>
+        {company.map((d, i) => {
+          var driver = [];
+          if(selectedDrivers.length === 0) company.map((item)=> selectedDrivers.push([]) && selectAll.push(false) )
+          if (filterApplied) {
+            if (selectValue === "All") driver = drivers;
+            else if (selectValue === "Allocated")
+              driver = allocated.filter(
+                (item) => item.parentCompany === d.userName
+              );
+            else if (selectValue === "Not Allocated")
+              driver = notAllocated.filter(
+                (item) => item.parentCompany === d.userName
+              );
+            else if (selectValue === "Total")
+              driver = jsonData.filter(
+                (item) =>
+                  item.designation === "Driver" &&
+                  item.parentCompany === d.userName
+              );
+          } else {
+            driver = jsonData.filter(
+              (item) =>
+                item.designation === "Driver" &&
+                item.parentCompany === d.userName
             );
-          })
-        )}
+          }
+          return (
+            <Accordion
+              className="accordion accordion-primary"
+              defaultActiveKey="0"
+            >
+              <Accordion.Item
+                className="accordion-item"
+                key={i}
+                eventKey={`$/{i}`}
+              >
+                <Accordion.Header className="accordian-header rounded-sm">
+                  <div
+                    className="form-check custom-checkbox bs_exam_topper_all"
+                    style={{ marginRight: "10px" }}
+                  >
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={`customCheckBox${i}`}
+                      onChange={()=>handleSelectAll(d.id, company,driver, i)}
+                      onClick={()=>handleSelect(i)}
+                      checked={selectAll[i]}
+                      required
+                    />
+                  </div>
+                  {d.userName}
+                </Accordion.Header>
+                {driver.length === 0 ? (
+                  <Accordion.Body className="p-2 text-center fs-4 heading ">
+                    No Record Found
+                  </Accordion.Body>
+                ) : (
+                  driver.map((item, index) => {
+                    return (
+                      <Accordion.Body
+                        className="accordian-body"
+                        eventKey={`${i}`}
+                      >
+                        <div
+                          key={index}
+                          onClick={() => {
+                            setSelectDriver(selectDriver.concat(item.id));
+                          }}
+                          className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
+                        >
+                          <div className="form-check custom-checkbox ms-3 me-3 bs_exam_topper">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={() => handleDriverSelect(item.id, i)}
+                              checked={selectedDrivers[i].includes(item.id)}
+                              required
+                            />
+                          </div>
+                          <span className="fs-4 ms-2">
+                            {item.firstName} {item.lastName}
+                          </span>
+                        </div>
+                      </Accordion.Body>
+                    );
+                  })
+                )}
+              </Accordion.Item>
+            </Accordion>
+          );
+        })}
       </div>
-      <div className="mt-3 text-center" style={{ width: "100%" }}>
-        <Button className="w-50" variant="primary btn-lg">
+      <div className="mt-3 text-center">
+        <Button className="w-25 btn-md" variant="primary btn-md">
           XLS
         </Button>
       </div>
