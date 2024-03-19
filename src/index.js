@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import {store} from './store/store';
 import  ThemeContext  from "./context/ThemeContext"; 
 import { ToastContainer } from 'react-toastify';
+import './i18n'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

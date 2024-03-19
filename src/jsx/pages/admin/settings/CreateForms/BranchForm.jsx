@@ -66,7 +66,7 @@ const BranchForm = () => {
     <>
       <MainPagetitle
         mainTitle="Branch"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Branch"}
       />
       <div className="m-2 p-2">

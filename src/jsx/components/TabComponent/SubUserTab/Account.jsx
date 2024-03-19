@@ -12,6 +12,9 @@ import "../../../../scss/pages/_driver-tracking.scss";
 import DummyData from "../../../../users.json";
 import { getSelectValues } from "../../../../utils/selectValues";
 
+import {useTranslation} from "react-i18next";
+
+
 const Account = ({
   handleNext,
   register,
@@ -28,6 +31,7 @@ const Account = ({
   const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
 
+  const {t} = useTranslation();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -199,7 +203,7 @@ const Account = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group</label>
+          <label className="form-label">{t('businessgroup')}</label>
           <Controller
             name="businessUser"
             control={control}
@@ -378,7 +382,7 @@ const Account = ({
           }`}
         >
           <label className="form-label">
-            State<span className="text-danger">*</span>
+            State
           </label>
           <div style={{ background: "white" }}>
             <StateSelect

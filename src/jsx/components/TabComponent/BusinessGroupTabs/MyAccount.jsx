@@ -190,6 +190,7 @@ const user = localStorage.getItem('loginDetails-email')
             defaultValue={getValues('zipCode')}
 
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">

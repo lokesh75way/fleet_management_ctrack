@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -49,12 +49,12 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       navigate('/subUser')
     }
   }
-
+  const {id} = useParams();
   return (
     <>
       <MainPagetitle
         mainTitle="User"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"User"}
       />
       <div className="m-2 p-2">

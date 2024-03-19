@@ -75,7 +75,7 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
     <>
       <MainPagetitle
         mainTitle="Technician"
-        pageTitle={"Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Technician"}
       />
       <div className="m-2 p-2">

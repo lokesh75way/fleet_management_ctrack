@@ -76,8 +76,8 @@ const BusinessUser = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="BusinessUser"
-        pageTitle={"BusinessUser"}
+        mainTitle="Business Group"
+        pageTitle={"Business Group"}
         parentTitle={"Home"}
       />
       <div className="container-fluid">
@@ -87,7 +87,7 @@ const BusinessUser = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">BusinessUsers</h4>
+                    <h4 className="heading mb-0">Business Groups</h4>
                     <div>
                       <Link
                         to={{
@@ -98,7 +98,7 @@ const BusinessUser = () => {
                         data-bs-toggle="offcanvas"
                         style={{paddingBlock : '9px'}}
                       >
-                        + Add Business User
+                        + Add Business Group
                       </Link>{" "}
                     </div>
                   </div>
@@ -113,7 +113,7 @@ const BusinessUser = () => {
                       <thead>
                         <tr>
                           <th>ID</th>
-                          <th>Business User</th>
+                          <th>Business Group</th>
                           <th>Mobile Number</th>
                           <th>Email</th>
                           <th>Location</th>

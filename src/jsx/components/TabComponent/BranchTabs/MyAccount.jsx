@@ -107,7 +107,7 @@ const MyAccount = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business User</label><span className="text-danger">*</span>
+          <label className="form-label">Business Group</label><span className="text-danger">*</span>
           {/* {
              checkRole() === "admin" ? 
           } */}
