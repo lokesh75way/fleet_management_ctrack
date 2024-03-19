@@ -13,6 +13,7 @@ import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' 
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
+
 const VehicleForm = () => {
   const {saveData} = useStorage()
   const navigate = useNavigate()
@@ -52,7 +53,7 @@ const VehicleForm = () => {
     <>
       <MainPagetitle
         mainTitle="Vehicle"
-        pageTitle={id ? "Edit" : "Create"}
+        pageTitle={id?"Edit":"Create"}
         parentTitle={"Vehicle"}
       />
       <div className="m-2 p-2">

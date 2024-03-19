@@ -193,6 +193,15 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
             )}
           />
         </div>
+        <div className="col-xl-6 mb-3" >
+          <label className="form-label">Upload File</label>
+          <input
+            type="file"
+            label="Document Name"
+            name={`documentFile`}
+            className="form-control"
+          />
+        </div>
 
 
       </div>

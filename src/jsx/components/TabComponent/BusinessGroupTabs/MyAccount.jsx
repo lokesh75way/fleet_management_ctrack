@@ -144,7 +144,7 @@ const MyAccount = ({
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.id);
-              setIsStateDisabled(false);
+              setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
@@ -197,6 +197,7 @@ const MyAccount = ({
             placeholder=""
             defaultValue={getValues("zipCode")}
           />
+          <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -290,10 +291,9 @@ const MyAccount = ({
                 />
               </svg>
               <div className="fallback">
-                <input name="file" type="file" {...register("file")} />
+                <input name="file" type="file" multiple />
               </div>
             </form>
-            <Error errorName={errors.file} />
           </div>
         </div>
       </div>
