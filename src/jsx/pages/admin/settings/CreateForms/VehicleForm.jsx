@@ -24,7 +24,7 @@ const VehicleForm = () => {
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
   })
-
+  const { id } = useParams();
   const onSubmit = (data)=>{
     if(activeIndex === (totalTabs -1)){
       try{
@@ -43,7 +43,11 @@ const VehicleForm = () => {
     // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
 
-  const {id} = useParams();
+  if (!id) {
+    tabHeading.pop();
+    component.pop();
+  }
+
 
   return (
     <>

@@ -71,6 +71,12 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
     notifySuccess('Saved !')
     console.log(data);
   };
+
+
+  if(!id){
+    component.pop();
+    tabHeading.pop();
+  }
   return (
     <>
       <MainPagetitle

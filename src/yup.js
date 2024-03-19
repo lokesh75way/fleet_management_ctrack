@@ -183,6 +183,22 @@ export const businessGroupAccountSchema = yup
     helpDeskTelephoneNumber: yup
     .string()
     .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
+
+    file: yup
+      .mixed()
+      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+        if (!value) return true; // Allow empty field
+        for (let i = 0; i < value.length; i++) {
+          const extension = value[i].name
+            .substring(value[i].name.lastIndexOf(".") + 1)
+            .toLowerCase();
+          if (extension !== "jpg" && extension !== "png") {
+            return false;
+          }
+        }
+        return true;
+      }),
+   
   })
   .required();
 
@@ -225,24 +241,22 @@ export const driverInfoSchema = yup
     licenseNumber: yup.string(),
   })
   .required();
-export const driverDocumentSchema = yup
-  .object({
-    
-  })
-  .required();
+export const driverDocumentSchema = yup.object({}).required();
 export const subUserAccountSchema = yup
   .object({
-   userName: yup.string().required("User Name is required "),
-   featureTemplate: yup.string().required("Feature Template is required "),
-   password: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-   confirmPassword: yup
-    .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-    mobileNumber: yup.string().matches(/^[0-9]{10}$/, 'Phone number must be exactly 10 digits'),
+    userName: yup.string().required("User Name is required "),
+    featureTemplate: yup.string().required("Feature Template is required "),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+    confirmPassword: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+    mobileNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
   })
@@ -280,7 +294,9 @@ export const technicianTaskSchema = yup
     taskName: yup.string().required("Task Name is required "),
     serviceLocation: yup.string().required("Service Location is required "),
     reportingTime: yup.string().required("Reporting Time is required "),
-    plannedReportingDate: yup.string().required("Planned Reporting Date is required "),
+    plannedReportingDate: yup
+      .string()
+      .required("Planned Reporting Date is required "),
   })
   .required();
 export const geofenceMapSchema = yup

@@ -24,16 +24,6 @@ const headers = [
 ];
 
 const Driver = (ref) => {
-  const [startDate, setStartDate] = useState(new Date(0));
-  const [endDate, setEndDate] = useState(new Date(0));
-
-  const dateRangeText = startDate.toLocaleDateString();
-
-  const [selectFilter, setFilter] = useState({
-    value: "All Companies",
-    label: "All Companies",
-  });
-
   const [tableData, setTableData] = useState(GeofenceData);
   const [editData, setEditData] = useState({
     id: 0,
@@ -60,20 +50,6 @@ const Driver = (ref) => {
       }
     }
   };
-
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
-
-  // const[formData, setFormData] = useState()
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -110,25 +86,7 @@ const Driver = (ref) => {
     setTableData(updateTable);
   };
 
-  useEffect(() => {
-    const dates = findHighestAndLowestDates(GeofenceData);
-    setStartDate(dates.lowestDate);
-    setEndDate(dates.highestDate);
-  }, []);
-
-  useEffect(() => {
-    console.log(startDate);
-    if (startDate && endDate) {
-      const data = filterAlerts(
-        startDate,
-        endDate,
-        selectFilter.label,
-        GeofenceData
-      );
-      setTableData(data);
-    }
-  }, [startDate, endDate, selectFilter.value]);
-
+  
   const employe = useRef();
   return (
     <>
@@ -146,38 +104,6 @@ const Driver = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Geofence</h4>
                     <div className="d-flex">
-                      <DatePicker
-                        // width="0px"
-                        className="form-control"
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        onChange={(dates) => {
-                          const [start, end] = dates;
-                          setStartDate(start);
-                          setEndDate(end);
-                        }}
-                        dateFormat="dd/MM/yy"
-                        placeholderText={dateRangeText}
-                      />
-                      <Select
-                        onChange={(newValue) => {
-                          setFilter({
-                            value: newValue.value,
-                            label: newValue.label,
-                          });
-                        }}
-                        name={"parent"}
-                        menuPortalTarget={document.body}
-                        menuPosition={"fixed"}
-                        styles={customStyles}
-                        options={companyOptions}
-                        value={selectFilter}
-                        defaultValue={{
-                          label: "All Companies",
-                          value: "All Companies",
-                        }}
-                      />
                       <Link
                         to={"/settings/geofence/map"}
                         className="btn btn-primary btn-sm ms-1"
@@ -244,7 +170,7 @@ const Driver = (ref) => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/driver"
+                              to="/settings/geofence"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -256,7 +182,7 @@ const Driver = (ref) => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/driver"
+                          to="/settings/geofence"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)

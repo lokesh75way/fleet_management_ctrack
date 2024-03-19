@@ -121,11 +121,13 @@ const BusinessGroupRoutes = () => {
     { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "subUser/create", component: <SubUserForm /> },
     { url: "subUser", component: <SubUser /> },
+
     { url: "/settings/alert", component: <Alert /> },
     { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
     { url: "/settings/expense", component: <Expense /> },
     { url: "/settings/geofence", component: <Geofence /> },
     { url: "/settings/geofence/map", component: <GeofenceMap /> },
+
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
     { url: "Vehicle", component: <Vehicle /> },

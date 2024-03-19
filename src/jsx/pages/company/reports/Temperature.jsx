@@ -22,15 +22,12 @@ const headers = [
 ];
 
 const Temperature = (ref) => {
-    const [startDate, setStartDate] = useState(new Date(0));
-    const [endDate, setEndDate] = useState(new Date(0));
-  
-    const dateRangeText = startDate.toLocaleDateString();
-  
-    const [selectFilter, setFilter] = useState({
-      value: "All Companies",
-      label: "All Companies",
-    });
+  const [date, setDate] = useState({
+    startDate: new Date(0),
+    endDate: new Date(0),
+  });
+  const [businessFilter, setBusinessFilter] = useState("All Groups");
+  const [companyFilter, setFilterCompany] = useState("All Companies");
 
   const [tableData, setTableData] = useState(DriverData);
   const [editData, setEditData] = useState({
@@ -97,36 +94,18 @@ const Temperature = (ref) => {
   };
 
   useEffect(() => {
-    const dates = findHighestAndLowestDates(DriverData);
-    setStartDate(dates.lowestDate);
-    setEndDate(dates.highestDate);
-  }, []);
-
-  useEffect(() => {
-    console.log(startDate);
-    if (startDate && endDate) {
+    if (date?.startDate && date?.endDate) {
       const data = filterAlerts(
-        startDate,
-        endDate,
-        selectFilter.label,
+        date?.startDate,
+        date?.endDate,
+        companyFilter,
+        businessFilter,
         DriverData
       );
       setTableData(data);
     }
-  }, [startDate, endDate, selectFilter.value]);
+  }, [date?.startDate, date?.endDate, companyFilter, businessFilter]);
 
-
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
 
   const filter = useRef();
   return (
@@ -145,38 +124,6 @@ const Temperature = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Temperature</h4>
                     <div className="d-flex">
-                      <DatePicker
-                        // width="0px"
-                        className="form-control"
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        onChange={(dates) => {
-                          const [start, end] = dates;
-                          setStartDate(start);
-                          setEndDate(end);
-                        }}
-                        dateFormat="dd/MM/yy"
-                        placeholderText={dateRangeText}
-                      />
-                      <Select
-                        onChange={(newValue) => {
-                          setFilter({
-                            value: newValue.value,
-                            label: newValue.label,
-                          });
-                        }}
-                        name={"parent"}
-                        menuPortalTarget={document.body}
-                        menuPosition={"fixed"}
-                        styles={customStyles}
-                        options={companyOptions}
-                        value={selectFilter}
-                        defaultValue={{
-                          label: "All Companies",
-                          value: "All Companies",
-                        }}
-                      />
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"
@@ -231,7 +178,7 @@ const Temperature = (ref) => {
                       >
                         <Link
                           className="paginate_button previous disabled"
-                          to="/temperature"
+                          to="/reports/temperature"
                           onClick={() =>
                             activePag.current > 0 &&
                             onClick(activePag.current - 1)
@@ -243,7 +190,7 @@ const Temperature = (ref) => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/temperature"
+                              to="/reports/temperature"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -255,7 +202,7 @@ const Temperature = (ref) => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/temperature"
+                          to="/reports/temperature"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)
@@ -273,9 +220,13 @@ const Temperature = (ref) => {
         </div>
       </div>
       <FilterOffcanvas
+        data={DriverData}
         ref={filter}
         editData={editData}
         setEditData={setEditData}
+        setBusinessHandler={setBusinessFilter}
+        setCompanyHandler={setFilterCompany}
+        setDatehandler={setDate}
         handleSubmit={handleSubmit}
         Title={editData.id === 0 ? "Add Filter" : "Edit Filter"}
       />

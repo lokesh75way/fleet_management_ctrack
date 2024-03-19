@@ -184,7 +184,7 @@ const Driver = (ref) => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/expense"
+                              to="/settings/expense"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -196,7 +196,7 @@ const Driver = (ref) => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/expense"
+                          to="/settings/expense"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)

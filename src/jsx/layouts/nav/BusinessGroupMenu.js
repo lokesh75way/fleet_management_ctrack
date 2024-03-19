@@ -140,7 +140,7 @@ export const BusinessGroupMenuList = [
 
   {
     title: "Settings",
-    to : "settings",
+    url: "/settings",
     iconStyle: SVGICON.SettingMenu,
     content: [
       {
@@ -185,8 +185,22 @@ export const BusinessGroupMenuList = [
         to: "/reports/activity",
       },
       {
+        title: "Alert",
+        to: "/reports/alert",
+      },
+      {
+        title: "Fuel",
+        to: "/reports/fuel",
+      },
+      
+      {
+        title: "Trip Classification",
+        to: "/reports/trip-classification",
+      },
+
+      {
         title: "Reports",
-        to: "/reports",
+        to: "/reports/generated",
       },
       {
         title: "Geofence-Address",
@@ -199,6 +213,10 @@ export const BusinessGroupMenuList = [
       {
         title: "Driver Behaviour",
         to: "/reports/driver-behaviour",
+      },
+      {
+        title: "Billing",
+        to: "/reports/billing",
       },
     ],
   },

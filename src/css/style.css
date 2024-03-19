@@ -57681,3 +57681,7 @@ html[dir="rtl"]
 .feature_template_table td{
   width: 60px;
 }
+
+#filter_reports .react-datepicker-wrapper{
+  width: 100%;
+}
