@@ -70,6 +70,10 @@ export const companyAccountSchema = yup
     parent: yup.string().required("Please select a option"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     email: yup.string().email().required("Email is required "),
@@ -102,6 +106,10 @@ export const branchAccountSchema = yup
     parentCompany: yup.string().required("Company Name is required "),
     userName: yup.string().required("Please enter the Branch Name"),
     country: yup.string().required("Please select a Country"),
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     zipCode: yup
@@ -125,6 +133,10 @@ export const adminProfileAccountSchema = yup
   .object({
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     oldPassword: yup
@@ -156,6 +168,10 @@ export const businessGroupAccountSchema = yup
     // branch: yup.string().required(),
     userName: yup.string().required("Please enter a Business Group Name"),
     country: yup.string().required("Please select a Country"),
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     zipCode: yup
@@ -215,12 +231,13 @@ export const driverProfileSchema = yup
     company: yup.string().required("Company is required "),
     business: yup.string().required("Business group is required "),
     branch: yup.string().required("Branch is required "),
-    employeeDesignation: yup
-      .string()
-      .required("Employee Designation is required "),
     firstName: yup.string().required("First Name is required "),
     lastName: yup.string().required("Last Name is required "),
-    employeeNumber: yup.number(),
+    employeeNumber: yup.number().typeError("Employee Number must be a number"),
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     contactNumber1: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
@@ -235,13 +252,44 @@ export const driverProfileSchema = yup
   .required();
 export const driverInfoSchema = yup
   .object({
-    age: yup.number(),
-    drivingExperienceSince: yup.number(),
+    age: yup
+      .number()
+      .typeError("Age must be a number")
+      .required("Age is required"),
+    drivingExperienceSince: yup
+      .number()
+      .typeError("Driving experience must be a number")
+      .required("Driving experience is required"),
     licenseToDrive: yup.string(),
     licenseNumber: yup.string(),
   })
   .required();
-export const driverDocumentSchema = yup.object({}).required();
+export const driverDocumentSchema = yup
+  .object({
+    test: yup.array().of(
+      yup.object().shape({
+        fieldName: yup.string().required("This field is required"),
+        file: yup
+          .mixed()
+          .required("File is required")
+          .test("fileExist", "File is required", (value) => value && value.length)
+          .test("fileSize", "File size is too large", (value) => {
+            console.log({value})
+            return value && value.length > 0 ? value && value[0]?.size <= 1024 * 1024 : true; 
+          })
+          .test("fileType", "Unsupported file type", (value) => {
+            if(value && value.length > 0) return (
+              value &&
+              ["image/jpeg", "image/png", "application/pdf"].includes(
+                value[0]?.type
+              )
+            );
+            return true;
+          })
+      })
+    ),
+  })
+  .required();
 export const subUserAccountSchema = yup
   .object({
     userName: yup.string().required("User Name is required "),
@@ -259,6 +307,7 @@ export const subUserAccountSchema = yup
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
+    state: yup.string().required("Please select a State"),
   })
   .required();
 export const alertSchema = yup
@@ -329,6 +378,10 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
+    zipCode: yup
+      .number()
+      .typeError("ZipCode must be a number")
+      .required("Zip Code is required "),
     country: yup.string().required("Please select a Country "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),

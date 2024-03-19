@@ -413,7 +413,7 @@ const Home = () => {
               <div
                 className="card-body d-flex justify-content-center align-items-center py-2"
                 style={{ flexWrap: "wrap" }}
-              >
+               >
                 <div>
                   <ChartPie />
                 </div>

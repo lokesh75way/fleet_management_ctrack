@@ -73,7 +73,7 @@ const Profile = ({
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
+          {!getValues("business") && <Error errorName={errors.business} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -102,7 +102,7 @@ const Profile = ({
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
+          {!getValues("company") && <Error errorName={errors.company} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
