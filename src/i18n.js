@@ -1,20 +1,14 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { arabic } from './lang/Arabic';
+import { english } from './lang/English';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
-  en: {
-    translation: {
-      "businessgroup":"Business Group"
-    }
-  },
-  ar: {
-    translation: {
-      "businessgroup": "مجموعة الأعمال"
-    }
-  }
+  en: english,
+  ar: arabic
 };
 
 i18n

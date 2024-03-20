@@ -9,8 +9,11 @@ import DummyData from '../../../../users.json'
 import useStorage from "../../../../hooks/useStorage";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
+import {useTranslation} from 'react-i18next'
 
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+  
+  const {t} = useTranslation();
   const {checkRole, checkUserName} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
