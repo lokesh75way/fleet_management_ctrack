@@ -19,7 +19,7 @@ const ShowMapContainer = ({ data }) => {
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        />
+        />       
         <Marker styles={{background:'red'}} position={[ 25.2233, 55.2869]} ><Popup>Dubai Trade Center</Popup><Tooltip>Dubai Trade Center</Tooltip></Marker>
       </MapContainer>
     </div>

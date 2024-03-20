@@ -430,6 +430,12 @@ const Report = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Generated Report</h4>
                     <div className="d-flex">
+                      <CSVLink
+                        {...csvlink}
+                        className="btn btn-primary light btn-sm me-1"
+                      >
+                        <i className="fa-solid fa-file-excel" /> Export Report
+                      </CSVLink>
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"

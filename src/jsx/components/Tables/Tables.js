@@ -1174,7 +1174,119 @@ export const VehicleData = [
     }
   ];
   
-  
+
+  export const BillingData = [
+    {
+        id: '1001',
+        createdDate: "2024-02-23",
+        parentCompany: 'Company4',
+        parentBusiness: "Business Group1",
+        userName: 'John Doe',
+        mobileNumber: '1234567890',
+        email: 'john.doe@example.com',
+        billAmount: 500.00,
+        paidAmount: 450.00
+    },
+    {
+        id: '1002',
+        createdDate: '2024-02-21',
+        parentCompany: 'Company4',
+        parentBusiness: "Business Group2",
+        userName: 'Alice Smith',
+        mobileNumber: '9876543210',
+        email: 'alice.smith@example.com',
+        billAmount: 750.00,
+        paidAmount: 750.00
+    },
+    {
+        id: '2001',
+        createdDate: '2024-03-10',
+        parentCompany: 'Company3',
+        parentBusiness: "Business Group3",
+        userName: 'Bob Johnson',
+        mobileNumber: '5555555555',
+        email: 'bob.johnson@example.com',
+        billAmount: 300.00,
+        paidAmount: 280.00
+    },
+    {
+        id: '2002',
+        createdDate: '2024-01-24',
+        parentCompany: 'Company3',
+        parentBusiness: "Business Group4",
+        userName: 'Emma Brown',
+        mobileNumber: '1111111111',
+        email: 'emma.brown@example.com',
+        billAmount: 1000.00,
+        paidAmount: 1000.00
+    },
+    {
+        id: '3001',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group5",
+        userName: 'David Lee',
+        mobileNumber: '9999999999',
+        email: 'david.lee@example.com',
+        billAmount: 200.00,
+        paidAmount: 200.00
+    },
+    {
+        id: '3002',
+        createdDate: '2024-02-15',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group1",
+        userName: 'Sarah Green',
+        mobileNumber: '2222222222',
+        email: 'sarah.green@example.com',
+        billAmount: 1200.00,
+        paidAmount: 1150.00
+    },
+    {
+        id: '4001',
+        createdDate: '2024-02-21',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group1",
+        userName: 'Michael Wilson',
+        mobileNumber: '3333333333',
+        email: 'michael.wilson@example.com',
+        billAmount: 800.00,
+        paidAmount: 750.00
+    },
+    {
+        id: '4002',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group2",
+        userName: 'Olivia Taylor',
+        mobileNumber: '4444444444',
+        email: 'olivia.taylor@example.com',
+        billAmount: 600.00,
+        paidAmount: 600.00
+    },
+    {
+        id: '5001',
+        createdDate: '2024-03-12',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group3",
+        userName: 'James Johnson',
+        mobileNumber: '7777777777',
+        email: 'james.johnson@example.com',
+        billAmount: 400.00,
+        paidAmount: 350.00
+    },
+    {
+        id: '5002',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group3",
+        userName: 'Sophia Davis',
+        mobileNumber: '6666666666',
+        email: 'sophia.davis@example.com',
+        billAmount: 900.00,
+        paidAmount: 800.00
+    }
+];
 
 
 
