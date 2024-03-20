@@ -31,6 +31,7 @@ const ClassifyTrip = (ref) => {
     setValue,
     getValues,
     handleSubmit,
+    clearErrors,
     formState: { errors },
     control,
   } = useForm({
@@ -194,6 +195,7 @@ const ClassifyTrip = (ref) => {
           errors={errors}
           setValue={setValue}
           getValues={getValues}
+          clearErrors={clearErrors}
           Title={"Add Trips"}
         />
       </div>

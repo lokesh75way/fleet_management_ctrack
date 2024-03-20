@@ -8,7 +8,7 @@ import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyA
 import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { businessGroupAccountSchema, companySettingSchema } from "../../../../../yup";
+import { businessGroupAccountSchema, businessGroupSettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import {useTranslation} from 'react-i18next'
 
@@ -47,7 +47,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 1 ?  companySettingSchema : businessGroupAccountSchema
+      activeIndex === 1 ?  businessGroupSettingSchema : businessGroupAccountSchema
   ),
     });
 

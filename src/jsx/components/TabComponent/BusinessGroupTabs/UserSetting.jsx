@@ -21,7 +21,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
 const {t} = useTranslation();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
@@ -198,10 +198,12 @@ const {t} = useTranslation();
           <label className="form-label">{t('uploadFile')}</label>
           <input
             type="file"
-            label="Document Name"
-            name={`documentFile`}
+            {...register('businessGroupLogo')}
+            label="Business Group Logo"
+            name="businessGroupLogo"
             className="form-control"
           />
+          <Error errorName={errors.businessGroupLogo} />
         </div>
 
 

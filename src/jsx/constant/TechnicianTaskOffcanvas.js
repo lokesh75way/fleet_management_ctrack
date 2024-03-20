@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -16,7 +16,7 @@ import '../../scss/pages/_driver-tracking.scss'
 import {taskCategoryOptions, severityOptions, technicianOptions, branchOptions} from '../components/TabComponent/VehicleTabs/Options'
 
 const TechnicianOffcanvas = forwardRef(
-  ({ Title, handleSubmit, editData, setEditData, control, setValue, getValues,register, errors, onSubmit }, ref) => {
+  ({ Title, handleSubmit, editData, setEditData, control, setValue, getValues,register, errors,clearErrors, onSubmit }, ref) => {
     const [addEmploye, setAddEmploye] = useState(false);
     const [tempValue, setTempValue] = useState();
     useImperativeHandle(ref, () => ({
@@ -38,6 +38,26 @@ const TechnicianOffcanvas = forwardRef(
         padding: ".25rem 0 ", // Adjust the height as needed
       }),
     };
+    useEffect(()=>{
+      if(addEmploye === true){
+        clearErrors("technician")
+        clearErrors('taskCategory')
+        clearErrors('taskName')
+        clearErrors('taskPriority')
+        clearErrors('serviceLocation')
+        clearErrors('plannedReportingDate')
+        clearErrors('reportingTime')
+        setValue("technician",'')
+        setValue('taskCategory','')
+        setValue('taskName','')
+        setValue('taskPriority','')
+        setValue('serviceLocation','')
+        setValue('plannedReportingDate','')
+        setValue('reportingTime','')
+        setValue('contactPersonName','')
+        setValue('contactPersonNumber','')
+      }
+    },[addEmploye])
 
     return (
       <>
@@ -66,7 +86,7 @@ const TechnicianOffcanvas = forwardRef(
                 <div className="row"> 
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Technicnan <span className="text-danger">*</span>
+                      Technician <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="technician"

@@ -119,6 +119,23 @@ export const BusinessGroupMenuList = [
     ),
     to: "/driver",
   },
+  {
+    title: "Vehicle Tracking",
+    iconStyle: (
+      <BsPinMap
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/vehicle-tracking",
+  },
 
   {
     title: "Feature Template",

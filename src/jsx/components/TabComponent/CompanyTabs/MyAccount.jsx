@@ -173,11 +173,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             className="form-control"
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
-            defaultValue={
-              filteredCompanyData[0]
-                ? filteredCompanyData[0].helpDeskTelephoneNumber
-                : ""
-            }
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskTelephoneNumber : ''}
             placeholder=""
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
@@ -190,9 +188,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
-            }
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -204,6 +202,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             className="form-control"
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={
               filteredCompanyData[0]
@@ -269,9 +269,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
-            }
+            min='0'
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -323,15 +323,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Fax Number"
             name="faxNumber"
             placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">Upload File</label>
-          <input
-            type="file"
-            label="Document Name"
-            name={`documentFile`}
-            className="form-control"
           />
         </div>
       </div>

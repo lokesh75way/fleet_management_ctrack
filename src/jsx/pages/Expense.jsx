@@ -30,6 +30,7 @@ const Driver = (ref) => {
     setValue,
     getValues,
     handleSubmit,
+    clearErrors,
     formState: { errors },
     control,
   } = useForm({
@@ -124,7 +125,7 @@ const Driver = (ref) => {
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
-                        onClick={() => expense.current.showModal()}
+                        onClick={() => {expense.current.showModal(); console.log(expense)}}
                       >
                         + Add Expense
                       </Link>{" "}
@@ -184,7 +185,7 @@ const Driver = (ref) => {
                           {paggination.map((number, i) => (
                             <Link
                               key={i}
-                              to="/settings/expense"
+                              to="/expense"
                               className={`paginate_button  ${
                                 activePag.current === i ? "current" : ""
                               } `}
@@ -196,7 +197,7 @@ const Driver = (ref) => {
                         </span>
                         <Link
                           className="paginate_button next"
-                          to="/settings/expense"
+                          to="/expense"
                           onClick={() =>
                             activePag.current + 1 < paggination.length &&
                             onClick(activePag.current + 1)
@@ -224,6 +225,7 @@ const Driver = (ref) => {
         handleSubmit={handleSubmit}
         errors={errors}
         control={control}
+        clearErrors={clearErrors}
         Title={editData.id === 0 ? "Add Expense" : "Edit Expense"}
       />
     </>

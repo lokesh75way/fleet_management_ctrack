@@ -43,6 +43,7 @@ const Alert = () => {
     setValue,
     getValues,
     control,
+    clearErrors,
     handleSubmit,
   } = useForm({
     resolver: yupResolver(alertSchema),
@@ -221,6 +222,7 @@ const Alert = () => {
         control={control}
         errors={errors}
         handleSubmit={handleSubmit}
+        clearErrors={clearErrors}
       />
     </>
   );

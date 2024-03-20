@@ -33,17 +33,12 @@ const DriverForm = () => {
       branch: filteredUserData[0]?.parentBranch || "",
       company: filteredUserData[0]?.parentCompany || "",
       business: filteredUserData[0]?.parentBusinessGroup || "",
+      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
     },
     resolver: yupResolver(
       activeIndex === 0 ? driverProfileSchema : activeIndex === 1 ?  driverInfoSchema: driverDocumentSchema
     ),
   });
-
-
-  if(!id){
-    component.pop();
-    tabHeading.pop();
-  }
 
   const onSubmitHanlder = (data) => {
     console.log({activeIndex});
