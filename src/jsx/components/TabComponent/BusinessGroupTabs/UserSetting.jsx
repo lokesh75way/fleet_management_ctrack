@@ -21,7 +21,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
 const {t} = useTranslation();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
