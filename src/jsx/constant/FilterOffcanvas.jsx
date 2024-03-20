@@ -26,7 +26,7 @@ import {
   FaSearch,
   FaWifi,
 } from "react-icons/fa";
-import { findHighestAndLowestDates } from "../../utils/selectValues";
+import { findHighestAndLowestDates } from "../../utils/helper";
 
 const FilterOffcanvas = forwardRef(
   (

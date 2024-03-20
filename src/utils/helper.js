@@ -86,25 +86,36 @@ export const statusData = () => {
   return status;
 };
 
-export function filterAlerts(startDateStr, endDateStr, companyName, parentBusinessName, data = []) {
+export function filterAlerts(
+  startDateStr,
+  endDateStr,
+  companyName,
+  parentBusinessName,
+  data = []
+) {
   if (!Array.isArray(data)) {
     console.error("Data is not an array.");
     return [];
   }
   let startDate = startDateStr ? new Date(startDateStr) : new Date(0); // Default to epoch if startDate is not provided
   let endDate = endDateStr ? new Date(endDateStr) : new Date(); // Default to current date if endDate is not provided
-  
-  return data.filter(item => {
+
+  return data.filter((item) => {
     let currentDate = new Date(item.createdDate);
-    let isDateInRange = (currentDate >= startDate) && (currentDate <= endDate);
-    
-    let isCompanyMatch = companyName === "All Companies" ? true : item.parentCompany === companyName;
-    let isParentBusinessMatch = parentBusinessName === "All Groups" ? true : item.parentBusiness === parentBusinessName;
+    let isDateInRange = currentDate >= startDate && currentDate <= endDate;
+
+    let isCompanyMatch =
+      companyName === "All Companies"
+        ? true
+        : item.parentCompany === companyName;
+    let isParentBusinessMatch =
+      parentBusinessName === "All Groups"
+        ? true
+        : item.parentBusiness === parentBusinessName;
 
     return isDateInRange && isCompanyMatch && isParentBusinessMatch;
   });
 }
-
 
 export function findHighestAndLowestDates(data) {
   if (!Array.isArray(data) || data.length === 0) {
@@ -125,4 +136,28 @@ export function findHighestAndLowestDates(data) {
   }
 
   return { highestDate, lowestDate };
+}
+
+export function filterClassifyTable(filter, data) {
+  const { branch, from, to, search } = filter;
+  let filteredData = data;
+  if(branch.label !== 'All'){
+    filteredData = data.filter((item) => item.branch === branch.label);
+  }
+  if (from && to) {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    filteredData = filteredData.filter((item) => {
+      const startTime = new Date(item.startTime);
+      return startTime >= fromDate && startTime <= toDate;
+    });
+  }
+  if (search !== '') {
+    filteredData = filteredData.filter((item) =>
+      item.driver.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+
+  return filteredData;
 }

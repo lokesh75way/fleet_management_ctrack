@@ -24,7 +24,7 @@ import Select from "react-select";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
-import { getVehicles, statusData } from "../../../utils/selectValues";
+import { getVehicles, statusData } from "../../../utils/helper";
 import CheckboxTree from 'react-checkbox-tree'
 import DriverCompanyItem from "../Tracking/DriverTabComponent3";
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
@@ -131,7 +131,7 @@ const DriverTabComponent1 = (props) => {
     <>
       <div className="vehicle_tracking-object">
         <span
-          className={`light fs-9 ${
+          className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Running")}
@@ -141,7 +141,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 idle ${
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Idle")}
@@ -151,7 +151,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Stopped")}
@@ -161,7 +161,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 inActive ${
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Inactive")}
@@ -171,7 +171,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 noData ${
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("NoData")}
@@ -180,7 +180,7 @@ const DriverTabComponent1 = (props) => {
           <span>NoData</span>
         </span>
         <span
-          className={`light fs-9 ${
+          className={`light fs-9 total ${
             selectValue === "All" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("All")}
@@ -323,11 +323,11 @@ const DriverTabComponent2 = (props) => {
     });
   return (
     <>
-      <div className="px-2 driver_tracking-object">
+      <div className="px-2 vehicle_tracking-object">
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9  running ${
             selectValue === "Allocated"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
@@ -340,7 +340,7 @@ const DriverTabComponent2 = (props) => {
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 idle ${
             selectValue === "Not Allocated"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
@@ -353,7 +353,7 @@ const DriverTabComponent2 = (props) => {
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 total ${
             selectValue === "Total"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"

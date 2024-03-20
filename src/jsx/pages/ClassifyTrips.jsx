@@ -13,8 +13,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { classifyTripsSchema } from "../../yup";
 import { Nav, Tab } from "react-bootstrap";
+import { filterClassifyTable } from "../../utils/helper";
 
 const ClassifyTrip = (ref) => {
+  const [filterData, setFilterData] = useState({
+    from: new Date(),
+    to: new Date(),
+    branch: "All",
+    search: "",
+  });
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab, PlannedTab, CompletedTab];
 
@@ -56,7 +63,12 @@ const ClassifyTrip = (ref) => {
     }
   };
 
-  // const[formData, setFormData] = useState()
+  const submitFilterHandler = (val) => {
+    console.log(val);
+    const data = filterClassifyTable(val, ClassifyTripData);
+    console.log(data)
+    setTableData(data);
+  };
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -77,27 +89,15 @@ const ClassifyTrip = (ref) => {
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
-
-    // setEditTableData(item);
     classifyTrips.current.showModal();
-  };
-  // const handleSubmit=(e)=>{
-  //     e.preventDefault();
-  //     const updateTable = tableData.map((table)=>{
-  //         if(table.id === editData.id) {
-  //             console.log(table.id)
-  //             return {...table, ...editData };
-  //         }
-  //         return table;
-  //     })
-  //     setTableData(updateTable)
-  // }
-  const onSubmit = (data) => {
-    console.log(data);
   };
 
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
+
+  const onSubmit = (data) => {
+    console.log("Submit botn", data);
+  };
 
   const [activeIndex, setActiveIndex] = useState(0);
   return (
@@ -154,6 +154,7 @@ const ClassifyTrip = (ref) => {
                   active={i === activeIndex}
                 >
                   <Component
+                    tableData1={tableData}
                     data={tabHeading}
                     control={control}
                     setValue={setValue}
@@ -169,10 +170,11 @@ const ClassifyTrip = (ref) => {
           </Tab.Content>
         </Tab.Container>
         <ClassifyTripsFilterOffcanvas
+          submitFilterHandler={submitFilterHandler}
           ref={classifyTripsFilter}
-          // editData={editData}
-          // setEditData={setEditData}
           handleSubmit={handleSubmit}
+          filterData={filterData}
+          setFilterData={setFilterData}
           onSubmit={onSubmit}
           register={register}
           control={control}
@@ -180,6 +182,7 @@ const ClassifyTrip = (ref) => {
           setValue={setValue}
           getValues={getValues}
           Title={"Add Filter"}
+          data={ClassifyTripData}
         />
         <ClassifyTripsOffcanvas
           ref={classifyTrips}
@@ -202,12 +205,14 @@ const ClassifyTrip = (ref) => {
 
 export default ClassifyTrip;
 
-const ActiveTab = () => {
-  const [tableData, setTableData] = useState(ClassifyTripData);
-  useEffect(()=>{
-    const data = ClassifyTripData.filter((data)=> data.status === 'active');
-    setTableData(data)
-  },[])
+const ActiveTab = ({tableData1}) => {
+  const [tableData, setTableData] = useState(tableData1);
+  console.log(tableData)
+  useEffect(() => {
+    const data = tableData1.filter((data) => data.status === "active");
+    console.log(data)
+    setTableData(data);
+  }, [tableData1]);
   const {
     register,
     setValue,
@@ -265,14 +270,12 @@ const ActiveTab = () => {
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
-
-    // setEditTableData(item);
     classifyTrips.current.showModal();
   };
 
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
-
+  console.log(tableData)
   return (
     <div className="container-fluid">
       <div className="row">
@@ -370,12 +373,14 @@ const ActiveTab = () => {
   );
 };
 
-const PlannedTab = () => {
-  const [tableData, setTableData] = useState(ClassifyTripData);
-  useEffect(()=>{
-    const data = ClassifyTripData.filter((data)=> data.status === 'planned');
-    setTableData(data)
-  },[])
+const PlannedTab = ({tableData1}) => {
+  const [tableData, setTableData] = useState(tableData1);
+
+  useEffect(()=>{setTableData(tableData1)},[tableData1])
+  useEffect(() => {
+    const data = tableData.filter((data) => data.status === "planned");
+    setTableData(data);
+  }, []);
   const {
     register,
     setValue,
@@ -541,12 +546,12 @@ const PlannedTab = () => {
   );
 };
 
-const CompletedTab = () => {
-  const [tableData, setTableData] = useState(ClassifyTripData);
-  useEffect(()=>{
-    const data = ClassifyTripData.filter((data)=> data.status === 'completed');
-    setTableData(data)
-  },[])
+const CompletedTab = ({tableData1}) => {
+  const [tableData, setTableData] = useState(tableData1);
+  useEffect(() => {
+    const data = tableData.filter((data) => data.status === "completed");
+    setTableData(data);
+  }, [tableData1]);
   const {
     register,
     setValue,
@@ -655,7 +660,7 @@ const CompletedTab = () => {
                     </thead>
                     <tbody>
                       <ClassifyTripTable
-                         active={false}
+                        active={false}
                         editData={editData}
                         tableData={tableData}
                         onConfirmDelete={onConfirmDelete}

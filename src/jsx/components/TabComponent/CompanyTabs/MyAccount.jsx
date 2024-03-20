@@ -5,22 +5,20 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from '../../../../users.json'
+import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 
 const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
-  
-  const {t} = useTranslation();
   const {checkRole, checkUserName} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const [tempValue,setTempValue] = useState();
+  const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-
-  const role = localStorage.getItem('role');
+  const {t} = useTranslation();
+  const role = localStorage.getItem("role");
 
   const customStyles = {
     control: (base) => ({
@@ -29,39 +27,39 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     }),
   };
 
-  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
+  const businessUserOptions = DummyData.filter(
+    (item) => item.role === "businessgroup"
+  ).map((item) => ({
     label: item.userName,
     value: item.id,
   }));
 
-  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+  const companyOptions = DummyData.filter(
+    (item) => item.role === "company"
+  ).map((item) => ({
     label: item.userName,
     value: item.id,
   }));
 
-  
-  useEffect(()=>{
-    
-      if(role === 'businessgroup'){
-      setTempValue(localStorage.getItem('loginDetails-name')); 
-      setValue("parent", localStorage.getItem('loginDetails-name'))
-      }
-  },[])
-
-
+  useEffect(() => {
+    if (role === "businessgroup") {
+      setTempValue(localStorage.getItem("loginDetails-name"));
+      setValue("parent", localStorage.getItem("loginDetails-name"));
+    }
+  }, []);
 
   const { id } = useParams();
-    const companyData = JSON.parse(localStorage.getItem('userJsonData'))
-  
-    const newData = companyData.filter(data => data.id.toString() === id);
-  
-    const [filteredCompanyData,setFilteredCompanyData] = useState(newData);
-  
+  const companyData = JSON.parse(localStorage.getItem("userJsonData"));
+
+  const newData = companyData.filter((data) => data.id.toString() === id);
+
+  const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('businessGroup')}<span className="text-danger">*</span></label>
+          <label className="form-label">Business Group<span className="text-danger">*</span></label>
           {
           checkRole() === "admin" ?<Controller
             name="parent"
@@ -107,7 +105,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].userName : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
+            }
           />
           <Error errorName={errors.userName} />
         </div>
@@ -124,21 +124,23 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           />
            <Error errorName={errors.company} />
         </div> */}
-               
+
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('email')}<span className="text-danger">*</span></label>
+          <label className="form-label">Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].email : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].email : ""
+            }
           />
           <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('password')}<span className="text-danger">*</span></label>
+          <label className="form-label">Password<span className="text-danger">*</span></label>
           <CustomInput
             type="password"
             register={register}
@@ -150,19 +152,21 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.password} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('helpDeskEmail')}<span className="text-danger">*</span></label>
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ""
+            }
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('helpDeskTelephoneNumber')}<span className="text-danger">*</span></label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -177,7 +181,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('mobileNumber')}<span className="text-danger">*</span></label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -201,26 +205,30 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             min="0"
             onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].whatsappContactNumber : ''}
+            defaultValue={
+              filteredCompanyData[0]
+                ? filteredCompanyData[0].whatsappContactNumber
+                : ""
+            }
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('country')}<span className="text-danger">*</span></label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.name);
-              setIsStateDisabled(false)
+              setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
-         { !getValues('country') && <Error errorName={errors.country} />}
+          {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">{t('state')}</label>
+          <label className="form-label">State</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -233,7 +241,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
               placeHolder="Select State"
             />
           </div>
-          {!getValues('state') && <Error errorName={errors.state} />}
+          {!getValues("state") && <Error errorName={errors.state} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -245,7 +253,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="City"
             name="city"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].city : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].city : ""
+            }
           />
           <Error errorName={errors.city} />
         </div>
@@ -275,7 +285,9 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].street1 : ''}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].street1 : ""
+            }
           />
           <Error errorName={errors.street1} />
         </div>
@@ -322,7 +334,11 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           {t('submit')}
         </Button>

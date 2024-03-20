@@ -270,7 +270,6 @@ const MyAccount = ({
             defaultValue={getValues("faxNumber")}
           />
         </div>
-                 
       </div>
       <div
         style={{

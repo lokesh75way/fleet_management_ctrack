@@ -70,6 +70,9 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     
     notifySuccess("Saved !");
     console.log('business group data',data);
+    if(!id){
+      navigate('/business')
+    }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
