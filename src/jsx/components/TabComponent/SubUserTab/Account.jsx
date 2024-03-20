@@ -41,20 +41,36 @@ const Account = ({
     
   };
 
+  const role = localStorage.getItem("role");
+  const { id } = useParams();
+  const User = JSON.parse(localStorage.getItem("userJsonData"));
 
-  const defaultCompanyOptions = DummyData.filter(
-    (item) => item.role === "company"
-  ).map((item) => ({
-    label: item.userName,
-    value: item.id,
-  }));
+  const loggedinemail = localStorage.getItem("loginDetails-name");
+  let defaultCompanyOptions;
+
+  if(role === "admin") {
+
+    defaultCompanyOptions = DummyData.filter(
+      (item) => item.role === "company"
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+
+  }else{
+
+    defaultCompanyOptions = DummyData.filter(
+      (item) => item.role === "company" && item.parent === loggedinemail
+    ).map((item) => ({
+      label: item.userName,
+      value: item.id,
+    }));
+  }
+
 
   console.log('ye he default company data', defaultCompanyOptions);
 
-  const { id } = useParams();
-  const User = JSON.parse(localStorage.getItem("userJsonData"));
-  const role = localStorage.getItem("role");
-  const loggedinemail = localStorage.getItem("loginDetails-name");
+
 
   
   
@@ -63,7 +79,7 @@ const Account = ({
     const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
     parentbgname = parentbgnamefilter[0].parentBusinessGroup;
   }
-  
+
   const branchData = User.filter(
     (item) => item.role === "branch" && item.id == id
   );
@@ -198,12 +214,13 @@ const Account = ({
 
 
   
+  
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('businessgroup')}</label>
+          <label className="form-label">{t('businessGroup')}</label>
           <Controller
             name="businessUser"
             control={control}
@@ -219,12 +236,15 @@ const Account = ({
                 isDisabled={defaultValues.business.disabled}
                 name={name}
                 styles={customStyles}
+
                 defaultValue={role === 'company' && {
                   label: parentbgname,
                   value: parentbgname,
+                } || role === 'businessgroup' && {
+                  label: loggedinemail,
+                  value: loggedinemail,
                 } 
               }
-                
               />
             )}
           />

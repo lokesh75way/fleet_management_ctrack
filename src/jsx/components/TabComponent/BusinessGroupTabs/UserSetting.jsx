@@ -8,6 +8,7 @@ import { currencyOptions } from "../VehicleTabs/Options";
 import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
+import {useTranslation} from 'react-i18next'
 
 import Error from "../../Error/Error";
 import {
@@ -20,8 +21,8 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
-
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
+const {t} = useTranslation();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
   const customStyles = {
@@ -34,7 +35,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Date Format</label>
+          <label className="form-label">{t('dateFormat')}</label>
           <Controller
             name="dateFormat"
             control={control}
@@ -53,7 +54,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Time Format</label>
+          <label className="form-label">{t('timeFormat')}</label>
           <Controller
             name="timeFormat"
             control={control}
@@ -70,7 +71,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Unit of Distance</label>
+          <label className="form-label">{t('unitOfDistance')}</label>
           <Controller
             name="fuelEconomyScaling"
             control={control}
@@ -90,7 +91,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Unit of Fuel</label>
+          <label className="form-label">{t('unitOfFuel')}</label>
           <Controller
             name="unitOfFuel"
             control={control}
@@ -107,7 +108,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Language</label>
+          <label className="form-label">{t('language')}</label>
           <Controller
             name="language"
             control={control}
@@ -124,7 +125,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Status</label>
+          <label className="form-label">{t('status')}</label>
           <Controller
             name="status"
             control={control}
@@ -141,7 +142,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Work Start Day</label>
+          <label className="form-label">{t('worksStartDay')}</label>
           <Controller
             name="worksstartday"
             control={control}
@@ -158,7 +159,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Currency</label>
+          <label className="form-label">{t('currency')}</label>
           <Controller
             name="currency"
             control={control}
@@ -176,7 +177,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
         </div>
 
         <div className="col-xl-6 mb-3 ">
-        <label className="form-label">Time Zone </label>
+        <label className="form-label">{t('timeZone')} </label>
           <Controller
             name="timezone"
             control={control}
@@ -194,7 +195,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           />
         </div>
         <div className="col-xl-6 mb-3" >
-          <label className="form-label">Business Group Logo</label>
+          <label className="form-label">{t('uploadFile')}</label>
           <input
             type="file"
             {...register('businessGroupLogo')}
@@ -221,7 +222,7 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, registe
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

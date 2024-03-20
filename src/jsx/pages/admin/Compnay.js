@@ -4,8 +4,11 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import CompanyTable from "../../components/Tables/CompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
+import {useTranslation} from 'react-i18next'
 
 const Company = () => {
+
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const [selectFilter, setFilter] = useState({
@@ -130,9 +133,9 @@ const Company = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Company"
-        pageTitle={"Company"}
-        parentTitle={"Home"}
+        mainTitle={t('company')}
+        pageTitle={t('company')}
+        parentTitle={t('home')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -141,7 +144,7 @@ const Company = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Companies</h4>
+                    <h4 className="heading mb-0">{t('companies')}</h4>
                     <div className="d-flex align-items-center">
                       <Controller
                         name="parent"
@@ -177,7 +180,7 @@ const Company = () => {
                         style={{paddingBlock : '9px'}}
                         // onClick={()=>company.current.showModal()}
                       >
-                        + Add Company
+                        + {t('addCompany')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -191,15 +194,15 @@ const Company = () => {
                     >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Company Name</th>
-                          <th>Business Group</th>
-                          <th>Mobile Number</th>
-                          <th>Location</th>
-                          <th>Email</th>
-                          <th>Branches</th>
-                          <th>Zip Code</th>
-                          <th>Action</th>
+                          <th>{t('id')}</th>
+                          <th>{t('companyName')}</th>
+                          <th>{t('businessGroup')}</th>
+                          <th>{t('mobileNumber')}</th>
+                          <th>{t('location')}</th>
+                          <th>{t('email')}</th>
+                          <th>{t('branches')}</th>
+                          <th>{t('zipCode')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -215,11 +218,11 @@ const Company = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                        {t('showing')} {activePag.current * sort + 1} {t('to')} {" "}
                         {dataLength > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : dataLength}{" "}
-                        of {dataLength} entries
+                        {t('of')}  {dataLength} {t('entries')} 
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

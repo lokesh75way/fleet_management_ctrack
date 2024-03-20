@@ -8,6 +8,7 @@ import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useParams } from "react-router-dom";
+import {useTranslation} from "react-i18next";
 const MyAccount = ({
   data,
   setValue,
@@ -18,6 +19,8 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+
+  const {t} = useTranslation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
@@ -48,7 +51,7 @@ const MyAccount = ({
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Business Group Name <span className="text-danger">*</span>
+            {t('businessGroupName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -62,7 +65,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Email<span className="text-danger">*</span>
+            {t('email')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -77,7 +80,7 @@ const MyAccount = ({
         {!id && (
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">
-              Password<span className="text-danger">*</span>
+            {t('password')}<span className="text-danger">*</span>
             </label>
             <CustomInput
               type="password"
@@ -92,7 +95,7 @@ const MyAccount = ({
         )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Help Desk Email<span className="text-danger">*</span>
+          {t('helpDeskEmail')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -106,7 +109,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Help Desk Telephone Number<span className="text-danger">*</span>
+          {t('helpDeskTelephoneNumber')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -123,7 +126,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Mobile Number<span className="text-danger">*</span>
+          {t('mobileNumber')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -138,7 +141,7 @@ const MyAccount = ({
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">{t('whatsappContactNumber')}</label>
           <CustomInput
             type="number"
             register={register}
@@ -153,7 +156,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Country<span className="text-danger">*</span>
+          {t('country')}<span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -172,7 +175,7 @@ const MyAccount = ({
             isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
           }`}
         >
-          <label className="form-label">State</label>
+          <label className="form-label">{t('state')}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={isStateDisabled ? 0: countryid}
@@ -188,7 +191,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City<span className="text-danger">*</span>
+          {t('city')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -202,7 +205,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+          {t('zipCode')}
           </label>
           <CustomInput
             type="number"
@@ -218,7 +221,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1<span className="text-danger">*</span>
+          {t('street1')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -232,7 +235,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -244,7 +247,7 @@ const MyAccount = ({
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Contact Person</label>
+          <label className="form-label">{t('contactPerson')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -256,7 +259,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Fax Number
+          {t('faxNumber')}
           </label>
           <CustomInput
             type="number"
@@ -283,7 +286,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>
