@@ -1,36 +1,56 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import Select from "react-select";
-import DatePicker from "react-datepicker";
 import MainPagetitle from "../../../layouts/MainPagetitle";
 import { DriverData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import DriverTable from "../../../components/Tables/DriverTable";
 import {
   filterAlerts,
-  findHighestAndLowestDates,
-} from "../../../../utils/selectValues";
-import { companyOptions } from "../../../components/TabComponent/VehicleTabs/Options";
+} from "../../../../utils/helper";
 
-const headers = [
-  { label: "Employee ID", key: "emplid" },
-  { label: "Employee Name", key: "title" },
-  { label: "Department", key: "department" },
-  { label: "Email Address", key: "email" },
-  { label: "Contact Number", key: "contact" },
-  { label: "Gender", key: "gender" },
-  { label: "Location", key: "location" },
-  { label: "Status", key: "status" },
+const tableData = [
+  {emplid: '1001', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
+  {emplid: '1002', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
+  {emplid: '1003', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
+  {emplid: '1004', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},    
+  {emplid: '1005', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
+  {emplid: '1006', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
+  {emplid: '1007', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
+  {emplid: '1008', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
+  {emplid: '1009', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
+  {emplid: '1010', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},   
+  {emplid: '1011', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
+  {emplid: '1012', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
+  {emplid: '1013', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},    
+  {emplid: '1014', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
+  {emplid: '1015', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
 ];
+
+const headersTitle = [
+  {label:'Employee ID', key:'emplid'}, 
+  {label:'Employee Name', key:'title'}, 
+  {label:'Email Address', key:'email'}, 
+  {label:'Contact Number', key:'contact'}, 
+  {label:'Gender', key:'gender'}, 
+  {label:'Location', key:'location'}, 
+  {label:'Status', key:'status'}, 
+]
+
+
+const csvlink = {
+  headers : headersTitle,
+  data : tableData,
+  filename: "csvfile.csv"
+}
 
 const DriverBehaviour = (ref) => {
   const [date, setDate] = useState({
     startDate: new Date(0),
     endDate: new Date(0),
   });
-  const [businessFilter, setBusinessFilter] = useState('All Groups');
-  const [companyFilter, setFilterCompany] = useState('All Companies');
+  const [businessFilter, setBusinessFilter] = useState("All Groups");
+  const [companyFilter, setFilterCompany] = useState("All Companies");
 
   // console.log("company is ", businessFilter, companyFilter, date);
 
@@ -63,7 +83,7 @@ const DriverBehaviour = (ref) => {
 
   useEffect(() => {
     if (date?.startDate && date?.endDate) {
-    const data = filterAlerts(
+      const data = filterAlerts(
         date?.startDate,
         date?.endDate,
         companyFilter,
@@ -73,8 +93,6 @@ const DriverBehaviour = (ref) => {
       setTableData(data);
     }
   }, [date?.startDate, date?.endDate, companyFilter, businessFilter]);
-
-
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -115,7 +133,7 @@ const DriverBehaviour = (ref) => {
       <MainPagetitle
         mainTitle="DriverBehaviour"
         pageTitle={"DriverBehaviour"}
-        parentTitle={"Home"}
+        parentTitle={"Reports"}
       />
       <div className="container-fluid">
         <div className="row">
@@ -126,6 +144,12 @@ const DriverBehaviour = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">DriverBehaviour</h4>
                     <div className="d-flex">
+                      <CSVLink
+                        {...csvlink}
+                        className="btn btn-primary light btn-sm me-1"
+                      >
+                        <i className="fa-solid fa-file-excel" /> Export Report
+                      </CSVLink>
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"

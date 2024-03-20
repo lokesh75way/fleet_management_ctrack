@@ -81,7 +81,7 @@ const ActiveUserMap = () => {
   return (
     <>
       <div className="card overflow-hidden">
-        <div className="card-header border-0">
+        <div className="card-header border-0" style={{paddingBottom :0}}>
           <h4 className="heading mb-0">Active users</h4>
         </div>
         <div className="card-body pe-0">

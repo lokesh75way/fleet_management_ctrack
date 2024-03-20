@@ -61,6 +61,8 @@ import ApexBar2 from "../charts/apexcharts/Bar2";
 import ApexLine3 from "../charts/apexcharts/Line3";
 import ApexLine5 from "../charts/apexcharts/Line5";
 import ApexLine4 from "../charts/apexcharts/Line4";
+import PolarChart from "../charts/Chartjs/polar";
+import Notification from "./Notification";
 
 const speed = {
   data: [
@@ -111,6 +113,7 @@ const Home = () => {
     showProjectOverviewTab,
     showDataFrequency,
     showFleetStatus,
+    showFleetIdle,
     showFaultyDevices,
     showDevicesVsProject,
     showCategoryWiseStatus,
@@ -120,7 +123,8 @@ const Home = () => {
     showObjectType,
     showNumberOfTasks,
     showInactiveDevices,
-    
+    showCategoryWiseTask,
+    showTop5Technician,
   } = useContext(ThemeContext);
 
   const customStyles = {
@@ -366,6 +370,7 @@ const Home = () => {
                 backgroundColor="#0d99ff"
                 hoverBackgroundColor="rgba(44, 44, 44, 0.5)"
                 barThickness={40}
+                indexAxis = {'y'}
               />
             </div>
           </div>)}
@@ -440,6 +445,7 @@ const Home = () => {
                     color1={"#49be25"}
                     color2={"#5179cf"}
                     Chartdata={[45, 55]}
+                    labels={["Web User", "Mobile User"]}
                   />
                 </div>
                 <div>
@@ -779,7 +785,7 @@ const Home = () => {
           className="row "
           style={{ marginLeft: "0.2rem", justifyContent: "" }}
         >
-          <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
+         {showCategoryWiseTask && <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
             <div
               className="card same-card p-2"
               style={{
@@ -806,13 +812,12 @@ const Home = () => {
                 className="d-flex justify-content-center align-items-center flex-column"
                 style={{ height : '30vh' }}
               >
-             <h2>0</h2>
-             <p className="text-black fs-4">Tasks</p>
+             <PolarChart/>
               </div>
             </div>
-          </div>
+          </div>}
 
-          <div className="col-xl-6 col-md-12">
+         {showTop5Technician && <div className="col-xl-6 col-md-12">
             <div
               className="card same-card p-2"
               style={{
@@ -825,7 +830,6 @@ const Home = () => {
                 <h4
                   className="text-black fs-4 p-3"
                   style={{
-                    marginBottom: "2rem",
                     whiteSpace: "nowrap", // Added: prevent text from wrapping
                     overflow: "hidden", // Added: hide overflow
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
@@ -840,13 +844,11 @@ const Home = () => {
                 ></div>
               </div>
 
-              <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ height : '30vh' }}
-              >
-              </div>
+            <Notification/>
+      
+            
             </div>
-          </div>
+          </div>}
 
         </div>
       </div>

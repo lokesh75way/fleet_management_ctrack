@@ -266,7 +266,12 @@ const ThemeContextProvider = (props) => {
   const [showEarningBlog, setShowEarningBlog] = useState(true);
   const [showActiveUserMap, setShowActiveUserMap] = useState(true);
   const [showFleetStatus, setShowFleetStatus] = useState(true);
+  const [showFleetFuel, setShowFleetFuel] = useState(true);
+  const [showFleetIdle, setShowFleetIdle] = useState(true);
   const [showDataFrequency, setShowDataFrequency] = useState(true);
+  const [showMaintenance, setMaintenance] = useState(true);
+  const [showOverSpeed, setOverSpeed] = useState(true);
+  const [showStayInZone, setStayInZone] = useState(true);
   const [showFaultyDevices, setShowFaultyDevices] = useState(true);
   const [showDevicesVsProject, setDevicesVsProject] = useState(true);
   const [showCategoryWiseStatus, setCategoryWiseStatus] = useState(true);
@@ -276,6 +281,9 @@ const ThemeContextProvider = (props) => {
   const [showObjectType, setObjectType] = useState(true);
   const [showNumberOfTasks, setNumberOfTasks] = useState(true);
   const [showInactiveDevices, setInactiveDevices] = useState(true);
+  const [showCategoryWiseTask, setCategoryWiseTask] = useState(true);
+  const [showTop5Technician, setTop5Technician] = useState(true);
+  const [showFleetUsage, setFleetUsage] = useState(true);
   useEffect(() => {
     const body = document.querySelector("body");
     body.setAttribute("data-typography", "poppins");
@@ -376,10 +384,6 @@ const ThemeContextProvider = (props) => {
         setShowEarningBlog,
         showActiveUserMap,
         setShowActiveUserMap,
-        showDataFrequency,
-        setShowDataFrequency,
-        showFleetStatus,
-        setShowFleetStatus,
         showFaultyDevices,
         setShowFaultyDevices,
         showDevicesVsProject,
@@ -398,6 +402,26 @@ const ThemeContextProvider = (props) => {
         setNumberOfTasks,
         showInactiveDevices,
         setInactiveDevices,
+        showCategoryWiseTask,
+        setCategoryWiseTask,
+        showTop5Technician,
+        setTop5Technician,
+        showFleetUsage,
+        setFleetUsage,
+        showFleetStatus,
+        setShowFleetStatus,
+        showFleetFuel,
+        setShowFleetFuel,
+        showFleetIdle,
+        setShowFleetIdle,
+        showDataFrequency,
+        setShowDataFrequency,
+        showMaintenance,
+        setMaintenance,
+        showOverSpeed,
+        setOverSpeed,
+        showStayInZone,
+        setStayInZone,
       }}
     >
       {props.children}

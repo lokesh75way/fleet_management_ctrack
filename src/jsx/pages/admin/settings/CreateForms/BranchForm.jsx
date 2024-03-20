@@ -64,6 +64,9 @@ const BranchForm = () => {
       }
     }
     notifySuccess("Saved!");
+    if(!id){
+      navigate('/branch')
+    }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (

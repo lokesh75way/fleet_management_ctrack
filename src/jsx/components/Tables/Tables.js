@@ -893,6 +893,7 @@ export const VehicleData = [
       distance: 150,
       fuelConsumption: 10,
       driver: "John Doe",
+      branch : 'Branch1'
 
     },
     {
@@ -904,7 +905,9 @@ export const VehicleData = [
       reachLocation: "City C",
       distance: 200,
       fuelConsumption: 15,
-      driver: "Jane Smith"
+      driver: "Jane Smith",
+      branch : 'Branch1'
+
     },
     {
       status : 'active',
@@ -915,7 +918,9 @@ export const VehicleData = [
       reachLocation: "City D",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Mike Johnson"
+      driver: "Mike Johnson",
+      branch : 'Branch1'
+
     },
     {
       status : 'completed',
@@ -926,7 +931,9 @@ export const VehicleData = [
       reachLocation: "City E",
       distance: 220,
       fuelConsumption: 18,
-      driver: "Emily Wilson"
+      driver: "Emily Wilson",
+      branch : 'Branch2'
+
     },
     {
       status : 'completed',
@@ -937,7 +944,9 @@ export const VehicleData = [
       reachLocation: "City F",
       distance: 190,
       fuelConsumption: 14,
-      driver: "David Brown"
+      driver: "David Brown",
+      branch : 'Branch2'
+
     },
     {
       status : 'completed',
@@ -948,7 +957,9 @@ export const VehicleData = [
       reachLocation: "City G",
       distance: 210,
       fuelConsumption: 16,
-      driver: "Sarah Garcia"
+      driver: "Sarah Garcia",
+      branch : 'Branch2'
+
     },
     {
       status : 'planned',
@@ -959,7 +970,9 @@ export const VehicleData = [
       reachLocation: "City H",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Michael Martinez"
+      driver: "Michael Martinez",
+      branch : 'branch3'
+
     },
     {
       status : 'planned',
@@ -970,7 +983,9 @@ export const VehicleData = [
       reachLocation: "City I",
       distance: 240,
       fuelConsumption: 20,
-      driver: "Jessica Taylor"
+      driver: "Jessica Taylor",
+      branch : 'Branch3'
+
     },
     {
       status : 'planned',
@@ -981,7 +996,9 @@ export const VehicleData = [
       reachLocation: "City J",
       distance: 200,
       fuelConsumption: 15,
-      driver: "Daniel Anderson"
+      driver: "Daniel Anderson",
+      branch : 'Branch3'
+
     },
     {
       status : 'active',
@@ -992,7 +1009,9 @@ export const VehicleData = [
       reachLocation: "City K",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Olivia Thomas"
+      driver: "Olivia Thomas",
+      branch : 'Branch3'
+
     },
     {
       status : 'active',
@@ -1003,7 +1022,9 @@ export const VehicleData = [
       reachLocation: "City L",
       distance: 220,
       fuelConsumption: 18,
-      driver: "William Rodriguez"
+      driver: "William Rodriguez",
+      branch : 'Branch3'
+
     },
     {
       status : 'planned',
@@ -1014,7 +1035,9 @@ export const VehicleData = [
       reachLocation: "City M",
       distance: 210,
       fuelConsumption: 16,
-      driver: "Emma Wilson"
+      driver: "Emma Wilson",
+      branch : 'Branch4'
+
     }
   ]
   export const GeofenceData = [
@@ -1174,7 +1197,119 @@ export const VehicleData = [
     }
   ];
   
-  
+
+  export const BillingData = [
+    {
+        id: '1001',
+        createdDate: "2024-02-23",
+        parentCompany: 'Company4',
+        parentBusiness: "Business Group1",
+        userName: 'John Doe',
+        mobileNumber: '1234567890',
+        email: 'john.doe@example.com',
+        billAmount: 500.00,
+        paidAmount: 450.00
+    },
+    {
+        id: '1002',
+        createdDate: '2024-02-21',
+        parentCompany: 'Company4',
+        parentBusiness: "Business Group2",
+        userName: 'Alice Smith',
+        mobileNumber: '9876543210',
+        email: 'alice.smith@example.com',
+        billAmount: 750.00,
+        paidAmount: 750.00
+    },
+    {
+        id: '2001',
+        createdDate: '2024-03-10',
+        parentCompany: 'Company3',
+        parentBusiness: "Business Group3",
+        userName: 'Bob Johnson',
+        mobileNumber: '5555555555',
+        email: 'bob.johnson@example.com',
+        billAmount: 300.00,
+        paidAmount: 280.00
+    },
+    {
+        id: '2002',
+        createdDate: '2024-01-24',
+        parentCompany: 'Company3',
+        parentBusiness: "Business Group4",
+        userName: 'Emma Brown',
+        mobileNumber: '1111111111',
+        email: 'emma.brown@example.com',
+        billAmount: 1000.00,
+        paidAmount: 1000.00
+    },
+    {
+        id: '3001',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group5",
+        userName: 'David Lee',
+        mobileNumber: '9999999999',
+        email: 'david.lee@example.com',
+        billAmount: 200.00,
+        paidAmount: 200.00
+    },
+    {
+        id: '3002',
+        createdDate: '2024-02-15',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group1",
+        userName: 'Sarah Green',
+        mobileNumber: '2222222222',
+        email: 'sarah.green@example.com',
+        billAmount: 1200.00,
+        paidAmount: 1150.00
+    },
+    {
+        id: '4001',
+        createdDate: '2024-02-21',
+        parentCompany: 'Company2',
+        parentBusiness: "Business Group1",
+        userName: 'Michael Wilson',
+        mobileNumber: '3333333333',
+        email: 'michael.wilson@example.com',
+        billAmount: 800.00,
+        paidAmount: 750.00
+    },
+    {
+        id: '4002',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group2",
+        userName: 'Olivia Taylor',
+        mobileNumber: '4444444444',
+        email: 'olivia.taylor@example.com',
+        billAmount: 600.00,
+        paidAmount: 600.00
+    },
+    {
+        id: '5001',
+        createdDate: '2024-03-12',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group3",
+        userName: 'James Johnson',
+        mobileNumber: '7777777777',
+        email: 'james.johnson@example.com',
+        billAmount: 400.00,
+        paidAmount: 350.00
+    },
+    {
+        id: '5002',
+        createdDate: '2024-02-11',
+        parentCompany: 'Company1',
+        parentBusiness: "Business Group3",
+        userName: 'Sophia Davis',
+        mobileNumber: '6666666666',
+        email: 'sophia.davis@example.com',
+        billAmount: 900.00,
+        paidAmount: 800.00
+    }
+];
 
 
 

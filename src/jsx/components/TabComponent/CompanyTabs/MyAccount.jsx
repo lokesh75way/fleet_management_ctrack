@@ -29,7 +29,6 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-
   const role = localStorage.getItem("role");
 
   const customStyles = {
@@ -183,8 +182,9 @@ const MyAccount = ({
             <Error errorName={errors.password} />
           </div>
         )}
+       
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
+        <label className="form-label">
             {t("helpDeskEmail")}
             <span className="text-danger">*</span>
           </label>

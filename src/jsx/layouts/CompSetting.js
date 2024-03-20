@@ -8,6 +8,8 @@ import { ThemeContext } from "../../context/ThemeContext";
 const CompSetting = () => {
   const [settingToggle, setSettingToggle] = useState(false);
   const [demoToggle, setDemoToggle] = useState(false);
+  const role = localStorage.getItem("role");
+  console.log("hdgfklshf", { role });
   const {
     body,
     sideBarOption,
@@ -28,10 +30,6 @@ const CompSetting = () => {
     setShowEarningBlog,
     setShowActiveUserMap,
     setShowAllProjectDonutChart,
-    showDataFrequency,
-    setShowDataFrequency,
-    showFleetStatus,
-    setShowFleetStatus,
     showFaultyDevices,
     setShowFaultyDevices,
     showDevicesVsProject,
@@ -50,59 +48,95 @@ const CompSetting = () => {
     setNumberOfTasks,
     showInactiveDevices,
     setInactiveDevices,
+    showCategoryWiseTask,
+    setCategoryWiseTask,
+    showTop5Technician,
+    setTop5Technician,
+    showFleetStatus,
+    setShowFleetStatus,
+    showFleetFuel,
+    setShowFleetFuel,
+    showFleetIdle,
+    setShowFleetIdle,
+    showDataFrequency,
+    setShowDataFrequency,
+    showMaintenance,
+    setMaintenance,
+    showOverSpeed,
+    setOverSpeed,
+    showStayInZone,
+    setStayInZone,
+    showFleetUsage,
+    setFleetUsage,
   } = useContext(ThemeContext);
 
   // Function to toggle component visibility
   const toggleComponent = (component, value) => {
     switch (component) {
-      case "CardWidget":
+      case "Card-Widget":
         setShowCardWidget(value);
         break;
-      case "ProjectOverviewTab":
-        setShowProjectOverviewTab(value);
-        break;
-      case "EarningBlog":
-        setShowEarningBlog(value);
-        break;
-      case "ActiveUserMap":
+      case "Active-User-Map":
         setShowActiveUserMap(value);
         break;
-      case "AllProjectDonutChart":
-        setShowAllProjectDonutChart(value);
-        break;
-      case "DataFrequency":
+      case "Data-Frequency":
         setShowDataFrequency(value);
         break;
-      case "FleetStatus":
+      case "Fleet-Status":
         setShowFleetStatus(value);
         break;
-      case "FaultyDevices":
+      case "Faulty-Devices":
         setShowFaultyDevices(value);
         break;
-      case "DevicesVsProject":
+      case "Devices-Vs-Project":
         setDevicesVsProject(value);
         break;
-      case "CategoryWiseStatus":
+      case "Category-Wise-Status":
         setCategoryWiseStatus(value);
         break;
-      case "WebVsMobileUser":
+      case "Web-Vs-Mobile-User":
         setWebVsMobileUser(value);
         break;
-      case "ApplicationUsage":
+      case "Application-Usage":
         setApplicationUsage(value);
         break;
-      case "ModelWiseDevices":
+      case "Model-Wise-Devices":
         setModelWiseDevices(value);
         break;
-      case "ObjectType":
+      case "Object-Type":
         setObjectType(value);
         break;
-      case "NumberOfTasks":
+      case "Number-Of-Tasks":
         setNumberOfTasks(value);
         break;
-      case "InactiveDevices":
+      case "Inactive-Devices":
         setInactiveDevices(value);
         break;
+      case "Category-Wise-Task":
+        setCategoryWiseTask(value);
+        break;
+      case "Top-5-Technician":
+        setTop5Technician(value);
+        break;
+      case  "Fleet-Fuel":
+        setShowFleetFuel (value);
+        break;
+      case  "Fleet-Usage":
+        setFleetUsage (value);
+        break;
+      case "Fleet-Idle":
+       setShowFleetIdle(value);
+        break;
+      case "Maintenance":
+        setMaintenance(value);
+        break;
+      case "OverSpeed":
+        setOverSpeed(value);
+        break;
+      case "Stay-In-Zone":
+        setStayInZone(value);
+        break;
+
       // Add cases for other components
       default:
         break;
@@ -111,92 +145,180 @@ const CompSetting = () => {
 
   //   Function to render checkboxes and handle visibility toggle
   const renderComponentCheckbox = (componentName) => {
+    const label = componentName.replaceAll('-',' ');
     return (
       <div key={componentName} className="form-check custom-checkbox mb-2">
         <input
           type="checkbox"
           className="form-check-input"
           id="customCheckBox1"
-          checked={eval(`show${componentName}`)}
+          checked={eval(`show${componentName.replaceAll('-','')}`)}
           onChange={(e) => toggleComponent(componentName, e.target.checked)}
         />
-        <label className="form-check-label fs-18" htmlFor="customCheckBox1">
-          {componentName}
-        </label>
+        <label className="form-check-label fs-18">{label}</label>
       </div>
     );
   };
 
   return (
     <>
-      <div className={`sidebar-right ${settingToggle ? "show" : ""}`}>
-        <div
-          className="bg-overlay"
-          onClick={() => setSettingToggle(!settingToggle)}
-        ></div>
-        <Link
-          to="#"
-          className="sidebar-right-trigger wave-effect wave-effect-x"
-          onClick={() => setSettingToggle(!settingToggle)}
-        >
-          <span>
-            <i className="fa fa-cog fa-spin" />
-          </span>
-        </Link>
-        <Link
-          to="#"
-          className="sidebar-close-trigger"
-          onClick={() => setSettingToggle(!settingToggle)}
-        >
-          <span>
-            <i className="la-times las"></i>
-          </span>
-        </Link>
-        <div className="sidebar-right-inner">
-          <h4>Pick your Charts</h4>
-          <Tab.Container defaultActiveKey="Theme">
-            <div className="card-tabs ">
-              <Nav as="ul" className="nav nav-tabs" role="tablist">
-                <Nav.Item as="li" className="nav-item">
-                  <Nav.Link
-                    as="a"
-                    className="nav-link c-pointer"
-                    data-toggle="tab"
+      {role === "admin" ? (
+        <div className={`sidebar-right ${settingToggle ? "show" : ""}`}>
+          <div
+            className="bg-overlay"
+            onClick={() => setSettingToggle(!settingToggle)}
+          ></div>
+          <Link
+            to="#"
+            className="sidebar-right-trigger wave-effect wave-effect-x"
+            onClick={() => setSettingToggle(!settingToggle)}
+          >
+            <span>
+              <i className="fa fa-cog fa-spin" />
+            </span>
+          </Link>
+          <Link
+            to="#"
+            className="sidebar-close-trigger"
+            onClick={() => setSettingToggle(!settingToggle)}
+          >
+            <span>
+              <i className="la-times las"></i>
+            </span>
+          </Link>
+          <div className="sidebar-right-inner">
+            <h4>Pick your Charts</h4>
+            <Tab.Container defaultActiveKey="Theme">
+              <div className="card-tabs ">
+                <Nav as="ul" className="nav nav-tabs" role="tablist">
+                  <Nav.Item as="li" className="nav-item">
+                    <Nav.Link
+                      as="a"
+                      className="nav-link c-pointer"
+                      data-toggle="tab"
+                      eventKey="Theme"
+                      role="tab"
+                    >
+                      {" "}
+                      Dashboard Pick{" "}
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  position: "relative",
+                  overflow: "scroll",
+                }}
+              >
+                <Tab.Content className="">
+                  <Tab.Pane
+                    className="tab-pane fade"
                     eventKey="Theme"
-                    role="tab"
+                    style={{ position: "absolute" }}
                   >
-                    {" "}
-                    Dashboard Pick{" "}
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </div>
-            <Tab.Content className="">
-              <Tab.Pane className="tab-pane fade overflow-scroll" eventKey="Theme">
-                {[
-                  "CardWidget",
-                  "ProjectOverviewTab",
-                  "EarningBlog",
-                  "ActiveUserMap",
-                  "DataFrequency",
-                  "FleetStatus",
-                  "FaultyDevices",
-                  "DevicesVsProject",
-                  "CategoryWiseStatus",
-                  "WebVsMobileUser",
-                  "ApplicationUsage",
-                  "ModelWiseDevices",
-                  "ObjectType",
-                  "NumberOfTasks",
-                  "InactiveDevices",
-                ].map((componentName) =>
-                  renderComponentCheckbox(componentName)
-                )}
-              </Tab.Pane>
-            </Tab.Content>
-          </Tab.Container>
+                    {[
+                      "Card-Widget",
+                      "Active-User-Map",
+                      "Data-Frequency",
+                      "Fleet-Status",
+                      "Faulty-Devices",
+                      "Devices-Vs-Project",
+                      "Category-Wise-Status",
+                      "Web-Vs-Mobile-User",
+                      "Application-Usage",
+                      "Model-Wise-Devices",
+                      "Object-Type",
+                      "Number-Of-Tasks",
+                      "Inactive-Devices",
+                      "Category-Wise-Task",
+                      "Top-5-Technician",
+                    ].map((componentName) =>
+                      renderComponentCheckbox(componentName)
+                    )}
+                  </Tab.Pane>
+                </Tab.Content>
+              </div>
+            </Tab.Container>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={`sidebar-right ${settingToggle ? "show" : ""}`}>
+          <div
+            className="bg-overlay"
+            onClick={() => setSettingToggle(!settingToggle)}
+          ></div>
+          <Link
+            to="#"
+            className="sidebar-right-trigger wave-effect wave-effect-x"
+            onClick={() => setSettingToggle(!settingToggle)}
+          >
+            <span>
+              <i className="fa fa-cog fa-spin" />
+            </span>
+          </Link>
+          <Link
+            to="#"
+            className="sidebar-close-trigger"
+            onClick={() => setSettingToggle(!settingToggle)}
+          >
+            <span>
+              <i className="la-times las"></i>
+            </span>
+          </Link>
+          <div className="sidebar-right-inner">
+            <h4>Pick your Charts</h4>
+            <Tab.Container defaultActiveKey="Theme">
+              <div className="card-tabs ">
+                <Nav as="ul" className="nav nav-tabs" role="tablist">
+                  <Nav.Item as="li" className="nav-item">
+                    <Nav.Link
+                      as="a"
+                      className="nav-link c-pointer"
+                      data-toggle="tab"
+                      eventKey="Theme"
+                      role="tab"
+                    >
+                      {" "}
+                      Dashboard Pick{" "}
+                    </Nav.Link>
+                  </Nav.Item>
+                </Nav>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  position: "relative",
+                  overflow: "scroll",
+                }}
+              >
+                <Tab.Content className="">
+                  <Tab.Pane
+                    className="tab-pane fade"
+                    eventKey="Theme"
+                    style={{ position: "absolute" }}
+                  >
+                    {[
+                      "Card-Widget",
+                      "Fleet-Usage",
+                      "Fleet-Status",
+                      "Fleet-Fuel",
+                      "Fleet-Idle",
+                      "Data-Frequency",
+                      "Maintenance",
+                      "OverSpeed",
+                      "Stay-In-Zone",
+                    ].map((componentName) =>
+                      renderComponentCheckbox(componentName)
+                    )}
+                  </Tab.Pane>
+                </Tab.Content>
+              </div>
+            </Tab.Container>
+          </div>
+        </div>
+      )}
     </>
   );
 };

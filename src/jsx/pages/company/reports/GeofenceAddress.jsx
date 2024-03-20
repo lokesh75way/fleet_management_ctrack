@@ -7,19 +7,353 @@ import MainPagetitle from "../../../layouts/MainPagetitle";
 import { GeofenceData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import GeofenceTable from "../../../components/Tables/GeofenceTable";
-import { filterAlerts } from "../../../../utils/selectValues";
+import { filterAlerts } from "../../../../utils/helper";
+const reportData = [
+  {
+    invoice: "INV-00001",
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    parentCompany: "Company4",
+    parentBusiness: "Business Group1",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-00002",
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    parentCompany: "Company4",
+    parentBusiness: "Business Group1",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-00003",
+    parentCompany: "Company3",
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-00004",
+    parentCompany: "Company3",
+    parentBusiness: "Business Group2",
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-00005",
+    parentCompany: "Company2",
+    parentBusiness: "Business Group2",
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-00006",
+    parentCompany: "Company2",
+    parentBusiness: "Business Group3",
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-00007",
+    parentCompany: "Company1",
+    parentBusiness: "Business Group3",
 
-const headers = [
-  { label: "Employee ID", key: "emplid" },
-  { label: "Employee Name", key: "title" },
-  { label: "Department", key: "department" },
-  { label: "Email Address", key: "email" },
-  { label: "Contact Number", key: "contact" },
-  { label: "Gender", key: "gender" },
-  { label: "Location", key: "location" },
-  { label: "Status", key: "status" },
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-00008",
+    parentCompany: "Company1",
+    parentBusiness: "Business Group3",
+
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-00009",
+    parentCompany: "Company5",
+    parentBusiness: "Business Group4",
+
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000010",
+    parentCompany: "Company5",
+    parentBusiness: "Business Group4",
+
+    customer: "Jack John",
+    date: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000011",
+    parentCompany: "Company5",
+    parentBusiness: "Business Group4",
+
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000012",
+    parentCompany: "Company1",
+    parentBusiness: "Business Group5",
+
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000013",
+    parentCompany: "Company1",
+    parentBusiness: "Business Group5",
+
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000014",
+    parentCompany: "Company2",
+    parentBusiness: "Business Group5",
+
+    customer: "Jack John",
+    createdDate: "15 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000015",
+    parentCompany: "Company2",
+    parentBusiness: "Business Group5",
+
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000016",
+    parentCompany: "Company3",
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000017",
+    parentCompany: "Company3",
+    customer: "Ricky Antony",
+    parentBusiness: "Business Group1",
+
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000018",
+    parentCompany: "Company4",
+    parentBusiness: "Business Group1",
+
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000019",
+    parentCompany: "Company4",
+    parentBusiness: "Business Group2",
+
+    customer: "Ricky Antony",
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000020",
+    parentBusiness: "Business Group3",
+
+    parentCompany: "Company2",
+    customer: "Jack John",
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000021",
+    parentCompany: "Company2",
+    customer: "Ricky Antony",
+    parentBusiness: "Business Group3",
+
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000022",
+    parentCompany: "Company5",
+    customer: "Jack John",
+    parentBusiness: "Business Group3",
+
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
+  {
+    invoice: "INV-000023",
+    parentCompany: "Company2",
+    customer: "Ricky Antony",
+    parentBusiness: "Business Group2",
+
+    createdDate: "14 May 2023",
+    duedate: "25 May 2023",
+    amount: "105",
+    discount: "5",
+    open: "120",
+    adjust: "0.00",
+    status: "Active",
+  },
+  {
+    invoice: "INV-000024",
+    parentCompany: "Company3",
+    customer: "Jack John",
+    parentBusiness: "Business Group1",
+
+    createdDate: "25 May 2023",
+    duedate: "01 June 2023",
+    amount: "230",
+    discount: "10",
+    open: "150",
+    adjust: "0.00",
+    status: "Pending",
+  },
 ];
 
+const headers = [
+  { label: "Invoice", key: "invoice" },
+  { label: "Customer", key: "customer" },
+  { label: "Date", key: "date" },
+  { label: "Due Date", key: "duedate" },
+  { label: "Amount", key: "amount" },
+  { label: "Discount", key: "discount" },
+  { label: "Open", key: "open" },
+  { label: "Adjustment", key: "adjust" },
+  { label: "Status", key: "status" },
+];
+const csvlink = {
+  headers: headers,
+  data: reportData,
+  filename: "csvfile.csv",
+};
 const GeofenceAddress = (ref) => {
   const [date, setDate] = useState({
     startDate: new Date(0),
@@ -109,7 +443,7 @@ const GeofenceAddress = (ref) => {
       <MainPagetitle
         mainTitle="GeofenceAddress"
         pageTitle={"GeofenceAddress"}
-        parentTitle={"Home"}
+        parentTitle={"Reports"}
       />
       <div className="container-fluid">
         <div className="row">
@@ -120,6 +454,12 @@ const GeofenceAddress = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">GeofenceAddress</h4>
                     <div className="d-flex">
+                    <CSVLink
+                        {...csvlink}
+                        className="btn btn-primary light btn-sm me-1"
+                      >
+                        <i className="fa-solid fa-file-excel" /> Export Report
+                      </CSVLink>
                       <Link
                         to={"#"}
                         className="btn btn-primary btn-sm ms-1"

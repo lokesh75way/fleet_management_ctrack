@@ -17,14 +17,14 @@ import { BsArrowRepeat } from "react-icons/bs";
 import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
 import { IoIosNavigate } from "react-icons/io";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useNavigate  } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import DeleteModal from "../Modal/DeleteModal";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
-import { getVehicles, statusData } from "../../../utils/selectValues";
+import { getVehicles, statusData } from "../../../utils/helper";
 import CheckboxTree from 'react-checkbox-tree'
 import DriverCompanyItem from "../Tracking/DriverTabComponent3";
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
@@ -78,12 +78,22 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
               );
             })}
           </Nav>
-          <Tab.Content className="p-2 py-4" style={{ background: "#f5f5f5" }}>
+          <Tab.Content
+            className="p-2 py-4"
+            style={{
+              background: "#f5f5f5",
+              overflow: "scroll",
+              height: "100vh",
+            }}
+          >
             {tabData.map((data, i) => {
               const Component = components[i];
               return (
                 <Tab.Pane eventKey={data.name.toLowerCase()} key={i}>
-                  <Component data={componentData} handleToggleCardPosition={handleToggleCardPosition} />
+                  <Component
+                    data={componentData}
+                    handleToggleCardPosition={handleToggleCardPosition}
+                  />
                 </Tab.Pane>
               );
             })}
@@ -93,7 +103,6 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
     </>
   );
 };
-
 
 const DriverTabComponent1 = (props) => {
   const status = statusData();
@@ -112,7 +121,7 @@ const DriverTabComponent1 = (props) => {
     }));
   const handleSearch = (item) => {
     const vehicleData = getVehicles(selectValue);
-    console.log(vehicleData)
+    console.log(vehicleData);
     const filteredData = Object.entries(vehicleData).filter((vehicle) => {
       const vec = vehicle[1].filter((data) => data.id == item.id);
       return vec.length > 0;
@@ -131,7 +140,7 @@ const DriverTabComponent1 = (props) => {
     <>
       <div className="vehicle_tracking-object">
         <span
-          className={`light fs-9 ${
+          className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Running")}
@@ -141,7 +150,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 idle ${
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Idle")}
@@ -151,7 +160,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Stopped")}
@@ -161,7 +170,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 inActive ${
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("Inactive")}
@@ -171,7 +180,7 @@ const DriverTabComponent1 = (props) => {
         </span>
         <span
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 noData ${
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("NoData")}
@@ -180,7 +189,7 @@ const DriverTabComponent1 = (props) => {
           <span>NoData</span>
         </span>
         <span
-          className={`light fs-9 ${
+          className={`light fs-9 total ${
             selectValue === "All" && "vehicle_tracking-active"
           }`}
           onClick={() => setSelectValue("All")}
@@ -196,8 +205,8 @@ const DriverTabComponent1 = (props) => {
           styling={{
             height: "30px",
             marginRight: "10px",
-            fontSize : "12px",
-            color :"#4A4646"
+            fontSize: "12px",
+            color: "#4A4646",
           }}
           onSearch={(string) => {
             if (string === "") {
@@ -208,7 +217,12 @@ const DriverTabComponent1 = (props) => {
           onSelect={handleSearch}
         />
       </div>
-      {<CompanyItem vehicles={vehicles} handleToggleCardPositionHandler={props.handleToggleCardPosition} />}
+      {
+        <CompanyItem
+          vehicles={vehicles}
+          handleToggleCardPositionHandler={props.handleToggleCardPosition}
+        />
+      }
     </>
   );
 };
@@ -255,40 +269,40 @@ const DriverTabComponent2 = (props) => {
     setDrivers(jsonData.filter((item) => item.designation === "Driver"));
     setCompany(jsonData.filter((item) => item.role === "company"));
   };
-  const handleSelectAll = (id,company,drivers, index) => {
-      var checkboxArray = [...selectedDrivers]
-      if (!selectAll[index]) {
-        drivers.map((item)=> checkboxArray[index].push(item.id) )
-      } else {
-        checkboxArray[index] = []
-        setSelectedDrivers(checkboxArray);
-      }
-      console.log(checkboxArray)
+  const handleSelectAll = (id, company, drivers, index) => {
+    var checkboxArray = [...selectedDrivers];
+    if (!selectAll[index]) {
+      drivers.map((item) => checkboxArray[index].push(item.id));
+    } else {
+      checkboxArray[index] = [];
+      setSelectedDrivers(checkboxArray);
+    }
+    console.log(checkboxArray);
   };
-  const handleSelect = (ind)=>{
-    console.log(selectAll)
-    setSelectAll(prev => {
+  const handleSelect = (ind) => {
+    console.log(selectAll);
+    setSelectAll((prev) => {
       const newArr = [...prev];
-      newArr[ind] = !newArr[ind]
-      return newArr
-    })
-  }
+      newArr[ind] = !newArr[ind];
+      return newArr;
+    });
+  };
   const handleDriverSelect = (id, ind) => {
-      const updatedDrivers = [...selectedDrivers];
-      if (updatedDrivers[ind].includes(id)) {
-          const index = updatedDrivers[ind].indexOf(id);
-          updatedDrivers[ind].splice(index, 1);
-          if(updatedDrivers[ind].length === 2){
-            handleSelect(ind)
-          }
-      } else {
-          updatedDrivers[ind].push(id);
-          if(updatedDrivers[ind].length === 3){
-            handleSelect(ind)
-          }
+    const updatedDrivers = [...selectedDrivers];
+    if (updatedDrivers[ind].includes(id)) {
+      const index = updatedDrivers[ind].indexOf(id);
+      updatedDrivers[ind].splice(index, 1);
+      if (updatedDrivers[ind].length === 2) {
+        handleSelect(ind);
       }
-      console.log(updatedDrivers)
-      setSelectedDrivers(updatedDrivers);
+    } else {
+      updatedDrivers[ind].push(id);
+      if (updatedDrivers[ind].length === 3) {
+        handleSelect(ind);
+      }
+    }
+    console.log(updatedDrivers);
+    setSelectedDrivers(updatedDrivers);
   };
   useEffect(() => {
     if (selectValue !== "All") {
@@ -323,11 +337,11 @@ const DriverTabComponent2 = (props) => {
     });
   return (
     <>
-      <div className="px-2 driver_tracking-object">
+      <div className="px-2 vehicle_tracking-object">
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9  running ${
             selectValue === "Allocated"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
@@ -340,7 +354,7 @@ const DriverTabComponent2 = (props) => {
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 idle ${
             selectValue === "Not Allocated"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
@@ -353,7 +367,7 @@ const DriverTabComponent2 = (props) => {
         <span
           bg=""
           pill
-          className={`light fs-9 ${
+          className={`light fs-9 total ${
             selectValue === "Total"
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
@@ -368,15 +382,19 @@ const DriverTabComponent2 = (props) => {
         <ReactSearchAutocomplete
           items={items}
           className="w-100"
-          styling={{ position: "absolute", zIndex: 999 }}
+          styling={{
+            height: "30px",
+            marginRight: "10px",
+            fontSize: "12px",
+            color: "#red",
+          }}
           onSearch={handleOnSearch}
           onSelect={handleOnSelect}
         />
       </div>
       <div
-        className="d-flex flex-column bg-white p-2"
+        className="d-flex flex-column  p-2"
         style={{
-          border: " 1px solid white",
           marginTop: ".5rem",
           height: "65vh",
           overflowY: "scroll",
@@ -384,7 +402,10 @@ const DriverTabComponent2 = (props) => {
       >
         {company.map((d, i) => {
           var driver = [];
-          if(selectedDrivers.length === 0) company.map((item)=> selectedDrivers.push([]) && selectAll.push(false) )
+          if (selectedDrivers.length === 0)
+            company.map(
+              (item) => selectedDrivers.push([]) && selectAll.push(false)
+            );
           if (filterApplied) {
             if (selectValue === "All") driver = drivers;
             else if (selectValue === "Allocated")
@@ -422,14 +443,14 @@ const DriverTabComponent2 = (props) => {
                   <div
                     className="form-check custom-checkbox bs_exam_topper_all"
                     style={{ marginRight: "10px" }}
-                    onClick={(e)=>e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
                   >
                     <input
                       type="checkbox"
                       className="form-check-input"
                       id={`customCheckBox${i}`}
-                      onChange={()=>handleSelectAll(d.id, company,driver, i)}
-                      onClick={()=>handleSelect(i)}
+                      onChange={() => handleSelectAll(d.id, company, driver, i)}
+                      onClick={() => handleSelect(i)}
                       checked={selectAll[i]}
                       required
                     />
@@ -485,8 +506,6 @@ const DriverTabComponent2 = (props) => {
   );
 };
 
-
-
 const DriverTabComponent3 = (props) => {
   const geoData = JSON.parse(localStorage.getItem("geofenceData"));
   const [tableData, setTableData] = useState(geoData);
@@ -496,7 +515,8 @@ const DriverTabComponent3 = (props) => {
   // Function to handle search
   const handleSearch = (query) => {
     console.log("Search Query:", query);
-    setSearchQuery(query);
+    const fenceData = geoData.filter((item) => item.id === query.id);
+    setTableData(fenceData);
   };
 
   // Function to reset search
@@ -504,16 +524,19 @@ const DriverTabComponent3 = (props) => {
     setSearchQuery("");
   };
 
-   // Filter tableData based on searchQuery
-   const filteredTableData = tableData.filter((item) =>
-   item.company.toLowerCase().includes(searchQuery.toLowerCase())
- );
+  // Filter tableData based on searchQuery
+  const filteredTableData = tableData.filter((item) =>
+    item.company.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
     const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
-    localStorage.setItem("geofenceData", JSON.stringify(updatedLocalStorageData));
+    localStorage.setItem(
+      "geofenceData",
+      JSON.stringify(updatedLocalStorageData)
+    );
   };
 
   const editDrawerOpen = (d) => {
@@ -557,38 +580,38 @@ const DriverTabComponent3 = (props) => {
     return acc;
   }, {});
 
+  const items = tableData.map((data) => ({
+    id: data.id,
+    name: data.name,
+  }));
+
   return (
     <>
       <div className="d-flex mt-4 mb-4">
-     
         <ReactSearchAutocomplete
-          onSearch={handleSearch}
+          items={items}
+          // onSearch={handleSearch}
           className="w-100"
-          placeholder="Search by company name"
           styling={{
             height: "30px",
             marginRight: "10px",
             fontSize: "12px",
             color: "#red",
           }}
-          // onSelect={handleSearch}
+          onSelect={handleSearch}
         />
       </div>
       <div
-        className="d-flex flex-column bg-white p-2"
+        className="d-flex flex-column p-2"
         style={{
-          border: " 1px solid white",
           marginTop: ".5rem",
-          height: "65vh",
           overflowY: "scroll",
         }}
       >
-      
-            <GeoFenceItem
-              geoFences={groupedData}
-              handleToggleCardPositionHandler={props.handleToggleCardPosition}
-            />
-        
+        <GeoFenceItem
+          geoFences={groupedData}
+          handleToggleCardPositionHandler={props.handleToggleCardPosition}
+        />
       </div>
     </>
   );

@@ -62,7 +62,7 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
               <h5 className="bc-title">{mainTitle}</h5>
             </li>
             <li className="breadcrumb-item">
-              <Link to={"#"}>
+              <Link to={parentTitle === 'Home' ? "/dashboard" : "#"}>
                 {SVGICON.HomeSvg} {parentTitle}
               </Link>
             </li>

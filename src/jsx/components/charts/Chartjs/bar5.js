@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 
 class BarChart5 extends Component {
   render() {
-    const { labels, data, backgroundColor, hoverBackgroundColor, barThickness } = this.props;
+    const { labels, data, backgroundColor, hoverBackgroundColor, barThickness,indexAxis } = this.props;
 
     const chartData = {
       defaultFontFamily: "Poppins",
@@ -44,7 +44,7 @@ class BarChart5 extends Component {
 
     const horizontalOptions = {
       ...options,
-      indexAxis: "y", // This makes the chart horizontal
+      indexAxis: indexAxis, // This makes the chart horizontal
     };
 
     return (

@@ -1,16 +1,11 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-import Select from "react-select";
-import DatePicker from "react-datepicker";
-import { IMAGES } from "../constant/theme";
+
 import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import { GeofenceData } from "../components/Tables/Tables";
 import GeofenceTable from "../components/Tables/GeofenceTable";
-import { filterAlerts, findHighestAndLowestDates } from "../../utils/selectValues";
-import { companyOptions } from "../components/TabComponent/VehicleTabs/Options";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
