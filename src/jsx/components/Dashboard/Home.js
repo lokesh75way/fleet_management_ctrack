@@ -55,6 +55,7 @@ import BarChart5 from "../charts/Chartjs/bar5";
 import { SVGICON } from "../../constant/theme";
 import Setting from "../../layouts/Setting";
 import CompSetting from "../../layouts/CompSetting";
+import BarChart6 from "../charts/Chartjs/bar6";
 
 const speed = {
   data: [
@@ -97,13 +98,20 @@ const Home = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-
   const {
     showCardWidget,
     showAllProjectDonutChart,
     showEarningBlog,
     showActiveUserMap,
-    showProjectOverviewTab
+    showProjectOverviewTab,
+    showFleetStatus,
+    showFleetFuel,
+    showFleetIdle,
+    showDataFrequency,
+    showMaintenance,
+    showOverSpeed,
+    showStayInZone,
+    showFleetUsage
   } = useContext(ThemeContext);
 
   const customStyles = {
@@ -192,182 +200,181 @@ const Home = () => {
           )}
         </div>
 
-          <div className="row " style={{ marginRight: "0.0rem" }}>
-            {showEarningBlog && (
-              <div className="col-xl-7 col-sm-12">
-                <div className="card same-card p-2">
-                  <div className="d-flex justify-content-between">
-                    <h4 className="text-black text-md p-3">Fleet Usage</h4>
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    ></div>
-                  </div>
-                  <EarningBlog />
-                </div>
-              </div>
-            )}
-
-            {showAllProjectDonutChart && (
-              <div className="col-xl-5 col-sm-12">
-                <div className="card same-card p-2">
-                  <div className="d-flex justify-content-between">
-                    <h4 className="text-black text-md p-3">Fleet Status</h4>
-                  </div>
-
+        <div className="row " style={{ marginRight: "0.0rem" }}>
+          {showFleetUsage && (
+            <div className="col-xl-7 col-sm-12">
+              <div className="card same-card p-2">
+                <div className="d-flex justify-content-between">
+                  <h4 className="text-black text-md p-3">Fleet Usage</h4>
                   <div
-                    className="card-body d-flex align-items-center justify-content-center  py-2 "
-                    style={{ flexWrap: "wrap" }}
-                  >
-                    <AllProjectDonutChart
-                      colors={[
-                        "#FF5E5E",
-                        "var(--primary)",
-                        "#3AC977",
-                        "#FF9F00",
-                      ]}
-                      labels={[
-                        "Cancelled",
-                        "Yet To Start",
-                        "Complete",
-                        "Progress",
-                      ]}
-                      width={300}
-                      data={[18, 19, 25, 23]}
-                      completeLabel="Total"
-                    />
-                    <ul className="project-list">
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#3AC977" />
-                        </svg>{" "}
-                        Completed
-                      </li>
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  ></div>
+                </div>
+                <EarningBlog />
+              </div>
+            </div>
+          )}
 
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                        </svg>{" "}
-                        Progress
-                      </li>
+          {showFleetStatus && (
+            <div className="col-xl-5 col-sm-12">
+              <div className="card same-card p-2">
+                <div className="d-flex justify-content-between">
+                  <h4 className="text-black text-md p-3">Fleet Status</h4>
+                </div>
 
-                      <li>
-                        <svg
+                <div
+                  className="card-body d-flex align-items-center justify-content-center  py-2 "
+                  style={{ flexWrap: "wrap" }}
+                >
+                  <AllProjectDonutChart
+                    colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
+                    labels={[
+                      "Cancelled",
+                      "Yet To Start",
+                      "Complete",
+                      "Progress",
+                    ]}
+                    width={300}
+                    data={[18, 19, 25, 23]}
+                    completeLabel="Total"
+                  />
+                  <ul className="project-list">
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#3AC977" />
+                      </svg>{" "}
+                      Completed
+                    </li>
+
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#FF9F00" />
+                      </svg>{" "}
+                      Progress
+                    </li>
+
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect
                           width="10"
                           height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            width="10"
-                            height="10"
-                            rx="3"
-                            fill="var(--primary)"
-                          />
-                        </svg>{" "}
-                        Yet To Start
-                      </li>
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#FF5E5E" />
-                        </svg>{" "}
-                        Cancelled
-                      </li>
-                    </ul>
-                  </div>
+                          rx="3"
+                          fill="var(--primary)"
+                        />
+                      </svg>{" "}
+                      Yet To Start
+                    </li>
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#FF5E5E" />
+                      </svg>{" "}
+                      Cancelled
+                    </li>
+                  </ul>
                 </div>
               </div>
-            )}
-          </div>
-        
+            </div>
+          )}
+        </div>
 
         <div className="row" style={{ marginLeft: 0, marginRight: 0 }}>
-          <div className="col-xl-6" style={{ paddingLeft: 0 }}>
-            <div
-              className="card same-card mb-3 p-2"
-              style={{ cursor: "pointer" }}
-              onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
-            >
-              <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Fleet Idle</h4>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  {/* <Select /> */}
+          {showFleetIdle && (
+            <div className="col-xl-6" style={{ paddingLeft: 0 }}>
+              <div
+                className="card same-card mb-3 p-2"
+                style={{ cursor: "pointer" }}
+                onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
+              >
+                <div className="d-flex justify-content-between">
+                  <h4 className="text-black text-md p-3">Fleet Idle</h4>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    {/* <Select /> */}
+                  </div>
                 </div>
+                <ApexBar3
+                  series={[
+                    {
+                      name: "Total Fleet Idle",
+                      data: [420, 550, 850, 220, 650],
+                    },
+                    {
+                      name: "Approx Fuel Waste",
+                      data: [170, 850, 101, 90, 250],
+                    },
+                  ]}
+                />
               </div>
-              <ApexBar3
-                series={[
-                  {
-                    name: "Total Fleet Idle",
-                    data: [420, 550, 850, 220, 650],
-                  },
-                  {
-                    name: "Approx Fuel Waste",
-                    data: [170, 850, 101, 90, 250],
-                  },
-                ]}
-              />
             </div>
-          </div>
-          <div className="col-xl-6">
-            <div
-              className="card same-card mb-3 p-2"
-              style={{ cursor: "pointer" }}
-              onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
-            >
-              <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Fleet Fuel</h4>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  {/* <Select /> */}
+          )}
+
+          {showFleetFuel && (
+            <div className="col-xl-6">
+              <div
+                className="card same-card mb-3 p-2"
+                style={{ cursor: "pointer" }}
+                onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
+              >
+                <div className="d-flex justify-content-between">
+                  <h4 className="text-black text-md p-3">Fleet Fuel</h4>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    {/* <Select /> */}
+                  </div>
                 </div>
+                <ApexBar3
+                  series={[
+                    {
+                      name: "Total Fuel Refill",
+                      data: [420, 550, 850, 220, 650],
+                    },
+                    {
+                      name: "Approx Fuel Drain",
+                      data: [170, 850, 101, 90, 250],
+                    },
+                  ]}
+                />
               </div>
-              <ApexBar3
-                series={[
-                  {
-                    name: "Total Fuel Refill",
-                    data: [420, 550, 850, 220, 650],
-                  },
-                  {
-                    name: "Approx Fuel Drain",
-                    data: [170, 850, 101, 90, 250],
-                  },
-                ]}
-              />
             </div>
-          </div>
+          )}
         </div>
 
         <div className="row" style={{ marginLeft: "0.2rem" }}>
           {/* Temperature */}
 
-          {showProjectOverviewTab && (
+          {showDataFrequency && (
             <div className="col-xl-7" style={{ paddingLeft: 0 }}>
               <div
                 className="card same-card mb-3 p-2"
@@ -390,94 +397,108 @@ const Home = () => {
             </div>
           )}
 
-          <div className="col-xl-5 col-md-12">
-            <div
-              className="card same-card mb-3 p-2"
-              style={{
-                cursor: "pointer",
-              }}
-            >
-              <div className="d-flex align-items-center">
-                <h4
-                  className="text-black fs-4 p-3"
-                  style={{
-                    // marginBottom: "4rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Maintenance
-                </h4>
-              </div>
+          {showMaintenance && (
+            <div className="col-xl-5 col-md-12">
               <div
-                className="card-body d-flex justify-content-center align-items-center py-2"
-                style={{ flexWrap: "wrap" }}
-               >
-                <div>
-                  <ChartPie />
+                className="card same-card mb-3 p-2"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                <div className="d-flex align-items-center">
+                  <h4
+                    className="text-black fs-4 p-3"
+                    style={{
+                      // marginBottom: "4rem",
+                      whiteSpace: "nowrap", // Added: prevent text from wrapping
+                      overflow: "hidden", // Added: hide overflow
+                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                    }}
+                  >
+                    Maintenance
+                  </h4>
                 </div>
-                <div>
-                  <ul className="project-list p-3">
-                    <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#3AC977" />
-                      </svg>{" "}
-                      Renewal Due
-                    </li>
-
-                    <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                      </svg>{" "}
-                      Renewal Over-Due
-                    </li>
-                    <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#FF5E5E" />
-                      </svg>{" "}
-                      Maintenance Due
-                    </li>
-                    <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
+                <div
+                  className="card-body d-flex justify-content-center align-items-center py-2"
+                  style={{ flexWrap: "wrap" }}
+                >
+                  <div>
+                    <ChartPie
+                      color1={"#3AC977"}
+                      color2={"#FF9F00"}
+                      color3={"#FF5E5E"}
+                      color4={"#0d99ff"}
+                      Chartdata={[45, 55, 34, 78]}
+                      labels={[
+                        "Renewal Due",
+                        "Renewal OverDue",
+                        "Maintenance Due",
+                        "Maintenance OverDue",
+                      ]}
+                    />
+                  </div>
+                  <div>
+                    <ul className="project-list p-3">
+                      <li>
+                        <svg
                           width="10"
                           height="10"
-                          rx="3"
-                          fill="var(--primary)"
-                        />
-                      </svg>{" "}
-                      Maintenance Over-Due
-                    </li>
-                  </ul>
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#3AC977" />
+                        </svg>{" "}
+                        Renewal Due
+                      </li>
+
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#FF9F00" />
+                        </svg>{" "}
+                        Renewal Over-Due
+                      </li>
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect width="10" height="10" rx="3" fill="#FF5E5E" />
+                        </svg>{" "}
+                        Maintenance Due
+                      </li>
+                      <li>
+                        <svg
+                          width="10"
+                          height="10"
+                          viewBox="0 0 10 10"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <rect
+                            width="10"
+                            height="10"
+                            rx="3"
+                            fill="var(--primary)"
+                          />
+                        </svg>{" "}
+                        Maintenance Over-Due
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div
@@ -485,65 +506,75 @@ const Home = () => {
           style={{ marginLeft: "0.2rem", justifyContent: "space-between" }}
         >
           {/* Overspeed */}
-          <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
-            <div
-              className="card same-card p-2"
-              style={{
-                // backgroundColor: "rgb(241 156 135 / 56%)",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(<OverspeedTable />, "Overspeed")}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <h4
-                  className="text-black fs-4 p-3"
-                  style={{
-                    marginBottom: "4rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Overspeed
-                </h4>
-              </div>
+          {showOverSpeed && (
+            <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
+              <div
+                className="card same-card p-2"
+                style={{
+                  // backgroundColor: "rgb(241 156 135 / 56%)",
+                  cursor: "pointer",
+                }}
+                onClick={() => openModal(<OverspeedTable />, "Overspeed")}
+              >
+                <div className="d-flex align-items-center justify-content-between">
+                  <h4
+                    className="text-black fs-4 p-3"
+                    style={{
+                      marginBottom: "4rem",
+                      whiteSpace: "nowrap", // Added: prevent text from wrapping
+                      overflow: "hidden", // Added: hide overflow
+                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                    }}
+                  >
+                    Overspeed
+                  </h4>
+                </div>
 
-              <DualLine />
+                <DualLine />
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Stay In Zone */}
-          <div className="col-xl-6 col-md-12">
-            <div
-              className="card same-card p-2"
-              style={{
-                // backgroundColor: "rgb(144 238 144 / 56%)",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
-            >
-              <div className="d-flex align-items-center justify-content-between">
-                <h4
-                  className="text-black fs-4 p-3"
-                  style={{
-                    marginBottom: "4rem",
-                    whiteSpace: "nowrap", // Added: prevent text from wrapping
-                    overflow: "hidden", // Added: hide overflow
-                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                  }}
-                >
-                  Stay In Zone
-                </h4>
-                <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                ></div>
-              </div>
+          {showStayInZone && (
+            <div className="col-xl-6 col-md-12">
+              <div
+                className="card same-card p-2"
+                style={{
+                  // backgroundColor: "rgb(144 238 144 / 56%)",
+                  cursor: "pointer",
+                }}
+                onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
+              >
+                <div className="d-flex align-items-center justify-content-between">
+                  <h4
+                    className="text-black fs-4 p-3"
+                    style={{
+                      marginBottom: "4rem",
+                      whiteSpace: "nowrap", // Added: prevent text from wrapping
+                      overflow: "hidden", // Added: hide overflow
+                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                    }}
+                  >
+                    Stay In Zone
+                  </h4>
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  ></div>
+                </div>
 
-              <BarChart5 />
+                <BarChart5
+                  labels={["0", "1", "2", "3", "4", "5", "6", "7"]}
+                  data={[65, 59, 23, 45, 12, 67, 20, 40]}
+                  backgroundColor="grey"
+                  hoverBackgroundColor="rgba(44, 44, 44, 0.5)"
+                  barThickness={40}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
