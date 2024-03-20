@@ -61,7 +61,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group<span className="text-danger">*</span></label>
+          <label className="form-label">{t('businessGroup')}<span className="text-danger">*</span></label>
           {
           checkRole() === "admin" ?<Controller
             name="parent"
@@ -98,7 +98,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company Name <span className="text-danger">*</span>
+          {t('companyName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -126,7 +126,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div> */}
                
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <label className="form-label">{t('email')}<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -138,7 +138,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password<span className="text-danger">*</span></label>
+          <label className="form-label">{t('password')}<span className="text-danger">*</span></label>
           <CustomInput
             type="password"
             register={register}
@@ -150,7 +150,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.password} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
+          <label className="form-label">{t('helpDeskEmail')}<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -162,7 +162,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
+          <label className="form-label">{t('helpDeskTelephoneNumber')}<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -175,7 +175,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
+          <label className="form-label">{t('mobileNumber')}<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -187,7 +187,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">{t('whatsappContactNumber')}</label>
           <CustomInput
             type="number"
             register={register}
@@ -200,7 +200,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country<span className="text-danger">*</span></label>
+          <label className="form-label">{t('country')}<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -214,7 +214,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
          { !getValues('country') && <Error errorName={errors.country} />}
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">State</label>
+          <label className="form-label">{t('state')}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -231,7 +231,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City<span className="text-danger">*</span>
+          {t('city')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -245,7 +245,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+          {t('zipCode')}
           </label>
           <CustomInput
             type="number"
@@ -259,7 +259,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1<span className="text-danger">*</span>
+          {t('street1')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -273,7 +273,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -284,7 +284,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Contact Person</label>
+          <label className="form-label">{t('contactPerson')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -295,7 +295,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Fax Number
+          {t('faxNumber')}
           </label>
           <CustomInput
             type="number"
@@ -306,7 +306,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
           />
         </div>
         <div className="col-xl-6 mb-3" >
-          <label className="form-label">Upload File</label>
+          <label className="form-label">{t('uploadFile')}</label>
           <input
             type="file"
             label="Document Name"
@@ -325,7 +325,7 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>
