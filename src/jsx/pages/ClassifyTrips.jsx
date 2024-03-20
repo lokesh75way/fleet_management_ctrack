@@ -231,7 +231,6 @@ const ActiveTab = ({tableData1}) => {
     gender: "",
     location: "",
   });
-  useEffect(()=>{setTableData(tableData1)},[tableData1])
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -550,8 +549,7 @@ const CompletedTab = ({tableData1}) => {
   useEffect(() => {
     const data = tableData.filter((data) => data.status === "completed");
     setTableData(data);
-  }, []);
-  useEffect(()=>{setTableData(tableData1)},[tableData1])
+  }, [tableData1]);
   const {
     register,
     setValue,

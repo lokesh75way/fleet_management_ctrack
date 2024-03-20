@@ -141,16 +141,23 @@ export function findHighestAndLowestDates(data) {
 export function filterClassifyTable(filter, data) {
   const { branch, from, to, search } = filter;
   let filteredData = data;
-
   if(branch.label !== 'All'){
     filteredData = data.filter((item) => item.branch === branch.label);
   }
-
+  if (from && to) {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    filteredData = filteredData.filter((item) => {
+      const startTime = new Date(item.startTime);
+      return startTime >= fromDate && startTime <= toDate;
+    });
+  }
   if (search !== '') {
     filteredData = filteredData.filter((item) =>
       item.driver.toLowerCase().includes(search.toLowerCase())
     );
   }
+
 
   return filteredData;
 }
