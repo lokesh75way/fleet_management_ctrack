@@ -11,7 +11,6 @@ const ClassifyTripTable = ({
   editDrawerOpen,
   active,
 }) => {
-  console.log("Table data ", tableData);
   return (
     <>
       {tableData.map((item, index) => (

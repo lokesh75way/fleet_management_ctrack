@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import {
   filterAlerts,
   findHighestAndLowestDates,
-} from "../../../utils/selectValues";
+} from "../../../utils/helper";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import FilterOffcanvas from "../../constant/FilterOffcanvas";
 

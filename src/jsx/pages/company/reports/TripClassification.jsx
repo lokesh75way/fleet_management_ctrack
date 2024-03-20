@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MainPagetitle from "../../../layouts/MainPagetitle";
 // import { ClassificationReports } from "../../../components/Tables/Tables"
 
-import { filterAlerts } from "../../../../utils/selectValues";
+import { filterAlerts } from "../../../../utils/helper";
 import { tripData } from "../../../components/Tables/Tables";
 import ClassificationReport from "../../../components/Tables/ClassificationReport";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";

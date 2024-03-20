@@ -11,14 +11,7 @@ import AlertTable from "../components/Tables/AlertTable";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { alertSchema } from "../../yup";
-import Select from "react-select";
-import { companyOptions } from "../components/TabComponent/VehicleTabs/Options";
-import DatePicker from "react-datepicker";
-import {
-  filterAlerts,
-  filterDataBetweenDates,
-  findHighestAndLowestDates,
-} from "../../utils/selectValues";
+
 
 const headers = [
   { label: "Employee ID", key: "emplid" },

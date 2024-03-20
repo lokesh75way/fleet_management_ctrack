@@ -10,7 +10,7 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import useStorage from "../../../../hooks/useStorage";
 import "../../../../scss/pages/_driver-tracking.scss";
 import DummyData from "../../../../users.json";
-import { getSelectValues } from "../../../../utils/selectValues";
+import { getSelectValues } from "../../../../utils/helper";
 
 import {useTranslation} from "react-i18next";
 

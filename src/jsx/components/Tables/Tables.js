@@ -893,6 +893,7 @@ export const VehicleData = [
       distance: 150,
       fuelConsumption: 10,
       driver: "John Doe",
+      branch : 'Branch1'
 
     },
     {
@@ -904,7 +905,9 @@ export const VehicleData = [
       reachLocation: "City C",
       distance: 200,
       fuelConsumption: 15,
-      driver: "Jane Smith"
+      driver: "Jane Smith",
+      branch : 'Branch1'
+
     },
     {
       status : 'active',
@@ -915,7 +918,9 @@ export const VehicleData = [
       reachLocation: "City D",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Mike Johnson"
+      driver: "Mike Johnson",
+      branch : 'Branch1'
+
     },
     {
       status : 'completed',
@@ -926,7 +931,9 @@ export const VehicleData = [
       reachLocation: "City E",
       distance: 220,
       fuelConsumption: 18,
-      driver: "Emily Wilson"
+      driver: "Emily Wilson",
+      branch : 'Branch2'
+
     },
     {
       status : 'completed',
@@ -937,7 +944,9 @@ export const VehicleData = [
       reachLocation: "City F",
       distance: 190,
       fuelConsumption: 14,
-      driver: "David Brown"
+      driver: "David Brown",
+      branch : 'Branch2'
+
     },
     {
       status : 'completed',
@@ -948,7 +957,9 @@ export const VehicleData = [
       reachLocation: "City G",
       distance: 210,
       fuelConsumption: 16,
-      driver: "Sarah Garcia"
+      driver: "Sarah Garcia",
+      branch : 'Branch2'
+
     },
     {
       status : 'planned',
@@ -959,7 +970,9 @@ export const VehicleData = [
       reachLocation: "City H",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Michael Martinez"
+      driver: "Michael Martinez",
+      branch : 'branch3'
+
     },
     {
       status : 'planned',
@@ -970,7 +983,9 @@ export const VehicleData = [
       reachLocation: "City I",
       distance: 240,
       fuelConsumption: 20,
-      driver: "Jessica Taylor"
+      driver: "Jessica Taylor",
+      branch : 'Branch3'
+
     },
     {
       status : 'planned',
@@ -981,7 +996,9 @@ export const VehicleData = [
       reachLocation: "City J",
       distance: 200,
       fuelConsumption: 15,
-      driver: "Daniel Anderson"
+      driver: "Daniel Anderson",
+      branch : 'Branch3'
+
     },
     {
       status : 'active',
@@ -992,7 +1009,9 @@ export const VehicleData = [
       reachLocation: "City K",
       distance: 180,
       fuelConsumption: 12,
-      driver: "Olivia Thomas"
+      driver: "Olivia Thomas",
+      branch : 'Branch3'
+
     },
     {
       status : 'active',
@@ -1003,7 +1022,9 @@ export const VehicleData = [
       reachLocation: "City L",
       distance: 220,
       fuelConsumption: 18,
-      driver: "William Rodriguez"
+      driver: "William Rodriguez",
+      branch : 'Branch3'
+
     },
     {
       status : 'planned',
@@ -1014,7 +1035,9 @@ export const VehicleData = [
       reachLocation: "City M",
       distance: 210,
       fuelConsumption: 16,
-      driver: "Emma Wilson"
+      driver: "Emma Wilson",
+      branch : 'Branch4'
+
     }
   ]
   export const GeofenceData = [

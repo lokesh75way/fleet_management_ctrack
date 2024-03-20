@@ -7,7 +7,7 @@ import MainPagetitle from "../../../layouts/MainPagetitle";
 import { GeofenceData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import GeofenceTable from "../../../components/Tables/GeofenceTable";
-import { filterAlerts } from "../../../../utils/selectValues";
+import { filterAlerts } from "../../../../utils/helper";
 const reportData = [
   {
     invoice: "INV-00001",

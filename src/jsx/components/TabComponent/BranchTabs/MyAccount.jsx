@@ -7,7 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
-import { getSelectValues } from "../../../../utils/selectValues";
+import { getSelectValues } from "../../../../utils/helper";
 
 const MyAccount = ({
   setValue,
