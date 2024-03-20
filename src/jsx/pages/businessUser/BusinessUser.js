@@ -8,8 +8,11 @@ import InviteCustomer from "../../constant/ModalList";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 // import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from "../../components/Tables/BusinessTable";
+import {useTranslation} from "react-i18next";
 
 const BusinessUser = () => {
+
+  const { t } = useTranslation();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -76,9 +79,9 @@ const BusinessUser = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Business Group"
-        pageTitle={"Business Group"}
-        parentTitle={"Home"}
+        mainTitle= {t('businessGroup')}
+        pageTitle={t('businessGroup')}
+        parentTitle={t('home')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -87,7 +90,7 @@ const BusinessUser = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Business Groups</h4>
+                    <h4 className="heading mb-0">{t('businessGroup')}</h4>
                     <div>
                       <Link
                         to={{
@@ -98,7 +101,7 @@ const BusinessUser = () => {
                         data-bs-toggle="offcanvas"
                         style={{paddingBlock : '9px'}}
                       >
-                        + Add Business Group
+                        {t('addBusinessGroup')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -112,13 +115,13 @@ const BusinessUser = () => {
                     >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Business Group</th>
-                          <th>Mobile Number</th>
-                          <th>Email</th>
-                          <th>Location</th>
-                          <th>Company Count</th>
-                          <th>Action</th>
+                          <th>{t('id')}</th>
+                          <th>{t('businessGroup')}</th>
+                          <th>{t('mobileNumber')}</th>
+                          <th>{t('email')}</th>
+                          <th>{t('location')}</th>
+                          <th>{t('companyCount')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -131,11 +134,11 @@ const BusinessUser = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t("to")}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
