@@ -92,7 +92,7 @@ const TechnicianTask = (ref) => {
     //     })
     //     setTableData(updateTable)
     // } 
-    const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+    const {register, formState:{errors}, setValue, getValues, control, handleSubmit,clearErrors} = useForm({
         resolver: yupResolver(technicianTaskSchema )
       })
     
@@ -204,6 +204,7 @@ const TechnicianTask = (ref) => {
                 errors={errors}
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
+                clearErrors={clearErrors}
                 Title={ editData.id === 0 ? "Add Task" : "Edit Task"}
             />
         </>

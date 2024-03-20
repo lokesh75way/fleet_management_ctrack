@@ -9,7 +9,7 @@ import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
+import { vehicleGeneralSchema, vehicleProfileSchema, vehicleDocumentSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
@@ -22,7 +22,10 @@ const VehicleForm = () => {
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
+    defaultValues: {
+      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
+    },
+    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: activeIndex === 1? vehicleProfileSchema : vehicleDocumentSchema)
   })
   const { id } = useParams();
   const onSubmit = (data)=>{
@@ -30,6 +33,7 @@ const VehicleForm = () => {
       try{
         saveData(data, 'vehicleData')
         console.log(data)
+        notifySuccess("Saved !")
         navigate("/vehicle");
         return;
       }
@@ -40,14 +44,8 @@ const VehicleForm = () => {
     }
     notifySuccess("Saved !")
     console.log(data)
-    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
-
-  if (!id) {
-    tabHeading.pop();
-    component.pop();
-  }
-
 
   return (
     <>

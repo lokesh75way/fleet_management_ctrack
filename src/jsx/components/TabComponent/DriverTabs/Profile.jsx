@@ -213,7 +213,7 @@ const Profile = ({
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">
-            State <span className="text-danger">*</span>
+            State
           </label>
           <div>
             <StateSelect
@@ -245,13 +245,15 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code <span className="text-danger">*</span>
+            Zip Code 
           </label>
           <CustomInput
             type="number"
             register={register}
             label="zipCode"
             name="zipCode"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={filteredUserData[0]?.zipCode}
           />
@@ -293,6 +295,8 @@ const Profile = ({
             register={register}
             label="Contact Number1"
             name="contactNumber1"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={filteredUserData[0]?.contactNumber1 || " "}
           />
@@ -307,6 +311,8 @@ const Profile = ({
             register={register}
             label="Contact Number2"
             name="contactNumber2"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={filteredUserData[0]?.contactNumber2 || " "}
           />

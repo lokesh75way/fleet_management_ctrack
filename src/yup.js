@@ -1,28 +1,28 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
-    company: yup.string().required(),
-    business: yup.string().required(),
-    vehicleName: yup.string().required(),
-    serverAddress: yup.string(),
+    company: yup.string().required("Company name id required"),
+    business: yup.string().required("Business group name is required"),
+    vehicleName: yup.string().required("Vehicle name is required"),
+    serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
-    IMEINumber: yup.number().positive().integer().required(),
-    simNumber: yup.number().positive().integer().required(),
-    secondarySimNumber: yup.number().positive().integer(),
-    deviceAccuracyTolerance: yup.number().positive().integer().min(0).max(100),
+    IMEINumber: yup.number().positive().integer().required("IMEI Number is required").typeError("IMEI Number must be a number"),
+    simNumber: yup.number().positive().integer().required("Sim Number is required").typeError("Sim Number must be a number"),
+    secondarySimNumber: yup.number().positive().integer().typeError("Secondary Sim Number must be a number"),
+    deviceAccuracyTolerance: yup.number().positive().integer().min(0).max(100).typeError("Device Accuracy Tolerance must be a number"),
   })
   .required();
 export const vehicleProfileSchema = yup
   .object({
     DVIRTemplate: yup.string().required("DIVR Template is required "),
-    purchaseAmount: yup.number().positive().integer(),
+    purchaseAmount: yup.number().positive().integer().typeError("Purchase Amount must be a number"),
     plateNumber: yup.string().required("Plate Number is required "),
     registrationNumber: yup
       .number()
       .positive()
       .integer()
-      .min(4, "Registration Number must be of 4 digit"),
-    passengerSeats: yup.number().positive().integer(),
+      .min(4, "Registration Number must be of 4 digit or more"),
+    passengerSeats: yup.number().positive().integer().typeError("Passenger seats must be a number"),
     distanceCost: yup.number().positive().integer(),
     durationCost: yup.number().positive().integer(),
     GPSWarranty: yup.string().required("GPS Warranty is required "),
@@ -30,17 +30,45 @@ export const vehicleProfileSchema = yup
       .number()
       .positive()
       .integer()
+      .typeError("Weight Capacity must be a number")
       .required("Weight Capacity is required "),
     registrationNumber: yup
       .number()
       .positive()
       .integer()
+      .typeError("Registration Number must be a number")
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
   })
   .required();
 
+  export const vehicleDocumentSchema = yup
+  .object({
+    test: yup.array().of(
+      yup.object().shape({
+        fieldName: yup.string().required("This field is required"),
+        file: yup
+          .mixed()
+          .required("File is required")
+          .test("fileExist", "File is required", (value) => value && value.length)
+          .test("fileSize", "File size is too large", (value) => {
+            console.log({value})
+            return value && value.length > 0 ? value && value[0]?.size <= 1024 * 1024 : true; 
+          })
+          .test("fileType", "Unsupported file type", (value) => {
+            if(value && value.length > 0) return (
+              value &&
+              ["image/jpeg", "image/png", "application/pdf"].includes(
+                value[0]?.type
+              )
+            );
+            return true;
+          })
+      })
+    ),
+  })
+  .required();
 export const forgetpasswordSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
 });
@@ -70,17 +98,14 @@ export const companyAccountSchema = yup
     parent: yup.string().required("Please select a option"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup
-      .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     email: yup.string().email().required("Email is required "),
     zipCode: yup
       .number()
-      .positive('Zip Code should be positive')
-      .integer(),
+      .integer('Zip Code must be an integer')
+      .nullable(true)
+      .transform((_, val) => val ? Number(val) : null),
     helpDeskEmail: yup
       .string()
       .email()
@@ -92,10 +117,12 @@ export const companyAccountSchema = yup
 
     mobileNumber: yup
       .string()
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
+      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits")
+      .required("Mobile Number is required"),
     
     helpDeskTelephoneNumber: yup
     .string()
+    .required("Help Desk Telephone Number is required")
     .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
   })
   .required();
@@ -108,14 +135,12 @@ export const branchAccountSchema = yup
     country: yup.string().required("Please select a Country"),
     zipCode: yup
       .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
+      .positive('Zip Code must be a positive number')
+      .integer('Zip Code must be an integer')
+      .nullable(true)
+      .transform((_, val) => val ? Number(val) : null),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    zipCode: yup
-    .number()
-    .positive('Zip Code should be positive')
-    .integer(),
     helpDeskEmail: yup
       .string()
       .email()
@@ -134,9 +159,11 @@ export const adminProfileAccountSchema = yup
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup
-      .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
+    .number()
+    .positive('Zip Code must be a positive number')
+    .integer('Zip Code must be an integer')
+    .nullable(true)
+    .transform((_, val) => val ? Number(val) : null),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     oldPassword: yup
@@ -168,25 +195,18 @@ export const businessGroupAccountSchema = yup
     // branch: yup.string().required(),
     userName: yup.string().required("Please enter a Business Group Name"),
     country: yup.string().required("Please select a Country"),
-    zipCode: yup
-      .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     zipCode: yup
     .number()
-    .positive('Zip Code should be positive')
-    .integer(),
-    // oldPassword: yup.string().required("Please enter the old password"),
+    .positive('Zip Code must be a positive number')
+    .integer('Zip Code must be an integer')
+    .nullable(true)
+    .transform((_, val) => val ? Number(val) : null),
     password: yup
       .string()
       .min(8, "Password must be at least 8 characters")
       .max(20, "Password must be at most 20 characters"),
-    // retypePassword: yup
-    //   .string()
-    //   .min(8, "Password must be at least 8 characters")
-    //   .max(20, "Password must be at most 20 characters"),
     helpDeskEmail: yup
       .string()
       .email()
@@ -200,10 +220,18 @@ export const businessGroupAccountSchema = yup
     .string()
     .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
 
-    file: yup
+  })
+  .required();
+
+export const companySettingSchema = yup
+  .object({
+    dateFormat: yup.string(),
+    timeFormat: yup.string(),
+    unitOfDistance: yup.string(),
+    companyLogo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        if (!value) return true; // Allow empty field
+        if (!value) return true; 
         for (let i = 0; i < value.length; i++) {
           const extension = value[i].name
             .substring(value[i].name.lastIndexOf(".") + 1)
@@ -214,15 +242,27 @@ export const businessGroupAccountSchema = yup
         }
         return true;
       }),
-   
   })
   .required();
-
-export const companySettingSchema = yup
+export const businessGroupSettingSchema = yup
   .object({
     dateFormat: yup.string(),
     timeFormat: yup.string(),
     unitOfDistance: yup.string(),
+    businessGroupLogo: yup
+      .mixed()
+      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+        if (!value) return true; 
+        for (let i = 0; i < value.length; i++) {
+          const extension = value[i].name
+            .substring(value[i].name.lastIndexOf(".") + 1)
+            .toLowerCase();
+          if (extension !== "jpg" && extension !== "png") {
+            return false;
+          }
+        }
+        return true;
+      }),
   })
   .required();
 
@@ -236,8 +276,10 @@ export const driverProfileSchema = yup
     employeeNumber: yup.number().typeError("Employee Number must be a number"),
     zipCode: yup
       .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
+      .positive('Zip Code must be a positive number')
+      .integer('Zip Code must be an integer')
+      .nullable(true)
+      .transform((_, val) => val ? Number(val) : null),
     contactNumber1: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
@@ -328,10 +370,10 @@ export const expenseSchema = yup
     branch: yup.string().required("Select a Branch "),
     category: yup.string().required("Choose a Category "),
     type: yup.string().required("Select a type "),
-    amount: yup.number().required("Enter an Amount "),
+    amount: yup.number().required("Enter an Amount ").typeError("Amount must be a number"),
     fromDate: yup.date().required("Enter the date "),
     toDate: yup.date().required("Enter the date "),
-    referenceNumber: yup.number().required("Reference Number a required "),
+    referenceNumber: yup.number().required("Reference Number a required ").typeError("Reference Number must be a number"),
     //  userName: yup.string().required("User Name is required "),
   })
   .required();
@@ -364,7 +406,7 @@ export const technicianGeneralSchema = yup
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
-    technicianNumber: yup.number().required("Technician Number is required "),
+    technicianNumber: yup.number().typeError("Technician Number must be a number").required("Technician Number is required "),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
@@ -380,8 +422,10 @@ export const technicianAddressSchema = yup
   .object({
     zipCode: yup
       .number()
-      .typeError("ZipCode must be a number")
-      .required("Zip Code is required "),
+      .positive('Zip Code must be a positive number')
+      .integer('Zip Code must be an integer')
+      .nullable(true)
+      .transform((_, val) => val ? Number(val) : null),
     country: yup.string().required("Please select a Country "),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),

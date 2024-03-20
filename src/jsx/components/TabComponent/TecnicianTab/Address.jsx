@@ -84,6 +84,8 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
             register={register}
             label="Zip Code"
             name="zipCode"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={
               filteredUserData[0] ? filteredUserData[0].zipCode : ""
