@@ -11,6 +11,8 @@ const CustomInput = ({
   type,
   value,
   style,
+  onInput,
+  min,
   disabled,
 }) => {
   const { errors } = useFormContext();
@@ -18,9 +20,6 @@ const CustomInput = ({
     <div>
       <input
         {...register(`${name}`)}
-        // {...register(`${name}`, {
-        //   required: required ? false : `${label} is required!`,
-        // })}
         name={name}
         type={type}
         label={label}
@@ -30,6 +29,8 @@ const CustomInput = ({
         className="form-control"
         defaultValue={defaultValue}
         disabled={disabled}
+        onInput={onInput}
+        min={min}
         autoComplete="off"
       />
     </div>

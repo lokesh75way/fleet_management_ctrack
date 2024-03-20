@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
@@ -34,6 +34,15 @@ const MyAccount = ({
       padding: ".25rem 0 ",
     }),
   };
+  // useEffect(()=>{
+  //   console.log("outside");
+  //   console.log(stateid);
+  //   if(stateid !== 0){
+  //     console.log("inside");
+  //     setstateid(0);
+  //     setValue("state", '');
+  //   }
+  // },[countryid])
 
   const user = localStorage.getItem("loginDetails-email");
 
@@ -109,6 +118,8 @@ const MyAccount = ({
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={getValues("helpDeskTelephoneNumber")}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
@@ -123,6 +134,8 @@ const MyAccount = ({
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={getValues("mobileNumber")}
           />
           <Error errorName={errors.mobileNumber} />
@@ -136,6 +149,8 @@ const MyAccount = ({
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={getValues("whatsappContactNumber")}
           />
         </div>
@@ -146,7 +161,7 @@ const MyAccount = ({
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
-              setValue("country", e.id);
+              setValue("country", e.name);
               setIsStateDisabled(false)
             }}
             containerClassName="bg-white"
@@ -163,10 +178,10 @@ const MyAccount = ({
           <label className="form-label">{t('state')}</label>
           <div style={{ background: "white" }}>
             <StateSelect
-              countryid={countryid}
+              countryid={isStateDisabled ? 0: countryid}
               onChange={(e) => {
                 setstateid(e.id);
-                setValue("state", e.id);
+                setValue("state", e.name);
               }}
               containerClassName="bg-white"
               inputClassName="border border-white customSelectHeight"
@@ -198,6 +213,8 @@ const MyAccount = ({
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={getValues("zipCode")}
           />
           <Error errorName={errors.zipCode} />
@@ -253,15 +270,7 @@ const MyAccount = ({
             defaultValue={getValues("faxNumber")}
           />
         </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadLogo')}</label>
-          <input
-            type="file"
-            label="Document Name"
-            name={`documentFile`}
-            className="form-control"
-          />
-        </div>
+                 
       </div>
       <div
         style={{

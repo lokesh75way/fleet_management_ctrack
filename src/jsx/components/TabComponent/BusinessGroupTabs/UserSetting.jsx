@@ -198,10 +198,12 @@ const {t} = useTranslation();
           <label className="form-label">{t('uploadFile')}</label>
           <input
             type="file"
-            label="Document Name"
-            name={`documentFile`}
+            {...register('businessGroupLogo')}
+            label="Business Group Logo"
+            name="businessGroupLogo"
             className="form-control"
           />
+          <Error errorName={errors.businessGroupLogo} />
         </div>
 
 

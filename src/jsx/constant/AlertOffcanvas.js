@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -26,6 +26,7 @@ const AlertOffcanvas = forwardRef(
       errors,
       handleSubmit,
       onSubmit,
+      clearErrors,
     },
     ref
   ) => {
@@ -39,6 +40,20 @@ const AlertOffcanvas = forwardRef(
         setAddEmploye(true);
       },
     }));
+    useEffect(()=>{
+      if(addEmploye === true){
+        clearErrors("branch")
+        clearErrors('basedOn')
+        clearErrors('object')
+        clearErrors('alertType')
+        clearErrors('alertName')
+        clearErrors('severity')
+        clearErrors('alertValue')
+        setValue('alertName','')
+        setValue('validTimeFrom1','')
+        setValue('validTimeFrom2','')
+      }
+    },[addEmploye])
     const nav = useNavigate();
     const handleChange = (e) => {
       setSelectedOption(e.target.value);

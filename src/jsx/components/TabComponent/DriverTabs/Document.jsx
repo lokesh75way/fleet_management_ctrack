@@ -37,11 +37,6 @@ const Document = ({
     { value: "Bank Account", label: "Bank Account" },
     { value: "Mediclaim", label: "Mediclaim" },
   ]);
-  useEffect(()=>{
-      if(fields.length <= 0){
-        append({fieldName:tempValue, file:null,IssueDate:"", ExpiryDate:"" })
-      }
-  },[])
 
   return (
     <div className="p-4">

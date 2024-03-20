@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -24,6 +24,7 @@ const ClassifyTripsOffcanvas = forwardRef(
       onSubmit,
       errors,
       control,
+      clearErrors,
     },
     ref
   ) => {
@@ -42,6 +43,24 @@ const ClassifyTripsOffcanvas = forwardRef(
         padding: ".25rem 0 ", // Adjust the height as needed
       }),
     };
+    useEffect(()=>{
+      if(addEmploye === true){
+        clearErrors("startTime")
+        clearErrors('startLocation')
+        clearErrors('reachTime')
+        clearErrors('reachLocation')
+        clearErrors('driver')
+        setValue('startTime','')
+        setValue('startLocation','')
+        setValue('reachTime','')
+        setValue('reachLocation','')
+        setValue('driver','')
+        setValue('distance','')
+        setValue('fuelConsumption','')
+        setValue('lastModifiedBy','')
+
+      }
+    },[addEmploye])
 
     return (
       <>

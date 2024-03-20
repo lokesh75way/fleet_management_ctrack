@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -27,6 +27,7 @@ const ExpenseOffcanvas = forwardRef(
       onSubmit,
       errors,
       control,
+      clearErrors,
     },
     ref
   ) => {
@@ -53,10 +54,18 @@ const ExpenseOffcanvas = forwardRef(
       setSelectedOption2(e.target.value);
       setValue("jobAllocation", e.target.value);
     };
-    // const handleChange3 = (e) => {
-    //   setSelectedOption3(e.target.value);
-    //   setValue("validDays", e.target.value);
-    // };
+    useEffect(()=>{
+      if(addEmploye === true){
+        clearErrors("branch")
+        clearErrors('category')
+        clearErrors('type')
+        clearErrors('amount')
+        clearErrors('referenceNumber')
+        setValue('amount','')
+        setValue('referenceNumber','')
+        setValue('description','')
+      }
+    },[addEmploye])
     const customStyles = {
       control: (base) => ({
         ...base,

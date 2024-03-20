@@ -169,6 +169,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             className="form-control"
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskTelephoneNumber : ''}
             placeholder=""
           />
@@ -182,6 +184,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
           />
           <Error errorName={errors.mobileNumber} />
@@ -194,6 +198,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             className="form-control"
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].whatsappContactNumber : ''}
           />
@@ -253,6 +259,8 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            min='0'
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
           />
           <Error errorName={errors.zipCode} />
@@ -303,15 +311,6 @@ const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, error
             label="Fax Number"
             name="faxNumber"
             placeholder=""
-          />
-        </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadFile')}</label>
-          <input
-            type="file"
-            label="Document Name"
-            name={`documentFile`}
-            className="form-control"
           />
         </div>
       </div>

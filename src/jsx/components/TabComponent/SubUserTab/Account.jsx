@@ -373,6 +373,8 @@ const Account = ({
             register={register}
             label="Mobile Number"
             name="mobileNumber"
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
             defaultValue={
               filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
@@ -388,6 +390,9 @@ const Account = ({
             onChange={(e) => {
               setCountryid(e.id);
               setValue("country", e.name);
+              setstateid(null);
+              setTempValue(e.name)
+              setValue("state", 'Select State');
               setIsStateDisabled(false);
             }}
             containerClassName="bg-white"

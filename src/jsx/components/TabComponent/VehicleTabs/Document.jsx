@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
+import Error from "../../Error/Error";
 
 const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [document, setDocument] = useState([0]);
   const [tempValue, setTempValue] = useState(null);
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "test",
+  });
 
   const customStyles = {
     control: (base) => ({
@@ -27,44 +31,29 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
     { value: "Road Tax", label: "Road Tax" },
   ]);
 
-  const changeValueCall = (val) => {
-    const option = {
-      value: val,
-      label: val,
-    };
-    setDriverDocumentOptions(...driverDocumentOptions, option);
-  };
-
-  const documentCountChange = () => {
-    setDocument((prev) => {
-      const newArr = [...prev];
-      newArr.push(0);
-      return newArr;
-    });
-  };
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
-          <Button onClick={documentCountChange} className="ms-auto">
+          <Button onClick={()=>append({fieldName:tempValue, file:null,IssueDate:"", ExpiryDate:"" })} className="ms-auto">
             + Add Document
           </Button>
         </div>
-        {document.map((item, index) => {
+        {fields.map((item, index) => {
           return (
             <>
-              <div className="row mb-4 ">
+              <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
                   <label className="form-label">Select Document</label>
                   <Controller
-                    name={`documentType${index}`}
+                    name={`test.${index}.fieldName`}
                     control={control}
                     rules={{ required: true }}
                     render={({ field: { onChange, value, name, ref } }) => (
                       <CreatableSelect
                         onChange={(newValue) => {
                           setTempValue(newValue?.value);
-                          setValue(`documentType${index}`, newValue?.value);
+                          setValue(`test.${index}.fieldName`, newValue?.value);
                         }}
                         isClearable
                         options={driverDocumentOptions}
@@ -78,54 +67,58 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                       />
                     )}
                   />
+                   {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
                 </div>
                 <div className="col-xl-3 mb-2">
                   <label className="form-label">Upload File</label>
                   <input
-                    type="file"
-                    {...register(`documentFile${index}`)}
+                    type="file" 
+                    {...register(`test.${index}.file`)}
                     label="Document Name"
-                    name={`documentFile${index}`}
-                    className="form-control"
+                    name={`test.${index}.file`}
+                    className="form-control customDateHeight"
                   />
+                  <Error errorName={errors?.test?.[index]?.file} /> 
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
                   <label className="form-label">Issue Date</label>
                   <Controller
-                    name={`documentName${index}IssueDate`}
+                    name={`test.${index}IssueDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`documentName${index}IssueDate`) ||
+                          getValues(`test.${index}IssueDate`) ||
                           new Date()
                         }
                         className="form-control"
                         onChange={(newValue) =>
-                          setValue(`documentName${index}IssueDate`, newValue)
+                          setValue(`test.${index}IssueDate`, newValue)
                         }
                       />
                     )}
                   />
+                  {!getValues(`test.${index}.IssueDate`) && <Error errorName={errors?.test?.[index]?.IssueDate} /> }
                 </div>
                 <div className="col-xl-3 d-flex flex-column  mb-2">
                   <label className="form-label">Expiry Date</label>
                   <Controller
-                    name={`documentName${index}ExpiryDate`}
+                    name={`test.${index}ExpiryDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`documentName${index}ExpiryDate`) ||
+                          getValues(`test.${index}ExpiryDate`) ||
                           new Date()
                         }
                         className="form-control"
                         onChange={(newValue) =>
-                          setValue(`documentName${index}ExpiryDate`, newValue)
+                          setValue(`test.${index}ExpiryDate`, newValue)
                         }
                       />
                     )}
                   />
+                  {!getValues(`test.${index}.ExpiryDate`) && <Error errorName={errors?.test?.[index]?.ExpiryDate} /> }
                 </div>
               </div>
             </>

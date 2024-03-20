@@ -234,6 +234,7 @@ const DriverTabComponent2 = (props) => {
     (item) => item.activityStatus === "Not Allocated"
   );
   const total = drivers.length;
+  console.log(drivers)
   const handleOnSelect = (results) => {
     setSelectValue("All");
     setFilterApplied(true);
@@ -421,6 +422,7 @@ const DriverTabComponent2 = (props) => {
                   <div
                     className="form-check custom-checkbox bs_exam_topper_all"
                     style={{ marginRight: "10px" }}
+                    onClick={(e)=>e.stopPropagation()}
                   >
                     <input
                       type="checkbox"
@@ -475,8 +477,8 @@ const DriverTabComponent2 = (props) => {
         })}
       </div>
       <div className="mt-3 text-center">
-        <Button className="w-25 btn-md" variant="primary btn-md">
-          XLS
+        <Button className="btn-md" variant="primary">
+          Save Selection
         </Button>
       </div>
     </>

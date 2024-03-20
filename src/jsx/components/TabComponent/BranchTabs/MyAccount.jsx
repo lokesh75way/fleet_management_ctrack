@@ -328,6 +328,8 @@ const MyAccount = ({
             label="Zip Code"
             name="zipCode"
             placeholder=""
+            min="0"
+            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             defaultValue={
               filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
             }
