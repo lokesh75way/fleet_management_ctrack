@@ -18,7 +18,9 @@ const MyAccount = ({
   errors,
   control,
 }) => {
-  // const {checkRole, checkUserName} = useStorage()
+  const [selectStateName, setSelectStateName] = useState({
+    name: "Select State",
+  });
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
@@ -272,6 +274,7 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
+              setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.id);
               setIsStateDisabled(false)
@@ -297,7 +300,7 @@ const MyAccount = ({
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-              // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].state : "" }}
+              defaultValue={selectStateName}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}

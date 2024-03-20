@@ -25,7 +25,9 @@ const Account = ({
   errors,
   control,
 }) => {
-  const { checkUser } = useStorage();
+  const [selectStateName, setSelectStateName] = useState({
+    name: "Select State",
+  });
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -67,13 +69,6 @@ const Account = ({
     }));
   }
 
-
-  console.log('ye he default company data', defaultCompanyOptions);
-
-
-
-  
-  
   let parentbgname;
   if(role === 'company') {
     const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
@@ -388,11 +383,9 @@ const Account = ({
           </label>
           <CountrySelect
             onChange={(e) => {
+              setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.name);
-              setstateid(null);
-              setTempValue(e.name)
-              setValue("state", 'Select State');
               setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
@@ -416,6 +409,7 @@ const Account = ({
                 setstateid(e.id);
                 setValue("state", e.name);
               }}
+              defaultValue={selectStateName}
               containerClassName="bg-white"
               inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"

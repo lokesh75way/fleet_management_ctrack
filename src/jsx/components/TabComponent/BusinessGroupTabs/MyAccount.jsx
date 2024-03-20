@@ -19,7 +19,9 @@ const MyAccount = ({
   errors,
   control,
 }) => {
-
+  const [selectStateName, setSelectStateName] = useState({
+    name: "Select State",
+  });
   const {t} = useTranslation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -160,6 +162,7 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
+              setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false)
@@ -183,6 +186,7 @@ const MyAccount = ({
                 setstateid(e.id);
                 setValue("state", e.name);
               }}
+              defaultValue={selectStateName}
               containerClassName="bg-white"
               inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"

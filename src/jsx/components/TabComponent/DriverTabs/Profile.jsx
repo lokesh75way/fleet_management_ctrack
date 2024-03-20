@@ -21,6 +21,9 @@ const Profile = ({
   getValues,
   errors,
 }) => {
+  const [selectStateName, setSelectStateName] = useState({
+    name: "Select State",
+  });
   const { control } = useForm();
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
@@ -201,6 +204,7 @@ const Profile = ({
           </label>
           <CountrySelect
             onChange={(e) => {
+              setSelectStateName({name : "Select State"})
               setCountryid(e.id);
               setValue("country", e.id);
               setIsStateDisabled(false)
@@ -225,6 +229,7 @@ const Profile = ({
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
+                defaultValue={selectStateName}
             />
             {!getValues("state") && <Error errorName={errors.state} />}
           </div>
