@@ -159,7 +159,7 @@
     line-height: 1.5;
     border-radius: 0.25rem;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 400;
     padding: 5px 12px;
     border: 0.0625rem solid transparent;
     display: flex;
@@ -226,8 +226,8 @@
 .rct-node-parent.rct-node-collapsed {
   > span {
     background-color: #0d99ff1a;
-    color: var(--primary);
-    border-color: var(--rgba-primary-1);
+    color : var(--primary);
+    border-color: var(--rgba-primary-1)
   }
 }
 .rct-node-leaf {
@@ -263,9 +263,37 @@
 .pillBadge {
   width: "33%";
 }
-
-.accordian-header {
-  button {
+.driver_tracking-object {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 10px;
+  margin-inline: 0px;
+  > span {
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border: 0.0625rem solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    border-radius: 20px;
+    color: var(--primary);
+    background-color: rgba(13, 153, 255, 0.05);
+    p {
+      margin-bottom: 0px;
+    }
+    &:hover {
+      background-color: rgba(13, 153, 255, 0.05);
+    }
+  }
+}
+.accordian-header{
+  button{
     padding: 1rem;
   }
 }

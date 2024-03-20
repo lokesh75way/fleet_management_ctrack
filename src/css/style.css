@@ -22012,9 +22012,9 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   margin: 0rem 0rem 0rem 0rem;
 }
 .sidebar-right .tab-content {
-  padding: 1.25rem 1.25rem 0;
+    padding: 1.25rem 1.25rem 0;
   min-height: 480px;
-  background: #fff;
+    background: #fff;
 }
 .sidebar-right .tab-content .tab-pane .admin-settings .row > div {
   margin-bottom: 1.25rem;
@@ -49330,6 +49330,7 @@ table.dataTable thead .sorting_asc {
 
 .active-map-main {
   position: relative;
+  z-index: 0;
 }
 .active-map-main:after {
   content: "";
