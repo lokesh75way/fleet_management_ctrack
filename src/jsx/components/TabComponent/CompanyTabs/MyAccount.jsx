@@ -9,17 +9,10 @@ import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
+import {useTranslation} from 'react-i18next'
 
-const MyAccount = ({
-  setValue,
-  getValues,
-  register,
-  onSubmit,
-  handleSubmit,
-  errors,
-  control,
-}) => {
-  const { checkRole, checkUserName } = useStorage();
+const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
+  const {checkRole, checkUserName} = useStorage()
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
@@ -66,55 +59,44 @@ const MyAccount = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Business Group<span className="text-danger">*</span>
-          </label>
-          {checkRole() === "admin" ? (
-            <Controller
-              name="parent"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) => {
-                    setTempValue(newValue.label);
-                    setValue("parent", newValue.label);
-                  }}
-                  options={businessUserOptions}
-                  ref={ref}
-                  name={name}
-                  styles={customStyles}
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              name="parent"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) => {
-                    setTempValue(newValue.label);
-                    setValue("parent", newValue.label);
-                  }}
-                  options={[{ value: checkUserName(), label: checkUserName() }]}
-                  ref={ref}
-                  isDisabled={localStorage.getItem("role") !== "Admin"}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={[
-                    { value: checkUserName(), label: checkUserName() },
-                  ]}
-                />
-              )}
-            />
-          )}
-          {!getValues("parent") && <Error errorName={errors.parent} />}
+          <label className="form-label">Business Group<span className="text-danger">*</span></label>
+          {
+          checkRole() === "admin" ?<Controller
+            name="parent"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
+                options={businessUserOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+              />
+            )}
+          />:
+          <Controller
+            name="parent"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
+                options={[{value:checkUserName(),label:checkUserName()}]}
+                ref={ref}
+                isDisabled={localStorage.getItem('role') !== 'Admin'}
+                name={name}
+                styles={customStyles}
+                defaultValue={[{value:checkUserName(),label:checkUserName()}]} 
+              />
+            )}
+          />
+          }
+          { !getValues('parent') && <Error errorName={errors.parent} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company Name <span className="text-danger">*</span>
+          {t('companyName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -144,9 +126,7 @@ const MyAccount = ({
         </div> */}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Email<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -159,27 +139,20 @@ const MyAccount = ({
           />
           <Error errorName={errors.email} />
         </div>
-        {!id && (
-          <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              Password<span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="password"
-              register={register}
-              name="password"
-              label="password"
-              placeholder=""
-              defaultValue={getValues("password")}
-            />
-            <Error errorName={errors.password} />
-          </div>
-        )}
-
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Help Desk Email<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Password<span className="text-danger">*</span></label>
+          <CustomInput
+            type="password"
+            register={register}
+            name="password"
+            label="password"
+            placeholder=""
+            defaultValue={getValues('password')}
+          />
+          <Error errorName={errors.password} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
@@ -193,9 +166,7 @@ const MyAccount = ({
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Help Desk Telephone Number<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -212,9 +183,7 @@ const MyAccount = ({
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Mobile Number<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
           <CustomInput
             type="number"
             register={register}
@@ -228,7 +197,7 @@ const MyAccount = ({
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number</label>
+          <label className="form-label">{t('whatsappContactNumber')}</label>
           <CustomInput
             type="number"
             register={register}
@@ -245,9 +214,7 @@ const MyAccount = ({
           <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            Country<span className="text-danger">*</span>
-          </label>
+          <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -260,11 +227,7 @@ const MyAccount = ({
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div
-          className={`${
-            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
-          }`}
-        >
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">State</label>
           <div style={{ background: "white" }}>
             <StateSelect
@@ -282,7 +245,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City<span className="text-danger">*</span>
+          {t('city')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -298,7 +261,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+          {t('zipCode')}
           </label>
           <CustomInput
             type="number"
@@ -314,7 +277,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1<span className="text-danger">*</span>
+          {t('street1')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -330,7 +293,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -341,7 +304,7 @@ const MyAccount = ({
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Contact Person</label>
+          <label className="form-label">{t('contactPerson')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -352,7 +315,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Fax Number
+          {t('faxNumber')}
           </label>
           <CustomInput
             type="number"
@@ -362,7 +325,7 @@ const MyAccount = ({
             placeholder=""
           />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-6 mb-3" >
           <label className="form-label">Upload File</label>
           <input
             type="file"
@@ -386,7 +349,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

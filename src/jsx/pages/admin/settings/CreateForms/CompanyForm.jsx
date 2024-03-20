@@ -11,13 +11,15 @@ import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
-
+import {useTranslation} from 'react-i18next'
 const CompanyForm = () => {
+
+  const {t} = useTranslation();
   const { saveData } = useStorage();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeIndex, setActiveIndex] = useState(0);
-  let tabHeading = ["New Company", "Settings", "Change Password"];
+  let tabHeading = [t('newCompany'), t('settings'), t('changePassword')];
   let component = [MyAccount, UserSetting, ManagePassword];
   if (!id) {
     tabHeading.pop();
@@ -73,9 +75,9 @@ const CompanyForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Company"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Company"}
+        mainTitle={t('company')}
+        pageTitle={id?t('edit'):t('create')}
+        parentTitle={t('company')}
       />
       <div className="m-2 p-2">
         <FormProvider>

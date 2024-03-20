@@ -10,10 +10,12 @@ import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs
 import { yupResolver } from "@hookform/resolvers/yup";
 import { businessGroupAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import {useTranslation} from 'react-i18next'
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
+  const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Business Group", "Settings","Change Password"];
+  const tabHeading = [t('newBusinessGroup'), t('settings'),t('changePassword')];
   const component = [MyAccount, UserSetting,ManagePassword];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()
@@ -76,9 +78,9 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Business Group"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Business Group"}
+        mainTitle= {t('businessGroup')}
+        pageTitle={id?t('edit'):t('create')}
+        parentTitle={t('businessGroup')}
       />
       <div className="m-2 p-2">
         <FormProvider>
