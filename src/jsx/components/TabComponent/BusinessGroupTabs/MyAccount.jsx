@@ -253,15 +253,6 @@ const MyAccount = ({
             defaultValue={getValues("faxNumber")}
           />
         </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadLogo')}</label>
-          <input
-            type="file"
-            label="Document Name"
-            name={`documentFile`}
-            className="form-control"
-          />
-        </div>
       </div>
       <div
         style={{
