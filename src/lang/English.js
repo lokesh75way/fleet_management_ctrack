@@ -76,5 +76,14 @@ export const english = {
 
       "newCompany":"New Company",
 
+
+
+
+      "branchName": "Branch Name",
+      "parentBranch": "Parent Branch",
+      "childBranches": "Child Branches",
+      "addBranch":"Add Branch"
+    
+
     }
   }
