@@ -17379,7 +17379,7 @@ svg.pulse-svg .third-circle {
   margin-right: 0;
 }
 [direction="rtl"] .content-body {
-  margin-right: 21.563rem;
+  margin-right: 14.563rem;
   margin-left: auto;
 }
 [data-sidebar-style="modern"][direction="rtl"] .content-body {
@@ -19207,12 +19207,12 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
   .color-title {
   display: none;
 }
-[data-sidebar-style="full"][data-layout="vertical"]
+/* [data-sidebar-style="full"][data-layout="vertical"]
   .menu-toggle
   .nav-header
   .nav-control {
   right: -3rem;
-}
+} */
 [data-sidebar-style="full"][data-layout="vertical"]
   .menu-toggle
   .nav-header
@@ -55443,10 +55443,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-left: 0;
   margin-right: 0;
 }
-[direction="rtl"] .content-body {
+/* [direction="rtl"] .content-body {          
   margin-right: 21.563rem;
   margin-left: auto;
-}
+} */
 [data-sidebar-style="modern"][direction="rtl"] .content-body {
   margin-right: 9.375rem;
 }

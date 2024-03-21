@@ -40,6 +40,7 @@ const MyAccount = ({
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const defaultValues = getSelectValues();
 
   useEffect(() => {
     const tempbusinessUserOptions = DummyData.filter(
@@ -101,8 +102,22 @@ const MyAccount = ({
       filteredCompanyData[0] ? filteredCompanyData[0].state : ""
     );
   }, []);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loginDetails-name");
+    const role = localStorage.getItem('role')
+    if (role === "businessgroup") {
+      setTempValue(loggedInUser);
+      setValue("parentBusinessGroup", loggedInUser);
+    }
+    if (role === "company") {
+      setValue("parentCompany", loggedInUser);
+      const filterparent = DummyData.filter(item => item.userName === loggedInUser)[0].parent;
+      setValue("parentBusinessGroup", filterparent);
+      setTempValue(loggedInUser);
+    }
+  }, []);
 
-  const defaultValues = getSelectValues();
+ 
   // console.log(defaultValues)
 
   return (
@@ -115,7 +130,7 @@ const MyAccount = ({
           } */}
           {id ? (
             <Controller
-              name="businessUser"
+              name="parentBusinessGroup"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
@@ -141,7 +156,7 @@ const MyAccount = ({
             />
           ) : (
             <Controller
-              name="businessUser"
+              name="parentBusinessGroup"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
@@ -163,6 +178,7 @@ const MyAccount = ({
               )}
             />
           )}
+          {!getValues("parentBusinessGroup") && <Error errorName={errors.parentBusinessGroup} />}
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -220,7 +236,7 @@ const MyAccount = ({
             />
           )}
 
-          {!getValues("company") && <Error errorName={errors.company} />}
+          {!getValues("parentCompany") && <Error errorName={errors.parentCompany} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Parent Branch</label>
@@ -249,7 +265,7 @@ const MyAccount = ({
               />
             )}
           />
-          {!getValues("parent") && <Error errorName={errors.parent} />}
+          {!getValues("parentBranch") && <Error errorName={errors.parentBranch} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">

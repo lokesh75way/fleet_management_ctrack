@@ -9,7 +9,8 @@ import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from 'react-i18next'
+import { storageCapacityOptions } from "../VehicleTabs/Options";
 
 const MyAccount = ({
   setValue,
@@ -61,8 +62,11 @@ const MyAccount = ({
 
   const { id } = useParams();
   const companyData = JSON.parse(localStorage.getItem("userJsonData"));
+  let newData = [];
+if(id){
+   newData = companyData.filter((data) => data.id == id);
 
-  const newData = companyData.filter((data) => data.id.toString() === id);
+}
 
   const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
 
@@ -133,6 +137,24 @@ const MyAccount = ({
             }
           />
           <Error errorName={errors.userName} />
+        </div>
+
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+          {t('username')} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="User Name2"
+            name="userName2"
+            placeholder=""
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].userName2 : ""
+            }
+          />
+          <Error errorName={errors.userName2} />
         </div>
         {/* <div className="col-xl-6 mb-3">
           <label className="form-label">Company<span className="text-danger">*</span></label>
@@ -347,6 +369,28 @@ const MyAccount = ({
           />
           <Error errorName={errors.zipCode} />
         </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">{t('storageCapacity')}</label>
+          <Controller
+            name="storageCapacity"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("storageCapacity", newValue.value)}
+                options={storageCapacityOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={storageCapacityOptions[1]}
+              />
+            )}
+          />
+
+            <p style={{fontStyle: "italic"}}>
+              For more than 120 days, please <a href="#" class="link-primary">contact</a> your account manager.
+            </p>
+
+        </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("street1")}
@@ -397,6 +441,17 @@ const MyAccount = ({
             name="faxNumber"
             placeholder=""
           />
+        </div>
+        <div className="col-xl-6 mb-3" >
+          <label className="form-label">{t('uploadLogo')}</label>
+          <input
+            type="file"
+            {...register('businessGroupLogo')}
+            label="Business Group Logo"
+            name="businessGroupLogo"
+            className="form-control"
+          />
+          <Error errorName={errors.businessGroupLogo} />
         </div>
       </div>
       <div

@@ -344,7 +344,7 @@ const AlertOffcanvas = forwardRef(
                         name="validTimeFrom1"
                         placeholder=""
                       />
-                      <span className="px-2">To</span>
+                      <span className="px-1">To</span>
                       <CustomInput
                         type="time"
                         register={register}

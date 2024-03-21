@@ -95,8 +95,9 @@ export const resetPassword = yup.object().shape({
 export const companyAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    parent: yup.string().required("Please select a option"),
-    userName: yup.string().required("Please enter a User Name"),
+    parent: yup.string().required("Please select an option"),
+    userName: yup.string().required("Please enter a Company Name"),
+    userName2: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
@@ -131,6 +132,7 @@ export const branchAccountSchema = yup
   .object({
     // branch: yup.string().required(),
     parentCompany: yup.string().required("Company Name is required "),
+    parentBusinessGroup: yup.string().required("Business Group Name is required "),
     userName: yup.string().required("Please enter the Branch Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup
@@ -166,6 +168,10 @@ export const adminProfileAccountSchema = yup
     .transform((_, val) => val ? Number(val) : null),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
+    email: yup
+      .string()
+      .email()
+      .required("Email is required "),
     oldPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -193,7 +199,9 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
+    
     userName: yup.string().required("Please enter a Business Group Name"),
+    userName2: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
@@ -282,14 +290,14 @@ export const driverProfileSchema = yup
       .transform((_, val) => val ? Number(val) : null),
     contactNumber1: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits")
       .required("Contact Number1 is required "),
     contactNumber2: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
     country: yup.string().required("Please select a Country "),
+    street1: yup.string().required("Please enter street1 address"),
     city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
   })
   .required();
 export const driverInfoSchema = yup
@@ -346,10 +354,9 @@ export const subUserAccountSchema = yup
       .min(8, "Password must be at least 8 characters"),
     mobileNumber: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
-    state: yup.string().required("Please select a State"),
   })
   .required();
 export const alertSchema = yup
@@ -387,7 +394,7 @@ export const technicianTaskSchema = yup
     reportingTime: yup.string().required("Reporting Time is required "),
     plannedReportingDate: yup
       .string()
-      .required("Planned Reporting Date is required "),
+      .required("Reporting Date is required "),
   })
   .required();
 export const geofenceMapSchema = yup
@@ -396,9 +403,10 @@ export const geofenceMapSchema = yup
     name: yup.string().required("Enter Geofence name "),
     category: yup.string().required("Select a Category "),
     geofenceAccess: yup.string().required("Choose access method "),
+    tolerance: yup.string().required("Tolerance value is required "),
     contactNumber: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
   })
   .required();
 export const technicianGeneralSchema = yup

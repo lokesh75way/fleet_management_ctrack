@@ -226,6 +226,8 @@ const GeofenceDetail = () => {
                   register={register}
                   label="Contact Number"
                   name="contactNumber"
+                  min="0"
+                  onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
                   defaultValue={
                     filteredGeoData[0] ? filteredGeoData[0].contactNumber : ""
                   }
@@ -274,8 +276,8 @@ const GeofenceDetail = () => {
                     />
                   )}
                 />
-                {!getValues("contactNunber") && (
-                  <Error errorName={errors.contactNumber} />
+                {!getValues("tolerance") && (
+                  <Error errorName={errors.tolerance} />
                 )}
               </div>
 

@@ -260,6 +260,7 @@ const ThemeContextProvider = (props) => {
   const [groupsDataState, setGroupsDataState] = useState([]);
   const [lang, setLang] = useState("");
   const [isArabic, setIsArabic] = useState("");
+  const [isRtl, setIsRtl] = useState(false);
   const [role, setRole] = useState("superadmin");
   const [showCardWidget, setShowCardWidget] = useState(true);
   const [showProjectOverviewTab, setShowProjectOverviewTab] = useState(true);
@@ -422,6 +423,8 @@ const ThemeContextProvider = (props) => {
         setOverSpeed,
         showStayInZone,
         setStayInZone,
+        isRtl,  
+        setIsRtl,
       }}
     >
       {props.children}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import CustomInput from '../../Input/CustomInput'
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from 'react-timezone-select'
@@ -196,9 +196,9 @@ const {t} = useTranslation();
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">{t('uploadFile')}</label>
-          <input
+          <CustomInput
             type="file"
-            {...register('businessGroupLogo')}
+            register={register}
             label="Business Group Logo"
             name="businessGroupLogo"
             className="form-control"

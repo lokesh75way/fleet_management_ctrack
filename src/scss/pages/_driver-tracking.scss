@@ -339,6 +339,57 @@
   }
 }
 
-.customeoff{
+.classy_filter{
   width: 500px !important;
 }
+.showPasswordIcon{
+  position: absolute;
+  top: 10%;
+right: 3%;
+font-size: 1.4rem;
+cursor: pointer;
+}
+// input[type=time] {
+//   border: none;
+//   color: #2a2c2d;
+//   font-size: 14px;
+//   font-family: helvetica;
+//   width:9rem
+// }
+// input[type=time]::-webkit-datetime-edit-fields-wrapper {
+//   display: flex;
+// }
+
+// /* The space between the fields - between hour and minute, the minute and 
+// second, second and am/pm */
+// input[type=time]::-webkit-datetime-edit-text {
+//   padding: 19px 3px;
+// }
+
+// /* The naming convention for the hour, minute, second, and am/pm field is
+// `-webkit-datetime-edit-{field}-field` */
+
+// /* Hour */
+// input[type=time]::-webkit-datetime-edit-hour-field {
+//   border-radius: 15%;
+//   padding: 19px 3px;
+// }
+
+// /* Minute */
+// input[type=time]::-webkit-datetime-edit-minute-field {
+//   border-radius: 15%;
+//   padding: 19px 3px;
+// }
+
+/* AM/PM */
+// input[type=time]::-webkit-datetime-edit-ampm-field {
+//   background-color: #7155d3;
+//   border-radius: 15%;
+//   color: #fff;
+//   padding: 19px 3px;
+// }
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);
+}
+
+

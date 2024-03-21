@@ -260,7 +260,7 @@ const Profile = ({
             min="0"
             onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
             placeholder=""
-            defaultValue={filteredUserData[0]?.zipCode}
+            defaultValue={filteredUserData[0]?.zipCode || ''}
           />
           <Error errorName={errors.zipCode} />
         </div>

@@ -40,7 +40,7 @@ const headersTitle = [
 const csvlink = {
   headers : headersTitle,
   data : tableData,
-  filename: "csvfile.csv"
+  filename: "Fuel Rep.csv"
 }
 
 const Fuel = (ref) => {

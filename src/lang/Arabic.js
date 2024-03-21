@@ -72,7 +72,15 @@ export const arabic = {
       "of": "من",
       "entries": "المدخلات",
 
-      "newCompany": "شركة جديدة"
+      "newCompany": "شركة جديدة",
+
+
+
+      "branchName": "اسم الفرع",
+      "parentBranch": "الفرع الأصلي",
+      "childBranches": "فروع الطفل",
+      "addBranch": "إضافة فرع",
+
 
 
   }

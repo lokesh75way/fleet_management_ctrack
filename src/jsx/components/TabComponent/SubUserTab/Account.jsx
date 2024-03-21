@@ -167,8 +167,6 @@ const Account = ({
     tempcompanyOptions.push({ label: "None", value: 0 });
 
     setBusinessUserOptions(tempbusinessUserOptions);
-
-    console.log('ye he value ',businessUserValue);
     if(businessUserValue) {
       setCompanyOptions(tempcompanyOptions);
     }
@@ -231,7 +229,6 @@ const Account = ({
                 isDisabled={defaultValues.business.disabled}
                 name={name}
                 styles={customStyles}
-
                 defaultValue={role === 'company' && {
                   label: parentbgname,
                   value: parentbgname,
@@ -244,11 +241,6 @@ const Account = ({
             )}
           />
         </div>
-
-
-        
-
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">
             Company

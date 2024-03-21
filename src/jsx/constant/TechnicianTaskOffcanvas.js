@@ -221,7 +221,7 @@ const TechnicianOffcanvas = forwardRef(
                         />
                       )}
                     />
-                    {!getValues("serviceLocation") && <Error errorName={errors.serviceLocation} />}
+                    {!getValues("plannedReportingDate") && <Error errorName={errors.plannedReportingDate} />}
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">Reporting Time <span className="text-danger">*</span></label>
