@@ -137,7 +137,7 @@ const SideBar = () => {
           : ""
       }`}
     >
-      <div className="deznav-scroll">
+      <div className="deznav-scroll" >
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
           {MenuList.map((data, index) => {
             let menuClass = data.classsChange;

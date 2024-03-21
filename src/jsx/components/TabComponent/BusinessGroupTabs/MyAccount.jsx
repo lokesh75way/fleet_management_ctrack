@@ -9,6 +9,8 @@ import DummyData from "../../../../users.json";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useParams } from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import { storageCapacityOptions } from "../VehicleTabs/Options";
+
 const MyAccount = ({
   data,
   setValue,
@@ -62,6 +64,20 @@ const MyAccount = ({
             defaultValue={getValues("userName")}
           />
           <Error errorName={errors.userName} />
+        </div>
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+            {t('username')} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="User Name2"
+            name="userName2"
+            placeholder=""
+            defaultValue={getValues("userName2")}
+          />
+          <Error errorName={errors.userName2} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -219,6 +235,31 @@ const MyAccount = ({
           />
           <Error errorName={errors.zipCode} />
         </div>
+
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">{t('storageCapacity')}</label>
+          <Controller
+            name="storageCapacity"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("storageCapacity", newValue.value)}
+                options={storageCapacityOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={storageCapacityOptions[1]}
+              />
+            )}
+          />
+
+            <p style={{fontStyle: "italic"}}>
+              For more than 120 days, please <a href="#" class="link-primary">contact</a> your account manager.
+            </p>
+
+        </div>
+
+
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
           {t('street1')}<span className="text-danger">*</span>
@@ -269,6 +310,17 @@ const MyAccount = ({
             placeholder=""
             defaultValue={getValues("faxNumber")}
           />
+        </div>
+        <div className="col-xl-6 mb-3" >
+          <label className="form-label">{t('uploadLogo')}</label>
+          <input
+            type="file"
+            {...register('businessGroupLogo')}
+            label="Business Group Logo"
+            name="businessGroupLogo"
+            className="form-control"
+          />
+          <Error errorName={errors.businessGroupLogo} />
         </div>
       </div>
       <div

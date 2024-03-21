@@ -179,6 +179,13 @@ export const statusOptions = [
   { value: "Inactive", label: "Inactive" },
 ];
 
+export const storageCapacityOptions = [
+  { value: "60 days", label: "60 days" },
+  { value: "90 days", label: "90 days" },
+  { value: "120 days", label: "120 days" },
+];
+
+
 export const languageOptions = [
   { value: "English", label: "English" },
   { value: "Arabic", label: "Arabic" },

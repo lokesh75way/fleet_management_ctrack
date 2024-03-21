@@ -1,6 +1,11 @@
 import React, {  useState } from "react";
 /// React router dom
 import { Link } from "react-router-dom";
+import { clsx } from 'clsx';
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
+
+
 
 
 
@@ -18,6 +23,11 @@ export function  NavMenuToggle(){
 
 const NavHader = () => {
   const [toggle, setToggle] = useState(false);
+
+  const {isRtl} = useContext(ThemeContext)
+
+
+  const tableHeading2 = clsx({'text-left':isRtl, 'text-right':!isRtl})
 
   return (
     <div className="nav-header">
@@ -44,7 +54,7 @@ const NavHader = () => {
          NavMenuToggle();
         }}
       >
-        <div className={`hamburger ${toggle ? "is-active" : ""}`}>
+        <div className={`hamburger ${toggle ? "is-active" : ""}`} >
           <span className="line"></span>
           <span className="line"></span>
           <span className="line"></span>          

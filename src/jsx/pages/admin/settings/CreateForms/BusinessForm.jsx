@@ -68,9 +68,14 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
       }
     }
     
-    notifySuccess("Saved !");
-    console.log('business group data',data);
     if(!id){
+      const existingUserData = JSON.parse(localStorage.getItem("userJsonData"));
+      data.id = `${existingUserData.length + 1}`;
+      data.role = 'businessgroup';
+      data.parent = 'admin';
+      existingUserData.push(data);
+      localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
+      notifySuccess("New Business Group Created !");
       navigate('/business')
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));

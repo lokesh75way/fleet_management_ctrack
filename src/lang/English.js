@@ -82,8 +82,9 @@ export const english = {
       "branchName": "Branch Name",
       "parentBranch": "Parent Branch",
       "childBranches": "Child Branches",
-      "addBranch":"Add Branch"
+      "addBranch":"Add Branch",
     
-
+      "username": "User Name",
+      "storageCapacity": "Storage Capacity",
     }
   }

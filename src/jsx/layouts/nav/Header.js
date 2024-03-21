@@ -8,6 +8,7 @@ import { IMAGES, SVGICON } from "../../constant/theme";
 import Logoutbtn from "./Logoutbtn";
 import {useTranslation} from 'react-i18next'
 
+
 const NotificationBlog = ({ classChange }) => {
 
   
@@ -50,6 +51,8 @@ const NotificationBlog = ({ classChange }) => {
 };
 
 const Header = ({ onNote }) => {
+
+  
   const {i18n} = useTranslation();
   const role = localStorage.getItem('role');
   const loginDetailsEmail = localStorage.getItem('loginDetails-email');
@@ -61,12 +64,12 @@ const Header = ({ onNote }) => {
     });
   }, []);
 
-  const { lang, setLang } = useContext(ThemeContext);
+  const { lang, setLang, setIsRtl,direction ,changeDirectionLayout} = useContext(ThemeContext);
   return (
     <div className={`header ${headerFix ? "is-fixed" : ""}`}>
       <div className="header-content">
         <nav className="navbar navbar-expand">
-          <div className="collapse navbar-collapse justify-content-between">
+          <div className="collapse navbar-collapse justify-content-between" >
             <div className="header-left">
               {/* <div className="input-group search-area">
                 <span className="input-group-text rounded-0">
@@ -295,14 +298,18 @@ const Header = ({ onNote }) => {
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => {i18n.changeLanguage("ar"); setLang('ar')}}
+                    onClick={() => {i18n.changeLanguage("ar"); setLang('ar'); setIsRtl(true);
+                    changeDirectionLayout({ value: "rtl", label: "RTL" });
+                  }}
                   >
                     Arabic
                   </Link>
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => {i18n.changeLanguage("en"); setLang('en')}}
+                    onClick={() => {i18n.changeLanguage("en"); setLang('en'); setIsRtl(false);
+                    changeDirectionLayout({ value: "ltr", label: "LTR" });
+                  }}
                   >
                     English
                   </Link>
