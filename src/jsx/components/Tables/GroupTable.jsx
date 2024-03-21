@@ -3,7 +3,7 @@ import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
 
-const GroupTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
+const GroupTable = ({onConfirmDelete,tableData}) => {
 
     return (
         <>
@@ -35,7 +35,7 @@ const GroupTable = ({onConfirmDelete,tableData,editDrawerOpen}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            {/* <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span> */}
                             <DeleteModal className='cursor-pointer ' onConfirmDelete={()=>onConfirmDelete(index)} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
 
                         </span>

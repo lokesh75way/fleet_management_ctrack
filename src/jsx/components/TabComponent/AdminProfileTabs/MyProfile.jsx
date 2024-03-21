@@ -14,8 +14,6 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue,setTempValue] = useState();
-  const [isCheckCP, setIsCheckCP] = useState(false);
-  const [adminData,setAdminData] = useState(data)
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -52,17 +50,6 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">Country<span className="text-danger">*</span></label>
-          {/* {isEdit ? <CountrySelect
-            onChange={(e) => {
-              setCountryid(e.id);
-              setValue("country", e.id);
-            }}
-            // defaultValue={data?.country}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
-          />
-          : */}
           <CountrySelect
             onChange={(e) => {
               console.log(e)
@@ -93,72 +80,17 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           </div>
           {!getValues('state') && <Error errorName={errors.state} />}
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">Change Password</label>
-          <div className="form-check custom-checkbox mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="customCheckBox1"
-              onClick={() => setIsCheckCP(!isCheckCP)}
-            />
-          </div>
-        </div>
-        {isCheckCP && (
-          <>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Old Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                name="oldPassword"
-                label="Old Password"
-                // disabled={!isEdit}
-              />
-              <Error errorName={errors.oldPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                New Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="New Password"
-                name="newPassword"
-                // disabled={!isEdit}
-              />
-              <Error errorName={errors.newPassword} />
-            </div>
-            <div className="col-xl-6 mb-3 ">
-              <label className="form-label">
-                Retype Password<span className="text-danger">*</span>
-              </label>
-              <CustomInput
-                type="password"
-                register={register}
-                label="Retype Passwor"
-                name="retypePassword"
-                // disabled={!isEdit}
-              />
-              <Error errorName={errors.retypePassword} />
-            </div>
-          </>
-        )}
-        
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password Recovery Email<span className="text-danger">*</span></label>
+          <label className="form-label">Email<span className="text-danger">*</span></label>
           <CustomInput
             type="email"
             register={register}
-            defaultValue={data?.passwordRecoveryEmail || " "}
-            label="Password Recovery Email"
-            name="passwordRecoveryEmail"
+            defaultValue={data?.email || " "}
+            label="Email"
+            name="email"
             // disabled={!isEdit}
           />
-          <Error errorName={errors.passwordRecoveryEmail} />
+          <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
@@ -198,7 +130,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           {!getValues("mobileNumber") && <Error errorName={errors.mobileNumber} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Whatsapp Contact Number<span className="text-danger">*</span></label>
+          <label className="form-label">Whatsapp Contact Number</label>
           <CustomInput
             type="number"
             register={register}
@@ -206,7 +138,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             label="Whatsapp Contact Number"
             defaultValue={data?.whatsappContactNumber || " "}
             name="whatsappContactNumber"
-            disabled={!isEdit} 
+            // disabled={!isEdit} 
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -225,7 +157,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code<span className="text-danger">*</span>
+            Zip Code
           </label>
           <CustomInput
             type="number"

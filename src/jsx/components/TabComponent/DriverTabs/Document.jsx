@@ -51,7 +51,7 @@ const Document = ({
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Select Document</label>
+                  <label className="form-label">Select Document<span className="text-danger">*</span></label>
                   <Controller
                     name={`test.${index}.fieldName`}
                     control={control}
@@ -77,7 +77,7 @@ const Document = ({
                   {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
                 </div>
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Upload File</label>
+                  <label className="form-label">Upload File<span className="text-danger">*</span></label>
                   <input
                     type="file" 
                     {...register(`test.${index}.file`)}
@@ -99,7 +99,7 @@ const Document = ({
                           getValues(`test.${index}IssueDate`) ||
                           new Date()
                         }
-                        className="form-control"
+                        className="form-control customDateHeight"
                         onChange={(newValue) =>
                           setValue(`test.${index}IssueDate`, newValue)
                         }
@@ -119,7 +119,7 @@ const Document = ({
                           getValues(`test.${index}ExpiryDate`) ||
                           new Date()
                         }
-                        className="form-control"
+                        className="form-control customDateHeight"
                         onChange={(newValue) =>
                           setValue(`test.${index}ExpiryDate`, newValue)
                         }

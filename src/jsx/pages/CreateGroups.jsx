@@ -11,8 +11,9 @@ import { ThemeContext } from '../../context/ThemeContext';
 
 const CreateGroups = () => {
 
-    const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
-    console.log('printing from group page',groupsDataState);
+    // const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
+    const templateData = JSON.parse(localStorage.getItem("templateData")) || []
+    const [groupsDataState,setGroupsDataState] = useState(templateData)
 
     const navigate = useNavigate();
 
@@ -54,37 +55,14 @@ const CreateGroups = () => {
         settest(i);
     };
     const onConfirmDelete = (index) => {
-        
-        console.log('index is ',index);
+
         const newdata = groupsDataState.filter((e,i)=>{
             if(index != i) return e;
         })
-
+        localStorage.setItem('templateData', JSON.stringify(newdata))
         setGroupsDataState(newdata);
 
     }
-    const editDrawerOpen = (item)=>{
-        console.log(item)
-        tableData.map((table)=>(
-            table.id === item && setEditData(table)
-        ))
-        subCompany.current.showModal();
-    }
-    const handleSubmit=(e)=>{
-        e.preventDefault();
-        const updateTable = tableData.map((table)=>{
-            if(table.id === editData.id) {
-                console.log(table.id)
-                return {...table, ...editData };
-            }
-            return table;
-        })
-        setTableData(updateTable)
-    }
-    const subCompany = useRef();
-
-
-    
 
     const handleAddGroup = ()=>{
         navigate('permission');
@@ -123,7 +101,7 @@ const CreateGroups = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <GroupTable editData={editData} tableData={groupsDataState} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} setEditData={setEditData}/>
+                                            <GroupTable editData={editData} tableData={groupsDataState} onConfirmDelete={onConfirmDelete} setEditData={setEditData}/>
                                             </tbody>
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
@@ -181,13 +159,6 @@ const CreateGroups = () => {
                     </div>
                 </div>
             </div>
-            <SubCompanyOffcanvas
-                ref={subCompany}
-                editData={editData}
-                setEditData={setEditData}
-                handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Sub Company" : "Edit Sub Company"}
-            />
         </>
     );
 };

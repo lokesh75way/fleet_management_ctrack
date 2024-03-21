@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
 import Error from "../../Error/Error";
+import '../../../../scss/pages/_driver-tracking.scss'
 
 const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
   const [tempValue, setTempValue] = useState(null);
@@ -44,7 +45,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Select Document</label>
+                  <label className="form-label">Select Document<span className="text-danger">*</span></label>
                   <Controller
                     name={`test.${index}.fieldName`}
                     control={control}
@@ -70,7 +71,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                    {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
                 </div>
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Upload File</label>
+                  <label className="form-label">Upload File<span className="text-danger">*</span></label>
                   <input
                     type="file" 
                     {...register(`test.${index}.file`)}
@@ -91,7 +92,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                           getValues(`test.${index}IssueDate`) ||
                           new Date()
                         }
-                        className="form-control"
+                        className="form-control customDateHeight"
                         onChange={(newValue) =>
                           setValue(`test.${index}IssueDate`, newValue)
                         }
@@ -111,7 +112,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                           getValues(`test.${index}ExpiryDate`) ||
                           new Date()
                         }
-                        className="form-control"
+                        className="form-control customDateHeight"
                         onChange={(newValue) =>
                           setValue(`test.${index}ExpiryDate`, newValue)
                         }
