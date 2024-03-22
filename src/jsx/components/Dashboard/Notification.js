@@ -27,7 +27,7 @@ const Notification = () => {
                           <img  alt="" width="50" src={avatar1} />
                         </div>
                         <div className="media-body">
-                          <h5 className="mb-1">Technician 1</h5>
+                          <h5 className="mb-1 pe-2">Technician 1</h5>
                        
                         </div>
                         <Dropdown className="dropdown">
@@ -77,7 +77,7 @@ const Notification = () => {
                       <div className="timeline-panel">
                         <div className="media me-2 media-info">T2</div>
                         <div className="media-body">
-                          <h5 className="mb-1">Technician 2</h5>
+                          <h5 className="mb-1 pe-2">Technician 2</h5>
                       
                         </div>
                         <Dropdown className="dropdown">
@@ -127,7 +127,7 @@ const Notification = () => {
                           <img  alt="" width="50" src={avatar1} />
                         </div>
                         <div className="media-body">
-                          <h5 className="mb-1">Technician 3</h5>
+                          <h5 className="mb-1 pe-2">Technician 3</h5>
                          
                         </div>
                         <Dropdown className="dropdown">
@@ -175,7 +175,7 @@ const Notification = () => {
                       <div className="timeline-panel">
                       <div className="media me-2 media-info">T4</div>
                         <div className="media-body">
-                          <h5 className="mb-1">Technician 4</h5>
+                          <h5 className="mb-1 pe-2">Technician 4</h5>
                         </div>
                         <Dropdown className="dropdown">
                           <Dropdown.Toggle
@@ -222,7 +222,7 @@ const Notification = () => {
                       <div className="timeline-panel">
                         <div className="media me-2 media-danger">T5</div>
                         <div className="media-body">
-                          <h5 className="mb-1">Technician 5</h5>
+                          <h5 className="mb-1 pe-2">Technician 5</h5>
                        
                         </div>
                         <Dropdown className="dropdown">

@@ -196,8 +196,8 @@ const AlertOffcanvas = forwardRef(
                     />
                    { !getValues('object') && <Error errorName={errors.object} />}
                   </div>
-                  {selectedOption === 'vehicleGroup' && 
-                    <div className="col-xl-6 mb-3 ">
+                 
+                    <div className={`${ selectedOption !== 'vehicleGroup' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
                     <label className="form-label">
                       Object Group <span className="text-danger">*</span>
                     </label>
@@ -210,7 +210,7 @@ const AlertOffcanvas = forwardRef(
                     />
                     <Error errorName={errors.objectGroup} />
                   </div>
-                  }
+         
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
                       Alert Name <span className="text-danger">*</span>
