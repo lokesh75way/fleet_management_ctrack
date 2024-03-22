@@ -2,8 +2,19 @@ import React from 'react'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
+import { useNavigate } from 'react-router-dom'
 
-const GroupTable = ({onConfirmDelete,tableData}) => {
+const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
+    const navigate = useNavigate()
+    const handleClick = (index)=>{
+        setIsEditTrue(index)
+        const props = {
+            isEditTrue : isEditTrue,
+            setIsEditTrue : setIsEditTrue,
+        }
+        console.log(props)
+        navigate('permission', {state:JSON.stringify(props)})
+    }
 
     return (
         <>
@@ -35,7 +46,7 @@ const GroupTable = ({onConfirmDelete,tableData}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            {/* <span className='cursor-pointer' onClick={() => editDrawerOpen(item.id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span> */}
+                            <span className='cursor-pointer' onClick={() => handleClick(index)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
                             <DeleteModal className='cursor-pointer ' onConfirmDelete={()=>onConfirmDelete(index)} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
 
                         </span>

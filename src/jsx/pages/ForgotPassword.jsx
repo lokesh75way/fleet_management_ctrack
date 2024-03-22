@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-// image
 import logo from "../../images/logo/logo-full.png";
 import { useForm } from "react-hook-form";
 import { forgetpasswordSchema } from "../../yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import CustomInput from '../components/Input/CustomInput'
+import PasswordServices from "../../services/api/PasswordServices";
 
 const ForgotPassword = ({ history }) => {
   const navigate = useNavigate();
@@ -15,15 +16,14 @@ const ForgotPassword = ({ history }) => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      email: "demo@example.com",
+      email: "noreply.75way@gmail.com",
     },
     resolver: yupResolver(forgetpasswordSchema),
   });
 
-  console.log(errors);
-
-  const onSubmit = (value) => {
-    navigate("/page-resetpassword");
+  const onSubmit = ({email}) => {
+    PasswordServices.forgotPassword({email:email})
+    // navigate("/page-resetpassword");
   };
 
   return (
@@ -47,10 +47,12 @@ const ForgotPassword = ({ history }) => {
                         <label className="">
                           <strong>Email</strong>
                         </label>
-                        <input
+                        <CustomInput
                           type="email"
                           className="form-control"
-                          {...register("email")}
+                          register={register}
+                          name="email"
+                          label="Email"
                         />
                         {errors.email && (
                           <div className="text-danger fs-12">

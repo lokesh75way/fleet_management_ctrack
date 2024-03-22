@@ -87,7 +87,7 @@ function App(props) {
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);
   }, []);
-
+console.log(props)
   if (props.isAuthenticated) {
     console.log("from app.js role", role);
     console.log("from app.js type", type);
@@ -129,6 +129,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     isAuthenticated: isAuthenticated(state),
   };

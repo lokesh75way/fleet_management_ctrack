@@ -7,7 +7,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { reset } from "./Options";
 import _ from "lodash";
 
-const Permission = () => {
+const Permission = ({isEditTrue, setIsEditTrue}) => {
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
   const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
   const [groupsDataState, setGroupsDataState] = useState(templateData);
@@ -21,8 +21,36 @@ const Permission = () => {
 
   const handleCheckboxChange = (isChecked, index) => {
     if (isChecked) {
+      if(index === 11){
+        for(let i =0; i < data[index].submodules.length; i++){
+          data[index].submodules[i].permissions.add = true
+          data[index].submodules[i].permissions.delete = true
+          data[index].submodules[i].permissions.view = true
+          data[index].submodules[i].permissions.modify = true
+        }
+      }
+      else{
+        data[index].permissions.add = true
+        data[index].permissions.delete = true
+        data[index].permissions.view = true
+        data[index].permissions.modify = true
+      }
       setSubModuleIndexArray([...subModuleIndexArray, index]);
     } else {
+      if(index === 11){
+        for(let i =0; i < data[index].submodules.length; i++){
+          data[index].submodules[i].permissions.add = false
+          data[index].submodules[i].permissions.delete = false
+          data[index].submodules[i].permissions.view = false
+          data[index].submodules[i].permissions.modify = false
+        }
+      }
+      else{
+        data[index].permissions.add = false
+        data[index].permissions.delete = false
+        data[index].permissions.view = false
+        data[index].permissions.modify = false
+      }
       setSubModuleIndexArray(
         subModuleIndexArray.filter((item) => item !== index)
       );
@@ -74,27 +102,37 @@ const Permission = () => {
     // if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;
     if (!newGroupData.groupName) return;
 
-
-    console.log('yeeee heeeeee dataaaaaa',data);
+    const tempGroupData = newGroupData;
+    tempGroupData.groupPermissions = data
     setNewGroupData((prev) => ({
       ...prev,
       groupPermissions: data,
     }));
-    setGroupsDataState([...groupsDataState, newGroupData]);
-    setNewGroupData({ groupName: "", groupPermissions: {} });
-    setData(JSON.parse(JSON.stringify(reset)));
+    setGroupsDataState(prevState => [...prevState, tempGroupData]);
+    setSubModuleIndexArray([]);
   };
 
-  console.log(newGroupData);
-  console.log("data saved", groupsDataState);
-
-  console.log("reset data", reset);
+  useEffect(()=>{
+    if(isEditTrue !== -1){
+      const editData = groupsDataState.filter((item, index)=> index === isEditTrue)
+      setNewGroupData({ groupName: editData.groupName, groupPermissions: editData.groupPermissions });
+      console.log(editData)
+    }
+  },[])
 
   useEffect(() => {
+    if(isEditTrue !== -1){
+      const newdata = groupsDataState.filter((e,i)=>{
+        if(isEditTrue !== i) return e;
+    })
+      localStorage.setItem('templateData', JSON.stringify(newdata))
+    }
     setSelectOptions(
       groupsDataState.map((e) => ({ value: e.index, label: e.groupName }))
     );
     localStorage.setItem('templateData', JSON.stringify(groupsDataState))
+    setNewGroupData({ groupName: "", groupPermissions: {} });
+    setData(JSON.parse(JSON.stringify(reset)));
   }, [groupsDataState]);
 
   return (  

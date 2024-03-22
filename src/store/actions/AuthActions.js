@@ -46,16 +46,19 @@ export function Logout(navigate) {
 }
 
 export function loginAction(email, password, navigate) {
+
   return (dispatch) => {
     login(email, password)
       .then((response) => {
-        saveTokenInLocalStorage(response.data);
-        runLogoutTimer(dispatch, response.data.expiresIn * 1000, navigate);
-        dispatch(loginConfirmedAction(response.data));
+        console.log(response.data)
+        saveTokenInLocalStorage(response.data.data);
+        runLogoutTimer(dispatch, response.data.data.expiresIn * 1000, navigate);
+        dispatch(loginConfirmedAction(response.data.data));
         navigate("/dashboard");
       })
       .catch((error) => {
-        const errorMessage = formatError(error.response.data);
+        console.log(error?.response?.data?.message)
+        const errorMessage = formatError(error?.response?.data?.message);
         dispatch(loginFailedAction(errorMessage));
       });
   };

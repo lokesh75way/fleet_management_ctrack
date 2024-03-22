@@ -4,15 +4,24 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import logo from "../../images/logo/logo-full.png";
 import LogoWhite from "../../images/logo/logofull-white.png";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useForm } from "react-hook-form";
+import CustomInput from '../components/Input/CustomInput'
+import PasswordServices from "../../services/api/PasswordServices";
 
 const ChangePassword = () => {
   const { background } = useContext(ThemeContext);
   const [showOldPassword, setOldShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const {register, control, formState:{errors},handleSubmit} = useForm()
   const nav = useNavigate();
-  const submitHandler = (e) => {
-    e.preventDefault();
+
+  const onSubmit = ({newPassword, oldPassword, confirmPassword}) => {
+    const password = {
+      password: oldPassword, newPassword: newPassword
+    }
+    PasswordServices.changePassword(password)
+      console.log(oldPassword,newPassword)
     nav("/dashboard");
   };
   return (
@@ -35,14 +44,17 @@ const ChangePassword = () => {
                         </Link>
                       </div>
                       <h4 className="text-center mb-4">Change Password</h4>
-                      <form onSubmit={(e) => submitHandler(e)}>
+                      <form onSubmit={ handleSubmit(onSubmit)}>
                         <div className="mb-3">
                           <label>
-                            <strong>Password</strong>
+                            <strong>Old Password</strong>
                           </label>
                           <div className="position-relative">
-                          <input
+                          <CustomInput
                             type={showOldPassword ? "text" : "password"}
+                            register={register}
+                            name="oldPassword"
+                            label="Old Password"
                             className="form-control"
                             defaultValue=""
                           />
@@ -61,9 +73,12 @@ const ChangePassword = () => {
                             <strong>New Password</strong>
                           </label>
                           <div className="position-relative">
-                          <input
+                          <CustomInput
                             type={showNewPassword ? "text" : "password"}
                             className="form-control"
+                            register={register}
+                            name="newPassword"
+                            label="New Password"
                             defaultValue=""
                           />
                           <span
@@ -81,9 +96,12 @@ const ChangePassword = () => {
                             <strong>Confirm Password</strong>
                           </label>
                           <div className="position-relative">
-                          <input
+                          <CustomInput
                             type={showConfirmPassword ? "text" : "password"}
                             className="form-control"
+                            register={register}
+                            name="confirmPassword"
+                            label="Confirm Password"
                             defaultValue=""
                           />
                           <span
