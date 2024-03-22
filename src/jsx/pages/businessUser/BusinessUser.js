@@ -9,10 +9,12 @@ import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 // import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from "../../components/Tables/BusinessTable";
 import {useTranslation} from "react-i18next";
+import { usePermissions } from "../../../context/PermissionContext";
 
 const BusinessUser = () => {
 
   const { t } = useTranslation();
+  const { can }  = usePermissions(); // calling can method from usePermission
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -92,17 +94,20 @@ const BusinessUser = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t('businessGroup')}</h4>
                     <div>
-                      <Link
-                        to={{
-                          pathname: "/business/create",
-                          state: { editData },
-                        }}
-                        className="btn btn-primary btn-sm ms-1 p-2"
-                        data-bs-toggle="offcanvas"
-                        style={{paddingBlock : '9px'}}
-                      >
-                        {t('addBusinessGroup')}
-                      </Link>{" "}
+                       {can(2, "add") && ( 
+                        <Link
+                          to={{
+                            pathname: "/business/create",
+                            state: { editData },
+                          }}
+                          className="btn btn-primary btn-sm ms-1 p-2"
+                          data-bs-toggle="offcanvas"
+                          style={{ paddingBlock: "9px" }}
+                        >
+                          {t("addBusinessGroup")}
+                        </Link>
+                      )}
+
                     </div>
                   </div>
                   <div
