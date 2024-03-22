@@ -9,7 +9,7 @@ import EditControlFC from './EditControl';
 const ShowMapContainer = ({ data }) => {
 
   return (
-    <div style={{ display: 'flex', height: '85vh' }}>
+    <div style={{ display: 'flex', height: '85vh' , position : "relative" , zIndex : 1}}>
     <div style={{ width: '100%' }}>
       <MapContainer
         center={[ 25.2233, 55.2869]}

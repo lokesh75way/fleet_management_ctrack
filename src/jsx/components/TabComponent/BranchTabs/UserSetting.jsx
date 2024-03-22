@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import CustomInput from '../../Input/CustomInput'
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from 'react-timezone-select'
@@ -20,7 +20,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
 
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
@@ -195,8 +195,9 @@ const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control }) => {
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">Upload File</label>
-          <input
+          <CustomInput
             type="file"
+            register={register}
             label="Document Name"
             name={`documentFile`}
             className="form-control"

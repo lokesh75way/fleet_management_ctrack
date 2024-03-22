@@ -8,7 +8,9 @@ import { reset } from "./Options";
 import _ from "lodash";
 
 const Permission = () => {
-  const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
+  // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
+  const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
+  const [groupsDataState, setGroupsDataState] = useState(templateData);
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
   const [data, setData] = useState(staticoptions);
   const [newGroupData, setNewGroupData] = useState({
@@ -69,14 +71,15 @@ const Permission = () => {
   };
 
   const handleSave = () => {
-    if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;
+    // if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;
     if (!newGroupData.groupName) return;
 
+
+    console.log('yeeee heeeeee dataaaaaa',data);
     setNewGroupData((prev) => ({
       ...prev,
       groupPermissions: data,
     }));
-
     setGroupsDataState([...groupsDataState, newGroupData]);
     setNewGroupData({ groupName: "", groupPermissions: {} });
     setData(JSON.parse(JSON.stringify(reset)));
@@ -91,9 +94,10 @@ const Permission = () => {
     setSelectOptions(
       groupsDataState.map((e) => ({ value: e.index, label: e.groupName }))
     );
+    localStorage.setItem('templateData', JSON.stringify(groupsDataState))
   }, [groupsDataState]);
 
-  return (
+  return (  
     <div>
       <Card>
         <Card.Header>
@@ -194,14 +198,13 @@ const Permission = () => {
                 style={{ position: "sticky", top: 0, background: "white" }}
               >
                 <tr>
-                  <th scope="col" className="col-4" style={{ width: "130px" }}>
+                  <th scope="col" className="col-4" style={{ width: "150px" }}>
                     SubModules
                   </th>
                   <th scope="col">Add</th>
                   <th scope="col">View</th>
                   <th scope="col">Modify</th>
                   <th scope="col">Delete</th>
-                  <th scope="col">Export</th>
                 </tr>
               </thead>
               <tbody className="feature_template_table">
@@ -273,7 +276,7 @@ const Permission = () => {
                             name="delete"
                           />
                         </td>
-                        <td>
+                        {/* <td>
                           <input
                             type="checkbox"
                             checked={data[mindex].permissions.export}
@@ -287,7 +290,7 @@ const Permission = () => {
                             }
                             name="export"
                           />
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   }
@@ -360,7 +363,7 @@ const Permission = () => {
                             name="delete"
                           />
                         </td>
-                        <td>
+                        {/* <td>
                           <input
                             type="checkbox"
                             checked={element.permissions.export}
@@ -375,7 +378,7 @@ const Permission = () => {
                             className="form-check-input"
                             name="export"
                           />
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   });

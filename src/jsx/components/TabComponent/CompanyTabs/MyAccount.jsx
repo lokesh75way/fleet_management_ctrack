@@ -12,13 +12,24 @@ import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 
-const MyAccount = ({ setValue,getValues, register, onSubmit, handleSubmit, errors, control }) => {
-  const {checkRole, checkUserName} = useStorage()
+const MyAccount = ({
+  setValue,
+  getValues,
+  register,
+  onSubmit,
+  handleSubmit,
+  errors,
+  control,
+}) => {
+  const [selectStateName, setSelectStateName] = useState({
+    name: "Select State",
+  });
+  const { t } = useTranslation();
+  const { checkRole, checkUserName } = useStorage();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const {t} = useTranslation();
   const role = localStorage.getItem("role");
 
   const customStyles = {
@@ -63,44 +74,56 @@ if(id){
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group<span className="text-danger">*</span></label>
-          {
-          checkRole() === "admin" ?<Controller
-            name="parent"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
-                options={businessUserOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-              />
-            )}
-          />:
-          <Controller
-            name="parent"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.label); setValue("parent", newValue.label)}}
-                options={[{value:checkUserName(),label:checkUserName()}]}
-                ref={ref}
-                isDisabled={localStorage.getItem('role') !== 'Admin'}
-                name={name}
-                styles={customStyles}
-                defaultValue={[{value:checkUserName(),label:checkUserName()}]} 
-              />
-            )}
-          />
-          }
-          { !getValues('parent') && <Error errorName={errors.parent} />}
+          <label className="form-label">
+            {t("businessGroup")}
+            <span className="text-danger">*</span>
+          </label>
+          {checkRole() === "admin" ? (
+            <Controller
+              name="parent"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <Select
+                  onChange={(newValue) => {
+                    setTempValue(newValue.label);
+                    setValue("parent", newValue.label);
+                  }}
+                  options={businessUserOptions}
+                  ref={ref}
+                  name={name}
+                  styles={customStyles}
+                />
+              )}
+            />
+          ) : (
+            <Controller
+              name="parent"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <Select
+                  onChange={(newValue) => {
+                    setTempValue(newValue.label);
+                    setValue("parent", newValue.label);
+                  }}
+                  options={[{ value: checkUserName(), label: checkUserName() }]}
+                  ref={ref}
+                  isDisabled={localStorage.getItem("role") !== "Admin"}
+                  name={name}
+                  styles={customStyles}
+                  defaultValue={[
+                    { value: checkUserName(), label: checkUserName() },
+                  ]}
+                />
+              )}
+            />
+          )}
+          {!getValues("parent") && <Error errorName={errors.parent} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('companyName')} <span className="text-danger">*</span>
+            {t("companyName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -148,7 +171,10 @@ if(id){
         </div> */}
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("email")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -161,20 +187,29 @@ if(id){
           />
           <Error errorName={errors.email} />
         </div>
+        {!id && (
+          <div className="col-xl-6 mb-3 ">
+            <label className="form-label">
+              {t("password")}
+              <span className="text-danger">*</span>
+            </label>
+            <CustomInput
+              type="password"
+              register={register}
+              name="password"
+              label="password"
+              placeholder=""
+              defaultValue={getValues("password")}
+            />
+            <Error errorName={errors.password} />
+          </div>
+        )}
+       
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Password<span className="text-danger">*</span></label>
-          <CustomInput
-            type="password"
-            register={register}
-            name="password"
-            label="password"
-            placeholder=""
-            defaultValue={getValues('password')}
-          />
-          <Error errorName={errors.password} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
+        <label className="form-label">
+            {t("helpDeskEmail")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -188,7 +223,10 @@ if(id){
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("helpDeskTelephoneNumber")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -196,14 +234,24 @@ if(id){
             label="Help Desk Telephone Number"
             name="helpDeskTelephoneNumber"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].helpDeskTelephoneNumber : ''}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
+            defaultValue={
+              filteredCompanyData[0]
+                ? filteredCompanyData[0].helpDeskTelephoneNumber
+                : ""
+            }
             placeholder=""
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("mobileNumber")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -211,13 +259,18 @@ if(id){
             label="Mobile Number"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ''}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
+            }
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('whatsappContactNumber')}</label>
+          <label className="form-label">{t("whatsappContactNumber")}</label>
           <CustomInput
             type="number"
             register={register}
@@ -225,7 +278,10 @@ if(id){
             label="Whatsapp Contact Number"
             name="whatsappContactNumber"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
             defaultValue={
               filteredCompanyData[0]
@@ -236,9 +292,14 @@ if(id){
           <Error errorName={errors.whatsappContactNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("country")}
+            <span className="text-danger">*</span>
+          </label>
           <CountrySelect
             onChange={(e) => {
+              console.log(e);
+              setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false);
@@ -249,8 +310,12 @@ if(id){
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">State</label>
+        <div
+          className={`${
+            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+          }`}
+        >
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -261,13 +326,15 @@ if(id){
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
+              defaultValue={selectStateName}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('city')}<span className="text-danger">*</span>
+            {t("city")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -283,7 +350,7 @@ if(id){
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('zipCode')}
+            {t("zipCode")}
           </label>
           <CustomInput
             type="number"
@@ -291,9 +358,14 @@ if(id){
             label="Zip Code"
             name="zipCode"
             placeholder=""
-            min='0'
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ''}
+            min="0"
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
+            }
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -321,7 +393,8 @@ if(id){
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street1')}<span className="text-danger">*</span>
+            {t("street1")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -337,7 +410,7 @@ if(id){
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street2')}
+            {t("street2")}
           </label>
           <CustomInput
             type="text"
@@ -348,7 +421,7 @@ if(id){
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('contactPerson')}</label>
+          <label className="form-label">{t("contactPerson")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -359,7 +432,7 @@ if(id){
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('faxNumber')}
+            {t("faxNumber")}
           </label>
           <CustomInput
             type="number"
@@ -395,7 +468,7 @@ if(id){
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

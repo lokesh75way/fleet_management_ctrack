@@ -64,7 +64,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
         <Offcanvas
           show={addEmploye}
           onHide={setAddEmploye}
-          className="offcanvas-end customeoff"
+          className="offcanvas-end customeoff classy_filter"
           placement="end"
         >
           <div className="offcanvas-header">
