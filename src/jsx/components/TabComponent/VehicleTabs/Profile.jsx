@@ -255,7 +255,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Distance"
-              style={{ width: "6rem", margin: " 0 1rem" }}
+              style={{ width: "6rem", margin: " 0 2rem" }}
               name="distance"
               placeholder=""
             />
@@ -304,7 +304,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Duration"
-              style={{ width: "6rem", margin: " 0 1rem" }}
+              style={{ width: "6rem", margin: " 0 2rem" }}
               name="duration"
               placeholder=""
             />
@@ -326,7 +326,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             />
             {isCheckedDBFC2 && (
               <>
-                <span style={{ paddingLeft: ".6rem" }}>/</span>
+                <span style={{ paddingLeft: ".6rem", paddingRight : ".6rem" }}>/</span>
                 <CustomInput
                   type="number"
                   register={register}
@@ -377,7 +377,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  className="ms-4"
+                  className="ms-4 me-4"
                   defaultValue={distanceQuantitySelectOptions[0]}
                 />
               )}
@@ -391,11 +391,11 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <CustomInput
               type="number"
               register={register}
-              style={{marginRight: ".5rem" }}
+              style={{marginRight: ".5rem"}}
               name="consumptionTolerance"
               placeholder=""
             />
-            <span style={{ padding: " 0 .5rem" }}>%</span>
+            <span style={{ padding: " 1rem" }}>%</span>
           </div>
         </div>
 
@@ -503,10 +503,10 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </label>
           </div>
         </div>
-        {isCheckedCBO && (
+     
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">Distance<span className="text-danger">*</span></label>
-            <div className="d-flex align-items-center">
+            <div className={`${!isCheckedCBO ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
                 register={register}
@@ -515,15 +515,15 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 name="distanceCost"
                 placeholder=""
               />
-              <span style={{ padding: " 0 .5rem" }}>$/Km</span>
+              <span style={{ padding: "0 1rem" }}>$/Km</span>
             </div>
               <Error errorName={errors.distanceCost} />
           </div>
-        )}
-        {isCheckedCBO2 && (
+
+  
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">Duration<span className="text-danger">*</span></label>
-            <div className="d-flex align-items-center">
+            <div className={`${!isCheckedCBO2 ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
                 register={register}
@@ -552,7 +552,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </div>
             <Error errorName={errors.durationCost} />
           </div>
-        )}
+   
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             RFID Timeout Duration
@@ -607,11 +607,11 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </label>
           </div>
         </div>
-        {isCheckedWC && (
+      
           <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Underweight Tolerance</label>
-              <div className="d-flex align-items-center">
+              <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -620,12 +620,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="underweightTolerance"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>%</span>
+                <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Overweight Tolerance</label>
-              <div className="d-flex align-items-center">
+              <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -634,12 +634,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="overweightTolerance"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>%</span>
+                <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Loading/Unloading Tolerance </label>
-              <div className="d-flex align-items-center">
+              <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -648,11 +648,11 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="loadingUnloadingTolerance"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>%</span>
+                <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
             </div>
           </>
-        )}
+   
         <div className="col-xl-6 mb-3">
           <label className="form-label">Fuel Sensor</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
@@ -694,10 +694,10 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </div>
           </div>
         </div>
-        {selectedOption === 'multiple' && (
+
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">No of Tanks</label>
-            <div className="d-flex align-items-center">
+            <div className={`${ selectedOption !== 'multiple' ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
                 register={register}
@@ -706,10 +706,10 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 name="noOfTanks"
                 placeholder=""
               />
-              <span style={{ padding: " 0 .5rem" }}>mG</span>
+              <span style={{ padding: " 0 1rem" }}>mG</span>
             </div>
           </div>
-        )}
+  
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">G Sensor</label>
@@ -729,11 +729,11 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </label>
           </div>
         </div>
-        {isCheckedGS && (
+
           <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis X</label>
-              <div className="d-flex align-items-center">
+              <div className={`${ !isCheckedGS ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -742,12 +742,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="axisX"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>mG</span>
+                <span style={{ padding: " 0 1rem" }}>mG</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis Y</label>
-              <div className="d-flex align-items-center">
+              <div className={`${ !isCheckedGS ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -756,12 +756,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="axisY"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>mG</span>
+                <span style={{ padding: " 0 1rem" }}>mG</span>
               </div>
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">Axis Z</label>
-              <div className="d-flex align-items-center">
+              <div className={`${ !isCheckedGS ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -770,11 +770,11 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   name="axisZ"
                   placeholder=""
                 />
-                <span style={{ padding: " 0 .5rem" }}>mG</span>
+                <span style={{ padding: " 0 1rem" }}>mG</span>
               </div>
             </div>
           </>
-        )}
+  
       </div>
       <div
         style={{

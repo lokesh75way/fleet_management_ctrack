@@ -155,10 +155,10 @@ const ExpenseOffcanvas = forwardRef(
                     </div>
                     { !getValues('category') && <Error errorName={errors.category} />}
                   </div>
-                  {selectedOption === "variable" && (
+
                     <div className="col-xl-6 mb-3">
                       <label className="form-label">Consider Job</label>
-                      <div className="form-check custom-checkbox mb-3">
+                      <div className={`${ selectedOption !== "variable" ?  "form-check custom-checkbox mb-3 pe-none" : "form-check custom-checkbox mb-3" }`} >
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -167,13 +167,14 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       </div>
                     </div>
-                  )}
+             
                   {
-                    isCheckCJ && <>
+               
+                    <>
                     <div className="col-xl-6 mb-3">
                     <label className="form-label">Job Allocation</label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
-                      <div className="form-check custom-checkbox form-check-inline">
+                      <div  className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
                         <input
                           type="radio"
                           className="form-check-input"
@@ -188,7 +189,7 @@ const ExpenseOffcanvas = forwardRef(
                           In-Progress
                         </label>
                       </div>
-                      <div className="form-check custom-checkbox form-check-inline">
+                      <div className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
                         <input
                           type="radio"
                           className="form-check-input"
@@ -206,12 +207,12 @@ const ExpenseOffcanvas = forwardRef(
                     </div>
                   </div>
                   {
-                    selectedOption2 === 'completed' && <>
+                     <>
                         <div className="col-xl-6 mb-3">
                         <label className="form-label">
                           Completed Till
                         </label>
-                        <div className="d-flex align-items-center">
+                        <div className={`${ selectedOption2 !== 'completed' ?  "d-flex align-items-center pe-none" : "fd-flex align-items-center"}`}>
                         <Controller
                           name="startDate"
                           control={control}
@@ -286,9 +287,9 @@ const ExpenseOffcanvas = forwardRef(
                     />
                     { !getValues('type') && <Error errorName={errors.type} />}
                   </div>
-                  {selectedOption === "fix" && (
+            
                     <>
-                      <div className="col-xl-6 mb-3">
+                      <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label className="form-label">
                           From Date <span className="text-danger">*</span>
                         </label>
@@ -308,7 +309,7 @@ const ExpenseOffcanvas = forwardRef(
                         />
                         { !getValues('fromDate') && <Error errorName={errors.fromDate} />}
                       </div>
-                      <div className="col-xl-6 mb-3">
+                      <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label className="form-label">
                           To Date <span className="text-danger">*</span>
                         </label>
@@ -329,10 +330,10 @@ const ExpenseOffcanvas = forwardRef(
                         { !getValues('toDate') && <Error errorName={errors.toDate} />}
                       </div>
                     </>
-                  )}
+             
 
-                  {selectedOption === "variable" && (
-                    <div className="col-xl-6 mb-3">
+             
+                    <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                       <label className="form-label">
                         Expense Date <span className="text-danger">*</span>
                       </label>
@@ -351,7 +352,7 @@ const ExpenseOffcanvas = forwardRef(
                       />
                       { !getValues('expenseDate') && <Error errorName={errors.expenseDate} />}
                     </div>
-                  )}
+                 
                   <div className="col-xl-6 mb-3">
                     <label
                       htmlFor="exampleFormControlInput3"
@@ -384,9 +385,9 @@ const ExpenseOffcanvas = forwardRef(
                     />
                     <Error errorName={errors.referenceNumber} />
                   </div>
-                  {selectedOption === "variable" && (
+                 
                     <>
-                      <div className="col-xl-6 mb-3">
+                      <div className={`${ selectedOption !== 'variable' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
@@ -401,7 +402,7 @@ const ExpenseOffcanvas = forwardRef(
                           placeholder=""
                         />
                       </div>
-                      <div className="col-xl-6 mb-3">
+                      <div className={`${ selectedOption !== 'variable' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
@@ -417,7 +418,7 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       </div>
                     </>
-                  )}
+                  
                   <div className="col-xl-6 mb-3">
                     <label
                       htmlFor="exampleFormControlInput3"

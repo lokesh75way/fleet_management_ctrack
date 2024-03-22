@@ -5,13 +5,16 @@ import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import useStorage from "../../../hooks/useStorage";
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   const {getCompany} = useStorage()
+  const {isRtl} = useContext(ThemeContext)
   return (
     <>
       {tableData.map((item, index) => (
-        <tr key={index}>
+        <tr key={index} >
           <td>
             <span>{item.id}</span>
           </td>
