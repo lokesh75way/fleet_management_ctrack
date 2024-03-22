@@ -243,7 +243,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Company
+          {t('company')}
           </label>
 
           <Controller
@@ -273,7 +273,7 @@ const Account = ({
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Branch</label>
+          <label className="form-label">{t('branch')}</label>
           <Controller
             name="Branch"
             control={control}
@@ -297,7 +297,7 @@ const Account = ({
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Vehicle</label>
+          <label className="form-label">{t('vehicle')}</label>
           <Controller
             name="accessibleVehicles"
             control={control}
@@ -322,7 +322,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Email <span className="text-danger">*</span>
+          {t('email')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -337,7 +337,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            User Name <span className="text-danger">*</span>
+          {t('username')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -353,7 +353,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Mobile Number <span className="text-danger">*</span>
+          {t('mobileNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -371,7 +371,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Country<span className="text-danger">*</span>
+          {t('country')}<span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -392,7 +392,7 @@ const Account = ({
           }`}
         >
           <label className="form-label">
-            State
+          {t('state')}
           </label>
           <div style={{ background: "white" }}>
             <StateSelect
@@ -411,7 +411,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Password <span className="text-danger">*</span>
+          {t('password')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="password"
@@ -427,7 +427,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Confirm Password <span className="text-danger">*</span>
+          {t('confirmPassword')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="password"
@@ -443,7 +443,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Feature Template <span className="text-danger">*</span>
+          {t('featureTemplate')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="featureTemplate"
@@ -482,7 +482,7 @@ const Account = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

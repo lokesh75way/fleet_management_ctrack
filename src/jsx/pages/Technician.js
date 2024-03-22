@@ -6,6 +6,7 @@ import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import TechnicianTable from "../components/Tables/TechnicianTable";
+import {useTranslation} from 'react-i18next'
 
 import { clsx } from 'clsx';
 
@@ -19,6 +20,8 @@ import { ThemeContext } from "../../context/ThemeContext";
   // }
   
   const Technician = () => {
+
+    const {t} = useTranslation();
     const {isRtl} = useContext(ThemeContext);
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
@@ -76,9 +79,9 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
   return (
     <>
       <MainPagetitle
-        mainTitle="Technician Details"
-        pageTitle={"Technician Details"}
-        parentTitle={"Technician"}
+        mainTitle={t('technicianDetails')}
+        pageTitle={t('technicianDetails')}
+        parentTitle={t('technician')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -87,7 +90,7 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Technician</h4>
+                    <h4 className="heading mb-0">{t('technician')}</h4>
                     <div>
                       {/* <CSVLink {...csvlink} className="btn btn-primary light btn-sm me-1">
                                                 <i className="fa-solid fa-file-excel" /> {" "} 
@@ -98,7 +101,7 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
-                        + Add Technician
+                        + {t('technician')}
                       </Link>{" "}
                       {/* <button type="button" className="btn btn-secondary btn-sm"                                                 
                                                 onClick={() => invite.current.showInviteModal()}
@@ -116,13 +119,13 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                     >
                       <thead>
                         <tr>
-                          <th>Technician ID</th>
-                          <th>Technician Name</th>
-                          <th>Email</th>
-                          <th>Contact Number</th>
-                          <th>Location</th>
-                          <th>Technician Number</th>
-                          <th>Action</th>
+                          <th>{t('technicianId')}</th>
+                          <th>{t('technicianName')}</th>
+                          <th>{t('email')}</th>
+                          <th>{t('contactNumber')}</th>
+                          <th>{t('location')}</th>
+                          <th>{t('technicianNumber')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -135,11 +138,11 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

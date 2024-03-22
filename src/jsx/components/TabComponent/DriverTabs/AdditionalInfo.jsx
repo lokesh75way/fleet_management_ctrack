@@ -137,11 +137,11 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             </div>
           </div>
         </div>
-        {selectedOption === "yes" && (
+
           <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">License Number</label>
-              <div className="d-flex align-items-center">
+              <div className={`${ selectedOption !== "yes" ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
                   register={register}
@@ -153,7 +153,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 <Error errorName={errors.licenseNumber} />
               </div>
             </div>
-            <div className="col-xl-6 mb-3 ">
+            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3  pe-none" : "col-xl-6 mb-3 " }`}>
               <label className="form-label">License to Drive</label>
               <Controller
                 name="licenseToDrive"
@@ -174,7 +174,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 />
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
-            <div className="col-xl-6 mb-3 d-flex flex-column">
+            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
               <label className="form-label">License Issued Date</label>
               <Controller
                 name="licenseIssueDate"
@@ -207,7 +207,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               />
             </div>
           </>
-        )}
+    
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Life Insurance Number</label>
           <CustomInput

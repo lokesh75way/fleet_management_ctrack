@@ -49151,7 +49151,8 @@ table.dataTable thead .sorting_asc {
   text-align: right;
 }
 .active-projects thead tr th:first-child {
-  padding-right: 0;
+  /* padding-right: 0;
+  padding-left: 0; */
 }
 
 .active-projects tbody tr td {
@@ -49163,7 +49164,7 @@ table.dataTable thead .sorting_asc {
   text-align: right;
 }
 .active-projects tbody tr td:first-child {
-  padding-right: 0;
+  /* padding-right: 0; */
 }
 
 .active-projects .tbl-caption {
@@ -49195,6 +49196,7 @@ table.dataTable thead .sorting_asc {
 }
 
 .active-projects .dataTables_info {
+  padding-right:  20px;
   padding-left: 20px;
   font-size: 12px;
 }

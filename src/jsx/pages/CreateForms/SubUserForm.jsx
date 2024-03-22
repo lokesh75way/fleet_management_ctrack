@@ -9,14 +9,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {subUserAccountSchema} from '../../../yup'
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import useStorage from "../../../hooks/useStorage";
+import {useTranslation} from 'react-i18next'
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
+  const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
   const userName = checkUserName()
-  const tabHeading = ["Account"];
+  const tabHeading = [t('account')];
   const component = [Account];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate()

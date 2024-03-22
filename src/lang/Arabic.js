@@ -81,7 +81,33 @@ export const arabic = {
       "childBranches": "فروع الطفل",
       "addBranch": "إضافة فرع",
 
+      "username": "اسم المستخدم",
+      "storageCapacity": "سعة التخزين",
+      "forMoreThan120DaysPlease":"لأكثر من 120 يومًا، يرجى ",
+      "contact":"الاتصال",
+      "yourAccountManager":"مدير حسابك.",
+      "newBranch": "فرع جديد",
+      "users": "المستخدمين",
+      "addUser": "إضافة مستخدم",
+      
 
+      "account":"حساب",
+      "vehicle":"مركبة",
+      "confirmPassword":"تأكيد كلمة المرور",
+      "featureTemplate":"قالب الميزة",
+      "branch":"فرع",
 
+      "technicianDetails": "تفاصيل الفني",
+      "technicianName": "اسم الفني",
+      "technicianNumber": "رقم الفني",
+      "addTechnician": "+ إضافة فني",
+      "inviteEmployee": "+ دعوة موظف",
+      "technicianId": "معرف الفني",
+      "technician": "فني",
+      "addTechnician": "إضافة فني",
+      "contactNumber": "رقم الاتصال",
+      "General": "ترجمة عامة",
+      "Address": "ترجمة العنوان",
+      "Leave": "ترك"
   }
 }

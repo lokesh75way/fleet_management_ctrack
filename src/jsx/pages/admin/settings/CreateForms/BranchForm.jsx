@@ -10,10 +10,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
+import {useTranslation} from'react-i18next'
 
 const BranchForm = () => {
+  const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["New Branch", "Setting","Change Password"];
+  const tabHeading = [t('newBranch'), t('settings'),t('changePassword')];
   const component = [MyAccount, UserSetting,ManagePassword];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate();

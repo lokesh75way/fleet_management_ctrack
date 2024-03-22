@@ -86,5 +86,34 @@ export const english = {
     
       "username": "User Name",
       "storageCapacity": "Storage Capacity",
+      "forMoreThan120DaysPlease":"For more than 120 days, please ",
+      "contact":"contact",
+      "yourAccountManager":"your account manager.",
+      "newBranch":"New Branch",
+
+      "users": "Users",
+      "addUser": "Add User",
+      
+
+      "account":"Account",
+      "vehicle":"Vehicle",
+      "confirmPassword":"Confirm Password",
+      "featureTemplate":"Feature Template",
+      "branch":"Branch",
+
+      "technician":"Technician",
+      "addTechnician": "Add Technician",
+
+
+      "technicianDetails": "Technician Details",
+      "technicianName": "Technician Name",
+      "technicianNumber": "Technician Number",
+      "addTechnician": "+ Add Technician",
+      "inviteEmployee": "+ Invite Employee",
+      "technicianId": "Technician ID",
+      "contactNumber": "Contact Number",
+      "General": "General Translation",
+      "Address": "Address Translation",
+      "Leave": "Leave Translation"
     }
   }
