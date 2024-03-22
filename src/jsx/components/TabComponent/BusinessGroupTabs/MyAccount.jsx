@@ -258,7 +258,7 @@ const MyAccount = ({
           />
 
             <p style={{fontStyle: "italic"}}>
-              For more than 120 days, please <a href="#" class="link-primary">contact</a> your account manager.
+              {t('forMoreThan120DaysPlease')}<a href="#" class="link-primary">{t('contact')}</a> {t('yourAccountManager')}
             </p>
 
         </div>

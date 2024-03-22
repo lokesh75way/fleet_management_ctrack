@@ -12,6 +12,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {technicianTaskSchema} from '../../yup'
 
+import { clsx } from 'clsx';
+import { ThemeContext } from '../../context/ThemeContext';
+
 const headers = [
     { label: "Employee ID", key: "emplid" },
     { label: "Employee Name", key: "title" },
@@ -24,6 +27,9 @@ const headers = [
 ]
 
 const TechnicianTask = (ref) => {
+    const {isRtl} = useContext(ThemeContext);
+    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     const[tableData, setTableData] = useState(TechnicianTaskData)
     const [editData , setEditData] = useState({
         id:0,
@@ -158,7 +164,7 @@ const TechnicianTask = (ref) => {
                                                         onClick(activePag.current - 1)
                                                     }
                                                 >
-                                                    <i className="fa-solid fa-angle-left" />
+                                                    <i className={arrowleft}/>
                                                 </Link>
                                                 <span>
                                                     {paggination.map((number, i) => (
@@ -182,7 +188,7 @@ const TechnicianTask = (ref) => {
                                                         onClick(activePag.current + 1)
                                                     }
                                                 >
-                                                    <i className="fa-solid fa-angle-right" />
+                                                    <i className={arrowright} />
                                                 </Link>
                                             </div>
                                         </div> 

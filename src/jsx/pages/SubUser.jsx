@@ -5,14 +5,24 @@ import MainPagetitle from "../layouts/MainPagetitle";
 import { useNavigate } from "react-router-dom";
 import SubUserTable from "../components/Tables/SubUserTable";
 import useStorage from "../../hooks/useStorage";
+import { clsx } from 'clsx';
+import {useTranslation} from 'react-i18next'
+
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
-//     headers : headers,
-//     data : tableData,
-//     filename: "csvfile.csv"
-// }
-const SubUser = () => {
+  //     headers : headers,
+  //     data : tableData,
+  //     filename: "csvfile.csv"
+  // }
+  const SubUser = () => {
 
+    const {t} = useTranslation();
+    const {isRtl} = useContext(ThemeContext);
+    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+    
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
@@ -81,7 +91,7 @@ const SubUser = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Users</h4>
+                    <h4 className="heading mb-0">{t('users')}</h4>
                     <div>
                       <Link
                         to={"/subUser/create"}
@@ -89,7 +99,7 @@ const SubUser = () => {
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subuser.current.showModal()}
                       >
-                        + Add User
+                        + {t('addUser')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -103,12 +113,12 @@ const SubUser = () => {
                     >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>User Name</th>
-                          <th>Mobile Number</th>
-                          <th>Email</th>
-                          <th>Location</th>
-                          <th>Action</th>
+                          <th>{t('id')}</th>
+                          <th>{t('username')}</th>
+                          <th>{t('mobileNumber')}</th>
+                          <th>{t('email')}</th>
+                          <th>{t('location')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -117,11 +127,11 @@ const SubUser = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -135,7 +145,7 @@ const SubUser = () => {
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -159,7 +169,7 @@ const SubUser = () => {
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

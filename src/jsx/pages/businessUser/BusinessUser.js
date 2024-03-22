@@ -9,9 +9,20 @@ import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 // import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from "../../components/Tables/BusinessTable";
 import {useTranslation} from "react-i18next";
+
+import { clsx } from 'clsx';
+
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
+
 import { usePermissions } from "../../../context/PermissionContext";
 
+
 const BusinessUser = () => {
+
+  const {isRtl} = useContext(ThemeContext);
+  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
 
   const { t } = useTranslation();
   const { can }  = usePermissions(); // calling can method from usePermission
@@ -157,7 +168,7 @@ const BusinessUser = () => {
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -181,7 +192,7 @@ const BusinessUser = () => {
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

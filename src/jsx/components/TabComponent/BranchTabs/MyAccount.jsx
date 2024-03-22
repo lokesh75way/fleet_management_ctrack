@@ -8,6 +8,8 @@ import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
 import { getSelectValues } from "../../../../utils/helper";
+import {useTranslation} from "react-i18next"
+
 
 const MyAccount = ({
   setValue,
@@ -31,6 +33,8 @@ const MyAccount = ({
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+  const {t} = useTranslation();
 
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
@@ -124,7 +128,7 @@ const MyAccount = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Business Group</label><span className="text-danger">*</span>
+          <label className="form-label">{t('businessGroup')}</label><span className="text-danger">*</span>
           {/* {
              checkRole() === "admin" ? 
           } */}
@@ -183,7 +187,7 @@ const MyAccount = ({
 
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Company<span className="text-danger">*</span>
+          {t('company')}<span className="text-danger">*</span>
           </label>
           {id ? (
             <Controller
@@ -239,7 +243,7 @@ const MyAccount = ({
           {!getValues("parentCompany") && <Error errorName={errors.parentCompany} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Parent Branch</label>
+          <label className="form-label">{t('parentBranch')}</label>
           <Controller
             name="parent"
             control={control}
@@ -269,7 +273,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch Name <span className="text-danger">*</span>
+          {t('branchName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -286,7 +290,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Country<span className="text-danger">*</span>
+          {t('country')}<span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -304,7 +308,7 @@ const MyAccount = ({
         </div>
         <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
           <label className="form-label">
-            State
+          {t('state')}
           </label>
           <div style={{ background: "white" }}>
             <StateSelect
@@ -323,7 +327,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City<span className="text-danger">*</span>
+          {t('city')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -339,7 +343,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+          {t('zipCode')}
           </label>
           <CustomInput
             type="number"
@@ -357,7 +361,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1<span className="text-danger">*</span>
+          {t('street1')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -373,7 +377,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -398,7 +402,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

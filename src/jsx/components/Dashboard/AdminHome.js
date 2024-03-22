@@ -176,7 +176,7 @@ const Home = () => {
       >
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 z-3">
           <label className="mr-2 mt-2 justify-content-between align-items-center">
-            Date:
+            Date
           </label>
           <DatePicker
             width="280px"
