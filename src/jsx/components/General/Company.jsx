@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 import { CompanyData } from "../../components/Tables/Tables";
 import CompanyTable from "../../components/Tables/CompanyTable";
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
+import {clsx} from 'clsx'
+
 
 const Company = () => {
   const [data, setData] = useState(
@@ -67,6 +71,9 @@ const Company = () => {
   };
   const company = useRef();
   const edit = useRef();
+  const {isRtl} = useContext(ThemeContext);
+const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   return (
     <>
       <div className="">
@@ -136,7 +143,7 @@ const Company = () => {
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -160,7 +167,7 @@ const Company = () => {
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

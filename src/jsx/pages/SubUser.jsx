@@ -5,14 +5,21 @@ import MainPagetitle from "../layouts/MainPagetitle";
 import { useNavigate } from "react-router-dom";
 import SubUserTable from "../components/Tables/SubUserTable";
 import useStorage from "../../hooks/useStorage";
+import { clsx } from 'clsx';
+
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
-//     headers : headers,
-//     data : tableData,
-//     filename: "csvfile.csv"
-// }
-const SubUser = () => {
-
+  //     headers : headers,
+  //     data : tableData,
+  //     filename: "csvfile.csv"
+  // }
+  const SubUser = () => {
+    const {isRtl} = useContext(ThemeContext);
+    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+    
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
@@ -135,7 +142,7 @@ const SubUser = () => {
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -159,7 +166,7 @@ const SubUser = () => {
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

@@ -7,8 +7,14 @@ import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import DriverTable from "../components/Tables/DriverTable";
+import { clsx } from 'clsx';
+
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Driver = (ref) => {
+  const {isRtl} = useContext(ThemeContext);
+  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const driverDataFromLocalStorage = allData.filter(
@@ -182,7 +188,7 @@ const Driver = (ref) => {
                             onClick(activePage.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -206,7 +212,7 @@ const Driver = (ref) => {
                             onClick(activePage.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

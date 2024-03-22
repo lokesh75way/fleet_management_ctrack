@@ -7,14 +7,22 @@ import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import TechnicianTable from "../components/Tables/TechnicianTable";
 
-// const csvlink = {
-//     headers : headers,
-//     data : tableData,
-//     filename: "csvfile.csv"
-// }
+import { clsx } from 'clsx';
 
-const Technician = () => {
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
+
+// const csvlink = {
+  //     headers : headers,
+  //     data : tableData,
+  //     filename: "csvfile.csv"
+  // }
+  
+  const Technician = () => {
+    const {isRtl} = useContext(ThemeContext);
+    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+    const userData = JSON.parse(localStorage.getItem("userJsonData"));
 const techData = userData.filter((item)=>item.designation === 'Technician')
 
   const [tableData, setTableData] = useState(techData);
@@ -145,7 +153,7 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -169,7 +177,7 @@ const techData = userData.filter((item)=>item.designation === 'Technician')
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>

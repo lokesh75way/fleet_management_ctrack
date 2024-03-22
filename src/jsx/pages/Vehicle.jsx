@@ -4,8 +4,14 @@ import {VehicleData} from '../components/Tables/Tables'
 import VehicleTable from '../components/Tables/VehicleTable';
 import { ThemeContext } from '../../context/ThemeContext';
 import MainPagetitle from '../layouts/MainPagetitle';
+import { clsx } from 'clsx';
+
+
 
 const Vehicle = () => {  
+    const {isRtl} = useContext(ThemeContext);
+    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     const {setAddVehicle, addVehicle} = useContext(ThemeContext)
     const userData = JSON.parse(localStorage.getItem("userJsonData"));
     const VehicleData = userData.filter((item)=>item.designation === 'vehicle')
@@ -147,7 +153,7 @@ const Vehicle = () => {
                                                         onClick(activePage.current - 1)
                                                     }
                                                 >
-                                                    <i className="fa-solid fa-angle-left" />
+                                                    <i className={arrowleft} />
                                                 </Link>
                                                 <span>
                                                     {paggination.map((number, i) => (
@@ -171,7 +177,7 @@ const Vehicle = () => {
                                                         onClick(activePage.current + 1)
                                                     }
                                                 >
-                                                    <i className="fa-solid fa-angle-right" />
+                                                    <i className={arrowright}/>
                                                 </Link>
                                             </div>
                                         </div> 

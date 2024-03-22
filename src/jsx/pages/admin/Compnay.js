@@ -5,9 +5,18 @@ import CompanyTable from "../../components/Tables/CompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import {useTranslation} from 'react-i18next'
+import { clsx } from 'clsx';
+
+import { useContext } from "react";
+import { ThemeContext } from "../../../context/ThemeContext";
+
+
 
 const Company = () => {
-
+  
+  const {isRtl} = useContext(ThemeContext);
+  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   const { t } = useTranslation();
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
@@ -236,7 +245,7 @@ const Company = () => {
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
                           {paggination.map((number, i) => (
@@ -260,7 +269,7 @@ const Company = () => {
                             onClick(activePag.current + 1)
                           }
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>
