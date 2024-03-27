@@ -4,58 +4,90 @@ import { Card, Table } from "react-bootstrap";
 import Select from "react-select";
 import { staticoptions } from "./Options";
 import { ThemeContext } from "../../../context/ThemeContext";
-import { reset } from "./Options";
+// import { reset } from "./Options";
 import _ from "lodash";
+import TemplateServices from "../../../services/api/TemplateServices";
 
-const Permission = ({isEditTrue, setIsEditTrue}) => {
+const Permission = ({ isEditTrue, setIsEditTrue }) => {
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
-  const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
-  const [groupsDataState, setGroupsDataState] = useState(templateData);
+  // const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
+  const [groupsDataState, setGroupsDataState] = useState([]);
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
-  const [data, setData] = useState(staticoptions);
+  const [data, setData] = useState([]);
   const [newGroupData, setNewGroupData] = useState({
-    groupName: "",
-    groupPermissions: {},
+    name: "",
+    permission: {},
   });
   const [selectOptions, setSelectOptions] = useState([]);
 
+  // const handleCheckboxChange = (isChecked, index) => {
+  //   if (isChecked) {
+  //     if (index === 11) {
+  //       for (let i = 0; i < data[index].submodules.length; i++) {
+  //         data[index].submodules[i].permissions.add = true;
+  //         data[index].submodules[i].permissions.delete = true;
+  //         data[index].submodules[i].permissions.view = true;
+  //         data[index].submodules[i].permissions.modify = true;
+  //       }
+  //     } else {
+  //       data[index].permissions.add = true;
+  //       data[index].permissions.delete = true;
+  //       data[index].permissions.view = true;
+  //       data[index].permissions.modify = true;
+  //     }
+  //     setSubModuleIndexArray([...subModuleIndexArray, index]);
+  //   } else {
+  //     if (index === 11) {
+  //       for (let i = 0; i < data[index].submodules.length; i++) {
+  //         data[index].submodules[i].permissions.add = false;
+  //         data[index].submodules[i].permissions.delete = false;
+  //         data[index].submodules[i].permissions.view = false;
+  //         data[index].submodules[i].permissions.modify = false;
+  //       }
+  //     } else {
+  //       data[index].permissions.add = false;
+  //       data[index].permissions.delete = false;
+  //       data[index].permissions.view = false;
+  //       data[index].permissions.modify = false;
+  //     }
+  //     setSubModuleIndexArray(
+  //       subModuleIndexArray.filter((item) => item !== index)
+  //     );
+  //   }
+  // };
+
   const handleCheckboxChange = (isChecked, index) => {
     if (isChecked) {
-      if(index === 11){
-        for(let i =0; i < data[index].submodules.length; i++){
-          data[index].submodules[i].permissions.add = true
-          data[index].submodules[i].permissions.delete = true
-          data[index].submodules[i].permissions.view = true
-          data[index].submodules[i].permissions.modify = true
-        }
-      }
-      else{
-        data[index].permissions.add = true
-        data[index].permissions.delete = true
-        data[index].permissions.view = true
-        data[index].permissions.modify = true
-      }
-      setSubModuleIndexArray([...subModuleIndexArray, index]);
+      // Add the module index to the subModuleIndexArray
+      setSubModuleIndexArray((prevArray) => [...prevArray, index]);
     } else {
-      if(index === 11){
-        for(let i =0; i < data[index].submodules.length; i++){
-          data[index].submodules[i].permissions.add = false
-          data[index].submodules[i].permissions.delete = false
-          data[index].submodules[i].permissions.view = false
-          data[index].submodules[i].permissions.modify = false
-        }
-      }
-      else{
-        data[index].permissions.add = false
-        data[index].permissions.delete = false
-        data[index].permissions.view = false
-        data[index].permissions.modify = false
-      }
-      setSubModuleIndexArray(
-        subModuleIndexArray.filter((item) => item !== index)
+      // Remove the module index from the subModuleIndexArray
+      setSubModuleIndexArray((prevArray) =>
+        prevArray.filter((item) => item !== index)
       );
     }
   };
+
+  // const handleSubModulePermisssionChange = (
+  //   isChecked,
+  //   name,
+  //   moduleIndex,
+  //   subModuleIndex
+  // ) => {
+  //   let updatedData = [...data];
+
+  //   if (isChecked) {
+  //     updatedData[moduleIndex].submodules[subModuleIndex].permissions[
+  //       name
+  //     ] = true;
+  //     setData(updatedData);
+  //   } else {
+  //     updatedData[moduleIndex].submodules[subModuleIndex].permissions[
+  //       name
+  //     ] = false;
+  //     setData(updatedData);
+  //   }
+  // };
 
   const handleSubModulePermisssionChange = (
     isChecked,
@@ -63,21 +95,20 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
     moduleIndex,
     subModuleIndex
   ) => {
-    let updatedData = [...data];
-
-    if (isChecked) {
-      updatedData[moduleIndex].submodules[subModuleIndex].permissions[
-        name
-      ] = true;
-      setData(updatedData);
-    } else {
-      updatedData[moduleIndex].submodules[subModuleIndex].permissions[
-        name
-      ] = false;
-      setData(updatedData);
+    
+    if (data && data[moduleIndex] && data[moduleIndex].permission) {
+      const updatedData = [...data];
+      const permissions = updatedData[moduleIndex].permission;
+  
+      if (permissions[subModuleIndex]) {
+        // Update the specific permission based on the checkbox name
+        permissions[subModuleIndex][name] = isChecked;
+        // Update the state with the modified data
+        setData(updatedData);
+      }
     }
   };
-
+  
   const handleModulePermisssionChange = (isChecked, name, moduleIndex) => {
     let updatedData = [...data];
 
@@ -94,48 +125,120 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
     const { value } = e.target;
     setNewGroupData((prev) => ({
       ...prev,
-      groupName: value,
+      name: value,
     }));
   };
 
-  const handleSave = () => {
-    // if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;
-    if (!newGroupData.groupName) return;
+  // const handleSave = () => {
+  //   // if (_.isEqual(data, JSON.parse(JSON.stringify(reset)))) return;
+  //   if (!newGroupData.name) return;
 
-    const tempGroupData = newGroupData;
-    tempGroupData.groupPermissions = data
-    setNewGroupData((prev) => ({
-      ...prev,
-      groupPermissions: data,
-    }));
-    setGroupsDataState(prevState => [...prevState, tempGroupData]);
-    setSubModuleIndexArray([]);
-  };
+  //   const tempGroupData = newGroupData;
+  //   tempGroupData.permission = data;
+  //   console.log("helo data", data);
+  //   setNewGroupData((prev) => ({
+  //     ...prev,
+  //     permission: data,
+  //   }));
+  //   setGroupsDataState((prevState) => [...prevState, tempGroupData]);
+  //   setSubModuleIndexArray([]);
+  // };
 
-  useEffect(()=>{
-    if(isEditTrue !== -1){
-      const editData = groupsDataState.filter((item, index)=> index === isEditTrue)
-      setNewGroupData({ groupName: editData.groupName, groupPermissions: editData.groupPermissions });
-      console.log(editData)
+  const handleSave = async () => {
+    // Check if name is empty
+    if (!newGroupData.name) return;
+
+    try { 
+         const tempGroupData = newGroupData;
+        tempGroupData.permission = data;
+        console.log("helo data", tempGroupData);
+        setNewGroupData((prev) => ({
+          ...prev,
+          permission: data,
+        }));
+        // Make API call to save the data
+        await TemplateServices.createTemplate(tempGroupData);
+
+        // If the API call is successful, update states and reset subModuleIndexArray
+        setGroupsDataState((prevState) => [...prevState, newGroupData]);
+        setSubModuleIndexArray([]);
+        
+        // Optionally, you can show a success message to the user
+        console.log("Data saved successfully");
+    } catch (error) {
+        // If there's an error, handle it or show an error message to the user
+        console.error("Error saving data:", error);
     }
-  },[])
+};
+
 
   useEffect(() => {
-    if(isEditTrue !== -1){
-      const newdata = groupsDataState.filter((e,i)=>{
-        if(isEditTrue !== i) return e;
-    })
-      localStorage.setItem('templateData', JSON.stringify(newdata))
+    if (isEditTrue !== -1) {
+      const editData = groupsDataState.filter(
+        (item, index) => index === isEditTrue
+      );
+      setNewGroupData({
+        name: editData.name,
+        permission: editData.permission,
+      });
+      console.log(editData);
     }
+  }, []);
+
+  //   useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const moduleData = await TemplateServices.listModule();
+  //       console.log("Received template data:", moduleData);
+  //       setData(moduleData.data); // Assuming 'data' property contains template data array
+  //     } catch (error) {
+  //       console.error("Error fetching template data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  // useEffect(() => {
+  //   if(isEditTrue !== -1){
+  //     const newdata = groupsDataState.filter((e,i)=>{
+  //       if(isEditTrue !== i) return e;
+  //   })
+  //     localStorage.setItem('templateData', JSON.stringify(newdata))
+  //   }
+  //   setSelectOptions(
+  //     groupsDataState.map((e) => ({ value: e.index, label: e.name }))
+  //   );
+  //   localStorage.setItem('templateData', JSON.stringify(groupsDataState))
+  //   setNewGroupData({ name: "", groupPermissions: {} });
+
+  // }, [groupsDataState]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const moduleData = await TemplateServices.getModules();
+        console.log("Received template data:", moduleData);
+        setData(moduleData.data); // Assuming 'data' property contains template data array
+      } catch (error) {
+        console.error("Error fetching template data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     setSelectOptions(
-      groupsDataState.map((e) => ({ value: e.index, label: e.groupName }))
+      groupsDataState.map((template) => ({
+        value: template._id, // Assuming '_id' is the unique identifier for each template
+        label: template.name, // Assuming 'name' is the property containing the template name
+      }))
     );
-    localStorage.setItem('templateData', JSON.stringify(groupsDataState))
-    setNewGroupData({ groupName: "", groupPermissions: {} });
-    setData(JSON.parse(JSON.stringify(reset)));
+    // setData(JSON.parse(JSON.stringify(reset)));
   }, [groupsDataState]);
 
-  return (  
+  return (
     <div>
       <Card>
         <Card.Header>
@@ -144,7 +247,7 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
 
         <div className="d-flex justify-content-between m-2 mt-4 p-3">
           <input
-            value={newGroupData.groupName}
+            value={newGroupData.name}
             name="groupname"
             type="text"
             className="p-2"
@@ -247,22 +350,20 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
               </thead>
               <tbody className="feature_template_table">
                 {subModuleIndexArray.map((mindex, index) => {
-                  if (data[mindex].submodules.length == 0) {
-                    return (
-                      <tr key={index}>
-                        <td className="col-2" style={{ width: "130px" }}>
-                          {" "}
-                          {data[mindex].name}
-                        </td>
+                  return data[mindex].permission.map(
+                    (permission, permissionIndex) => (
+                      <tr key={permissionIndex}>
+                        <td className="col-2">{permission.moduleId.title}</td>
                         <td>
                           <input
                             type="checkbox"
-                            checked={data[mindex].permissions.add}
+                            checked={permission.add}
                             onChange={(e) =>
-                              handleModulePermisssionChange(
+                              handleSubModulePermisssionChange(
                                 e.target.checked,
                                 e.target.name,
-                                mindex
+                                mindex,
+                                permissionIndex
                               )
                             }
                             className="form-check-input"
@@ -272,97 +373,13 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
                         <td>
                           <input
                             type="checkbox"
-                            checked={data[mindex].permissions.view}
-                            className="form-check-input"
-                            onChange={(e) =>
-                              handleModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex
-                              )
-                            }
-                            name="view"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={data[mindex].permissions.modify}
-                            className="form-check-input"
-                            onChange={(e) =>
-                              handleModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex
-                              )
-                            }
-                            name="modify"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={data[mindex].permissions.delete}
-                            className="form-check-input"
-                            onChange={(e) =>
-                              handleModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex
-                              )
-                            }
-                            name="delete"
-                          />
-                        </td>
-                        {/* <td>
-                          <input
-                            type="checkbox"
-                            checked={data[mindex].permissions.export}
-                            className="form-check-input"
-                            onChange={(e) =>
-                              handleModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex
-                              )
-                            }
-                            name="export"
-                          />
-                        </td> */}
-                      </tr>
-                    );
-                  }
-
-                  return data[mindex].submodules.map((element, i) => {
-                    return (
-                      <tr key={i}>
-                        <td className="col-2"> {element.name}</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={element.permissions.add}
+                            checked={permission.view}
                             onChange={(e) =>
                               handleSubModulePermisssionChange(
                                 e.target.checked,
                                 e.target.name,
                                 mindex,
-                                i
-                              )
-                            }
-                            className="form-check-input"
-                            name="add"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={element.permissions.view}
-                            onChange={(e) =>
-                              handleSubModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex,
-                                i
+                                permissionIndex
                               )
                             }
                             className="form-check-input"
@@ -372,13 +389,13 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
                         <td>
                           <input
                             type="checkbox"
-                            checked={element.permissions.modify}
+                            checked={permission.modify}
                             onChange={(e) =>
                               handleSubModulePermisssionChange(
                                 e.target.checked,
                                 e.target.name,
                                 mindex,
-                                i
+                                permissionIndex
                               )
                             }
                             className="form-check-input"
@@ -388,38 +405,22 @@ const Permission = ({isEditTrue, setIsEditTrue}) => {
                         <td>
                           <input
                             type="checkbox"
-                            checked={element.permissions.delete}
+                            checked={permission.delete}
                             onChange={(e) =>
                               handleSubModulePermisssionChange(
                                 e.target.checked,
                                 e.target.name,
                                 mindex,
-                                i
+                                permissionIndex
                               )
                             }
                             className="form-check-input"
                             name="delete"
                           />
                         </td>
-                        {/* <td>
-                          <input
-                            type="checkbox"
-                            checked={element.permissions.export}
-                            onChange={(e) =>
-                              handleSubModulePermisssionChange(
-                                e.target.checked,
-                                e.target.name,
-                                mindex,
-                                i
-                              )
-                            }
-                            className="form-check-input"
-                            name="export"
-                          />
-                        </td> */}
                       </tr>
-                    );
-                  });
+                    )
+                  );
                 })}
               </tbody>
             </Table>

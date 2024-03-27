@@ -8,8 +8,25 @@ import TemplateServices from '../../services/api/TemplateServices';
 
 const CreateGroups = () => {
 
-    const templateData = JSON.parse(localStorage.getItem("templateData")) || []
-    const [groupsDataState,setGroupsDataState] = useState(templateData)
+
+    // const templateData = JSON.parse(localStorage.getItem("templateData")) || []
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const templateData = await TemplateServices.getModules();
+            console.log("Received template data:", templateData);
+            setGroupsDataState(templateData.data); // Assuming 'data' property contains template data array
+          } catch (error) {
+            console.error("Error fetching template data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
+
+    const [groupsDataState,setGroupsDataState] = useState([])
     const [isEditTrue,setIsEditTrue] = useState(-1)
 
     const navigate = useNavigate();
