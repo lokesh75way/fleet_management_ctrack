@@ -7,6 +7,7 @@ import { HiOutlineLanguage } from "react-icons/hi2";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import Logoutbtn from "./Logoutbtn";
 import {useTranslation} from 'react-i18next'
+import useStorage from "../../../hooks/useStorage";
 
 
 const NotificationBlog = ({ classChange }) => {
@@ -54,9 +55,10 @@ const Header = ({ onNote }) => {
 
   
   const {i18n} = useTranslation();
-  const role = localStorage.getItem('role');
-  const loginDetailsEmail = localStorage.getItem('loginDetails-email');
-  const loginDetailsName = localStorage.getItem('loginDetails-name');
+  const {checkUser, checkUserName, checkRole} = useStorage();
+  const loginDetailsEmail = checkUser();
+  const loginDetailsName = checkUserName();
+  const role = checkRole();
   const [headerFix, setheaderFix] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {

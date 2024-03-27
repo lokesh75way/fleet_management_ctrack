@@ -5,6 +5,8 @@ import {
     Logout,
 } from '../store/actions/AuthActions';
 import { isAuthenticated } from '../store/selectors/AuthSelectors';
+import initAxios from './api/Axios';
+initAxios()
 
 export function signUp(email, password) {
     //axios call
@@ -29,12 +31,9 @@ export function login(email, password) {
         password,
         returnSecureToken: true,
     };
-    // return axios.post(
-    //     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-    //     postData,
-    // );
+
     return axios.post(
-        `http://192.168.1.31:5000/api/fleet/auth/login`,
+        `http://192.168.1.125:5000/api/fleet/auth/login`,
         postData,
     )
 }
@@ -60,11 +59,6 @@ export function formatError(errorResponse) {
 }
 
 export function saveTokenInLocalStorage(tokenDetails) {
-    tokenDetails.expiresIn = 1800
-    tokenDetails.expireDate = new Date(
-        new Date().getTime() + tokenDetails.expiresIn * 1000,
-    );
-
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
@@ -82,21 +76,10 @@ export function checkAutoLogin(dispatch, navigate) {
         dispatch(Logout(navigate));
 		return;
     }
-
     tokenDetails = JSON.parse(tokenDetailsString);
-    let expireDate = new Date(tokenDetails.expireDate);
-    let todaysDate = new Date();
-
-    if (todaysDate > expireDate) {
-        dispatch(Logout(navigate));
-        return;
-    }
-		
     dispatch(loginConfirmedAction(tokenDetails));
-	
-    const timer = expireDate.getTime() - todaysDate.getTime();
-    runLogoutTimer(dispatch, timer, navigate);
 }
+
 
 export function isLogin() {
     const tokenDetailsString = localStorage.getItem('userDetails');

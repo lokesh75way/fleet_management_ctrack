@@ -5,6 +5,7 @@ import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import useStorage from "../../../hooks/useStorage";
+import { usePermissions } from "../../../context/PermissionContext";
 
 const CompanyTable = ({
   tableData,
@@ -14,6 +15,7 @@ const CompanyTable = ({
   setDataLength
 }) => {
   const { getBranch } = useStorage();
+  const { can } = usePermissions()
   var filterData = tableData;
   if (tempValue !== "All") {
     filterData = tableData.filter(
@@ -33,11 +35,6 @@ const CompanyTable = ({
           </td>
           <td>
             <div className="products">
-              {/* <img
-                src={item.image || IMAGES.contact1}
-                className="avatar avatar-md"
-                alt=""
-              /> */}
               <div>
                 <h6>{item.parent}</h6>
               </div>
@@ -46,19 +43,12 @@ const CompanyTable = ({
           <td>
             <span>{item.mobileNumber}</span>
           </td>
-          {/* <td>
-                        <span>{item.usergroup || item.shortName}</span>
-                    </td> */}
           <td>
             <span>{item.country}</span>
           </td>
           <td>
             <span>{item.email}</span>
           </td>
-
-          {/* <td>
-                        <span style={{width:"5rem"}} className={`badge light border-0 ${item.status === "Active" ? 'badge-success' : 'badge-danger'} `} >{item.status || "Inactive"}</span>
-                    </td> */}
           <td>
             <Link
               to={`/branch/cid/${item.id}`}
@@ -70,23 +60,23 @@ const CompanyTable = ({
           <td>
             <span>{item.zipCode}</span>
           </td>
-          <td>
+          {can('comapny', 'edit') && can('comapny', 'delete') && <td>
             <span className="d-flex justify-content-center">
-              <span
+              {can('comapny', 'edit') && <span
                 className="cursor-pointer"
                 onClick={() => editDrawerOpen(item.id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-              </span>
-              <DeleteModal
+              </span>}
+              {can('company','delete') && <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
                 id={item.id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-              </DeleteModal>
+              </DeleteModal>}
             </span>
-          </td>
+          </td>}
         </tr>
       ))}
     </>

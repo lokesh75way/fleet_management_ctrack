@@ -14,8 +14,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { notifyError } from '../../utils/toast';
 
 function Login(props) {
-
-  const users = JSON.parse(localStorage.getItem('userJsonData'));
   const [heartActive, setHeartActive] = useState(true);
   const {
     register,
@@ -30,44 +28,11 @@ function Login(props) {
   });
 
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   function onLogin({email , password}) {
-
-		// old login method
-
-		// dispatch(loadingToggleAction(true));
-		// dispatch(loginAction(email, password, navigate));
-
-
-		// new temporary login method
-
-	// 	const loginDetails = users.find(user => user.email === email && user.password === password);
-	// 	if (loginDetails) {
-	// 		localStorage.setItem('loginDetails-email', loginDetails.email);
-	// 		localStorage.setItem('loginDetails-name', loginDetails.userName);
-	// 		localStorage.setItem('role', loginDetails.role);
-	// 		localStorage.setItem('type', loginDetails.type || '');
-	// 		dispatch(loadingToggleAction(true));
-	// 		dispatch(loginAction('noreply.75way@gmail.com', 'Admin@123', navigate));
-
-	// 	} else {
-  //     notifyError("Invalid email or password")
-	// 	}
-  // }
-		const loginDetails = 1;
-		if (loginDetails) {
-			localStorage.setItem('loginDetails-email', email);
-			// localStorage.setItem('loginDetails-name', loginDetails.userName);
-			localStorage.setItem('role', 'admin');
-			// localStorage.setItem('type', loginDetails.type || '');
-			dispatch(loadingToggleAction(true));
-			dispatch(loginAction(email, password, navigate));
-
-		} else {
-      notifyError("Invalid email or password")
-		}
+		dispatch(loadingToggleAction(true));
+		dispatch(loginAction(email, password, navigate));
   }
 
   return (
