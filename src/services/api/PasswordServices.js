@@ -1,14 +1,16 @@
-import requests from "./Axios";
+import axios from "axios";
+import initAxios from "./Axios";
+initAxios()
 
 const PasswordServices = {
   changePassword: async (body) => {
-    return requests.put("/auth/change-password", body);
+    return axios.put("/auth/change-password", body);
   },
   forgotPassword: async (body) => {
-    return requests.post("/auth/forgot-password", body);
+    return axios.post("/auth/forgot-password", body);
   },
   resetPassword: async (body) => {
-    return requests.post("/auth/forgot-password", body);
+    return axios.post("/auth/forgot-password", body);
   },
 
   
