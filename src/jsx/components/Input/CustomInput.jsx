@@ -1,6 +1,4 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
-import Error from "../Error/Error";
 const CustomInput = ({
   name,
   label,
@@ -15,7 +13,7 @@ const CustomInput = ({
   min,
   disabled,
 }) => {
-  const { errors } = useFormContext();
+
   return (
     <div>
       <input

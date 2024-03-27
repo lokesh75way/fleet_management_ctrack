@@ -1,35 +1,22 @@
-
 import React, {useState, useRef, useEffect,useContext} from 'react';
 import {Link} from 'react-router-dom';
 import MainPagetitle from '../layouts/MainPagetitle';
-import SubCompanyOffcanvas from '../constant/SubCompanyOffcanvas';
-import { SubCompanyData } from '../components/Tables/Tables';
 import GroupTable from '../components/Tables/GroupTable';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../../context/ThemeContext';
+import TemplateServices from '../../services/api/TemplateServices';
 
 
 const CreateGroups = () => {
 
-    // const { groupsDataState,setGroupsDataState } = useContext(ThemeContext);
     const templateData = JSON.parse(localStorage.getItem("templateData")) || []
     const [groupsDataState,setGroupsDataState] = useState(templateData)
+    const [isEditTrue,setIsEditTrue] = useState(-1)
 
     const navigate = useNavigate();
 
     const [data, setData] = useState(
         document.querySelectorAll("#employee-tbl_wrapper tbody tr")
     );
-    const [tableData , setTableData] = useState(SubCompanyData);
-    const [editData , setEditData] = useState({
-        id:0,
-        reseller:'',
-        contact:0,
-        username:'',
-        status:'',
-        location:'',
-        usergroup:''
-    });
     const sort = 10;
     const activePag = useRef(0);
     const [test, settest] = useState(0);
@@ -42,6 +29,17 @@ const CreateGroups = () => {
             }
         }
     };
+    const getAllModules = async()=>{
+        const {data,isSuccess} = await TemplateServices.getModules()
+        console.log(data)
+        return data
+    }
+
+    // useEffect(()=>{
+    //     const data = getAllModules();
+    //     setGroupsDataState(data)
+    // },[])
+
    useEffect(() => {
       setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
     }, [test]);
@@ -65,7 +63,10 @@ const CreateGroups = () => {
     }
 
     const handleAddGroup = ()=>{
-        navigate('permission');
+        const props = {
+            isEditTrue,setIsEditTrue
+        }
+        navigate('permission',{state:JSON.stringify(props)});
     }
 
 
@@ -101,7 +102,7 @@ const CreateGroups = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <GroupTable editData={editData} tableData={groupsDataState} onConfirmDelete={onConfirmDelete} setEditData={setEditData}/>
+                                            <GroupTable isEditTrue={isEditTrue} setIsEditTrue={setIsEditTrue} tableData={groupsDataState} onConfirmDelete={onConfirmDelete}/>
                                             </tbody>
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">

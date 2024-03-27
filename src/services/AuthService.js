@@ -4,6 +4,7 @@ import {
     loginConfirmedAction,
     Logout,
 } from '../store/actions/AuthActions';
+import { isAuthenticated } from '../store/selectors/AuthSelectors';
 
 export function signUp(email, password) {
     //axios call
@@ -16,6 +17,10 @@ export function signUp(email, password) {
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
         postData,
     );
+    // return axios.post(
+    //     `http://192.168.1.23:5000/api/api/auth/login`,
+    //     postData,
+    // );
 }
 
 export function login(email, password) {
@@ -24,19 +29,24 @@ export function login(email, password) {
         password,
         returnSecureToken: true,
     };
+    // return axios.post(
+    //     `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+    //     postData,
+    // );
     return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+        `http://192.168.1.23:5000/api/auth/login`,
         postData,
-    );
+    )
 }
 
 export function formatError(errorResponse) {
-    switch (errorResponse.error.message) {
+
+    switch (errorResponse) {
         case 'EMAIL_EXISTS':            
             swal("Oops", "Email already exists", "error");
             break;
-        case 'EMAIL_NOT_FOUND':
-           swal("Oops", "Email not found", "error",{ button: "Try Again!",});
+        case 'User not found':
+           swal("Oops", "User not found", "error",{ button: "Try Again!",});
            break;
         case 'INVALID_PASSWORD':
             swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
@@ -50,9 +60,11 @@ export function formatError(errorResponse) {
 }
 
 export function saveTokenInLocalStorage(tokenDetails) {
+    tokenDetails.expiresIn = 1800
     tokenDetails.expireDate = new Date(
         new Date().getTime() + tokenDetails.expiresIn * 1000,
     );
+
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 

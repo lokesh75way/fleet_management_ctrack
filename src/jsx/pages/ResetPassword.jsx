@@ -7,6 +7,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { forgetpasswordSchema, resetPassword } from "../../yup";
 import { useForm } from "react-hook-form";
+import CustomInput from "../components/Input/CustomInput";
 
 const ResetPassword = () => {
   const { background } = useContext(ThemeContext);
@@ -24,8 +25,9 @@ const ResetPassword = () => {
   });
 
   const nav = useNavigate();
-  const submitHandler = (value) => {
-    nav("/login");
+  const onSubmit = ({newPassword}) => {
+    console.log(newPassword)
+    // nav("/login");
   };
   return (
     <>
@@ -47,15 +49,17 @@ const ResetPassword = () => {
                         </Link>
                       </div>
                       <h4 className="text-center mb-4">Reset Password</h4>
-                      <form onSubmit={handleSubmit(submitHandler)}>
+                      <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-3">
                           <label>
                             <strong>New Password</strong>
                           </label>
-                          <input
+                          <CustomInput
                             type="password"
                             className="form-control"
-                            {...register("newPassword")}
+                            register={register}
+                            name="newPassword"
+                            label="New Password"
                           />
                           {errors.newPassword && (
                             <div className="text-danger fs-12">
@@ -67,11 +71,13 @@ const ResetPassword = () => {
                           <label>
                             <strong>Confirm Password</strong>
                           </label>
-                          <input
+                          <CustomInput
                             type="password"
                             className="form-control"
                             defaultValue="Password"
-                            {...register("confirmPassword")}
+                            register={register}
+                            name="confirmPassword"
+                            label="Confirm Password"
                           />
                           {errors.confirmPassword && (
                             <div className="text-danger fs-12">
