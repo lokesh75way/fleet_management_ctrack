@@ -196,13 +196,13 @@ const CompanyRoutes = () => {
 
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle/> },
-    { url: "vehicle/create", component: <VehicleForm/> },
-    { url: "driver/create", component: <DriverForm/> },
+    { url: "Vehicle", component: <Vehicle /> },
+    { url: "vehicle/create", component: <VehicleForm /> },
+    { url: "driver/create", component: <DriverForm /> },
     { url: "technician/details/create", component: <TechnicianForm /> },
-    { url: "branch/create", component: <BranchForm/> },
-    { url: "/company/my-profile/edit", component: <MyProfile/> },
-    
+    { url: "branch/create", component: <BranchForm /> },
+    { url: "/company/my-profile/edit", component: <MyProfile /> },
+
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
     { url: "/reports/geofence-address", component: <GeofenceAddress /> },
@@ -228,7 +228,7 @@ const CompanyRoutes = () => {
     { url: "/charts/fuel", component: <FuelChart /> },
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
-    { url: "Technician", component: <Technician /> },
+    { url: "technician", component: <Technician /> },
     { url: "branch", component: <Branch /> },
     { url: "driver", component: <Driver /> },
     { url: "vehicle-tracking", component: <DriverTracking /> },

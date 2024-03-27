@@ -7,39 +7,35 @@ export function usePermissions() {
 }
 
 export function PermissionProvider({ children }) {
-  const [permissions, setPermissions] = useState({});
+  const [permissionsByModuleId, setPermissionsByModuleId] = useState({});
+  const [permissionsByBasePath, setPermissionsByBasePath] = useState({});
+
+  // need to access store/storage and set user permissions
+  const [userPermission] = useState([])
 
   // Function to transform permissions array into object format to get quicker access
-  const transformPermissions = (permissionsArray) => {
-    const transformedPermissions = {};
-    permissionsArray.forEach(permission => {
-      transformedPermissions[permission.module] = {
-        edit: permission.edit,
-        add: permission.add,
-        read: permission.read,
-        delete: permission.delete
-      };
+  const transformPermissions = (userPermission, field) => {
+    const permissionsByModuleId = {};
+    const permissionsByBasePath = {};
+    userPermission.forEach(permission => {
+      permissionsByModuleId[permission.moduleId] = permission;
+      permissionsByBasePath[permission.endPoint] = permission;
     });
-    return transformedPermissions;
+    setPermissionsByModuleId(permissionsByModuleId)
+    setPermissionsByBasePath(permissionsByBasePath)
   };
 
   useEffect(() => {
-    
-    const receivedPermissions = [
-      { module: 1, edit: true, add: false, read: true, delete: false },
-      { module: 2, edit: false, add: true, read: true, delete: true },
-      { module: 3, edit: true, add: true, read: true, delete: true }
-    ];
-
-    const transformedPermissions = transformPermissions(receivedPermissions);
-    setPermissions(transformedPermissions);
-  }, []);
+    transformPermissions(userPermission);
+  }, [userPermission]);
 
 
-  const can = (moduleId, operation) => {
-    const modulePermissions = permissions[moduleId];
+  const can = (module, operation) => {
+    if (operation === '*') return true;
+
+    const modulePermissions = permissionsByModuleId[module] || permissionsByBasePath[module];
     if (modulePermissions) {
-      return modulePermissions[operation];
+      return modulePermissions[operation] ?? false;
     }
     return false; // Module not found, deny permission
   };
