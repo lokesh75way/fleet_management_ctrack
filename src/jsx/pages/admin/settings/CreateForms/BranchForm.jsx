@@ -10,20 +10,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
-import {useTranslation} from'react-i18next'
-
+import {useTranslation} from'react-i18next';
+import { createNewBranch } from "../../../../../services/api/BranchServices";
+ 
 const BranchForm = () => {
   const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = [t('newBranch'), t('settings'),t('changePassword')];
   const component = [MyAccount, UserSetting,ManagePassword];
-  const totalTabs = tabHeading.length;
+ 
   const navigate = useNavigate();
   const { id } = useParams();
   if(!id){
     component.pop();
     tabHeading.pop();
   }
+  const totalTabs = tabHeading.length;
   const {
     register,
     formState: { errors },
@@ -37,39 +39,37 @@ const BranchForm = () => {
     ),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
-          const val = JSON.parse(localStorage.getItem("userJsonData"));
-          const indexToUpdate = val.findIndex((item) => item.id == id);
-          if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id , role : "branch"};
-            localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess("Branch Updated!");
-            navigate("/branch");
+          try{
+            // await editCompany(data)
+          }
+          catch(e){
+            console.log(e)
+            notifyError("Some error occured !!");
           }
           return;
         } else {
-          data = { ...data, role: "branch" };
-          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-          data.id = existingData.length + 1;
-          existingData.push(data);
-          localStorage.setItem("userJsonData", JSON.stringify(existingData));
-          // notifySuccess("Branch Added Successfully !!");
-          notifySuccess("New Branch Created!");
-          navigate("/branch");
+          try{
+            await createNewBranch(data);
+            console.log("Brach created", data)
+            notifySuccess("New Branch Created!");
+            navigate("/branch");
+          }
+          catch(e){
+            console.log(e)
+            notifyError("Some error occured !!");
+          }
           return;
         }
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
-    notifySuccess("Saved!");
-    if(!id){
-      navigate('/branch')
-    }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    console.log(data)
   };
   return (
     <>

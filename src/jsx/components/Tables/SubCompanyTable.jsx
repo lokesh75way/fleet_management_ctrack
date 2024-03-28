@@ -9,14 +9,14 @@ import useStorage from '../../../hooks/useStorage'
 const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
   var filterData = tableData;
 
-  console.log("this is data",filterData,tempValue,tempValue2);
+  // console.log("this is data",filterData,tempValue,tempValue2);
   if(tempValue!=='All Companies'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
   if(tempValue2!=='All Branches'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentBranch === tempValue2)
   }
-  console.log("this is data after filter",filterData,tempValue,tempValue2);
+  // console.log("this is data after filter",filterData,tempValue,tempValue2);
   var branchCount = []
   for(var i=0;i<filterData.length;i++){
     const branchName = filterData[i].userName
@@ -28,25 +28,25 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
         {filterData.map((item, index) => (
           <tr key={index}>
             <td>
-              <span>{item.id}</span>
+              <span>{index + 1}</span>
             </td>
 
             {/* <td><span>{item.application}</span></td> */}
             <td>
-              <span className="text-primary">{item.userName}</span>
+              <span className="text-primary">{item.branchName}</span>
             </td>
             <td>
-              <span >{item.parentBranch !== 'none' ? item.parentBranch: <span className='ps-4'>-</span> }</span>
+              <span >{item.parentBranchId?.branchName ? item.parentBranchId?.branchName :<span className='ps-4'>-</span> }</span>
             </td>
             <td>
-              <span >{item.parentCompany}</span>
+              <span >{item.companyId?.companyName ? item.companyId?.companyName : <span className='ps-4'>-</span> }</span>
             </td>
             <td>
-              <span >{item.parentBusinessGroup}</span>
+              <span >{item.businessGroupId?.groupName ? item.businessGroupId?.groupName : <span className='ps-4'>-</span> }</span>
             </td>
-            <td>
+            {/* <td>
               <span>{item.mobileNumber}</span>
-            </td>
+            </td> */}
             <td>
               <span>{item.city}</span>
             </td>

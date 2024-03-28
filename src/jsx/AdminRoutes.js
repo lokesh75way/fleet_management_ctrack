@@ -1,12 +1,10 @@
 import React, { Suspense } from "react";
 /// React router dom
 import { Routes, Route, useNavigate } from "react-router-dom";
-
 /// Css
 import "./index.css";
 import "./chart.css";
 import "./step.css";
-
 import ScrollToTop from "./layouts/ScrollToTop";
 import AdminHome from "./components/Dashboard/AdminHome";
 import Loader from "./components/Loader";
@@ -16,7 +14,6 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
-
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
 const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
@@ -34,7 +31,6 @@ const AlertReport = React.lazy(() => import("./pages/company/reports/Alert"));
 const Reminder = React.lazy(() => import("./pages/company/reports/Reminder"));
 const ExpenseReport = React.lazy(() => import("./pages/company/reports/Expense"));
 const FuelReport = React.lazy(() => import("./pages/company/reports/Fuel"));
-
 const UpdateDriverForm = React.lazy(() =>
   import("./pages/admin/settings/EditForm/UpdateDriverForm")
 );
@@ -44,7 +40,6 @@ const UpdateVehicleForm = React.lazy(() =>
 const UpdateCompanyForm = React.lazy(() =>
   import("./pages/admin/settings/CreateForms/CompanyForm")
 );
-
 const Performance = React.lazy(() =>
   import("./components/Dashboard/Performance")
 );
@@ -68,7 +63,6 @@ const VehicleForm = React.lazy(() =>
 const DriverForm = React.lazy(() =>
   import("./pages/admin/settings/CreateForms/DriverForm")
 );
-
 const TechnicianForm = React.lazy(() =>
   import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
@@ -89,10 +83,8 @@ const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
-
 const Error404 = React.lazy(() => import("./pages/Error404"));
 const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
-
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
 const Company = React.lazy(() => import("./pages/admin/Compnay"));
 const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
@@ -103,7 +95,6 @@ const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 // import Permission from "./pages/Permission";
-
 const allroutes = [
   // Dashboard
   { module: '*', url: "", component: <AdminHome /> },
@@ -118,61 +109,48 @@ const allroutes = [
   { module: '*', url: "app-profile", component: <AdminProfile /> },
   { module: '*', url: "changepassword", component: <ChangePassword /> },
   { module: '*', url: "contactUs", component: <ContactUs /> },
-
-
   { module: 'driver', url: "driver", component: <Driver /> },
   { module: 'driver', url: "driver/create", component: <DriverForm /> },
   { module: 'driver', url: "driver/edit/:id", component: <DriverForm /> },
-
-
-
-  { module: 'sub-user', url: "subUser/create", component: <SubUserForm /> },
-  { module: 'sub-user', url: "subUser", component: <SubUser /> },
-  { module: 'sub-user', url: "subUser/edit/:id", component: <SubUserForm /> },
-
+  { module: 'subUser', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser', url: "subUser/edit/:id", component: <SubUserForm /> },
   { module: 'vehicle', url: "vehicle-tracking", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle-tracking/:id", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle/create", component: <VehicleForm /> },
   { module: 'vehicle', url: "vehicle", component: <Vehicle /> },
   { module: 'vehicle', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
-
   { module: 'settings', url: "/settings/alert", component: <Alert /> },
   { module: 'settings', url: "/settings/classifyTrips", component: <ClassifyTrips /> },
   { module: 'settings', url: "/settings/expense", component: <Expense /> },
   { module: 'settings', url: "/settings/geofence", component: <Geofence /> },
   { module: 'settings', url: "/settings/geofence/map", component: <GeofenceMap /> },
   { module: 'settings', url: "/settings/geofence/map/edit/:id", component: <GeofenceMap /> },
-
   { module: 'technician', url: "technician/details", component: <Technician /> },
   { module: 'technician', url: "technician/edit/:id", component: <TechnicianForm /> },
   { module: 'technician', url: "technician/details/create", component: <TechnicianForm /> },
   { module: 'technician', url: "technician/tasks", component: <TechnicianTask /> },
-
-  { module: 'company', url: "company/create", component: <CompanyForm /> },
-  { module: 'company', url: "company/edit/:id", component: <CompanyForm /> },
+  { module: 'company',operation:'add', url: "company/create", component: <CompanyForm /> },
+  { module: 'company',operation:'modify', url: "company/edit/:id", component: <CompanyForm /> },
   { module: 'company', url: "company/:id", component: <Company /> },
   { module: 'company', url: "company", component: <Company /> },
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
-
   { module: 'branch', url: "branch/create", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
   { module: 'branch', url: "branch/edit/:id", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
   { module: 'branch', url: "branch/cid/:id", component: <Branch /> },
   { module: 'branch', url: "branch/bid/:id", component: <Branch /> },
-
   { module: 'business', url: "business/create", component: <BusinessForm /> },
   { module: 'business', url: "business/edit/:id", component: <BusinessForm /> },
   { module: 'business', url: "business-group", component: <BusinessUser /> },
   { module: 'business', url: "business-group/:id", component: <BusinessUser /> },
   { module: 'business', url: "business", component: <Business /> },
-
   // groups
   { module: 'groups', url: "groups", component: <CreateGroups /> },
   { module: 'groups', url: "groups/permission", component: <Permission /> },
-
-  // reports 
-  { module: 'reports', url: "reports/generated", component: <Report /> },
+  // reports
+  { module: 'reports', url: "/reports/generated", component: <Report /> },
   { module: 'reports', url: "/reports/activity", component: <ActivityReport /> },
   { module: 'reports', url: "/reports/geofence-address", component: <GeofenceAddress /> },
   { module: 'reports', url: "/reports/sensor", component: <Sensor /> },
@@ -191,30 +169,29 @@ const allroutes = [
   { module: 'reports', url: "/reports/elock", component: <Elock /> },
   { module: 'reports', url: "/reports/trip-classification", component: <TripClassification /> },
 ];
-
 const AdminRoutes = () => {
   const { can } = usePermissions()
   const navigate = useNavigate()
-
   function NotFound() {
     const url = allroutes.map((route) => route.url);
     let path = window.location.pathname;
     path = path.split("/");
     path = path[path.length - 1];
-
     if (url.indexOf(path) <= 0) {
       return <Error404 />;
     }
   }
-
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (!can(data.module, 'view')) {
+            if ( !can(data.module, data.operation || 'view')) {
+              // console.log(data.module, data.url, 'create')
                return <Route
-                path={'*'}
+                key={i}
+                exact
+                path={`${data.url}`}
                 element={<PermissionDenied />}
               />
             }
@@ -234,5 +211,4 @@ const AdminRoutes = () => {
     </Suspense>
   );
 };
-
 export default AdminRoutes;

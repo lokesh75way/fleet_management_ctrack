@@ -6,7 +6,6 @@ export const companyOptions = [
   { value: "company5@example.com", label: "Company5" },
   { value: "All Companies", label: "All Companies" },
 ];
-
 export const branchOptions = [
   {value : 'All', label : 'All'},
   { value: "branch1@example.com", label: "Branch1" },
@@ -15,7 +14,6 @@ export const branchOptions = [
   { value: "branch4@example.com", label: "Branch4" },
   { value: "branch5@example.com", label: "Branch5" },
 ];
-
 export const businessGroupOptions = [
   { value: "businessgroup1@example.com", label: "Business Group1" },
   { value: "businessgroup2@example.com", label: "Business Group2" },
@@ -24,7 +22,6 @@ export const businessGroupOptions = [
   { value: "businessgroup5@example.com", label: "Business Group5" },
   { value: "All Groups", label: "All Groups" },
 ];
-
 export const deviceTypeOptions = [
   { value: "2G Camera Howen 5632", label: "2G Camera Howen 5632" },
   { value: "2G Camera Howen 5633", label: "2G Camera Howen 5633" },
@@ -55,9 +52,9 @@ export const featureTemplateOptions = [
   { value: "Template 4", label: "Template 4" },
 ];
 export const unitOfDistanceOptions = [
-  { value: "Kilometer", label: "Kilometer" },
-  { value: "Mile", label: "Mile" },
-  { value: "Nautical mile", label: "Nautical mile" },
+  { value: "KILOMETER", label: "KILOMETER" },
+  { value: "MILES", label: "MILES" },
+  { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
 export const speedDetectionOptions = [
   { value: "From Device", label: "From Device" },
@@ -119,7 +116,6 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor2", label: "BLE Battery Sensor2" },
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
-
 export const ObjectOptions = [
   { value: "Test1", label: "Test1" },
   { value: "Test2", label: "Test2" },
@@ -134,12 +130,12 @@ export const TypeOptions = [
 ];
 export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
-  { value: "dd-MM-yyyy", label: "dd-MM-yyyy" },
-  { value: "MM-dd-yyyy", label: "MM-dd-yyyy" },
+  { value: "DD-MM-YYYY", label: "DD-MM-YYYY" },
+  { value: "MM-DD-YYYY", label: "MM-dd-yyyy" },
 ];
 export const timeFormatOptions = [
-  { value: "12 Hour", label: "12 Hour" },
-  { value: "24 Hour", label: "24 Hour" },
+  { value: "12", label: "12" },
+  { value: "24", label: "24" },
 ];
 export const weekStartDayOptions = [
   { value: "Sunday", label: "Sunday" },
@@ -160,10 +156,9 @@ export const preferredCurrencyUnitOptions = [
   { value: "75 way", label: "75 way" },
 ];
 export const unitOfFuelOptions = [
-  { value: "litre", label: "Litre" },
-  { value: "gallon", label: "Gallon" },
+  { value: "LITRES", label: "LITRES" },
+  { value: "GALLONS", label: "GALLONS" },
 ];
-
 export const dayOptions = [
   { value: "Monday", label: "Monday" },
   { value: "Tuesday", label: "Tuesday" },
@@ -173,26 +168,21 @@ export const dayOptions = [
   { value: "Saturday", label: "Saturday" },
   { value: "Sunday", label: "Sunday" },
 ];
-
 export const statusOptions = [
-  { value: "Active", label: "Active" },
-  { value: "Inactive", label: "Inactive" },
+  { value: "ACTIVE", label: "ACTIVE" },
+  { value: "INACTIVE", label: "INACTIVE" },
 ];
-
 export const storageCapacityOptions = [
   { value: "60 days", label: "60 days" },
   { value: "90 days", label: "90 days" },
   { value: "120 days", label: "120 days" },
 ];
-
-
 export const languageOptions = [
-  { value: "English", label: "English" },
-  { value: "Arabic", label: "Arabic" },
-  { value: "French", label: "French" },
-  { value: "Portugese", label: "Portugese" },
+  { value: "ENGLISH", label: "ENGLISH" },
+  { value: "ARABIC", label: "ARABIC" },
+  { value: "FRENCH", label: "FRENCH" },
+  { value: "PORTUGESE", label: "PORTUGESE" },
 ];
-
 export const currencyOptions = [
   { value: "AED", label: "AED" },
   { value: "USD", label: "USD" },
@@ -202,7 +192,6 @@ export const currencyOptions = [
   { value: "Dalasi", label: "Dalasi" },
   { value: "Shilling", label: "Shilling" },
 ];
-
 export const fuelEconomyScalingOptions = [
   { value: "km/i", label: "Km/I" },
   { value: "i/100", label: "I/100" },

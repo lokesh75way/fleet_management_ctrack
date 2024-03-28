@@ -9,7 +9,8 @@ import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
 import { getSelectValues } from "../../../../utils/helper";
 import {useTranslation} from "react-i18next"
-
+import { getGroups } from "../../../../services/api/BusinessGroup";
+import {getCompany} from "../../../../services/api/CompanyServices";
 
 const MyAccount = ({
   setValue,
@@ -46,22 +47,31 @@ const MyAccount = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const defaultValues = getSelectValues();
 
-  useEffect(() => {
-    const tempbusinessUserOptions = DummyData.filter(
-      (item) => item.role === "businessgroup"
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
+  const [tempbusinessUserOptions,SetTempbusinessUserOptions] = useState([])
+  const getBusinessGroup = async()=>{
+    const {data} = await getGroups()
+    // console.log("jeqgduwygfiruwgfieruw",data)
+    SetTempbusinessUserOptions(data.map((item) => ({
+      label: item.businessGroupId.groupName,
+      value: item.businessGroupId._id,
+    })));
+  }
 
-    const tempcompanyOptions = DummyData.filter(
-      (item) => item.role === "company"
-    )
-      .filter((cp) => cp.parent === businessUserValue)
-      .map((item) => ({
-        label: item.userName,
-        value: item.id,
-      }));
+  const [tempcompanyOptions,SetTempcompanyOptions] = useState([])
+  const getAllCompany = async()=>{
+    const {data} = await getCompany()
+    // console.log("company",data.data.data)
+    SetTempcompanyOptions(data.data.data.map((item) => ({
+      label: item.companyId?.companyName,
+      value: item.companyId?._id,
+    })));
+  }
+  useEffect(()=>{
+    getBusinessGroup()
+    getAllCompany()
+  },[])
+  useEffect(() => {
+
 
     const tempparentOptions = DummyData.filter((item) => item.role === "branch")
       .filter((br) => br.parentCompany === companyValue)
@@ -134,14 +144,14 @@ const MyAccount = ({
           } */}
           {id ? (
             <Controller
-              name="parentBusinessGroup"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
-                    setValue("parentBusinessGroup", newValue.label);
+                    setValue("businessGroupId", newValue.value);
                   }}
                   options={businessUserOptions}
                   ref={ref}
@@ -160,14 +170,14 @@ const MyAccount = ({
             />
           ) : (
             <Controller
-              name="parentBusinessGroup"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
-                    setValue("parentBusinessGroup", newValue.label);
+                    setValue("businessGroupId", newValue.value);
                   }}
                   options={businessUserOptions}
                   ref={ref}
@@ -182,7 +192,7 @@ const MyAccount = ({
               )}
             />
           )}
-          {!getValues("parentBusinessGroup") && <Error errorName={errors.parentBusinessGroup} />}
+          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
 
         <div className="col-xl-6 mb-3">
@@ -191,14 +201,14 @@ const MyAccount = ({
           </label>
           {id ? (
             <Controller
-              name="parentCompany"
+              name="companyId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
-                    setValue("parentCompany", newValue.label);
+                    setValue("companyId", newValue.value);
                   }}
                   options={companyOptions}
                   ref={ref}
@@ -217,14 +227,14 @@ const MyAccount = ({
             />
           ) : (
             <Controller
-              name="parentCompany"
+              name="companyId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
-                    setValue("parentCompany", newValue.label);
+                    setValue("companyId", newValue.value);
                   }}
                   isDisabled={defaultValues.company.disabled}
                   options={companyOptions}
@@ -240,7 +250,7 @@ const MyAccount = ({
             />
           )}
 
-          {!getValues("parentCompany") && <Error errorName={errors.parentCompany} />}
+          {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('parentBranch')}</label>
@@ -279,14 +289,14 @@ const MyAccount = ({
             type="text"
             register={register}
             required
-            label="User Name"
-            name="userName"
+            label="Branch Name"
+            name="branchName"
             placeholder=""
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
+              filteredCompanyData[0] ? filteredCompanyData[0].branchName : ""
             }
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.branchName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">

@@ -11,6 +11,7 @@ import { clsx } from 'clsx';
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
+import { getAllBranch , createBranch } from "../../../services/api/BranchServices";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -86,7 +87,16 @@ const Branch = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
-  const [tableData, setTableData] = useState(SubCompanyData);
+  const fetchAllBranch = async()=>{
+    const {data, success} = await getAllBranch()
+   
+    setTableData(data.data)
+  }
+    useEffect(()=>{
+      fetchAllBranch()
+    },[])
+
+  const [tableData, setTableData] = useState([]);
   const [dataLength, setDataLength] = useState(SubCompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
@@ -284,7 +294,7 @@ const Branch = () => {
                           <th>{t('parentBranch')}</th>
                           <th>{t('companyName')}</th>
                           <th>{t('businessGroup')}</th>
-                          <th>{t('mobileNumber')}</th>
+                          {/* <th>{t('mobileNumber')}</th> */}
                           <th>{t('location')}</th>
                           <th>{t('childBranches')}</th>
                           <th>{t('action')}</th>
