@@ -13,7 +13,7 @@ export function PermissionProvider({ children }) {
   // const permissions = useSelector(state => state.auth.permission);
   // console.log(permissions)
   const permissions = JSON.parse(localStorage.getItem('permission'))
-  const [userPermission, setUserPermission] = useState(permissions || [])
+  const [userPermission, setUserPermission] = useState(permissions[0].permission || [])
 
   // Function to transform permissions array into object format to get quicker access
   const transformPermissions = (userPermission, field) => {
@@ -21,12 +21,11 @@ export function PermissionProvider({ children }) {
     const permissionsByBasePath = {};
 
     userPermission.forEach(permission => {
-      permission.permission.map((data,index)=>{
-        permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
-        permissionsByBasePath[data?.moduleId?.basePath] = permission.permission;
+        // permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
+        permissionsByBasePath[permission?.moduleId?.basePath] = permission;
         return ;
-      })
     });
+    console.log(permissionsByBasePath)
     setPermissionsByModuleId(permissionsByModuleId)
     setPermissionsByBasePath(permissionsByBasePath)
   };
@@ -38,11 +37,9 @@ export function PermissionProvider({ children }) {
 
   const can = (module, operation) => {
     if (module === '*') return true;
-
     const modulePermissions = permissionsByBasePath[module];
-
     if (modulePermissions) {
-      return modulePermissions[0][operation] === false ? false :  true
+      return modulePermissions[operation] === false ? false :  true
     }
     return false; 
   };

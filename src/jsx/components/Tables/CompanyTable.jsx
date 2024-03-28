@@ -16,69 +16,71 @@ const CompanyTable = ({
 }) => {
   const { getBranch } = useStorage();
   const { can } = usePermissions()
+  const editPermission = can('company','modify')
+  const deletePermission = can('company','delete')
   var filterData = tableData;
-  if (tempValue !== "All") {
-    filterData = tableData.filter(
-      (item) => item.role === "company" && item.parent === tempValue
-    );
-  }
-  setDataLength(filterData.length)
+  // if (tempValue !== "All") {
+  //   filterData = tableData.filter(
+  //     (item) => item.role === "company" && item.parent === tempValue
+  //   );
+  // }
+  setDataLength(filterData?.length)
   return (
     <>
-      {filterData.map((item, index) => (
-        <tr key={index}>
-          <td>
+      {filterData.map((item, index) => {
+        return <tr key={index}>
+          {/* <td>
             <span>{item.id}</span>
-          </td>
+          </td> */}
           <td>
-            <span className="text-primary">{item.userName}</span>
+            <span className="text-primary">{item?.companyId?.companyName}</span>
           </td>
           <td>
             <div className="products">
               <div>
-                <h6>{item.parent}</h6>
+                <h6>{item?.companyId?.businessGroupId?.groupName}</h6>
               </div>
             </div>
           </td>
-          <td>
+          {/* <td>
             <span>{item.mobileNumber}</span>
-          </td>
+          </td> */}
           <td>
             <span>{item.country}</span>
           </td>
           <td>
-            <span>{item.email}</span>
+            <span>{item?.companyId?.helpDeskEmail}</span>
           </td>
           <td>
             <Link
-              to={`/branch/cid/${item.id}`}
+              to={`/branch/cid/${item?.companyId?.id}`}
               className="text-primary badge light border-0 badge-count"
             >
-              {getBranch(item.userName)}
+              {getBranch(item?.companyId?.userName)}
             </Link>
           </td>
           <td>
-            <span>{item.zipCode}</span>
+            <span>{item?.companyId?.zipCode}</span>
           </td>
-          {can('comapny', 'edit') && can('comapny', 'delete') && <td>
+          {(editPermission || deletePermission) && <td>
             <span className="d-flex justify-content-center">
-              {can('comapny', 'edit') && <span
+              {editPermission && <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item.id)}
+                onClick={() => editDrawerOpen(item?.id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>}
-              {can('company','delete') && <DeleteModal
+              {deletePermission && <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.id}
+                id={item?._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>}
             </span>
           </td>}
         </tr>
-      ))}
+      })}
     </>
   );
 };

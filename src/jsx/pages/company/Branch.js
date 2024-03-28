@@ -11,6 +11,7 @@ import { clsx } from 'clsx';
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
+import { usePermissions } from "../../../context/PermissionContext";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -19,6 +20,7 @@ const Branch = () => {
   const {isRtl} = useContext(ThemeContext);
   const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
   const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const {can} = usePermissions()
 
   const {t} = useTranslation();
   const navigate = useNavigate();
@@ -258,7 +260,7 @@ const Branch = () => {
                           />
                         )}
                       />
-                      <Link
+                      {can('branch','add') && <Link
                         to={"/branch/create"}
                         className="btn btn-primary btn-sm ms-1"
                         style={{paddingBlock : '9px'}}
@@ -266,7 +268,7 @@ const Branch = () => {
                         // onClick={()=>subCompany.current.showModal()}
                       >
                         + {t('addBranch')}
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -287,7 +289,7 @@ const Branch = () => {
                           <th>{t('mobileNumber')}</th>
                           <th>{t('location')}</th>
                           <th>{t('childBranches')}</th>
-                          <th>{t('action')}</th>
+                          {(can('branch','modify') || can('branch','delete')) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

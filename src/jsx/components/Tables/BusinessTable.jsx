@@ -53,7 +53,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             </Link>
           </td>
 
-          {deletePermission && editPermission &&<td>
+          {(deletePermission || editPermission) &&<td>
             <span className="d-flex justify-content-center">
               {editPermission && <span
                 className="cursor-pointer"

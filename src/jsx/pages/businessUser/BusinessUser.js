@@ -137,7 +137,7 @@ const BusinessUser = () => {
                           <th>{t('email')}</th>
                           <th>{t('location')}</th>
                           <th>{t('companyCount')}</th>
-                          {can('business', "delete") && can('business', "modify") && <th>{t('action')}</th>}
+                          {(can('business', "delete") || can('business', "modify")) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

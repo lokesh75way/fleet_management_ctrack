@@ -11,6 +11,8 @@ import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import useStorage from "../../../hooks/useStorage";
 import { usePermissions } from "../../../context/PermissionContext";
+import { deleteCompany, getCompany } from "../../../services/api/CompanyServices";
+import { notifyError, notifySuccess } from "../../../utils/toast";
 
 
 
@@ -21,24 +23,35 @@ const Company = () => {
   const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [tableData, setTableData] = useState([]);
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const [selectFilter, setFilter] = useState({
     value: "All Business Groups",
     label: "All Business Groups",
   });
   const [tempValue, setTempValue] = useState("All");
-  console.log("Filter valeus are", selectFilter);
-  const CompanyData = allData.filter((item) => item.role === "company");
+  let CompanyData = allData.filter((item) => item.role === "company");
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
   console.log(id);
+  const fetchAllCompany = async()=>{
+    const {data, success} = await getCompany()
+    // CompanyData = data.data.data
+    setTableData(data.data.data)
+  }
+
+    useEffect(()=>{
+      fetchAllCompany()
+    },[])
+
+
   useEffect(() => {
     if (id) {
       const user = JSON.parse(localStorage.getItem("userJsonData"));
       const username = user.filter((data) => data.id === id)[0].userName;
-      console.log(username);
+
       setFilter({
         value: username,
         label: username,
@@ -61,7 +74,7 @@ const Company = () => {
     }),
   };
 
-  const [tableData, setTableData] = useState(CompanyData);
+
   const [dataLength, setDataLength] = useState(CompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
@@ -99,9 +112,14 @@ const Company = () => {
     settest(i);
   };
   // for deleting data in table
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const onConfirmDelete = async(_id) => {
+    try{
+      await deleteCompany(_id)
+      notifySuccess("Company Deleted")
+    }
+    catch(e){
+      notifyError("Something Went Wrong")
+    }
 
     // Remove item from local storage
     const updatedLocalStorageData = CompanyData.filter(
@@ -205,15 +223,15 @@ const Company = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
+                          {/* <th>{t('id')}</th> */}
                           <th>{t('companyName')}</th>
                           <th>{t('businessGroup')}</th>
-                          <th>{t('mobileNumber')}</th>
+                          {/* <th>{t('mobileNumber')}</th> */}
                           <th>{t('location')}</th>
                           <th>{t('email')}</th>
                           <th>{t('branches')}</th>
                           <th>{t('zipCode')}</th>
-                          {can('comapny', 'edit') && can('comapny', 'delete') && <th>{t('action')}</th>}
+                          {(can('company', 'edit') || can('company', 'delete') ) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

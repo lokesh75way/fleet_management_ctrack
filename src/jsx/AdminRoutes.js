@@ -121,20 +121,20 @@ const allroutes = [
 
 
   { module: 'driver', url: "driver", component: <Driver /> },
-  { module: 'driver', url: "driver/create", component: <DriverForm /> },
-  { module: 'driver', url: "driver/edit/:id", component: <DriverForm /> },
+  { module: 'driver',operation:'add', url: "driver/create", component: <DriverForm /> },
+  { module: 'driver',operation:'modify', url: "driver/edit/:id", component: <DriverForm /> },
 
 
 
-  { module: 'subUser', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
   { module: 'subUser', url: "subUser", component: <SubUser /> },
-  { module: 'subUser', url: "subUser/edit/:id", component: <SubUserForm /> },
+  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
 
   { module: 'vehicle', url: "vehicle-tracking", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle-tracking/:id", component: <DriverTracking /> },
-  { module: 'vehicle', url: "vehicle/create", component: <VehicleForm /> },
+  { module: 'vehicle',operation:'add', url: "vehicle/create", component: <VehicleForm /> },
   { module: 'vehicle', url: "vehicle", component: <Vehicle /> },
-  { module: 'vehicle', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+  { module: 'vehicle',operation:'modify', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
 
   { module: 'settings', url: "/settings/alert", component: <Alert /> },
   { module: 'settings', url: "/settings/classifyTrips", component: <ClassifyTrips /> },
@@ -148,21 +148,21 @@ const allroutes = [
   { module: 'technician', url: "technician/details/create", component: <TechnicianForm /> },
   { module: 'technician', url: "technician/tasks", component: <TechnicianTask /> },
 
-  { module: 'company', url: "company/create", component: <CompanyForm /> },
-  { module: 'company', url: "company/edit/:id", component: <CompanyForm /> },
+  { module: 'company',operation:'add', url: "company/create", component: <CompanyForm /> },
+  { module: 'company',operation:'modify', url: "company/edit/:id", component: <CompanyForm /> },
   { module: 'company', url: "company/:id", component: <Company /> },
   { module: 'company', url: "company", component: <Company /> },
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
 
-  { module: 'branch', url: "branch/create", component: <BranchForm /> },
+  { module: 'branch',operation:'add', url: "branch/create", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
-  { module: 'branch', url: "branch/edit/:id", component: <BranchForm /> },
+  { module: 'branch',operation:'modify', url: "branch/edit/:id", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
   { module: 'branch', url: "branch/cid/:id", component: <Branch /> },
   { module: 'branch', url: "branch/bid/:id", component: <Branch /> },
 
-  { module: 'business', url: "business/create", component: <BusinessForm /> },
-  { module: 'business', url: "business/edit/:id", component: <BusinessForm /> },
+  { module: 'business',operation:'add', url: "business/create", component: <BusinessForm /> },
+  { module: 'business',operation:'modify', url: "business/edit/:id", component: <BusinessForm /> },
   { module: 'business', url: "business-group", component: <BusinessUser /> },
   { module: 'business', url: "business-group/:id", component: <BusinessUser /> },
   { module: 'business', url: "business", component: <Business /> },
@@ -212,34 +212,15 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (data.url.includes('create') && !can(data.module, data.url, 'create')) {
-              console.log(data.module, data.url, 'create')
+            if ( !can(data.module, data.operation || 'view')) {
+              // console.log(data.module, data.url, 'create')
                return <Route
                 key={i}
                 exact
-                path={'*'}
+                path={`${data.url}`}
                 element={<PermissionDenied />}
               />
             }
-            if (data.url.includes('edit') && !can(data.module, data.url, 'modify')) {
-              console.log(data.module, data.url, 'edit')
-               return <Route
-               key={i}
-                exact
-                path={'*'}
-                element={<PermissionDenied />}
-              />
-            }
-            if (!can(data.module, data.url, 'view')) {
-              console.log(data.module, data.url, 'view')
-               return <Route
-               key={i}
-                exact
-                path={'*'}
-                element={<PermissionDenied />}
-              />
-            }
-            console.log(data.module, data.url, 'all')
             return (
               <Route
                 key={i}

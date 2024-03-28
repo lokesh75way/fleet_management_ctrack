@@ -10,6 +10,7 @@ import {useTranslation} from 'react-i18next'
 
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { usePermissions } from "../../context/PermissionContext";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
   //     headers : headers,
@@ -20,6 +21,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
     const {t} = useTranslation();
     const {isRtl} = useContext(ThemeContext);
+    const {can} = usePermissions()
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     
@@ -78,7 +80,7 @@ import { ThemeContext } from "../../context/ThemeContext";
   };
   const editDrawerOpen = (item) => {
     // tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`/subUser/edit/${item}`);
+    navigate(`/subUser/edit/${item.id}`);
     // setEditTableData(item);
   };
   return (
@@ -93,14 +95,14 @@ import { ThemeContext } from "../../context/ThemeContext";
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t('users')}</h4>
                     <div>
-                      <Link
+                      {can('subUser','add') && <Link
                         to={"/subUser/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subuser.current.showModal()}
                       >
                         + {t('addUser')}
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -118,7 +120,7 @@ import { ThemeContext } from "../../context/ThemeContext";
                           <th>{t('mobileNumber')}</th>
                           <th>{t('email')}</th>
                           <th>{t('location')}</th>
-                          <th>{t('action')}</th>
+                          {(can('subUser','modify') || can('subUser','delete')) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>
