@@ -65,7 +65,7 @@ function App(props) {
   
     const userData = localStorage.getItem('userData');
     const technicianData = localStorage.getItem('technicianData');
-    const userJsonData = localStorage.getItem('userJsonData')
+     const userJsonData = localStorage.getItem('userJsonData');
 
     const geoData = localStorage.getItem('geofenceData')
 
@@ -76,7 +76,7 @@ function App(props) {
    
     if(!userData) localStorage.setItem('userData', JSON.stringify(UserData))
     if(!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
-    if(!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
+    if(!userJsonData) localStorage.setItem('userJsonData', JSON.stringify([{}]))
     if(!geoData) localStorage.setItem('geofenceData', JSON.stringify(GeofenceData))
     
 

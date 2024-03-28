@@ -7,9 +7,10 @@ import SubUserTable from "../components/Tables/SubUserTable";
 import useStorage from "../../hooks/useStorage";
 import { clsx } from 'clsx';
 import {useTranslation} from 'react-i18next'
-
+import UserServices from '../../services/api/UserServices'
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { notifyError, notifySuccess } from "../../utils/toast";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
   //     headers : headers,
@@ -22,7 +23,25 @@ import { ThemeContext } from "../../context/ThemeContext";
     const {isRtl} = useContext(ThemeContext);
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
-    
+    //call get api from userservice
+    const [fetchtableData, fetchSetTableData] = useState([]);
+
+    useEffect(() => {
+      UserServices.getUser()
+      .then(response => {
+        console.log(response, 'response')
+        if(response?.data?.success === true){
+          fetchSetTableData(response.data.data)
+          const fusers = response.data.data.data
+          localStorage.setItem("userJsonData", JSON.stringify(fusers));
+
+        }else{
+          notifyError(response?.message?.message)
+        }
+      }).catch(error => {
+        notifyError(error?.message?.message);
+      })
+    }, [])
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
@@ -35,7 +54,7 @@ import { ThemeContext } from "../../context/ThemeContext";
   else if(role === 'businessgroup'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'admin') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
+  else if(checkRole() === 'admin') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin'  )
 
   const [tableData, setTableData] = useState(UserData);
   const [editData, setEditData] = useState();
@@ -73,8 +92,26 @@ import { ThemeContext } from "../../context/ThemeContext";
   const subuser = useRef();
   const edit = useRef();
   const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+    UserServices.deleteUser(id)
+    .then(response => {
+      if(response?.data?.success === true){
+        notifySuccess("User deleted successfully !!");
+        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+        const index = existingData.findIndex((item) => item._id === id);
+        console.log(index, 'index')
+        existingData.splice(index, 1);
+        localStorage.setItem("userJsonData", JSON.stringify(existingData));
+        const updatedData = tableData.filter((item) => item._id !== id);
+        setTableData(updatedData);
+        
+      }else{
+        notifyError(response?.message?.message)
+      }
+    }).catch(error => {
+      notifyError(error?.message?.message);
+    })
+
+    
   };
   const editDrawerOpen = (item) => {
     // tableData.map((table) => table.id === item && setEditData(table));

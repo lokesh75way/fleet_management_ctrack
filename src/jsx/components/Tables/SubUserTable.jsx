@@ -10,7 +10,7 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item.id}</span>
+            <span>{item._id}</span>
           </td>
           <td>
             <span className="text-primary">{item.userName}</span>
@@ -29,7 +29,7 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
             <span className="d-flex justify-content-center">
               <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item.id)}
+                onClick={() => editDrawerOpen(item._id)}
               >
                 <FaEdit
                   style={{
@@ -41,7 +41,7 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
               <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.id}
+                id={item._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>

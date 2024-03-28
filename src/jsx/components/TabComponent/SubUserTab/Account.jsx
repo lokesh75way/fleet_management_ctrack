@@ -11,7 +11,7 @@ import useStorage from "../../../../hooks/useStorage";
 import "../../../../scss/pages/_driver-tracking.scss";
 import DummyData from "../../../../users.json";
 import { getSelectValues } from "../../../../utils/helper";
-
+import TemplateServices from "../../../../services/api/TemplateServices";
 import {useTranslation} from "react-i18next";
 
 
@@ -32,7 +32,7 @@ const Account = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-
+  const [featureTemplateOptions, setFeatureTemplateOptions] = useState([]);
   const {t} = useTranslation();
   const customStyles = {
     control: (base) => ({
@@ -42,7 +42,24 @@ const Account = ({
 
     
   };
-
+  //from templateservices get all templates and populate templates dropdown
+  useEffect(() => {
+    TemplateServices.getTemplates()
+      .then((response) => {
+        if (response?.data?.success === true) {
+          const templates = response.data.data;
+          console.log(templates, "templates");
+          const tempOptions = templates.map((item) => ({
+            label: item.name,
+            value: item._id,
+          }));
+          setFeatureTemplateOptions(tempOptions);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   const role = localStorage.getItem("role");
   const { id } = useParams();
   const User = JSON.parse(localStorage.getItem("userJsonData"));
@@ -51,12 +68,11 @@ const Account = ({
   let defaultCompanyOptions;
 
   if(role === "admin") {
-
     defaultCompanyOptions = DummyData.filter(
       (item) => item.role === "company"
     ).map((item) => ({
       label: item.userName,
-      value: item.id,
+      value: item._id,
     }));
 
   }else{
@@ -65,7 +81,7 @@ const Account = ({
       (item) => item.role === "company" && item.parent === loggedinemail
     ).map((item) => ({
       label: item.userName,
-      value: item.id,
+      value: item._id,
     }));
   }
 
@@ -76,12 +92,12 @@ const Account = ({
   }
 
   const branchData = User.filter(
-    (item) => item.role === "branch" && item.id == id
+    (item) => item.role === "branch" && item._id == id
   );
 
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
 
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+  const newData = userData.filter((data) => data._id == id);
 
   const defaultValues = getSelectValues();
 
@@ -99,7 +115,7 @@ const Account = ({
       (item) => item.role === "businessgroup"
     ).map((item) => ({
       label: item.userName,
-      value: item.id,
+      value: item._id,
     }));
 
     let tempcompanyOptions;
@@ -111,7 +127,7 @@ const Account = ({
         .filter((cp) => cp.parent === loggedinemail)
         .map((item) => ({
           label: item.userName,
-          value: item.id,
+          value: item._id,
         }));
         
       }else{
@@ -122,7 +138,7 @@ const Account = ({
           .filter((cp) => cp.parent === businessUserValue)
           .map((item) => ({
             label: item.userName,
-            value: item.id,
+            value: item._id,
           }));
         
     }
@@ -135,14 +151,14 @@ const Account = ({
         .filter((br) => br.parentCompany === loggedinemail)
         .map((item) => ({
           label: item.userName,
-          value: item.id,
+          value: item._id,
         }));
       }else{
         tempparentOptions = DummyData.filter((item) => item.role === "branch")
           .filter((br) => br.parentCompany === companyValue)
           .map((item) => ({
             label: item.userName,
-            value: item.id,
+            value: item._id,
           }));
     }
 
@@ -150,13 +166,13 @@ const Account = ({
     if(role === 'company') {
       tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === loggedinemail ).map((item) => ({
         label: item.vehicleName,
-        value: item.id,
+        value: item._id,
       }));
       
     }else{
       tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === companyValue ).map((item) => ({
         label: item.vehicleName,
-        value: item.id,
+        value: item._id,
       }));
       
 
@@ -203,6 +219,10 @@ const Account = ({
       "state",
       filteredCompanyData[0] ? filteredCompanyData[0].state : ""
     );
+    setValue(
+      "_id",
+      filteredCompanyData[0] ? filteredCompanyData[0]._id : id
+    )
   }, []);
 
 
@@ -446,14 +466,14 @@ const Account = ({
           {t('featureTemplate')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="featureTemplate"
+            name="featureTemplateId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
-                  setValue("featureTemplate", newValue.label);
+                  setValue("featureTemplateId", newValue.label);
                 }}
                 options={featureTemplateOptions}
                 ref={ref}
@@ -463,8 +483,8 @@ const Account = ({
               />
             )}
           />
-          {!getValues("featureTemplate") && (
-            <Error errorName={errors.featureTemplate} />
+          {!getValues("featureTemplateId") && (
+            <Error errorName={errors.featureTemplateId} />
           )}
         </div>
       </div>

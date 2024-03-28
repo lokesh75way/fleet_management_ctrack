@@ -10,6 +10,7 @@ import {subUserAccountSchema} from '../../../yup'
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import useStorage from "../../../hooks/useStorage";
 import {useTranslation} from 'react-i18next'
+import UserServices from '../../../services/api/UserServices'
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
 
@@ -34,23 +35,62 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     resolver: yupResolver(subUserAccountSchema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    console.log(data, 'this is data')
+    if(data.hasOwnProperty('_id') && data._id){
+    
     try {
       const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-      data.id = existingData.length + 1;
+      const index = existingData.findIndex((item) => item._id === data._id);
+      //only update fieds that changed on index
+      
+      existingData[index] = { ...existingData[index], ...data };
+      UserServices.updateuser(data, data._id)
+      .then(response => {
+        if(response?.data?.success === true){
+          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          notifySuccess("User updated successfully !!");
+          navigate('/subUser')
+        }else{
+          notifyError(response?.message?.message)
+        }
+      }).catch(error => {
+        notifyError(error?.message?.message);
+      })
+    } catch (error) {
+      notifyError("Error Occured !!");
+      navigate('/subUser')
+    }
+  }else{
+    try {
+      const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+      // data.id = existingData.length + 1;
       data.role = "user";
       data.parent = userName;
-      data.type = role;
-      existingData.push(data);
-      console.log('this is dataaaaaaaaaaaaaaaaa',data);
-      localStorage.setItem("userJsonData", JSON.stringify(existingData));
-      notifySuccess("User created successfully !!");
-      navigate('/subUser')
+      data.type = "admin";
+      
+      UserServices.createUser(data)
+      .then(response => {
+        if(response?.data?.success === true){
+        console.log('this is response',response)
+        data._id = response.data.data._id
+        existingData.push(data);
+        localStorage.setItem("userJsonData", JSON.stringify(existingData));
+        notifySuccess("User created successfully !!");
+        navigate('/subUser')
+        }else{
+          notifyError(response?.message?.message)
+        }
+      }).catch(error => {
+        notifyError(error?.message?.message);
+      })
+      
     } catch (error) {
       notifyError("Error Occured !!");
       navigate('/subUser')
     }
   }
+}
   const {id} = useParams();
   return (
     <>
