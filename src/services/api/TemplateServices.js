@@ -4,7 +4,7 @@ import initAxios from './Axios';
 initAxios();
 
 const TemplateServices = {
-  getModules: async (body) => {
+  getTemplates: async (body) => {
     try {
       const response = await axios.get("/feature-template", body);
       return response.data; // Directly return the data array

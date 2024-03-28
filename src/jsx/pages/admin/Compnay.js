@@ -9,6 +9,8 @@ import { clsx } from 'clsx';
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
+import useStorage from "../../../hooks/useStorage";
+import { usePermissions } from "../../../context/PermissionContext";
 
 
 
@@ -139,6 +141,7 @@ const Company = () => {
   ];
   const company = useRef();
   const edit = useRef();
+  const { can } = usePermissions()
   return (
     <>
       <MainPagetitle
@@ -182,7 +185,7 @@ const Company = () => {
                           />
                         )}
                       />
-                      <Link
+                      {can('company','add') && <Link
                         to={"/company/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
@@ -190,7 +193,7 @@ const Company = () => {
                         // onClick={()=>company.current.showModal()}
                       >
                         + {t('addCompany')}
-                      </Link>{" "}
+                      </Link>}
                     </div>
                   </div>
                   <div
@@ -211,7 +214,7 @@ const Company = () => {
                           <th>{t('email')}</th>
                           <th>{t('branches')}</th>
                           <th>{t('zipCode')}</th>
-                          <th>{t('action')}</th>
+                          {can('comapny', 'edit') && can('comapny', 'delete') && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

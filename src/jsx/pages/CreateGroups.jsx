@@ -14,7 +14,7 @@ const CreateGroups = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const templateData = await TemplateServices.getModules();
+            const templateData = await TemplateServices.getTemplates();
             console.log("Received template data:", templateData);
             setGroupsDataState(templateData.data); // Assuming 'data' property contains template data array
           } catch (error) {
