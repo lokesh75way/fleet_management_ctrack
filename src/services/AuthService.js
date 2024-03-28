@@ -4,9 +4,6 @@ import {
     loginConfirmedAction,
     Logout,
 } from '../store/actions/AuthActions';
-import { isAuthenticated } from '../store/selectors/AuthSelectors';
-import initAxios from './api/Axios';
-initAxios()
 
 export function signUp(email, password) {
     //axios call
@@ -41,14 +38,14 @@ export function login(email, password) {
 export function formatError(errorResponse) {
 
     switch (errorResponse) {
-        case 'EMAIL_EXISTS':            
+        case 'EMAIL_EXISTS':
             swal("Oops", "Email already exists", "error");
             break;
         case 'User not found':
-           swal("Oops", "User not found", "error",{ button: "Try Again!",});
-           break;
+            swal("Oops", "User not found", "error", { button: "Try Again!", });
+            break;
         case 'INVALID_PASSWORD':
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+            swal("Oops", "Invalid Password", "error", { button: "Try Again!", });
             break;
         case 'USER_DISABLED':
             return 'User Disabled';
@@ -74,7 +71,7 @@ export function checkAutoLogin(dispatch, navigate) {
     let tokenDetails = '';
     if (!tokenDetailsString) {
         dispatch(Logout(navigate));
-		return;
+        return;
     }
     tokenDetails = JSON.parse(tokenDetailsString);
     dispatch(loginConfirmedAction(tokenDetails));
@@ -86,7 +83,7 @@ export function isLogin() {
 
     if (tokenDetailsString) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }

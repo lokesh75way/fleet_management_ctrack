@@ -1,9 +1,7 @@
 import axios from "axios";
-import initAxios from "./Axios";
-initAxios()
 
 const VehicleServices = {
-  createVehicles : async (body) => {
+  createVehicles: async (body) => {
     return axios.patch("/vehicle", body);
   },
   getVehicles: async (body) => {
@@ -13,7 +11,7 @@ const VehicleServices = {
     console.log(body)
     return axios.delete(`/vehicle/${body}`);
   },
-  updateVehicles : async (body) => {
+  updateVehicles: async (body) => {
     return axios.patch('/vehicle')
   }
 

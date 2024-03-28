@@ -1,6 +1,4 @@
 import axios from "axios";
-import initAxios from "./Axios";
-initAxios()
 
 const PasswordServices = {
   changePassword: async (body) => {
@@ -13,12 +11,12 @@ const PasswordServices = {
     return axios.post("/auth/forgot-password", body);
   },
 
-  
-//   getStaffById: async (id, body) => {
-//     return requests.post(`/admin/${id}`, body);
-//   },
 
- 
+  //   getStaffById: async (id, body) => {
+  //     return requests.post(`/admin/${id}`, body);
+  //   },
+
+
 };
 
 export default PasswordServices;
