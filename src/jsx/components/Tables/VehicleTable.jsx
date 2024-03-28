@@ -6,13 +6,14 @@ import { FaCar } from "react-icons/fa6";
 import useStorage from "../../../hooks/useStorage";
 
 const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  const { getData } = useStorage();
+  // const { getData } = useStorage();
+  // const filteredItems = getData(tableData);
+  if(tableData.length ===0){
+    return;
+  }
 
-  const filteredItems = getData(tableData);
-  return filteredItems.map((item, index) => (
+  return tableData?.map((item, index) => (
     <tr key={item.id}>
-    
-
       <td>
         <div className="products">
           {/* <img  className="avatar avatar-md" alt="" /> */}
@@ -30,20 +31,20 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
         <span>{item.plateNumber}</span>
       </td>
       <td>
-        <span className="text-primary">{item.branch}</span>
+        <span className="text-primary">{item?.branchId?.branchName}</span>
       </td>
       
       <td>
         <span>{item.simNumber}</span>
       </td>
       <td>
-        <span>{item.IMEINumber}</span>
+        <span>{item.imeiNumber}</span>
       </td>
       <td>
         <span className="text-primary">{item.registrationNumber}</span>
       </td>
       <td>
-        <span>{item.DVIRTemplate}</span>
+        <span>{item.weightCapacity}</span>
       </td>
       {/* <td>
                 <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
@@ -59,7 +60,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
           <DeleteModal
             className="cursor-pointer "
             onConfirmDelete={onConfirmDelete}
-            id={item.id}
+            id={item._id}
           >
             <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
           </DeleteModal>
