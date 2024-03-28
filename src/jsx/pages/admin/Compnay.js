@@ -37,7 +37,7 @@ const Company = () => {
   useEffect(() => {
     if (id) {
       const user = JSON.parse(localStorage.getItem("userJsonData"));
-      const username = user.filter((data) => data.id == id)[0].userName;
+      const username = user.filter((data) => data.id === id)[0].userName;
       console.log(username);
       setFilter({
         value: username,
@@ -190,7 +190,6 @@ const Company = () => {
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                         style={{paddingBlock : '9px'}}
-                        // onClick={()=>company.current.showModal()}
                       >
                         + {t('addCompany')}
                       </Link>}

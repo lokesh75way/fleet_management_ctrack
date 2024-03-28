@@ -105,7 +105,7 @@ const BusinessUser = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t('businessGroup')}</h4>
                     <div>
-                       {can(2, "add") && ( 
+                       {can('business', "add") && ( 
                         <Link
                           to={{
                             pathname: "/business/create",
@@ -137,7 +137,7 @@ const BusinessUser = () => {
                           <th>{t('email')}</th>
                           <th>{t('location')}</th>
                           <th>{t('companyCount')}</th>
-                          <th>{t('action')}</th>
+                          {can('business', "delete") && can('business', "modify") && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

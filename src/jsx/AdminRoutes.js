@@ -126,9 +126,9 @@ const allroutes = [
 
 
 
-  { module: 'sub-user', url: "subUser/create", component: <SubUserForm /> },
-  { module: 'sub-user', url: "subUser", component: <SubUser /> },
-  { module: 'sub-user', url: "subUser/edit/:id", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser', url: "subUser/edit/:id", component: <SubUserForm /> },
 
   { module: 'vehicle', url: "vehicle-tracking", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle-tracking/:id", component: <DriverTracking /> },
@@ -172,7 +172,7 @@ const allroutes = [
   { module: 'groups', url: "groups/permission", component: <Permission /> },
 
   // reports 
-  { module: 'reports', url: "reports/generated", component: <Report /> },
+  { module: 'reports', url: "/reports/generated", component: <Report /> },
   { module: 'reports', url: "/reports/activity", component: <ActivityReport /> },
   { module: 'reports', url: "/reports/geofence-address", component: <GeofenceAddress /> },
   { module: 'reports', url: "/reports/sensor", component: <Sensor /> },
@@ -212,12 +212,34 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (!can(data.module, 'view')) {
+            if (data.url.includes('create') && !can(data.module, data.url, 'create')) {
+              console.log(data.module, data.url, 'create')
                return <Route
+                key={i}
+                exact
                 path={'*'}
                 element={<PermissionDenied />}
               />
             }
+            if (data.url.includes('edit') && !can(data.module, data.url, 'modify')) {
+              console.log(data.module, data.url, 'edit')
+               return <Route
+               key={i}
+                exact
+                path={'*'}
+                element={<PermissionDenied />}
+              />
+            }
+            if (!can(data.module, data.url, 'view')) {
+              console.log(data.module, data.url, 'view')
+               return <Route
+               key={i}
+                exact
+                path={'*'}
+                element={<PermissionDenied />}
+              />
+            }
+            console.log(data.module, data.url, 'all')
             return (
               <Route
                 key={i}

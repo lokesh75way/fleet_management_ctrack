@@ -7,9 +7,13 @@ import { IMAGES, SVGICON } from "../../constant/theme";
 import useStorage from "../../../hooks/useStorage";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
+import { usePermissions } from "../../../context/PermissionContext";
 
 const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   const {getCompany} = useStorage()
+  const {can} = usePermissions()
+  const editPermission = can('business', "modify");
+  const deletePermission = can('business', "delete");
   const {isRtl} = useContext(ThemeContext)
   return (
     <>
@@ -49,24 +53,24 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             </Link>
           </td>
 
-          <td>
+          {deletePermission && editPermission &&<td>
             <span className="d-flex justify-content-center">
-              <span
+              {editPermission && <span
                 className="cursor-pointer"
                 onClick={() => editDrawerOpen(item)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-              </span>
+              </span>}
 
-              <DeleteModal
+              {deletePermission && <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
                 id={item.id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-              </DeleteModal>
+              </DeleteModal>}
             </span>
-          </td>
+          </td>}
         </tr>
       ))}
     </>

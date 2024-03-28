@@ -22,8 +22,8 @@ export function PermissionProvider({ children }) {
 
     userPermission.forEach(permission => {
       permission.permission.map((data,index)=>{
-        permissionsByModuleId[data.moduleId.moduleId] = permission.permission;
-        permissionsByBasePath[data.moduleId.basePath] = permission.permission;
+        permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
+        permissionsByBasePath[data?.moduleId?.basePath] = permission.permission;
         return ;
       })
     });
@@ -37,14 +37,14 @@ export function PermissionProvider({ children }) {
 
 
   const can = (module, operation) => {
-    if (operation === '*') return true;
+    if (module === '*') return true;
 
     const modulePermissions = permissionsByBasePath[module];
+
     if (modulePermissions) {
       return modulePermissions[0][operation] === false ? false :  true
-      // return modulePermissions[0][operation] === false;
     }
-    return false; // Module not found, deny permission
+    return false; 
   };
 
   return (
