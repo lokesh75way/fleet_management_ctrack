@@ -1,3 +1,4 @@
+import { usePermissions } from "../../context/PermissionContext";
 import {
   formatError,
   login,
@@ -13,6 +14,7 @@ export const LOGIN_CONFIRMED_ACTION = "[login action] confirmed login";
 export const LOGIN_FAILED_ACTION = "[login action] failed login";
 export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
+export const SET_PERMISSION = "[Permission action] permission action";
 
 export function signupAction(email, password, navigate) {
   return (dispatch) => {
@@ -46,14 +48,13 @@ export function Logout(navigate) {
 }
 
 export function loginAction(email, password, navigate) {
-
   return (dispatch) => {
     login(email, password)
       .then((response) => {
-        console.log(response.data)
         saveTokenInLocalStorage(response.data.data);
-        runLogoutTimer(dispatch, response.data.data.expiresIn * 1000, navigate);
         dispatch(loginConfirmedAction(response.data.data));
+        dispatch(setPermissions(response.data.data.permissions));
+        localStorage.setItem("permission",JSON.stringify(response.data.data.permissions))
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -74,6 +75,12 @@ export function loginFailedAction(data) {
 export function loginConfirmedAction(data) {
   return {
     type: LOGIN_CONFIRMED_ACTION,
+    payload: data,
+  };
+}
+export function setPermissions(data) {
+  return {
+    type: SET_PERMISSION,
     payload: data,
   };
 }

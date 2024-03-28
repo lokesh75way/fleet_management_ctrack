@@ -40,30 +40,20 @@ const SideBar = () => {
 
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
-  const type = localStorage.getItem("type");
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const role = userDetails?.user?.role;
+  // const type = userDetails?.user?.type;
 
   let MenuList;
-  // if(role === "user"){
-  //   if(type === "admin") MenuList = AdminMenuList;
-  //   else if(type === "businessgroup") MenuList = BusinessGroupMenuList;
-  //   else if(type === "company") MenuList = CompanyMenuList;
-  // }
-  // else if(role === "admin") MenuList = AdminMenuList;
-  // else if(role === "businessgroup") MenuList = BusinessGroupMenuList;
-  // else if(role === "company") MenuList = CompanyMenuList;
   switch (role) {
-    case "company":
+    case "COMPANY":
       MenuList = CompanyMenuList;
       break;
-    case "admin":
+    case "SUPER_ADMIN":
       MenuList = AdminMenuList;
       break;
-    case "businessgroup":
+    case "BUSINESS_GROUP":
       MenuList = BusinessGroupMenuList;
-      break;
-    case "branch":
-      MenuList = SubCompanyMenuList;
       break;
     default:
       MenuList = CompanyMenuList; // Default case if role doesn't match any case

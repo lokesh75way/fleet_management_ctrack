@@ -27,15 +27,15 @@ import { ThemeContext } from "../../context/ThemeContext";
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
   const userName = checkUserName()
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const userData = JSON.parse(localStorage.getItem('userJsonData'))
   var UserData;
-  if(checkRole() === 'company'){
+  if(checkRole() === 'COMPANY'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'company' && item.parent === userName))
   }
-  else if(role === 'businessgroup'){
+  else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'admin') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
 
   const [tableData, setTableData] = useState(UserData);
   const [editData, setEditData] = useState();

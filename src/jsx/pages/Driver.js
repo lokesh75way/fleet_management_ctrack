@@ -10,9 +10,11 @@ import DriverTable from "../components/Tables/DriverTable";
 import { clsx } from 'clsx';
 
 import { ThemeContext } from "../../context/ThemeContext";
+import useStorage from "../../hooks/useStorage";
 
 const Driver = (ref) => {
   const {isRtl} = useContext(ThemeContext);
+  const {checkRole} = useStorage()
   const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
   const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   const navigate = useNavigate();
@@ -29,13 +31,13 @@ const Driver = (ref) => {
 
   useEffect(() => {
     const loginCompanyId = localStorage.getItem("loginDetails-name");
-    const role = localStorage.getItem("role");
+    const role = checkRole()
    
     let data1;
-    if (role === "admin") {
+    if (role === "SUPER_ADMIN") {
       data1 = DriverDataMemoized;
       console.log(data1)
-    } else if (role === "businessgroup") {
+    } else if (role === "BUSINESS_GROUP") {
       data1 = DriverDataMemoized.filter(
         (driver) => driver.parentBusinessGroup === loginCompanyId
       );
@@ -45,7 +47,7 @@ const Driver = (ref) => {
         (driver) => driver.parentBranch === loginCompanyId
       );
     }
-    else if(role === 'company'){
+    else if(role === 'COMPANY'){
       data1 = DriverDataMemoized.filter(
         (driver) => driver.parentCompany === loginCompanyId
       );
