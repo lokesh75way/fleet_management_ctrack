@@ -94,9 +94,7 @@ const Branch = () => {
     const {data, success} = await getAllBranch()
     setTableData(data.data)
   }
-    useEffect(()=>{
-      fetchAllBranch()
-    },[])
+
 
   const [tableData, setTableData] = useState([]);
   const [dataLength, setDataLength] = useState(SubCompanyData.length);
@@ -123,6 +121,11 @@ const Branch = () => {
       }
     }
   };
+
+  useEffect(()=>{
+    fetchAllBranch()
+  },[tableData])
+  
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
