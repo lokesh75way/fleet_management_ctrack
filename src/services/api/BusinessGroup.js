@@ -5,7 +5,6 @@ const createGroup = async (body) => {
 };
 const getGroups = async (body) => {
   const { data } = await axios.get("/business-groups", body);
-  console.log(data);
   return { data: data.data.data, totalLength: data.data.totalLength };
 };
 const deleteGroup = async (body) => {
