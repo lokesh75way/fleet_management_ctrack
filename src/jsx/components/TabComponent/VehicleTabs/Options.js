@@ -160,18 +160,18 @@ export const preferredCurrencyUnitOptions = [
   { value: "75 way", label: "75 way" },
 ];
 export const unitOfFuelOptions = [
-  { value: "LITRES", label: "LITRES" },
+  { value: "LITERS", label: "LITERS" },
   { value: "GALLONS", label: "GALLONS" },
 ];
 
 export const dayOptions = [
-  { value: "Monday", label: "Monday" },
-  { value: "Tuesday", label: "Tuesday" },
-  { value: "Wednesday", label: "Wednesday" },
-  { value: "Thursday", label: "Thursday" },
-  { value: "Friday", label: "Friday" },
-  { value: "Saturday", label: "Saturday" },
-  { value: "Sunday", label: "Sunday" },
+  { value: "MONDAY", label: "MONDAY" },
+  { value: "TUESDAY", label: "TUESDAY" },
+  { value: "WEDNESDAY", label: "WEDNESDAY" },
+  { value: "THURSDAY", label: "THURSDAY" },
+  { value: "FRIDAY", label: "FRIDAY" },
+  { value: "SATURDAY", label: "SATURDAY" },
+  { value: "SUNDAY", label: "SUNDAY" },
 ];
 
 export const statusOptions = [
@@ -179,7 +179,7 @@ export const statusOptions = [
   { value: "INACTIVE", label: "INACTIVE" },
 ];
 
-export const storageCapacityOptions = [
+export const storageCapacityOptions = [ 
   { value: "60 days", label: "60 days" },
   { value: "90 days", label: "90 days" },
   { value: "120 days", label: "120 days" },
@@ -190,7 +190,7 @@ export const languageOptions = [
   { value: "ENGLISH", label: "ENGLISH" },
   { value: "ARABIC", label: "ARABIC" },
   { value: "FRENCH", label: "FRENCH" },
-  { value: "PORTUGESE", label: "PORTUGESE" },
+  { value: "PORTUGUESE", label: "PORTUGUESE" },
 ];
 
 export const currencyOptions = [

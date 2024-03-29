@@ -49,7 +49,7 @@ const CompanyTable = ({
             <span>{item.country}</span>
           </td>
           <td>
-            <span>{item?.companyId?.helpDeskEmail}</span>
+            <span>{item?.email}</span>
           </td>
           <td>
             <Link
@@ -66,7 +66,7 @@ const CompanyTable = ({
             <span className="d-flex justify-content-center">
               {editPermission && <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item?.id)}
+                onClick={() => editDrawerOpen(item?._id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>}

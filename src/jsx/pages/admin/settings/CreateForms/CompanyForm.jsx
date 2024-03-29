@@ -9,23 +9,28 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
-import {useTranslation} from 'react-i18next'
-import { addCompany } from "../../../../../services/api/CompanyServices";
+import { useTranslation } from "react-i18next";
+import { addCompany, editCompany } from "../../../../../services/api/CompanyServices";
+import { dateFormatOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 const CompanyForm = () => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { saveData } = useStorage();
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { formData } = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
-  let tabHeading = [t('newCompany'), t('settings'), t('changePassword')];
+  // ManagePassword , t('changePassword')
+  let tabHeading = [t("newCompany"), t("settings"), t("changePassword")];
   let component = [MyAccount, UserSetting, ManagePassword];
-  if (!id) {
-    tabHeading.pop();
-    component.pop();
-  }
+  // if (!id) {
+  //   tabHeading.pop();
+  //   component.pop();
+  // }
+  tabHeading.pop();
+  component.pop();
 
   const totalTabs = tabHeading.length;
   const {
@@ -41,30 +46,31 @@ const CompanyForm = () => {
     ),
   });
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
-          try{
-            // await editCompany(data) 
-          }
-          catch(e){
-            console.log(e)
+          try {
+            console.log("edit data",data)
+            await editCompany(data);
+            notifySuccess("New Company Created!");
+            navigate("/company");
+          return;
+          } catch (e) {
+            console.log(e);
             notifyError("Some error occured !!");
           }
           return;
         } else {
-          try{
-            await addCompany(data) 
-          }
-          catch(e){
-            console.log(e)
+          try {
+            await addCompany(data);
+            notifySuccess("New Company Created!");
+            navigate("/company");
+          return;
+          } catch (e) {
+            console.log(e);
             notifyError("Some error occured !!");
           }
-      
-          notifySuccess("New Company Created!");
-          navigate("/company");
-          return;
         }
       } catch (error) {
         notifyError("Some error occured !!");
@@ -72,15 +78,15 @@ const CompanyForm = () => {
     }
 
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    console.log(data)
+    console.log(data);
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle={t('company')}
-        pageTitle={id?t('edit'):t('create')}
-        parentTitle={t('company')}
+        mainTitle={t("company")}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t("company")}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -112,6 +118,7 @@ const CompanyForm = () => {
                       >
                         <Component
                           data={tabHeading}
+                          formData={formData}
                           control={control}
                           setValue={setValue}
                           register={register}
