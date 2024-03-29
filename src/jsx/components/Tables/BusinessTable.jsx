@@ -20,7 +20,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       {tableData.map((item, index) => (
         <tr key={index} >
           <td>
-            <span>{item.id}</span>
+            <span>{item._id}</span>
           </td>
           <td>
             <div className="products">
@@ -30,7 +30,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
                 alt=""
               /> */}
               <div>
-                <h6>{item.userName}</h6>
+                <h6>{item.businessGroupId?.groupName}</h6>
               </div>
             </div>
           </td>
@@ -49,7 +49,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
               to={`/company/${item.id}`}
               className="text-primary badge light border-0 badge-count"
             >
-              {getCompany(item.userName)}
+
             </Link>
           </td>
 
@@ -57,7 +57,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             <span className="d-flex justify-content-center">
               {editPermission && <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item)}
+                onClick={() => editDrawerOpen(item._id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>}
@@ -65,7 +65,7 @@ const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
               {deletePermission && <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.id}
+                id={item._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>}

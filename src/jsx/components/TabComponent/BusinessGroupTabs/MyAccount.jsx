@@ -7,7 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import "../../../../scss/pages/_driver-tracking.scss";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 
@@ -25,11 +25,13 @@ const MyAccount = ({
     name: "Select State",
   });
   const {t} = useTranslation();
+  const location = useLocation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
+  
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-
+  const [dValues, setDvalues] = useState({});
   const { id } = useParams();
 
   const customStyles = {
@@ -38,17 +40,15 @@ const MyAccount = ({
       padding: ".25rem 0 ",
     }),
   };
-  // useEffect(()=>{
-  //   console.log("outside");
-  //   console.log(stateid);
-  //   if(stateid !== 0){
-  //     console.log("inside");
-  //     setstateid(0);
-  //     setValue("state", '');
-  //   }
-  // },[countryid])
-
-  const user = localStorage.getItem("loginDetails-email");
+  useEffect(()=>{
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+      console.log(dValues
+        )
+    }
+  },[id])
+ console.log(dValues?.businessGroupId?.groupName)
 
   return (
     <div className="p-4">
@@ -60,10 +60,10 @@ const MyAccount = ({
           <CustomInput
             type="text"
             register={register}
-            label="User Name"
-            name="userName"
+            label="groupName"
+            name="groupName"
             placeholder=""
-            defaultValue={getValues("userName")}
+            defaultValue={getValues("groupName")}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -74,10 +74,10 @@ const MyAccount = ({
           <CustomInput
             type="text"
             register={register}
-            label="User Name2"
-            name="userName2"
+            label="userName"
+            name="userName"
             placeholder=""
-            defaultValue={getValues("userName2")}
+            defaultValue={getValues("userName")}
           />
           <Error errorName={errors.userName2} />
         </div>
@@ -341,7 +341,8 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {/* {t('Next')} */}
+          Next
         </Button>
       </div>
     </div>

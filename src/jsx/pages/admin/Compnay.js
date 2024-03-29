@@ -120,15 +120,6 @@ const Company = () => {
     catch(e){
       notifyError("Something Went Wrong")
     }
-
-    // Remove item from local storage
-    const updatedLocalStorageData = CompanyData.filter(
-      (item) => item.id !== id
-    );
-    localStorage.setItem(
-      "companyData",
-      JSON.stringify(updatedLocalStorageData)
-    );
   };
   const editDrawerOpen = (item) => {
     tableData.map((table) => table.id === item && setEditData(table));
