@@ -9,8 +9,7 @@ export function PermissionProvider({ children }) {
   const [permissionsByBasePath, setPermissionsByBasePath] = useState({});
   // need to access store/storage and set user permissions
   const state = useSelector(state => state);
-  console.log("permission provide",state.auth.permission[0])
-  
+
   // const permissions = state?.auth?.permission[0]
   // const [userPermission, setUserPermission] = useState(permissions || [])
   const permissions = JSON.parse(localStorage.getItem('permission'))
@@ -20,9 +19,9 @@ export function PermissionProvider({ children }) {
     const permissionsByModuleId = {};
     const permissionsByBasePath = {};
     userPermission.forEach(permission => {
-        // permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
-        permissionsByBasePath[permission?.moduleId?.basePath] = permission;
-        return ;
+      // permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
+      permissionsByBasePath[permission?.moduleId?.basePath] = permission;
+      return;
     });
     console.log(permissionsByBasePath)
     setPermissionsByModuleId(permissionsByModuleId)
@@ -35,9 +34,9 @@ export function PermissionProvider({ children }) {
     if (module === '*') return true;
     const modulePermissions = permissionsByBasePath[module];
     if (modulePermissions) {
-      return modulePermissions[operation] === false ? false :  true
+      return modulePermissions[operation] === false ? false : true
     }
-    return false; 
+    return false;
   };
   return (
     <PermissionContext.Provider value={{ can, setUserPermission }}>

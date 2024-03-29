@@ -8,21 +8,11 @@ import { isAuthenticated } from '../store/selectors/AuthSelectors';
 import initAxios from './api/Axios';
 initAxios()
 
-export function signUp(email, password) {
-    //axios call
-    const postData = {
-        email,
-        password,
-        returnSecureToken: true,
-    };
+export function signUp(data) {
     return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-        postData,
+        `/auth/register`,
+        data,
     );
-    // return axios.post(
-    //     `http://192.168.1.23:5000/api/api/auth/login`,
-    //     postData,
-    // );
 }
 
 export function login(email, password) {
@@ -33,7 +23,7 @@ export function login(email, password) {
     };
 
     return axios.post(
-        `http://localhost:5000/api/fleet/auth/login`,
+        `/auth/login`,
         postData,
     )
 }
@@ -41,14 +31,14 @@ export function login(email, password) {
 export function formatError(errorResponse) {
 
     switch (errorResponse) {
-        case 'EMAIL_EXISTS':            
+        case 'EMAIL_EXISTS':
             swal("Oops", "Email already exists", "error");
             break;
         case 'User not found':
-           swal("Oops", "User not found", "error",{ button: "Try Again!",});
-           break;
+            swal("Oops", "User not found", "error", { button: "Try Again!", });
+            break;
         case 'INVALID_PASSWORD':
-            swal("Oops", "Invalid Password", "error",{ button: "Try Again!",});
+            swal("Oops", "Invalid Password", "error", { button: "Try Again!", });
             break;
         case 'USER_DISABLED':
             return 'User Disabled';
@@ -63,10 +53,10 @@ export function saveTokenInLocalStorage(tokenDetails) {
 }
 
 export function runLogoutTimer(dispatch, timer, navigate) {
-    setTimeout(() => {
-        //dispatch(Logout(history));
-        dispatch(Logout(navigate));
-    }, timer);
+    // setTimeout(() => {
+    //     //dispatch(Logout(history));
+    //     dispatch(Logout(navigate));
+    // }, timer);
 }
 
 export function checkAutoLogin(dispatch, navigate) {
@@ -74,7 +64,7 @@ export function checkAutoLogin(dispatch, navigate) {
     let tokenDetails = '';
     if (!tokenDetailsString) {
         dispatch(Logout(navigate));
-		return;
+        return;
     }
     tokenDetails = JSON.parse(tokenDetailsString);
     dispatch(loginConfirmedAction(tokenDetails));
@@ -86,7 +76,7 @@ export function isLogin() {
 
     if (tokenDetailsString) {
         return true;
-    }else{
+    } else {
         return false;
     }
 }
