@@ -1,6 +1,6 @@
 import axios from "axios";
-import initAxios from "./Axios";
-initAxios()
+
+
   export const getCompany =  async () => {
     return axios.get("/companies");
   }
@@ -15,6 +15,10 @@ initAxios()
     return axios.patch("/companies", body);
   }
 
+ export  const changePassword = async (body) => {
+    const data= axios.post("/companies/change-password",body);
+    return data
+  }
   
 //   getStaffById: async (id, body) => {
 //     return requests.post(`/admin/${id}`, body);

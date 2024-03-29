@@ -66,16 +66,11 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
-          console.log("Hello");
-          console.log(data);
+         
           delete data["oldPassword"];
           delete data["newPassword"];
           delete data["retypePassword"];
-          console.log(data);
-          // if(data.zipCode === ''){
-          delete data.zipCode;
-          // }
-          console.log(data);
+        
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
         } else {
@@ -86,7 +81,6 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
 
         return;
       } catch (error) {
-        console.log("data udpated", updateGroup);
         await updateGroup(data);
         notifyError("Some error occured !!");
       }
