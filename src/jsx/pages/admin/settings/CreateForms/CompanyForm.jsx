@@ -37,6 +37,7 @@ const CompanyForm = () => {
 
   const totalTabs = tabHeading.length;
 
+
   const {
     register,
     formState: { errors },
@@ -49,51 +50,53 @@ const CompanyForm = () => {
       activeIndex === 1 ? companySettingSchema : companyAccountSchema
     ),
   });
-
+console.log(activeIndex)
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - 2) {
-      try {
-        if (id) {
-          try {
-            await editCompany(data);
-            notifySuccess("New Company Created!");
-            navigate("/company");
-            return;
-          } catch (e) {
-            console.log(e);
-            notifyError("Some error occured !!");
-          }
-          return;
-        } else {
-          try {
-            await addCompany(data);
-            notifySuccess("New Company Created!");
-            navigate("/company");
-            return;
-          } catch (e) {
-            console.log(e);
-            notifyError("Some error occured !!");
-          }
-        }
-      } catch (error) {
-        notifyError("Some error occured !!");
-      }
-    } else if (activeIndex === 2) {
-      try {
-        const passwordData = {
-          password: data.newPassword,
-          oldPassword: data.oldPassword,
-          confirmPassword: data.retypePassword,
-          _id: id,
-        };
-        await changePassword(passwordData);
-        notifySuccess("Password has been changed");
-        navigate("/companies");
-      } catch (error) {
-        notifyError("Password is not changes!");
-      }
-    }
-    console.log(activeIndex);
+    console.log(activeIndex)
+    // if (activeIndex === totalTabs - 2) {
+    //   try {
+    //     if (id) {
+    //       try {
+    //         await editCompany(data);
+    //         notifySuccess("New Company Created!");
+    //         navigate("/company");
+    //         return;
+    //       } catch (e) {
+    //         console.log(e);
+    //         notifyError("Some error occured !!");
+    //       }
+    //       return;
+    //     } else {
+    //       try {
+    //         await addCompany(data);
+    //         notifySuccess("New Company Created!");
+    //         navigate("/company");
+    //         return;
+    //       } catch (e) {
+    //         console.log(e);
+    //         notifyError("Some error occured !!");
+    //       }
+    //     }
+    //   } catch (error) {
+    //     notifyError("Some error occured !!");
+    //   }
+    // } else if (activeIndex === 2) {
+    //   try {
+    //     console.log("Hello world")
+    //     const passwordData = {
+    //       password: data.newPassword,
+    //       oldPassword: data.oldPassword,
+    //       confirmPassword: data.retypePassword,
+    //       _id: id,
+    //     };
+    //     await changePassword(passwordData);
+    //     notifySuccess("Password has been changed");
+    //     navigate("/companies");
+    //   } catch (error) {
+    //     notifyError("Password is not changes!");
+    //   }
+    // }
+    // console.log(activeIndex);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 
