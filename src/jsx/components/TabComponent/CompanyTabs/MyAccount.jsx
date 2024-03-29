@@ -21,6 +21,7 @@ const MyAccount = ({
   handleSubmit,
   errors,
   control,
+  formData
 }) => {
   const [selectStateName, setSelectStateName] = useState({
     name: "Select State",
@@ -46,6 +47,7 @@ const MyAccount = ({
   //   label: item.userName,
   //   value: item.id,
   // }));
+  console.log(formData)
   const [businessUserOptions,setBusinessUserOptions] = useState([])
   const getBusinessGroup = async()=>{
     const {data} = await getGroups()
@@ -76,13 +78,32 @@ const MyAccount = ({
 
   const { id } = useParams();
   const companyData = JSON.parse(localStorage.getItem("userJsonData"));
-  let newData = [];
-if(id){
-   newData = companyData.filter((data) => data.id == id);
+//   let newData = [];
+// if(id){
+//   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
+//    newData = formData[0].companyId
+// }
+useEffect(()=>{
+  if(formData && id){
+    setValue("businessGroupId",formData[0].companyId?.businessGroupId?.businessGroupId)
+    setValue("companyName",formData[0].companyId?.companyName)
+    setValue("userName", formData[0].userName)
+    setValue("email",formData[0].email)
+    setValue("mobileNumber",formData[0].mobileNumber)
+    setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
+    setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
+    setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
+    setValue("street1",formData[0].companyId?.street1)
+    setValue("street2",formData[0].companyId?.street2)
+    setValue("contactPerson",formData[0].companyId?.contactPerson)
+    setValue("faxNumber",formData[0].companyId?.faxNumber)
+    setValue("zipCode",formData[0].companyId?.zipCode)
+    setValue("city",formData[0].companyId?.city)
+    const capacity = formData[0].companyId?.capacity + " days"
+    setValue("storageCapacity",capacity)
+  }
+},[formData,id])
 
-}
-
-  const [filteredCompanyData, setFilteredCompanyData] = useState(newData);
 
   return (
     <div className="p-4">
@@ -107,19 +128,20 @@ if(id){
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
                 />
               )}
             />
           ) : (
             <Controller
-              name="parent"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setTempValue(newValue.label);
-                    setValue("parent", newValue.label);
+                    setValue("businessGroupId", newValue.label);
                   }}
                   options={[{ value: checkUserName(), label: checkUserName() }]}
                   ref={ref}
@@ -145,10 +167,8 @@ if(id){
             required
             label="Company Name"
             name="companyName"
+            defaultValue={getValues('companyName')}
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].companyName : ""
-            }
           />
           <Error errorName={errors.companyName} />
         </div>
@@ -164,9 +184,7 @@ if(id){
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
-            }
+            defaultValue={getValues('userName')}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -196,7 +214,7 @@ if(id){
             name="email"
             placeholder=""
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].email : ""
+              getValues('email')
             }
           />
           <Error errorName={errors.email} />
@@ -230,9 +248,7 @@ if(id){
             name="helpDeskEmail"
             label="Help Desk Email"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].helpDeskEmail : ""
-            }
+            defaultValue={getValues('helpDeskEmail')}
           />
           <Error errorName={errors.helpDeskEmail} />
         </div>
@@ -252,11 +268,7 @@ if(id){
               const temp = Math.max(0, e.target.value);
               e.target.value = temp < 1 ? "" : temp;
             }}
-            defaultValue={
-              filteredCompanyData[0]
-                ? filteredCompanyData[0].helpDeskTelephoneNumber
-                : ""
-            }
+            defaultValue={getValues('helpDeskTelephoneNumber')}
             placeholder=""
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
@@ -277,9 +289,7 @@ if(id){
               const temp = Math.max(0, e.target.value);
               e.target.value = temp < 1 ? "" : temp;
             }}
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].mobileNumber : ""
-            }
+            defaultValue={getValues('mobileNumber')}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -297,11 +307,7 @@ if(id){
               e.target.value = temp < 1 ? "" : temp;
             }}
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0]
-                ? filteredCompanyData[0].whatsappContactNumber
-                : ""
-            }
+            defaultValue={getValues('whatsappContactNumber')}
           />
           <Error errorName={errors.whatsappContactNumber} />
         </div>
@@ -356,9 +362,7 @@ if(id){
             label="City"
             name="city"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].city : ""
-            }
+            defaultValue={getValues('city')}
           />
           <Error errorName={errors.city} />
         </div>
@@ -377,9 +381,7 @@ if(id){
               const temp = Math.max(0, e.target.value);
               e.target.value = temp < 1 ? "" : temp;
             }}
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
-            }
+            defaultValue={getValues('zipCode')}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -393,9 +395,9 @@ if(id){
                 onChange={(newValue) => setValue("storageCapacity", newValue.value)}
                 options={storageCapacityOptions}
                 ref={ref}
-                name={name}
+                name="storageCapacity"
                 styles={customStyles}
-                defaultValue={storageCapacityOptions[1]}
+                value={{label: getValues("storageCapacity") ,value: getValues("storageCapacity")}}
               />
             )}
           />
@@ -416,9 +418,7 @@ if(id){
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].street1 : ""
-            }
+            defaultValue={getValues('street1')}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -432,6 +432,7 @@ if(id){
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={getValues('street2')}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -441,6 +442,7 @@ if(id){
             register={register}
             label="Contact Person"
             name="contactPerson"
+            defaultValue={getValues('contactPerson')}
             placeholder=""
           />
         </div>
@@ -453,6 +455,7 @@ if(id){
             register={register}
             label="Fax Number"
             name="faxNumber"
+            defaultValue={getValues('faxNumber')}
             placeholder=""
           />
         </div>

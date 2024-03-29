@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import CustomInput from '../../Input/CustomInput'
 import { Controller, useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
 import {useTranslation} from 'react-i18next'
+import {useLocation,useParams} from 'react-router-dom'
 
 import Error from "../../Error/Error";
 import {
@@ -20,17 +21,38 @@ import {
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
+const UserSetting = ({ setValue,getValues ,handleSubmit, onSubmit,errors, control, register }) => {
 const {t} = useTranslation();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
-
+  const [dValues, setDvalues] = useState([]);
+  const location = useLocation();
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+  const { id } = useParams();
+  useEffect(()=>{
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+    }
+  },[id])
+  useEffect(()=>{
+    setValue('dateFormat',dValues?.dateFormat || dateFormatOptions[0].value)
+    setValue('unitOfDistance',dValues?.unitOfDistance || unitOfDistanceOptions[0].value)
+    setValue('timeFormat',dValues?.timeFormat || timeFormatOptions[0].value)
+    setValue('unitOfFuel',dValues?.unitOfFuel || unitOfFuelOptions[0].value)
+    setValue('language',dValues?.language || languageOptions[0].value)
+    setValue('status',dValues?.status || statusOptions[0].value)
+    setValue('workStartDay',dValues?.workStartDay || dayOptions[0].value)
+    setValue('currency',dValues?.currency || currencyOptions[0].value)
+  },[])
+
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -46,7 +68,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dateFormatOptions[0]}
+                value={{label:getValues("dateFormat"), value :getValues("dateFormat")}}
               />
             )}
           />
@@ -65,7 +87,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={timeFormatOptions[0]}
+                value={{label:getValues("timeFormat"), value :getValues("timeFormat")}}
               />
             )}
           />
@@ -84,7 +106,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={fuelEconomyScalingOptions[0]}
+                value={{label:getValues("unitOfDistance"), value :getValues("unitOfDistance")}}
               />
             )}
           />
@@ -102,7 +124,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfFuelOptions[0]}
+                value={{label:getValues("unitOfFuel"), value :getValues("unitOfFuel")}}
               />
             )}
           />
@@ -119,7 +141,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={languageOptions[0]}
+                value={{label:getValues("language"), value :getValues("language")}}
               />
             )}
           />
@@ -136,7 +158,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={statusOptions[0]}
+                value={{label:getValues("status"), value :getValues("status")}}
               />
             )}
           />
@@ -153,7 +175,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dayOptions[0]}
+                value={{label:getValues("workStartDay"), value :getValues("workStartDay")}}
               />
             )}
           />
@@ -170,7 +192,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={currencyOptions[0]}
+                value={{label:getValues("currency"), value :getValues("currency")}}
               />
             )}
           />
@@ -188,7 +210,6 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfFuelOptions[0]}
                 value={selectedTimezone}
               />
             )}
