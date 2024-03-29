@@ -6,14 +6,11 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import "../../../../scss/pages/_driver-tracking.scss";
 
 const ManagePassword = ({
-  data,
-  setValue,
   getValues,
   register,
   onSubmit,
   handleSubmit,
   errors,
-  control,
 }) => {
   const [showOldPassword, setOldShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
@@ -106,7 +103,9 @@ const ManagePassword = ({
       >
         <Button
           type="submit"
-          onClick={handleSubmit(onSubmit)}
+          onClick={()=> {
+            console.log("clicked!")
+          }}
           style={{ width: "10%" }}
         >
           {" "}
