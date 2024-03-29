@@ -52,6 +52,8 @@ const MyAccount = ({
   const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
   const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
+  const [defaultCountry,setDefaultCountry] = useState();
+  
 
   const businessGroupOptions = async (inputValue) => {
     try {
@@ -87,20 +89,20 @@ const MyAccount = ({
   };
   // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
 
-  useEffect(() => {
-    const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-      .filter((br) => br.parentCompany === companyValue)
-      .map((item) => ({
-        label: item.userName,
-        value: item.id,
-      }));
+  // useEffect(() => {
+  //   const tempparentOptions = DummyData.filter((item) => item.role === "branch")
+  //     .filter((br) => br.parentCompany === companyValue)
+  //     .map((item) => ({
+  //       label: item.userName,
+  //       value: item.id,
+  //     }));
 
-    tempparentOptions.push({ label: "None", value: 0 });
+  //   tempparentOptions.push({ label: "None", value: 0 });
 
-    setBusinessUserOptions(tempbusinessUserOptions);
-    setCompanyOptions(tempcompanyOptions);
-    setParentOptions(tempparentOptions);
-  }, [businessUserValue, companyValue, parentValue]);
+  //   setBusinessUserOptions(tempbusinessUserOptions);
+  //   setCompanyOptions(tempcompanyOptions);
+  //   setParentOptions(tempparentOptions);
+  // }, [businessUserValue, companyValue, parentValue]);
 
   const { id } = useParams();
   useEffect(() => {
@@ -115,59 +117,65 @@ const MyAccount = ({
   useEffect(() => {
     console.log(dValues);
     if (dValues && id) {
-      setValue("groupName", dValues.businessGroupId?.groupName);
+      setValue("businessGroupName", dValues.businessGroupId?.groupName);
+      setValue("businessGroupId", dValues.businessGroupId?._id);
       setValue("companyName", dValues.companyId?.companyName);
       setValue("companyId", dValues.companyId?._id);
-      setValue("parent", dValues.parentBranchId?.branchName);
+      setValue("parentBranch", dValues.parentBranchId?.branchName);
+      setValue("parentBranchId", dValues.parentBranchId?._id);
       setValue("branchName", dValues.branchName);
       setValue("city", dValues.city);
       setValue("country", dValues.country);
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
       setValue("street2", dValues.street2);
+      setDefaultCountry({ name:dValues.country })
+      setValue("country",dValues.country)
+      setSelectStateName({name : dValues.state})
+      setValue("state",dValues.state)
     }
   }, [dValues, id]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
 
-  useEffect(() => {
-    setValue(
-      "parentBusinessGroup",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-    );
-    setValue(
-      "parentCompany",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
-    );
-    setValue(
-      "parentBranch",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-    );
-    setValue(
-      "country",
-      filteredCompanyData[0] ? filteredCompanyData[0].country : ""
-    );
-    setValue(
-      "state",
-      filteredCompanyData[0] ? filteredCompanyData[0].state : ""
-    );
-  }, []);
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("loginDetails-name");
-    const role = localStorage.getItem("role");
-    if (role === "businessgroup") {
-      setTempValue(loggedInUser);
-      setValue("parentBusinessGroup", loggedInUser);
-    }
-    if (role === "company") {
-      setValue("parentCompany", loggedInUser);
-      const filterparent = DummyData.filter(
-        (item) => item.userName === loggedInUser
-      )[0].parent;
-      setValue("parentBusinessGroup", filterparent);
-      setTempValue(loggedInUser);
-    }
-  }, []);
+  // useEffect(() => {
+  //   setValue(
+  //     "parentBusinessGroup",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
+  //   );
+  //   setValue(
+  //     "parentCompany",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
+  //   );
+  //   setValue(
+  //     "parentBranch",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
+  //   );
+  //   setValue(
+  //     "country",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].country : ""
+  //   );
+  //   setValue(
+  //     "state",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].state : ""
+  //   );
+  // }, []);
+  // useEffect(() => {
+  //   const loggedInUser = localStorage.getItem("loginDetails-name");
+  //   const role = localStorage.getItem("role");
+  //   if (role === "businessgroup") {
+  //     setTempValue(loggedInUser);
+  //     setValue("parentBusinessGroup", loggedInUser);
+  //   }
+  //   if (role === "company") {
+  //     setValue("parentCompany", loggedInUser);
+  //     const filterparent = DummyData.filter(
+  //       (item) => item.userName === loggedInUser
+  //     )[0].parent;
+  //     setValue("parentBusinessGroup", filterparent);
+  //     setTempValue(loggedInUser);
+  //   }
+  // }, []);
 
   // console.log(defaultValues)
 
@@ -192,15 +200,15 @@ const MyAccount = ({
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.label);
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  
-                  defaultValue={{
-                    label: dValues.businessGroupId?.groupName,
-                    value: dValues.businessGroupId?._id,
+                  value={{
+                    label: getValues('businessGroupName'),
+                    value: getValues('businessGroupId'),
                   }}
                 />
               )}
@@ -215,6 +223,7 @@ const MyAccount = ({
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.label);
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
@@ -222,9 +231,9 @@ const MyAccount = ({
                   name={name}
                   styles={customStyles}
                   defaultOptions
-                  defaultValue={{
-                    label: dValues.businessGroupId?.groupName,
-                    value: dValues.businessGroupId?._id,
+                  value={{
+                    label: getValues('businessGroupName'),
+                    value: getValues('businessGroupId'),
                   }}
                 />
               )}
@@ -249,13 +258,14 @@ const MyAccount = ({
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.label);
                   }}
                   loadOptions={allCompanyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
                   defaultOptions
-                  defaultValue={{
+                  value={{
                     label: getValues('companyName'),
                     value: getValues('companyId'),
                   }}
@@ -279,7 +289,7 @@ const MyAccount = ({
                   name={name}
                   styles={customStyles}
                   defaultOptions
-                  defaultValue={{
+                  value={{
                     label: getValues('companyName'),
                     value: getValues('companyId'),
                   }}
@@ -306,9 +316,9 @@ const MyAccount = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={{
-                  label: dValues.parentBranchId?.branchName,
-                  value: dValues.parentBranchId?._id,
+                value={{
+                  label: getValues('parentBranch'),
+                  value: getValues('parentBranchId')
                 }}
               />
             )}
@@ -347,8 +357,8 @@ const MyAccount = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-            defaultValue = {{label : getValues('country'), value : getValues('country')}}
-            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
+            defaultValue={defaultCountry}
+            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyD0ata[0].country : "" }}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -404,7 +414,7 @@ const MyAccount = ({
               e.target.value = temp < 1 ? "" : temp;
             }}
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
+              getValues('zipCode')
             }
           />
           <Error errorName={errors.zipCode} />
@@ -421,7 +431,7 @@ const MyAccount = ({
             name="street1"
             placeholder=""
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].street1 : ""
+              getValues('street1')
             }
           />
           <Error errorName={errors.street1} />
@@ -436,6 +446,7 @@ const MyAccount = ({
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={getValues('street2')}
           />
         </div>
       </div>

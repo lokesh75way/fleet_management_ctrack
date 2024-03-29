@@ -11,7 +11,8 @@ import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import {useTranslation} from'react-i18next';
-import { createNewBranch } from "../../../../../services/api/BranchServices";
+import { createNewBranch, editBranch } from "../../../../../services/api/BranchServices";
+import { editCompany } from "../../../../../services/api/CompanyServices";
  
 const BranchForm = () => {
   const {t} = useTranslation();
@@ -21,10 +22,14 @@ const BranchForm = () => {
  
   const navigate = useNavigate();
   const { id } = useParams();
-  if(!id){
+
     component.pop();
     tabHeading.pop();
-  }
+
+  //  if(!id){
+  //   component.pop();
+  //   tabHeading.pop();
+  // }
   const totalTabs = tabHeading.length;
   const {
     register,
@@ -44,7 +49,14 @@ const BranchForm = () => {
       try {
         if (id) {
           try{
-            // await editCompany(data)
+            const Branchdata = {
+              ...data,
+              branchId :id
+            }
+            await editBranch(Branchdata)
+            console.log("Brach created", data)
+            notifySuccess("Branch Updated!");
+            navigate("/branch");
           }
           catch(e){
             console.log(e)

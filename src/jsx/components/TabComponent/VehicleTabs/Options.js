@@ -52,7 +52,7 @@ export const featureTemplateOptions = [
   { value: "Template 4", label: "Template 4" },
 ];
 export const unitOfDistanceOptions = [
-  { value: "KILOMETER", label: "KILOMETER" },
+  { value: "KILOMETERS", label: "KILOMETERS" },
   { value: "MILES", label: "MILES" },
   { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
@@ -134,17 +134,17 @@ export const dateFormatOptions = [
   { value: "MM-DD-YYYY", label: "MM-dd-yyyy" },
 ];
 export const timeFormatOptions = [
-  { value: "12", label: "12" },
-  { value: "24", label: "24" },
+  { value: "12 Hour", label: "12 Hour" },
+  { value: "24 Hour", label: "24 Hour" },
 ];
 export const weekStartDayOptions = [
-  { value: "Sunday", label: "Sunday" },
-  { value: "Monday", label: "Monday" },
-  { value: "Tuesday", label: "Tuesday" },
-  { value: "Wednesday", label: "Wednesday" },
-  { value: "Thursday", label: "Thursday" },
-  { value: "Friday", label: "Friday" },
-  { value: "Saturday", label: "Saturday" },
+  { value: "SUNDAY", label: "SUNDAY" },
+  { value: "MONDAY", label: "MONDAY" },
+  { value: "TUESDAY", label: "TUESDAY" },
+  { value: "WEDNESDAY", label: "WEDNESDAY" },
+  { value: "THURSDAY", label: "THURSDAY" },
+  { value: "FRIDAY", label: "FRIDAY" },
+  { value: "SATURDAY", label: "SATURDAY" },
 ];
 export const subCompanyOptions = [
   { value: "All", label: "All" },
@@ -156,17 +156,17 @@ export const preferredCurrencyUnitOptions = [
   { value: "75 way", label: "75 way" },
 ];
 export const unitOfFuelOptions = [
-  { value: "LITRES", label: "LITRES" },
+  { value: "LITERS", label: "LITERS" },
   { value: "GALLONS", label: "GALLONS" },
 ];
 export const dayOptions = [
-  { value: "Monday", label: "Monday" },
-  { value: "Tuesday", label: "Tuesday" },
-  { value: "Wednesday", label: "Wednesday" },
-  { value: "Thursday", label: "Thursday" },
-  { value: "Friday", label: "Friday" },
-  { value: "Saturday", label: "Saturday" },
-  { value: "Sunday", label: "Sunday" },
+  { value: "SUNDAY", label: "SUNDAY" },
+  { value: "MONDAY", label: "MONDAY" },
+  { value: "TUESDAY", label: "TUESDAY" },
+  { value: "WEDNESDAY", label: "WEDNESDAY" },
+  { value: "THURSDAY", label: "THURSDAY" },
+  { value: "FRIDAY", label: "FRIDAY" },
+  { value: "SATURDAY", label: "SATURDAY" },
 ];
 export const statusOptions = [
   { value: "ACTIVE", label: "ACTIVE" },
