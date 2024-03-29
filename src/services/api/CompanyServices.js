@@ -3,7 +3,7 @@ import initAxios from "./Axios";
 initAxios()
 
   export const getCompany =  async () => {
-    return axios.get("/companies");
+    return axios.get("/company");
   }
   export const addCompany =  async (body) => {
     return axios.post("/companies", body);
