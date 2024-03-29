@@ -77,7 +77,7 @@ const ManagePassword = ({
               type={showConfirmPassword ? "text" : "password"}
               register={register}
               label="Retype Passwor"
-              name="retypePassword"
+              name="confirmPassword"
               placeholder=""
             />
             <span
@@ -103,9 +103,7 @@ const ManagePassword = ({
       >
         <Button
           type="submit"
-          onClick={()=> {
-            console.log("clicked!")
-          }}
+          onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
           {" "}
