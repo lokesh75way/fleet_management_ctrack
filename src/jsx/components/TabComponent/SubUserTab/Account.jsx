@@ -28,6 +28,7 @@ const Account = ({
   const [selectStateName, setSelectStateName] = useState({
     name: "Select State",
   });
+  const {checkRole,checkUser} = useStorage()
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -43,14 +44,14 @@ const Account = ({
     
   };
 
-  const role = localStorage.getItem("role");
+  const role = checkRole()
   const { id } = useParams();
   const User = JSON.parse(localStorage.getItem("userJsonData"));
 
   const loggedinemail = localStorage.getItem("loginDetails-name");
   let defaultCompanyOptions;
 
-  if(role === "admin") {
+  if(role === "SUPER_ADMIN") {
 
     defaultCompanyOptions = DummyData.filter(
       (item) => item.role === "company"
@@ -70,7 +71,7 @@ const Account = ({
   }
 
   let parentbgname;
-  if(role === 'company') {
+  if(role === 'COMPANY') {
     const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
     parentbgname = parentbgnamefilter[0].parentBusinessGroup;
   }
@@ -103,12 +104,12 @@ const Account = ({
     }));
 
     let tempcompanyOptions;
-    if(role === "businessgroup"){
+    if(role === "BUSINESS_GROUP"){
 
       tempcompanyOptions = DummyData.filter(
         (item) => item.role === "company"
       )
-        .filter((cp) => cp.parent === loggedinemail)
+        .filter((cp) => cp.parent === checkUser())
         .map((item) => ({
           label: item.userName,
           value: item.id,
@@ -130,9 +131,9 @@ const Account = ({
 
     let tempparentOptions;
 
-    if(role === 'company') {
+    if(role === 'COMPANY') {
       tempparentOptions = DummyData.filter((item) => item.role === "branch")
-        .filter((br) => br.parentCompany === loggedinemail)
+        .filter((br) => br.parentCompany === checkUser())
         .map((item) => ({
           label: item.userName,
           value: item.id,
@@ -147,8 +148,8 @@ const Account = ({
     }
 
     let tempvehicleOptions;
-    if(role === 'company') {
-      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === loggedinemail ).map((item) => ({
+    if(role === 'COMPANY') {
+      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === checkUser() ).map((item) => ({
         label: item.vehicleName,
         value: item.id,
       }));
@@ -229,10 +230,10 @@ const Account = ({
                 isDisabled={defaultValues.business.disabled}
                 name={name}
                 styles={customStyles}
-                defaultValue={role === 'company' && {
+                defaultValue={role === 'COMPANY' && {
                   label: parentbgname,
                   value: parentbgname,
-                } || role === 'businessgroup' && {
+                } || role === 'BUSINESS_GROUP' && {
                   label: loggedinemail,
                   value: loggedinemail,
                 } 
@@ -262,7 +263,7 @@ const Account = ({
                 name={name}
                 styles={customStyles}
 
-                defaultValue={role === 'company' && {
+                defaultValue={role === 'COMPANY' && {
                   label: loggedinemail,
                   value: loggedinemail,
                 } }

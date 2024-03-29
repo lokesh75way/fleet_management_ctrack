@@ -4,10 +4,13 @@ import VehicleTable from "../components/Tables/VehicleTable";
 import { ThemeContext } from "../../context/ThemeContext";
 import MainPagetitle from "../layouts/MainPagetitle";
 import { clsx } from "clsx";
+import VehicleServices from "../../services/api/VehicleService";
+import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 
 const Vehicle = () => {
   const { isRtl } = useContext(ThemeContext);
+  const {can} = usePermissions()
   const arrowleft = clsx({
     "fa-solid fa-angle-right": isRtl,
     "fa-solid fa-angle-left": !isRtl,
@@ -122,13 +125,13 @@ const Vehicle = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Vehicle</h4>
                     <div>
-                      <Link
+                     {can('vehicle','add') && <Link
                         to={"/vehicle/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
                         + Add Vehicle Info
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -148,7 +151,7 @@ const Vehicle = () => {
                           <th>IMEI Number</th>
                           <th>Registration Number</th>
                           <th>Weight Capacity</th>
-                          <th>Action</th>
+                          {(can('vehicle','modify') || can('vehicle','delete')) && <th>Action</th>}
                         </tr>
                       </thead>
                       <tbody>

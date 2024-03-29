@@ -12,6 +12,7 @@ import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import {useTranslation} from 'react-i18next'
+import { addCompany } from "../../../../../services/api/CompanyServices";
 const CompanyForm = () => {
 
   const {t} = useTranslation();
@@ -40,26 +41,27 @@ const CompanyForm = () => {
     ),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
-          const val = JSON.parse(localStorage.getItem("userJsonData"));
-          console.log("Id is needed", id, data);
-          const indexToUpdate = val.findIndex((item) => item.id == id);
-          if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id, role: "company" };
-            localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess("Company Updated!");
-            navigate("/company");
+          try{
+            // await editCompany(data) 
+          }
+          catch(e){
+            console.log(e)
+            notifyError("Some error occured !!");
           }
           return;
         } else {
-          data = { ...data, role: "company" };
-          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-          data.id = existingData.length + 1;
-          existingData.push(data);
-          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          try{
+            await addCompany(data) 
+          }
+          catch(e){
+            console.log(e)
+            notifyError("Some error occured !!");
+          }
+      
           notifySuccess("New Company Created!");
           navigate("/company");
           return;
@@ -68,8 +70,9 @@ const CompanyForm = () => {
         notifyError("Some error occured !!");
       }
     }
+
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    notifySuccess("Saved !");
+    console.log(data)
   };
 
   return (
