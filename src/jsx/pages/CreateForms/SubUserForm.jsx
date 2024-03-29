@@ -36,6 +36,13 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   });
 
   const onSubmit = async (data) => {
+    //if data.businessUser exists create new field named businessGroupId in data with value of businessUser
+    if (data.businessUser) {
+      data.businessGroupId = data.businessUser;
+    }
+    if(data.parentCompany){
+      data.companyId = data.parentCompany;
+    }
     console.log(data, 'this is data')
     if (data.hasOwnProperty('_id') && data._id) {
 

@@ -269,14 +269,14 @@ const Account = ({
   useEffect(() => {
 
     const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
+    const selectedGroupId = filteredUserData[0]?.businessGroupId;
+    const selectedCompanyId = filteredUserData[0]?.companyId;
     setValue("featureTemplateId", selectedTemplateId);
+    setValue("businessUser", selectedGroupId);
+    setValue("parentCompany", selectedCompanyId);
     setValue(
       "parentBusinessGroup",
       filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-    );
-    setValue(
-      "parentCompany",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
     );
     setValue(
       "parentBranch",
@@ -314,7 +314,7 @@ const Account = ({
               <Select
                 onChange={(newValue) => {
                   setBusinessUserValue(newValue.label);
-                  setValue("parentBusinessGroup", newValue.label);
+                  setValue("parentBusinessGroup", newValue.value);
                   setValue("businessUser", newValue.value);
                 }}
                 options={businessUserOptions}
@@ -340,7 +340,7 @@ const Account = ({
               <Select
                 onChange={(newValue) => {
                   setCompanyValue(newValue.label);
-                  setValue("parentCompany", newValue.label);
+                  setValue("parentCompany", newValue.value);
                 }}
                 isDisabled={defaultValues?.company?.disabled}
                 options={companyOptions}
@@ -549,7 +549,7 @@ const Account = ({
             {t('featureTemplate')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="featureTemplateId"
+            name="featureTemplateId" 
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
