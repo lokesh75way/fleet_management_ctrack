@@ -284,20 +284,22 @@ export const driverProfileSchema = yup
     employeeNumber: yup.number().typeError("Employee Number must be a number"),
     zipCode: yup
       .number()
-      .positive('Zip Code must be a positive number')
-      .integer('Zip Code must be an integer')
+      .positive("Zip Code must be a positive number")
+      .integer("Zip Code must be an integer")
       .nullable(true)
-      .transform((_, val) => val ? Number(val) : null),
-    contactNumber1: yup
+      .transform((_, val) => (val ? Number(val) : null)),
+    contact1: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits")
       .required("Contact Number1 is required "),
-    contactNumber2: yup
+    contact2: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
     country: yup.string().required("Please select a Country "),
     street1: yup.string().required("Please enter street1 address"),
+    street2: yup.string(),
     city: yup.string().required("Please enter a City "),
+    state: yup.string(),
   })
   .required();
 export const driverInfoSchema = yup
