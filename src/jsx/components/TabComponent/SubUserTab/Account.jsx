@@ -17,7 +17,7 @@ import { notifyError } from "../../../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import {getGroups} from "../../../../services/api/BusinessGroup";
 import {getCompany} from "../../../../services/api/CompanyServices";
-// import {getBranch} from "../../../../services/api/";
+import {getAllBranch} from "../../../../services/api/BranchServices";
 
 const Account = ({
   handleNext,
@@ -53,7 +53,7 @@ const Account = ({
     const fetchOptions = async () => {
       const response = await getGroups();
       const companyResponse = await getCompany();
-      // const branchResponse = await getBranch();
+      const branchResponse = await getAllBranch();
       console.log(response, "response");
       if (response.error) {
         notifyError(response.error)
@@ -78,16 +78,18 @@ const Account = ({
         }));
         setCompanyOptions(companyOptions);
       }
-      // if (branchResponse.error) {
-      //   notifyError(branchResponse.error)
-      // } else {
-      //   const branches = branchResponse.data;
-      //   const branchOptions = branches.map((item) => ({
-      //     label: item.branchName,
-      //     value: item._id,
-      //   }));
-      //   setParentOptions(branchOptions);
-      // }
+      if (branchResponse.error) {
+        notifyError(branchResponse.error)
+      } else {
+        const branches = branchResponse;
+        console.log(branches, "branches");
+        const branchOptions = branches.map((item) => ({
+          label: item.branchName,
+          value: item._id,
+        }));
+        setParentOptions(branchOptions);
+        setBranchOptions(branchOptions);
+      }
     }
     fetchOptions()
   }, []);
@@ -108,22 +110,6 @@ const Account = ({
       }
     }
     fetchOptions()
-
-    // TemplateServices.getTemplates()
-    //   .then((response) => {
-    //     if (response?.data?.success === true) {
-    //       const templates = response.data.data;
-    //       console.log(templates, "templates");
-    //       const tempOptions = templates.map((item) => ({
-    //         label: item.name,
-    //         value: item._id,
-    //       }));
-    //       setTemplateOptions(tempOptions);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }, []);
 
 
@@ -172,6 +158,7 @@ const Account = ({
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
+  const [branchOptions, setBranchOptions] = useState([]);
   const [parentOptions, setParentOptions] = useState([]);
   const [vehiclesOptions, setVehiclesOptions] = useState([]);
   const [businessUserValue, setBusinessUserValue] = useState();
@@ -271,9 +258,13 @@ const Account = ({
     const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
     const selectedGroupId = filteredUserData[0]?.businessGroupId;
     const selectedCompanyId = filteredUserData[0]?.companyId;
+    const selectedBranchId = filteredUserData[0]?.branchId;
     setValue("featureTemplateId", selectedTemplateId);
     setValue("businessUser", selectedGroupId);
     setValue("parentCompany", selectedCompanyId);
+    setValue("Branch", selectedBranchId);
+
+
     setValue(
       "parentBusinessGroup",
       filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
@@ -362,27 +353,25 @@ const Account = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setValue("Branch", newValue);
+                  setValue("Branch", newValue.value);
                 }}
-                options={parentOptions}
+                options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 isMulti={true}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].Branch : ""
-                }
+                value={branchOptions.find(option => option.value === value)}
               />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        {/* <div className="col-xl-6 mb-3">
           <label className="form-label">{t('vehicle')}</label>
           <Controller
             name="accessibleVehicles"
             control={control}
-            rules={{ required: true }}
+            
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
@@ -400,7 +389,7 @@ const Account = ({
             )}
           />
           {!getValues("vehicle") && <Error errorName={errors.parent} />}
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t('email')} <span className="text-danger">*</span>
