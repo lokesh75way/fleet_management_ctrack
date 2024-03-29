@@ -1,9 +1,9 @@
-import React,{useState} from "react";
-import { NavLink ,Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { connect, useDispatch } from 'react-redux';
 import {
-    loadingToggleAction,
-    signupAction,
+	loadingToggleAction,
+	signupAction,
 } from '../../store/actions/AuthActions';
 // image
 
@@ -14,48 +14,63 @@ import bg6 from '../../images/background/bg6.jpg';
 function Register(props) {
 	const [heartActive, setHeartActive] = useState(true);
 
-    const [email, setEmail] = useState('');
-    let errorsObj = { email: '', password: '' };
-    const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
+	const [username, setUserName] = useState('');
+	let errorsObj = { email: '', password: '', mobile: '', name };
+	const [errors, setErrors] = useState(errorsObj);
+	const [password, setPassword] = useState('');
+	const [mobile, setMobile] = useState('');
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-    function onSignUp(e) {
-        e.preventDefault();
-        let error = false;
-        const errorObj = { ...errorsObj };
-        if (email === '') {
-            errorObj.email = 'Email is Required';
-            error = true;
-        }
-        if (password === '') {
-            errorObj.password = 'Password is Required';
-            error = true;
-        }
-        setErrors(errorObj);
-        if (error) return;
-        dispatch(loadingToggleAction(true));
-        dispatch(signupAction(email, password, navigate));
-    }
-	
+	function onSignUp(e) {
+		e.preventDefault();
+		let error = false;
+		const errorObj = { ...errorsObj };
+		if (email === '') {
+			errorObj.email = 'Email is Required';
+			error = true;
+		}
+		if (password === '') {
+			errorObj.password = 'Password is Required';
+			error = true;
+		}
+		if (name === '') {
+			errorObj.name = 'Name is Required';
+			error = true;
+		}
+		if (mobile === '') {
+			errorObj.mobile = 'Mobile is Required';
+			error = true;
+		}
+		if (username === '') {
+			errorObj.username = 'Username is Required';
+			error = true;
+		}
+		setErrors(errorObj);
+		if (error) return;
+		dispatch(loadingToggleAction(true));
+		dispatch(signupAction({ email, password, name, mobile, username }, navigate));
+	}
+
 	return (
 		<>
 			<div className="page-wraper">
 				<div className="browse-job login-style3">
-					<div className="bg-img-fix overflow-hidden" style={{background:'#fff url('+ bg6 + ')',  height: "100vh"}}>
+					<div className="bg-img-fix overflow-hidden" style={{ background: '#fff url(' + bg6 + ')', height: "100vh" }}>
 						<div className="row gx-0">
 							<div className="col-xl-4 col-lg-5 col-md-6 col-sm-12 vh-100 bg-white">
-								<div id="mCSB_1" className="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" style={{maxHeight: "653px"}}>
-									<div id="mCSB_1_container" className="mCSB_container" style={{position:"relative", top:"0", left:"0", dir:"ltr"}}>
+								<div id="mCSB_1" className="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" style={{ maxHeight: "653px" }}>
+									<div id="mCSB_1_container" className="mCSB_container" style={{ position: "relative", top: "0", left: "0", dir: "ltr" }}>
 										<div className="login-form style-2">
 											<div className="card-body">
-												<div className="logo-header">													
+												<div className="logo-header">
 													<Link to={"/login"} className="logo"><img src={logo} alt="log1" className="width-230 light-logo" /></Link>
 													<Link to={"/login"} className="logo"><img src={LogoWhite} alt="log2" className="width-230 dark-logo" /></Link>
-												</div>												
-												<nav className="nav nav-tabs border-bottom-0" >														
+												</div>
+												<nav className="nav nav-tabs border-bottom-0" >
 													<div className="tab-content w-100" id="nav-tabContent">
 														<div className="tab-pane active show fade">
 															{props.errorMessage && (
@@ -67,7 +82,7 @@ function Register(props) {
 																<div className=''>
 																	{props.successMessage}
 																</div>
-															)}	
+															)}
 															<form className="dz-form py-2" onSubmit={onSignUp}>
 																<h3 className="form-title">Sign Up</h3>
 																<div className="dz-separator-outer m-b5">
@@ -75,18 +90,16 @@ function Register(props) {
 																</div>
 																<p>Enter your personal details below: </p>
 																<div className="form-group mt-3">
-																	<input name="dzName" required="" className="form-control" placeholder="Full Name" type="text" />
+																	<input name="dzName" required="" value={name} onChange={(e) => setName(e.target.value)} className="form-control" placeholder="Full Name" type="text" />
+																	{errors.name && <div className="text-danger fs-12">{errors.name}</div>}
 																</div>
 																<div className="form-group mt-3">
-																	<input name="dzName2" required="" className="form-control" placeholder="User Name" type="text" />
-																</div>
-																<div className="form-group mt-3">																	
-																	<input value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="hello@example.com"/>
+																	<input value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" placeholder="hello@example.com" />
 																	{errors.email && <div className="text-danger fs-12">{errors.email}</div>}
 																</div>
-																
+
 																<div className="form-group mt-3">
-																	
+
 																	<input
 																		value={password}
 																		onChange={(e) =>
@@ -97,7 +110,31 @@ function Register(props) {
 																	/>
 																	{errors.password && <div className="text-danger fs-12">{errors.password}</div>}
 																</div>
-																
+																<div className="form-group mt-3">
+
+																	<input
+																		value={mobile}
+																		onChange={(e) =>
+																			setMobile(e.target.value)
+																		}
+																		className="form-control"
+																		placeholder="mobile"
+																	/>
+																	{errors.mobile && <div className="text-danger fs-12">{errors.mobile}</div>}
+																</div>
+																<div className="form-group mt-3">
+
+																	<input
+																		value={username}
+																		onChange={(e) =>
+																			setUserName(e.target.value)
+																		}
+																		className="form-control"
+																		placeholder="username"
+																	/>
+																	{errors.username && <div className="text-danger fs-12">{errors.username}</div>}
+																</div>
+
 																<div className="mb-3 mt-3">
 																	<span className="form-check float-start me-2">
 																		<input type="checkbox" className="form-check-input mt-0" id="check2" name="example1" />
@@ -106,26 +143,26 @@ function Register(props) {
 																	<label><Link to={"#"}>Terms of Service </Link>&amp; <Link to={"#"}>Privacy Policy</Link></label>
 																</div>
 																<div className="form-group clearfix text-left">
-																	<NavLink to="/login"  className="btn btn-primary outline gray" type="button">Back</NavLink >
+																	<NavLink to="/login" className="btn btn-primary outline gray" type="button">Back</NavLink >
 																	<button type="submit" className="btn btn-primary float-end">Submit</button>
 																</div>
-															</form>														
+															</form>
 														</div>
-													</div>												
+													</div>
 												</nav>
 											</div>
 											<div className="card-footer">
 												<div className=" bottom-footer clearfix m-t10 m-b20 row text-center">
 													<div className="col-lg-12 text-center">
-														<span> © Copyright by 
-															<span 
-																className={`heart ${heartActive ? "" : "heart-blast"}`}														
-																onClick={()=>setHeartActive(!heartActive)}
+														<span> © Copyright by
+															<span
+																className={`heart ${heartActive ? "" : "heart-blast"}`}
+																onClick={() => setHeartActive(!heartActive)}
 															></span>
-														<a href="https://www.dexignzone.com/" rel="noreferrer" target="_blank"> DexignZone </a> All rights reserved.</span> 
+															<a href="https://www.dexignzone.com/" rel="noreferrer" target="_blank"> DexignZone </a> All rights reserved.</span>
 													</div>
 												</div>
-											</div>	
+											</div>
 										</div>
 									</div>
 								</div>
@@ -139,11 +176,11 @@ function Register(props) {
 };
 
 const mapStateToProps = (state) => {
-    return {
-        errorMessage: state.auth.errorMessage,
-        successMessage: state.auth.successMessage,
-        showLoading: state.auth.showLoading,
-    };
+	return {
+		errorMessage: state.auth.errorMessage,
+		successMessage: state.auth.successMessage,
+		showLoading: state.auth.showLoading,
+	};
 };
 
 export default connect(mapStateToProps)(Register);
