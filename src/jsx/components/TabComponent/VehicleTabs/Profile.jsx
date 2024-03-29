@@ -58,7 +58,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 type="radio"
                 className="form-check-input"
                 name="optradioCustom1"
-                onChange={() => setValue("vehicleCategory", "movable")}
+                onChange={() => setValue("vehicleCategory", "MOVABLE")}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
                 Movable
@@ -68,7 +68,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <input
                 type="radio"
                 className="form-check-input"
-                onChange={() => setValue("vehicleCategory", "immovable")}
+                onChange={() => setValue("vehicleCategory", "IMMOVABLE")}
                 name="optradioCustom1"
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
@@ -661,8 +661,8 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 type="radio"
                 className="form-check-input"
                 id="customRadioBox987"
-                value='single'
-                checked={selectedOption === 'single'}
+                value='SINGLE'
+                checked={selectedOption === 'SINGLE'}
                 onChange={handleChange}
                 name="optradioCustom1"
               />
@@ -680,8 +680,8 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 className="form-check-input"
                 id="customRadioBox988"
                 name="optradioCustom1"
-                value='multiple'
-                checked={selectedOption === 'multiple'}
+                value='MULTIPLE'
+                checked={selectedOption === 'MULTIPLE'}
                 onChange={handleChange}
               />
               <label

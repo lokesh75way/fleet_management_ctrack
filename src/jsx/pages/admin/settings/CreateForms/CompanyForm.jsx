@@ -67,6 +67,7 @@ const CompanyForm = () => {
           return;
         } else {
           try {
+            if(data.zipCode === '') delete data.zipCode
             await addCompany(data);
             notifySuccess("New Company Created!");
             navigate("/company");

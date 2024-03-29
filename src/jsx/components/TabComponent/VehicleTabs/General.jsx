@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
@@ -11,10 +11,13 @@ import {
   speedDetectionOptions,
   businessGroupOptions,
 } from "./Options";
+import AsyncSelect from "react-select/async";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { getGroups } from "../../../../services/api/BusinessGroup";
 
 const General = ({
   register,
@@ -36,9 +39,58 @@ const General = ({
   const { id } = useParams();
   const loggedInUser = localStorage.getItem("loginDetails-name");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const [allCompany, setAllCompany] = useState([]);
+  const [allBusinessGroup, setAllBusinessGroup] = useState([]);
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  const role = localStorage.getItem("role");
+  const role = checkRole()
+
+  // useEffect(()=>{
+  //   getCompanyData()
+  //   getBusinessData()
+  // },[])
+  // let businessGroupOptions;
+  // const getCompanyData = async()=>{
+  //   const {data} = await getGroups()
+  //   businessGroupOptions = data.map((item)=>{
+  //     return 
+  //   })
+  //   setAllCompany(allCompany)
+  // }
+  const businessGroupOptions = async (inputValue) => {
+    try {
+      const businessGroupResponse = await getGroups();
+      const businessGroupData = businessGroupResponse.data;
+      console.log("businessGroupData",businessGroupData)
+      const response = businessGroupData.map((item) => ({
+        label: item?.businessGroupId?.groupName,
+        value: item?.businessGroupId?._id,
+      }))
+      console.log("response",response)
+      return response;
+    } catch (error) {
+      console.error("Error fetching business group options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  const allCompanyOptions = async (inputValue) => {
+    try {
+      const companyResponse = await getCompany();
+      const companyData = companyResponse.data.data.data;
+      const response = companyData.map((item) => ({
+        label: item?.companyId?.companyName,
+        value: item?.companyId?._id,
+      }));
+      return response
+    } catch (error) {
+      console.error("Error fetching company options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  useEffect(()=>{
+    businessGroupOptions()
+    allCompanyOptions()
+  },[])
 
   let companyOptions,branchOptions;
   if(role === 'admin'){
@@ -90,26 +142,28 @@ const General = ({
             rules={{ required: true }}
             disabled={true}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
                 onChange={(newValue) => {
-                  console.log(newValue);
                   setTempValue(newValue?.value);
                   setValue("business", newValue?.value);
                 }}
-                isDisabled={role === "company" || role === "businessgroup"}
-                options={businessGroupOptions}
+                isDisabled={role === "COMPANY" || role === "BUSINESS_GROUP"}
+                loadOptions={businessGroupOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{
-                  label : 
-                  filteredUserData[0]?.parentBusinessGroup ||
-                  (role === "admin" ? '' : role === "businessgroup" ? loggedInUser : companyOptions[0].parent ),
-                  value : 
-                  filteredUserData[0]?.parentBusinessGroup ||
-                  (loggedInUser !== "Admin" ? loggedInUser : companyOptions[0].parent )
-                }
-                }
+                value={{label:getValues('business'), value :getValues('business')}}
+                // value={{
+                //   label : 
+                //   filteredUserData?.[0]?.parentBusinessGroup ||
+                //   (role === "admin" ? '' : role === "businessgroup" ? loggedInUser : companyOptions?.[0].parent ),
+                //   value : 
+                //   filteredUserData?.[0]?.parentBusinessGroup ||
+                //   (loggedInUser !== "Admin" ? loggedInUser : companyOptions[0].parent )
+                // }
+                // }
               />
             )}
           />
@@ -124,24 +178,27 @@ const General = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
                 onChange={(newValue) => {
                   setTempValue(newValue?.value);
-                  setValue("company", newValue?.value);
+                  setValue("company", newValue?.label);
                 }}
-                isDisabled={role === "company"}
-                options={companyOptions}
+                isDisabled={role === "COMPANY"}
+                loadOptions={allCompanyOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{
-                  label:
-                    filteredUserData[0]?.parentCompany ||
-                    (role === "company" ? loggedInUser : ""),
-                  value:
-                    filteredUserData[0]?.parentCompany ||
-                    (role === "company" ? loggedInUser : "")
-                }}
+                value={{label:getValues('company'), value :getValues('company')}}
+                // value={{
+                //   label:
+                //     filteredUserData[0]?.parentCompany ||
+                //     (role === "company" ? loggedInUser : ""),
+                //   value:
+                //     filteredUserData[0]?.parentCompany ||
+                //     (role === "company" ? loggedInUser : "")
+                // }}
               />
             )}
           />
@@ -201,7 +258,7 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={deviceTypeOptions[0]}
+                value={{label:getValues('deviceType'), value :getValues('deviceType')}}
               />
             )}
           />
@@ -215,11 +272,11 @@ const General = ({
             type="number"
             required
             register={register}
-            name="IMEINumber"
+            name="imeiNumber"
             label="IMEI Number"
             placeholder=""
           />
-          <Error errorName={errors.IMEINumber} />
+          <Error errorName={errors.imeiNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Copy From</label>

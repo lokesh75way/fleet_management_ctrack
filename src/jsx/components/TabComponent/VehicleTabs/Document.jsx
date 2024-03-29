@@ -22,14 +22,14 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
   };
 
   const [driverDocumentOptions, setDriverDocumentOptions] = useState([
-    { value: "Insurance", label: "Insurance" },
-    { value: "PCU", label: "PCU" },
-    { value: "Registration Certificate", label: "Registration Certificate" },
-    { value: "Service Contract", label: "Service Contract" },
-    { value: "National Permit", label: "National Permit" },
-    { value: "State Permit", label: "State Permit" },
-    { value: "RTO Passing", label: "RTO Passing" },
-    { value: "Road Tax", label: "Road Tax" },
+    { value: "INSURANCE", label: "INSURANCE" },
+    { value: "PSU", label: "PSU" },
+    { value: "REGISTRARION_CERTIFICATE", label: "REGISTRARION_CERTIFICATE" },
+    { value: "SERVICE_CONTRACT", label: "SERVICE_CONTRACT" },
+    { value: "NATIONAL_PERMIT", label: "NATIONAL_PERMIT" },
+    { value: "STATE_PERMIT", label: "STATE_PERMIT" },
+    { value: "RTO_PASSING", label: "RTO_PASSING" },
+    { value: "ROAD_TAX", label: "Road Tax" },
   ]);
 
   return (

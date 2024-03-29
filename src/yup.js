@@ -6,30 +6,10 @@ export const vehicleGeneralSchema = yup
     vehicleName: yup.string().required("Vehicle name is required"),
     serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
-    IMEINumber: yup
-      .number()
-      .positive()
-      .integer()
-      .required("IMEI Number is required")
-      .typeError("IMEI Number must be a number"),
-    simNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .required("Sim Number is required")
-      .typeError("Sim Number must be a number"),
-    secondarySimNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Secondary Sim Number must be a number"),
-    deviceAccuracyTolerance: yup
-      .number()
-      .positive()
-      .integer()
-      .min(0)
-      .max(100)
-      .typeError("Device Accuracy Tolerance must be a number"),
+    imeiNumber: yup.number().positive().integer().required("IMEI Number is required").typeError("IMEI Number must be a number"),
+    simNumber: yup.number().positive().integer().required("Sim Number is required").typeError("Sim Number must be a number"),
+    secondarySimNumber: yup.number().positive().integer().typeError("Secondary Sim Number must be a number"),
+    deviceAccuracyTolerance: yup.number().positive().integer().min(0).max(100).typeError("Device Accuracy Tolerance must be a number"),
   })
   .required();
 export const vehicleProfileSchema = yup

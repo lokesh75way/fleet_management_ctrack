@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema, vehicleDocumentSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import { createVehicles } from "../../../../../services/api/VehicleService";
 
 
 const VehicleForm = () => {
@@ -28,12 +29,13 @@ const VehicleForm = () => {
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: activeIndex === 1? vehicleProfileSchema : vehicleDocumentSchema)
   })
   const { id } = useParams();
-  const onSubmit = (data)=>{
+  const onSubmit = async(data)=>{
     if(activeIndex === (totalTabs -1)){
       try{
-        saveData(data, 'vehicleData')
         console.log(data)
-        notifySuccess("Saved !")
+        await createVehicles(data)
+        
+        notifySuccess("Vehicle created !")
         navigate("/vehicle");
         return;
       }

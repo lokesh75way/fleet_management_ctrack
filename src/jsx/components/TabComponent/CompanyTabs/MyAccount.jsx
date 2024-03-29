@@ -7,6 +7,7 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
+import AsyncSelect from "react-select/async";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
@@ -41,17 +42,44 @@ const MyAccount = ({
     }),
   };
 
-  const [businessUserOptions,setBusinessUserOptions] = useState([])
-  const getBusinessGroup = async()=>{
-    const {data} = await getGroups()
-    setBusinessUserOptions(data.map((item) => ({
-      label: item.businessGroupId.groupName,
-      value: item.businessGroupId._id,
-    })));
-  }
+  // const businessUserOptions = DummyData.filter(
+  //   (item) => item.role === "businessgroup"
+  // ).map((item) => ({
+  //   label: item.userName,
+  //   value: item.id,
+  // }));
+
+  // const [businessUserOptions,setBusinessUserOptions] = useState([])
+  // const getBusinessGroup = async()=>{
+  //   const {data} = await getGroups()
+  //   console.log("jeqgduwygfiruwgfieruw",data)
+  //   setBusinessUserOptions(data.map((item) => ({
+  //     label: item?.businessGroupId?.groupName,
+  //     value: item?.businessGroupId?._id,
+  //   })));
+  //   console.log("iuewghfiuw3grfurf",businessUserOptions)
+  // }
   useEffect(()=>{
-    getBusinessGroup()
+    // getBusinessGroup()
+    businessGroupOptions()
   },[])
+
+  const businessGroupOptions = async (inputValue) => {
+    try {
+      const businessGroupResponse = await getGroups();
+      console.log("businessGroupResponse",businessGroupResponse)
+      const businessGroupData = businessGroupResponse.data;
+      const response = businessGroupData.map((item) => ({
+        label: item?.businessGroupId?.groupName,
+        value: item?.businessGroupId?._id,
+      }))
+      console.log("response",response)
+      return response;
+    } catch (error) {
+      console.error("Error fetching business group options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
 
   const companyOptions = DummyData.filter(
     (item) => item.role === "company"
@@ -68,7 +96,6 @@ const MyAccount = ({
   }, []);
 
   const { id } = useParams();
-  const companyData = JSON.parse(localStorage.getItem("userJsonData"));
 //   let newData = [];
 // if(id){
 //   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
@@ -76,7 +103,7 @@ const MyAccount = ({
 // }
 useEffect(()=>{
   if(formData && id){
-    setValue("businessGroupId",formData[0].companyId?.businessGroupId?.businessGroupId)
+    setValue("businessGroupId",formData[0].companyId?.businessGroupId?.groupName)
     setValue("companyName",formData[0].companyId?.companyName)
     setValue("userName", formData[0].userName)
     setValue("email",formData[0].email)
@@ -90,8 +117,7 @@ useEffect(()=>{
     setValue("faxNumber",formData[0].companyId?.faxNumber)
     setValue("zipCode",formData[0].companyId?.zipCode)
     setValue("city",formData[0].companyId?.city)
-    const capacity = formData[0].companyId?.capacity + " days"
-    setValue("storageCapacity",capacity)
+    setValue("storageCapacity",formData[0].companyId?.capacity )
   }
 },[formData,id])
 
@@ -110,12 +136,15 @@ useEffect(()=>{
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
                   onChange={(newValue) => {
                     setTempValue(newValue.label);
-                    setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupId", newValue.label);
+                    setValue("businessId", newValue.value);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
