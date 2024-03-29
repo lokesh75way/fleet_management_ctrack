@@ -9,22 +9,28 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import { addCompany, editCompany } from "../../../../../services/api/CompanyServices";
+import { dateFormatOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 const CompanyForm = () => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { saveData } = useStorage();
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { formData } = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
-  let tabHeading = [t('newCompany'), t('settings'), t('changePassword')];
+  // ManagePassword , t('changePassword')
+  let tabHeading = [t("newCompany"), t("settings"), t("changePassword")];
   let component = [MyAccount, UserSetting, ManagePassword];
-  if (!id) {
-    tabHeading.pop();
-    component.pop();
-  }
+  // if (!id) {
+  //   tabHeading.pop();
+  //   component.pop();
+  // }
+  tabHeading.pop();
+  component.pop();
 
   const totalTabs = tabHeading.length;
   const {
@@ -40,44 +46,47 @@ const CompanyForm = () => {
     ),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
-          const val = JSON.parse(localStorage.getItem("userJsonData"));
-          console.log("Id is needed", id, data);
-          const indexToUpdate = val.findIndex((item) => item.id == id);
-          if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id, role: "company" };
-            localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess("Company Updated!");
+          try {
+            console.log("edit data",data)
+            await editCompany(data);
+            notifySuccess("New Company Created!");
             navigate("/company");
+          return;
+          } catch (e) {
+            console.log(e);
+            notifyError("Some error occured !!");
           }
           return;
         } else {
-          data = { ...data, role: "company" };
-          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-          data.id = existingData.length + 1;
-          existingData.push(data);
-          localStorage.setItem("userJsonData", JSON.stringify(existingData));
-          notifySuccess("New Company Created!");
-          navigate("/company");
+          try {
+            await addCompany(data);
+            notifySuccess("New Company Created!");
+            navigate("/company");
           return;
+          } catch (e) {
+            console.log(e);
+            notifyError("Some error occured !!");
+          }
         }
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
+
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    notifySuccess("Saved !");
+    console.log(data);
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle={t('company')}
-        pageTitle={id?t('edit'):t('create')}
-        parentTitle={t('company')}
+        mainTitle={t("company")}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t("company")}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -109,6 +118,7 @@ const CompanyForm = () => {
                       >
                         <Component
                           data={tabHeading}
+                          formData={formData}
                           control={control}
                           setValue={setValue}
                           register={register}

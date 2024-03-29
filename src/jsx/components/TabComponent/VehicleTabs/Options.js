@@ -6,7 +6,6 @@ export const companyOptions = [
   { value: "company5@example.com", label: "Company5" },
   { value: "All Companies", label: "All Companies" },
 ];
-
 export const branchOptions = [
   {value : 'All', label : 'All'},
   { value: "branch1@example.com", label: "Branch1" },
@@ -15,7 +14,6 @@ export const branchOptions = [
   { value: "branch4@example.com", label: "Branch4" },
   { value: "branch5@example.com", label: "Branch5" },
 ];
-
 export const businessGroupOptions = [
   { value: "businessgroup1@example.com", label: "Business Group1" },
   { value: "businessgroup2@example.com", label: "Business Group2" },
@@ -24,7 +22,6 @@ export const businessGroupOptions = [
   { value: "businessgroup5@example.com", label: "Business Group5" },
   { value: "All Groups", label: "All Groups" },
 ];
-
 export const deviceTypeOptions = [
   { value: "2G Camera Howen 5632", label: "2G Camera Howen 5632" },
   { value: "2G Camera Howen 5633", label: "2G Camera Howen 5633" },
@@ -119,7 +116,6 @@ export const alertTypeOptions = [
   { value: "BLE Battery Sensor2", label: "BLE Battery Sensor2" },
   { value: "BLE Battery Sensor3", label: "BLE Battery Sensor3" },
 ];
-
 export const ObjectOptions = [
   { value: "Test1", label: "Test1" },
   { value: "Test2", label: "Test2" },
@@ -163,7 +159,6 @@ export const unitOfFuelOptions = [
   { value: "LITERS", label: "LITERS" },
   { value: "GALLONS", label: "GALLONS" },
 ];
-
 export const dayOptions = [
   { value: "SUNDAY", label: "SUNDAY" },
   { value: "MONDAY", label: "MONDAY" },
@@ -173,26 +168,22 @@ export const dayOptions = [
   { value: "FRIDAY", label: "FRIDAY" },
   { value: "SATURDAY", label: "SATURDAY" },
 ];
-
 export const statusOptions = [
   { value: "ACTIVE", label: "ACTIVE" },
   { value: "INACTIVE", label: "INACTIVE" },
 ];
 
-export const storageCapacityOptions = [
+export const storageCapacityOptions = [ 
   { value: "60 days", label: "60 days" },
   { value: "90 days", label: "90 days" },
   { value: "120 days", label: "120 days" },
 ];
-
-
 export const languageOptions = [
   { value: "ENGLISH", label: "ENGLISH" },
   { value: "ARABIC", label: "ARABIC" },
   { value: "FRENCH", label: "FRENCH" },
   { value: "PORTUGUESE", label: "PORTUGUESE" },
 ];
-
 export const currencyOptions = [
   { value: "AED", label: "AED" },
   { value: "USD", label: "USD" },
@@ -202,7 +193,6 @@ export const currencyOptions = [
   { value: "Dalasi", label: "Dalasi" },
   { value: "Shilling", label: "Shilling" },
 ];
-
 export const fuelEconomyScalingOptions = [
   { value: "km/i", label: "Km/I" },
   { value: "i/100", label: "I/100" },

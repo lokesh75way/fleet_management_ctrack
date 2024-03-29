@@ -95,9 +95,9 @@ export const resetPassword = yup.object().shape({
 export const companyAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    parent: yup.string().required("Please select an option"),
-    userName: yup.string().required("Please enter a Company Name"),
-    userName2: yup.string().required("Please enter a User Name"),
+    businessGroupId: yup.string().required("Please select an option"),
+    companyName: yup.string().required("Please enter a Company Name"),
+    userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
@@ -131,8 +131,8 @@ export const companyAccountSchema = yup
 export const branchAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-    parentCompany: yup.string().required("Company Name is required "),
-    parentBusinessGroup: yup.string().required("Business Group Name is required "),
+    companyId: yup.string().required("Company Name is required "),
+    businessGroupId: yup.string().required("Business Group Name is required "),
     userName: yup.string().required("Please enter the Branch Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup

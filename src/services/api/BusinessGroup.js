@@ -1,6 +1,4 @@
 import axios from "axios";
-
-
 const createGroup = async (body) => {
   console.log(body);
   return axios.post("/business-groups", body);

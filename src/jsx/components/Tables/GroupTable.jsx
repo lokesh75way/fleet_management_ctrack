@@ -16,18 +16,18 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
         navigate('permission', {state:JSON.stringify(props)})
     }
 
+
+
+
+
     return (
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
                     <td><span>{item.id}</span></td>
                     <td>
-                        <div className="products">
-                            <img src={item.image} className="avatar avatar-md" alt="" />
-                            <div>
-                                <h6>{item.groupName}</h6>
-                                <span>Web Designer</span>
-                            </div>
+                        <div className="products">         
+                                <h6>{item.name}</h6>
                         </div>
                     </td>
                     {/* <td><span>{item.application}</span></td> */}
