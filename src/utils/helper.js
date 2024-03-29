@@ -1,6 +1,9 @@
+import useStorage from "../hooks/useStorage";
+
 export const getSelectValues = (id) => {
-  const role = localStorage.getItem("role");
-  if (role === "admin") {
+  const user  = JSON.parse(localStorage.getItem('userDetails'))
+  const role = user.user.role
+  if (role === "SUPER_ADMIN") {
     return {
       business: {
         disabled: false,
@@ -11,8 +14,8 @@ export const getSelectValues = (id) => {
         defaultValues: "",
       },
     };
-  } else if (role === "businessgroup") {
-    const businessName = localStorage.getItem("loginDetails-name");
+  } else if (role === "BUSINESS_GROUP") {
+    const businessName = user.user.userName
     return {
       business: {
         disabled: true,
@@ -23,8 +26,8 @@ export const getSelectValues = (id) => {
         defaultValues: "",
       },
     };
-  } else if (role === "company") {
-    const companyName = localStorage.getItem("loginDetails-name");
+  } else if (role === "COMPANY") {
+    const companyName = user.user.userName
     const user = JSON.parse(localStorage.getItem("userJsonData")).filter(
       (item) => item.userName === companyName
     );

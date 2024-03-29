@@ -19,7 +19,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
   if(tempValue2!=='All Branches'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentBranch === tempValue2)
   }
-  console.log("this is data after filter",filterData,tempValue,tempValue2);
+  // console.log("this is data after filter",filterData,tempValue,tempValue2);
   var branchCount = []
   for(var i=0;i<filterData.length;i++){
     const branchName = filterData[i].userName
@@ -31,23 +31,23 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
         {filterData.map((item, index) => (
           <tr key={index}>
             <td>
-              <span>{item.id}</span>
+              <span>{index + 1}</span>
             </td>
             <td>
-              <span className="text-primary">{item.userName}</span>
+              <span className="text-primary">{item.branchName}</span>
             </td>
             <td>
-              <span >{item.parentBranch !== 'none' ? item.parentBranch: <span className='ps-4'>-</span> }</span>
+              <span >{item.parentBranchId?.branchName ? item.parentBranchId?.branchName :<span className='ps-4'>-</span> }</span>
             </td>
             <td>
-              <span >{item.parentCompany}</span>
+              <span >{item.companyId?.companyName ? item.companyId?.companyName : <span className='ps-4'>-</span> }</span>
             </td>
             <td>
-              <span >{item.parentBusinessGroup}</span>
+              <span >{item.businessGroupId?.groupName ? item.businessGroupId?.groupName : <span className='ps-4'>-</span> }</span>
             </td>
-            <td>
+            {/* <td>
               <span>{item.mobileNumber}</span>
-            </td>
+            </td> */}
             <td>
               <span>{item.city}</span>
             </td>
@@ -64,14 +64,14 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
               <span className="d-flex justify-content-center">
                 {editPermission && <span
                   className="cursor-pointer"
-                  onClick={() => editDrawerOpen(item.id)}
+                  onClick={() => editDrawerOpen(item._id)}
                 >
                   <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
                 </span>}
-                {deletePermission && <DeleteModal
+                {1 && <DeleteModal
                   className="cursor-pointer "
                   onConfirmDelete={onConfirmDelete}
-                  id={item.id}
+                  id={item._id}
                 >
                   <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
                 </DeleteModal>}

@@ -1,11 +1,12 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux';
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { loadingToggleAction,loginAction,
+import {
+  loadingToggleAction, loginAction,
 } from '../../store/actions/AuthActions';
 // import users from '../../users.json'
 
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import logo from "../../images/logo/logo-full.png";
 import LogoWhite from "../../images/logo/logofull-white.png";
 import bg6 from "../../images/background/bg6.jpg";
@@ -30,9 +31,9 @@ function Login(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  function onLogin({email , password}) {
-		dispatch(loadingToggleAction(true));
-		dispatch(loginAction(email, password, navigate));
+  function onLogin({ email, password }) {
+    dispatch(loadingToggleAction(true));
+    dispatch(loginAction(email, password, navigate));
   }
 
   return (
@@ -160,14 +161,14 @@ function Login(props) {
                                   <li>
                                     <Link
                                       target="_blank"
-                                      to={"https://www.facebook.com/dexignzone"}
+                                      to={"https://www.facebook.com"}
                                       className="fab fa-facebook-f btn-facebook"
                                     ></Link>
                                   </li>
                                   <li>
                                     <Link
                                       target="_blank"
-                                      to={"mailto:dexignzones@gmail.com"}
+                                      to={"mailtos@gmail.com"}
                                       className="fab fa-google-plus-g btn-google-plus"
                                     ></Link>
                                   </li>
@@ -175,7 +176,7 @@ function Login(props) {
                                     <Link
                                       target="_blank"
                                       to={
-                                        "https://www.linkedin.com/in/dexignzone"
+                                        "https://www.linkedin.com/in"
                                       }
                                       className="fab fa-linkedin-in btn-linkedin"
                                     ></Link>
@@ -183,7 +184,7 @@ function Login(props) {
                                   <li>
                                     <Link
                                       target="_blank"
-                                      to={"https://twitter.com/dexignzones"}
+                                      to={"https://twitter.coms"}
                                       className="fab fa-twitter btn-twitter"
                                     ></Link>
                                   </li>
@@ -192,7 +193,7 @@ function Login(props) {
                             </form>
                             <div className="text-center bottom">
                               <NavLink
-                                to="/page-register"
+                                to="/register"
                                 className="btn btn-primary button-md btn-block"
                               >
                                 Create an account
@@ -200,7 +201,7 @@ function Login(props) {
 
                               <div className="mt-2">
                                 <Link
-                                  to="/page-forgotpassword"
+                                  to="/forgotpassword"
                                   style={{ fontSize: "small" }}
                                 >
                                   {" "}
@@ -219,18 +220,17 @@ function Login(props) {
                             {" "}
                             © Copyright by{" "}
                             <span
-                              className={`heart ${
-                                heartActive ? "" : "heart-blast"
-                              }`}
+                              className={`heart ${heartActive ? "" : "heart-blast"
+                                }`}
                               onClick={() => setHeartActive(!heartActive)}
                             ></span>
                             <a
-                              href="https://www.dexignzone.com/"
+                              href="#"
                               rel="noreferrer"
                               target="_blank"
                             >
                               {" "}
-                              DexignZone{" "}
+                              75way{" "}
                             </a>{" "}
                             All rights reserved.
                           </span>

@@ -12,6 +12,8 @@ import { clsx } from 'clsx';
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
+import { getAllBranch , createBranch, deleteBranch } from "../../../services/api/BranchServices";
+import { notifySuccess } from "../../../utils/toast";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -88,7 +90,13 @@ const Branch = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
-  const [tableData, setTableData] = useState(SubCompanyData);
+  const fetchAllBranch = async()=>{
+    const {data, success} = await getAllBranch()
+    setTableData(data.data)
+  }
+
+
+  const [tableData, setTableData] = useState([]);
   const [dataLength, setDataLength] = useState(SubCompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
@@ -113,6 +121,11 @@ const Branch = () => {
       }
     }
   };
+
+  useEffect(()=>{
+    fetchAllBranch()
+  },[tableData])
+  
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -126,20 +139,14 @@ const Branch = () => {
     chageData(activePag.current * sort, (activePag.current + 1) * sort);
     settest(i);
   };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-
-    // Remove item from local storage
-    const updatedLocalStorageData = SubCompanyData.filter(
-      (item) => item.id !== id
-    );
-    localStorage.setItem("branchData", JSON.stringify(updatedLocalStorageData));
+  const onConfirmDelete = async(id) => {
+    await deleteBranch(id)
+    notifySuccess("Branch Deleted");
   };
 
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`edit/${item}`);
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`,{state : filteredData});
     // company.current.showModal();
   };
 
@@ -286,7 +293,7 @@ const Branch = () => {
                           <th>{t('parentBranch')}</th>
                           <th>{t('companyName')}</th>
                           <th>{t('businessGroup')}</th>
-                          <th>{t('mobileNumber')}</th>
+                          {/* <th>{t('mobileNumber')}</th> */}
                           <th>{t('location')}</th>
                           <th>{t('childBranches')}</th>
                           {(can('branch','modify') || can('branch','delete')) && <th>{t('action')}</th>}
