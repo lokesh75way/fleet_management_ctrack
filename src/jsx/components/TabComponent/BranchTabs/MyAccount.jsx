@@ -117,9 +117,11 @@ const MyAccount = ({
     if (dValues && id) {
       setValue("groupName", dValues.businessGroupId?.groupName);
       setValue("companyName", dValues.companyId?.companyName);
+      setValue("companyId", dValues.companyId?._id);
       setValue("parent", dValues.parentBranchId?.branchName);
       setValue("branchName", dValues.branchName);
       setValue("city", dValues.city);
+      setValue("country", dValues.country);
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
       setValue("street2", dValues.street2);
@@ -232,7 +234,6 @@ const MyAccount = ({
             <Error errorName={errors.businessGroupId} />
           )}
         </div>
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">
             {t("company")}
@@ -244,7 +245,7 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
@@ -253,9 +254,10 @@ const MyAccount = ({
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  defaultOptions
                   defaultValue={{
-                    label: dValues.companyId?.companyName,
-                    value: dValues.companyId?._id,
+                    label: getValues('companyName'),
+                    value: getValues('companyId'),
                   }}
                 />
               )}
@@ -266,7 +268,7 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
@@ -276,9 +278,10 @@ const MyAccount = ({
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  defaultOptions
                   defaultValue={{
-                    label: dValues.companyId?.companyName,
-                    value: dValues.companyId?._id,
+                    label: getValues('companyName'),
+                    value: getValues('companyId'),
                   }}
                 />
               )}
@@ -294,7 +297,7 @@ const MyAccount = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
                 onChange={(newValue) => {
                   setParentValue(newValue.value);
                   setValue("parentBranch", newValue.value);
@@ -344,6 +347,7 @@ const MyAccount = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
+            defaultValue = {{label : getValues('country'), value : getValues('country')}}
             // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
