@@ -200,8 +200,8 @@ export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
     
-    userName: yup.string().required("Please enter a Business Group Name"),
-    userName2: yup.string().required("Please enter a User Name"),
+    groupName: yup.string().required("Please enter a Business Group Name"),
+    userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
