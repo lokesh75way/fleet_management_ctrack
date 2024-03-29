@@ -212,7 +212,7 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (!can(data.module, 'view')) {
+            if (can(data.module, 'view')) {
                return <Route
                 path={'*'}
                 element={<PermissionDenied />}

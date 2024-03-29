@@ -33,7 +33,7 @@ export function login(email, password) {
     };
 
     return axios.post(
-        `http://192.168.1.31:5000/api/fleet/auth/login`,
+        `http://localhost:5000/api/fleet/auth/login`,
         postData,
     )
 }

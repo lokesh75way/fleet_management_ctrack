@@ -55,9 +55,9 @@ export const featureTemplateOptions = [
   { value: "Template 4", label: "Template 4" },
 ];
 export const unitOfDistanceOptions = [
-  { value: "Kilometer", label: "Kilometer" },
-  { value: "Mile", label: "Mile" },
-  { value: "Nautical mile", label: "Nautical mile" },
+  { value: "KILOMETERS", label: "KILOMETERS" },
+  { value: "MILES", label: "MILES" },
+  { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
 export const speedDetectionOptions = [
   { value: "From Device", label: "From Device" },
@@ -134,21 +134,21 @@ export const TypeOptions = [
 ];
 export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
-  { value: "dd-MM-yyyy", label: "dd-MM-yyyy" },
-  { value: "MM-dd-yyyy", label: "MM-dd-yyyy" },
+  { value: "DD-MM-YYYY", label: "DD-MM-YYYY" },
+  { value: "MM-DD-YYYY", label: "MM-DD-YYYY" },
 ];
 export const timeFormatOptions = [
   { value: "12 Hour", label: "12 Hour" },
   { value: "24 Hour", label: "24 Hour" },
 ];
 export const weekStartDayOptions = [
-  { value: "Sunday", label: "Sunday" },
-  { value: "Monday", label: "Monday" },
-  { value: "Tuesday", label: "Tuesday" },
-  { value: "Wednesday", label: "Wednesday" },
-  { value: "Thursday", label: "Thursday" },
-  { value: "Friday", label: "Friday" },
-  { value: "Saturday", label: "Saturday" },
+  { value: "SUNDAY", label: "SUNDAY" },
+  { value: "MONDAY", label: "MONDAY" },
+  { value: "TUESDAY", label: "TUESDAY" },
+  { value: "WEDNESDAY", label: "WEDNESDAY" },
+  { value: "THRUSDAY", label: "THRUSDAY" },
+  { value: "FRIDAY", label: "FRIDAY" },
+  { value: "SATURDAY", label: "SATURDAY" },
 ];
 export const subCompanyOptions = [
   { value: "All", label: "All" },
@@ -160,23 +160,23 @@ export const preferredCurrencyUnitOptions = [
   { value: "75 way", label: "75 way" },
 ];
 export const unitOfFuelOptions = [
-  { value: "litre", label: "Litre" },
-  { value: "gallon", label: "Gallon" },
+  { value: "LITERS", label: "LITERS" },
+  { value: "GALLONS", label: "GALLONS" },
 ];
 
 export const dayOptions = [
-  { value: "Monday", label: "Monday" },
-  { value: "Tuesday", label: "Tuesday" },
-  { value: "Wednesday", label: "Wednesday" },
-  { value: "Thursday", label: "Thursday" },
-  { value: "Friday", label: "Friday" },
-  { value: "Saturday", label: "Saturday" },
-  { value: "Sunday", label: "Sunday" },
+  { value: "SUNDAY", label: "SUNDAY" },
+  { value: "MONDAY", label: "MONDAY" },
+  { value: "TUESDAY", label: "TUESDAY" },
+  { value: "WEDNESDAY", label: "WEDNESDAY" },
+  { value: "THRUSDAY", label: "THRUSDAY" },
+  { value: "FRIDAY", label: "FRIDAY" },
+  { value: "SATURDAY", label: "SATURDAY" },
 ];
 
 export const statusOptions = [
-  { value: "Active", label: "Active" },
-  { value: "Inactive", label: "Inactive" },
+  { value: "ACTIVE", label: "ACTIVE" },
+  { value: "INACTIVE", label: "INACTIVE" },
 ];
 
 export const storageCapacityOptions = [
@@ -187,10 +187,10 @@ export const storageCapacityOptions = [
 
 
 export const languageOptions = [
-  { value: "English", label: "English" },
-  { value: "Arabic", label: "Arabic" },
-  { value: "French", label: "French" },
-  { value: "Portugese", label: "Portugese" },
+  { value: "ENGLISH", label: "ENGLISH" },
+  { value: "ARABIC", label: "ARABIC" },
+  { value: "FRENCH", label: "FRENCH" },
+  { value: "PORTUGUESE", label: "PORTUGUESE" },
 ];
 
 export const currencyOptions = [
@@ -208,13 +208,13 @@ export const fuelEconomyScalingOptions = [
   { value: "i/100", label: "I/100" },
 ];
 export const severityOptions = [
-  { value: "low", label: "low" },
-  { value: "medium", label: "medium" },
-  { value: "high", label: "high" },
+  { value: "LOW", label: "LOW" },
+  { value: "MEDIUM", label: "MEDIUM" },
+  { value: "HIGH", label: "HIGH" },
 ];
 export const taskCategoryOptions = [
-  { value: "Installation", label: "Installation" },
-  { value: "Maintainance", label: "Maintainance" },
+  { value: "INSTALLATION", label: "Installation" },
+  { value: "MAINTAINANCE", label: "Maintainance" },
 ];
 export const technicianOptions = [
   { value: "Arpit", label: "Arpit" },

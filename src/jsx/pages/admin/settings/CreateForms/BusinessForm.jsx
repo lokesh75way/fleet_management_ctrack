@@ -19,10 +19,14 @@ import {
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
-import { createGroup } from "../../../../../services/api/BusinessGroup";
+import {
+  changePassword,
+  createGroup,
+  updateGroup,
+} from "../../../../../services/api/BusinessGroup";
+import { storageCapacityOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
-
   const { t } = useTranslation();
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -38,7 +42,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   }
 
   const totalTabs = tabHeading.length;
- 
+
   const {
     register,
     formState: { errors },
@@ -53,12 +57,27 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         ? businessGroupSettingSchema
         : businessGroupAccountSchema
     ),
+    defaultValues: {
+      // storageCapacity : storageCapacityOptions[0]
+    },
   });
 
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - 1) {
+    if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
+          console.log("Hello");
+          console.log(data);
+          delete data["oldPassword"];
+          delete data["newPassword"];
+          delete data["retypePassword"];
+          console.log(data);
+          // if(data.zipCode === ''){
+          delete data.zipCode;
+          // }
+          console.log(data);
+          await updateGroup(data);
+          notifySuccess("Business group has been updated!");
         } else {
           await createGroup(data);
           notifySuccess("New Business group Created!");
@@ -67,7 +86,23 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
 
         return;
       } catch (error) {
+        console.log("data udpated", updateGroup);
+        await updateGroup(data);
         notifyError("Some error occured !!");
+      }
+    } else if (activeIndex === 2) {
+      try {
+        const passwordData = {
+          password: data.newPassword,
+          oldPassword: data.oldPassword,
+          confirmPassword: data.retypePassword,
+          _id: id,
+        };
+        await changePassword(passwordData);
+        notifySuccess("Password has been changed");
+        navigate("/business")
+      } catch (error) {
+        notifyError("Password is not changes!");
       }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
