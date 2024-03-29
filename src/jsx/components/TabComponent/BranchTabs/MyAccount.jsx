@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
+import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
 import { getSelectValues } from "../../../../utils/helper";
-import {useTranslation} from "react-i18next"
-
+import { useTranslation } from "react-i18next";
+import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { editBranch } from "../../../../services/api/BranchServices";
+import { useLocation } from "react-router-dom";
 
 const MyAccount = ({
   setValue,
@@ -34,222 +38,276 @@ const MyAccount = ({
     }),
   };
 
-  const {t} = useTranslation();
-
+  const { t } = useTranslation();
+  const location = useLocation();
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
   const [parentOptions, setParentOptions] = useState([]);
-
   const [businessUserValue, setBusinessUserValue] = useState([]);
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const defaultValues = getSelectValues();
 
-  useEffect(() => {
-    const tempbusinessUserOptions = DummyData.filter(
-      (item) => item.role === "businessgroup"
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
+  const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
+  const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
+  const [dValues, setDvalues] = useState([]);
+  const [defaultCountry,setDefaultCountry] = useState();
+  
 
-    const tempcompanyOptions = DummyData.filter(
-      (item) => item.role === "company"
-    )
-      .filter((cp) => cp.parent === businessUserValue)
-      .map((item) => ({
-        label: item.userName,
-        value: item.id,
+  const businessGroupOptions = async (inputValue) => {
+    try {
+      const businessGroupResponse = await getGroups();
+      const businessGroupData = businessGroupResponse.data;
+      const response = businessGroupData.map((item) => ({
+        label: item.businessGroupId.groupName,
+        value: item.businessGroupId._id,
+      }))
+      
+      return response;  
+      
+    } catch (error) {
+      console.error("Error fetching business group options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  
+  const allCompanyOptions = async (inputValue) => {
+    try {
+      const companyResponse = await getCompany();
+      const companyData = companyResponse.data.data.data;
+      const response = companyData.map((item) => ({
+        label: item.companyId?.companyName,
+        value: item.companyId?._id,
       }));
+      console.log("RES:-> ", response);
+      return response; 
+    } catch (error) {
+      console.error("Error fetching company options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
 
-    const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-      .filter((br) => br.parentCompany === companyValue)
-      .map((item) => ({
-        label: item.userName,
-        value: item.id,
-      }));
+  // useEffect(() => {
+  //   const tempparentOptions = DummyData.filter((item) => item.role === "branch")
+  //     .filter((br) => br.parentCompany === companyValue)
+  //     .map((item) => ({
+  //       label: item.userName,
+  //       value: item.id,
+  //     }));
 
-    tempparentOptions.push({ label: "None", value: 0 });
+  //   tempparentOptions.push({ label: "None", value: 0 });
 
-    setBusinessUserOptions(tempbusinessUserOptions);
-    setCompanyOptions(tempcompanyOptions);
-    setParentOptions(tempparentOptions);
-  }, [businessUserValue, companyValue, parentValue]);
+  //   setBusinessUserOptions(tempbusinessUserOptions);
+  //   setCompanyOptions(tempcompanyOptions);
+  //   setParentOptions(tempparentOptions);
+  // }, [businessUserValue, companyValue, parentValue]);
 
   const { id } = useParams();
-  const User = JSON.parse(localStorage.getItem("userJsonData"));
-  const branchData = User.filter(
-    (item) => item.role === "branch" && item.id == id
-  );
-  const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
-
   useEffect(() => {
-    setValue(
-      "parentBusinessGroup",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-    );
-    setValue(
-      "parentCompany",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
-    );
-    setValue(
-      "parentBranch",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-    );
-    setValue(
-      "country",
-      filteredCompanyData[0] ? filteredCompanyData[0].country : ""
-    );
-    setValue(
-      "state",
-      filteredCompanyData[0] ? filteredCompanyData[0].state : ""
-    );
-  }, []);
+    if (id) {
+      const data = location.state[0];
+      console.log("====================================");
+      console.log("data of Id clicked", data);
+      console.log("====================================");
+      setDvalues(data);
+    }
+  }, [id]);
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("loginDetails-name");
-    const role = localStorage.getItem('role')
-    if (role === "businessgroup") {
-      setTempValue(loggedInUser);
-      setValue("parentBusinessGroup", loggedInUser);
+    console.log(dValues);
+    if (dValues && id) {
+      setValue("businessGroupName", dValues.businessGroupId?.groupName);
+      setValue("businessGroupId", dValues.businessGroupId?._id);
+      setValue("companyName", dValues.companyId?.companyName);
+      setValue("companyId", dValues.companyId?._id);
+      setValue("parentBranch", dValues.parentBranchId?.branchName);
+      setValue("parentBranchId", dValues.parentBranchId?._id);
+      setValue("branchName", dValues.branchName);
+      setValue("city", dValues.city);
+      setValue("country", dValues.country);
+      setValue("zipCode", dValues.zipCode);
+      setValue("street1", dValues.street1);
+      setValue("street2", dValues.street2);
+      setDefaultCountry({ name:dValues.country })
+      setValue("country",dValues.country)
+      setSelectStateName({name : dValues.state})
+      setValue("state",dValues.state)
     }
-    if (role === "company") {
-      setValue("parentCompany", loggedInUser);
-      const filterparent = DummyData.filter(item => item.userName === loggedInUser)[0].parent;
-      setValue("parentBusinessGroup", filterparent);
-      setTempValue(loggedInUser);
-    }
-  }, []);
+  }, [dValues, id]);
 
- 
+  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
+
+  // useEffect(() => {
+  //   setValue(
+  //     "parentBusinessGroup",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
+  //   );
+  //   setValue(
+  //     "parentCompany",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
+  //   );
+  //   setValue(
+  //     "parentBranch",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
+  //   );
+  //   setValue(
+  //     "country",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].country : ""
+  //   );
+  //   setValue(
+  //     "state",
+  //     filteredCompanyData[0] ? filteredCompanyData[0].state : ""
+  //   );
+  // }, []);
+  // useEffect(() => {
+  //   const loggedInUser = localStorage.getItem("loginDetails-name");
+  //   const role = localStorage.getItem("role");
+  //   if (role === "businessgroup") {
+  //     setTempValue(loggedInUser);
+  //     setValue("parentBusinessGroup", loggedInUser);
+  //   }
+  //   if (role === "company") {
+  //     setValue("parentCompany", loggedInUser);
+  //     const filterparent = DummyData.filter(
+  //       (item) => item.userName === loggedInUser
+  //     )[0].parent;
+  //     setValue("parentBusinessGroup", filterparent);
+  //     setTempValue(loggedInUser);
+  //   }
+  // }, []);
+
   // console.log(defaultValues)
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('businessGroup')}</label><span className="text-danger">*</span>
+          <label className="form-label">{t("businessGroup")}</label>
+          <span className="text-danger">*</span>
           {/* {
              checkRole() === "admin" ? 
           } */}
           {id ? (
             <Controller
-              name="parentBusinessGroup"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
+                cacheOptions 
+                defaultOptions
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
-                    setValue("parentBusinessGroup", newValue.label);
+                    setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.label);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  defaultValue={{
-                    label: filteredCompanyData[0]
-                      ? filteredCompanyData[0].parentBusinessGroup
-                      : "",
-                    value: filteredCompanyData[0]
-                      ? filteredCompanyData[0].id
-                      : "",
+                  value={{
+                    label: getValues('businessGroupName'),
+                    value: getValues('businessGroupId'),
                   }}
                 />
               )}
             />
           ) : (
             <Controller
-              name="parentBusinessGroup"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
-                    setValue("parentBusinessGroup", newValue.label);
+                    setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.label);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
                   isDisabled={defaultValues?.business?.disabled}
                   name={name}
                   styles={customStyles}
-                  defaultValue={{
-                    label: defaultValues.business.defaultValues,
-                    value: defaultValues.business.defaultValues,
+                  defaultOptions
+                  value={{
+                    label: getValues('businessGroupName'),
+                    value: getValues('businessGroupId'),
                   }}
                 />
               )}
             />
           )}
-          {!getValues("parentBusinessGroup") && <Error errorName={errors.parentBusinessGroup} />}
+          {!getValues("businessGroupId") && (
+            <Error errorName={errors.businessGroupId} />
+          )}
         </div>
-
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('company')}<span className="text-danger">*</span>
+            {t("company")}
+            <span className="text-danger">*</span>
           </label>
           {id ? (
             <Controller
-              name="parentCompany"
+              name="companyId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
-                    setValue("parentCompany", newValue.label);
+                    setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.label);
                   }}
-                  options={companyOptions}
+                  loadOptions={allCompanyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  defaultValue={{
-                    label: filteredCompanyData[0]
-                      ? filteredCompanyData[0].parentCompany
-                      : "",
-                    value: filteredCompanyData[0]
-                      ? filteredCompanyData[0].id
-                      : "",
+                  defaultOptions
+                  value={{
+                    label: getValues('companyName'),
+                    value: getValues('companyId'),
                   }}
                 />
               )}
             />
           ) : (
             <Controller
-              name="parentCompany"
+              name="companyId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
-                    setValue("parentCompany", newValue.label);
+                    setValue("companyId", newValue.value);
                   }}
                   isDisabled={defaultValues?.company?.disabled}
                   options={companyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  defaultValue={{
-                    label: defaultValues.company.defaultValues ,
-                    value: defaultValues.company.defaultValues ,
+                  defaultOptions
+                  value={{
+                    label: getValues('companyName'),
+                    value: getValues('companyId'),
                   }}
                 />
               )}
             />
           )}
 
-          {!getValues("parentCompany") && <Error errorName={errors.parentCompany} />}
+          {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('parentBranch')}</label>
+          <label className="form-label">{t("parentBranch")}</label>
           <Controller
             name="parent"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
                 onChange={(newValue) => {
                   setParentValue(newValue.value);
                   setValue("parentBranch", newValue.value);
@@ -258,58 +316,58 @@ const MyAccount = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={{
-                  label: filteredCompanyData[0]
-                    ? filteredCompanyData[0].parentBranch
-                    : "",
-                  value: filteredCompanyData[0]
-                    ? filteredCompanyData[0].id
-                    : "",
+                value={{
+                  label: getValues('parentBranch'),
+                  value: getValues('parentBranchId')
                 }}
               />
             )}
           />
-          {!getValues("parentBranch") && <Error errorName={errors.parentBranch} />}
+          {!getValues("parentBranch") && (
+            <Error errorName={errors.parentBranch} />
+          )}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('branchName')} <span className="text-danger">*</span>
+            {t("branchName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
             required
-            label="User Name"
-            name="userName"
+            label="Branch Name"
+            name="branchName"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].userName : ""
-            }
+            defaultValue={getValues("branchName")}
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.branchName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('country')}<span className="text-danger">*</span>
+            {t("country")}
+            <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
               setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.id);
-              setIsStateDisabled(false)
+              setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyData[0].country : "" }}
+            defaultValue={defaultCountry}
+            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyD0ata[0].country : "" }}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">
-          {t('state')}
-          </label>
+        <div
+          className={`${
+            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+          }`}
+        >
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -327,7 +385,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('city')}<span className="text-danger">*</span>
+            {t("city")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -335,15 +394,13 @@ const MyAccount = ({
             label="City"
             name="city"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].city : ""
-            }
+            defaultValue={getValues("city")}
           />
           <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('zipCode')}
+            {t("zipCode")}
           </label>
           <CustomInput
             type="number"
@@ -352,16 +409,20 @@ const MyAccount = ({
             name="zipCode"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
+              getValues('zipCode')
             }
           />
           <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street1')}<span className="text-danger">*</span>
+            {t("street1")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -370,14 +431,14 @@ const MyAccount = ({
             name="street1"
             placeholder=""
             defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].street1 : ""
+              getValues('street1')
             }
           />
           <Error errorName={errors.street1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street2')}
+            {t("street2")}
           </label>
           <CustomInput
             type="text"
@@ -385,6 +446,7 @@ const MyAccount = ({
             label="Street2"
             name="street2"
             placeholder=""
+            defaultValue={getValues('street2')}
           />
         </div>
       </div>
@@ -402,7 +464,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

@@ -1,7 +1,6 @@
 import axios from "axios";
 import initAxios from "./Axios";
 initAxios()
-
   export const getCompany =  async () => {
     return axios.get("/company");
   }
