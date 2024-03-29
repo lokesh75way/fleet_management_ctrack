@@ -66,7 +66,7 @@ const CompanyForm = () => {
             await addCompany(data);
             notifySuccess("New Company Created!");
             navigate("/company");
-          return;
+            return;
           } catch (e) {
             console.log(e);
             notifyError("Some error occured !!");
