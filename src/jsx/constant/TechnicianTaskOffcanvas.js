@@ -14,6 +14,7 @@ import Error from "../components/Error/Error";
 import CustomInput from "../components/Input/CustomInput";
 import '../../scss/pages/_driver-tracking.scss'
 import {taskCategoryOptions, severityOptions, technicianOptions, branchOptions} from '../components/TabComponent/VehicleTabs/Options'
+import {useTranslation} from 'react-i18next'
 
 const TechnicianOffcanvas = forwardRef(
   ({ Title, handleSubmit, editData, setEditData, control, setValue, getValues,register, errors,clearErrors, onSubmit }, ref) => {
@@ -30,6 +31,8 @@ const TechnicianOffcanvas = forwardRef(
       console.log(e.target.value);
       setEditData({ ...editData, [name]: value });
     };
+
+    const {t} = useTranslation();
 
     const [selectedOption, setSelectedOption] = useState(null);
     const customStyles = {
@@ -86,7 +89,7 @@ const TechnicianOffcanvas = forwardRef(
                 <div className="row"> 
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Technician <span className="text-danger">*</span>
+                      {t('technician')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="technician"
@@ -107,7 +110,7 @@ const TechnicianOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Task Category <span className="text-danger">*</span>
+                    {t('taskCategory')}<span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="c"
@@ -131,7 +134,7 @@ const TechnicianOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput2"
                       className="form-label"
                     >
-                      Task Name <span className="text-danger">*</span>
+                      {t('taskName')} <span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="text"
@@ -144,7 +147,7 @@ const TechnicianOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Task Priority <span className="text-danger">*</span>
+                    {t('taskPriority')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="taskPriority"
@@ -165,7 +168,7 @@ const TechnicianOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Contact Person Name 
+                    {t('contactPersonName')}
                     </label>
                     <CustomInput
                       type="text"
@@ -180,7 +183,7 @@ const TechnicianOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      Contact Person Number
+                      {t('contactPersonNumber')}
                     </label>
                     <CustomInput
                       type="number"
@@ -193,7 +196,7 @@ const TechnicianOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Service Location<span className="text-danger">*</span>
+                    {t('serviceLocation')}<span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="text"
@@ -206,7 +209,7 @@ const TechnicianOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3 d-flex flex-column">
                     <label className="form-label">
-                      Planned Reporting <span className="text-danger">*</span>
+                    {t('plannedReportingDate')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="plannedReportingDate"
@@ -224,7 +227,7 @@ const TechnicianOffcanvas = forwardRef(
                     {!getValues("plannedReportingDate") && <Error errorName={errors.plannedReportingDate} />}
                   </div>
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Reporting Time <span className="text-danger">*</span></label>
+                    <label className="form-label">{t('reportingTime')}<span className="text-danger">*</span></label>
                       <CustomInput
                         type="time"
                         register={register}
@@ -236,7 +239,7 @@ const TechnicianOffcanvas = forwardRef(
                       </div>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">
-                      Description 
+                    {t('description')} 
                     </label>
                     <div className="mb-3 ">
                       <textarea
@@ -254,16 +257,16 @@ const TechnicianOffcanvas = forwardRef(
                   <button
                     type="submit"
                     onClick={() => {handleSubmit(onSubmit)}}
-                    className="btn btn-primary me-1"
+                    className="btn btn-primary me-1 m-1"
                   >
-                    Submit
+                    {t('submit')}
                   </button>
                   <Link
                     to={"#"}
                     onClick={() => setAddEmploye(false)}
-                    className="btn btn-danger light ms-1"
+                    className="btn btn-danger light ms-1 m-1"
                   >
-                    Cancel
+                    {t('cancel')}
                   </Link>
                 </div>
               </form>

@@ -7,10 +7,13 @@ import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
 import { useParams } from "react-router-dom";
-import '../../../../scss/pages/_driver-tracking.scss'
+import '../../../../scss/pages/_driver-tracking.scss';
+import {useTranslation} from 'react-i18next'
 
 const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues, control,errors }) => {
 
+
+  const {t} = useTranslation();
   const { id } = useParams();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id === parseInt(id, 10));
@@ -31,7 +34,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Date of Birth</label>
+          <label className="form-label">{t('dateOfBirth')}</label>
           <Controller
             name="dateOfBirth"
             control={control}
@@ -45,7 +48,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Age<span className="text-danger">*</span></label>
+          <label className="form-label">{t('age')}<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -57,7 +60,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           <Error errorName={errors.age} />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Date of Joining</label>
+          <label className="form-label">{t('dateOfJoining')}</label>
           <Controller
             name="dateOfJoining"
             control={control}
@@ -71,7 +74,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Date of Leaving</label>
+          <label className="form-label">{t('dateOfLeaving')}</label>
           <Controller
             name="dateOfLeaving"
             control={control}
@@ -85,7 +88,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Driving Experience Since<span className="text-danger">*</span></label>
+          <label className="form-label">{t('drivingExperienceSince')}<span className="text-danger">*</span></label>
           <CustomInput
             type="text"
             register={register}
@@ -97,7 +100,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           <Error errorName={errors.drivingExperienceSince} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">License Available</label>
+          <label className="form-label">{t('licenseAvailable')}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -114,7 +117,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 htmlFor="customRadioBox987"
                 style={{ marginBottom: "0" }}
               >
-                Yes
+                {t('yes')}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
@@ -132,7 +135,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 htmlFor="customRadioBox988"
                 style={{ marginBottom: "0" }}
               >
-                No
+                {t('no')}
               </label>
             </div>
           </div>
@@ -140,7 +143,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
 
           <>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">License Number</label>
+              <label className="form-label">{t('licenseNumber')}</label>
               <div className={`${ selectedOption !== "yes" ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -154,7 +157,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               </div>
             </div>
             <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3  pe-none" : "col-xl-6 mb-3 " }`}>
-              <label className="form-label">License to Drive</label>
+              <label className="form-label">{t('licenseToDrive')}</label>
               <Controller
                 name="licenseToDrive"
                 control={control}
@@ -175,7 +178,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
             <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
-              <label className="form-label">License Issued Date</label>
+              <label className="form-label">{t('licenseIssueDate')}</label>
               <Controller
                 name="licenseIssueDate"
                 control={control}
@@ -191,7 +194,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               />
             </div>
             <div className="col-xl-6 mb-3 d-flex flex-column">
-              <label className="form-label">License Expiry Date</label>
+              <label className="form-label">{t('licenseExpiryDate')}</label>
               <Controller
                 name="licenseExpiryDate"
                 control={control}
@@ -209,7 +212,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           </>
     
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Life Insurance Number</label>
+          <label className="form-label">{t('lifeInsuranceNumber')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -219,7 +222,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Life Insurance Expiry Date</label>
+          <label className="form-label">{t('lifeInsuranceExpiryDtae')}</label>
           <Controller
                 name="lifeInsuranceExpiryDtae"
                 control={control}
@@ -235,7 +238,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mediclaim Number</label>
+          <label className="form-label">{t('mediclaimNumber')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -245,7 +248,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Mediclaim Expiry Date</label>
+          <label className="form-label">{t('mediclaimExpiryDate')}</label>
           <Controller
                 name="mediclaimExpiryDate"
                 control={control}
@@ -261,7 +264,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Active</label>
+          <label className="form-label">{t('active')}</label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -281,7 +284,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

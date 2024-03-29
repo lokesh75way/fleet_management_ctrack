@@ -11,6 +11,7 @@ import { clsx } from 'clsx';
 
 import { ThemeContext } from "../../context/ThemeContext";
 import useStorage from "../../hooks/useStorage";
+import {useTranslation} from 'react-i18next'
 
 const Driver = (ref) => {
   const {isRtl} = useContext(ThemeContext);
@@ -69,6 +70,8 @@ const Driver = (ref) => {
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
+
+  const {t} = useTranslation();
   const sort = 10;
   const activePage = useRef(0);
   const [test, settest] = useState(0);
@@ -117,9 +120,9 @@ const Driver = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Drivers"
-        pageTitle={"Drivers"}
-        parentTitle={"Home"}
+        mainTitle={t('drivers')}
+        pageTitle={t('drivers')}
+        parentTitle={t('home')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -128,7 +131,7 @@ const Driver = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Drivers</h4>
+                    <h4 className="heading mb-0">{t('drivers')}</h4>
                     <div>
                       <Link
                         to={"/driver/create"}
@@ -136,7 +139,7 @@ const Driver = (ref) => {
                         data-bs-toggle="offcanvas"
                         // onClick={() => employe.current.showModal()}
                       >
-                        + Add Driver
+                        + {t('addDriver')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -150,14 +153,14 @@ const Driver = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Employee Name</th>
-                          <th>Age</th>
-                          <th>Contact Number</th>
-                          <th>Driving Experience Since</th>
-                          <th>City</th>
-                          <th>Status</th>
-                          <th>Action</th>
+                          <th>{t('id')}</th>
+                          <th>{t('employeeName')}</th>
+                          <th>{t('age')}</th>
+                          <th>{t('contactNumber')}</th>
+                          <th>{t('drivingExperienceSince')}</th>
+                          <th>{t('city')}</th>
+                          <th>{t('status')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -172,11 +175,11 @@ const Driver = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePage.current * sort + 1} to{" "}
+                      {t('showing')} {activePage.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePage.current + 1) * sort
                           ? (activePage.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

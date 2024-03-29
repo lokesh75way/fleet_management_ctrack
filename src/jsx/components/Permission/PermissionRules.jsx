@@ -7,6 +7,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 // import { reset } from "./Options";
 import _ from "lodash";
 import TemplateServices from "../../../services/api/TemplateServices";
+import {useTranslation} from 'react-i18next'
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
@@ -19,6 +20,8 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     permission: {},
   });
   const [selectOptions, setSelectOptions] = useState([]);
+
+  const { t } = useTranslation();
 
   const handleCheckboxChange = (isChecked, index) => {
     if (isChecked) {
@@ -197,7 +200,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     <div>
       <Card>
         <Card.Header>
-          <Card.Title>Permissions</Card.Title>
+          <Card.Title>{t('permission')}</Card.Title>
         </Card.Header>
 
         <div className="d-flex justify-content-between m-2 mt-4 p-3">
@@ -213,7 +216,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               borderRadius: "0.3rem",
               width: "15rem",
             }}
-            placeholder="Feature Template Name"
+            placeholder={t('featureTemplateName')}
           />
           <div
             className="d-flex justify-content-center"
@@ -221,16 +224,16 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
           >
             <Select
               options={selectOptions}
-              placeholder="Select a Feature Template"
+              placeholder={t('selectFeatureTemplate')}
               styles={{ control: (base) => ({ ...base, width: "18rem" }) }}
             >
               {" "}
             </Select>{" "}
             <button
               className="btn btn-primary"
-              style={{ marginLeft: "1rem", padding: "7px 16px" }}
+              style={{ marginLeft: "1rem",marginRight:"1rem", padding: "7px 16px" }}
             >
-              Copy
+              {t('copy')}
             </button>
           </div>
         </div>
@@ -250,7 +253,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                 style={{ position: "sticky", top: 0, background: "white" }}
               >
                 <tr>
-                  <th scope="col">Module</th>
+                  <th scope="col">{t('module')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -258,7 +261,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                   return (
                     <React.Fragment key={i}>
                       <tr>
-                        <td>
+                        <td >
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -269,7 +272,8 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                               handleCheckboxChange(e.target.checked, i)
                             }
                           />
-                          {element.title}
+                          <span style={{marginRight:"1.7rem"}}>{t(element.title)}</span>
+                          
                         </td>
                       </tr>
                     </React.Fragment>
@@ -296,12 +300,12 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               >
                 <tr>
                   <th scope="col" className="col-4" style={{ width: "150px" }}>
-                    SubModules
+                  {t('subModules')}
                   </th>
-                  <th scope="col">Add</th>
-                  <th scope="col">View</th>
-                  <th scope="col">Modify</th>
-                  <th scope="col">Delete</th>
+                  <th scope="col">{t('add')}</th>
+                  <th scope="col">{t('view')}</th>
+                  <th scope="col">{t('modify')}</th>
+                  <th scope="col">{t('delete')}</th>
                 </tr>
               </thead>
               <tbody className="feature_template_table">
@@ -458,7 +462,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
             onClick={handleSave}
           >
             {" "}
-            Save{" "}
+            {t('save')}{" "}
           </button>
         </div>
       </Card>

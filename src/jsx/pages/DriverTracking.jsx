@@ -8,7 +8,11 @@ import { FaUser } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdFence } from "react-icons/md";
 import "../../scss/pages/_driver-tracking.scss";
+
+import {useTranslation} from 'react-i18next'
 const DriverTracking = () => {
+
+  const {t} = useTranslation();
   const { currentPosition, setCurrentPosition } = useContext(ThemeContext);
   const data = [
     { lat: 30.7099475, lng: 76.6900474 },
@@ -38,9 +42,9 @@ const DriverTracking = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle Tracking"
-        pageTitle={"Vehicle Tracking"}
-        parentTitle={"Tracking"}
+        mainTitle={t('vehicleTracking')}
+        pageTitle={t('vehicleTracking')}
+        parentTitle={t('tracking')}
       />
       <div
         className={`backdrop ${isOutside ? "d-none" : "d-block"}`}

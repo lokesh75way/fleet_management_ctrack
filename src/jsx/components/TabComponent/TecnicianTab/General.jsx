@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import DummyData from '../../../../users.json'
 import useStorage from "../../../../hooks/useStorage";
 import '../../../../scss/pages/_driver-tracking.scss'
+
+import {useTranslation} from 'react-i18next'
 const General = ({
   register,
   setValue,
@@ -18,6 +20,8 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
+
+  const {t} = useTranslation();
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
   const {checkRole,checkUserName} = useStorage()
@@ -60,7 +64,7 @@ const General = ({
       <div className="row" style={{ width: "70%", margin: "auto" }}>
       <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company <span className="text-danger">*</span>
+          {t('company')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="parentCompany"
@@ -82,7 +86,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            First Name <span className="text-danger">*</span>
+          {t('firstName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -98,7 +102,7 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Middle Name</label>
+          <label className="form-label">{t('middleName')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -113,7 +117,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Last Name <span className="text-danger">*</span>
+          {t('lastName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -130,7 +134,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Technician Number <span className="text-danger">*</span>
+          {t('technicianNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -147,7 +151,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Email<span className="text-danger">*</span>
+          {t('email')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -161,7 +165,7 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Gender</label>
+          <label className="form-label">{t('gender')}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -172,7 +176,7 @@ const General = ({
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-                Male
+              {t('male')}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
@@ -184,7 +188,7 @@ const General = ({
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-                Female
+              {t('female')}
               </label>
             </div>
           </div>
@@ -193,7 +197,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Mobile Number <span className="text-danger">*</span>
+          {t('mobileNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -211,7 +215,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Emergency Contact <span className="text-danger">*</span>
+          {t('emergencyContact')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -229,7 +233,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
-            Date of Join<span className="text-danger">*</span>
+          {t('dateOfJoin')}<span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfJoin"
@@ -253,7 +257,7 @@ const General = ({
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
             {" "}
-            Date of Birth<span className="text-danger">*</span>
+            {t('dateOfBirth')}<span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfBirth"
@@ -291,7 +295,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

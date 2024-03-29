@@ -13,12 +13,16 @@ import { vehicleGeneralSchema, vehicleProfileSchema, vehicleDocumentSchema } fro
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 
+import {useTranslation} from 'react-i18next'
+
 
 const VehicleForm = () => {
+
+  const {t} = useTranslation();
   const {saveData} = useStorage()
   const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Document"];
+  const tabHeading = [t('general'), t('profile'), t('document')];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
@@ -33,16 +37,16 @@ const VehicleForm = () => {
       try{
         saveData(data, 'vehicleData')
         console.log(data)
-        notifySuccess("Saved !")
+        notifySuccess(t('saved'))
         navigate("/vehicle");
         return;
       }
       catch(error){
-        notifyError("Some error occured !!")
+        notifyError(t('someErrorOccured'))
       }
       return;
     }
-    notifySuccess("Saved !")
+    notifySuccess(t('saved'))
     console.log(data)
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
@@ -50,9 +54,9 @@ const VehicleForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Vehicle"}
+        mainTitle={t('vehicle')}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t('vehicle')}
       />
       <div className="m-2 p-2">
         <FormProvider>

@@ -10,11 +10,14 @@ import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { driverProfileSchema, driverInfoSchema, driverDocumentSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import {useTranslation} from 'react-i18next'
 
 const DriverForm = () => {
+
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Profile", "Additional Info", "Document"];
+  const tabHeading = [t('profile'), t('additionalInfo'), t('document')];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
   const { id } = useParams();
@@ -35,7 +38,7 @@ const DriverForm = () => {
       business: filteredUserData[0]?.parentBusinessGroup || "",
       test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
     },
-    resolver: yupResolver(
+    resolver: yupResolver(       
       activeIndex === 0 ? driverProfileSchema : activeIndex === 1 ?  driverInfoSchema: driverDocumentSchema
     ),
   });
@@ -58,7 +61,7 @@ const DriverForm = () => {
             };
 
             localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess("Driver Updated!");
+            notifySuccess(t('driverUpdated'));
             navigate("/driver");
           }
           return;
@@ -70,12 +73,12 @@ const DriverForm = () => {
           existingData.push(data);
           localStorage.setItem("userJsonData", JSON.stringify(existingData));
           // notifySuccess("Branch Added Successfully !!");
-          notifySuccess("New Driver Created!");
+          notifySuccess(t('newDriverCreated'));
           navigate("/driver");
           return;
         }
       } catch (error) {
-        notifyError("Some error occured !!");
+        notifyError(t('someErrorOccurred'));
       }
     }
     console.log("data from drivers", data);
@@ -84,9 +87,9 @@ const DriverForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Driver"
-        pageTitle={id ? "edit" : "create"}
-        parentTitle={"Driver"}
+        mainTitle={t('driver')}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t('driver')}
       />
       <div className="m-2 p-2">
         <FormProvider>
