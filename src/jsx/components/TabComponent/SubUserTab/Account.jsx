@@ -81,7 +81,7 @@ const Account = ({
       if (branchResponse.error) {
         notifyError(branchResponse.error)
       } else {
-        const branches = branchResponse;
+        const branches = branchResponse.data.data;
         console.log(branches, "branches");
         const branchOptions = branches.map((item) => ({
           label: item.branchName,
