@@ -60,9 +60,10 @@ const Account = ({
       }
       else {
         const groups = response.data;
+
         const groupOptions = groups.map((item) => ({
-          label: item.groupName,
-          value: item._id,
+          label: item.businessGroupId.groupName,
+          value: item.businessGroupId._id,
         }));
         setBusinessUserOptions(groupOptions);
       }
@@ -72,8 +73,8 @@ const Account = ({
         const companies = companyResponse.data.data.data;
         console.log(companies, "companies");
         const companyOptions = companies.map((item) => ({
-          label: item.companyName,
-          value: item._id,
+          label: item.companyId?.companyName,
+        value: item.companyId?._id,
         }));
         setCompanyOptions(companyOptions);
       }
