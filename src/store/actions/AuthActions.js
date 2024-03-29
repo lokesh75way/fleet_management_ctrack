@@ -79,6 +79,7 @@ export function loginConfirmedAction(data) {
   };
 }
 export function setPermissions(data) {
+  console.log("is data here hare",data)
   return {
     type: SET_PERMISSION,
     payload: data,
