@@ -42,7 +42,7 @@ const {t} = useTranslation();
     }
   },[id])
   useEffect(()=>{
-    setValue('dateFormat',dValues?.dateFormat || dateFormatOptions[0].value)
+    setValue('dateFormat',dValues?.dateFormat ? dValues?.dateFormat : dateFormatOptions[0].value)
     setValue('unitOfDistance',dValues?.unitOfDistance || unitOfDistanceOptions[0].value)
     setValue('timeFormat',dValues?.timeFormat || timeFormatOptions[0].value)
     setValue('unitOfFuel',dValues?.unitOfFuel || unitOfFuelOptions[0].value)
@@ -95,7 +95,7 @@ const {t} = useTranslation();
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('unitOfDistance')}</label>
           <Controller
-            name="fuelEconomyScaling"
+            name="unitOfDistance"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
