@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
-import { VehicleData } from "../components/Tables/Tables";
+import { Link, useNavigate } from "react-router-dom";
 import VehicleTable from "../components/Tables/VehicleTable";
 import { ThemeContext } from "../../context/ThemeContext";
 import MainPagetitle from "../layouts/MainPagetitle";
 import { clsx } from "clsx";
 import VehicleServices from "../../services/api/VehicleService";
+import { usePermissions } from "../../context/PermissionContext";
+import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 
 const Vehicle = () => {
   const { isRtl } = useContext(ThemeContext);
+  const {can} = usePermissions()
   const arrowleft = clsx({
     "fa-solid fa-angle-right": isRtl,
     "fa-solid fa-angle-left": !isRtl,
@@ -17,7 +19,7 @@ const Vehicle = () => {
     "fa-solid fa-angle-left": isRtl,
     "fa-solid fa-angle-right": !isRtl,
   });
-//   const { setAddVehicle, addVehicle } = useContext(ThemeContext);
+  //   const { setAddVehicle, addVehicle } = useContext(ThemeContext);
 
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
@@ -48,16 +50,15 @@ const Vehicle = () => {
   };
   async function getVehicleData() {
     try {
-      const { data } = await VehicleServices.getVehicles();
-      setTableData(data.data.data);
-      
+      const { data , totalLength} = await getVehicles();
+      console.log(data)
+      setTableData(data);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
-    
   }
 
-  console.log(tableData)
+  console.log(tableData);
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -79,7 +80,7 @@ const Vehicle = () => {
 
   // delete function
   const onConfirmDelete = (id) => {
-    VehicleServices.deleteVehicles(id);
+    deleteVehicles(id);
     getVehicleData();
     setDeleteId(id);
   };
@@ -124,13 +125,13 @@ const Vehicle = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">Vehicle</h4>
                     <div>
-                      <Link
+                     {can('vehicle','add') && <Link
                         to={"/vehicle/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
                         + Add Vehicle Info
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -150,7 +151,7 @@ const Vehicle = () => {
                           <th>IMEI Number</th>
                           <th>Registration Number</th>
                           <th>Weight Capacity</th>
-                          <th>Action</th>
+                          {(can('vehicle','modify') || can('vehicle','delete')) && <th>Action</th>}
                         </tr>
                       </thead>
                       <tbody>

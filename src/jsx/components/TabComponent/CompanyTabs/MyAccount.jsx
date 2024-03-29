@@ -11,6 +11,7 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
+import { getGroups } from "../../../../services/api/BusinessGroup";
 
 const MyAccount = ({
   setValue,
@@ -39,18 +40,31 @@ const MyAccount = ({
     }),
   };
 
-  const businessUserOptions = DummyData.filter(
-    (item) => item.role === "businessgroup"
-  ).map((item) => ({
-    label: item.userName,
-    value: item.id,
-  }));
+  // const businessUserOptions = DummyData.filter(
+  //   (item) => item.role === "businessgroup"
+  // ).map((item) => ({
+  //   label: item.userName,
+  //   value: item.id,
+  // }));
+  const [businessUserOptions,setBusinessUserOptions] = useState([])
+  const getBusinessGroup = async()=>{
+    const {data} = await getGroups()
+    console.log("jeqgduwygfiruwgfieruw",data)
+    setBusinessUserOptions(data.map((item) => ({
+      label: item.businessGroupId.groupName,
+      value: item.businessGroupId._id,
+    })));
+    console.log("iuewghfiuw3grfurf",businessUserOptions)
+  }
+  useEffect(()=>{
+    getBusinessGroup()
+  },[])
 
   const companyOptions = DummyData.filter(
     (item) => item.role === "company"
   ).map((item) => ({
-    label: item.userName,
-    value: item.id,
+    label: item.country,
+    value: item.country,
   }));
 
   useEffect(() => {
@@ -78,16 +92,16 @@ if(id){
             {t("businessGroup")}
             <span className="text-danger">*</span>
           </label>
-          {checkRole() === "admin" ? (
+          {checkRole() === "SUPER_ADMIN" ? (
             <Controller
-              name="parent"
+              name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
                     setTempValue(newValue.label);
-                    setValue("parent", newValue.label);
+                    setValue("businessGroupId", newValue.value);
                   }}
                   options={businessUserOptions}
                   ref={ref}
@@ -119,11 +133,29 @@ if(id){
               )}
             />
           )}
-          {!getValues("parent") && <Error errorName={errors.parent} />}
+          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t("companyName")} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            required
+            label="Company Name"
+            name="companyName"
+            placeholder=""
+            defaultValue={
+              filteredCompanyData[0] ? filteredCompanyData[0].companyName : ""
+            }
+          />
+          <Error errorName={errors.companyName} />
+        </div>
+
+        <div className="col-xl-6 mb-3 ">
+          <label className="form-label">
+          {t('username')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -137,24 +169,6 @@ if(id){
             }
           />
           <Error errorName={errors.userName} />
-        </div>
-
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-          {t('username')} <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="User Name2"
-            name="userName2"
-            placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].userName2 : ""
-            }
-          />
-          <Error errorName={errors.userName2} />
         </div>
         {/* <div className="col-xl-6 mb-3">
           <label className="form-label">Company<span className="text-danger">*</span></label>

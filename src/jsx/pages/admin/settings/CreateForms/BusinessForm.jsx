@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
@@ -8,35 +13,32 @@ import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyA
 import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { businessGroupAccountSchema, businessGroupSettingSchema } from "../../../../../yup";
+import {
+  businessGroupAccountSchema,
+  businessGroupSettingSchema,
+} from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import { createGroup } from "../../../../../services/api/BusinessGroup";
 
 const BusinessForm = ({ Title, editData, setEditData }) => {
-  const {t} = useTranslation();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t('newBusinessGroup'), t('settings'),t('changePassword')];
-  const component = [MyAccount, UserSetting,ManagePassword];
-  const totalTabs = tabHeading.length;
-  const navigate = useNavigate()
-  const { id } = useParams(); 
 
-  if(!id){
-    component.pop();
-    tabHeading.pop();
+  const { t } = useTranslation();
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  let tabHeading = [t("newBusinessGroup"), t("settings"), t("changePassword")];
+  let component = [MyAccount, UserSetting, ManagePassword];
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  if (!id) {
+    tabHeading = [t("newBusinessGroup"), t("settings")];
+    component = [MyAccount, UserSetting];
   }
 
-  // Fetch data from local storage when the id changes
-  useEffect(() => {
-    const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-    console.log(existingData, id)
-    const businessData = existingData.find((item) => item.id === parseInt(id, 10));
-    if (businessData) {
-      reset(businessData);
-    }
-  }, [id]);
-
-
+  const totalTabs = tabHeading.length;
+ 
   const {
     register,
     formState: { errors },
@@ -47,45 +49,36 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 1 ?  businessGroupSettingSchema : businessGroupAccountSchema
-  ),
-    });
+      activeIndex === 1
+        ? businessGroupSettingSchema
+        : businessGroupAccountSchema
+    ),
+  });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingUserData = JSON.parse(localStorage.getItem("userJsonData"));
-        data.id = `${existingUserData.length + 1}`;
-        data.role = 'businessgroup';
-        data.parent = 'admin';
-        existingUserData.push(data);
-        localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
-        notifySuccess("New Business Group Created !");
+        if (id) {
+        } else {
+          await createGroup(data);
+          notifySuccess("New Business group Created!");
+        }
         navigate("/business");
+
         return;
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
-    
-    if(!id){
-      const existingUserData = JSON.parse(localStorage.getItem("userJsonData"));
-      data.id = `${existingUserData.length + 1}`;
-      data.role = 'businessgroup';
-      data.parent = 'admin';
-      existingUserData.push(data);
-      localStorage.setItem("userJsonData", JSON.stringify(existingUserData));
-      notifySuccess("New Business Group Created !");
-      navigate('/business')
-    }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
+
   return (
     <>
       <MainPagetitle
-        mainTitle= {t('businessGroup')}
-        pageTitle={id?t('edit'):t('create')}
-        parentTitle={t('businessGroup')}
+        mainTitle={t("businessGroup")}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t("businessGroup")}
       />
       <div className="m-2 p-2">
         <FormProvider>

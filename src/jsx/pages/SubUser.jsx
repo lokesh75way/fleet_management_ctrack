@@ -11,6 +11,7 @@ import UserServices from '../../services/api/UserServices'
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { notifyError, notifySuccess } from "../../utils/toast";
+import { usePermissions } from "../../context/PermissionContext";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
   //     headers : headers,
@@ -21,6 +22,7 @@ import { notifyError, notifySuccess } from "../../utils/toast";
 
     const {t} = useTranslation();
     const {isRtl} = useContext(ThemeContext);
+    const {can} = usePermissions()
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     //call get api from userservice
@@ -46,15 +48,15 @@ import { notifyError, notifySuccess } from "../../utils/toast";
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
   const userName = checkUserName()
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
+  const userData = JSON.parse(localStorage.getItem('userJsonData'))
   var UserData;
-  if(checkRole() === 'company'){
+  if(checkRole() === 'COMPANY'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'company' && item.parent === userName))
   }
-  else if(role === 'businessgroup'){
+  else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'admin') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin'  )
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
 
   const [tableData, setTableData] = useState(UserData);
   const [editData, setEditData] = useState();
@@ -115,7 +117,7 @@ import { notifyError, notifySuccess } from "../../utils/toast";
   };
   const editDrawerOpen = (item) => {
     // tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`/subUser/edit/${item}`);
+    navigate(`/subUser/edit/${item.id}`);
     // setEditTableData(item);
   };
   return (
@@ -130,14 +132,14 @@ import { notifyError, notifySuccess } from "../../utils/toast";
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t('users')}</h4>
                     <div>
-                      <Link
+                      {can('subUser','add') && <Link
                         to={"/subUser/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subuser.current.showModal()}
                       >
                         + {t('addUser')}
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -155,7 +157,7 @@ import { notifyError, notifySuccess } from "../../utils/toast";
                           <th>{t('mobileNumber')}</th>
                           <th>{t('email')}</th>
                           <th>{t('location')}</th>
-                          <th>{t('action')}</th>
+                          {(can('subUser','modify') || can('subUser','delete')) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

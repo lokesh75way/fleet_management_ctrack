@@ -1,177 +1,21 @@
+import TemplateServices from "../../../services/api/TemplateServices";
+
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const templateData = await TemplateServices.getModules();
+//       console.log("Received template data:", templateData);
+//       setGroupsDataState(templateData.data); // Assuming 'data' property contains template data array
+//     } catch (error) {
+//       console.error("Error fetching template data:", error);
+//     }
+//   };
+
+//   fetchData();
+// }, []);
+
 export const groupsData = [{ groupName: "", groupPermissions: [] }];
 
-export const staticoptions = [
-  {
-    name: "Dashboard",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Business Groups",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Companies",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Branches",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Driver",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Vehicle Tracking",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Reports",
-    submodules: [
-    ],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Geofence",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  {
-    name: "Classify Trips",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
+// export const staticoptions
 
-  {
-    name: "Alert",
-    submodules: [],
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  // {
-  //   name: "Fuel",
-  //   permissions: {
-  //     add: false,
-  //     view: false,
-  //     modify: false,
-  //     delete: false,
-  //     
-  //   },
-  // },
-  {
-    name: "Expense",
-    submodules: [],
-
-    permissions: {
-      add: false,
-      view: false,
-      modify: false,
-      delete: false,
-      
-    },
-  },
-  // {
-  //   name: "Temperature Chart",
-  //   permissions: {
-  //     add: false,
-  //     view: false,
-  //     modify: false,
-  //     delete: false,
-  //     
-  //   },
-  //   //   },
-  //   // ],
-  // },
-  {
-    name: "Technician",
-    submodules: [
-      {
-        name: "Technician Details",
-        permissions: {
-          add: false,
-          view: false,
-          modify: false,
-          delete: false,
-          
-        },
-      },
-      {
-        name: "Technician Tasks",
-        permissions: {
-          add: false,
-          view: false,
-          modify: false,
-          delete: false,
-          
-        },
-      },
-    ],
-  },
-];
-
-export const reset = JSON.parse(JSON.stringify(staticoptions));
+// export const reset = JSON.parse(JSON.stringify(staticoptions));

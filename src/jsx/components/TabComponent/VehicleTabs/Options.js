@@ -55,9 +55,9 @@ export const featureTemplateOptions = [
   { value: "Template 4", label: "Template 4" },
 ];
 export const unitOfDistanceOptions = [
-  { value: "Kilometer", label: "Kilometer" },
-  { value: "Mile", label: "Mile" },
-  { value: "Nautical mile", label: "Nautical mile" },
+  { value: "KILOMETER", label: "KILOMETER" },
+  { value: "MILES", label: "MILES" },
+  { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
 export const speedDetectionOptions = [
   { value: "From Device", label: "From Device" },
@@ -134,12 +134,12 @@ export const TypeOptions = [
 ];
 export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
-  { value: "dd-MM-yyyy", label: "dd-MM-yyyy" },
-  { value: "MM-dd-yyyy", label: "MM-dd-yyyy" },
+  { value: "DD-MM-YYYY", label: "DD-MM-YYYY" },
+  { value: "MM-DD-YYYY", label: "MM-dd-yyyy" },
 ];
 export const timeFormatOptions = [
-  { value: "12 Hour", label: "12 Hour" },
-  { value: "24 Hour", label: "24 Hour" },
+  { value: "12", label: "12" },
+  { value: "24", label: "24" },
 ];
 export const weekStartDayOptions = [
   { value: "Sunday", label: "Sunday" },
@@ -160,8 +160,8 @@ export const preferredCurrencyUnitOptions = [
   { value: "75 way", label: "75 way" },
 ];
 export const unitOfFuelOptions = [
-  { value: "litre", label: "Litre" },
-  { value: "gallon", label: "Gallon" },
+  { value: "LITRES", label: "LITRES" },
+  { value: "GALLONS", label: "GALLONS" },
 ];
 
 export const dayOptions = [
@@ -175,8 +175,8 @@ export const dayOptions = [
 ];
 
 export const statusOptions = [
-  { value: "Active", label: "Active" },
-  { value: "Inactive", label: "Inactive" },
+  { value: "ACTIVE", label: "ACTIVE" },
+  { value: "INACTIVE", label: "INACTIVE" },
 ];
 
 export const storageCapacityOptions = [
@@ -187,10 +187,10 @@ export const storageCapacityOptions = [
 
 
 export const languageOptions = [
-  { value: "English", label: "English" },
-  { value: "Arabic", label: "Arabic" },
-  { value: "French", label: "French" },
-  { value: "Portugese", label: "Portugese" },
+  { value: "ENGLISH", label: "ENGLISH" },
+  { value: "ARABIC", label: "ARABIC" },
+  { value: "FRENCH", label: "FRENCH" },
+  { value: "PORTUGESE", label: "PORTUGESE" },
 ];
 
 export const currencyOptions = [

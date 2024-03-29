@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   Route,
   Routes,
@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 // action
 import { checkAutoLogin } from "./services/AuthService";
-
 import { isAuthenticated } from "./store/selectors/AuthSelectors";
 
 import "./css/style.css";
@@ -31,6 +30,8 @@ import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/
 import UserJsonData from './users.json'
 import GeofenceData from './geofenceData.json'
 import { GiLabCoat } from "react-icons/gi";
+import useStorage from "./hooks/useStorage";
+import { usePermissions } from "./context/PermissionContext";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
@@ -55,8 +56,12 @@ function withRouter(Component) {
 }
 
 function App(props) {
-  let role = localStorage.getItem("role");
-  let type = localStorage.getItem('type')
+  const {checkRole, checkType} = useStorage()
+  let role = checkRole()
+  let type = checkType()
+  const {setUserPermission}  = usePermissions()
+  const userPermission = useSelector(state => state.auth.permission);
+
   useEffect(()=>{
     const companyData = localStorage.getItem('companyData');
     const vehicleData = localStorage.getItem('vehicleData');
@@ -87,27 +92,15 @@ function App(props) {
   useEffect(() => {
     checkAutoLogin(dispatch, navigate);
   }, []);
-console.log(props)
+
   if (props.isAuthenticated) {
-    console.log("from app.js role", role);
-    console.log("from app.js type", type);
-
-    // return role === 'admin' ? <AdminRoutes /> : <CompanyRoutes />;
-    // if(role === "user"){
-    //   if(type === "admin") return <AdminRoutes />;
-    //   else if(type === "businessgroup") return <BusinessGroupRoutes />;
-    //   else if(type === "company") return <CompanyRoutes />;
-    // }
-    // else if(role === "admin") return <AdminRoutes />;
-    // else if(role === "businessgroup") return <BusinessGroupRoutes />;
-    // else if(role === "company") return <CompanyRoutes />;
-
+    console.log(userPermission)
     switch (role) {
-      case "admin":
+      case "SUPER_ADMIN":
         return <AdminRoutes />;
-      case "businessgroup":
+      case "BUSINESS_GROUP":
         return <BusinessGroupRoutes />;
-      case "company":
+      case "COMPANY":
         return <CompanyRoutes />;
     }
   }
@@ -129,7 +122,6 @@ console.log(props)
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     isAuthenticated: isAuthenticated(state),
   };

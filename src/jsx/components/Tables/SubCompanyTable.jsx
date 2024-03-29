@@ -5,11 +5,14 @@ import DeleteModal from '../Modal/DeleteModal'
 import { Link } from 'react-router-dom'
 import { IMAGES,SVGICON} from '../../constant/theme'; 
 import useStorage from '../../../hooks/useStorage'
+import { usePermissions } from '../../../context/PermissionContext'
 
 const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
   var filterData = tableData;
 
-  console.log("this is data",filterData,tempValue,tempValue2);
+  const {can} = usePermissions()
+  const editPermission = can('branch','modify');
+  const deletePermission = can('branch','delete');
   if(tempValue!=='All Companies'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentCompany === tempValue)
   }
@@ -30,8 +33,6 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
             <td>
               <span>{item.id}</span>
             </td>
-
-            {/* <td><span>{item.application}</span></td> */}
             <td>
               <span className="text-primary">{item.userName}</span>
             </td>
@@ -59,23 +60,23 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
               {branchCount[index]}
             </Link>
           </td>
-            <td>
+            {(editPermission || deletePermission) && <td>
               <span className="d-flex justify-content-center">
-                <span
+                {editPermission && <span
                   className="cursor-pointer"
                   onClick={() => editDrawerOpen(item.id)}
                 >
                   <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-                </span>
-                <DeleteModal
+                </span>}
+                {deletePermission && <DeleteModal
                   className="cursor-pointer "
                   onConfirmDelete={onConfirmDelete}
                   id={item.id}
                 >
                   <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-                </DeleteModal>
+                </DeleteModal>}
               </span>
-            </td>
+            </td>}
           </tr>
         ))}
       </>

@@ -4,12 +4,14 @@ import { Nav, Tab } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { ThemeContext } from "../../context/ThemeContext";
+import useStorage from "../../hooks/useStorage";
 
 const CompSetting = () => {
+  const {checkRole} = useStorage();
   const [settingToggle, setSettingToggle] = useState(false);
   const [demoToggle, setDemoToggle] = useState(false);
-  const role = localStorage.getItem("role");
-  console.log("hdgfklshf", { role });
+  const role = checkRole();
+  
   const {
     body,
     sideBarOption,

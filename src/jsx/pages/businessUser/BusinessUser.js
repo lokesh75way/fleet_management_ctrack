@@ -8,35 +8,38 @@ import InviteCustomer from "../../constant/ModalList";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 // import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from "../../components/Tables/BusinessTable";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
-import { clsx } from 'clsx';
+import { clsx } from "clsx";
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import { usePermissions } from "../../../context/PermissionContext";
-
+import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
 
 const BusinessUser = () => {
-
-  const {isRtl} = useContext(ThemeContext);
-  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const [deleteId, setDeleteId] = useState();
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
 
   const { t } = useTranslation();
-  const { can }  = usePermissions(); // calling can method from usePermission
+  const { can } = usePermissions(); // calling can method from usePermission
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
 
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const BusinessData = userData.filter((item) => item.role === "businessgroup");
-
-  const [tableData, setTableData] = useState(BusinessData);
+  const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
-    title: "",
+    title: "sfds",
     contact: 0,
     email: "",
     status: "",
@@ -57,6 +60,19 @@ const BusinessUser = () => {
     }
   };
 
+  async function getGroupData() {
+    try {
+      const { data, totalLength } = await getGroups();
+      setTableData(data);
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  }
+
+  useEffect(() => {
+    getGroupData();
+  }, [deleteId]);
+
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -72,29 +88,23 @@ const BusinessUser = () => {
   };
 
   const onConfirmDelete = (id) => {
-    // Remove item from state
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-
-    // Remove item from local storage
-    const updatedLocalStorageData = userData.filter((item) => item.id !== id);
-    localStorage.setItem(
-      "userJsonData",
-      JSON.stringify(updatedLocalStorageData)
-    );
+    deleteGroup(id)
+    setDeleteId(id)
   };
   const editDrawerOpen = (item) => {
-    navigate(`/business/edit/${item.id}`);
+    const filteredData = tableData.filter((data) => data._id === item);
+
+    navigate(`/business/edit/${item}`, {state : filteredData});
   };
-  
+
   const company = useRef();
   const edit = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle= {t('businessGroup')}
-        pageTitle={t('businessGroup')}
-        parentTitle={t('home')}
+        mainTitle={t("businessGroup")}
+        pageTitle={t("businessGroup")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -103,9 +113,9 @@ const BusinessUser = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('businessGroup')}</h4>
+                    <h4 className="heading mb-0">{t("businessGroup")}</h4>
                     <div>
-                       {can(2, "add") && ( 
+                       {can('business', "add") && ( 
                         <Link
                           to={{
                             pathname: "/business/create",
@@ -137,7 +147,7 @@ const BusinessUser = () => {
                           <th>{t('email')}</th>
                           <th>{t('location')}</th>
                           <th>{t('companyCount')}</th>
-                          <th>{t('action')}</th>
+                          {(can('business', "delete") || can('business', "modify")) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>
@@ -150,11 +160,11 @@ const BusinessUser = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t("to")}{" "}
+                        {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("of")} {data.length} {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

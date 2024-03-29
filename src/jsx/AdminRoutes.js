@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 /// React router dom
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 /// Css
 import "./index.css";
@@ -16,7 +16,6 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
-import PermissionDenied from "../components/PermissionDenied";
 
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
@@ -92,6 +91,7 @@ const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
 
 const Error404 = React.lazy(() => import("./pages/Error404"));
+const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
 
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
 const Company = React.lazy(() => import("./pages/admin/Compnay"));
@@ -121,20 +121,20 @@ const allroutes = [
 
 
   { module: 'driver', url: "driver", component: <Driver /> },
-  { module: 'driver', url: "driver/create", component: <DriverForm /> },
-  { module: 'driver', url: "driver/edit/:id", component: <DriverForm /> },
+  { module: 'driver',operation:'add', url: "driver/create", component: <DriverForm /> },
+  { module: 'driver',operation:'modify', url: "driver/edit/:id", component: <DriverForm /> },
 
 
 
-  { module: 'sub-user', url: "subUser/create", component: <SubUserForm /> },
-  { module: 'sub-user', url: "subUser", component: <SubUser /> },
-  { module: 'sub-user', url: "subUser/edit/:id", component: <SubUserForm /> },
+  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
 
   { module: 'vehicle', url: "vehicle-tracking", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle-tracking/:id", component: <DriverTracking /> },
-  { module: 'vehicle', url: "vehicle/create", component: <VehicleForm /> },
+  { module: 'vehicle',operation:'add', url: "vehicle/create", component: <VehicleForm /> },
   { module: 'vehicle', url: "vehicle", component: <Vehicle /> },
-  { module: 'vehicle', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+  { module: 'vehicle',operation:'modify', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
 
   { module: 'settings', url: "/settings/alert", component: <Alert /> },
   { module: 'settings', url: "/settings/classifyTrips", component: <ClassifyTrips /> },
@@ -148,21 +148,21 @@ const allroutes = [
   { module: 'technician', url: "technician/details/create", component: <TechnicianForm /> },
   { module: 'technician', url: "technician/tasks", component: <TechnicianTask /> },
 
-  { module: 'company', url: "company/create", component: <CompanyForm /> },
-  { module: 'company', url: "company/edit/:id", component: <CompanyForm /> },
+  { module: 'company',operation:'add', url: "company/create", component: <CompanyForm /> },
+  { module: 'company',operation:'modify', url: "company/edit/:id", component: <CompanyForm /> },
   { module: 'company', url: "company/:id", component: <Company /> },
   { module: 'company', url: "company", component: <Company /> },
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
 
-  { module: 'branch', url: "branch/create", component: <BranchForm /> },
+  { module: 'branch',operation:'add', url: "branch/create", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
-  { module: 'branch', url: "branch/edit/:id", component: <BranchForm /> },
+  { module: 'branch',operation:'modify', url: "branch/edit/:id", component: <BranchForm /> },
   { module: 'branch', url: "branch", component: <Branch /> },
   { module: 'branch', url: "branch/cid/:id", component: <Branch /> },
   { module: 'branch', url: "branch/bid/:id", component: <Branch /> },
 
-  { module: 'business', url: "business/create", component: <BusinessForm /> },
-  { module: 'business', url: "business/edit/:id", component: <BusinessForm /> },
+  { module: 'business',operation:'add', url: "business/create", component: <BusinessForm /> },
+  { module: 'business',operation:'modify', url: "business/edit/:id", component: <BusinessForm /> },
   { module: 'business', url: "business-group", component: <BusinessUser /> },
   { module: 'business', url: "business-group/:id", component: <BusinessUser /> },
   { module: 'business', url: "business", component: <Business /> },
@@ -172,7 +172,7 @@ const allroutes = [
   { module: 'groups', url: "groups/permission", component: <Permission /> },
 
   // reports 
-  { module: 'reports', url: "reports/generated", component: <Report /> },
+  { module: 'reports', url: "/reports/generated", component: <Report /> },
   { module: 'reports', url: "/reports/activity", component: <ActivityReport /> },
   { module: 'reports', url: "/reports/geofence-address", component: <GeofenceAddress /> },
   { module: 'reports', url: "/reports/sensor", component: <Sensor /> },
@@ -194,6 +194,7 @@ const allroutes = [
 
 const AdminRoutes = () => {
   const { can } = usePermissions()
+  const navigate = useNavigate()
 
   function NotFound() {
     const url = allroutes.map((route) => route.url);
@@ -211,11 +212,12 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (!can(data.module, 'read')) {
-              <Navigate
+            if ( !can(data.module, data.operation || 'view')) {
+              // console.log(data.module, data.url, 'create')
+               return <Route
                 key={i}
                 exact
-                to={`/permission-denied`}
+                path={`${data.url}`}
                 element={<PermissionDenied />}
               />
             }

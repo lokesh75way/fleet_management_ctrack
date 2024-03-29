@@ -5,6 +5,7 @@ import {
     LOGOUT_ACTION,
     SIGNUP_CONFIRMED_ACTION,
     SIGNUP_FAILED_ACTION,
+    SET_PERMISSION,
 } from '../actions/AuthActions';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
         expiresIn: '',
         refreshToken: '',
     },
+    permission: [],
     errorMessage: '',
     successMessage: '',
     showLoading: false,
@@ -71,6 +73,12 @@ export function AuthReducer(state = initialState, action) {
         return {
             ...state,
             showLoading: action.payload,
+        };
+    }
+    if (action.type === SET_PERMISSION) {
+        return {
+            ...state,
+            permission: action.payload,
         };
     }
     return state;
