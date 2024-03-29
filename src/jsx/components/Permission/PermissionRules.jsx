@@ -19,6 +19,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     permission: {},
   });
   const [selectOptions, setSelectOptions] = useState([]);
+  
   const [selectedTemplate, setSelectedTemplate] = useState(null); // Step 1: State to hold selected template data
 
   // Other functions and useEffects remain unchanged
