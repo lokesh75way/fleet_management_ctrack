@@ -160,19 +160,20 @@ export const unitOfFuelOptions = [
   { value: "GALLONS", label: "GALLONS" },
 ];
 export const dayOptions = [
-  { value: "SUNDAY", label: "SUNDAY" },
   { value: "MONDAY", label: "MONDAY" },
   { value: "TUESDAY", label: "TUESDAY" },
   { value: "WEDNESDAY", label: "WEDNESDAY" },
   { value: "THURSDAY", label: "THURSDAY" },
   { value: "FRIDAY", label: "FRIDAY" },
   { value: "SATURDAY", label: "SATURDAY" },
+  { value: "SUNDAY", label: "SUNDAY" },
 ];
 export const statusOptions = [
   { value: "ACTIVE", label: "ACTIVE" },
   { value: "INACTIVE", label: "INACTIVE" },
 ];
-export const storageCapacityOptions = [
+
+export const storageCapacityOptions = [ 
   { value: "60 days", label: "60 days" },
   { value: "90 days", label: "90 days" },
   { value: "120 days", label: "120 days" },
@@ -181,7 +182,7 @@ export const languageOptions = [
   { value: "ENGLISH", label: "ENGLISH" },
   { value: "ARABIC", label: "ARABIC" },
   { value: "FRENCH", label: "FRENCH" },
-  { value: "PORTUGESE", label: "PORTUGESE" },
+  { value: "PORTUGUESE", label: "PORTUGUESE" },
 ];
 export const currencyOptions = [
   { value: "AED", label: "AED" },

@@ -94,7 +94,6 @@ function App(props) {
   }, []);
 
   if (props.isAuthenticated) {
-    console.log(userPermission)
     switch (role) {
       case "SUPER_ADMIN":
         return <AdminRoutes />;

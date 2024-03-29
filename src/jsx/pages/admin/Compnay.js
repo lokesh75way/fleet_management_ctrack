@@ -121,9 +121,9 @@ const Company = () => {
       notifyError("Something Went Wrong")
     }
   };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`edit/${item}`);
+  const editDrawerOpen = (_id) => {
+    const data = tableData.filter((item)=> item._id === _id)
+    navigate(`edit/${_id}`, {state : {formData:data}});
     // company.current.showModal();
   };
   // const handleSubmit=(e)=>{

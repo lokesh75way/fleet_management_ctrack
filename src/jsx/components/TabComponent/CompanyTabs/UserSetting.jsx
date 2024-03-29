@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import CustomInput from '../../Input/CustomInput'
 import { Controller, useForm } from "react-hook-form";
@@ -20,9 +20,11 @@ import {
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
+import { useParams } from "react-router-dom";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control,register }) => {
+const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control,register,formData, getValues }) => {
 const {t} = useTranslation();
+const { id } = useParams();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
   const customStyles = {
@@ -31,6 +33,18 @@ const {t} = useTranslation();
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+
+  useEffect(()=>{
+      setValue('dateFormat',formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value)
+      setValue('unitOfDistance',formData?.[0].companyId?.unitOfDistance || unitOfDistanceOptions[0].value)
+      setValue('timeFormat',formData?.[0].companyId?.unitOfDistance || timeFormatOptions[0].value)
+      setValue('unitOfFuel',formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value)
+      setValue('language',formData?.[0].companyId?.language || languageOptions[0].value)
+      setValue('status',formData?.[0].companyId?.status || statusOptions[0].value)
+      setValue('workStartDay',formData?.[0].companyId?.workStartDay || dayOptions[0].value)
+      setValue('currency',formData?.[0].companyId?.currency || currencyOptions[0].value)
+  })
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -46,7 +60,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dateFormatOptions[0]}
+                value={{label:getValues("dateFormat"), value :getValues("dateFormat")}}
               />
             )}
           />
@@ -65,7 +79,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={timeFormatOptions[0]}
+                value={{label:getValues("timeFormat"), value :getValues("timeFormat")}}
               />
             )}
           />
@@ -84,7 +98,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={fuelEconomyScalingOptions[0]}
+                value={{label:getValues("unitOfDistance"), value :getValues("unitOfDistance")}}
               />
             )}
           />
@@ -102,7 +116,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfFuelOptions[0]}
+                value={{label:getValues("unitOfFuel"), value :getValues("unitOfFuel")}}
               />
             )}
           />
@@ -119,7 +133,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={languageOptions[0]}
+                value={{label:getValues("language"), value :getValues("language")}}
               />
             )}
           />
@@ -136,7 +150,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={statusOptions[0]}
+                value={{label:getValues("status"), value :getValues("status")}}
               />
             )}
           />
@@ -144,16 +158,16 @@ const {t} = useTranslation();
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('worksStartDay')}</label>
           <Controller
-            name="worksstartday"
+            name="workStartDay"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("worksstartday", newValue.value)}
+                onChange={(newValue) => setValue("workStartDay", newValue.value)}
                 options={dayOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dayOptions[0]}
+                value={{label:getValues("workStartDay"), value :getValues("workStartDay")}}
               />
             )}
           />
@@ -170,7 +184,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={currencyOptions[0]}
+                value={{label:getValues("currency"), value :getValues("currency")}}
               />
             )}
           />
@@ -188,7 +202,6 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfFuelOptions[0]}
                 value={selectedTimezone}
               />
             )}
