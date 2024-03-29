@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 /// React router dom
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 /// Css
 import "./index.css";
@@ -16,7 +16,6 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
-import PermissionDenied from "../components/PermissionDenied";
 
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
@@ -92,6 +91,7 @@ const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
 
 const Error404 = React.lazy(() => import("./pages/Error404"));
+const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
 
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
 const Company = React.lazy(() => import("./pages/admin/Compnay"));
@@ -194,6 +194,7 @@ const allroutes = [
 
 const AdminRoutes = () => {
   const { can } = usePermissions()
+  const navigate = useNavigate()
 
   function NotFound() {
     const url = allroutes.map((route) => route.url);
@@ -211,11 +212,9 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            if (!can(data.module, 'read')) {
-              <Navigate
-                key={i}
-                exact
-                to={`/permission-denied`}
+            if (!can(data.module, 'view')) {
+               return <Route
+                path={'*'}
                 element={<PermissionDenied />}
               />
             }
