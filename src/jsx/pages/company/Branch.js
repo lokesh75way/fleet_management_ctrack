@@ -11,7 +11,9 @@ import { clsx } from 'clsx';
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
-import { getAllBranch , createBranch } from "../../../services/api/BranchServices";
+import { usePermissions } from "../../../context/PermissionContext";
+import { getAllBranch , createBranch, deleteBranch } from "../../../services/api/BranchServices";
+import { notifySuccess } from "../../../utils/toast";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -20,6 +22,7 @@ const Branch = () => {
   const {isRtl} = useContext(ThemeContext);
   const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
   const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const {can} = usePermissions()
 
   const {t} = useTranslation();
   const navigate = useNavigate();
@@ -89,7 +92,6 @@ const Branch = () => {
 
   const fetchAllBranch = async()=>{
     const {data, success} = await getAllBranch()
-   
     setTableData(data.data)
   }
     useEffect(()=>{
@@ -134,20 +136,14 @@ const Branch = () => {
     chageData(activePag.current * sort, (activePag.current + 1) * sort);
     settest(i);
   };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-
-    // Remove item from local storage
-    const updatedLocalStorageData = SubCompanyData.filter(
-      (item) => item.id !== id
-    );
-    localStorage.setItem("branchData", JSON.stringify(updatedLocalStorageData));
+  const onConfirmDelete = async(id) => {
+    await deleteBranch(id)
+    notifySuccess("Branch Deleted");
   };
 
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`edit/${item}`);
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`,{state : filteredData});
     // company.current.showModal();
   };
 
@@ -268,7 +264,7 @@ const Branch = () => {
                           />
                         )}
                       />
-                      <Link
+                      {can('branch','add') && <Link
                         to={"/branch/create"}
                         className="btn btn-primary btn-sm ms-1"
                         style={{paddingBlock : '9px'}}
@@ -276,7 +272,7 @@ const Branch = () => {
                         // onClick={()=>subCompany.current.showModal()}
                       >
                         + {t('addBranch')}
-                      </Link>{" "}
+                      </Link>}{" "}
                     </div>
                   </div>
                   <div
@@ -297,7 +293,7 @@ const Branch = () => {
                           {/* <th>{t('mobileNumber')}</th> */}
                           <th>{t('location')}</th>
                           <th>{t('childBranches')}</th>
-                          <th>{t('action')}</th>
+                          {(can('branch','modify') || can('branch','delete')) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>

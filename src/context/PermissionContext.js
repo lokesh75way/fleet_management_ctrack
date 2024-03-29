@@ -34,7 +34,7 @@ export function PermissionProvider({ children }) {
     if (modulePermissions) {
       return modulePermissions[operation] === false ? false :  true
     }
-    return false;
+    return false; 
   };
   return (
     <PermissionContext.Provider value={{ can, setUserPermission }}>

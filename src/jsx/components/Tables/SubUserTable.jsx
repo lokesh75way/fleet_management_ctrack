@@ -3,8 +3,12 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 import { IMAGES } from "../../constant/theme";
+import { usePermissions } from "../../../context/PermissionContext";
 
 const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
+  const {can} = usePermissions()
+  const editPermission = can('subUser','modify')
+  const deletePermission = can('subUser','delete')
   return (
     <>
       {tableData.map((item, index) => (
@@ -25,9 +29,9 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
           <td>
             <span>{item.country}</span>
           </td>
-          <td>
+          {(editPermission || deletePermission) &&<td>
             <span className="d-flex justify-content-center">
-              <span
+              { editPermission&&<span
                 className="cursor-pointer"
                 onClick={() => editDrawerOpen(item.id)}
               >
@@ -37,16 +41,16 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     fontSize: "1.2rem",
                   }}
                 />
-              </span>
-              <DeleteModal
+              </span>}
+              {deletePermission && <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
                 id={item.id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-              </DeleteModal>
+              </DeleteModal>}
             </span>
-          </td>
+          </td>}
         </tr>
       ))}
     </>

@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
+import AsyncSelect from "react-select/async";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
 import { getSelectValues } from "../../../../utils/helper";
-import {useTranslation} from "react-i18next"
+import { useTranslation } from "react-i18next";
 import { getGroups } from "../../../../services/api/BusinessGroup";
-import {getCompany} from "../../../../services/api/CompanyServices";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { editBranch } from "../../../../services/api/BranchServices";
+import { useLocation } from "react-router-dom";
 
 const MyAccount = ({
   setValue,
@@ -35,44 +38,56 @@ const MyAccount = ({
     }),
   };
 
-  const {t} = useTranslation();
-
+  const { t } = useTranslation();
+  const location = useLocation();
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
   const [parentOptions, setParentOptions] = useState([]);
-
   const [businessUserValue, setBusinessUserValue] = useState([]);
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const defaultValues = getSelectValues();
 
-  const [tempbusinessUserOptions,SetTempbusinessUserOptions] = useState([])
-  const getBusinessGroup = async()=>{
-    const {data} = await getGroups()
-    // console.log("jeqgduwygfiruwgfieruw",data)
-    SetTempbusinessUserOptions(data.map((item) => ({
-      label: item.businessGroupId.groupName,
-      value: item.businessGroupId._id,
-    })));
-  }
+  const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
+  const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
+  const [dValues, setDvalues] = useState([]);
 
-  const [tempcompanyOptions,SetTempcompanyOptions] = useState([])
-  const getAllCompany = async()=>{
-    const {data} = await getCompany()
-    // console.log("company",data.data.data)
-    SetTempcompanyOptions(data.data.data.map((item) => ({
-      label: item.companyId?.companyName,
-      value: item.companyId?._id,
-    })));
-  }
-  useEffect(()=>{
-    getBusinessGroup()
-    getAllCompany()
-  },[])
+  const businessGroupOptions = async (inputValue) => {
+    try {
+      const businessGroupResponse = await getGroups();
+      const businessGroupData = businessGroupResponse.data;
+      const response = businessGroupData.map((item) => ({
+        label: item.businessGroupId.groupName,
+        value: item.businessGroupId._id,
+      }))
+      
+      return response;  
+      
+    } catch (error) {
+      console.error("Error fetching business group options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  
+  const allCompanyOptions = async (inputValue) => {
+    try {
+      const companyResponse = await getCompany();
+      const companyData = companyResponse.data.data.data;
+      const response = companyData.map((item) => ({
+        label: item.companyId?.companyName,
+        value: item.companyId?._id,
+      }));
+      console.log("RES:-> ", response);
+      return response; 
+    } catch (error) {
+      console.error("Error fetching company options:", error);
+      return []; // Return empty array in case of an error
+    }
+  };
+  // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
+
   useEffect(() => {
-
-
     const tempparentOptions = DummyData.filter((item) => item.role === "branch")
       .filter((br) => br.parentCompany === companyValue)
       .map((item) => ({
@@ -88,11 +103,30 @@ const MyAccount = ({
   }, [businessUserValue, companyValue, parentValue]);
 
   const { id } = useParams();
-  const User = JSON.parse(localStorage.getItem("userJsonData"));
-  const branchData = User.filter(
-    (item) => item.role === "branch" && item.id == id
-  );
-  const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
+  useEffect(() => {
+    if (id) {
+      const data = location.state[0];
+      console.log("====================================");
+      console.log("data of Id clicked", data);
+      console.log("====================================");
+      setDvalues(data);
+    }
+  }, [id]);
+  useEffect(() => {
+    console.log(dValues);
+    if (dValues && id) {
+      setValue("groupName", dValues.businessGroupId?.groupName);
+      setValue("companyName", dValues.companyId?.companyName);
+      setValue("parent", dValues.parentBranchId?.branchName);
+      setValue("branchName", dValues.branchName);
+      setValue("city", dValues.city);
+      setValue("zipCode", dValues.zipCode);
+      setValue("street1", dValues.street1);
+      setValue("street2", dValues.street2);
+    }
+  }, [dValues, id]);
+
+  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
 
   useEffect(() => {
     setValue(
@@ -118,27 +152,29 @@ const MyAccount = ({
   }, []);
   useEffect(() => {
     const loggedInUser = localStorage.getItem("loginDetails-name");
-    const role = localStorage.getItem('role')
+    const role = localStorage.getItem("role");
     if (role === "businessgroup") {
       setTempValue(loggedInUser);
       setValue("parentBusinessGroup", loggedInUser);
     }
     if (role === "company") {
       setValue("parentCompany", loggedInUser);
-      const filterparent = DummyData.filter(item => item.userName === loggedInUser)[0].parent;
+      const filterparent = DummyData.filter(
+        (item) => item.userName === loggedInUser
+      )[0].parent;
       setValue("parentBusinessGroup", filterparent);
       setTempValue(loggedInUser);
     }
   }, []);
 
- 
   // console.log(defaultValues)
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('businessGroup')}</label><span className="text-danger">*</span>
+          <label className="form-label">{t("businessGroup")}</label>
+          <span className="text-danger">*</span>
           {/* {
              checkRole() === "admin" ? 
           } */}
@@ -148,22 +184,21 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
+                cacheOptions 
+                defaultOptions
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  
                   defaultValue={{
-                    label: filteredCompanyData[0]
-                      ? filteredCompanyData[0].parentBusinessGroup
-                      : "",
-                    value: filteredCompanyData[0]
-                      ? filteredCompanyData[0].id
-                      : "",
+                    label: dValues.businessGroupId?.groupName,
+                    value: dValues.businessGroupId?._id,
                   }}
                 />
               )}
@@ -174,30 +209,34 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
                   onChange={(newValue) => {
                     setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
                   isDisabled={defaultValues.business.disabled}
                   name={name}
                   styles={customStyles}
+                  defaultOptions
                   defaultValue={{
-                    label: defaultValues.business.defaultValues,
-                    value: defaultValues.business.defaultValues,
+                    label: dValues.businessGroupId?.groupName,
+                    value: dValues.businessGroupId?._id,
                   }}
                 />
               )}
             />
           )}
-          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
+          {!getValues("businessGroupId") && (
+            <Error errorName={errors.businessGroupId} />
+          )}
         </div>
 
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('company')}<span className="text-danger">*</span>
+            {t("company")}
+            <span className="text-danger">*</span>
           </label>
           {id ? (
             <Controller
@@ -210,17 +249,13 @@ const MyAccount = ({
                     setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
                   }}
-                  options={companyOptions}
+                  loadOptions={allCompanyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
                   defaultValue={{
-                    label: filteredCompanyData[0]
-                      ? filteredCompanyData[0].parentCompany
-                      : "",
-                    value: filteredCompanyData[0]
-                      ? filteredCompanyData[0].id
-                      : "",
+                    label: dValues.companyId?.companyName,
+                    value: dValues.companyId?._id,
                   }}
                 />
               )}
@@ -237,13 +272,13 @@ const MyAccount = ({
                     setValue("companyId", newValue.value);
                   }}
                   isDisabled={defaultValues.company.disabled}
-                  options={companyOptions}
+                  loadOptions={allCompanyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
                   defaultValue={{
-                    label: defaultValues.company.defaultValues ,
-                    value: defaultValues.company.defaultValues ,
+                    label: dValues.companyId?.companyName,
+                    value: dValues.companyId?._id,
                   }}
                 />
               )}
@@ -253,7 +288,7 @@ const MyAccount = ({
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('parentBranch')}</label>
+          <label className="form-label">{t("parentBranch")}</label>
           <Controller
             name="parent"
             control={control}
@@ -269,21 +304,19 @@ const MyAccount = ({
                 name={name}
                 styles={customStyles}
                 defaultValue={{
-                  label: filteredCompanyData[0]
-                    ? filteredCompanyData[0].parentBranch
-                    : "",
-                  value: filteredCompanyData[0]
-                    ? filteredCompanyData[0].id
-                    : "",
+                  label: dValues.parentBranchId?.branchName,
+                  value: dValues.parentBranchId?._id,
                 }}
               />
             )}
           />
-          {!getValues("parentBranch") && <Error errorName={errors.parentBranch} />}
+          {!getValues("parentBranch") && (
+            <Error errorName={errors.parentBranch} />
+          )}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('branchName')} <span className="text-danger">*</span>
+            {t("branchName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -292,22 +325,21 @@ const MyAccount = ({
             label="Branch Name"
             name="branchName"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].branchName : ""
-            }
+            defaultValue={getValues("branchName")}
           />
           <Error errorName={errors.branchName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('country')}<span className="text-danger">*</span>
+            {t("country")}
+            <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
               setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
               setValue("country", e.id);
-              setIsStateDisabled(false)
+              setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -316,10 +348,12 @@ const MyAccount = ({
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">
-          {t('state')}
-          </label>
+        <div
+          className={`${
+            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+          }`}
+        >
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -337,7 +371,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('city')}<span className="text-danger">*</span>
+            {t("city")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -345,15 +380,13 @@ const MyAccount = ({
             label="City"
             name="city"
             placeholder=""
-            defaultValue={
-              filteredCompanyData[0] ? filteredCompanyData[0].city : ""
-            }
+            defaultValue={getValues("city")}
           />
           <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('zipCode')}
+            {t("zipCode")}
           </label>
           <CustomInput
             type="number"
@@ -362,7 +395,10 @@ const MyAccount = ({
             name="zipCode"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={
               filteredCompanyData[0] ? filteredCompanyData[0].zipCode : ""
             }
@@ -371,7 +407,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street1')}<span className="text-danger">*</span>
+            {t("street1")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -387,7 +424,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street2')}
+            {t("street2")}
           </label>
           <CustomInput
             type="text"
@@ -412,7 +449,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>
