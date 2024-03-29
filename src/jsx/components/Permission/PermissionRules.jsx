@@ -19,6 +19,41 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     permission: {},
   });
   const [selectOptions, setSelectOptions] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null); // Step 1: State to hold selected template data
+
+  // Other functions and useEffects remain unchanged
+
+  const handleCopy = () => {
+    if (!selectedTemplate) return;
+  
+    // Copy name
+    setNewGroupData({
+      ...newGroupData,
+      name: selectedTemplate.name,
+    });
+  
+    // Update permissions for modules directly
+    const updatedData = data.map(module => {
+      const permission = selectedTemplate.permission.find(perm => perm.moduleId === module._id);
+      if (permission) {
+        module.permission = {
+          add: permission.add,
+          view: permission.view,
+          modify: permission.modify,
+          delete: permission.delete,
+        };
+      }
+      return module;
+    });
+  
+    setData(updatedData);
+  
+    // Clear subModuleIndexArray
+    setSubModuleIndexArray([]);
+  
+    console.log("Data copied successfully");
+  };
+  
 
   const handleCheckboxChange = (isChecked, index) => {
     if (isChecked) {
@@ -223,12 +258,19 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               options={selectOptions}
               placeholder="Select a Feature Template"
               styles={{ control: (base) => ({ ...base, width: "18rem" }) }}
+              onChange={(selectedOption) => {
+                const selectedTemplateData = groupsDataState.find(
+                  (template) => template._id === selectedOption.value
+                );
+                setSelectedTemplate(selectedTemplateData);
+              }}
             >
               {" "}
             </Select>{" "}
             <button
               className="btn btn-primary"
               style={{ marginLeft: "1rem", padding: "7px 16px" }}
+              onClick={handleCopy}
             >
               Copy
             </button>
@@ -255,6 +297,9 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               </thead>
               <tbody>
                 {data.map((element, i) => {
+                  // const anyPermissionTrue = Object.values(
+                  //   element.permission
+                  // ).some((perm) => perm === true);
                   return (
                     <React.Fragment key={i}>
                       <tr>
