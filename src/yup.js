@@ -343,7 +343,7 @@ export const driverDocumentSchema = yup
 export const subUserAccountSchema = yup
   .object({
     userName: yup.string().required("User Name is required "),
-    featureTemplate: yup.string().required("Feature Template is required "),
+    featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
       .required("Password is required")

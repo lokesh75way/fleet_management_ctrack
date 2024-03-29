@@ -7,7 +7,7 @@ import SubUserTable from "../components/Tables/SubUserTable";
 import useStorage from "../../hooks/useStorage";
 import { clsx } from 'clsx';
 import {useTranslation} from 'react-i18next'
-import UserServices from '../../services/api/UserServices'
+import UserServices ,{getUser, deleteUser} from '../../services/api/UserServices'
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { notifyError, notifySuccess } from "../../utils/toast";
@@ -29,21 +29,19 @@ import { usePermissions } from "../../context/PermissionContext";
     const [fetchtableData, fetchSetTableData] = useState([]);
 
     useEffect(() => {
-      UserServices.getUser()
-      .then(response => {
-        console.log(response, 'response')
-        if(response?.data?.success === true){
-          fetchSetTableData(response.data.data)
-          const fusers = response.data.data.data
+      const fetchData = async () => {
+        const data = await getUser();
+        if (data.error) {
+          notifyError(data.error);
+        } else {
+          fetchSetTableData(data);
+          const fusers = data.data;
           localStorage.setItem("userJsonData", JSON.stringify(fusers));
-
-        }else{
-          notifyError(response?.message?.message)
         }
-      }).catch(error => {
-        notifyError(error?.message?.message);
-      })
-    }, [])
+      };
+    
+      fetchData();
+    }, []);
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
@@ -93,31 +91,23 @@ import { usePermissions } from "../../context/PermissionContext";
   // const employe = useRef();
   const subuser = useRef();
   const edit = useRef();
-  const onConfirmDelete = (id) => {
-    UserServices.deleteUser(id)
-    .then(response => {
-      if(response?.data?.success === true){
-        notifySuccess("User deleted successfully !!");
-        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-        const index = existingData.findIndex((item) => item._id === id);
-        console.log(index, 'index')
-        existingData.splice(index, 1);
-        localStorage.setItem("userJsonData", JSON.stringify(existingData));
-        const updatedData = tableData.filter((item) => item._id !== id);
-        setTableData(updatedData);
-        
-      }else{
-        notifyError(response?.message?.message)
-      }
-    }).catch(error => {
-      notifyError(error?.message?.message);
-    })
-
-    
+  const onConfirmDelete = async (id) => {
+    const response = await deleteUser(id);
+    if(response.error){
+      notifyError(response.error);
+    }else{
+      notifySuccess("User deleted successfully !!");
+      const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+      const index = existingData.findIndex((item) => item._id === id);
+      existingData.splice(index, 1);
+      localStorage.setItem("userJsonData", JSON.stringify(existingData));
+      const updatedData = tableData.filter((item) => item._id !== id);
+      setTableData(updatedData);
+    }
   };
   const editDrawerOpen = (item) => {
     // tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`/subUser/edit/${item.id}`);
+    navigate(`/subUser/edit/${item}`);
     // setEditTableData(item);
   };
   return (

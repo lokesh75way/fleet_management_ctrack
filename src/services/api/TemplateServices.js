@@ -5,6 +5,16 @@ import initAxios from "./Axios";
 initAxios()
 
 
+export const getTemplates = async () => {
+  try {
+    const response = await axios.get("/feature-template");
+      return response.data;
+  } catch(error){
+    console.error("Error fetching templates:", error);
+    return { error: "Couldn't fetch User" }
+  }
+}
+
 const TemplateServices = {
   getTemplates: async (body) => {
     try {
@@ -14,9 +24,6 @@ const TemplateServices = {
       console.error("Error fetching modules:", error);
       throw error; // Re-throwing the error for the caller to handle
     }
-  },
-  getTemplates: async () => {
-    return axios.get("/feature-template");
   },
   
 //   getStaffById: async (id, body) => {

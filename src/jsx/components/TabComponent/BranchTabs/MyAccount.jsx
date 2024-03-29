@@ -171,7 +171,7 @@ const MyAccount = ({
                   }}
                   options={businessUserOptions}
                   ref={ref}
-                  isDisabled={defaultValues.business.disabled}
+                  isDisabled={defaultValues?.business?.disabled}
                   name={name}
                   styles={customStyles}
                   defaultValue={{
@@ -226,7 +226,7 @@ const MyAccount = ({
                     setCompanyValue(newValue.label);
                     setValue("parentCompany", newValue.label);
                   }}
-                  isDisabled={defaultValues.company.disabled}
+                  isDisabled={defaultValues?.company?.disabled}
                   options={companyOptions}
                   ref={ref}
                   name={name}
