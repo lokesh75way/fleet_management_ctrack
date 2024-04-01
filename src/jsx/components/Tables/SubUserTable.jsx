@@ -14,7 +14,7 @@ const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item._id}</span>
+            <span>{index+1}</span>
           </td>
           <td>
             <span className="text-primary">{item.userName}</span>

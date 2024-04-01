@@ -54,7 +54,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       try {
         const existingData = JSON.parse(localStorage.getItem("userJsonData"));
         const index = existingData.findIndex((item) => item._id === data._id);
-        //only update fieds that changed on index
 
         existingData[index] = { ...existingData[index], ...data };
         const response = await updateUser(data, data._id)
@@ -94,7 +93,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
             notifyError(response.error);
           } else {
             data._id = response._id
-            existingData.push(data);
+            existingData.unshift(data);
             localStorage.setItem("userJsonData", JSON.stringify(existingData));
             notifySuccess("User created successfully !!");
             navigate('/subUser')

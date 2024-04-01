@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import { usePermissions } from "../../context/PermissionContext";
+
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
   //     headers : headers,
@@ -27,8 +28,9 @@ import { usePermissions } from "../../context/PermissionContext";
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     //call get api from userservice
     const [fetchtableData, fetchSetTableData] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+
       const fetchData = async () => {
         const data = await getUser();
         if (data.error) {
@@ -38,8 +40,9 @@ import { usePermissions } from "../../context/PermissionContext";
           const fusers = data.data;
           localStorage.setItem("userJsonData", JSON.stringify(fusers));
         }
+        setIsLoading(false);
       };
-    
+      setIsLoading(true);
       fetchData();
     }, []);
   const navigate = useNavigate();
