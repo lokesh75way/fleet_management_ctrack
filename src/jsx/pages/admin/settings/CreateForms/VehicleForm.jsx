@@ -14,12 +14,16 @@ import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { createVehicles, updateVehicles } from "../../../../../services/api/VehicleService";
 
+import {useTranslation} from 'react-i18next'
+
 
 const VehicleForm = () => {
+
+  const {t} = useTranslation();
   const {saveData} = useStorage()
   const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Document"];
+  const tabHeading = [t('general'), t('profile'), t('document')];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
@@ -72,9 +76,9 @@ const VehicleForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Vehicle"}
+        mainTitle={t('vehicle')}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t('vehicle')}
       />
       <div className="m-2 p-2">
         <FormProvider>

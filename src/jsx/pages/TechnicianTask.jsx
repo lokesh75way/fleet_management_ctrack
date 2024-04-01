@@ -11,6 +11,7 @@ import TechnicianTaskOffcanvas from '../constant/TechnicianTaskOffcanvas';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {technicianTaskSchema} from '../../yup'
+import {useTranslation} from 'react-i18next'
 
 import { clsx } from 'clsx';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -27,6 +28,8 @@ const headers = [
 ]
 
 const TechnicianTask = (ref) => {
+
+    const { t } = useTranslation();
     const {isRtl} = useContext(ThemeContext);
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
@@ -109,7 +112,7 @@ const TechnicianTask = (ref) => {
     const technicianTask = useRef();
     return (
         <>
-            <MainPagetitle mainTitle="Technician Task" pageTitle={'Technician Task'} parentTitle={'Technician'} />
+            <MainPagetitle mainTitle={t('technicianTask')} pageTitle={t('technicianTask')} parentTitle={t('technician')} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -117,12 +120,12 @@ const TechnicianTask = (ref) => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Technician Task</h4>
+                                        <h4 className="heading mb-0">{t('technicianTask')}</h4>
                                         <div>
  
                                             <Link to={"#"} className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 onClick={() => technicianTask.current.showModal()}
-                                            >+ Add Technician Task</Link> {" "}
+                                            >+ {t('addTechnicianTask')}</Link> {" "}
                                            
                                         </div>
                                     </div>
@@ -130,13 +133,13 @@ const TechnicianTask = (ref) => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Task Name</th>
-                                                    <th>Task Category</th>
-                                                    <th>Technician Name</th>
-                                                    <th>Service Location</th>
-                                                    <th>Reporting Time </th>
-                                                    <th>Action</th>
+                                                    <th>{t('id')}</th>
+                                                    <th>{t('taskName')}</th>
+                                                    <th>{t('taskCategory')}</th>
+                                                    <th>{t('technicianName')}</th>
+                                                    <th>{t('serviceLocation')}</th>
+                                                    <th>{t('reportingTime')}</th>
+                                                    <th>{t('action')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -146,11 +149,11 @@ const TechnicianTask = (ref) => {
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
                                             <div className="dataTables_info">
-                                                Showing {activePag.current * sort + 1} to{" "}
+                                            {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                                                 {data.length > (activePag.current + 1) * sort
                                                     ? (activePag.current + 1) * sort
                                                     : data.length}{" "}
-                                                of {data.length} entries
+                                                {t('of')} {data.length} {t('entries')}
                                             </div>
                                             <div
                                                 className="dataTables_paginate paging_simple_numbers"
@@ -211,7 +214,7 @@ const TechnicianTask = (ref) => {
                 setEditData={setEditData}
                 handleSubmit={handleSubmit}
                 clearErrors={clearErrors}
-                Title={ editData.id === 0 ? "Add Task" : "Edit Task"}
+                Title={ editData.id === 0 ? t('addTask') : t('editTask')}
             />
         </>
     );

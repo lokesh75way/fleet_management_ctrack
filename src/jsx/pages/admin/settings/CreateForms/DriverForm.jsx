@@ -14,15 +14,18 @@ import {
   driverDocumentSchema,
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import {useTranslation} from 'react-i18next'
 import {
   createDriver,
   getDriverById,
 } from "../../../../../services/api/driverService";
 
 const DriverForm = () => {
+
+  const {t} = useTranslation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["Profile", "Additional Info", "Document"];
+  const tabHeading = [t('profile'), t('additionalInfo'), t('document')];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
   const { id: driverId } = useParams();
@@ -73,12 +76,12 @@ const DriverForm = () => {
         } else {
           await createDriver(data);
           // notifySuccess("Branch Added Successfully !!");
-          notifySuccess("New Driver Created!");
+          notifySuccess(t('newDriverCreated'));
           navigate("/driver");
           return;
         }
       } catch (error) {
-        notifyError("Some error occured !!");
+        notifyError(t('someErrorOccurred'));
       }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
@@ -86,9 +89,9 @@ const DriverForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Driver"
-        pageTitle={driverId ? "edit" : "create"}
-        parentTitle={"Driver"}
+        mainTitle={t('driver')}
+        pageTitle={driverId ? t("edit") : t("create")}
+        parentTitle={t('driver')}
       />
       <div className="m-2 p-2">
         <FormProvider>

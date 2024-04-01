@@ -63,25 +63,31 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   });
 
   const onSubmit = async (data) => {
-    try {
-      if (activeIndex === totalTabs - (id ? 2 : 1)) {
-
+    if (activeIndex === totalTabs - (id ? 2 : 1)) {
+      try {
         if (id) {
           delete data["oldPassword"];
           delete data["newPassword"];
           delete data["retypePassword"];
+
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
         } else {
-          const data2 = await createGroup(data);
-          console.log(data2)
-          // if (!success) {
-          //   notifyError(message);
-          //   return;
-          // }
-          notifySuccess("hello");
+          const {success , message} = await createGroup(data);
+          if (success === false) {
+            notifyError(message);
+            return;
+          }
+          notifySuccess(message);
         }
-      } else if (activeIndex === 2) {
+        navigate("/business");
+
+        return;
+      } catch (error) {
+        notifyError("Some error occured !!");
+      }
+    } else if (activeIndex === 2) {
+      try {
         const passwordData = {
           password: data.newPassword,
           oldPassword: data.oldPassword,
@@ -90,13 +96,11 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         };
         await changePassword(passwordData);
         notifySuccess("Password has been changed");
+        navigate("/business");
+      } catch (error) {
+        notifyError("Password is not changes!");
       }
-  
-      navigate("/business");
-    } catch (error) {
-      notifyError("An error occurred!");
     }
-  
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 

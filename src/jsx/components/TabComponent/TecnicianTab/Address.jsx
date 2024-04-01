@@ -9,7 +9,11 @@ import CustomInput from "../../Input/CustomInput";
 import {useParams} from 'react-router-dom'
 import '../../../../scss/pages/_driver-tracking.scss'
 
+import {useTranslation} from 'react-i18next'
+
 const Address = ({ register, setValue, getValues, errors, handleSubmit, control, onSubmit }) => {
+
+  const { t } = useTranslation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const customStyles = {
@@ -30,7 +34,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1<span className="text-danger">*</span>
+            {t('street1')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -46,7 +50,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -61,7 +65,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City<span className="text-danger">*</span>
+          {t('city')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -77,7 +81,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code<span className="text-danger">*</span>
+          {t('zipCode')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -94,7 +98,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
           <Error errorName={errors.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country<span className="text-danger">*</span></label>
+          <label className="form-label">{t('country')}<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -109,7 +113,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mediclaim Number</label>
+          <label className="form-label">{t('mediclaimNumber')}</label>
           <CustomInput
             type="text"
             register={register}
@@ -122,7 +126,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">Mediclaim Expiry Date</label>
+          <label className="form-label">{t('mediclaimExpiryDate')}</label>
           <Controller
             name="mediclaimExpiryDate"
             control={control}
@@ -151,7 +155,7 @@ const Address = ({ register, setValue, getValues, errors, handleSubmit, control,
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

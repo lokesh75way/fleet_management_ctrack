@@ -13,7 +13,10 @@ import { SubCompanyMenuList } from "./SubCompanyMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
+import {useTranslation} from 'react-i18next'
+
 const useBaseUrl = () => {
+
   const location = useLocation();
   const { pathname } = location;
   const segments = pathname.split("/");
@@ -115,6 +118,8 @@ const SideBar = () => {
 
   const url = useBaseUrl();
   const { pathname: url2 } = useLocation();
+
+  const {t} = useTranslation();
   return (
     <div
       className={`deznav  border-right ${iconHover} ${
@@ -153,7 +158,7 @@ const SideBar = () => {
                       >
                         <div className="menu-icon">{data.iconStyle}</div>{" "}
                         <span className="nav-text">
-                          {data.title}
+                          {t(data.title)}
                           {data.update && data.update.length > 0 ? (
                             <span className="badge badge-xs badge-danger ms-2">
                               {data.update}
@@ -191,7 +196,7 @@ const SideBar = () => {
                                           handleSubmenuActive(data.title);
                                         }}
                                       >
-                                        {data.title}
+                                        {t(data.title)}
                                       </Link>
                                       <Collapse
                                         in={
@@ -220,7 +225,7 @@ const SideBar = () => {
                                                     }`}
                                                     to={data.to}
                                                   >
-                                                    {data.title}
+                                                    {t(data.title)}
                                                   </Link>
                                                 </li>
                                               );
@@ -242,7 +247,7 @@ const SideBar = () => {
                                           : ""
                                       }`}
                                     >
-                                      {data.title}
+                                      {t(data.title)}
                                     </Link>
                                   )}
                                 </li>
@@ -257,7 +262,7 @@ const SideBar = () => {
                       onClick={() => handleNonContentMenu(data.title)}
                     >
                       <div className="menu-icon">{data.iconStyle}</div>{" "}
-                      <span className="nav-text">{data.title}</span>
+                      <span className="nav-text">{t(data.title)}</span>
                       {data.update && data.update.length > 0 ? (
                         <span className="badge badge-xs badge-danger ms-2">
                           {data.update}
@@ -274,7 +279,7 @@ const SideBar = () => {
         </ul>
         <div className="help-desk">
           <Link to={"/contactUs"} className="btn btn-primary">
-            Help Desk
+            {t('helpDesk')}
           </Link>
         </div>
       </div>

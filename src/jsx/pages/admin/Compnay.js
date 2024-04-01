@@ -14,9 +14,44 @@ import { usePermissions } from "../../../context/PermissionContext";
 import { deleteCompany, getCompany } from "../../../services/api/CompanyServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 
+import { getGroups } from "../../../services/api/BusinessGroup";
+
 
 
 const Company = () => {
+
+
+  const [businessGroupNames,setBusinessGroupNames] = useState();
+  async function getGroupData() {
+    try {
+      const { data, totalLength } = await getGroups();
+      setBusinessGroupNames(data);
+
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  }
+
+  useEffect(() => {
+    getGroupData();
+  }, []);
+
+
+const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
+
+useEffect(() => {
+  if (businessGroupNames) {
+    setBusinessGroupOptions(businessGroupNames.map(item => ({
+      label: item.businessGroupId?.groupName, // Assuming name is the property you want to use for the label
+      value: item._id, // Assuming id is the property you want to use for the value
+    })));
+  }
+}, [businessGroupNames]);
+
+  console.log('this is daaaaataaaaa', businessGroupNames);
+
+
+  
   
   const {isRtl} = useContext(ThemeContext);
   const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
@@ -35,7 +70,6 @@ const Company = () => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
-  console.log(id);
   const fetchAllCompany = async()=>{
     const {data, success} = await getCompany()
     // CompanyData = data.data.data
@@ -45,7 +79,6 @@ const Company = () => {
     useEffect(()=>{
       fetchAllCompany()
     },[])
-
 
   useEffect(() => {
     if (id) {
@@ -115,6 +148,7 @@ const Company = () => {
   const onConfirmDelete = async(_id) => {
     try{
       await deleteCompany(_id)
+      fetchAllCompany()
       notifySuccess("Company Deleted")
     }
     catch(e){
@@ -124,7 +158,6 @@ const Company = () => {
   const editDrawerOpen = (_id) => {
     const data = tableData.filter((item)=> item._id === _id)
     navigate(`edit/${_id}`, {state : {formData:data}});
-    // company.current.showModal();
   };
   // const handleSubmit=(e)=>{
   //     e.preventDefault();
@@ -137,17 +170,23 @@ const Company = () => {
   //     })
   //     setTableData(updateTable)
   // }
-  const d = JSON.parse(localStorage.getItem("userJsonData"));
-  let businessGroupOptions = d
-    .filter((item) => item.role === "businessgroup")
-    .map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  businessGroupOptions = [
-    ...businessGroupOptions,
-    { label: "All", value: "All" },
-  ];
+
+
+
+
+  // const d = JSON.parse(localStorage.getItem("userJsonData"));
+  // let businessGroupOptions = d
+  //   .filter((item) => item.role === "businessgroup")
+  //   .map((item) => ({
+  //     label: item.userName,
+  //     value: item.id,
+  //   }));
+  // businessGroupOptions = [
+  //   ...businessGroupOptions,
+  //   { label: "All", value: "All" },
+  // ];
+
+
   const company = useRef();
   const edit = useRef();
   const { can } = usePermissions()
