@@ -2,7 +2,7 @@ import useStorage from "../hooks/useStorage";
 
 export const getSelectValues = (id) => {
   const user  = JSON.parse(localStorage.getItem('userDetails'))
-  const role = user.user.role
+  const role = user?.user?.role
   if (role === "SUPER_ADMIN") {
     return {
       business: {
@@ -15,7 +15,7 @@ export const getSelectValues = (id) => {
       },
     };
   } else if (role === "BUSINESS_GROUP") {
-    const businessName = user.user.userName
+    const businessName = user?.user?.userName
     return {
       business: {
         disabled: true,
@@ -27,14 +27,14 @@ export const getSelectValues = (id) => {
       },
     };
   } else if (role === "COMPANY") {
-    const companyName = user.user.userName
+    const companyName = user?.user?.userName
     const user = JSON.parse(localStorage.getItem("userJsonData")).filter(
       (item) => item.userName === companyName
     );
     return {
       business: {
         disabled: true,
-        defaultValues: user[0].parent,
+        defaultValues: user[0]?.parent,
       },
       company: {
         disabled: true,
