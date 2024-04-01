@@ -63,8 +63,6 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     "Feature Templates": "/groups"
   };
 
- 
-  }
 
   return (
     <>

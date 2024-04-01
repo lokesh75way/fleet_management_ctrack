@@ -17,6 +17,8 @@ import Error from "../components/Error/Error";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 
+import {useTranslation} from 'react-i18next'
+
 const GeofenceDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
@@ -104,11 +106,11 @@ const GeofenceDetail = () => {
   const GeoData = Geofence.filter((item) => item.id == id);
 
   const [filteredGeoData, setFilteredGeoData] = useState(GeoData);
-
+  const {t} = useTranslation();
   return (
     <div>
       <div style={{ padding: "10px", backgroundColor: "#FFFDFD" }}>
-        <h2 style={{ fontSize: "20px" }}>Geofence Detail</h2>
+        <h2 style={{ fontSize: "20px" }}>{t('geofenceDetail')}l</h2>
       </div>
 
       <div className="" style={{ display: "flex", height: "88vh" }}>
@@ -125,7 +127,7 @@ const GeofenceDetail = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-2">
                 <label htmlFor="company" className="form-label">
-                  Company:<span className="text-danger">*</span>
+                  {t('company')}:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="text"
@@ -140,7 +142,7 @@ const GeofenceDetail = () => {
               </div>
               <div className="mb-2">
                 <label htmlFor="company" className="form-label">
-                  Name:<span className="text-danger">*</span>
+                {t('name')}:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="text"
@@ -156,7 +158,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label className="form-label">
-                  Category:<span className="text-danger">*</span>
+                {t('category')}:<span className="text-danger">*</span>
                 </label>
                 <Controller
                   name="category"
@@ -186,7 +188,7 @@ const GeofenceDetail = () => {
               </div>
               <div className="mb-3">
                 <label className="form-label">
-                  Geofence Access:<span className="text-danger">*</span>
+                {t('geofenceAccess')}:<span className="text-danger">*</span>
                 </label>
                 <div
                   style={{ display: "flex", flexDirection: "row", gap: "5rem" }}
@@ -199,7 +201,7 @@ const GeofenceDetail = () => {
                       checked={selectedOption === "public"}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label">Public</label>
+                    <label className="form-check-label">{t('public')}</label>
                   </div>
                   <div className="form-check">
                     <input
@@ -209,7 +211,7 @@ const GeofenceDetail = () => {
                       checked={selectedOption === "private"}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label">Private</label>
+                    <label className="form-check-label">{t('private')}</label>
                   </div>
                 </div>
                 {!getValues("geofenceAccess") && (
@@ -219,7 +221,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label htmlFor="contactNumber" className="form-label">
-                  Contact Number:<span className="text-danger">*</span>
+                {t('contactNumber')}:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="number"
@@ -237,7 +239,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">
-                  Address:
+                {t('address')}:
                 </label>
                 <textarea
                   className="form-control"
@@ -252,7 +254,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label className="form-label">
-                  Tolerance:<span className="text-danger">*</span>
+                {t('tolerance')}:<span className="text-danger">*</span>
                 </label>
                 <Controller
                   name="tolerance"
@@ -282,7 +284,7 @@ const GeofenceDetail = () => {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">Description:</label>
+                <label className="form-label">{t('description')}:</label>
                 <textarea
                   className="form-control"
                   {...register("description")}
@@ -303,7 +305,7 @@ const GeofenceDetail = () => {
               >
                 <Button type="submit" onClick={handleSubmit(onSubmit)}>
                   {" "}
-                  Next
+                  {t('next')}
                 </Button>
               </div>
             </form>

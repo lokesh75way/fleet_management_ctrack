@@ -7,9 +7,12 @@ import { ThemeContext } from "../../../context/ThemeContext";
 // import { reset } from "./Options";
 import _ from "lodash";
 import TemplateServices from "../../../services/api/TemplateServices";
+import {useTranslation} from 'react-i18next'
 import { useNavigate } from "react-router-dom";
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
+
+  const {t} = useTranslation();
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
   // const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
   // const [show, setShow] = useState(false);
@@ -247,7 +250,7 @@ const handleSubModulePermisssionChange = (
     <div>
       <Card>
         <Card.Header>
-          <Card.Title>Permissions</Card.Title>
+          <Card.Title>{t('permission')}</Card.Title>
         </Card.Header>
 
         <div className="d-flex justify-content-between m-2 mt-4 p-3">
@@ -263,7 +266,7 @@ const handleSubModulePermisssionChange = (
               borderRadius: "0.3rem",
               width: "15rem",
             }}
-            placeholder="Feature Template Name"
+            placeholder={t('featureTemplateName')}
           />
           <div
             className="d-flex justify-content-center"
@@ -271,7 +274,7 @@ const handleSubModulePermisssionChange = (
           >
             <Select
               options={selectOptions}
-              placeholder="Select a Feature Template"
+              placeholder={t('selectFeatureTemplate')}
               styles={{ control: (base) => ({ ...base, width: "18rem" }) }}
               onChange={(selectedOption) => {
                 const selectedTemplateData = groupsDataState.find(
@@ -284,10 +287,10 @@ const handleSubModulePermisssionChange = (
             </Select>{" "}
             <button
               className="btn btn-primary"
-              style={{ marginLeft: "1rem", padding: "7px 16px" }}
+              style={{ marginLeft: "1rem", padding: "7px 16px",marginRight:"1rem" }}
               onClick={handleCopy}
             >
-              Copy
+              {t('copy')}
             </button>
           </div>
         </div>
@@ -307,7 +310,7 @@ const handleSubModulePermisssionChange = (
                 style={{ position: "sticky", top: 0, background: "white" }}
               >
                 <tr>
-                  <th scope="col">Module</th>
+                  <th scope="col">{t('module')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -319,7 +322,7 @@ const handleSubModulePermisssionChange = (
                   return (
                     <React.Fragment key={element._id}>
                       <tr>
-                        <td>
+                        <td >
                           <input
                             type="checkbox"
                             className="form-check-input"
@@ -330,7 +333,8 @@ const handleSubModulePermisssionChange = (
                               handleCheckboxChange(e.target.checked, element._id)
                             }
                           />
-                          {element.title}
+                          <span style={{marginRight:"1.7rem"}}>{t(element.title)}</span>
+                          
                         </td>
                       </tr>
                     </React.Fragment>
@@ -357,12 +361,12 @@ const handleSubModulePermisssionChange = (
               >
                 <tr>
                   <th scope="col" className="col-4" style={{ width: "150px" }}>
-                    SubModules
+                  {t('subModules')}
                   </th>
-                  <th scope="col">Add</th>
-                  <th scope="col">View</th>
-                  <th scope="col">Modify</th>
-                  <th scope="col">Delete</th>
+                  <th scope="col">{t('add')}</th>
+                  <th scope="col">{t('view')}</th>
+                  <th scope="col">{t('modify')}</th>
+                  <th scope="col">{t('delete')}</th>
                 </tr>
               </thead>
               <tbody className="feature_template_table">
@@ -523,7 +527,7 @@ const handleSubModulePermisssionChange = (
             onClick={handleSave}
           >
             {" "}
-            Save{" "}
+            {t('save')}{" "}
           </button>
         </div>
       </Card>

@@ -2,26 +2,30 @@ import React,{useRef} from "react";
 import ReactApexChart from "react-apexcharts";
 import {Nav, Tab} from 'react-bootstrap';
 
-const chartHeaderData = [
-  { title: 'Week', type:'week'},
-  { title: 'Month', type:'month'},
-  { title: 'Year', type:'year'},
-  { title: 'All', type:'all'},
-];
+import {useTranslation} from 'react-i18next'
+
 
 const  ProjectOverviewChart = () =>{   
+  const {t} = useTranslation();
+  const chartHeaderData = [
+    { title: t('week'), type:'week'},
+    { title: t('month'), type:'month'},
+    { title: t('year'), type:'year'},
+    { title: t('all'), type:'all'},
+  ];
+
     const chartRef = useRef();
     const  series = [
         {
-            name: 'Avg Freq',
+            name: t('avgFreq'),
             type: 'column',
             data: [27, 26, 28, 30, 26, 29, 30, 28, 26, 30, 27,28]
         }, {
-            name: 'Max Freq',
+            name: t('maxFreq'),
             type: 'area',
             data: [32, 31, 34, 35, 30, 31,35, 32, 31, 33, 32,35]
         }, {
-            name: 'Min Freq',
+            name: t('minFreq'),
             type: 'line',
             data: [20, 22, 24, 21, 23, 25, 21, 23, 22, 24, 25,20]
         }
@@ -197,7 +201,7 @@ const  ProjectOverviewChart = () =>{
       <>
           <Tab.Container defaultActiveKey={'Week'}>
             <div className="card-header border-0 pb-0 flex-wrap">
-                <h4 className="heading mb-0">Data Frequency</h4>                
+                <h4 className="heading mb-0">{t('dataFrequency')}</h4>                
                   <Nav as="ul" className="nav nav-pills mix-chart-tab">
                       {chartHeaderData.map((item, index)=>(
                         <Nav.Item as="li" className="nav-item" key={index}>

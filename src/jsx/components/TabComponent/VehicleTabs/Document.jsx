@@ -6,7 +6,11 @@ import CreatableSelect from 'react-select/creatable';
 import Error from "../../Error/Error";
 import '../../../../scss/pages/_driver-tracking.scss'
 
+import {useTranslation} from 'react-i18next'
+
 const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
+
+  const { t } = useTranslation();
   const [tempValue, setTempValue] = useState(null);
 
   const { fields, append, remove } = useFieldArray({
@@ -37,7 +41,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
           <Button onClick={()=>append({fieldName:tempValue, file:null,IssueDate:"", ExpiryDate:"" })} className="ms-auto">
-            + Add Document
+            + {t('addDocument')}
           </Button>
         </div>
         {fields.map((item, index) => {
@@ -45,7 +49,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Select Document<span className="text-danger">*</span></label>
+                  <label className="form-label">{t('selectDocument')}<span className="text-danger">*</span></label>
                   <Controller
                     name={`test.${index}.fieldName`}
                     control={control}
@@ -71,7 +75,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                    {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
                 </div>
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">Upload File<span className="text-danger">*</span></label>
+                  <label className="form-label">{t('uploadFile')}<span className="text-danger">*</span></label>
                   <input
                     type="file" 
                     {...register(`test.${index}.file`)}
@@ -82,7 +86,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                   <Error errorName={errors?.test?.[index]?.file} /> 
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
-                  <label className="form-label">Issue Date</label>
+                  <label className="form-label">{t('issueDate')}</label>
                   <Controller
                     name={`test.${index}IssueDate`}
                     control={control}
@@ -102,7 +106,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                   {!getValues(`test.${index}.IssueDate`) && <Error errorName={errors?.test?.[index]?.IssueDate} /> }
                 </div>
                 <div className="col-xl-3 d-flex flex-column  mb-2">
-                  <label className="form-label">Expiry Date</label>
+                  <label className="form-label">{t('expiryDate')}</label>
                   <Controller
                     name={`test.${index}ExpiryDate`}
                     control={control}
@@ -135,7 +139,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
         >
           <Button type="submit" onClick={handleSubmit(onSubmit)}>
             {" "}
-            Submit
+            {t('submit')}
           </Button>
         </div>
       </div>

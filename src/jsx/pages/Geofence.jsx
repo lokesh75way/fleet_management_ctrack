@@ -7,6 +7,8 @@ import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import { GeofenceData } from "../components/Tables/Tables";
 import GeofenceTable from "../components/Tables/GeofenceTable";
 
+import {useTranslation} from 'react-i18next'
+
 const headers = [
   { label: "Employee ID", key: "emplid" },
   { label: "Employee Name", key: "title" },
@@ -81,14 +83,16 @@ const Driver = (ref) => {
     setTableData(updateTable);
   };
 
+  const {t} = useTranslation();
+
   
   const employe = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle="Geofence"
-        pageTitle={"Geofence"}
-        parentTitle={"Settings"}
+        mainTitle={t('geofence')}
+        pageTitle={t('geofence')}
+        parentTitle={t('settings')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -97,7 +101,7 @@ const Driver = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Geofence</h4>
+                    <h4 className="heading mb-0">{t('geofence')}</h4>
                     <div className="d-flex">
                       <Link
                         to={"/settings/geofence/map"}
@@ -105,7 +109,7 @@ const Driver = (ref) => {
                         data-bs-toggle="offcanvas"
                         // onClick={() => employe.current.showModal()}
                       >
-                        + Show Map
+                        + {t('showMap')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -119,14 +123,14 @@ const Driver = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Geofence ID</th>
-                          <th>Geofence Name</th>
-                          <th>Geofence Type</th>
-                          <th>Contact Number</th>
-                          <th>Address</th>
-                          <th> Description</th>
-                          <th>Geofence Access</th>
-                          <th>Action</th>
+                            <th>{t('geofenceID')}</th>
+                            <th>{t('geofenceName')}</th>
+                            <th>{t('geofenceType')}</th>
+                            <th>{t('contactNumber')}</th>
+                            <th>{t('address')}</th>
+                            <th>{t('description')}</th>
+                            <th>{t('geofenceAccess')}</th>
+                            <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -141,11 +145,11 @@ const Driver = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

@@ -14,11 +14,14 @@ import {
   technicianLeaveSchema,
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import {useTranslation} from 'react-i18next'
 
 const TechnicianForm = ({ Title, editData, setEditData }) => {
+
+  const {t} = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
-  const tabHeading = ["General", "Address", "Leave"];
+  const tabHeading = [t('general'), t('address'), t('leave')];
   const component = [General, Address, Leave];
   const totalTabs = tabHeading.length;
 
@@ -49,7 +52,7 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
           if (indexToUpdate !== -1) {
             val[indexToUpdate] = { ...data, id, Designation: "Technician" };
             localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess("Technician Updated!");
+            notifySuccess(t('technicianUpdated'));
             navigate("/technician");
           }
           return;
@@ -60,15 +63,15 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
           existingData.push(data);
           localStorage.setItem("userJsonData", JSON.stringify(existingData));
           // notifySuccess("Branch Added Successfully !!");
-          notifySuccess("New Technician Created!");
+          notifySuccess(t('newTechnicianCreated'));
           navigate("/technician");
           return;
         }
       } catch (error) {
-        notifyError("Some error occured !!");
+        notifyError(t('someErrorOccurred'));
       }
     }
-    notifySuccess('Saved !')
+    notifySuccess(t('saved'))
     console.log(data);
   };
 
@@ -80,9 +83,9 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Technician"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Technician"}
+        mainTitle={t('technician')}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t('general')}
       />
       <div className="m-2 p-2">
         <FormProvider>

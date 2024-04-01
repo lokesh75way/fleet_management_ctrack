@@ -19,6 +19,8 @@ import { getCompany } from "../../../../services/api/CompanyServices";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 
+import {useTranslation} from 'react-i18next'
+
 const General = ({
   register,
   setValue,
@@ -59,6 +61,8 @@ const General = ({
     businessGroupOptions()
     allCompanyOptions()
   },[])
+
+  const {t} = useTranslation();
 
   let companyOptions,branchOptions;
   if(role === 'admin'){
@@ -122,7 +126,7 @@ const General = ({
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Business Group <span className="text-danger">*</span>
+            {t('businessGroup')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="businessGroupId"
@@ -149,7 +153,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company <span className="text-danger">*</span>
+          {t('company')}  <span className="text-danger">*</span>
           </label>
           <Controller
             name="company"
@@ -178,7 +182,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch
+          {t('branch')} 
           </label>
           <Controller
             name="branch"
@@ -200,7 +204,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Vehicle Name <span className="text-danger">*</span>
+          {t('vehicleName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -214,7 +218,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Device Type <span className="text-danger">*</span>
+          {t('deviceType')}  <span className="text-danger">*</span>
           </label>
           <Controller
             name="deviceType"
@@ -238,7 +242,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            IMEI Number <span className="text-danger">*</span>
+          {t('IMEINumber')}  <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -251,7 +255,7 @@ const General = ({
           <Error errorName={errors.imeiNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Copy From</label>
+          <label className="form-label">{t('copyFrom')} </label>
           <Controller
             name="copyFrom"
             control={control}
@@ -270,7 +274,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Server Address
+          {t('serverAddress')} 
           </label>
           <CustomInput
             type="text"
@@ -282,7 +286,7 @@ const General = ({
         <Error errorName={errors.serverAddress} />
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            SIM Number <span className="text-danger">*</span>
+          {t('simNumber')}  <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -295,7 +299,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Secondary SIM Number<span className="text-danger">*</span>
+          {t('secondarySimNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -307,7 +311,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Distance Counter
+          {t('distanceCounter')} 
           </label>
           <Controller
             name="distanceCounter"
@@ -329,7 +333,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Unit of Distance
+          {t('unitOfDistance')} 
           </label>
           <Controller
             name="unitOfDistance"
@@ -351,7 +355,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-            Speed Detection
+          {t('speedDetection')} 
           </label>
           <Controller
             name="speedDetection"
@@ -373,7 +377,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Device Accuracy Tolerance<span className="text-danger">*</span>
+          {t('deviceAccuracyTolerance')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -398,7 +402,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')} 
         </Button>
       </div>
     </div>

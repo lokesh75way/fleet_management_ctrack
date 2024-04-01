@@ -64,6 +64,8 @@ import ApexLine4 from "../charts/apexcharts/Line4";
 import PolarChart from "../charts/Chartjs/polar";
 import Notification from "./Notification";
 
+import {useTranslation} from 'react-i18next'
+
 const speed = {
   data: [
     64, 24, 40, 76, 19, 0, 2, 46, 65, 12, 10, 6, 15, 57, 35, 81, 86, 12, 12, 21,
@@ -104,6 +106,8 @@ const Home = () => {
   const [selectedDataTable, setSelectedDataTable] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  const {t} = useTranslation();
 
   const {
     showCardWidget,
@@ -170,13 +174,13 @@ const Home = () => {
       )}
 
       <MainPagetitle
-        mainTitle="Dashboard"
-        pageTitle="Dashboard"
-        parentTitle="Home"
+        mainTitle={t('dashboard')}
+        pageTitle={t('dashboard')}
+        parentTitle={t('home')}
       >
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 z-3">
           <label className="mr-2 mt-2 justify-content-between align-items-center">
-            Date
+          {t('date')}
           </label>
           <DatePicker
             width="280px"
@@ -246,7 +250,7 @@ const Home = () => {
             <div className="col-xl-5 col-sm-12">
               <div className="card same-card p-2">
                 <div className="d-flex justify-content-between">
-                  <h4 className="text-black text-md p-3">Fleet Status</h4>
+                  <h4 className="text-black text-md p-3">{t('fleetStatus')}</h4>
                 </div>
 
                 <div
@@ -263,7 +267,7 @@ const Home = () => {
                     ]}
                     width={300}
                     data={[18, 19, 25, 23]}
-                    completeLabel="Total"
+                    completeLabel={t("total")}
                   />
                   <ul className="project-list">
                     <li>
@@ -276,7 +280,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#3AC977" />
                       </svg>{" "}
-                      Completed
+                      {t('complete')}
                     </li>
 
                     <li>
@@ -289,7 +293,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#FF9F00" />
                       </svg>{" "}
-                      Progress
+                      {t('progress')}
                     </li>
 
                     <li>
@@ -307,7 +311,7 @@ const Home = () => {
                           fill="var(--primary)"
                         />
                       </svg>{" "}
-                      Yet To Start
+                      {t('yetToStart')}
                     </li>
                     <li>
                       <svg
@@ -319,7 +323,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#FF5E5E" />
                       </svg>{" "}
-                      Cancelled
+                      {t('cancelled')}
                     </li>
                   </ul>
                 </div>
@@ -337,7 +341,7 @@ const Home = () => {
               onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
             >
               <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Faulty Devices</h4>
+                <h4 className="text-black text-md p-3">{t('faultyDevices')}</h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -357,7 +361,7 @@ const Home = () => {
               onClick={() => openModal(<FleetIdleTable />, "Fleet Idle")}
             >
               <div className="d-flex justify-content-between">
-                <h4 className="text-black text-md p-3">Device vs Project</h4>
+                <h4 className="text-black text-md p-3">{t('deviceVsProject')}</h4>
                 <div
                   onClick={(e) => {
                     e.stopPropagation();
@@ -389,7 +393,7 @@ const Home = () => {
                 }}
                 onClick={() => openModal(<TemperatureTable />, "Temperature")}
               >
-                <h4 className="text-black text-md p-3">Category Wise Status</h4>
+                <h4 className="text-black text-md p-3">{t('categoryWiseStatus')}</h4>
 
                 <div className="d-flex align-items-center justify-content-between">
                   <div
@@ -402,11 +406,11 @@ const Home = () => {
                 <ApexBar3
                   series={[
                     {
-                      name: "Maintenance",
+                      name: t('maintenance'),
                       data: [1, 3, 9, 2],
                     },
                     {
-                      name: "Installation",
+                      name: t('installation'),
                       data: [2, 6, 8, 5],
                     },
                   ]}
@@ -433,7 +437,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Web vs Mobile User
+                  {t('webVsMobileUser')}
                 </h4>
               </div>
               <div
@@ -460,7 +464,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#3AC977" />
                       </svg>{" "}
-                      Web User
+                      {t('webUser')}
                     </li>
 
                     <li>
@@ -473,7 +477,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#FF9F00" />
                       </svg>{" "}
-                      Mobile User
+                      {t('mobileUser')}
                     </li>
                   </ul>
                 </div>
@@ -507,7 +511,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Application Usage
+                  {t('applicationUsage')}
                 </h4>
               </div>
 
@@ -534,7 +538,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#3AC977" />
                       </svg>{" "}
-                      Web User
+                      {t('webUser')}
                     </li>
 
                     <li>
@@ -547,7 +551,7 @@ const Home = () => {
                       >
                         <rect width="10" height="10" rx="3" fill="#FF9F00" />
                       </svg>{" "}
-                      Mobile User
+                      {t('mobileUser')}
                     </li>
                   </ul>
                 </div>
@@ -574,7 +578,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Model wise Devices
+                  {t('modelWiseDevices')}
                 </h4>
                 <div
                   onClick={(e) => {
@@ -588,7 +592,7 @@ const Home = () => {
                   labels={["Cancelled", "Yet To Start", "Complete", "Progress"]}
                   width={300}
                   data={[1000, 290, 50, 30]}
-                  completeLabel="Total"
+                  completeLabel={t("total")}
                   size="60%"
                 />
               </div>
@@ -615,7 +619,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Object Type
+                  {t('objectType')}
                 </h4>
                 <div
                   onClick={(e) => {
@@ -659,7 +663,7 @@ const Home = () => {
                     1000, 290, 50, 30, 10, 28, 2, 4, 6, 8, 12, 12, 34, 23, 12,
                     34, 56, 34, 12, 6, 78, 8, 81,
                   ]}
-                  completeLabel="Total"
+                  completeLabel={t("total")}
                   size="60%"
                 />
               </div>
@@ -691,7 +695,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Number of Tasks
+                  {t('numberOfTasks')}
                 </h4>
               </div>
 
@@ -760,7 +764,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Inactive Devices
+                  {t('inactiveDevices')}
                 </h4>
                 <div
                   onClick={(e) => {
@@ -804,7 +808,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Category Wise Tasks
+                  {t('categoryWiseTasks')}
                 </h4>
               </div>
 
@@ -835,7 +839,7 @@ const Home = () => {
                     textOverflow: "ellipsis", // Added: show ellipsis for overflow
                   }}
                 >
-                  Top Five Technician
+                  {t('topFiveTechnician')}
                 </h4>
                 <div
                   onClick={(e) => {
