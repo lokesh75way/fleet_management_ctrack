@@ -59,10 +59,12 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     Company: "/company",
     "Business Group": "/business",
     "Branch" : "/branch",
-    "Sub User" : "/user"
+    "Sub User" : "/user",
+    "Feature Templates": "/groups"
   };
 
-  console.log(parentTitle, pageTitle);
+ 
+  }
 
   return (
     <>
