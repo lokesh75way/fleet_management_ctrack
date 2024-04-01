@@ -56,6 +56,8 @@ function App(props) {
   let type = checkType()
   const { setUserPermission } = usePermissions()
   const userPermission = useSelector(state => state.auth.permission);
+  //useLocation
+  const location = useLocation();
 
   useEffect(() => {
     const companyData = localStorage.getItem('companyData');
@@ -85,7 +87,10 @@ function App(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAutoLogin(dispatch, navigate);
+    if(!location.pathname.includes('resetpassword')){
+      checkAutoLogin(dispatch, navigate);
+    }
+    console.log(location.pathname, "pathname")
   }, []);
 
   if (props.isAuthenticated) {
@@ -107,7 +112,7 @@ function App(props) {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<SignUp />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
           </Route>
         </Routes>
       </Suspense>

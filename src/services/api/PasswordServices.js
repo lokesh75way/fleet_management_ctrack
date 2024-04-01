@@ -16,7 +16,12 @@ const PasswordServices = {
     };
   },
   resetPassword: async (body) => {
-    return axios.post("/auth/forgot-password", body);
+    try{
+      const response = await axios.put("/auth/reset-password", body)
+      return response
+    }catch(error){
+      return { error: "Couldn't reset Password" }
+    }
   },
 
   
