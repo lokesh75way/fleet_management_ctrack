@@ -119,8 +119,7 @@ const Company = () => {
     .map((_, i) => i + 1);
   const onClick = async (i) => {
     activePag.current = i;
-    setPage(i);
-    await fetchAllCompany(i + 1);
+    setPage(i+1);
     settest(i);
   };
   // for deleting data in table
