@@ -4,7 +4,7 @@ import axios from "axios";
 const createGroup = async (body) => {
   return axios.post("/business-groups", body);
 };
-const getGroups = async (body) => {
+const getGroups = async () => {
   const { data } = await axios.get("/business-groups");
   return { data: data.data.data, totalLength: data.data.totalLength };
 };

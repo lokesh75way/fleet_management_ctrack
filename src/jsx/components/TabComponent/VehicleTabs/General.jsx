@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
@@ -9,12 +9,15 @@ import {
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
-  businessGroupOptions,
 } from "./Options";
+import AsyncSelect from "react-select/async";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { getGroups } from "../../../../services/api/BusinessGroup";
+import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 
 const General = ({
   register,
@@ -34,11 +37,28 @@ const General = ({
     }),
   };
   const { id } = useParams();
-  const loggedInUser = localStorage.getItem("loginDetails-name");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  const role = localStorage.getItem("role");
+  const role = checkRole()
+
+  // useEffect(()=>{
+  //   getCompanyData()
+  //   getBusinessData()
+  // },[])
+  // let businessGroupOptions;
+  // const getCompanyData = async()=>{
+  //   const {data} = await getGroups()
+  //   businessGroupOptions = data.map((item)=>{
+  //     return 
+  //   })
+  //   setAllCompany(allCompany)
+  // }
+
+  useEffect(()=>{
+    businessGroupOptions()
+    allCompanyOptions()
+  },[])
 
   let companyOptions,branchOptions;
   if(role === 'admin'){
@@ -76,6 +96,26 @@ const General = ({
       (item) => item.userName === checkUserName()
     )
   }
+  const[formData,setFormData] = useState([])
+  useEffect(()=>{
+    if(formData && id){
+      setValue("businessGroupId",formData[0]?.companyId?.businessGroupId?.groupName || businessGroupOptions[0])
+      // setValue("companyName",formData[0].companyId?.companyName)
+      // setValue("userName", formData[0].userName)
+      // setValue("email",formData[0].email)
+      // setValue("mobileNumber",formData[0].mobileNumber)
+      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
+      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
+      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
+      // setValue("street1",formData[0].companyId?.street1)
+      // setValue("street2",formData[0].companyId?.street2)
+      // setValue("contactPerson",formData[0].companyId?.contactPerson)
+      // setValue("faxNumber",formData[0].companyId?.faxNumber)
+      // setValue("zipCode",formData[0].companyId?.zipCode)
+      // setValue("city",formData[0].companyId?.city)
+      // setValue("storageCapacity",formData[0].companyId?.capacity )
+    }
+  },[formData,id])
 
   return (
     <div className="p-4">
@@ -85,35 +125,27 @@ const General = ({
             Business Group <span className="text-danger">*</span>
           </label>
           <Controller
-            name="business"
+            name="businessGroupId"
             control={control}
-            rules={{ required: true }}
-            disabled={true}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
                 onChange={(newValue) => {
-                  console.log(newValue);
                   setTempValue(newValue?.value);
-                  setValue("business", newValue?.value);
+                  setValue("businessGroupId", newValue?.label);
+                  setValue("businessId", newValue?.value);
                 }}
-                isDisabled={role === "company" || role === "businessgroup"}
-                options={businessGroupOptions}
+                isDisabled={role !== "SUPER_ADMIN"}
+                loadOptions={businessGroupOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{
-                  label : 
-                  filteredUserData[0]?.parentBusinessGroup ||
-                  (role === "admin" ? '' : role === "businessgroup" ? loggedInUser : companyOptions[0].parent ),
-                  value : 
-                  filteredUserData[0]?.parentBusinessGroup ||
-                  (loggedInUser !== "Admin" ? loggedInUser : companyOptions[0].parent )
-                }
-                }
+                value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
               />
             )}
           />
-          {!getValues("business") && <Error errorName={errors.business} />}
+          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -124,24 +156,20 @@ const General = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <AsyncSelect
+                cacheOptions
+                defaultOptions
                 onChange={(newValue) => {
                   setTempValue(newValue?.value);
-                  setValue("company", newValue?.value);
+                  setValue("company", newValue?.label);
+                  setValue("companyId", newValue?.value);
                 }}
-                isDisabled={role === "company"}
-                options={companyOptions}
+                isDisabled={role === "COMPANY"}
+                loadOptions={allCompanyOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{
-                  label:
-                    filteredUserData[0]?.parentCompany ||
-                    (role === "company" ? loggedInUser : ""),
-                  value:
-                    filteredUserData[0]?.parentCompany ||
-                    (role === "company" ? loggedInUser : "")
-                }}
+                value={{label:getValues('company'), value :getValues('company')}}
               />
             )}
           />
@@ -160,6 +188,7 @@ const General = ({
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
                   setValue("branch", newValue.label);
+                  setValue("branchId", newValue.value);
                 }}
                 options={branchOptions}
                 ref={ref}
@@ -201,7 +230,7 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={deviceTypeOptions[0]}
+                value={{label:getValues('deviceType'), value :getValues('deviceType')}}
               />
             )}
           />
@@ -215,11 +244,11 @@ const General = ({
             type="number"
             required
             register={register}
-            name="IMEINumber"
+            name="imeiNumber"
             label="IMEI Number"
             placeholder=""
           />
-          <Error errorName={errors.IMEINumber} />
+          <Error errorName={errors.imeiNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Copy From</label>
