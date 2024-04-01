@@ -35,7 +35,6 @@ const Company = () => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
-  console.log(id);
   const fetchAllCompany = async()=>{
     const {data, success} = await getCompany()
     // CompanyData = data.data.data
@@ -115,6 +114,7 @@ const Company = () => {
   const onConfirmDelete = async(_id) => {
     try{
       await deleteCompany(_id)
+      fetchAllCompany()
       notifySuccess("Company Deleted")
     }
     catch(e){
@@ -124,19 +124,8 @@ const Company = () => {
   const editDrawerOpen = (_id) => {
     const data = tableData.filter((item)=> item._id === _id)
     navigate(`edit/${_id}`, {state : {formData:data}});
-    // company.current.showModal();
   };
-  // const handleSubmit=(e)=>{
-  //     e.preventDefault();
-  //     const updateTable = tableData.map((table)=>{
-  //         if(table.id === editData.id) {
-  //             console.log(table.id)
-  //             return {...table, ...editData };
-  //         }
-  //         return table;
-  //     })
-  //     setTableData(updateTable)
-  // }
+
   const d = JSON.parse(localStorage.getItem("userJsonData"));
   let businessGroupOptions = d
     .filter((item) => item.role === "businessgroup")

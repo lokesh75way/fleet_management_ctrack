@@ -16,16 +16,12 @@ const CompanyTable = ({
 }) => {
   const { getBranch } = useStorage();
   const { can } = usePermissions()
-  // const editPermission = can('company','modify')
-  // const deletePermission = can('company','delete')
+
   const editPermission = true
   const deletePermission = true
   var filterData = tableData;
-  // if (tempValue !== "All") {
-  //   filterData = tableData.filter(
-  //     (item) => item.role === "company" && item.parent === tempValue
-  //   );
-  // }
+  console.log(tableData)
+ 
   setDataLength(filterData?.length)
   return (
     <>
