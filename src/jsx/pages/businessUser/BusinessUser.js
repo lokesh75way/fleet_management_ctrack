@@ -35,6 +35,9 @@ const BusinessUser = () => {
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
+  const activePag = useRef(0);
+  const [page, setPage] = useState(activePag.current + 1);
+  const [length, setLength] = useState(0);
 
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
@@ -48,7 +51,6 @@ const BusinessUser = () => {
   });
   const navigate = useNavigate();
   const sort = 10;
-  const activePag = useRef(0);
   const [test, settest] = useState(0);
   const chageData = (frist, sec) => {
     for (var i = 0; i < data.length; ++i) {
@@ -60,30 +62,33 @@ const BusinessUser = () => {
     }
   };
 
-  async function getGroupData() {
+  async function getGroupData(page) {
     try {
-      const { data, totalLength } = await getGroups();
+      const { data, totalPage, totalCount } = await getGroups(page);
       setTableData(data);
+      setLength(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
   }
 
   useEffect(() => {
-    getGroupData();
-  }, []);
+    getGroupData(page);
+  }, [page]);
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
 
+
   activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
+  let pagination = Array(Math.ceil(length / sort))
     .fill()
     .map((_, i) => i + 1);
-  const onClick = (i) => {
+  const onClick = async (i) => {
     activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
+    setPage(i);
+    await getGroupData(i+1);
     settest(i);
   };
 
@@ -115,7 +120,7 @@ const BusinessUser = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("businessGroup")}</h4>
                     <div>
-                       {can('business', "add") && ( 
+                      {can("business", "add") && (
                         <Link
                           to={{
                             pathname: "/business/create",
@@ -128,7 +133,6 @@ const BusinessUser = () => {
                           {t("addBusinessGroup")}
                         </Link>
                       )}
-
                     </div>
                   </div>
                   <div
@@ -141,13 +145,16 @@ const BusinessUser = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
-                          <th>{t('businessGroup')}</th>
-                          <th>{t('mobileNumber')}</th>
-                          <th>{t('email')}</th>
-                          <th>{t('location')}</th>
-                          <th>{t('companyCount')}</th>
-                          {(can('business', "delete") || can('business', "modify")) && <th>{t('action')}</th>}
+                          <th>{t("id")}</th>
+                          <th>{t("businessGroup")}</th>
+                          <th>{t("mobileNumber")}</th>
+                          <th>{t("email")}</th>
+                          <th>{t("location")}</th>
+                          <th>{t("companyCount")}</th>
+                          {(can("business", "delete") ||
+                            can("business", "modify")) && (
+                            <th>{t("action")}</th>
+                          )}
                         </tr>
                       </thead>
                       <tbody>
@@ -161,17 +168,21 @@ const BusinessUser = () => {
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
-                        {data.length > (activePag.current + 1) * sort
+                        {length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t("of")} {data.length} {t("entries")}
+                          : length}{" "}
+                        {t("of")} {length} {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
+                          className={`paginate_button ${
+                            activePag.current === 0
+                              ? "previous disabled"
+                              : "previous"
+                          }`}
                           to="/business"
                           onClick={() =>
                             activePag.current > 0 &&
@@ -181,7 +192,7 @@ const BusinessUser = () => {
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
+                          {pagination.map((number, i) => (
                             <Link
                               key={i}
                               to="/business"
@@ -195,10 +206,14 @@ const BusinessUser = () => {
                           ))}
                         </span>
                         <Link
-                          className="paginate_button next"
+                          className={`paginate_button ${
+                            activePag.current === pagination.length - 1
+                              ? "next disabled"
+                              : "next"
+                          }`}
                           to="/business"
                           onClick={() =>
-                            activePag.current + 1 < paggination.length &&
+                            activePag.current + 1 < pagination.length &&
                             onClick(activePag.current + 1)
                           }
                         >

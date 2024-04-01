@@ -1,7 +1,16 @@
 import axios from "axios";
 
-export const getCompany = async () => {
-  return axios.get("/companies");
+// export const getCompany = async () => {
+//   return axios.get("/companies");
+// };
+
+export const getCompany = async (page) => {
+  let url = "/companies";
+  if (page !== undefined) {
+    url += `?page=${page}&limit=${10}`;
+  }
+  return await axios.get(url);
+ 
 };
 export const addCompany = async (body) => {
   return axios.post("/companies", body);

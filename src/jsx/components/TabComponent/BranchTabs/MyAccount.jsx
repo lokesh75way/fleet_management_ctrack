@@ -87,30 +87,11 @@ const MyAccount = ({
       return []; // Return empty array in case of an error
     }
   };
-  // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
-
-  // useEffect(() => {
-  //   const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-  //     .filter((br) => br.parentCompany === companyValue)
-  //     .map((item) => ({
-  //       label: item.userName,
-  //       value: item.id,
-  //     }));
-
-  //   tempparentOptions.push({ label: "None", value: 0 });
-
-  //   setBusinessUserOptions(tempbusinessUserOptions);
-  //   setCompanyOptions(tempcompanyOptions);
-  //   setParentOptions(tempparentOptions);
-  // }, [businessUserValue, companyValue, parentValue]);
-
+ 
   const { id } = useParams();
   useEffect(() => {
     if (id) {
       const data = location.state[0];
-      console.log("====================================");
-      console.log("data of Id clicked", data);
-      console.log("====================================");
       setDvalues(data);
     }
   }, [id]);
@@ -137,47 +118,6 @@ const MyAccount = ({
   }, [dValues, id]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
-
-  // useEffect(() => {
-  //   setValue(
-  //     "parentBusinessGroup",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-  //   );
-  //   setValue(
-  //     "parentCompany",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
-  //   );
-  //   setValue(
-  //     "parentBranch",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-  //   );
-  //   setValue(
-  //     "country",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].country : ""
-  //   );
-  //   setValue(
-  //     "state",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].state : ""
-  //   );
-  // }, []);
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("loginDetails-name");
-  //   const role = localStorage.getItem("role");
-  //   if (role === "businessgroup") {
-  //     setTempValue(loggedInUser);
-  //     setValue("parentBusinessGroup", loggedInUser);
-  //   }
-  //   if (role === "company") {
-  //     setValue("parentCompany", loggedInUser);
-  //     const filterparent = DummyData.filter(
-  //       (item) => item.userName === loggedInUser
-  //     )[0].parent;
-  //     setValue("parentBusinessGroup", filterparent);
-  //     setTempValue(loggedInUser);
-  //   }
-  // }, []);
-
-  // console.log(defaultValues)
 
   return (
     <div className="p-4">

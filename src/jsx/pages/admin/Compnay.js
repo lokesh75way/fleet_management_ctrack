@@ -4,23 +4,29 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import CompanyTable from "../../components/Tables/CompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import {useTranslation} from 'react-i18next'
-import { clsx } from 'clsx';
+import { useTranslation } from "react-i18next";
+import { clsx } from "clsx";
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import useStorage from "../../../hooks/useStorage";
 import { usePermissions } from "../../../context/PermissionContext";
-import { deleteCompany, getCompany } from "../../../services/api/CompanyServices";
+import {
+  deleteCompany,
+  getCompany,
+} from "../../../services/api/CompanyServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 
-
-
 const Company = () => {
-  
-  const {isRtl} = useContext(ThemeContext);
-  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
@@ -35,17 +41,6 @@ const Company = () => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
-  console.log(id);
-  const fetchAllCompany = async()=>{
-    const {data, success} = await getCompany()
-    // CompanyData = data.data.data
-    setTableData(data.data.data)
-  }
-
-    useEffect(()=>{
-      fetchAllCompany()
-    },[])
-
 
   useEffect(() => {
     if (id) {
@@ -56,7 +51,7 @@ const Company = () => {
         value: username,
         label: username,
       });
-      setValue('parent',username);
+      setValue("parent", username);
       setTempValue(username);
     }
   }, [id]);
@@ -74,8 +69,10 @@ const Company = () => {
     }),
   };
 
-
+  const activePag = useRef(0);
   const [dataLength, setDataLength] = useState(CompanyData.length);
+  const [page, setPage] = useState(activePag.current + 1);
+  const [length, setLength] = useState(0);
   const [editData, setEditData] = useState({
     id: 0,
     title: "",
@@ -86,7 +83,7 @@ const Company = () => {
     usergroup: "",
   });
   const sort = 10;
-  const activePag = useRef(0);
+
   const [test, settest] = useState(0);
   const chageData = (frist, sec) => {
     for (var i = 0; i < data.length; ++i) {
@@ -98,32 +95,46 @@ const Company = () => {
     }
   };
 
+  const fetchAllCompany = async (page) => {
+    try {
+      const { data, success, totalCount } = await getCompany(page);
+      setTableData(data.data.data);
+      // console.log(data.data.totalCount)
+      setLength(data.data.totalCount);
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  };
+  useEffect(() => {
+    fetchAllCompany(page);
+  }, [page]);
+
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
 
   activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
+  let pagination = Array(Math.ceil(length / sort))
     .fill()
     .map((_, i) => i + 1);
-  const onClick = (i) => {
+  const onClick = async (i) => {
     activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
+    setPage(i);
+    await fetchAllCompany(i + 1);
     settest(i);
   };
   // for deleting data in table
-  const onConfirmDelete = async(_id) => {
-    try{
-      await deleteCompany(_id)
-      notifySuccess("Company Deleted")
-    }
-    catch(e){
-      notifyError("Something Went Wrong")
+  const onConfirmDelete = async (_id) => {
+    try {
+      await deleteCompany(_id);
+      notifySuccess("Company Deleted");
+    } catch (e) {
+      notifyError("Something Went Wrong");
     }
   };
   const editDrawerOpen = (_id) => {
-    const data = tableData.filter((item)=> item._id === _id)
-    navigate(`edit/${_id}`, {state : {formData:data}});
+    const data = tableData.filter((item) => item._id === _id);
+    navigate(`edit/${_id}`, { state: { formData: data } });
     // company.current.showModal();
   };
   // const handleSubmit=(e)=>{
@@ -150,13 +161,13 @@ const Company = () => {
   ];
   const company = useRef();
   const edit = useRef();
-  const { can } = usePermissions()
+  const { can } = usePermissions();
   return (
     <>
       <MainPagetitle
-        mainTitle={t('company')}
-        pageTitle={t('company')}
-        parentTitle={t('home')}
+        mainTitle={t("company")}
+        pageTitle={t("company")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -165,7 +176,7 @@ const Company = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('companies')}</h4>
+                    <h4 className="heading mb-0">{t("companies")}</h4>
                     <div className="d-flex align-items-center">
                       <Controller
                         name="parent"
@@ -173,11 +184,13 @@ const Company = () => {
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
-                          
                             onChange={(newValue) => {
                               setTempValue(newValue.label);
                               setValue("companyOptions", newValue.label);
-                              setFilter({value:newValue.value,label:newValue.label})
+                              setFilter({
+                                value: newValue.value,
+                                label: newValue.label,
+                              });
                             }}
                             ref={ref}
                             menuPortalTarget={document.body}
@@ -194,14 +207,16 @@ const Company = () => {
                           />
                         )}
                       />
-                      {can('company','add') && <Link
-                        to={"/company/create"}
-                        className="btn btn-primary btn-sm ms-1"
-                        data-bs-toggle="offcanvas"
-                        style={{paddingBlock : '9px'}}
-                      >
-                        + {t('addCompany')}
-                      </Link>}
+                      {can("company", "add") && (
+                        <Link
+                          to={"/company/create"}
+                          className="btn btn-primary btn-sm ms-1"
+                          data-bs-toggle="offcanvas"
+                          style={{ paddingBlock: "9px" }}
+                        >
+                          + {t("addCompany")}
+                        </Link>
+                      )}
                     </div>
                   </div>
                   <div
@@ -215,14 +230,15 @@ const Company = () => {
                       <thead>
                         <tr>
                           {/* <th>{t('id')}</th> */}
-                          <th>{t('companyName')}</th>
-                          <th>{t('businessGroup')}</th>
+                          <th>{t("companyName")}</th>
+                          <th>{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}
-                          <th>{t('location')}</th>
-                          <th>{t('email')}</th>
-                          <th>{t('branches')}</th>
-                          <th>{t('zipCode')}</th>
-                          {(can('company', 'edit') || can('company', 'delete') ) && <th>{t('action')}</th>}
+                          <th>{t("location")}</th>
+                          <th>{t("email")}</th>
+                          <th>{t("branches")}</th>
+                          <th>{t("zipCode")}</th>
+                          {(can("company", "edit") ||
+                            can("company", "delete")) && <th>{t("action")}</th>}
                         </tr>
                       </thead>
                       <tbody>
@@ -238,18 +254,22 @@ const Company = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t('showing')} {activePag.current * sort + 1} {t('to')} {" "}
-                        {dataLength > (activePag.current + 1) * sort
+                        {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
+                        {length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : dataLength}{" "}
-                        {t('of')}  {dataLength} {t('entries')} 
+                          : length}{" "}
+                        {t("of")} {length} {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
+                          className={`paginate_button ${
+                            activePag.current === 0
+                              ? "previous disabled"
+                              : "previous"
+                          }`}
                           to="/company"
                           onClick={() =>
                             activePag.current > 0 &&
@@ -259,7 +279,7 @@ const Company = () => {
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
+                          {pagination.map((number, i) => (
                             <Link
                               key={i}
                               to="/company"
@@ -273,10 +293,14 @@ const Company = () => {
                           ))}
                         </span>
                         <Link
-                          className="paginate_button next"
+                          className={`paginate_button ${
+                            activePag.current === pagination.length - 1
+                              ? "next disabled"
+                              : "next"
+                          }`}
                           to="/company"
                           onClick={() =>
-                            activePag.current + 1 < paggination.length &&
+                            activePag.current + 1 < pagination.length &&
                             onClick(activePag.current + 1)
                           }
                         >
