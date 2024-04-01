@@ -141,10 +141,9 @@ export const companyAccountSchema = yup
 
 export const branchAccountSchema = yup
   .object({
-    // branch: yup.string().required(),
+    branch: yup.string().required(),
     companyId: yup.string().required("Company Name is required "),
     businessGroupId: yup.string().required("Business Group Name is required "),
-    userName: yup.string().required("Please enter the Branch Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup
       .number()
@@ -154,10 +153,7 @@ export const branchAccountSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    helpDeskEmail: yup
-      .string()
-      .email()
-      .required("Help Desk Email is required "),
+   
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")

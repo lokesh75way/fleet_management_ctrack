@@ -108,14 +108,10 @@ const MyAccount = ({
   useEffect(() => {
     if (id) {
       const data = location.state[0];
-      console.log("====================================");
-      console.log("data of Id clicked", data);
-      console.log("====================================");
       setDvalues(data);
     }
   }, [id]);
   useEffect(() => {
-    console.log(dValues);
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
       setValue("businessGroupId", dValues.businessGroupId?._id);
@@ -137,47 +133,6 @@ const MyAccount = ({
   }, [dValues, id]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
-
-  // useEffect(() => {
-  //   setValue(
-  //     "parentBusinessGroup",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-  //   );
-  //   setValue(
-  //     "parentCompany",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentCompany : ""
-  //   );
-  //   setValue(
-  //     "parentBranch",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-  //   );
-  //   setValue(
-  //     "country",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].country : ""
-  //   );
-  //   setValue(
-  //     "state",
-  //     filteredCompanyData[0] ? filteredCompanyData[0].state : ""
-  //   );
-  // }, []);
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("loginDetails-name");
-  //   const role = localStorage.getItem("role");
-  //   if (role === "businessgroup") {
-  //     setTempValue(loggedInUser);
-  //     setValue("parentBusinessGroup", loggedInUser);
-  //   }
-  //   if (role === "company") {
-  //     setValue("parentCompany", loggedInUser);
-  //     const filterparent = DummyData.filter(
-  //       (item) => item.userName === loggedInUser
-  //     )[0].parent;
-  //     setValue("parentBusinessGroup", filterparent);
-  //     setTempValue(loggedInUser);
-  //   }
-  // }, []);
-
-  // console.log(defaultValues)
 
   return (
     <div className="p-4">
@@ -350,7 +305,7 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.id);
               setIsStateDisabled(false);
@@ -465,7 +420,8 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("submit")}
+          {/* {t("submit")} */}
+          Next
         </Button>
       </div>
     </div>
