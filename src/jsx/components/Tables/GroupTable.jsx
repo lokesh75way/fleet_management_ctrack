@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdDelete } from 'react-icons/md'
 import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
     const navigate = useNavigate()
+    const [data, setData] = useState([]);
     const handleClick = (index)=>{
         setIsEditTrue(index)
         const props = {
@@ -16,13 +17,13 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
         navigate('permission', {state:JSON.stringify(props)})
     }
 
-
-
-
+    useEffect(() => {
+        setData(tableData.reverse());
+    }, [tableData])
 
     return (
         <>
-            {tableData.map((item, index) => (
+            {data.map((item, index) => (
                 <tr key={index}>
                     <td><span>{item.id}</span></td>
                     <td>

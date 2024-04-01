@@ -53,6 +53,15 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     e.preventDefault();
     nav("#");
   };
+  const redirectTo = {
+    Home: "/dashboard",
+    User: "/subUser",
+    Company: "/company",
+    Branch: "/branch",
+    "Business Group": "/business",
+    "Feature Templates": "/groups"
+  }
+
   return (
     <>
       <div className="page-titles d-flex justify-content-between align-items-center">
@@ -62,7 +71,7 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
               <h5 className="bc-title">{mainTitle}</h5>
             </li>
             <li className="breadcrumb-item">
-              <Link to={parentTitle === 'Home' ? "/dashboard" : "#"}>
+              <Link to={redirectTo[parentTitle] ? redirectTo[parentTitle] : ""}>
                 {SVGICON.HomeSvg} {parentTitle}
               </Link>
             </li>

@@ -65,7 +65,7 @@ function App(props) {
 
     const userData = localStorage.getItem('userData');
     const technicianData = localStorage.getItem('technicianData');
-    const userJsonData = localStorage.getItem('userJsonData')
+     const userJsonData = localStorage.getItem('userJsonData');
 
     const geoData = localStorage.getItem('geofenceData')
 

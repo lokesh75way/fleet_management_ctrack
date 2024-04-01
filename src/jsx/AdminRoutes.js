@@ -194,15 +194,15 @@ const AdminRoutes = () => {
       <Routes>
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
-            // if (!can(data.module, data.operation || 'view')) {
-            //   // console.log(data.module, data.url, 'create')
-            //    return <Route
-            //     key={i}
-            //     exact
-            //     path={`${data.url}`}
-            //     element={<PermissionDenied />}
-            //   />
-            // }
+            if (can(data.module, data.operation || 'view')) {
+              // console.log(data.module, data.url, 'create')
+               return <Route
+                key={i}
+                exact
+                path={`${data.url}`}
+                element={<PermissionDenied />}
+              />
+            }
             return (
               <Route
                 key={i}

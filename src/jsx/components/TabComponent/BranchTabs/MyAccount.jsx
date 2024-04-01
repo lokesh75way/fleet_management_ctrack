@@ -227,7 +227,7 @@ const MyAccount = ({
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
-                  isDisabled={defaultValues.business.disabled}
+                  isDisabled={defaultValues?.business?.disabled}
                   name={name}
                   styles={customStyles}
                   defaultOptions
@@ -284,8 +284,8 @@ const MyAccount = ({
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.label);
                   }}
-                  isDisabled={defaultValues.company.disabled}
-                  loadOptions={allCompanyOptions}
+                  isDisabled={defaultValues?.company?.disabled}
+                  options={companyOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}

@@ -22,7 +22,7 @@ const Permission = () => {
   ]
   return (
     <>
-      <MainPagetitle mainTitle={t('permission')} pageTitle={t('permission')} parentTitle={t('home')} />
+      <MainPagetitle mainTitle={t('permission')} pageTitle={t('permission')} parentTitle={t('Feature Templates')} />
         <Tabs  tabs={data} />
     </>
   )
