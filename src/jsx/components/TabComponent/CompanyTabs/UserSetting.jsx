@@ -37,7 +37,7 @@ const { id } = useParams();
   useEffect(()=>{
       setValue('dateFormat',formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value)
       setValue('unitOfDistance',formData?.[0].companyId?.unitOfDistance || unitOfDistanceOptions[0].value)
-      setValue('timeFormat',formData?.[0].companyId?.unitOfDistance || timeFormatOptions[0].value)
+      setValue('timeFormat',formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value)
       setValue('unitOfFuel',formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value)
       setValue('language',formData?.[0].companyId?.language || languageOptions[0].value)
       setValue('status',formData?.[0].companyId?.status || statusOptions[0].value)

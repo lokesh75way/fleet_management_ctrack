@@ -33,9 +33,8 @@ export const copyFromOptions = [{ value: "Test", label: "Test" }];
 export const distanceCounterOptions = [
   { value: "GPS", label: "GPS" },
   { value: "OBD", label: "OBD" },
-  { value: "CAN Odometer", label: "CAN Odometer" },
-  { value: "Relative Odometer", label: "Relative Odometer" },
-  { value: "Tachograph", label: "Tachograph" },
+  { value: "RELATIVEODOMETER", label: "RELATIVEODOMETER" },
+  { value: "TACHOGRAPH", label: "TACHOGRAPH" },
 ];
 export const driverDocumentOptions = [
   { value: "Driving License", label: "Driving License" },
@@ -57,26 +56,26 @@ export const unitOfDistanceOptions = [
   { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
 export const speedDetectionOptions = [
-  { value: "From Device", label: "From Device" },
-  { value: "From Lating", label: "From Lating" },
+  { value: "DEVICE", label: "DEVICE" },
+  { value: "LATING", label: "LATING" },
 ];
 export const permitOptions = [
-  { value: "ITC Permit", label: "ITC Permit" },
-  { value: "Normal", label: "Normal" },
-  { value: "Rent A Car", label: "Rent A Car" },
-  { value: "Fuel Sensor", label: "Fuel Sensor" },
-  { value: "Medical", label: "Medical" },
-  { value: "Other", label: "Other" },
+  { value: "ITC", label: "ITC" },
+  { value: "NORMAL", label: "NORMAL" },
+  { value: "RENT", label: "RENT" },
+  { value: "FULL_SENSOR", label: "FULL_SENSOR" },
+  { value: "MEDICAL", label: "MEDICAL" },
+  { value: "OTHER", label: "OTHER" },
 ];
 export const fuelTypeOptions = [
-  { value: "Petrol", label: "Petrol" },
-  { value: "Diesel", label: "Diesel" },
-  { value: "Gas", label: "Gas" },
-  { value: "Electric", label: "Electric" },
+  { value: "PETROL", label: "PETROL" },
+  { value: "DIESEL", label: "DIESEL" },
+  { value: "GAS", label: "GAS" },
+  { value: "ELECTRIC", label: "ELECTRIC" },
 ];
 export const distanceQuantitySelectOptions = [
-  { value: "Litre", label: "Litre" },
-  { value: "Gallon", label: "Gallon" },
+  { value: "LITERS", label: "LITERS" },
+  { value: "GALLONS", label: "GALLONS" },
 ];
 export const durationSelectOptions = [
   { value: "MM", label: "MM" },

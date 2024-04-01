@@ -27,6 +27,7 @@ const CompanyForm = () => {
   let component = [MyAccount, UserSetting, ManagePassword];
   const { id } = useParams();
   const location = useLocation();
+  const {formData} = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
   // ManagePassword , t('changePassword')
 
@@ -57,23 +58,25 @@ const CompanyForm = () => {
         if (id) {
           try {
             await editCompany(data);
-            notifySuccess("New Company Created!");
+            notifySuccess("Company Updated Successfully");
             navigate("/company");
             return;
           } catch (e) {
             console.log(e);
-            notifyError("Some error occured !!");
+            notifyError("Some error occured");
           }
           return;
         } else {
           try {
+            if(data.zipCode === '') delete data.zipCode
+            data.businessId = getValues('businessId')
             await addCompany(data);
-            notifySuccess("New Company Created!");
+            notifySuccess("New Company Created");
             navigate("/company");
             return;
           } catch (e) {
             console.log(e);
-            notifyError("Some error occured !!");
+            notifyError("Some error occured");
           }
         }
       } catch (error) {
@@ -144,6 +147,7 @@ const CompanyForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
+                          formData={formData}
                         />
                       </Tab.Pane>
                     );

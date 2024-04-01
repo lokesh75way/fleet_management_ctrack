@@ -8,6 +8,7 @@ import VehicleServices from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 
+
 const Vehicle = () => {
   const { isRtl } = useContext(ThemeContext);
   const {can} = usePermissions()
@@ -20,6 +21,7 @@ const Vehicle = () => {
     "fa-solid fa-angle-right": !isRtl,
   });
   //   const { setAddVehicle, addVehicle } = useContext(ThemeContext);
+
 
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
@@ -91,22 +93,6 @@ const Vehicle = () => {
     // vehicle.current.showModal();
   };
 
-  const handleSubmit = (e) => {
-    console.log("I am here");
-    e.preventDefault();
-    if (editData.id === 0) {
-      editData.id = editData.simNumber - 1;
-      tableData.push(editData);
-    } else {
-      const updateTable = tableData.map((table) => {
-        if (table.id === editData.id) {
-          return { ...table, ...editData };
-        }
-        return table;
-      });
-      setTableData(updateTable);
-    }
-  };
 
   const vehicle = useRef();
   return (

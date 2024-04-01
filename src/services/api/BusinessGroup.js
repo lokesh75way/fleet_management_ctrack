@@ -4,12 +4,12 @@ import axios from "axios";
 const createGroup = async (body) => {
   return axios.post("/business-groups", body);
 };
-const getGroups = async (body) => {
+const getGroups = async () => {
   const { data } = await axios.get("/business-groups");
   return { data: data.data.data, totalLength: data.data.totalLength };
 };
 const deleteGroup = async (body) => {
-  return axios.delete(`/business-groups/${body}`);
+  return axios.delete(`/business-group/${body}`);
 };
 const updateGroup = async (body) => {
   console.log(body)
