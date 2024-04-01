@@ -41,22 +41,13 @@ const MyAccount = ({
     }),
   };
 
-  // const businessUserOptions = DummyData.filter(
-  //   (item) => item.role === "businessgroup"
-  // ).map((item) => ({
-  //   label: item.userName,
-  //   value: item.id,
-  // }));
-  console.log(formData)
   const [businessUserOptions,setBusinessUserOptions] = useState([])
   const getBusinessGroup = async()=>{
     const {data} = await getGroups()
-    console.log("jeqgduwygfiruwgfieruw",data)
     setBusinessUserOptions(data.map((item) => ({
       label: item.businessGroupId.groupName,
       value: item.businessGroupId._id,
     })));
-    console.log("iuewghfiuw3grfurf",businessUserOptions)
   }
   useEffect(()=>{
     getBusinessGroup()

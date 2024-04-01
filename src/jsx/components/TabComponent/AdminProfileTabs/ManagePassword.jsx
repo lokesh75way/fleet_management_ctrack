@@ -6,14 +6,11 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import "../../../../scss/pages/_driver-tracking.scss";
 
 const ManagePassword = ({
-  data,
-  setValue,
   getValues,
   register,
   onSubmit,
   handleSubmit,
   errors,
-  control,
 }) => {
   const [showOldPassword, setOldShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
@@ -80,7 +77,7 @@ const ManagePassword = ({
               type={showConfirmPassword ? "text" : "password"}
               register={register}
               label="Retype Passwor"
-              name="retypePassword"
+              name="confirmPassword"
               placeholder=""
             />
             <span

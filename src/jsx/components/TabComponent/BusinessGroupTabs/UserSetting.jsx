@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import CustomInput from '../../Input/CustomInput'
+import CustomInput from "../../Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import TimezoneSelect from 'react-timezone-select'
+import TimezoneSelect from "react-timezone-select";
 import { currencyOptions } from "../VehicleTabs/Options";
 import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 import Error from "../../Error/Error";
 import {
@@ -20,22 +20,56 @@ import {
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
+import { useLocation, useParams } from "react-router-dom";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control, register }) => {
-const {t} = useTranslation();
-  const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
-
+const UserSetting = ({
+  setValue,
+  handleSubmit,
+  onSubmit,
+  errors,
+  control,
+  register,
+}) => {
+  const { t } = useTranslation();
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
+  const [dValues, setDvalues] = useState({});
+  const location = useLocation();
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
+  const { id } = useParams();
+  useEffect(() => {
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (dValues && id) {
+      console.log(dValues);
+      setValue("dateFormat", dValues.businessGroupId?.dateFormat);
+      setValue("timeFormat", dValues.businessGroupId?.timeFormat);
+      setValue("unitOfDistance", dValues.businessGroupId?.unitOfDistance)
+      setValue("workStartDay", dValues.businessGroupId?.workStartDay);
+      setValue("language", dValues.businessGroupId?.language);
+      setValue("status", dValues.businessGroupId?.status);
+      setValue("currency", dValues.businessGroupId?.currency);
+      setValue("timezone",dValues.businessGroupId?.timezone)
+      setValue("unitOfFuel",dValues.businessGroupId?.unitOfFuel)
+    }
+  }, [dValues, id]);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('dateFormat')}</label>
+          <label className="form-label">{t("dateFormat")}</label>
           <Controller
             name="dateFormat"
             control={control}
@@ -46,7 +80,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dateFormatOptions[0]}
+                value={{ value, label: value }}
               />
             )}
           />
@@ -54,7 +88,7 @@ const {t} = useTranslation();
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('timeFormat')}</label>
+          <label className="form-label">{t("timeFormat")}</label>
           <Controller
             name="timeFormat"
             control={control}
@@ -65,15 +99,16 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
+                value={{value , label : value}}
                 defaultValue={timeFormatOptions[0]}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('unitOfDistance')}</label>
+          <label className="form-label">{t("unitOfDistance")}</label>
           <Controller
-            name="fuelEconomyScaling"
+            name="unitOfDistance"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
@@ -84,14 +119,15 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={fuelEconomyScalingOptions[0]}
+                value={{value, label : value}}
+             
               />
             )}
           />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('unitOfFuel')}</label>
+          <label className="form-label">{t("unitOfFuel")}</label>
           <Controller
             name="unitOfFuel"
             control={control}
@@ -102,13 +138,14 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
+                value={{value , label :value}}
                 defaultValue={unitOfFuelOptions[0]}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('language')}</label>
+          <label className="form-label">{t("language")}</label>
           <Controller
             name="language"
             control={control}
@@ -119,13 +156,13 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={languageOptions[0]}
+                value={{ value, label: value }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('status')}</label>
+          <label className="form-label">{t("status")}</label>
           <Controller
             name="status"
             control={control}
@@ -136,30 +173,32 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={statusOptions[0]}
+                value={{ value, label: value }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('worksStartDay')}</label>
+          <label className="form-label">{("Work Start Day")}</label>
           <Controller
-            name="worksstartday"
+            name="workStartDay"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("worksstartday", newValue.value)}
+                onChange={(newValue) =>
+                  setValue("workStartDay", newValue.value)
+                }
                 options={dayOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={dayOptions[0]}
+                value={{ label: value, value }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('currency')}</label>
+          <label className="form-label">{t("currency")}</label>
           <Controller
             name="currency"
             control={control}
@@ -170,6 +209,7 @@ const {t} = useTranslation();
                 ref={ref}
                 name={name}
                 styles={customStyles}
+                value={{value, label : value}}
                 defaultValue={currencyOptions[0]}
               />
             )}
@@ -177,25 +217,23 @@ const {t} = useTranslation();
         </div>
 
         <div className="col-xl-6 mb-3 ">
-        <label className="form-label">{t('timeZone')} </label>
+          <label className="form-label">{t("timeZone")} </label>
           <Controller
             name="timezone"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
-                // onChange={(newValue) => setValue("unitOfFuel", newValue.value)}
                 onChange={setSelectedTimezone}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfFuelOptions[0]}
-                value={selectedTimezone}
+                value={{value , label : value}}
               />
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadFile')}</label>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">{t("uploadFile")}</label>
           <CustomInput
             type="file"
             register={register}
@@ -205,8 +243,6 @@ const {t} = useTranslation();
           />
           <Error errorName={errors.businessGroupLogo} />
         </div>
-
-
       </div>
       <div
         style={{
@@ -222,7 +258,7 @@ const {t} = useTranslation();
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

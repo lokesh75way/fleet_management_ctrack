@@ -282,6 +282,7 @@ const MyAccount = ({
                   onChange={(newValue) => {
                     setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.label);
                   }}
                   isDisabled={defaultValues?.company?.disabled}
                   options={companyOptions}
