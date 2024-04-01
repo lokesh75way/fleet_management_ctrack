@@ -71,7 +71,7 @@ const BusinessUser = () => {
 
   useEffect(() => {
     getGroupData();
-  }, [deleteId]);
+  }, []);
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -87,14 +87,14 @@ const BusinessUser = () => {
     settest(i);
   };
 
-  const onConfirmDelete = (id) => {
-    deleteGroup(id)
-    setDeleteId(id)
+  const onConfirmDelete = async (id) => {
+    await deleteGroup(id);
+    await getGroupData();
   };
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
 
-    navigate(`/business/edit/${item}`, {state : filteredData});
+    navigate(`/business/edit/${item}`, { state: filteredData });
   };
 
   const company = useRef();

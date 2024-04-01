@@ -7,9 +7,10 @@ import SubUserTable from "../components/Tables/SubUserTable";
 import useStorage from "../../hooks/useStorage";
 import { clsx } from 'clsx';
 import {useTranslation} from 'react-i18next'
-
+import UserServices ,{getUser, deleteUser} from '../../services/api/UserServices'
 import { useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { notifyError, notifySuccess } from "../../utils/toast";
 import { usePermissions } from "../../context/PermissionContext";
 // import CompanyOffcanvas from '../../constant/CompanyOffcanvas';
 // const csvlink = {
@@ -24,7 +25,23 @@ import { usePermissions } from "../../context/PermissionContext";
     const {can} = usePermissions()
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+    //call get api from userservice
+    const [fetchtableData, fetchSetTableData] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const data = await getUser();
+        if (data.error) {
+          notifyError(data.error);
+        } else {
+          fetchSetTableData(data);
+          const fusers = data.data;
+          localStorage.setItem("userJsonData", JSON.stringify(fusers));
+        }
+      };
     
+      fetchData();
+    }, []);
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
   const role = checkRole()
@@ -74,13 +91,23 @@ import { usePermissions } from "../../context/PermissionContext";
   // const employe = useRef();
   const subuser = useRef();
   const edit = useRef();
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const onConfirmDelete = async (id) => {
+    const response = await deleteUser(id);
+    if(response.error){
+      notifyError(response.error);
+    }else{
+      notifySuccess("User deleted successfully !!");
+      const existingData = JSON.parse(localStorage.getItem("userJsonData"));
+      const index = existingData.findIndex((item) => item._id === id);
+      existingData.splice(index, 1);
+      localStorage.setItem("userJsonData", JSON.stringify(existingData));
+      const updatedData = tableData.filter((item) => item._id !== id);
+      setTableData(updatedData);
+    }
   };
   const editDrawerOpen = (item) => {
     // tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`/subUser/edit/${item.id}`);
+    navigate(`/subUser/edit/${item}`);
     // setEditTableData(item);
   };
   return (

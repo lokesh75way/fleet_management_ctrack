@@ -12,23 +12,21 @@ import { usePermissions } from "../../../context/PermissionContext";
 const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   const {getCompany} = useStorage()
   const {can} = usePermissions()
-  const editPermission = can('business', "modify");
-  const deletePermission = can('business', "delete");
+  const editPermission = true
+  const deletePermission = true
+  // const editPermission = can('business', "modify");
+  // const deletePermission = can('business', "delete");
   const {isRtl} = useContext(ThemeContext)
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index} >
           <td>
-            <span>{item._id}</span>
+            <span>{index+1}</span>
           </td>
           <td>
             <div className="products">
-              {/* <img
-                src={item.image || IMAGES.contact1}
-                className="avatar avatar-md"
-                alt=""
-              /> */}
+             
               <div>
                 <h6>{item.businessGroupId?.groupName}</h6>
               </div>

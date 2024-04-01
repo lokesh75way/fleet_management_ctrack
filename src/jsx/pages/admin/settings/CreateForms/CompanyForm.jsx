@@ -6,33 +6,37 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from "../../../../../yup";
+import { companyAccountSchema, companyPasswordSchema, companySettingSchema } from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import { useTranslation } from "react-i18next";
-import { addCompany, editCompany } from "../../../../../services/api/CompanyServices";
+import {
+  addCompany,
+  changePassword,
+  editCompany,
+} from "../../../../../services/api/CompanyServices";
 import { dateFormatOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 const CompanyForm = () => {
   const { t } = useTranslation();
   const { saveData } = useStorage();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const location = useLocation();
-  const { formData } = location.state || {};
-  const [activeIndex, setActiveIndex] = useState(0);
-  // ManagePassword , t('changePassword')
+
   let tabHeading = [t("newCompany"), t("settings"), t("changePassword")];
   let component = [MyAccount, UserSetting, ManagePassword];
+  const { id } = useParams();
+  const location = useLocation();
+  const [activeIndex, setActiveIndex] = useState(0);
+  // ManagePassword , t('changePassword')
+
   // if (!id) {
-  //   tabHeading.pop();
-  //   component.pop();
+  //   tabHeading = [t("newBusinessGroup"), t("settings")];
+  //   component = [MyAccount, UserSetting];
   // }
-  tabHeading.pop();
-  component.pop();
 
   const totalTabs = tabHeading.length;
+
   const {
     register,
     formState: { errors },
@@ -42,20 +46,20 @@ const CompanyForm = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 1 ? companySettingSchema : companyAccountSchema
+      activeIndex === 1 ? companySettingSchema : activeIndex === 2 ? companyPasswordSchema : companyAccountSchema
     ),
   });
-
+  console.log(errors)
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - 1) {
+    console.log("Hello");
+    if (activeIndex === totalTabs - 2) {
       try {
         if (id) {
           try {
-            console.log("edit data",data)
             await editCompany(data);
             notifySuccess("New Company Created!");
             navigate("/company");
-          return;
+            return;
           } catch (e) {
             console.log(e);
             notifyError("Some error occured !!");
@@ -75,10 +79,25 @@ const CompanyForm = () => {
       } catch (error) {
         notifyError("Some error occured !!");
       }
-    }
+    } else if (activeIndex === 2) {
+      try {
+        const passwordData = {
+          password: data.newPassword,
+          oldPassword: data.oldPassword,
+          confirmPassword : data.confirmPassword,
+          _id: id,
+        };
+        console.log(passwordData)
 
+        await changePassword(passwordData);
+        notifySuccess("Password has been changed");
+        navigate("/companies");
+      } catch (error) {
+        notifyError("Password is not changes!");
+      }
+    }
+    // console.log(activeIndex);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    console.log(data);
   };
 
   return (
@@ -118,14 +137,13 @@ const CompanyForm = () => {
                       >
                         <Component
                           data={tabHeading}
-                          formData={formData}
                           control={control}
                           setValue={setValue}
                           register={register}
                           getValues={getValues}
                           errors={errors}
-                          onSubmit={onSubmit}
                           handleSubmit={handleSubmit}
+                          onSubmit={onSubmit}
                         />
                       </Tab.Pane>
                     );
