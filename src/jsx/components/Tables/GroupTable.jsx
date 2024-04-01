@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom'
 const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
     const navigate = useNavigate()
     const [data, setData] = useState([]);
-    const handleClick = (index)=>{
+    const handleClick = (index, id)=>{
         setIsEditTrue(index)
         const props = {
             isEditTrue : isEditTrue,
             setIsEditTrue : setIsEditTrue,
         }
         console.log(props)
-        navigate('permission', {state:JSON.stringify(props)})
+        navigate(`permission/${id}`, {state:JSON.stringify(props)})
     }
 
     useEffect(() => {
@@ -47,8 +47,8 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span className='cursor-pointer' onClick={() => handleClick(index)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
-                            <DeleteModal className='cursor-pointer ' onConfirmDelete={()=>onConfirmDelete(index)} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
+                            <span className='cursor-pointer' onClick={() => handleClick(index, item._id)} ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <DeleteModal className='cursor-pointer ' onConfirmDelete={()=>onConfirmDelete(index, item._id)} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
 
                         </span>
                     </td>

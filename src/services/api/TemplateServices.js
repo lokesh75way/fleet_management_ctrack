@@ -51,6 +51,26 @@ const TemplateServices = {
       throw error; // Re-throwing the error for the caller to handle
     }
   },
+
+  udpateTemplate: async (body) => {
+    try {
+      const response = await axios.patch("/feature-template", body);
+      return response.data; // Directly return the data array
+    } catch (error) {
+      console.error("Error fetching modules:", error);
+      throw error; // Re-throwing the error for the caller to handle
+    }
+  },
+
+  deleteTemplate: async (id) => {
+    try {
+      const response = await axios.delete(`/feature-template/${id}`);
+      return response.data; // Directly return the data array
+    } catch (error) {
+      console.error("Error fetching modules:", error);
+      throw error; // Re-throwing the error for the caller to handle
+    }
+  }
 };
 
 export default TemplateServices;

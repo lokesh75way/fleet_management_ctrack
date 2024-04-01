@@ -63,6 +63,7 @@ const CompanyForm = () => {
       try {
         if (id) {
           try {
+            // data.businessGroupId = getValues("businessId");
             await editCompany(data);
             notifySuccess("Company Updated Successfully");
             navigate("/company");
@@ -74,6 +75,7 @@ const CompanyForm = () => {
           return;
         } else {
           try {
+      
             data.businessGroupId = getValues("businessId");
             const { success, message } = await addCompany(data);
             if (!success) {

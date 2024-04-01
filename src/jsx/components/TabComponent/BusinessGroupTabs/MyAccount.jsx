@@ -66,8 +66,8 @@ const MyAccount = ({
       setValue("city",dValues.businessGroupId?.city)
       setDefaultCountry({ name:dValues.country })
       setValue("country",dValues.country)
-      setSelectStateName({name : dValues.state})
-      setValue("state",dValues.state)
+      setSelectStateName({name : dValues.state || ''})
+      setValue("state",dValues.state || '')
     }
   else{
     setValue('capacity',storageCapacityOptions[1].value)

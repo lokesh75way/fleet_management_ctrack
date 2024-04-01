@@ -7,8 +7,8 @@ import { ThemeContext } from "../../../context/ThemeContext";
 // import { reset } from "./Options";
 import _ from "lodash";
 import TemplateServices from "../../../services/api/TemplateServices";
+import { useNavigate, useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
-import { useNavigate } from "react-router-dom";
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
 
@@ -20,6 +20,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const { id } = useParams();
   const [newGroupData, setNewGroupData] = useState({
     name: "",
     permission: {},
@@ -27,12 +28,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   const [selectOptions, setSelectOptions] = useState([]);
 
   const [selectedTemplate, setSelectedTemplate] = useState(null); // Step 1: State to hold selected template data
-
-  // Other functions and useEffects remain unchanged
-
-  useEffect(()=>{
-    console.log("hello",subModuleIndexArray)
-  },[subModuleIndexArray])
 
   const handleCopy = () => {
     // setShow((prev) => !prev);
@@ -134,6 +129,7 @@ const handleSubModulePermisssionChange = (
     if (!newGroupData.name) return;
 
     try {
+      console.log(data, 'data-;;')
       const flattenedPermissions = data.reduce((acc, module) => {
         const mainModulePermissions = {
           moduleId: module._id,
@@ -145,7 +141,7 @@ const handleSubModulePermisssionChange = (
 
         acc.push(mainModulePermissions);
 
-        if (module.subModules && module.subModules.length > 0) {
+        if (module.subModules && module.subModules.length > 0 && !id) {
           module.subModules.forEach((subModule) => {
             const subModulePermissions = {
               moduleId: subModule.id,
@@ -171,8 +167,8 @@ const handleSubModulePermisssionChange = (
         permission: flattenedPermissions,
       }));
 
-      await TemplateServices.createTemplate(tempGroupData);
-      await fetchTemplates();
+      const method = id ? TemplateServices.udpateTemplate : TemplateServices.createTemplate; 
+      await method(tempGroupData);
       // console.log("this is the temoGrioyp data name", tempGroupData);
       // setGroupsDataState((prevState) => [...prevState, tempGroupData]);
       setSubModuleIndexArray([]);
@@ -230,6 +226,31 @@ const handleSubModulePermisssionChange = (
   const fetchTemplates = async () => {
     try {
       const templateData = await TemplateServices.getTemplates();
+      if (id) {
+        const moduleData = await TemplateServices.listModule();
+        // setCurrentTemplate();
+        const filteredData = templateData.data.data.find(d => d._id === id);
+        setNewGroupData(filteredData);
+        const updatedData = moduleData.data.map((module) => {
+          const permission = filteredData.permission.find(
+            (perm) => perm.moduleId === module._id
+          );
+          if (permission) {
+            module.permission = {
+              add: permission.add,
+              view: permission.view,
+              modify: permission.modify,
+              delete: permission.delete,
+            };
+          }
+          return module;
+        });
+    
+        setData(updatedData);
+        setSubModuleIndexArray(filteredData.permission.filter(d => {
+          return !(!d.delete && !d.view && !d.modify && !d.add)
+        }).map(d => d.moduleId));
+      }
       setGroupsDataState(templateData.data);
       setSelectOptions(
         templateData.data.map((template) => ({
@@ -527,7 +548,7 @@ const handleSubModulePermisssionChange = (
             onClick={handleSave}
           >
             {" "}
-            {t('save')}{" "}
+            {id ? 'Update' : 'Save'}{" "}
           </button>
         </div>
       </Card>

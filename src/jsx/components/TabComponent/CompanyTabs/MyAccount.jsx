@@ -25,8 +25,9 @@ const MyAccount = ({
   control,
   formData
 }) => {
+  const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
   const { t } = useTranslation();
   const { checkRole, checkUserName } = useStorage();
@@ -34,6 +35,7 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [bussinessGpLable, setBussinessGpLable] = useState(null)
   const role = localStorage.getItem("role");
 
   const customStyles = {
@@ -43,23 +45,7 @@ const MyAccount = ({
     }),
   };
 
-  // const businessUserOptions = DummyData.filter(
-  //   (item) => item.role === "businessgroup"
-  // ).map((item) => ({
-  //   label: item.userName,
-  //   value: item.id,
-  // }));
-
-  // const [businessUserOptions,setBusinessUserOptions] = useState([])
-  // const getBusinessGroup = async()=>{
-  //   const {data} = await getGroups()
-  //   console.log("jeqgduwygfiruwgfieruw",data)
-  //   setBusinessUserOptions(data.map((item) => ({
-  //     label: item?.businessGroupId?.groupName,
-  //     value: item?.businessGroupId?._id,
-  //   })));
-  //   console.log("iuewghfiuw3grfurf",businessUserOptions)
-  // }
+  
   useEffect(()=>{
     // getBusinessGroup()
     businessGroupOptions()
@@ -73,12 +59,6 @@ const MyAccount = ({
     value: item.country,
   }));
 
-  useEffect(() => {
-    if (role === "businessgroup") {
-      setTempValue(localStorage.getItem("loginDetails-name"));
-      setValue("parent", localStorage.getItem("loginDetails-name"));
-    }
-  }, []);
 
   const { id } = useParams();
 //   let newData = [];
@@ -89,7 +69,7 @@ const MyAccount = ({
 useEffect(()=>{
   if(formData && id){
     console.log("data:",formData)
-    setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?.groupName)
+    setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
     setValue("companyName",formData[0].companyId?.companyName)
     setValue("userName", formData[0].userName)
     setValue("email",formData[0].email)
@@ -104,6 +84,11 @@ useEffect(()=>{
     setValue("zipCode",formData[0].companyId?.zipCode)
     setValue("city",formData[0].companyId?.city)
     setValue("storageCapacity",formData[0].companyId?.capacity )
+    setValue("country",formData[0].country)
+    setValue("state",formData[0].state || '' )
+    setDefaultCountry({ name:formData[0].country })
+    setSelectStateName({name : formData[0].state || ''})
+    setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
   }
 },[formData,id])
 
@@ -125,16 +110,16 @@ useEffect(()=>{
                   cacheOptions
                   defaultOptions
                   onChange={(newValue) => {
-                    setTempValue(newValue.label);
-                    setValue("businessGroupId", newValue.label);
-                    setValue("businessId", newValue.value);
+                    console.log(newValue)
+                    setBussinessGpLable(newValue.label)
+                    setValue("businessGroupId", newValue.value);
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
                   isDisabled={checkRole() !== "SUPER_ADMIN"}
                   name={name}
                   styles={customStyles}
-                  value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
+                  value={{label: bussinessGpLable , value : value}}
                 />
               )}
             />
@@ -302,11 +287,12 @@ useEffect(()=>{
           <CountrySelect
             onChange={(e) => {
               console.log(e);
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false);
             }}
+            defaultValue={defaultCountry}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
