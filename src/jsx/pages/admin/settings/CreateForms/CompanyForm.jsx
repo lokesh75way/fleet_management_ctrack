@@ -31,10 +31,10 @@ const CompanyForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   // ManagePassword , t('changePassword')
 
-  // if (!id) {
-  //   tabHeading = [t("newBusinessGroup"), t("settings")];
-  //   component = [MyAccount, UserSetting];
-  // }
+  if (!id) {
+    tabHeading = [t("newBusinessGroup"), t("settings")];
+    component = [MyAccount, UserSetting];
+  }
 
   const totalTabs = tabHeading.length;
 

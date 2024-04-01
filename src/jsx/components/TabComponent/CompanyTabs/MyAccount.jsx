@@ -467,8 +467,7 @@ useEffect(()=>{
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t("submit")}
+          {"Next"}
         </Button>
       </div>
     </div>
