@@ -9,7 +9,7 @@ const getGroups = async (body) => {
   return { data: data.data.data, totalLength: data.data.totalLength };
 };
 const deleteGroup = async (body) => {
-  return axios.delete(`/business-groups/${body}`);
+  return axios.delete(`/business-group/${body}`);
 };
 const updateGroup = async (body) => {
   console.log(body)
