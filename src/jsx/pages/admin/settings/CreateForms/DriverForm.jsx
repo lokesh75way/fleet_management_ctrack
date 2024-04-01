@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
@@ -8,9 +8,17 @@ import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { driverProfileSchema, driverInfoSchema, driverDocumentSchema } from "../../../../../yup";
+import {
+  driverProfileSchema,
+  driverInfoSchema,
+  driverDocumentSchema,
+} from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import {useTranslation} from 'react-i18next'
+import {
+  createDriver,
+  getDriverById,
+} from "../../../../../services/api/driverService";
 
 const DriverForm = () => {
 
@@ -20,10 +28,9 @@ const DriverForm = () => {
   const tabHeading = [t('profile'), t('additionalInfo'), t('document')];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
-  const { id } = useParams();
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const newData = userData.filter((data) => data.id == parseInt(id, 10));
-  const [filteredUserData, setFilteredUserData] = useState(newData);
+  const { id: driverId } = useParams();
+  const [editData, setEditData] = useState({});
+
   const {
     register,
     formState: { errors },
@@ -31,47 +38,43 @@ const DriverForm = () => {
     getValues,
     control,
     handleSubmit,
+    reset,
   } = useForm({
-    defaultValues: {
-      branch: filteredUserData[0]?.parentBranch || "",
-      company: filteredUserData[0]?.parentCompany || "",
-      business: filteredUserData[0]?.parentBusinessGroup || "",
-      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
-    },
-    resolver: yupResolver(       
-      activeIndex === 0 ? driverProfileSchema : activeIndex === 1 ?  driverInfoSchema: driverDocumentSchema
+    defaultValues: editData,
+    resolver: yupResolver(
+      activeIndex === 0
+        ? driverProfileSchema
+        : activeIndex === 1
+        ? driverInfoSchema
+        : driverDocumentSchema
     ),
   });
 
-  const onSubmitHanlder = (data) => {
-    console.log({activeIndex});
+  async function getDriver(driverId) {
+    try {
+      const data = await getDriverById(driverId);
+      setEditData(data);
+      reset(data);
+    } catch (error) {
+      notifyError("Some error occured !!");
+      navigate("/driver");
+    }
+  }
+
+  useEffect(() => {
+    if (driverId) getDriver(driverId);
+  }, [driverId]);
+
+  const onSubmitHanlder = async (data) => {
+    console.log({ formData: data });
     if (activeIndex === totalTabs - 1) {
       try {
-        if (id) {
-          const val = JSON.parse(localStorage.getItem("userJsonData"));
-          console.log(id);
-          const indexToUpdate = val.findIndex((item) => item.id == id);
-          if (indexToUpdate !== -1) {
-            val[indexToUpdate] = {
-              ...filteredUserData[0],
-              ...data,
-              id,
-              Designation: "Driver",
-              role: "user",
-            };
-
-            localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess(t('driverUpdated'));
-            navigate("/driver");
-          }
+        if (driverId) {
+          notifySuccess("Driver Updated!");
+          navigate("/driver");
           return;
         } else {
-          console.log({data})
-          data = { ...data, designation: "Driver", role: "user" };
-          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-          data.id = existingData.length + 1;
-          existingData.push(data);
-          localStorage.setItem("userJsonData", JSON.stringify(existingData));
+          await createDriver(data);
           // notifySuccess("Branch Added Successfully !!");
           notifySuccess(t('newDriverCreated'));
           navigate("/driver");
@@ -81,14 +84,13 @@ const DriverForm = () => {
         notifyError(t('someErrorOccurred'));
       }
     }
-    console.log("data from drivers", data);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
     <>
       <MainPagetitle
         mainTitle={t('driver')}
-        pageTitle={id ? t("edit") : t("create")}
+        pageTitle={driverId ? t("edit") : t("create")}
         parentTitle={t('driver')}
       />
       <div className="m-2 p-2">

@@ -12,8 +12,6 @@ import {
   businessGroupOptions,
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
 
 const Profile = ({
   setValue,
@@ -27,9 +25,7 @@ const Profile = ({
     name: "Select State",
   });
   const { control } = useForm();
-  const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const customStyles = {
     control: (base) => ({
@@ -40,11 +36,7 @@ const Profile = ({
   const {t} = useTranslation();
   const { id } = useParams();
   const role = localStorage.getItem("role");
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-
   const loggedInUser = localStorage.getItem("loginDetails-name");
-  const newData = userData.filter((data) => data.id == parseInt(id, 10));
-  const [filteredUserData, setFilteredUserData] = useState(newData);
 
   return (
     <div className="p-4">
@@ -54,16 +46,15 @@ const Profile = ({
             {t('businessGroup')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="business"
+            name="businessGroupId"
             control={control}
             rules={{ required: true }}
             disabled={true}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  console.log(newValue);
-                  setTempValue(newValue?.value);
-                  setValue("business", newValue?.value);
+                  // newValue.value should be mongoId
+                  setValue("businessGroupId", newValue?.value);
                 }}
                 isDisabled={role === "company" || role === "businessgroup"}
                 options={businessGroupOptions}
@@ -72,27 +63,29 @@ const Profile = ({
                 styles={customStyles}
                 defaultValue={{
                   label:
-                    filteredUserData[0]?.parentBusinessGroup ||
-                    (loggedInUser !== "Admin" ? loggedInUser : ""),
+                    businessGroupOptions.filter((el) => el.value === value) ||
+                    " ",
+                  value: value,
                 }}
               />
             )}
           />
-          {!getValues("business") && <Error errorName={errors.business} />}
+          {!getValues("businessGroupId") && (
+            <Error errorName={errors.businessGroupId} />
+          )}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
           {t('company')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="company"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue?.value);
-                  setValue("company", newValue?.value);
+                  setValue("companyId", newValue?.value);
                 }}
                 isDisabled={role === "company"}
                 options={companyOptions}
@@ -101,28 +94,26 @@ const Profile = ({
                 styles={customStyles}
                 defaultValue={{
                   label:
-                    filteredUserData[0]?.parentCompany ||
-                    (role === "company" ? loggedInUser : ""),
+                    companyOptions.filter((el) => el.value === value) || " ",
+                  value: value,
                 }}
               />
             )}
           />
-          {!getValues("company") && <Error errorName={errors.company} />}
+          {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
           {t('branch')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="branch"
+            name="branchId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  console.log(newValue);
-                  setTempValue(newValue?.value);
-                  setValue("branch", newValue?.value);
+                  setValue("branchId", newValue?.value);
                 }}
                 options={branchOptions}
                 ref={ref}
@@ -130,13 +121,13 @@ const Profile = ({
                 styles={customStyles}
                 defaultValue={{
                   label:
-                    filteredUserData[0]?.parentBranch ||
-                    " "
+                    branchOptions.filter((el) => el.value === value) || " ",
+                  value: value,
                 }}
               />
             )}
           />
-          {!getValues("branch") && <Error errorName={errors.branch} />}
+          {!getValues("branchId") && <Error errorName={errors.branchId} />}
         </div>
         {/* <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -168,7 +159,7 @@ const Profile = ({
             label="First Name"
             name="firstName"
             placeholder="first name"
-            defaultValue={filteredUserData[0]?.firstName || ""}
+            defaultValue={""}
           />
           <Error errorName={errors.firstName} />
         </div>
@@ -182,7 +173,7 @@ const Profile = ({
             label="Last Name"
             name="lastName"
             placeholder="last name"
-            defaultValue={filteredUserData[0]?.lastName || ""}
+            defaultValue={""}
           />
           <Error errorName={errors.lastName} />
         </div>
@@ -196,7 +187,7 @@ const Profile = ({
             label="Employee Number"
             name="employeeNumber"
             placeholder=""
-            defaultValue={filteredUserData[0]?.employeeNumber || ""}
+            defaultValue={""}
           />
           <Error errorName={errors.employeeNumber} />
         </div>
@@ -206,10 +197,10 @@ const Profile = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              setSelectStateName({name : "Select State"})
-              setCountryid(e.id);
-              setValue("country", e.id);
-              setIsStateDisabled(false)
+              setSelectStateName({ name: "Select State" });
+              setCountryid(e.name);
+              setValue("country", e.name);
+              setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white"
@@ -225,13 +216,12 @@ const Profile = ({
             <StateSelect
               countryid={countryid}
               onChange={(e) => {
-                setstateid(e.id);
-                setValue("state", e.id);
+                setValue("state", e.name);
               }}
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-                defaultValue={selectStateName}
+              defaultValue={selectStateName}
             />
             {!getValues("state") && <Error errorName={errors.state} />}
           </div>
@@ -246,7 +236,7 @@ const Profile = ({
             label="City"
             name="city"
             placeholder=""
-            defaultValue={filteredUserData[0]?.city || ""}
+            defaultValue={""}
           />
           <Error errorName={errors.city} />
         </div>
@@ -260,9 +250,12 @@ const Profile = ({
             label="zipCode"
             name="zipCode"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
-            defaultValue={filteredUserData[0]?.zipCode || ''}
+            defaultValue={""}
           />
           <Error errorName={errors.zipCode} />
         </div>
@@ -276,7 +269,7 @@ const Profile = ({
             label="Street1"
             name="street1"
             placeholder=""
-            defaultValue={filteredUserData[0]?.street1 || " "}
+            defaultValue={""}
           />
           <Error errorName={errors.street1} />
         </div>
@@ -290,7 +283,7 @@ const Profile = ({
             label="Street2"
             name="street2"
             placeholder=""
-            defaultValue={filteredUserData[0]?.street2 || " "}
+            defaultValue={""}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -301,13 +294,16 @@ const Profile = ({
             type="number"
             register={register}
             label="Contact Number1"
-            name="contactNumber1"
+            name="contact1"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
-            defaultValue={filteredUserData[0]?.contactNumber1 || " "}
+            defaultValue={""}
           />
-          <Error errorName={errors.contactNumber1} />
+          <Error errorName={errors.contact1} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
@@ -317,13 +313,16 @@ const Profile = ({
             type="number"
             register={register}
             label="Contact Number2"
-            name="contactNumber2"
+            name="contact2"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
-            defaultValue={filteredUserData[0]?.contactNumber2 || " "}
+            defaultValue={""}
           />
-          <Error errorName={errors.contactNumber2} />
+          <Error errorName={errors.contact2} />
         </div>
       </div>
       <div

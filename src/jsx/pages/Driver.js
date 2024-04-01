@@ -1,60 +1,40 @@
-import React, { useState, useRef, useEffect, useContext, useMemo } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CSVLink } from "react-csv";
-
-import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
-import InviteCustomer from "../constant/ModalList";
-import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import DriverTable from "../components/Tables/DriverTable";
-import { clsx } from 'clsx';
+import { clsx } from "clsx";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import useStorage from "../../hooks/useStorage";
 import {useTranslation} from 'react-i18next'
+import { deleteDrivers, getDrivers } from "../../services/api/driverService";
+import { notifyError } from "../../utils/toast";
 
-const Driver = (ref) => {
-  const {isRtl} = useContext(ThemeContext);
-  const {checkRole} = useStorage()
-  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+const Driver = () => {
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
   const navigate = useNavigate();
-  const allData = JSON.parse(localStorage.getItem("userJsonData"));
-  const driverDataFromLocalStorage = allData.filter(
-    (item) => item.designation === "Driver"
-  );
-  // const driverData =
-  const DriverDataMemoized = useMemo(() => {
-    return driverDataFromLocalStorage ? driverDataFromLocalStorage : [];
-  }, [driverDataFromLocalStorage]);
 
   const [tableData, setTableData] = useState([]);
 
+  async function getDriversData(pageNo = 1, limit = 10) {
+    try {
+      const { data, totalLength } = await getDrivers(pageNo, limit);
+      setTableData(data);
+    } catch (error) {
+      notifyError("Some error occured !!");
+    }
+  }
+
   useEffect(() => {
-    const loginCompanyId = localStorage.getItem("loginDetails-name");
-    const role = checkRole()
-   
-    let data1;
-    if (role === "SUPER_ADMIN") {
-      data1 = DriverDataMemoized;
-      console.log(data1)
-    } else if (role === "BUSINESS_GROUP") {
-      data1 = DriverDataMemoized.filter(
-        (driver) => driver.parentBusinessGroup === loginCompanyId
-      );
-    }
-    else if(role === 'branch'){
-      data1 = DriverDataMemoized.filter(
-        (driver) => driver.parentBranch === loginCompanyId
-      );
-    }
-    else if(role === 'COMPANY'){
-      data1 = DriverDataMemoized.filter(
-        (driver) => driver.parentCompany === loginCompanyId
-      );
-    }
-  
-    setTableData(data1);
+    getDriversData();
   }, []);
 
   const [editData, setEditData] = useState({
@@ -85,8 +65,6 @@ const Driver = (ref) => {
     }
   };
 
-  // const[formData, setFormData] = useState()
-
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test, tableData]);
@@ -100,23 +78,21 @@ const Driver = (ref) => {
     chageData(activePage.current * sort, (activePage.current + 1) * sort);
     settest(i);
   };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
 
-    // Remove item from local storage
-    const updatedLocalStorageData = DriverDataMemoized.filter(
-      (item) => item.id !== id
-    );
-    localStorage.setItem("driverData", JSON.stringify(updatedLocalStorageData));
+  const onConfirmDelete = async (id) => {
+    try {
+      await deleteDrivers({ driverIds: [id] });
+      const updatedData = tableData.filter((item) => item._id !== id);
+      setTableData(updatedData);
+    } catch (error) {
+      console.error(error);
+    }
   };
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`/driver/edit/${item}`);
-    // setEditTableData(item);
+    setEditData(item);
+    navigate(`/driver/edit/${item._id}`);
   };
-  
-  const employe = useRef();
+
   return (
     <>
       <MainPagetitle

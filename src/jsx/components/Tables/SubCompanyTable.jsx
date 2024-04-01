@@ -68,7 +68,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
                 >
                   <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
                 </span>}
-                {deletePermission && <DeleteModal
+                {1 && <DeleteModal
                   className="cursor-pointer "
                   onConfirmDelete={onConfirmDelete}
                   id={item._id}

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from "../../../../users.json";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useLocation, useParams } from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -21,6 +20,7 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+  const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "Select State",
   });
@@ -28,7 +28,6 @@ const MyAccount = ({
   const location = useLocation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const [tempValue, setTempValue] = useState();
   
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [dValues, setDvalues] = useState({});
@@ -44,11 +43,35 @@ const MyAccount = ({
     if (id) {
       const data = location.state[0];
       setDvalues(data);
-      console.log(dValues
-        )
+     
     }
   },[id])
- console.log(dValues?.businessGroupId?.groupName)
+  useEffect(()=>{
+    console.log(dValues)
+    if(dValues && id){
+
+      setValue("groupName",dValues.businessGroupId?.groupName)
+      setValue("userName", dValues.userName)
+      setValue("email",dValues.email)
+      setValue("mobileNumber",dValues.mobileNumber)
+      setValue("whatsappContactNumber",dValues.businessGroupId?.whatsappContactNumber)
+      setValue("helpDeskEmail",dValues.businessGroupId?.helpDeskEmail)
+      setValue("helpDeskTelephoneNumber",dValues.businessGroupId?.helpDeskTelephoneNumber)
+      setValue("street1",dValues.businessGroupId?.street1)
+      setValue("street2",dValues.businessGroupId?.street2)
+      setValue("capacity",dValues.businessGroupId?.capacity)
+      setValue("contactPerson",dValues.businessGroupId?.contactPerson)
+      setValue("faxNumber",dValues?.businessGroupId?.faxNumber)
+      setValue("zipCode",dValues.businessGroupId?.zipCode)
+      setValue("city",dValues.businessGroupId?.city)
+      setDefaultCountry({ name:dValues.country })
+      setValue("country",dValues.country)
+      setSelectStateName({name : dValues.state})
+      setValue("state",dValues.state)
+    }
+    
+  },[dValues,id])
+
 
   return (
     <div className="p-4">
@@ -149,6 +172,7 @@ const MyAccount = ({
           <CustomInput
             type="number"
             register={register}
+            
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
@@ -186,6 +210,8 @@ const MyAccount = ({
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
+            defaultValue={defaultCountry}
+            
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -202,10 +228,10 @@ const MyAccount = ({
                 setstateid(e.id);
                 setValue("state", e.name);
               }}
-              defaultValue={selectStateName}
               containerClassName="bg-white"
               inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"
+              defaultValue={selectStateName}
             />
           </div>
         </div>
@@ -220,6 +246,7 @@ const MyAccount = ({
             name="city"
             placeholder=""
             defaultValue={getValues("city")}
+            
           />
           <Error errorName={errors.city} />
         </div>
@@ -243,16 +270,17 @@ const MyAccount = ({
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('storageCapacity')}</label>
           <Controller
-            name="storageCapacity"
+            name="capacity"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("storageCapacity", newValue.value)}
+                onChange={(newValue) => setValue("capacity", newValue.value)}
                 options={storageCapacityOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={storageCapacityOptions[1]}
+                value={{label : value , value}}
+                // def={storageCapacityOptions[0]}
               />
             )}
           />

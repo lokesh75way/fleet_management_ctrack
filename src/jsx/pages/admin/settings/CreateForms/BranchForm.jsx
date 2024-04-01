@@ -57,31 +57,31 @@ const BranchForm = () => {
             console.log("Brach created", data)
             notifySuccess("Branch Updated!");
             navigate("/branch");
+            return;
           }
           catch(e){
             console.log(e)
             notifyError("Some error occured !!");
           }
-          return;
+          return
         } else {
           try{
             await createNewBranch(data);
-            console.log("Brach created", data)
             notifySuccess("New Branch Created!");
             navigate("/branch");
+            return;
           }
           catch(e){
             console.log(e)
             notifyError("Some error occured !!");
           }
-          return;
         }
       } catch (error) {
         notifyError("Some error occured !!");
       }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    console.log(data)
+    console.log("data after submit",data)
   };
   return (
     <>

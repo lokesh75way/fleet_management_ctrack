@@ -16,9 +16,9 @@ export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
 export const SET_PERMISSION = "[Permission action] permission action";
 
-export function signupAction(email, password, navigate) {
-  return (dispatch) => {
-    signUp(email, password)
+export function signupAction(data, navigate) {
+  return async (dispatch) => {
+    await signUp(data)
       .then((response) => {
         saveTokenInLocalStorage(response.data);
         runLogoutTimer(
@@ -26,12 +26,12 @@ export function signupAction(email, password, navigate) {
           response.data.expiresIn * 1000
           //history,
         );
-        dispatch(confirmedSignupAction(response.data));
-        navigate("/dashboard");
+        navigate("/login");
         //history.push('/dashboard');
       })
       .catch((error) => {
-        const errorMessage = formatError(error.response.data);
+        console.log(error)
+        const errorMessage = formatError(error?.response?.data);
         dispatch(signupFailedAction(errorMessage));
       });
   };
@@ -54,7 +54,7 @@ export function loginAction(email, password, navigate) {
         saveTokenInLocalStorage(response.data.data);
         dispatch(loginConfirmedAction(response.data.data));
         dispatch(setPermissions(response.data.data.permissions));
-        localStorage.setItem("permission",JSON.stringify(response.data.data.permissions))
+        localStorage.setItem("permission", JSON.stringify(response.data.data.permissions))
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -79,7 +79,7 @@ export function loginConfirmedAction(data) {
   };
 }
 export function setPermissions(data) {
-  console.log("is data here hare",data)
+  console.log("is data here hare", data)
   return {
     type: SET_PERMISSION,
     payload: data,
