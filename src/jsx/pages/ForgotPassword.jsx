@@ -6,6 +6,7 @@ import { forgetpasswordSchema } from "../../yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CustomInput from '../components/Input/CustomInput'
 import PasswordServices from "../../services/api/PasswordServices";
+import { notifyError, notifySuccess } from "../../utils/toast";
 
 const ForgotPassword = ({ history }) => {
   const navigate = useNavigate();
@@ -23,6 +24,15 @@ const ForgotPassword = ({ history }) => {
 
   const onSubmit = ({email}) => {
     PasswordServices.forgotPassword({email:email})
+    .then((response) => {
+      console.log(response)
+      if(response.status === 200){
+        notifySuccess("Email Sent successfully !!");
+        navigate("/login");
+      }else{
+        notifyError("Email not sent !!");
+      }
+    })
     // navigate("/page-resetpassword");
   };
 
