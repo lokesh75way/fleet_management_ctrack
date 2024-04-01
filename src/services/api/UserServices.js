@@ -4,7 +4,7 @@ initAxios()
 
 export const getUser = async () => {
   try{
-    const response = await axios.get("/user")
+    const response = await axios.get("/users")
     return response?.data?.data
   }catch(error){
     return { error: "Couldn't fetch User" }
@@ -13,7 +13,7 @@ export const getUser = async () => {
 
 export const deleteUser = async (id) => {
   try{
-    const response = await axios.delete(`/user/${id}`)
+    const response = await axios.delete(`/users/${id}`)
     return response?.data?.data
   }
   catch(error){
@@ -23,7 +23,7 @@ export const deleteUser = async (id) => {
 
 export const createUser = async (data) => {
   try {
-    const response = await axios.post("/user", data)
+    const response = await axios.post("/users", data)
     console.log("response", response)
     return response?.data?.data
   }catch(error){
@@ -34,7 +34,7 @@ export const createUser = async (data) => {
 
 export const updateUser = async (data, id) => {
   try {
-    const response = await axios.put(`/user/${id}`, data)
+    const response = await axios.put(`/users/${id}`, data)
     console.log("response", response)
     return response?.data?.data
   }catch(error){

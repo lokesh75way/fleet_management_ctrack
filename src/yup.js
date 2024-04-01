@@ -372,16 +372,29 @@ export const driverDocumentSchema = yup
   .required();
 export const subUserAccountSchema = yup
   .object({
+    isEdit: yup.boolean(),
     userName: yup.string().required("User Name is required "),
     featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .test('isEdit', 'Password is required', function(value) {
+        const { isEdit } = this.parent;
+        if (isEdit) {
+          return true;
+        } else {
+          return value && value.length >= 8;
+        }
+      }),
     confirmPassword: yup
       .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .test('isEdit', 'Password is required', function(value) {
+        const { isEdit } = this.parent;
+        if (isEdit) {
+          return true;
+        } else {
+          return value && value.length >= 8;
+        }
+      }),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
