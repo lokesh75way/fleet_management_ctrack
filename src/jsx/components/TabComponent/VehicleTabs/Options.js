@@ -131,7 +131,7 @@ export const TypeOptions = [
 export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
   { value: "DD-MM-YYYY", label: "DD-MM-YYYY" },
-  { value: "MM-DD-YYYY", label: "MM-dd-yyyy" },
+  { value: "MM-DD-YYYY", label: "MM-DD-YYYY" },
 ];
 export const timeFormatOptions = [
   { value: "12 Hour", label: "12 Hour" },
@@ -142,7 +142,7 @@ export const weekStartDayOptions = [
   { value: "MONDAY", label: "MONDAY" },
   { value: "TUESDAY", label: "TUESDAY" },
   { value: "WEDNESDAY", label: "WEDNESDAY" },
-  { value: "THURSDAY", label: "THURSDAY" },
+  { value: "THRUSDAY", label: "THRUSDAY" },
   { value: "FRIDAY", label: "FRIDAY" },
   { value: "SATURDAY", label: "SATURDAY" },
 ];
@@ -160,13 +160,13 @@ export const unitOfFuelOptions = [
   { value: "GALLONS", label: "GALLONS" },
 ];
 export const dayOptions = [
+  { value: "SUNDAY", label: "SUNDAY" },
   { value: "MONDAY", label: "MONDAY" },
   { value: "TUESDAY", label: "TUESDAY" },
   { value: "WEDNESDAY", label: "WEDNESDAY" },
-  { value: "THURSDAY", label: "THURSDAY" },
+  { value: "THRUSDAY", label: "THRUSDAY" },
   { value: "FRIDAY", label: "FRIDAY" },
   { value: "SATURDAY", label: "SATURDAY" },
-  { value: "SUNDAY", label: "SUNDAY" },
 ];
 export const statusOptions = [
   { value: "ACTIVE", label: "ACTIVE" },
@@ -198,13 +198,13 @@ export const fuelEconomyScalingOptions = [
   { value: "i/100", label: "I/100" },
 ];
 export const severityOptions = [
-  { value: "low", label: "low" },
-  { value: "medium", label: "medium" },
-  { value: "high", label: "high" },
+  { value: "LOW", label: "LOW" },
+  { value: "MEDIUM", label: "MEDIUM" },
+  { value: "HIGH", label: "HIGH" },
 ];
 export const taskCategoryOptions = [
-  { value: "Installation", label: "Installation" },
-  { value: "Maintainance", label: "Maintainance" },
+  { value: "INSTALLATION", label: "Installation" },
+  { value: "MAINTAINANCE", label: "Maintainance" },
 ];
 export const technicianOptions = [
   { value: "Arpit", label: "Arpit" },
