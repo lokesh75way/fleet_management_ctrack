@@ -22,7 +22,7 @@ const MyAccount = ({
 }) => {
   const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
   const {t} = useTranslation();
   const location = useLocation();
@@ -69,6 +69,9 @@ const MyAccount = ({
       setSelectStateName({name : dValues.state})
       setValue("state",dValues.state)
     }
+  else{
+    setValue('capacity',storageCapacityOptions[1].value)
+  }
     
   },[dValues,id])
 
@@ -202,7 +205,7 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false)
@@ -246,6 +249,7 @@ const MyAccount = ({
             name="city"
             placeholder=""
             defaultValue={getValues("city")}
+
             
           />
           <Error errorName={errors.city} />
