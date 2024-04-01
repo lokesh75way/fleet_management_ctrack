@@ -155,7 +155,8 @@ const allroutes = [
   { module: 'business', url: "business", component: <Business /> },
   // groups
   { module: 'groups', url: "groups", component: <CreateGroups /> },
-  { module: 'groups', url: "groups/permission", component: <Permission /> },
+  { module: 'groups', url: "groups/permission/", component: <Permission /> },
+  { module: 'groups', url: "groups/permission/:id", component: <Permission /> },
 
   // reports 
   { module: 'reports', url: "/reports/generated", component: <Report /> },

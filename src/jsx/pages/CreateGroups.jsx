@@ -16,7 +16,7 @@ const CreateGroups = () => {
           try {
             const templateData = await TemplateServices.getTemplates();
             console.log("Received template data:", templateData);
-            setGroupsDataState(templateData.data); // Assuming 'data' property contains template data array
+            setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
           } catch (error) {
             console.error("Error fetching template data:", error);
           }
@@ -69,14 +69,14 @@ const CreateGroups = () => {
         chageData(activePag.current * sort, (activePag.current + 1) * sort);
         settest(i);
     };
-    const onConfirmDelete = (index) => {
+    const onConfirmDelete = async (index, id) => {
 
         const newdata = groupsDataState.filter((e,i)=>{
             if(index != i) return e;
         })
         localStorage.setItem('templateData', JSON.stringify(newdata))
         setGroupsDataState(newdata);
-
+        await TemplateServices.deleteTemplate(id);
     }
 
     const handleAddGroup = ()=>{
