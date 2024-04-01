@@ -1,7 +1,19 @@
-import axios from 'axios';
-import initAxios from './Axios';
+import { get } from "react-scroll/modules/mixins/scroller";
+import requests from "./Axios";
+import axios from "axios";
+import initAxios from "./Axios";
+initAxios()
 
-initAxios();
+
+export const getTemplates = async () => {
+  try {
+    const response = await axios.get("/feature-template");
+      return response.data;
+  } catch(error){
+    console.error("Error fetching templates:", error);
+    return { error: "Couldn't fetch User" }
+  }
+}
 
 const TemplateServices = {
   getTemplates: async (body) => {
@@ -13,6 +25,12 @@ const TemplateServices = {
       throw error; // Re-throwing the error for the caller to handle
     }
   },
+  
+//   getStaffById: async (id, body) => {
+//     return requests.post(`/admin/${id}`, body);
+//   },
+
+
   createTemplate: async (body) => {
 
     try {

@@ -217,7 +217,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             Registration Number<span className="text-danger">*</span>
           </label>
           <CustomInput
-            type="number"
+            type="text"
             register={register}
             label="Registration Number"
             name="registrationNumber"

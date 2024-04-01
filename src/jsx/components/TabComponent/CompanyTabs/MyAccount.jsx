@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
+import { businessGroupOptions } from "../../ReusableApi/Api";
 
 const MyAccount = ({
   setValue,
@@ -64,22 +65,6 @@ const MyAccount = ({
     businessGroupOptions()
   },[])
 
-  const businessGroupOptions = async (inputValue) => {
-    try {
-      const businessGroupResponse = await getGroups();
-      console.log("businessGroupResponse",businessGroupResponse)
-      const businessGroupData = businessGroupResponse.data;
-      const response = businessGroupData.map((item) => ({
-        label: item?.businessGroupId?.groupName,
-        value: item?.businessGroupId?._id,
-      }))
-      console.log("response",response)
-      return response;
-    } catch (error) {
-      console.error("Error fetching business group options:", error);
-      return []; // Return empty array in case of an error
-    }
-  };
 
   const companyOptions = DummyData.filter(
     (item) => item.role === "company"
@@ -103,7 +88,8 @@ const MyAccount = ({
 // }
 useEffect(()=>{
   if(formData && id){
-    setValue("businessGroupId",formData[0].companyId?.businessGroupId?.groupName)
+    console.log("data:",formData)
+    setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?.groupName)
     setValue("companyName",formData[0].companyId?.companyName)
     setValue("userName", formData[0].userName)
     setValue("email",formData[0].email)
@@ -130,7 +116,6 @@ useEffect(()=>{
             {t("businessGroup")}
             <span className="text-danger">*</span>
           </label>
-          {checkRole() === "SUPER_ADMIN" ? (
             <Controller
               name="businessGroupId"
               control={control}
@@ -146,35 +131,13 @@ useEffect(()=>{
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
+                  isDisabled={checkRole() !== "SUPER_ADMIN"}
                   name={name}
                   styles={customStyles}
                   value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
                 />
               )}
             />
-          ) : (
-            <Controller
-              name="businessGroupId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) => {
-                    setTempValue(newValue.label);
-                    setValue("businessGroupId", newValue.label);
-                  }}
-                  options={[{ value: checkUserName(), label: checkUserName() }]}
-                  ref={ref}
-                  isDisabled={localStorage.getItem("role") !== "Admin"}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={[
-                    { value: checkUserName(), label: checkUserName() },
-                  ]}
-                />
-              )}
-            />
-          )}
           {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
         <div className="col-xl-6 mb-3 ">

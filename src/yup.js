@@ -2,7 +2,7 @@ import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
     company: yup.string().required("Company name id required"),
-    business: yup.string().required("Business group name is required"),
+    businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
     serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
@@ -22,9 +22,7 @@ export const vehicleProfileSchema = yup
       .typeError("Purchase Amount must be a number"),
     plateNumber: yup.string().required("Plate Number is required "),
     registrationNumber: yup
-      .number()
-      .positive()
-      .integer()
+      .string()
       .min(4, "Registration Number must be of 4 digit or more"),
     passengerSeats: yup
       .number()
@@ -41,10 +39,8 @@ export const vehicleProfileSchema = yup
       .typeError("Weight Capacity must be a number")
       .required("Weight Capacity is required "),
     registrationNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Registration Number must be a number")
+      .string()
+      .typeError("Registration Number must be a string")
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
@@ -377,7 +373,7 @@ export const driverDocumentSchema = yup
 export const subUserAccountSchema = yup
   .object({
     userName: yup.string().required("User Name is required "),
-    featureTemplate: yup.string().required("Feature Template is required "),
+    featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
       .required("Password is required")

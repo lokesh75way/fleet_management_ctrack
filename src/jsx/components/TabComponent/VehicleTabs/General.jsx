@@ -9,7 +9,6 @@ import {
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
-  businessGroupOptions,
 } from "./Options";
 import AsyncSelect from "react-select/async";
 import CustomInput from "../../Input/CustomInput";
@@ -18,6 +17,7 @@ import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getGroups } from "../../../../services/api/BusinessGroup";
+import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 
 const General = ({
   register,
@@ -37,10 +37,7 @@ const General = ({
     }),
   };
   const { id } = useParams();
-  const loggedInUser = localStorage.getItem("loginDetails-name");
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const [allCompany, setAllCompany] = useState([]);
-  const [allBusinessGroup, setAllBusinessGroup] = useState([]);
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const role = checkRole()
@@ -57,36 +54,7 @@ const General = ({
   //   })
   //   setAllCompany(allCompany)
   // }
-  const businessGroupOptions = async (inputValue) => {
-    try {
-      const businessGroupResponse = await getGroups();
-      const businessGroupData = businessGroupResponse.data;
-      console.log("businessGroupData",businessGroupData)
-      const response = businessGroupData.map((item) => ({
-        label: item?.businessGroupId?.groupName,
-        value: item?.businessGroupId?._id,
-      }))
-      console.log("response",response)
-      return response;
-    } catch (error) {
-      console.error("Error fetching business group options:", error);
-      return []; // Return empty array in case of an error
-    }
-  };
-  const allCompanyOptions = async (inputValue) => {
-    try {
-      const companyResponse = await getCompany();
-      const companyData = companyResponse.data.data.data;
-      const response = companyData.map((item) => ({
-        label: item?.companyId?.companyName,
-        value: item?.companyId?._id,
-      }));
-      return response
-    } catch (error) {
-      console.error("Error fetching company options:", error);
-      return []; // Return empty array in case of an error
-    }
-  };
+
   useEffect(()=>{
     businessGroupOptions()
     allCompanyOptions()
@@ -128,6 +96,26 @@ const General = ({
       (item) => item.userName === checkUserName()
     )
   }
+  const[formData,setFormData] = useState([])
+  useEffect(()=>{
+    if(formData && id){
+      setValue("businessGroupId",formData[0]?.companyId?.businessGroupId?.groupName || businessGroupOptions[0])
+      // setValue("companyName",formData[0].companyId?.companyName)
+      // setValue("userName", formData[0].userName)
+      // setValue("email",formData[0].email)
+      // setValue("mobileNumber",formData[0].mobileNumber)
+      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
+      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
+      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
+      // setValue("street1",formData[0].companyId?.street1)
+      // setValue("street2",formData[0].companyId?.street2)
+      // setValue("contactPerson",formData[0].companyId?.contactPerson)
+      // setValue("faxNumber",formData[0].companyId?.faxNumber)
+      // setValue("zipCode",formData[0].companyId?.zipCode)
+      // setValue("city",formData[0].companyId?.city)
+      // setValue("storageCapacity",formData[0].companyId?.capacity )
+    }
+  },[formData,id])
 
   return (
     <div className="p-4">
@@ -137,37 +125,27 @@ const General = ({
             Business Group <span className="text-danger">*</span>
           </label>
           <Controller
-            name="business"
+            name="businessGroupId"
             control={control}
-            rules={{ required: true }}
-            disabled={true}
             render={({ field: { onChange, value, name, ref } }) => (
               <AsyncSelect
                 cacheOptions
                 defaultOptions
                 onChange={(newValue) => {
                   setTempValue(newValue?.value);
-                  setValue("business", newValue?.value);
+                  setValue("businessGroupId", newValue?.label);
+                  setValue("businessId", newValue?.value);
                 }}
-                isDisabled={role === "COMPANY" || role === "BUSINESS_GROUP"}
+                isDisabled={role !== "SUPER_ADMIN"}
                 loadOptions={businessGroupOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues('business'), value :getValues('business')}}
-                // value={{
-                //   label : 
-                //   filteredUserData?.[0]?.parentBusinessGroup ||
-                //   (role === "admin" ? '' : role === "businessgroup" ? loggedInUser : companyOptions?.[0].parent ),
-                //   value : 
-                //   filteredUserData?.[0]?.parentBusinessGroup ||
-                //   (loggedInUser !== "Admin" ? loggedInUser : companyOptions[0].parent )
-                // }
-                // }
+                value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
               />
             )}
           />
-          {!getValues("business") && <Error errorName={errors.business} />}
+          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -184,6 +162,7 @@ const General = ({
                 onChange={(newValue) => {
                   setTempValue(newValue?.value);
                   setValue("company", newValue?.label);
+                  setValue("companyId", newValue?.value);
                 }}
                 isDisabled={role === "COMPANY"}
                 loadOptions={allCompanyOptions}
@@ -191,14 +170,6 @@ const General = ({
                 name={name}
                 styles={customStyles}
                 value={{label:getValues('company'), value :getValues('company')}}
-                // value={{
-                //   label:
-                //     filteredUserData[0]?.parentCompany ||
-                //     (role === "company" ? loggedInUser : ""),
-                //   value:
-                //     filteredUserData[0]?.parentCompany ||
-                //     (role === "company" ? loggedInUser : "")
-                // }}
               />
             )}
           />
@@ -217,6 +188,7 @@ const General = ({
                 onChange={(newValue) => {
                   setTempValue(newValue.label);
                   setValue("branch", newValue.label);
+                  setValue("branchId", newValue.value);
                 }}
                 options={branchOptions}
                 ref={ref}
