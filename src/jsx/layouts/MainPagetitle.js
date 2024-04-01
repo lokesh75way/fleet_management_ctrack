@@ -56,7 +56,13 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
   const redirectTo = {
     Home: "/dashboard",
     User: "/subUser",
-  }
+    Company: "/company",
+    "Business Group": "/business",
+    "Branch" : "/branch",
+    "Sub User" : "/user"
+  };
+
+  console.log(parentTitle, pageTitle);
 
   return (
     <>
