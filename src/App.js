@@ -27,6 +27,7 @@ import GeofenceData from './geofenceData.json'
 import { GiLabCoat } from "react-icons/gi";
 import useStorage from "./hooks/useStorage";
 import { usePermissions } from "./context/PermissionContext";
+import UserRoutes from "./jsx/UserRoutes";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
@@ -101,6 +102,8 @@ function App(props) {
         return <BusinessGroupRoutes />;
       case "COMPANY":
         return <CompanyRoutes />;
+        case "user":
+        return <UserRoutes/>
     }
   }
 
