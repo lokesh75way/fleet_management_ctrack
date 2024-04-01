@@ -14,6 +14,8 @@ import prof23  from './../../../images/profile/23.jpg';
 import prof24  from './../../../images/profile/24.jpg';
 import prof25  from './../../../images/profile/25.jpg';
 
+import {useTranslation} from 'react-i18next'
+
 function ImageBlog({source}){
     return(
         <>
@@ -26,12 +28,14 @@ function ImageBlog({source}){
 
 const Activity = () =>{
     const [selectDrop, setSelectDrop] = useState("Recently");
+
+    const {t} = useTranslation();
     return(
         <>
             <div className="row">
                 <div className="col-xl-12">
                     <div className="page-titles acti-space"> 
-                        <h2 className="heading sm-mb-0 mb-2">Activity</h2>
+                        <h2 className="heading sm-mb-0 mb-2">{t('activity')}</h2>
                         <div className="d-flex align-items-center flex-wrap">
                             <div className="me-2">
                                 <button type="button" className="btn light btn-primary btn-sm mx-1">Activity</button>

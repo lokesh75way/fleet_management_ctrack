@@ -14,6 +14,8 @@ import {
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
 
+import {useTranslation} from 'react-i18next'
+
 const ExpenseOffcanvas = forwardRef(
   (
     {
@@ -73,6 +75,7 @@ const ExpenseOffcanvas = forwardRef(
       }),
     };
 
+    const {t} = useTranslation();
     return (
       <>
         <Offcanvas
@@ -99,7 +102,7 @@ const ExpenseOffcanvas = forwardRef(
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Branch<span className="text-danger">*</span></label>
+                    <label className="form-label">{t('branch')}<span className="text-danger">*</span></label>
                     <Controller
                       name="branch"
                       control={control}
@@ -120,7 +123,7 @@ const ExpenseOffcanvas = forwardRef(
                     { !getValues('branch') && <Error errorName={errors.branch} />}
                   </div>
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Category<span className="text-danger">*</span></label>
+                    <label className="form-label">{t('category')}<span className="text-danger">*</span></label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input
@@ -134,7 +137,7 @@ const ExpenseOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Variable
+                          {t('variable')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -149,7 +152,7 @@ const ExpenseOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Fix
+                          {t('fix')}
                         </label>
                       </div>
                     </div>
@@ -157,7 +160,7 @@ const ExpenseOffcanvas = forwardRef(
                   </div>
 
                     <div className="col-xl-6 mb-3">
-                      <label className="form-label">Consider Job</label>
+                      <label className="form-label">{t('considerJob')}</label>
                       <div className={`${ selectedOption !== "variable" ?  "form-check custom-checkbox mb-3 pe-none" : "form-check custom-checkbox mb-3" }`} >
                         <input
                           type="checkbox"
@@ -172,7 +175,7 @@ const ExpenseOffcanvas = forwardRef(
                
                     <>
                     <div className="col-xl-6 mb-3">
-                    <label className="form-label">Job Allocation</label>
+                    <label className="form-label">{t('jobAllocation')}</label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div  className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
                         <input
@@ -186,7 +189,7 @@ const ExpenseOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          In-Progress
+                          {t('inProgress')}
                         </label>
                       </div>
                       <div className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
@@ -201,7 +204,7 @@ const ExpenseOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Completed
+                          {t('completed')}
                         </label>
                       </div>
                     </div>
@@ -210,7 +213,7 @@ const ExpenseOffcanvas = forwardRef(
                      <>
                         <div className="col-xl-6 mb-3">
                         <label className="form-label">
-                          Completed Till
+                        {t('completedTill')}
                         </label>
                         <div className={`${ selectedOption2 !== 'completed' ?  "d-flex align-items-center pe-none" : "fd-flex align-items-center"}`}>
                         <Controller
@@ -226,7 +229,7 @@ const ExpenseOffcanvas = forwardRef(
                             />
                           )}
                         />
-                        <span className="mx-2" >To</span>
+                        <span className="mx-2" >{t('to')}</span>
                         <Controller
                           name="endDate"
                           control={control}
@@ -246,7 +249,7 @@ const ExpenseOffcanvas = forwardRef(
 
                   }
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Job</label>
+                    <label className="form-label">{t('job')}</label>
                     <Controller
                       name="job"
                       control={control}
@@ -267,7 +270,7 @@ const ExpenseOffcanvas = forwardRef(
                     </>
                   }
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Type<span className="text-danger">*</span></label>
+                    <label className="form-label">{t('type')}<span className="text-danger">*</span></label>
                     <Controller
                       name="type"
                       control={control}
@@ -291,7 +294,7 @@ const ExpenseOffcanvas = forwardRef(
                     <>
                       <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label className="form-label">
-                          From Date <span className="text-danger">*</span>
+                        {t('fromDate')} <span className="text-danger">*</span>
                         </label>
                         <Controller
                           name="fromDate"
@@ -311,7 +314,7 @@ const ExpenseOffcanvas = forwardRef(
                       </div>
                       <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                         <label className="form-label">
-                          To Date <span className="text-danger">*</span>
+                        {t('toDate')} <span className="text-danger">*</span>
                         </label>
                         <Controller
                           name="toDate"
@@ -335,7 +338,7 @@ const ExpenseOffcanvas = forwardRef(
              
                     <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
                       <label className="form-label">
-                        Expense Date <span className="text-danger">*</span>
+                      {t('expenseDate')} <span className="text-danger">*</span>
                       </label>
                       <Controller
                         name="expenseDate"
@@ -358,7 +361,7 @@ const ExpenseOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      Amount <span className="text-danger">*</span>
+                      {t('amount')} <span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="number"
@@ -374,7 +377,7 @@ const ExpenseOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      Reference Number <span className="text-danger">*</span>
+                      {t('referenceNumber')} <span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="number"
@@ -392,7 +395,7 @@ const ExpenseOffcanvas = forwardRef(
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
                         >
-                          Odometer
+                          {t('odometer')}
                         </label>
                         <CustomInput
                           type="number"
@@ -407,7 +410,7 @@ const ExpenseOffcanvas = forwardRef(
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
                         >
-                          Work Hour
+                          {t('workHour')}
                         </label>
                         <CustomInput
                           type="time"
@@ -424,7 +427,7 @@ const ExpenseOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      Bill Upload
+                      {t('billUpload')}
                     </label>
                     <CustomInput
                       type="file"
@@ -439,7 +442,7 @@ const ExpenseOffcanvas = forwardRef(
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      Description
+                      {t('description')}
                     </label>
                     <CustomInput
                       type="textarea"
@@ -456,14 +459,14 @@ const ExpenseOffcanvas = forwardRef(
                     onClick={() => {handleSubmit(onSubmit)}}
                     className="btn btn-primary me-1"
                   >
-                    Submit
+                    {t('submit')}
                   </button>
                   <Link
                     to={"#"}
                     onClick={() => setAddEmploye(false)}
                     className="btn btn-danger light ms-1"
                   >
-                    Cancel
+                    {t('cancel')}
                   </Link>
                 </div>
               </form>

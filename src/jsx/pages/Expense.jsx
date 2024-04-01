@@ -12,6 +12,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {expenseSchema} from '../../yup'
 
+import {useTranslation} from 'react-i18next'
+
 const headers = [
   { label: "Employee ID", key: "emplid" },
   { label: "Employee Name", key: "title" },
@@ -24,6 +26,8 @@ const headers = [
 ];
 
 const Driver = (ref) => {
+
+  const {t} = useTranslation();
   const [tableData, setTableData] = useState(ExpenseData);
   const {
     register,
@@ -108,9 +112,9 @@ const Driver = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Expense"
-        pageTitle={"Expense"}
-        parentTitle={"Settings"}
+        mainTitle={t('expense')}
+        pageTitle={t('expense')}
+        parentTitle={t('settings')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -119,7 +123,7 @@ const Driver = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Expense</h4>
+                    <h4 className="heading mb-0">{t('expense')}</h4>
                     <div>
                       <Link
                         to={"#"}
@@ -127,7 +131,7 @@ const Driver = (ref) => {
                         data-bs-toggle="offcanvas"
                         onClick={() => {expense.current.showModal(); console.log(expense)}}
                       >
-                        + Add Expense
+                        + {t('addExpense')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -141,12 +145,12 @@ const Driver = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Vehicle Name</th>
-                          <th>Expense Date</th>
-                          <th>Amount</th>
-                          <th>Description</th>
-                          <th>Action</th>
+                          <th>{t('id')}</th>
+                          <th>{t('vehicleName')}</th>
+                          <th>{t('expenseDate')}</th>
+                          <th>{t('amount')}</th>
+                          <th>{t('description')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -161,11 +165,11 @@ const Driver = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -226,7 +230,7 @@ const Driver = (ref) => {
         errors={errors}
         control={control}
         clearErrors={clearErrors}
-        Title={editData.id === 0 ? "Add Expense" : "Edit Expense"}
+        Title={editData.id === 0 ? t('addExpense') :  t('editExpense')}
       />
     </>
   );

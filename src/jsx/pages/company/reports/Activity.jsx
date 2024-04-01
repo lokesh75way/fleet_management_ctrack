@@ -7,7 +7,7 @@ import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import DriverTable from "../../../components/Tables/DriverTable";
 import { filterAlerts } from "../../../../utils/helper";
 import { CSVLink } from "react-csv";
-
+import {useTranslation} from 'react-i18next'
 const tableData = [
   {emplid: '1001', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
   {emplid: '1002', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
@@ -125,12 +125,14 @@ const Activity = (ref) => {
 
   const filter = useRef();
 
+  const {t} = useTranslation();
+
   return (
     <>
       <MainPagetitle
-        mainTitle="Activity"
-        pageTitle={"Activity"}
-        parentTitle={"Reports"}
+        mainTitle={t('activity')}
+        pageTitle={t('activity')}
+        parentTitle={t('reports')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -139,14 +141,14 @@ const Activity = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Activity</h4>
+                    <h4 className="heading mb-0">{t('activity')}</h4>
 
                     <div className="d-flex">
                     <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> Export Report
+                        <i className="fa-solid fa-file-excel" /> {t('exportReport')}
                       </CSVLink>
                       <Link
                         to={"#"}
@@ -154,7 +156,7 @@ const Activity = (ref) => {
                         data-bs-toggle="offcanvas"
                         onClick={() => filter.current.showModal()}
                       >
-                        + Filter
+                        + {t('filter')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -168,15 +170,14 @@ const Activity = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Employee ID</th>
-                          <th>Employee Name</th>
-                          <th>Age</th>
-                          <th>Contact Number</th>
-                          {/* <th>Gender</th> */}
-                          <th>Driving Experience</th>
-                          <th>Location</th>
-                          <th>Status</th>
-                          <th>Action</th>
+                          <th>{t('employeeID')}</th>
+                          <th>{t('employeeName')}</th>
+                          <th>{t('age')}</th>
+                          <th>{t('contactNumber')}</th>
+                          <th>{t('drivingExperience')}</th>
+                          <th>{t('location')}</th>
+                          <th>{t('status')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -191,11 +192,11 @@ const Activity = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -253,7 +254,7 @@ const Activity = (ref) => {
         setCompanyHandler={setFilterCompany}
         setDatehandler={setDate}
         handleSubmit={handleSubmit}
-        Title={editData.id === 0 ? "Add Filter" : "Edit Filter"}
+        Title={editData.id === 0 ? t('addFilter') : t('editFilter')}
       />
     </>
   );

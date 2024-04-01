@@ -316,7 +316,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                         <tr key={index}>
                           <td className="col-2" style={{ width: "130px" }}>
                             {" "}
-                            {data[mindex].title}
+                            {t(data[mindex].title)}
                           </td>
                           <td>
                             <input

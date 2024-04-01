@@ -2,6 +2,7 @@ import React from "react";
 import WorldMap from "react-svg-worldmap";
 import { createRoot } from 'react-dom/client';
 import { MapContainer, TileLayer, GeoJSON,Marker,Popup ,Tooltip} from 'react-leaflet';
+import {useTranslation} from 'react-i18next'
 // import EditControlFC from './EditControl';
 
 
@@ -78,11 +79,13 @@ const ActiveUserMap = () => {
           features: [],
         });
     }
+
+const {t} = useTranslation();
   return (
     <>
       <div className="card overflow-hidden">
         <div className="card-header border-0" style={{paddingBottom :0}}>
-          <h4 className="heading mb-0">Active users</h4>
+          <h4 className="heading mb-0">{t('activeUsers')}</h4>
         </div>
         <div className="card-body pe-0">
           <div className="row">
