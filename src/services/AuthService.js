@@ -6,6 +6,7 @@ import {
 } from '../store/actions/AuthActions';
 import { isAuthenticated } from '../store/selectors/AuthSelectors';
 import initAxios from './api/Axios';
+import { useSearchParams } from 'react-router-dom';
 initAxios()
 
 export function signUp(data) {

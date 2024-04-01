@@ -70,7 +70,6 @@ useEffect(() => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
-  console.log(id);
   const fetchAllCompany = async()=>{
     const {data, success} = await getCompany()
     // CompanyData = data.data.data
@@ -149,6 +148,7 @@ useEffect(() => {
   const onConfirmDelete = async(_id) => {
     try{
       await deleteCompany(_id)
+      fetchAllCompany()
       notifySuccess("Company Deleted")
     }
     catch(e){
@@ -158,7 +158,6 @@ useEffect(() => {
   const editDrawerOpen = (_id) => {
     const data = tableData.filter((item)=> item._id === _id)
     navigate(`edit/${_id}`, {state : {formData:data}});
-    // company.current.showModal();
   };
   // const handleSubmit=(e)=>{
   //     e.preventDefault();
