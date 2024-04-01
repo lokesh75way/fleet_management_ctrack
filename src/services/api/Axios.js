@@ -6,7 +6,6 @@ function initAxios() {
     const state = store.getState();
     const token = state.auth.auth.token;
     config.baseURL = process.env.REACT_APP_BACKEND_API
-    // config.baseURL = 'http://localhost:5000/api/fleet/'
     config.headers.Authorization = `Bearer ${token}`
     return config;
   });

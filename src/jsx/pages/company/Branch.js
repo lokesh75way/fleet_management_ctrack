@@ -124,7 +124,7 @@ const Branch = () => {
 
   useEffect(()=>{
     fetchAllBranch()
-  },[tableData])
+  },[])
   
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -142,6 +142,7 @@ const Branch = () => {
   const onConfirmDelete = async(id) => {
     await deleteBranch(id)
     notifySuccess("Branch Deleted");
+    await fetchAllBranch()
   };
 
   const editDrawerOpen = (item) => {
