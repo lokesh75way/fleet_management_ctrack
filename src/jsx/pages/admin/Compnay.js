@@ -157,6 +157,7 @@ useEffect(() => {
   };
   const editDrawerOpen = (_id) => {
     const data = tableData.filter((item)=> item._id === _id)
+    console.log(data)
     navigate(`edit/${_id}`, {state : {formData:data}});
   };
   // const handleSubmit=(e)=>{

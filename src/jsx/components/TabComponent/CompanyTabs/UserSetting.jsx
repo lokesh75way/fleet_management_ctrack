@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import CustomInput from '../../Input/CustomInput'
+import CustomInput from "../../Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import TimezoneSelect from 'react-timezone-select'
+import TimezoneSelect from "react-timezone-select";
 import { currencyOptions } from "../VehicleTabs/Options";
 import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 import Error from "../../Error/Error";
 import {
@@ -22,10 +22,21 @@ import {
 } from "../VehicleTabs/Options";
 import { useParams } from "react-router-dom";
 
-const UserSetting = ({ setValue, handleSubmit, onSubmit,errors, control,register,formData, getValues }) => {
-const {t} = useTranslation();
-const { id } = useParams();
-  const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
+const UserSetting = ({
+  setValue,
+  handleSubmit,
+  onSubmit,
+  errors,
+  control,
+  register,
+  formData,
+  getValues,
+}) => {
+  const { t } = useTranslation();
+  const { id } = useParams();
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
 
   const customStyles = {
     control: (base) => ({
@@ -34,22 +45,46 @@ const { id } = useParams();
     }),
   };
 
-  useEffect(()=>{
-      setValue('dateFormat',formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value)
-      setValue('unitOfDistance',formData?.[0].companyId?.unitOfDistance || unitOfDistanceOptions[0].value)
-      setValue('timeFormat',formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value)
-      setValue('unitOfFuel',formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value)
-      setValue('language',formData?.[0].companyId?.language || languageOptions[0].value)
-      setValue('status',formData?.[0].companyId?.status || statusOptions[0].value)
-      setValue('workStartDay',formData?.[0].companyId?.workStartDay || dayOptions[0].value)
-      setValue('currency',formData?.[0].companyId?.currency || currencyOptions[0].value)
-  })
+  useEffect(() => {
+    setValue(
+      "dateFormat",
+      formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value
+    );
+    setValue(
+      "unitOfDistance",
+      formData?.[0].companyId?.unitOfDistance || unitOfDistanceOptions[0].value
+    );
+    setValue(
+      "timeFormat",
+      formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
+    );
+    setValue(
+      "unitOfFuel",
+      formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value
+    );
+    setValue(
+      "language",
+      formData?.[0].companyId?.language || languageOptions[0].value
+    );
+    setValue(
+      "status",
+      formData?.[0].companyId?.status || statusOptions[0].value
+    );
+    setValue(
+      "workStartDay",
+      formData?.[0].companyId?.workStartDay || dayOptions[0].value
+    );
+    setValue(
+      "currency",
+      formData?.[0].companyId?.currency || currencyOptions[0].value
+    );
+  },[]);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('dateFormat')}</label>
+          <label className="form-label">{t("dateFormat")}</label>
           <Controller
             name="dateFormat"
             control={control}
@@ -60,7 +95,10 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("dateFormat"), value :getValues("dateFormat")}}
+                value={{
+                  label: getValues("dateFormat"),
+                  value: getValues("dateFormat"),
+                }}
               />
             )}
           />
@@ -68,7 +106,7 @@ const { id } = useParams();
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('timeFormat')}</label>
+          <label className="form-label">{t("timeFormat")}</label>
           <Controller
             name="timeFormat"
             control={control}
@@ -79,13 +117,16 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("timeFormat"), value :getValues("timeFormat")}}
+                value={{
+                  label: getValues("timeFormat"),
+                  value: getValues("timeFormat"),
+                }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('unitOfDistance')}</label>
+          <label className="form-label">{t("unitOfDistance")}</label>
           <Controller
             name="fuelEconomyScaling"
             control={control}
@@ -98,14 +139,17 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("unitOfDistance"), value :getValues("unitOfDistance")}}
+                value={{
+                  label: getValues("unitOfDistance"),
+                  value: getValues("unitOfDistance"),
+                }}
               />
             )}
           />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('unitOfFuel')}</label>
+          <label className="form-label">{t("unitOfFuel")}</label>
           <Controller
             name="unitOfFuel"
             control={control}
@@ -116,13 +160,16 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("unitOfFuel"), value :getValues("unitOfFuel")}}
+                value={{
+                  label: getValues("unitOfFuel"),
+                  value: getValues("unitOfFuel"),
+                }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('language')}</label>
+          <label className="form-label">{t("language")}</label>
           <Controller
             name="language"
             control={control}
@@ -133,13 +180,16 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("language"), value :getValues("language")}}
+                value={{
+                  label: getValues("language"),
+                  value: getValues("language"),
+                }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('status')}</label>
+          <label className="form-label">{t("status")}</label>
           <Controller
             name="status"
             control={control}
@@ -150,30 +200,38 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("status"), value :getValues("status")}}
+                value={{
+                  label: getValues("status"),
+                  value: getValues("status"),
+                }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('worksStartDay')}</label>
+          <label className="form-label">{t("worksStartDay")}</label>
           <Controller
             name="workStartDay"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("workStartDay", newValue.value)}
+                onChange={(newValue) =>
+                  setValue("workStartDay", newValue.value)
+                }
                 options={dayOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("workStartDay"), value :getValues("workStartDay")}}
+                value={{
+                  label: getValues("workStartDay"),
+                  value: getValues("workStartDay"),
+                }}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('currency')}</label>
+          <label className="form-label">{t("currency")}</label>
           <Controller
             name="currency"
             control={control}
@@ -184,14 +242,17 @@ const { id } = useParams();
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues("currency"), value :getValues("currency")}}
+                value={{
+                  label: getValues("currency"),
+                  value: getValues("currency"),
+                }}
               />
             )}
           />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-        <label className="form-label">{t('timeZone')} </label>
+          <label className="form-label">{t("timeZone")} </label>
           <Controller
             name="timezone"
             control={control}
@@ -207,9 +268,9 @@ const { id } = useParams();
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadFile')}</label>
-          <CustomInput 
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">{t("uploadFile")}</label>
+          <CustomInput
             type="file"
             register={register}
             label="Company Logo"
@@ -218,8 +279,6 @@ const { id } = useParams();
           />
           <Error errorName={errors.companyLogo} />
         </div>
-
-
       </div>
       <div
         style={{
@@ -235,7 +294,7 @@ const { id } = useParams();
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>
