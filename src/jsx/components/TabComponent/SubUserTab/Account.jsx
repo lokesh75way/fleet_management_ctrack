@@ -56,7 +56,7 @@ const Account = ({
 
   async function onGroupChange(groupId) {
     const companies = allCompanies
-      .filter(item => item.companyId.businessGroupId._id == groupId)
+      .filter(item => item?.companyId?.businessGroupId?._id == groupId)
       .map(item => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
       setCompanyOptions(companies);
       setValue("parentCompany", "");
@@ -64,8 +64,6 @@ const Account = ({
   }
 
   async function onCompanyChange(companyId) {
-    console.log(companyId)
-    console.log(allBranches, "allBranches")
     const branches = allBranches
       .filter(item => item?.companyId?._id == companyId)
       .map(item => ({ value: item?._id, label: item?.branchName }));
@@ -78,26 +76,22 @@ const Account = ({
       const response = await getGroups();
       const companyResponse = await getCompany();
       const branchResponse = await getAllBranch();
-      console.log(response, "response");
       if (response.error) {
         notifyError(response.error)
       }
       else {
         const groups = response.data;
-        console.log(groups, "groups")
         setAllGroups(groups);
         const groupOptions = groups.map((item) => ({
           label: item?.businessGroupId?.groupName,
           value: item?.businessGroupId?._id,
         }));
-
         setBusinessUserOptions(groupOptions);
       }
       if (companyResponse.error) {
         notifyError(companyResponse.error)
       } else {
         const companies = companyResponse.data.data.data;
-        console.log(companies, "companies");
         const companyOptions = companies.map((item) => ({
           label: item.companyId?.companyName,
           value: item.companyId?._id,
@@ -109,7 +103,6 @@ const Account = ({
         notifyError(branchResponse.error)
       } else {
         const branches = branchResponse.data.data;
-        console.log(branches, "branches");
         const branchOptions = branches.map((item) => ({
           label: item.branchName,
           value: item._id,
@@ -130,8 +123,7 @@ const Account = ({
       if (response.error) {
         notifyError(response.error)
       } else {
-        const templates = response.data;
-        console.log(templates, "templates");
+        const templates = response.data.data;
         const tempOptions = templates.map((item) => ({
           label: item.name,
           value: item._id,
@@ -285,16 +277,14 @@ const Account = ({
 
   useEffect(() => {
     const id = filteredUserData[0]?._id;
-    console.log(id, "id");
     id ? setIsEdit(true) : setIsEdit(false);
     const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
     const selectedGroupId = filteredUserData[0]?.businessGroupId;
     const selectedCompanyId = filteredUserData[0]?.companyId;
     const selectedBranchId = filteredUserData[0]?.branchIds;
     setValue("featureTemplateId", selectedTemplateId);
-    console.log(selectedGroupId, "selectedGroupId");
     setValue("businessUser", selectedGroupId);
-    
+    loadDatainDropdowns();
     setValue("parentCompany", selectedCompanyId);
     setValue("Branch", selectedBranchId);
     setValue("branchIds", selectedBranchId);
@@ -328,9 +318,12 @@ const Account = ({
     );
 
     setValue("isEdit", isEdit);
-
-    
-  }, [TemplateOptions]);
+async function loadDatainDropdowns(){
+    await onGroupChange(selectedGroupId);
+    await onCompanyChange(selectedCompanyId);
+  } 
+  
+  }, [TemplateOptions, allBranches, allCompanies, allGroups, ]);
 
 
 
