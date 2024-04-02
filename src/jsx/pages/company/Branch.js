@@ -5,31 +5,42 @@ import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import AsyncSelect from "react-select/async";
 import useStorage from "../../../hooks/useStorage";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
-import { clsx } from 'clsx';
+import { clsx } from "clsx";
 
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
-import { getAllBranch , createBranch, deleteBranch } from "../../../services/api/BranchServices";
+import {
+  getAllBranch,
+  createBranch,
+  deleteBranch,
+} from "../../../services/api/BranchServices";
 import { notifySuccess } from "../../../utils/toast";
 import usePagination from "../../../hooks/usePagination";
 import { getCompany } from "../../../services/api/CompanyServices";
+import CompanyDropdown from "../../components/CompanyDropdown";
+import BranchDropdown from "../../components/BranchDropdown";
+import { getSelectValues } from "../../../utils/helper";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
 const Branch = () => {
-  
-  const {isRtl} = useContext(ThemeContext);
-  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
-  const {can} = usePermissions()
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
+  const { can } = usePermissions();
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const params = useParams();
-
 
   const [selectFilter, setFilter] = useState({
     value: "All Companies",
@@ -50,7 +61,7 @@ const Branch = () => {
       marginRight: "1rem",
       marginLeft: "1rem",
       width: "15rem",
-      height:"0.6rem",
+      height: "0.6rem",
       menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
       menu: (provided) => ({ ...provided, zIndex: 9999 }),
     }),
@@ -61,7 +72,7 @@ const Branch = () => {
   const { control, setValue, getValues, watch } = useForm();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
-
+  const [companyId, setCompanyId] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
@@ -77,12 +88,12 @@ const Branch = () => {
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-
+  const defaultValues = getSelectValues();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
-  usePagination();
+    usePagination();
 
   // const fetchAllCompany = async()=>{
-  //   try { 
+  //   try {
   //     const {data, success} = await getCompany()
   //     console.log("this is the company data",data.data.data)
   //     setCompanies(data.data.data);
@@ -91,61 +102,60 @@ const Branch = () => {
   //   }
   // }
 
-
-
-  const fetchAllBranch = async()=>{
+  const fetchAllBranch = async () => {
     try {
-      const {data, success} = await getAllBranch(page)
-      setTableData(data.data)
+      const { data, success } = await getAllBranch(page);
+      setTableData(data.data);
       setCount(data.totalCount);
-      setBranches(data.data)
+      setBranches(data.data);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
-  }
-  useEffect(()=>{
-    fetchAllBranch(page)
-  },[page])
-  
-    //   // Map companies and branches to options for Select component
-    //   const companyOptions = companies.map(company => ({
-    //     value: company._id,
-    //     label: company.companyName
-    // }));
+  };
+  useEffect(() => {
+    fetchAllBranch(page);
+  }, [page]);
 
-    // Filter branches based on the selected company
-    const filteredBranches = branches.filter(branch => selectedCompany && branch.companyId._id === selectedCompany.value);
-    console.log({filteredBranches})
-    const branchOptions = filteredBranches.map(branch => ({
-        value: branch._id,
-        label: branch.branchName
-    }));
+  //   // Map companies and branches to options for Select component
+  //   const companyOptions = companies.map(company => ({
+  //     value: company._id,
+  //     label: company.companyName
+  // }));
+
+  // Filter branches based on the selected company
+  const filteredBranches = branches.filter(
+    (branch) =>
+      selectedCompany && branch.companyId._id === selectedCompany.value
+  );
+  console.log({ filteredBranches });
+  const branchOptions = filteredBranches.map((branch) => ({
+    value: branch._id,
+    label: branch.branchName,
+  }));
 
   //   const handleCompanyChange = selectedOption => {
   //     setSelectedCompany(selectedOption);
   //     setFilter({value: selectedOption.value, label: selectedOption.label}); // Update the filter for companies
   //     setFilter2({value: 'All Branches', label: 'All Branches'}); // Reset the branch filter
   // };
-  
-      // Handler function for branch selection
-      const handleBranchChange = selectedOption => {
-          console.log('Selected branch:', selectedOption);
-          // Implement your logic here
-      };
 
+  // Handler function for branch selection
+  const handleBranchChange = (selectedOption) => {
+    console.log("Selected branch:", selectedOption);
+    // Implement your logic here
+  };
 
-  const onConfirmDelete = async(id) => {
-    await deleteBranch(id)
+  const onConfirmDelete = async (id) => {
+    await deleteBranch(id);
     notifySuccess("Branch Deleted");
-    await fetchAllBranch()
+    await fetchAllBranch();
   };
 
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
-    navigate(`edit/${item}`,{state : filteredData});
+    navigate(`edit/${item}`, { state: filteredData });
     // company.current.showModal();
   };
-
 
   const d = JSON.parse(localStorage.getItem("userJsonData"));
 
@@ -163,7 +173,7 @@ const Branch = () => {
       setTableData(filteredData);
     }
   }, [loggedinUser, role, SubCompanyData]);
-  
+
   return (
     <>
       <MainPagetitle
@@ -178,30 +188,23 @@ const Branch = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('branches')}</h4>
+                    <h4 className="heading mb-0">{t("branches")}</h4>
                     <div className="d-flex align-items-center">
-                    <Controller
-                        name="parent"
+                      <Controller
+                        name="company"
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <AsyncSelect
-                            onChange={(newValue) => {
-                              setTempValue(newValue.label);
-                              setTempValue2("All Branches");
-                              setValue("parent", newValue.label);
-                              setFilter({value:newValue.value,label:newValue.label})
-                              setFilter2({value:'All Branches',label:"All Branches"})
+                          <CompanyDropdown
+                            onChange={async (newValue) => {
+                              setValue("company", newValue.value);
+                              setCompanyId(newValue.value);
                             }}
-                            ref={ref}
+                            value={value}
+                            customStyles={customStyles}
                             name={name}
-                            menuPortalTarget={document.body}
-                            menuPosition={"fixed"}
-                            styles={customStyles}
-                            // loadOptions={allCompanyOptions}
-                            value= {selectFilter}
-                            
-                            // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
+                            ref={ref}
+                            isDisabled={false}
                           />
                         )}
                       />
@@ -210,32 +213,36 @@ const Branch = () => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <AsyncSelect
+                          <BranchDropdown
                             onChange={(newValue) => {
-                              setTempValue2(newValue.label);
-                              setTempValue('All Companies');
-                              setValue("parentBranch", newValue.label);
-                              setFilter2({value:newValue.value,label:newValue.label})
+                              console.log("newValue", newValue);
+                              const valuesArray = newValue.map(
+                                (item) => item.value
+                              );
+                              // setValue("Branch", valuesArray);
+                              // setValue("branchIds", valuesArray);
                             }}
+                            key={companyId}
+                            companyId={companyId}
+                            value={value}
+                            customStyles={customStyles}
                             ref={ref}
                             name={name}
-                            menuPortalTarget={document.body}
-                            menuPosition={"fixed"}
-                            styles={customStyles}
-                            options={branchOptions}
-                            value={selectFilter2}
+                            isDisabled={defaultValues?.branch?.disabled}
                           />
                         )}
                       />
-                      {can('branch','add') && <Link
-                        to={"/branch/create"}
-                        className="btn btn-primary btn-sm ms-1"
-                        style={{paddingBlock : '9px'}}
-                        data-bs-toggle="offcanvas"
-                        // onClick={()=>subCompany.current.showModal()}
-                      >
-                        + {t('addBranch')}
-                      </Link>}{" "}
+                      {can("branch", "add") && (
+                        <Link
+                          to={"/branch/create"}
+                          className="btn btn-primary btn-sm ms-1"
+                          style={{ paddingBlock: "9px" }}
+                          data-bs-toggle="offcanvas"
+                          // onClick={()=>subCompany.current.showModal()}
+                        >
+                          + {t("addBranch")}
+                        </Link>
+                      )}{" "}
                     </div>
                   </div>
                   <div
@@ -248,15 +255,16 @@ const Branch = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
-                          <th>{t('branchName')}</th>
-                          <th>{t('parentBranch')}</th>
-                          <th>{t('companyName')}</th>
-                          <th>{t('businessGroup')}</th>
+                          <th>{t("id")}</th>
+                          <th>{t("branchName")}</th>
+                          <th>{t("parentBranch")}</th>
+                          <th>{t("companyName")}</th>
+                          <th>{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}
-                          <th>{t('location')}</th>
-                          <th>{t('childBranches')}</th>
-                          {(can('branch','modify') || can('branch','delete')) && <th>{t('action')}</th>}
+                          <th>{t("location")}</th>
+                          <th>{t("childBranches")}</th>
+                          {(can("branch", "modify") ||
+                            can("branch", "delete")) && <th>{t("action")}</th>}
                         </tr>
                       </thead>
                       <tbody>

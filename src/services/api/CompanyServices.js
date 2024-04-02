@@ -4,16 +4,20 @@ import axios from "axios";
 //   return axios.get("/companies");
 // };
 
-export const getCompany = async (page,id) => {
+export const getCompany = async (page, groupId) => {
   let url = "/companies";
   let params = [];
   if (page !== undefined) {
     params.push(`page=${page}`);
     params.push(`limit=${10}`);
   }
-  if(id !== undefined){
-    url+=`&businessGroupId=${id}`
+  if (groupId !== undefined) {
+    params.push(`businessGroupId=${groupId}`);
   }
+  if (params.length > 0) {
+    url += '?' + params.join('&');
+  }
+  console.log(url, "url");
   return await axios.get(url);
 };
 export const addCompany = async (body) => {
