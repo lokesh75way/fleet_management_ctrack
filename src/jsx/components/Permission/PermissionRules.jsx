@@ -9,6 +9,8 @@ import _ from "lodash";
 import TemplateServices from "../../../services/api/TemplateServices";
 import { useNavigate, useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
+import Error from "../Error/Error";
+
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
 
@@ -33,11 +35,11 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     // setShow((prev) => !prev);
     if (!selectedTemplate) return;
 
-    // Copy name
-    setNewGroupData({
-      ...newGroupData,
-      name: selectedTemplate.name,
-    });
+    // // Copy name
+    // setNewGroupData({
+    //   ...newGroupData,
+    //   name: selectedTemplate.name,
+    // });
 
     // Update permissions for modules directly
     const updatedData = data.map((module) => {
@@ -52,6 +54,8 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
           delete: permission.delete,
         };
       }
+
+      
       return module;
     });
 
@@ -118,6 +122,8 @@ const handleSubModulePermisssionChange = (
 
 
   const handleInputChange = (e) => {
+
+    setIsErrror(false);
     const { value } = e.target;
     setNewGroupData((prev) => ({
       ...prev,
@@ -125,10 +131,17 @@ const handleSubModulePermisssionChange = (
     }));
   };
 
+  const [isError, setIsErrror] = useState(false);
+
   const handleSave = async () => {
-    if (!newGroupData.name) return;
+    if (!newGroupData.name) {
+      setIsErrror(true);
+      return ;
+    }
 
     try {
+
+      setIsErrror(false);
       console.log(data, 'data-;;')
       const flattenedPermissions = data.reduce((acc, module) => {
         const mainModulePermissions = {
@@ -252,6 +265,8 @@ const handleSubModulePermisssionChange = (
         }).map(d => d.moduleId));
       }
       setGroupsDataState(templateData.data.data);
+
+
       setSelectOptions(
         templateData.data.data.map((template) => ({
           value: template._id,
@@ -263,18 +278,27 @@ const handleSubModulePermisssionChange = (
     }
   };
 
+  
+  const groupNames = groupsDataState.map(e=>e.name);
+  console.log("this is group data state ",groupNames);
+
   useEffect(() => {
     fetchTemplates();
   }, []);
 
+  console.log('is error : ',isError);
+
   return (
-    <div>
+    <div >
       <Card>
         <Card.Header>
           <Card.Title>{t('permission')}</Card.Title>
         </Card.Header>
 
-        <div className="d-flex justify-content-between m-2 mt-4 p-3">
+        <div className="d-flex justify-content-between m-2 mt-4 p-3" >
+
+          <div>
+
           <input
             value={newGroupData.name}
             name="groupname"
@@ -288,11 +312,14 @@ const handleSubModulePermisssionChange = (
               width: "15rem",
             }}
             placeholder={t('featureTemplateName')}
-          />
+            />
+
+          </div>
+          
           <div
             className="d-flex justify-content-center"
             style={{ width: "25rem" }}
-          >
+            >
             <Select
               options={selectOptions}
               placeholder={t('selectFeatureTemplate')}
@@ -315,8 +342,12 @@ const handleSubModulePermisssionChange = (
             </button>
           </div>
         </div>
+        <div className="ms-4 pt-0 mt-0">
+          {isError && <span className="text-danger text-sm pt-0 mt-0" style={{marginBottom:"1rem"}}>feature template name is required</span>  }
+        </div>
 
-        <Card.Body className="d-flex">
+
+        <Card.Body className="d-flex"  >
           <div
             style={{
               flex: 0.4,
