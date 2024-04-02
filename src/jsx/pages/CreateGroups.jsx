@@ -112,7 +112,7 @@ const CreateGroups = () => {
                                                 <tr>
                                                     <th>{t('SNo.')}</th>
                                                     <th>{t('templateName')}</th>
-                                                    <th>{t('action')}</th>
+                                                    <th style={{display:"flex", justifyContent:"center"}}>{t('action')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
