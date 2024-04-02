@@ -101,6 +101,7 @@ const MyAccount = ({
       setValue("companyId", dValues.companyId?._id);
       setValue("parentBranch", dValues.parentBranchId?.branchName);
       setValue("parentBranchId", dValues.parentBranchId?._id);
+      setValue("parent", dValues.parentBranchId?._id);
       setValue("branchName", dValues.branchName);
       setValue("city", dValues.city);
       setValue("country", dValues.country);
@@ -294,6 +295,7 @@ const MyAccount = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
+              console.log(value, "Brancg value"),
               // <AsyncSelect
               //   onChange={(newValue) => {
               //     setParentValue(newValue.value);
@@ -309,10 +311,11 @@ const MyAccount = ({
               //   }}
               // />
               <ParentBranchDropdown
-                onChange={(newValue) => {
+                onChange={async (newValue) => {
                   console.log(newValue)
                   setValue("parentBranchId", newValue.value);
                   setValue("parentBranch", newValue.value);
+                  setValue("parent", newValue.value);
                 }
                 }
                 value={value}
