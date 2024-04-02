@@ -28,13 +28,13 @@ export const getSelectValues = (id) => {
     };
   } else if (role === "COMPANY") {
     const companyName = user?.user?.userName
-    const user = JSON.parse(localStorage.getItem("userJsonData")).filter(
+    const userData = JSON.parse(localStorage.getItem("userJsonData")).filter(
       (item) => item.userName === companyName
     );
     return {
       business: {
         disabled: true,
-        defaultValues: user[0]?.parent,
+        defaultValues: userData[0]?.parent,
       },
       company: {
         disabled: true,
