@@ -180,7 +180,7 @@ const Account = ({
 
   const newData = userData.filter((data) => data._id == id);
 
-  const defaultValues = getSelectValues();
+  // const defaultValues = getSelectValues();
 
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
@@ -193,13 +193,7 @@ const Account = ({
   const [parentValue, setParentValue] = useState();
 
   useEffect(() => {
-    const tempbusinessUserOptions = DummyData.filter(
-      (item) => item.role === "businessgroup"
-    ).map((item) => ({
-      label: item.userName,
-      value: item._id,
-    }));
-
+   
     let tempcompanyOptions;
     if (role === "BUSINESS_GROUP") {
 
@@ -368,7 +362,7 @@ const Account = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={defaultValues?.business?.disabled}
+                // isDisabled={defaultValues?.business?.disabled}
                 name={name}
               />
             )}

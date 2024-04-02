@@ -5,9 +5,14 @@ const createGroup = async (body) => {
   const data = await axios.post("/business-groups", body);
   return data.data.data
 };
-const getGroups = async () => {
-  const { data } = await axios.get("/business-groups");
-  return { data: data.data.data, totalLength: data.data.totalLength };
+
+const getGroups = async (page) => {
+  let url = "/business-groups";
+  if (page !== undefined) {
+    url += `?page=${page}&limit=${10}`;
+  }
+  const { data } = await axios.get(url);
+  return { data: data.data.data, totalPage: data.data.totalPage, totalCount: data.data.totalCount };
 };
 const deleteGroup = async (body) => {
   return axios.delete(`/business-group/${body}`);

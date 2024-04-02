@@ -27,8 +27,9 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+  // const defaultValues = getSelectValues();
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -43,17 +44,11 @@ const MyAccount = ({
 
   const { t } = useTranslation();
   const location = useLocation();
-  const [businessUserOptions, setBusinessUserOptions] = useState([]);
-  const [companyOptions, setCompanyOptions] = useState([]);
-  const [parentOptions, setParentOptions] = useState([]);
-  const [businessUserValue, setBusinessUserValue] = useState([]);
-  const [companyValue, setCompanyValue] = useState([]);
-  const [parentValue, setParentValue] = useState();
+  
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const defaultValues = getSelectValues();
 
-  const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
-  const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
+  // const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
+  // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry,setDefaultCountry] = useState();
   
@@ -90,23 +85,7 @@ const MyAccount = ({
       return []; // Return empty array in case of an error
     }
   };
-  // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
-
-  // useEffect(() => {
-  //   const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-  //     .filter((br) => br.parentCompany === companyValue)
-  //     .map((item) => ({
-  //       label: item.userName,
-  //       value: item.id,
-  //     }));
-
-  //   tempparentOptions.push({ label: "None", value: 0 });
-
-  //   setBusinessUserOptions(tempbusinessUserOptions);
-  //   setCompanyOptions(tempcompanyOptions);
-  //   setParentOptions(tempparentOptions);
-  // }, [businessUserValue, companyValue, parentValue]);
-
+ 
   const { id } = useParams();
   useEffect(() => {
     if (id) {

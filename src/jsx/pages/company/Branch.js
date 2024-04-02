@@ -92,6 +92,7 @@ const Branch = () => {
 
   const fetchAllBranch = async()=>{
     const {data, success} = await getAllBranch()
+    console.log(data)
     setTableData(data.data)
   }
 
@@ -109,7 +110,7 @@ const Branch = () => {
     branches: 0,
   });
 
-  const sort = 10;
+  const sort = 8;
   const activePag = useRef(0);
   const [test, settest] = useState(0);
   const chageData = (frist, sec) => {
@@ -314,12 +315,12 @@ const Branch = () => {
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
-                      <div className="dataTables_info">
+                    <div className="dataTables_info">
                       {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {dataLength.length > (activePag.current + 1) * sort
+                        {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : dataLength}{" "}
-                        {t('of')} {dataLength} {t('entries')}
+                          : data.length}{" "}
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
