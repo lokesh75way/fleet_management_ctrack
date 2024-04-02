@@ -90,14 +90,12 @@ const Branch = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
-  const fetchAllBranch = async()=>{
-    const {data, success} = await getAllBranch()
-    setTableData(data.data)
-  }
 
-
+  const activePag = useRef(0);
   const [tableData, setTableData] = useState([]);
   const [dataLength, setDataLength] = useState(SubCompanyData.length);
+  const [page, setPage] = useState(activePag.current + 1);
+  const [length, setLength] = useState(0);
   const [editData, setEditData] = useState({
     id: 0,
     reseller: "",
@@ -109,8 +107,7 @@ const Branch = () => {
     branches: 0,
   });
 
-  const sort = 8;
-  const activePag = useRef(0);
+  const sort = 10;
   const [test, settest] = useState(0);
   const chageData = (frist, sec) => {
     for (var i = 0; i < data.length; ++i) {
@@ -122,21 +119,34 @@ const Branch = () => {
     }
   };
 
+  const fetchAllBranch = async()=>{
+   
+    
+
+    try {
+      const {data, success} = await getAllBranch(page)
+      setTableData(data.data)
+      setLength(data.totalCount);
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  }
+
   useEffect(()=>{
-    fetchAllBranch()
-  },[])
+    fetchAllBranch(page)
+  },[page])
   
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
 
   activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
+  let pagination = Array(Math.ceil(length / sort))
     .fill()
     .map((_, i) => i + 1);
-  const onClick = (i) => {
+  const onClick = async (i) => {
     activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
+    setPage(i+1);
     settest(i);
   };
   const onConfirmDelete = async(id) => {
@@ -314,29 +324,33 @@ const Branch = () => {
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
+                      <div className="dataTables_info">
+                        {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
+                        {length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                          : length}{" "}
+                        {t("of")} {length} {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
+                          className={`paginate_button ${
+                            activePag.current === 0
+                              ? "previous disabled"
+                              : "previous"
+                          }`}
                           to="/branch"
                           onClick={() =>
                             activePag.current > 0 &&
                             onClick(activePag.current - 1)
                           }
                         >
-                          <i className={arrowleft}/>
+                          <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
+                          {pagination.map((number, i) => (
                             <Link
                               key={i}
                               to="/branch"
@@ -350,10 +364,14 @@ const Branch = () => {
                           ))}
                         </span>
                         <Link
-                          className="paginate_button next"
+                          className={`paginate_button ${
+                            activePag.current === pagination.length - 1
+                              ? "next disabled"
+                              : "next"
+                          }`}
                           to="/branch"
                           onClick={() =>
-                            activePag.current + 1 < paggination.length &&
+                            activePag.current + 1 < pagination.length &&
                             onClick(activePag.current + 1)
                           }
                         >
