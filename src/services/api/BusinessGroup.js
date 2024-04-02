@@ -15,7 +15,7 @@ const getGroups = async (page) => {
   return { data: data.data.data, totalPage: data.data.totalPage, totalCount: data.data.totalCount };
 };
 const deleteGroup = async (body) => {
-  return axios.delete(`/business-group/${body}`);
+  return axios.delete(`/business-groups/${body}`);
 };
 const updateGroup = async (body) => {
   return axios.patch("/business-groups",body);
@@ -26,4 +26,10 @@ const changePassword = async (body) => {
   return data
 }
 
-export { createGroup, getGroups, deleteGroup, updateGroup , changePassword};
+const fileUpload = async (body) => {
+  const data = axios.post("/file-upload",body);
+  console.log(data)
+  return data;
+}
+
+export { createGroup, getGroups, deleteGroup, updateGroup , changePassword , fileUpload};
