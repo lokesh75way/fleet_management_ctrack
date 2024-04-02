@@ -120,9 +120,6 @@ const Branch = () => {
   };
 
   const fetchAllBranch = async()=>{
-   
-    
-
     try {
       const {data, success} = await getAllBranch(page)
       setTableData(data.data)

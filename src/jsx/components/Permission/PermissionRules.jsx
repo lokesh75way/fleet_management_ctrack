@@ -251,9 +251,9 @@ const handleSubModulePermisssionChange = (
           return !(!d.delete && !d.view && !d.modify && !d.add)
         }).map(d => d.moduleId));
       }
-      setGroupsDataState(templateData.data);
+      setGroupsDataState(templateData.data.data);
       setSelectOptions(
-        templateData.data.map((template) => ({
+        templateData.data.data.map((template) => ({
           value: template._id,
           label: template.name,
         }))

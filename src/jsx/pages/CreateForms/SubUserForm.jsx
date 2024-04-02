@@ -84,7 +84,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
         try {
           const existingData = JSON.parse(localStorage.getItem("userJsonData"));
           // data.id = existingData.length + 1;
-          data.role = "user";
+          data.role = "USER";
           data.parent = userName;
           data.type = "STAFF";
           const response = await createUser(data)
