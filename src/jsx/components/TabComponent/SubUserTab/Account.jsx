@@ -300,51 +300,53 @@ const Account = ({
   useEffect(() => {
     const id = filteredUserData[0]?._id;
     id ? setIsEdit(true) : setIsEdit(false);
-    const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
-    const selectedGroupId = filteredUserData[0]?.businessGroupId;
-    const selectedCompanyId = filteredUserData[0]?.companyId;
-    const selectedBranchId = filteredUserData[0]?.branchIds;
-    setValue("featureTemplateId", selectedTemplateId);
-    setValue("businessUser", selectedGroupId);
-    console.log("selectedGroupId", selectedGroupId)
-    loadDatainDropdowns();
-    setValue("parentCompany", selectedCompanyId);
-    setValue("Branch", selectedBranchId);
-    setValue("branchIds", selectedBranchId);
-
-    setValue(
-      "parentBusinessGroup",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-    );
-    setValue(
-      "parentBranch",
-      filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-    );
-    if (id) {
+    if(id){
+      const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
+      const selectedGroupId = filteredUserData[0]?.businessGroupId;
+      const selectedCompanyId = filteredUserData[0]?.companyId;
+      const selectedBranchId = filteredUserData[0]?.branchIds;
+      setValue("featureTemplateId", selectedTemplateId);
+      setValue("businessUser", selectedGroupId);
+      console.log("selectedGroupId", selectedGroupId)
+      loadDatainDropdowns();
+      setValue("parentCompany", selectedCompanyId);
+      setValue("Branch", selectedBranchId);
+      setValue("branchIds", selectedBranchId);
 
       setValue(
-        "country",
-        filteredUserData[0] ? filteredUserData[0]?.country : ""
+        "parentBusinessGroup",
+        filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
       );
-
-      setDefaultValue({ name: filteredUserData[0]?.country })
       setValue(
-        "state",
-        filteredUserData[0] ? filteredUserData[0]?.state : ""
+        "parentBranch",
+        filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
       );
-      setSelectStateName({ name: filteredUserData[0]?.state })
+      if (id) {
+
+        setValue(
+          "country",
+          filteredUserData[0] ? filteredUserData[0]?.country : ""
+        );
+
+        setDefaultValue({ name: filteredUserData[0]?.country })
+        setValue(
+          "state",
+          filteredUserData[0] ? filteredUserData[0]?.state : ""
+        );
+        setSelectStateName({ name: filteredUserData[0]?.state })
+      }
+
+      setValue(
+        "_id",
+        filteredUserData[0] ? filteredUserData[0]?._id : id
+      );
+      async function loadDatainDropdowns() {
+        await onGroupChange(selectedGroupId);
+        await onCompanyChange(selectedCompanyId);
+      }
     }
-
-    setValue(
-      "_id",
-      filteredUserData[0] ? filteredUserData[0]?._id : id
-    );
-
     setValue("isEdit", isEdit);
-    async function loadDatainDropdowns() {
-      await onGroupChange(selectedGroupId);
-      await onCompanyChange(selectedCompanyId);
-    }
+    
 
   }, [TemplateOptions, allBranches, allCompanies, allGroups,]);
 
