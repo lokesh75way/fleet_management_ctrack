@@ -264,7 +264,7 @@ const handleSubModulePermisssionChange = (
           return !(!d.delete && !d.view && !d.modify && !d.add)
         }).map(d => d.moduleId));
       }
-      setGroupsDataState(templateData.data.data);
+      setGroupsDataState(templateData.data.data); 
 
 
       setSelectOptions(
