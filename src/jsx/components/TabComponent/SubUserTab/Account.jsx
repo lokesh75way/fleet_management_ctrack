@@ -4,7 +4,6 @@ import { Controller } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import { useParams } from "react-router-dom";
-import { TemplateOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import useStorage from "../../../../hooks/useStorage";

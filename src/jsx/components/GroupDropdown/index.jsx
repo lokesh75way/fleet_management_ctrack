@@ -31,19 +31,16 @@ const GroupDropdown = ({
     }, [value, dropDownOptions]);
 
     return (
-        <div className="branch-dropdown">
             <Select
                 options = {dropDownOptions}
                 value={selectedOption}
                 onChange={(newValue) => onChange(newValue)}
-                style={customStyles}
+                styles={customStyles}
                 ref={ref}
                 name={name}
                 isDisabled={isDisabled}
                 // isDisabled={isDisabled}
                 />
-            
-        </div>
     );
 }
 export default GroupDropdown;

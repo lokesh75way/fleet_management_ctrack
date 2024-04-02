@@ -29,19 +29,15 @@ const CompanyDropdown = ({
     }, [value, dropdownOptions]);
 
     return (
-        <div className="branch-dropdown">
-
             <Select
                 options = {dropdownOptions}
                 value={selectedOption}
                 onChange={(newValue) => onChange(newValue)}
-                style={customStyles}
+                styles={customStyles}
                 name={name}
                 ref={ref}
                 isDisabled={isDisabled}
                 />
-            
-        </div>
     );
 }
 export default CompanyDropdown;
