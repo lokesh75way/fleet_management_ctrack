@@ -92,6 +92,7 @@ const Branch = () => {
 
   const fetchAllBranch = async()=>{
     const {data, success} = await getAllBranch()
+    console.log(data)
     setTableData(data.data)
   }
 
