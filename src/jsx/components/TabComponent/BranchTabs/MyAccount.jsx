@@ -87,23 +87,7 @@ const MyAccount = ({
       return []; // Return empty array in case of an error
     }
   };
-  // console.log("data from load options", businessGroupOptions() ,allCompanyOptions() )
-
-  // useEffect(() => {
-  //   const tempparentOptions = DummyData.filter((item) => item.role === "branch")
-  //     .filter((br) => br.parentCompany === companyValue)
-  //     .map((item) => ({
-  //       label: item.userName,
-  //       value: item.id,
-  //     }));
-
-  //   tempparentOptions.push({ label: "None", value: 0 });
-
-  //   setBusinessUserOptions(tempbusinessUserOptions);
-  //   setCompanyOptions(tempcompanyOptions);
-  //   setParentOptions(tempparentOptions);
-  // }, [businessUserValue, companyValue, parentValue]);
-
+ 
   const { id } = useParams();
   useEffect(() => {
     if (id) {
