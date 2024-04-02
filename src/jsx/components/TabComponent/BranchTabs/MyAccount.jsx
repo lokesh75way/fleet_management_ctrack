@@ -14,6 +14,7 @@ import { getGroups } from "../../../../services/api/BusinessGroup";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { editBranch } from "../../../../services/api/BranchServices";
 import { useLocation } from "react-router-dom";
+import { companyOptions, parentOptions } from "../VehicleTabs/Options";
 
 const MyAccount = ({
   setValue,
@@ -24,8 +25,9 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+  // const defaultValues = getSelectValues();
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -40,17 +42,11 @@ const MyAccount = ({
 
   const { t } = useTranslation();
   const location = useLocation();
-  const [businessUserOptions, setBusinessUserOptions] = useState([]);
-  const [companyOptions, setCompanyOptions] = useState([]);
-  const [parentOptions, setParentOptions] = useState([]);
-  const [businessUserValue, setBusinessUserValue] = useState([]);
-  const [companyValue, setCompanyValue] = useState([]);
-  const [parentValue, setParentValue] = useState();
+  
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const defaultValues = getSelectValues();
 
-  const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
-  const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
+  // const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
+  // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry,setDefaultCountry] = useState();
   
@@ -137,7 +133,6 @@ const MyAccount = ({
                 cacheOptions 
                 defaultOptions
                   onChange={(newValue) => {
-                    setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
                     setValue("businessGroupName", newValue.label);
                   }}
@@ -160,13 +155,12 @@ const MyAccount = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <AsyncSelect
                   onChange={(newValue) => {
-                    setBusinessUserValue(newValue.label);
                     setValue("businessGroupId", newValue.value);
                     setValue("businessGroupName", newValue.label);
                   }}
                   loadOptions={businessGroupOptions}
                   ref={ref}
-                  isDisabled={defaultValues?.business?.disabled}
+                
                   name={name}
                   styles={customStyles}
                   defaultOptions
@@ -195,7 +189,6 @@ const MyAccount = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <AsyncSelect
                   onChange={(newValue) => {
-                    setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.label);
                   }}
@@ -219,11 +212,10 @@ const MyAccount = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <AsyncSelect
                   onChange={(newValue) => {
-                    setCompanyValue(newValue.label);
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.label);
                   }}
-                  isDisabled={defaultValues?.company?.disabled}
+                  // isDisabled={defaultValues?.company?.disabled}
                   options={companyOptions}
                   ref={ref}
                   name={name}
@@ -249,7 +241,6 @@ const MyAccount = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <AsyncSelect
                 onChange={(newValue) => {
-                  setParentValue(newValue.value);
                   setValue("parentBranch", newValue.value);
                 }}
                 options={parentOptions}
