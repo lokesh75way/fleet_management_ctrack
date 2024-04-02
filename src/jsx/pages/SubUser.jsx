@@ -11,6 +11,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import { usePermissions } from "../../context/PermissionContext";
 import useStorage from "../../hooks/useStorage";
+import usePagination from "../../hooks/usePagination";
 
 
   const SubUser = () => {
@@ -22,16 +23,19 @@ import useStorage from "../../hooks/useStorage";
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     //call get api from userservice
     const [isLoading, setIsLoading] = useState(true);
+    const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+    usePagination();
 
+    const fetchUser = async () => {
+      setIsLoading(true)
+      const {data,count } = await getUser(page);
+      setTableData(data)
+      setCount(count)
+      setIsLoading(false);
+    };
     useEffect(() => {
-      const fetchData = async () => {
-        setIsLoading(true)
-        const {data} = await getUser();
-        setTableData(data)
-        setIsLoading(false);
-      };
-      fetchData();
-    }, []);
+      fetchUser(page);
+    }, [page]);
     
   const navigate = useNavigate();
   const {checkRole,checkUserName} = useStorage()
@@ -46,43 +50,14 @@ import useStorage from "../../hooks/useStorage";
   else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && (item.type === 'ADMIN' || item.type === 'STAFF') )
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && item.type === 'STAFF' )
 
   const [tableData, setTableData] = useState([] );
-  const [editData, setEditData] = useState();
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
-  };
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
-
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
   const onConfirmDelete = async (id) => {
      await deleteUser(id);
-  
   };
+
   const editDrawerOpen = (item) => {
     navigate(`/subUser/edit/${item}`);
   };
@@ -132,47 +107,44 @@ import useStorage from "../../hooks/useStorage";
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
-                          to="/subUser"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          className={`paginate_button ${
+                            page === 1 ? "previous disabled" : "previous"
+                          }`}
+                          to="/business"
+                          onClick={() => prevPage(page - 1)}
                         >
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/subUser"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
-                          className="paginate_button next"
-                          to="/subUser"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          className={`paginate_button ${
+                            page * 10 >= totalCount ? "next disabled" : "next"
+                          }`}
+                          to="/business"
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
                         </Link>

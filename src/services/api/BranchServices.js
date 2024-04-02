@@ -3,11 +3,13 @@ import initAxios from './Axios';
 
 initAxios();
 
-export const getAllBranch = async (companyId) => {
+export const getAllBranch = async (page,companyId) => {
     let url = '/branches';
+    if (page !== undefined) {
+        url += `?page=${page}&limit=${10}`;
+      }
     if (companyId) {
         url += `?companyId=${companyId}`;
-
     }
     const data = await axios.get(url);
     return data.data;

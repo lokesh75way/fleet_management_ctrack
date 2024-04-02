@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
+import AsyncSelect from "react-select/async";
 import useStorage from "../../../hooks/useStorage";
 import {useTranslation} from 'react-i18next'
 
@@ -14,6 +14,8 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 import { getAllBranch , createBranch, deleteBranch } from "../../../services/api/BranchServices";
 import { notifySuccess } from "../../../utils/toast";
+import usePagination from "../../../hooks/usePagination";
+import { getCompany } from "../../../services/api/CompanyServices";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -28,7 +30,7 @@ const Branch = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { getAllCompany } = useStorage();
+
   const [selectFilter, setFilter] = useState({
     value: "All Companies",
     label: "All Companies",
@@ -53,36 +55,6 @@ const Branch = () => {
       menu: (provided) => ({ ...provided, zIndex: 9999 }),
     }),
   };
-
-  useEffect(() => {
-    const str = window.location.pathname;
-    
-    if (str.includes('cid')) {
-      const user = JSON.parse(localStorage.getItem("userJsonData"));
-      const username = user.filter((data) => data.id == params.id)[0].userName;
-
-      setFilter({
-        value: username,
-        label: username,
-      });
-      setTempValue(username)
-
-      setValue('parent',username);
-    }
-    if (str.includes('bid')) {
-      const user = JSON.parse(localStorage.getItem("userJsonData"));
-      const username = user.filter((data) => data.id == params.id)[0].userName;
-
-      setFilter2({
-        value: username,
-        label: username,
-      });
-      setTempValue2(username)
-
-      setValue('parent',username);
-    }
-  }, [params.id]);
-
   const loggedinUser = localStorage.getItem("loginDetails-name");
   // const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
   const role = localStorage.getItem("role");
@@ -90,15 +62,7 @@ const Branch = () => {
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const SubCompanyData = userData.filter((item) => item.role === "branch");
 
-  const fetchAllBranch = async()=>{
-    const {data, success} = await getAllBranch()
-    console.log(data)
-    setTableData(data.data)
-  }
-
-
   const [tableData, setTableData] = useState([]);
-  const [dataLength, setDataLength] = useState(SubCompanyData.length);
   const [editData, setEditData] = useState({
     id: 0,
     reseller: "",
@@ -110,36 +74,66 @@ const Branch = () => {
     branches: 0,
   });
 
-  const sort = 8;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
+  const [companies, setCompanies] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+  usePagination();
+
+  // const fetchAllCompany = async()=>{
+  //   try { 
+  //     const {data, success} = await getCompany()
+  //     console.log("this is the company data",data.data.data)
+  //     setCompanies(data.data.data);
+  //   } catch (error) {
+  //     console.log("Error in fetching data", error);
+  //   }
+  // }
+
+
+
+  const fetchAllBranch = async()=>{
+    try {
+      const {data, success} = await getAllBranch(page)
+      setTableData(data.data)
+      setCount(data.totalCount);
+      setBranches(data.data)
+    } catch (error) {
+      console.log("Error in fetching data", error);
     }
-  };
-
+  }
   useEffect(()=>{
-    fetchAllBranch()
-  },[])
+    fetchAllBranch(page)
+  },[page])
   
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+    //   // Map companies and branches to options for Select component
+    //   const companyOptions = companies.map(company => ({
+    //     value: company._id,
+    //     label: company.companyName
+    // }));
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
+    // Filter branches based on the selected company
+    const filteredBranches = branches.filter(branch => selectedCompany && branch.companyId._id === selectedCompany.value);
+    console.log({filteredBranches})
+    const branchOptions = filteredBranches.map(branch => ({
+        value: branch._id,
+        label: branch.branchName
+    }));
+
+  //   const handleCompanyChange = selectedOption => {
+  //     setSelectedCompany(selectedOption);
+  //     setFilter({value: selectedOption.value, label: selectedOption.label}); // Update the filter for companies
+  //     setFilter2({value: 'All Branches', label: 'All Branches'}); // Reset the branch filter
+  // };
+  
+      // Handler function for branch selection
+      const handleBranchChange = selectedOption => {
+          console.log('Selected branch:', selectedOption);
+          // Implement your logic here
+      };
+
+
   const onConfirmDelete = async(id) => {
     await deleteBranch(id)
     notifySuccess("Branch Deleted");
@@ -152,44 +146,8 @@ const Branch = () => {
     // company.current.showModal();
   };
 
-  const invite = useRef();
-  const subCompany = useRef();
+
   const d = JSON.parse(localStorage.getItem("userJsonData"));
-  
-  let companyOptions = d
-    .filter((item) => item.role === "company")
-    .map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-
-
-  let allbranchOptions  = d
-    .filter((item) => item.role === "branch")
-    .map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-    allbranchOptions = [...allbranchOptions, { label: "All Branches", value: "All Branches" }];
-    const [branchOptions,setBranchOptions] = useState(allbranchOptions)
-
-  useEffect(()=>{
-    
-    let tempoptions = d
-    .filter((item) => item.role === "branch" && tempValue !== 'All Companies' && item.parentCompany === tempValue)
-    .map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-
-    if(tempValue !== 'All Companies') setBranchOptions(tempoptions)
-    else setBranchOptions(allbranchOptions);
-
-  },[tempValue])
-
-
-  companyOptions = [...companyOptions, { label: "All Companies", value: "All Companies" }];
-  
 
   useEffect(() => {
     if (role === "admin") return;
@@ -227,7 +185,7 @@ const Branch = () => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
+                          <AsyncSelect
                             onChange={(newValue) => {
                               setTempValue(newValue.label);
                               setTempValue2("All Branches");
@@ -240,7 +198,7 @@ const Branch = () => {
                             menuPortalTarget={document.body}
                             menuPosition={"fixed"}
                             styles={customStyles}
-                            options={companyOptions}
+                            // loadOptions={allCompanyOptions}
                             value= {selectFilter}
                             
                             // defaultValue={{value:getValues("parent"),label:getValues("parent")}}
@@ -252,7 +210,7 @@ const Branch = () => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
+                          <AsyncSelect
                             onChange={(newValue) => {
                               setTempValue2(newValue.label);
                               setTempValue('All Companies');
@@ -304,7 +262,7 @@ const Branch = () => {
                       <tbody>
                         <SubCompanyTable
                           tempValue={tempValue}
-                          setDataLength={setDataLength}
+                          // setDataLength={setDataLength}
                           tempValue2={tempValue2}
                           editData={editData}
                           tableData={tableData}
@@ -315,48 +273,45 @@ const Branch = () => {
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                      <div className="dataTables_info">
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
+                          className={`paginate_button ${
+                            page === 1 ? "previous disabled" : "previous"
+                          }`}
                           to="/branch"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          onClick={() => prevPage(page - 1)}
                         >
-                          <i className={arrowleft}/>
+                          <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/branch"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
-                          className="paginate_button next"
+                          className={`paginate_button ${
+                            page * 10 >= totalCount ? "next disabled" : "next"
+                          }`}
                           to="/branch"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
                         </Link>
