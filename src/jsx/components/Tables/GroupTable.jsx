@@ -28,12 +28,12 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
             {data.map((item, index) => (
                 <tr key={index}>
                     <td>
-                        <div className="products">         
+                        <div className="products d-flex justify-content-center">         
                                 <h6>{index +1}</h6>
                         </div>
                     </td>
                     <td>
-                        <div className="products">         
+                        <div className="products d-flex justify-content-center">         
                                 <h6>{item.name}</h6>
                         </div>
                     </td>
