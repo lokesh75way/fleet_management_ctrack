@@ -180,7 +180,7 @@ const Account = ({
 
   const newData = userData.filter((data) => data._id == id);
 
-  // const defaultValues = getSelectValues();
+  const defaultValues = getSelectValues();
 
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
