@@ -75,8 +75,7 @@ const CompanyForm = () => {
           return;
         } else {
           try {
-      
-            data.businessGroupId = getValues("businessId");
+            data.businessGroupId = getValues("businessGroupId");
             const { success, message } = await addCompany(data);
             if (!success) {
               notifyError(message);

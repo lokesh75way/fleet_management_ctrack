@@ -25,7 +25,7 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
     const branchName = filterData[i].userName
     branchCount[i] = filterData.filter((item)=> item.parentBranch === branchName).length
   }
-  setDataLength(filterData.length)
+  // setDataLength(filterData.length)
     return (
       <>
         {filterData.map((item, index) => (

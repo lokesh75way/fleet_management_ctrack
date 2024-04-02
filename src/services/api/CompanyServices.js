@@ -14,13 +14,11 @@ export const getCompany = async (page, groupId) => {
   if (groupId !== undefined) {
     params.push(`businessGroupId=${groupId}`);
   }
-
   if (params.length > 0) {
     url += '?' + params.join('&');
   }
   console.log(url, "url");
   return await axios.get(url);
- 
 };
 export const addCompany = async (body) => {
   const data = await axios.post("/companies", body);

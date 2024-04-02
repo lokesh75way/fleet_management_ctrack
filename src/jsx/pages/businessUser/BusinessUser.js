@@ -1,25 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
-
-import { IMAGES } from "../../constant/theme";
 import MainPagetitle from "../../layouts/MainPagetitle";
-import InviteCustomer from "../../constant/ModalList";
-import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
-// import {BusinessData} from "../../components/Tables/Tables";
 import BusinessTable from "../../components/Tables/BusinessTable";
 import { useTranslation } from "react-i18next";
-
 import { clsx } from "clsx";
-
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
-
 import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
+import usePagination from "../../../hooks/usePagination";
 
 const BusinessUser = () => {
-  const [deleteId, setDeleteId] = useState();
   const { isRtl } = useContext(ThemeContext);
   const arrowleft = clsx({
     "fa-solid fa-angle-right": isRtl,
@@ -31,66 +23,25 @@ const BusinessUser = () => {
   });
 
   const { t } = useTranslation();
-  const { can } = usePermissions(); // calling can method from usePermission
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const activePag = useRef(0);
-  const [page, setPage] = useState(activePag.current + 1);
-  const [length, setLength] = useState(0);
-
-  const [tableData, setTableData] = useState([]);
-  const [editData, setEditData] = useState({
-    id: 0,
-    title: "sfds",
-    contact: 0,
-    email: "",
-    status: "",
-    location: "",
-    usergroup: "",
-  });
   const navigate = useNavigate();
-  const sort = 10;
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
-  };
+  const { can } = usePermissions();
+  const [tableData, setTableData] = useState([]);
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+    usePagination();
 
-  async function getGroupData(page) {
+  async function getGroupData() {
     try {
-      const { data, totalPage, totalCount } = await getGroups(page);
+      const { data, totalCount } = await getGroups(page);
       setTableData(data);
-      setLength(totalCount);
+      setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
   }
 
   useEffect(() => {
-    getGroupData(page);
+    getGroupData();
   }, [page]);
-
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
-
-
-  activePag.current === 0 && chageData(0, sort);
-  let pagination = Array(Math.ceil(length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = async (i) => {
-    activePag.current = i;
-    setPage(i);
-    await getGroupData(i+1);
-    settest(i);
-  };
 
   const onConfirmDelete = async (id) => {
     await deleteGroup(id);
@@ -102,8 +53,6 @@ const BusinessUser = () => {
     navigate(`/business/edit/${item}`, { state: filteredData });
   };
 
-  const company = useRef();
-  const edit = useRef();
   return (
     <>
       <MainPagetitle
@@ -122,10 +71,7 @@ const BusinessUser = () => {
                     <div>
                       {can("business", "add") && (
                         <Link
-                          to={{
-                            pathname: "/business/create",
-                            state: { editData },
-                          }}
+                          to="/business/create"
                           className="btn btn-primary btn-sm ms-1 p-2"
                           data-bs-toggle="offcanvas"
                           style={{ paddingBlock: "9px" }}
@@ -167,11 +113,9 @@ const BusinessUser = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
-                        {length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : length}{" "}
-                        {t("of")} {length} {t("entries")}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -179,43 +123,34 @@ const BusinessUser = () => {
                       >
                         <Link
                           className={`paginate_button ${
-                            activePag.current === 0
-                              ? "previous disabled"
-                              : "previous"
+                            page === 1 ? "previous disabled" : "previous"
                           }`}
                           to="/business"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          onClick={() => prevPage(page - 1)}
                         >
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {pagination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/business"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
                           className={`paginate_button ${
-                            activePag.current === pagination.length - 1
-                              ? "next disabled"
-                              : "next"
+                            page * 10 >= totalCount ? "next disabled" : "next"
                           }`}
                           to="/business"
-                          onClick={() =>
-                            activePag.current + 1 < pagination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
                         </Link>
@@ -228,13 +163,6 @@ const BusinessUser = () => {
           </div>
         </div>
       </div>
-      {/* <CompanyOffcanvas 
-                ref={company}
-                Title={ editData.id === 0 ? "Add Company" : "Edit Company"}
-                handleSubmit={handleSubmit}
-                editData={editData}
-                setEditData={setEditData}
-            /> */}
     </>
   );
 };

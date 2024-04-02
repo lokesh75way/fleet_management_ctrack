@@ -81,7 +81,6 @@ const MyAccount = ({
 // }
 useEffect(()=>{
   if(formData && id){
-    console.log("data:",formData)
     setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
     setValue("companyName",formData[0].companyId?.companyName)
     setValue("userName", formData[0].userName)

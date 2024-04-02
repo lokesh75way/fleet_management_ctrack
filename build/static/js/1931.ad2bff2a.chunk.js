@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[1931],{71931:(e,s,c)=>{c.r(s),c.d(s,{default:()=>n});c(65043);var h=c(70579);const n=()=>(0,h.jsx)("h1",{children:"Expense"})}}]);
-//# sourceMappingURL=1931.ad2bff2a.chunk.js.map

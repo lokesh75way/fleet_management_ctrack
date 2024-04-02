@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { fileUpload } from "../services/api/BusinessGroup";
 import { notifyError } from "../utils/toast";
+import Dropzone, { useDropzone } from "react-dropzone";
 
 const FileUploader = ({ register }) => {
-  const fileChangeHandler = async (e) => {
-    console.log(e.target.files[0]);
-    try {
-      const {url} = await fileUpload(e.target.files[0]);
-      
-    } catch (error) {
-      console.log(error);
-      notifyError(error)
-    }
-  };
+  const [file, setFile] = useState();
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      "image/*": [".jpeg", ".jpg", ".png", ".webp"],
+    },
+    maxSize: 500000,
+    onDrop:async (acceptedFiles) => {
+      const url = await fileUpload(acceptedFiles[0])
+      console.log(url)
+    },
+  });
+  
+
   return (
-    <input
-      type="file"
-      {...register("businessGroupLogo")}
-      onChange={fileChangeHandler}
-      label="Business Group Logo"
-      name="businessGroupLogo"
-      accept=".jpg, .jpeg, .png"
-      className="form-control"
-    />
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      {isDragActive ? (
+        <p>Drop the files here ...</p>
+      ) : (
+        <p>Drag 'n' drop some files here, or click to select files</p>
+      )}
+    </div>
   );
 };
 

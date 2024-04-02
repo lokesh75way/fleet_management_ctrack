@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getCompany } from '../../../services/api/CompanyServices';
 import Select from "react-select";
+import usePagination from '../../../hooks/usePagination';
+
 const CompanyDropdown = ({
     onChange,
     value,
@@ -14,6 +16,7 @@ const CompanyDropdown = ({
     console.log(groupId, "this is value")
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
+    const {page} = usePagination();
     useEffect(() => {
         const fetchBusinessGroups = async () => {
             const response = await getCompany(undefined, groupId ? groupId : undefined);
@@ -39,7 +42,7 @@ const CompanyDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={isDisabled || !groupId}
+                isDisabled={isDisabled}
                 />
     );
 }
