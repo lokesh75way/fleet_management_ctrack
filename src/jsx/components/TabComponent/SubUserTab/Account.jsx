@@ -18,6 +18,9 @@ import { LuEye, LuEyeOff } from "react-icons/lu";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getAllBranch } from "../../../../services/api/BranchServices";
+import BranchDropdown from "../../BranchDropdown";
+import CompanyDropdown from "../../CompanyDropdown";
+import GroupDropdown from "../../GroupDropdown";
 
 const Account = ({
   handleNext,
@@ -55,19 +58,21 @@ const Account = ({
   };
 
   async function onGroupChange(groupId) {
+    console.log("groupId", groupId)
+    console.log("allCompanies", allCompanies)
     const companies = allCompanies
       .filter(item => item?.companyId?.businessGroupId?._id == groupId)
       .map(item => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
-      setCompanyOptions(companies);
-      setValue("parentCompany", "");
-      setBranchOptions([]);
+    setCompanyOptions(companies);
+    setValue("parentCompany", "");
+    setBranchOptions([]);
   }
 
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter(item => item?.companyId?._id == companyId)
       .map(item => ({ value: item?._id, label: item?.branchName }));
-      setBranchOptions(branches);
+    setBranchOptions(branches);
 
   }
 
@@ -318,12 +323,12 @@ const Account = ({
     );
 
     setValue("isEdit", isEdit);
-async function loadDatainDropdowns(){
-    await onGroupChange(selectedGroupId);
-    await onCompanyChange(selectedCompanyId);
-  } 
-  
-  }, [TemplateOptions, allBranches, allCompanies, allGroups, ]);
+    async function loadDatainDropdowns() {
+      await onGroupChange(selectedGroupId);
+      await onCompanyChange(selectedCompanyId);
+    }
+
+  }, [TemplateOptions, allBranches, allCompanies, allGroups,]);
 
 
 
@@ -342,19 +347,29 @@ async function loadDatainDropdowns(){
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              // <Select
+              //   onChange={async (newValue) => {
+              //     await onGroupChange(newValue.value);
+              //     setBusinessUserValue(newValue.label);
+              //     setValue("parentBusinessGroup", newValue.value);
+              //     setValue("businessUser", newValue.value);
+              //   }}
+              //   options={businessUserOptions}
+              //   ref={ref}
+              //   isDisabled={defaultValues?.business?.disabled}
+              //   name={name}
+              //   value={businessUserOptions.find(option => option.value === value)}
+              //   styles={customStyles}
+              // />
+              <GroupDropdown
                 onChange={async (newValue) => {
-                  await onGroupChange(newValue.value);
-                  setBusinessUserValue(newValue.label);
-                  setValue("parentBusinessGroup", newValue.value);
                   setValue("businessUser", newValue.value);
                 }}
-                options={businessUserOptions}
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
                 isDisabled={defaultValues?.business?.disabled}
                 name={name}
-                value={businessUserOptions.find(option => option.value === value)}
-                styles={customStyles}
               />
             )}
           />
@@ -369,20 +384,30 @@ async function loadDatainDropdowns(){
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={async (newValue) => {
-                  await onCompanyChange(newValue.value);
-                  setCompanyValue(newValue.label);
-                  setValue("parentCompany", newValue.value);
-                }}
-                isDisabled={defaultValues?.company?.disabled}
-                options={companyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={companyOptions.find(option => option.value === value)}
+              // <Select
+              //   onChange={async (newValue) => {
+              //     await onCompanyChange(newValue.value);
+              //     setCompanyValue(newValue.label);
+              //     setValue("parentCompany", newValue.value);
+              //   }}
+              //   isDisabled={defaultValues?.company?.disabled}
+              //   options={companyOptions}
+              //   ref={ref}
+              //   name={name}
+              //   styles={customStyles}
+              //   value={companyOptions.find(option => option.value === value)}
 
-              />
+              // />
+              <CompanyDropdown
+              onChange={async (newValue) => {
+                setValue("parentCompany", newValue.value);
+              }}
+              value={value}
+              customStyles={customStyles}
+              name={name}
+              ref={ref}
+              isDisabled={defaultValues?.company?.disabled}
+            />
             )}
           />
         </div>
@@ -393,20 +418,34 @@ async function loadDatainDropdowns(){
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={async (newValue) => {
-                  
-                  const selectedValues = newValue.map(option => option.value);
-                  setValue("Branch", selectedValues);
-                  setValue("branchIds", selectedValues);
-                }}
-                options={branchOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                isMulti={true}
-                value={Array.isArray(value) ? value.map(val => branchOptions.find(option => option.value === val)) : []}
-              />
+              // <Select
+              //   onChange={async (newValue) => {
+
+              //     const selectedValues = newValue.map(option => option.value);
+              //     setValue("Branch", selectedValues);
+              //     setValue("branchIds", selectedValues);
+              //   }}
+              //   options={branchOptions}
+              //   ref={ref}
+              //   name={name}
+              //   styles={customStyles}
+              //   isMulti={true}
+              //   value={Array.isArray(value) ? value.map(val => branchOptions.find(option => option.value === val)) : []}
+              // />
+              <BranchDropdown
+                onChange={(newValue) => {
+                console.log("newValue", newValue)
+                const valuesArray = newValue.map(item => item.value);
+                setValue("Branch", valuesArray);
+                setValue("branchIds", valuesArray);
+              }}
+              value={value}
+              customStyles={customStyles}
+              name={name}
+              ref={ref}
+              isDisabled={defaultValues?.branch?.disabled}
+  
+            />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -605,6 +644,8 @@ async function loadDatainDropdowns(){
           {!getValues("featureTemplateId") && (
             <Error errorName={errors.featureTemplateId} />
           )}
+        </div>
+        <div className="col-xl-6 mb-3 ">
         </div>
       </div>
       <div
