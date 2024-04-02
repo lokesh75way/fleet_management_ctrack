@@ -2,34 +2,14 @@ import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
     company: yup.string().required("Company name id required"),
-    business: yup.string().required("Business group name is required"),
+    businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
     serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
-    IMEINumber: yup
-      .number()
-      .positive()
-      .integer()
-      .required("IMEI Number is required")
-      .typeError("IMEI Number must be a number"),
-    simNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .required("Sim Number is required")
-      .typeError("Sim Number must be a number"),
-    secondarySimNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Secondary Sim Number must be a number"),
-    deviceAccuracyTolerance: yup
-      .number()
-      .positive()
-      .integer()
-      .min(0)
-      .max(100)
-      .typeError("Device Accuracy Tolerance must be a number"),
+    imeiNumber: yup.number().positive().integer().required("IMEI Number is required").typeError("IMEI Number must be a number"),
+    simNumber: yup.number().positive().integer().required("Sim Number is required").typeError("Sim Number must be a number"),
+    secondarySimNumber: yup.number().positive().integer().typeError("Secondary Sim Number must be a number"),
+    deviceAccuracyTolerance: yup.number().positive().integer().min(0).max(100).typeError("Device Accuracy Tolerance must be a number"),
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -42,9 +22,7 @@ export const vehicleProfileSchema = yup
       .typeError("Purchase Amount must be a number"),
     plateNumber: yup.string().required("Plate Number is required "),
     registrationNumber: yup
-      .number()
-      .positive()
-      .integer()
+      .string()
       .min(4, "Registration Number must be of 4 digit or more"),
     passengerSeats: yup
       .number()
@@ -61,10 +39,8 @@ export const vehicleProfileSchema = yup
       .typeError("Weight Capacity must be a number")
       .required("Weight Capacity is required "),
     registrationNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Registration Number must be a number")
+      .string()
+      .typeError("Registration Number must be a string")
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
@@ -165,10 +141,9 @@ export const companyAccountSchema = yup
 
 export const branchAccountSchema = yup
   .object({
-    // branch: yup.string().required(),
+    branch: yup.string().required(),
     companyId: yup.string().required("Company Name is required "),
     businessGroupId: yup.string().required("Business Group Name is required "),
-    userName: yup.string().required("Please enter the Branch Name"),
     country: yup.string().required("Please select a Country"),
     zipCode: yup
       .number()
@@ -178,10 +153,7 @@ export const branchAccountSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-    helpDeskEmail: yup
-      .string()
-      .email()
-      .required("Help Desk Email is required "),
+   
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -396,16 +368,29 @@ export const driverDocumentSchema = yup
   .required();
 export const subUserAccountSchema = yup
   .object({
+    isEdit: yup.boolean(),
     userName: yup.string().required("User Name is required "),
     featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .test('isEdit', 'Password is required', function(value) {
+        const { isEdit } = this.parent;
+        if (isEdit) {
+          return true;
+        } else {
+          return value && value.length >= 8;
+        }
+      }),
     confirmPassword: yup
       .string()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .test('isEdit', 'Password is required', function(value) {
+        const { isEdit } = this.parent;
+        if (isEdit) {
+          return true;
+        } else {
+          return value && value.length >= 8;
+        }
+      }),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),

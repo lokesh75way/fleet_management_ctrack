@@ -6,7 +6,11 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
 import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companyPasswordSchema, companySettingSchema } from "../../../../../yup";
+import {
+  companyAccountSchema,
+  companyPasswordSchema,
+  companySettingSchema,
+} from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -27,13 +31,14 @@ const CompanyForm = () => {
   let component = [MyAccount, UserSetting, ManagePassword];
   const { id } = useParams();
   const location = useLocation();
+  const { formData } = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
   // ManagePassword , t('changePassword')
 
-  // if (!id) {
-  //   tabHeading = [t("newBusinessGroup"), t("settings")];
-  //   component = [MyAccount, UserSetting];
-  // }
+  if (!id) {
+    tabHeading = [t("newBusinessGroup"), t("settings")];
+    component = [MyAccount, UserSetting];
+  }
 
   const totalTabs = tabHeading.length;
 
@@ -46,34 +51,43 @@ const CompanyForm = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
-      activeIndex === 1 ? companySettingSchema : activeIndex === 2 ? companyPasswordSchema : companyAccountSchema
+      activeIndex === 1
+        ? companySettingSchema
+        : activeIndex === 2
+        ? companyPasswordSchema
+        : companyAccountSchema
     ),
   });
-  console.log(errors)
   const onSubmit = async (data) => {
-    console.log("Hello");
-    if (activeIndex === totalTabs - 2) {
+    if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
           try {
+            // data.businessGroupId = getValues("businessId");
             await editCompany(data);
-            notifySuccess("New Company Created!");
+            notifySuccess("Company Updated Successfully");
             navigate("/company");
             return;
           } catch (e) {
             console.log(e);
-            notifyError("Some error occured !!");
+            notifyError("Some error occured");
           }
           return;
         } else {
           try {
-            await addCompany(data);
-            notifySuccess("New Company Created!");
+      
+            data.businessGroupId = getValues("businessId");
+            const { success, message } = await addCompany(data);
+            if (!success) {
+              notifyError(message);
+              return;
+            }
+            notifySuccess("New Company Created");
             navigate("/company");
             return;
           } catch (e) {
             console.log(e);
-            notifyError("Some error occured !!");
+            notifyError("Some error occured");
           }
         }
       } catch (error) {
@@ -84,15 +98,15 @@ const CompanyForm = () => {
         const passwordData = {
           password: data.newPassword,
           oldPassword: data.oldPassword,
-          confirmPassword : data.confirmPassword,
+          confirmPassword: data.confirmPassword,
           _id: id,
         };
-        console.log(passwordData)
 
         await changePassword(passwordData);
         notifySuccess("Password has been changed");
         navigate("/companies");
       } catch (error) {
+        console.log(error);
         notifyError("Password is not changes!");
       }
     }
@@ -144,6 +158,7 @@ const CompanyForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
+                          formData={formData}
                         />
                       </Tab.Pane>
                     );

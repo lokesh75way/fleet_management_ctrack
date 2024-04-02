@@ -12,18 +12,13 @@ import useStorage from "../../../hooks/useStorage";
 
 const NotificationBlog = ({ classChange }) => {
 
-  
-  
+
   return (
     <>
       <li>
         <div className="timeline-panel">
           <div className="media me-2">
             <img alt="images" width={50} src={IMAGES.Avatar} />
-          </div>
-          <div className="media-body">
-            <h6 className="mb-1">Dr sultads Send you Photo</h6>
-            <small className="d-block">29 July 2022 - 02:26 PM</small>
           </div>
         </div>
       </li>
@@ -65,6 +60,8 @@ const Header = ({ onNote }) => {
       setheaderFix(window.scrollY > 50);
     });
   }, []);
+
+  const {t} = useTranslation();
 
   const { lang, setLang, setIsRtl,direction ,changeDirectionLayout} = useContext(ThemeContext);
   return (
@@ -343,18 +340,18 @@ const Header = ({ onNote }) => {
                             className="avatar avatar-md"
                             alt=""
                           />
-                          <div>
-                            <h6>Thomas Fleming</h6>
-                            <span>Web Designer</span>
+                          <div className="mx-2">
+                            <h6>User 1</h6>
+
                           </div>
                         </div>
                       </div>
                       <div className="card-body px-0 py-2">
                         <Link
                           to={"/app-profile"}
-                          className="dropdown-item ai-icon "
+                          className="dropdown-item ai-icon mr-1"
                         >
-                          {SVGICON.User} <span className="ms-2">My Profile </span>
+                          {SVGICON.User} <span className="ms-2">{t('myProfile')}</span>
                         </Link>
 
                         <Link
@@ -362,7 +359,7 @@ const Header = ({ onNote }) => {
                           className="dropdown-item ai-icon "
                         >
                           {SVGICON.Password}{" "}
-                          <span className="ms-2">Change Password </span>
+                          <span className="ms-2">{t('changePassword')}</span>
                         </Link>
                       </div>
                       <div className="card-footer px-0 py-2">

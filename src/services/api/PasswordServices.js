@@ -7,10 +7,21 @@ const PasswordServices = {
     return axios.put("/auth/change-password", body);
   },
   forgotPassword: async (body) => {
-    return axios.post("/auth/forgot-password", body);
+    try{
+      const response = await axios.post("/auth/forgot-password", body)
+      return response
+    }
+    catch(error){
+      return { error: "Couldn't send Email" }
+    };
   },
   resetPassword: async (body) => {
-    return axios.post("/auth/forgot-password", body);
+    try{
+      const response = await axios.put("/auth/reset-password", body)
+      return response
+    }catch(error){
+      return { error: "Couldn't reset Password" }
+    }
   },
 
   

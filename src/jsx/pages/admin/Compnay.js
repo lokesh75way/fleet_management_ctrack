@@ -17,16 +17,48 @@ import {
 } from "../../../services/api/CompanyServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 
+import { getGroups } from "../../../services/api/BusinessGroup";
+
+
+
 const Company = () => {
-  const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+
+
+  const [businessGroupNames,setBusinessGroupNames] = useState();
+  async function getGroupData() {
+    try {
+      const { data, totalLength } = await getGroups();
+      setBusinessGroupNames(data);
+
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  }
+
+  useEffect(() => {
+    getGroupData();
+  }, []);
+
+
+const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
+
+useEffect(() => {
+  if (businessGroupNames) {
+    setBusinessGroupOptions(businessGroupNames.map(item => ({
+      label: item.businessGroupId?.groupName, // Assuming name is the property you want to use for the label
+      value: item._id, // Assuming id is the property you want to use for the value
+    })));
+  }
+}, [businessGroupNames]);
+
+  console.log('this is daaaaataaaaa', businessGroupNames);
+
+
+  
+  
+  const {isRtl} = useContext(ThemeContext);
+  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
+  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
@@ -41,6 +73,7 @@ const Company = () => {
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
   const { id } = useParams();
+
 
   useEffect(() => {
     if (id) {
@@ -123,18 +156,20 @@ const Company = () => {
     settest(i);
   };
   // for deleting data in table
-  const onConfirmDelete = async (_id) => {
-    try {
-      await deleteCompany(_id);
-      notifySuccess("Company Deleted");
-    } catch (e) {
-      notifyError("Something Went Wrong");
+  const onConfirmDelete = async(_id) => {
+    try{
+      await deleteCompany(_id)
+      fetchAllCompany()
+      notifySuccess("Company Deleted")
+    }
+    catch(e){
+      notifyError("Something Went Wrong")
     }
   };
   const editDrawerOpen = (_id) => {
-    const data = tableData.filter((item) => item._id === _id);
-    navigate(`edit/${_id}`, { state: { formData: data } });
-    // company.current.showModal();
+    const data = tableData.filter((item)=> item._id === _id)
+    console.log(data)
+    navigate(`edit/${_id}`, {state : {formData:data}});
   };
   // const handleSubmit=(e)=>{
   //     e.preventDefault();
@@ -147,17 +182,23 @@ const Company = () => {
   //     })
   //     setTableData(updateTable)
   // }
-  const d = JSON.parse(localStorage.getItem("userJsonData"));
-  let businessGroupOptions = d
-    .filter((item) => item.role === "businessgroup")
-    .map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  businessGroupOptions = [
-    ...businessGroupOptions,
-    { label: "All", value: "All" },
-  ];
+
+
+
+
+  // const d = JSON.parse(localStorage.getItem("userJsonData"));
+  // let businessGroupOptions = d
+  //   .filter((item) => item.role === "businessgroup")
+  //   .map((item) => ({
+  //     label: item.userName,
+  //     value: item.id,
+  //   }));
+  // businessGroupOptions = [
+  //   ...businessGroupOptions,
+  //   { label: "All", value: "All" },
+  // ];
+
+
   const company = useRef();
   const edit = useRef();
   const { can } = usePermissions();

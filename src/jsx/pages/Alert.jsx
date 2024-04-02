@@ -12,6 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { alertSchema } from "../../yup";
 
+import {useTranslation} from 'react-i18next'
+
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -25,6 +27,8 @@ const headers = [
 ];
 
 const Alert = () => {
+
+  const {t} = useTranslation();
  
   const [tableData, setTableData] = useState(AlertData);
   const [editData, setEditData] = useState({
@@ -99,9 +103,9 @@ const Alert = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Alert"
-        pageTitle={"Alert"}
-        parentTitle={"Settings"}
+        mainTitle={t('alert')}
+        pageTitle={t('alert')}
+        parentTitle={t('settings')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -111,7 +115,7 @@ const Alert = () => {
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0" style={{ flex: 1 }}>
-                      Alert
+                    {t('alert')}
                     </h4>
                     <div className="d-flex">
                       <div>
@@ -121,7 +125,7 @@ const Alert = () => {
                           data-bs-toggle="offcanvas"
                           onClick={() => alert.current.showModal()}
                         >
-                          + Add Alert
+                          + {t('addAlert')}
                         </Link>{" "}
                       </div>
                     </div>
@@ -136,13 +140,13 @@ const Alert = () => {
                     >
                       <thead>
                         <tr>
-                          <th>Alerts</th>
-                          <th>Alert Name</th>
-                          <th>Alert Type</th>
-                          <th>Created Date</th>
-                          <th>Notification</th>
-                          <th>Reason</th>
-                          <th>Action</th>
+                          <th>{t('alerts')}</th>
+                          <th>{t('alertName')}</th>
+                          <th>{t('alertType')}</th>
+                          <th>{t('createdDate')}</th>
+                          <th>{t('notification')}</th>
+                          <th>{t('reason')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -157,11 +161,11 @@ const Alert = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
+                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePag.current + 1) * sort
                           ? (activePag.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -212,7 +216,7 @@ const Alert = () => {
       </div>
       <AlertOffcanvas
         ref={alert}
-        Title="Add Alert"
+        Title={t('addAlert')}
         editData={editData}
         setEditData={setEditData}
         register={register}

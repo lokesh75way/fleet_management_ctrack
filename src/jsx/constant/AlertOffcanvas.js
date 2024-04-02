@@ -15,6 +15,8 @@ import {
 import CustomInput from "../components/Input/CustomInput";
 import '../../scss/pages/_driver-tracking.scss'
 
+import {useTranslation} from 'react-i18next'
+
 const AlertOffcanvas = forwardRef(
   (
     {
@@ -73,7 +75,7 @@ const AlertOffcanvas = forwardRef(
         padding: ".25rem 0 ", 
       }),
     };
-
+    const {t} = useTranslation();
     return (
       <>
         <Offcanvas
@@ -100,7 +102,7 @@ const AlertOffcanvas = forwardRef(
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Branch</label>
+                    <label className="form-label">{t('branch')}</label>
                     <Controller
                       name="branch"
                       control={control}
@@ -122,7 +124,7 @@ const AlertOffcanvas = forwardRef(
                   </div>
 
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Based On<span className="text-danger">*</span></label>
+                    <label className="form-label">{t('basedOn')}<span className="text-danger">*</span></label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input
@@ -136,7 +138,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Vehicle
+                          {t('vehicle')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -151,7 +153,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Vehicle Group
+                          {t('vehicleGroup')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -166,7 +168,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Vehicle Type
+                         {t('vehicleType')}
                         </label>
                       </div>
                     </div>
@@ -174,7 +176,7 @@ const AlertOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
-                      Object <span className="text-danger">*</span>
+                    {t('object')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="object"
@@ -199,7 +201,7 @@ const AlertOffcanvas = forwardRef(
                  
                     <div className={`${ selectedOption !== 'vehicleGroup' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
                     <label className="form-label">
-                      Object Group <span className="text-danger">*</span>
+                    {t('objectGroup')} <span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="text"
@@ -213,7 +215,7 @@ const AlertOffcanvas = forwardRef(
          
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
-                      Alert Name <span className="text-danger">*</span>
+                    {t('alertName')} <span className="text-danger">*</span>
                     </label>
                     <CustomInput
                       type="text"
@@ -226,7 +228,7 @@ const AlertOffcanvas = forwardRef(
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
-                      Alert Type <span className="text-danger">*</span>
+                    {t('alertType')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="alertType"
@@ -263,7 +265,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Start
+                          {t('start')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -278,7 +280,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Cancel
+                          {t('cancel')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -293,14 +295,14 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Both
+                          {t('both')}
                         </label>
                       </div>
                     </div>
                     { !getValues('alertValue') && <Error errorName={errors.alertValue} />}
                   </div>
                   <div className="col-xl-6 mb-3">
-                    <label className="form-label">Valid Days</label>
+                    <label className="form-label">{t('validDays')}</label>
                     <div className="basic-form" style={{ marginTop: ".5rem" }}>
                       <div className="form-check custom-checkbox form-check-inline">
                         <input
@@ -314,7 +316,7 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Everyday
+                          {t('everyday')}
                         </label>
                       </div>
                       <div className="form-check custom-checkbox form-check-inline">
@@ -329,13 +331,13 @@ const AlertOffcanvas = forwardRef(
                           className="form-check-label"
                           style={{ marginBottom: "0" }}
                         >
-                          Custom
+                          {t('custom')}
                         </label>
                       </div>
                     </div>
                   </div>
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Valid Time From</label>
+                    <label className="form-label">{t('validTimeFrom')}</label>
                     <div className="d-flex align-items-center justify-content-evenly">
                       <CustomInput
                         type="time"
@@ -344,7 +346,7 @@ const AlertOffcanvas = forwardRef(
                         name="validTimeFrom1"
                         placeholder=""
                       />
-                      <span className="px-1">To</span>
+                      <span className="px-1">{t('to')}</span>
                       <CustomInput
                         type="time"
                         register={register}
@@ -355,7 +357,7 @@ const AlertOffcanvas = forwardRef(
                     </div>
                   </div>
                   <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">Action </label>
+                    <label className="form-label">{t('action')} </label>
                     <div className="d-flex align-items-center">
                       <div className="form-check form-check-inline">
                         <label className="form-check-label">
@@ -365,7 +367,7 @@ const AlertOffcanvas = forwardRef(
                             value=""
                             defaultChecked
                           />
-                          SMS
+                          {t('sms')}
                         </label>
                       </div>
                       <div className="form-check form-check-inline">
@@ -375,7 +377,7 @@ const AlertOffcanvas = forwardRef(
                             className="form-check-input"
                             value=""
                           />
-                          Email
+                          {t('email')}
                         </label>
                       </div>
                       <div className="form-check form-check-inline">
@@ -385,7 +387,7 @@ const AlertOffcanvas = forwardRef(
                             className="form-check-input"
                             value=""
                           />
-                          Notification
+                          {t('notification')}
                         </label>
                       </div>
                     </div>
@@ -393,7 +395,7 @@ const AlertOffcanvas = forwardRef(
                 </div>
                 <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
-                      Severity <span className="text-danger">*</span>
+                    {t('severity')} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="severity"
@@ -419,16 +421,16 @@ const AlertOffcanvas = forwardRef(
                   <button
                     type="submit"
                     onClick={() => {handleSubmit(onSubmit)}}
-                    className="btn btn-primary me-1"
+                    className="btn btn-primary me-1 m-1"
                   >
-                    Submit
+                    {t('submit')}
                   </button>
                   <Link
                     to={"#"}
                     onClick={() => setAddEmploye(false)}
-                    className="btn btn-danger light ms-1"
+                    className="btn btn-danger light ms-1 m-1"
                   >
-                    Cancel
+                    {t('cancel')}
                   </Link>
                 </div>
               </form>

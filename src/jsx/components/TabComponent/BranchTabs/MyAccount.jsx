@@ -96,7 +96,6 @@ const MyAccount = ({
     }
   }, [id]);
   useEffect(() => {
-    console.log(dValues);
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
       setValue("businessGroupId", dValues.businessGroupId?._id);
@@ -290,7 +289,7 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.id);
               setIsStateDisabled(false);
@@ -405,7 +404,8 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("submit")}
+          {/* {t("submit")} */}
+          Next
         </Button>
       </div>
     </div>

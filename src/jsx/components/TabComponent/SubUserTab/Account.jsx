@@ -15,9 +15,9 @@ import { getTemplates } from "../../../../services/api/TemplateServices";
 import { useTranslation } from "react-i18next";
 import { notifyError } from "../../../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import {getGroups} from "../../../../services/api/BusinessGroup";
-import {getCompany} from "../../../../services/api/CompanyServices";
-import {getAllBranch} from "../../../../services/api/BranchServices";
+import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { getAllBranch } from "../../../../services/api/BranchServices";
 
 const Account = ({
   handleNext,
@@ -29,9 +29,11 @@ const Account = ({
   errors,
   control,
 }) => {
-  const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
-  });
+  const [selectStateName, setSelectStateName] = useState("");
+  const [defaultValue, setDefaultValue] = useState("");
+  const [allGroups, setAllGroups] = useState([]);
+  const [allCompanies, setAllCompanies] = useState([]);
+  const [allBranches, setAllBranches] = useState([]);
   const { checkRole, checkUser } = useStorage()
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
@@ -40,6 +42,8 @@ const Account = ({
   const [TemplateOptions, setTemplateOptions] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const { t } = useTranslation();
   const customStyles = {
     control: (base) => ({
@@ -49,21 +53,38 @@ const Account = ({
 
 
   };
+
+  async function onGroupChange(groupId) {
+    const companies = allCompanies
+      .filter(item => item?.companyId?.businessGroupId?._id == groupId)
+      .map(item => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
+      setCompanyOptions(companies);
+      setValue("parentCompany", "");
+      setBranchOptions([]);
+  }
+
+  async function onCompanyChange(companyId) {
+    const branches = allBranches
+      .filter(item => item?.companyId?._id == companyId)
+      .map(item => ({ value: item?._id, label: item?.branchName }));
+      setBranchOptions(branches);
+
+  }
+
   useEffect(() => {
     const fetchOptions = async () => {
       const response = await getGroups();
       const companyResponse = await getCompany();
       const branchResponse = await getAllBranch();
-      console.log(response, "response");
       if (response.error) {
         notifyError(response.error)
       }
       else {
         const groups = response.data;
-
+        setAllGroups(groups);
         const groupOptions = groups.map((item) => ({
-          label: item.businessGroupId.groupName,
-          value: item.businessGroupId._id,
+          label: item?.businessGroupId?.groupName,
+          value: item?.businessGroupId?._id,
         }));
         setBusinessUserOptions(groupOptions);
       }
@@ -71,26 +92,28 @@ const Account = ({
         notifyError(companyResponse.error)
       } else {
         const companies = companyResponse.data.data.data;
-        console.log(companies, "companies");
         const companyOptions = companies.map((item) => ({
           label: item.companyId?.companyName,
-        value: item.companyId?._id,
+          value: item.companyId?._id,
         }));
-        setCompanyOptions(companyOptions);
+        setAllCompanies(companies);
+        // setCompanyOptions(companyOptions);
       }
       if (branchResponse.error) {
         notifyError(branchResponse.error)
       } else {
         const branches = branchResponse.data.data;
-        console.log(branches, "branches");
         const branchOptions = branches.map((item) => ({
           label: item.branchName,
           value: item._id,
         }));
+        setAllBranches(branches);
         setParentOptions(branchOptions);
-        setBranchOptions(branchOptions);
+        // setBranchOptions(branchOptions);
       }
+      setIsLoading(false);
     }
+    setIsLoading(true);
     fetchOptions()
   }, []);
 
@@ -100,8 +123,7 @@ const Account = ({
       if (response.error) {
         notifyError(response.error)
       } else {
-        const templates = response.data;
-        console.log(templates, "templates");
+        const templates = response.data.data;
         const tempOptions = templates.map((item) => ({
           label: item.name,
           value: item._id,
@@ -254,16 +276,18 @@ const Account = ({
   const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
 
   useEffect(() => {
-
+    const id = filteredUserData[0]?._id;
+    id ? setIsEdit(true) : setIsEdit(false);
     const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
     const selectedGroupId = filteredUserData[0]?.businessGroupId;
     const selectedCompanyId = filteredUserData[0]?.companyId;
-    const selectedBranchId = filteredUserData[0]?.branchId;
+    const selectedBranchId = filteredUserData[0]?.branchIds;
     setValue("featureTemplateId", selectedTemplateId);
     setValue("businessUser", selectedGroupId);
+    loadDatainDropdowns();
     setValue("parentCompany", selectedCompanyId);
     setValue("Branch", selectedBranchId);
-
+    setValue("branchIds", selectedBranchId);
 
     setValue(
       "parentBusinessGroup",
@@ -273,37 +297,54 @@ const Account = ({
       "parentBranch",
       filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
     );
-    setValue(
-      "country",
-      filteredUserData[0] ? filteredUserData[0].country : ""
-    );
-    setValue(
-      "state",
-      filteredCompanyData[0] ? filteredCompanyData[0].state : ""
-    );
+    if (id) {
+
+      setValue(
+        "country",
+        filteredUserData[0] ? filteredUserData[0]?.country : ""
+      );
+
+      setDefaultValue({ name: filteredUserData[0]?.country })
+      setValue(
+        "state",
+        filteredUserData[0] ? filteredUserData[0]?.state : ""
+      );
+      setSelectStateName({ name: filteredUserData[0]?.state })
+    }
+
     setValue(
       "_id",
-      filteredCompanyData[0] ? filteredCompanyData[0]._id : id
-    )
-  }, [TemplateOptions]);
+      filteredUserData[0] ? filteredUserData[0]?._id : id
+    );
+
+    setValue("isEdit", isEdit);
+async function loadDatainDropdowns(){
+    await onGroupChange(selectedGroupId);
+    await onCompanyChange(selectedCompanyId);
+  } 
+  
+  }, [TemplateOptions, allBranches, allCompanies, allGroups, ]);
 
 
 
-
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('businessGroup')}</label>
-          
+
           <Controller
             name="businessUser"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
+                onChange={async (newValue) => {
+                  await onGroupChange(newValue.value);
                   setBusinessUserValue(newValue.label);
                   setValue("parentBusinessGroup", newValue.value);
                   setValue("businessUser", newValue.value);
@@ -329,7 +370,8 @@ const Account = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
+                onChange={async (newValue) => {
+                  await onCompanyChange(newValue.value);
                   setCompanyValue(newValue.label);
                   setValue("parentCompany", newValue.value);
                 }}
@@ -352,15 +394,18 @@ const Account = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {
-                  setValue("Branch", newValue.value);
+                onChange={async (newValue) => {
+                  
+                  const selectedValues = newValue.map(option => option.value);
+                  setValue("Branch", selectedValues);
+                  setValue("branchIds", selectedValues);
                 }}
                 options={branchOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 isMulti={true}
-                value={branchOptions.find(option => option.value === value)}
+                value={Array.isArray(value) ? value.map(val => branchOptions.find(option => option.value === val)) : []}
               />
             )}
           />
@@ -445,7 +490,7 @@ const Account = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false);
@@ -453,7 +498,8 @@ const Account = ({
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
-
+            // value={getValues("country")}
+            defaultValue={defaultValue}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -471,74 +517,74 @@ const Account = ({
                 setstateid(e.id);
                 setValue("state", e.name);
               }}
-              defaultValue={selectStateName}
               containerClassName="bg-white"
               inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"
+              defaultValue={selectStateName}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
-        <div className="col-xl-6 mb-3 ">
+        {!isEdit && (<><div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t('password')} <span className="text-danger">*</span>
           </label>
           <div className="position-relative">
-          <CustomInput
-            type={showPassword ? "text" : "password"}
-            register={register}
-            label="Password"
-            name="password"
-            placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].password : ""
-            }
-          />
-          <span
-            className="showPasswordIcon"
-            onClick={() => {
-              setShowPassword(!showPassword);
-            }}
-          >
-            {showPassword ? <LuEyeOff /> : <LuEye />}
+            <CustomInput
+              type={showPassword ? "text" : "password"}
+              register={register}
+              label="Password"
+              name="password"
+              placeholder=""
+              defaultValue={
+                filteredUserData[0] ? filteredUserData[0].password : ""
+              }
+            />
+            <span
+              className="showPasswordIcon"
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? <LuEyeOff /> : <LuEye />}
 
-          </span>
+            </span>
           </div>
           <Error errorName={errors.password} />
         </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t('confirmPassword')} <span className="text-danger">*</span>
-          </label>
-          <div className="position-relative">
-          <CustomInput
-            type={showConfirmPassword ? "text" : "password"}
-            register={register}
-            label="Confirm Password"
-            name="confirmPassword"
-            placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].confirmPassword : ""
-            }
-          />
-           <span
-            className="showPasswordIcon"
-            onClick={() => {
-              setConfirmShowPassword(!showConfirmPassword);
-            }}
-          >
-            {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
+          <div className="col-xl-6 mb-3 ">
+            <label className="form-label">
+              {t('confirmPassword')} <span className="text-danger">*</span>
+            </label>
+            <div className="position-relative">
+              <CustomInput
+                type={showConfirmPassword ? "text" : "password"}
+                register={register}
+                label="Confirm Password"
+                name="confirmPassword"
+                placeholder=""
+                defaultValue={
+                  filteredUserData[0] ? filteredUserData[0].confirmPassword : ""
+                }
+              />
+              <span
+                className="showPasswordIcon"
+                onClick={() => {
+                  setConfirmShowPassword(!showConfirmPassword);
+                }}
+              >
+                {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
 
-          </span>
-          </div>
-          <Error errorName={errors.confirmPassword} />
-        </div>
+              </span>
+            </div>
+            <Error errorName={errors.confirmPassword} />
+          </div> </>)}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t('featureTemplate')} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="featureTemplateId" 
+            name="featureTemplateId"
             control={control}
             rules={{ required: true }}
             render={({ field }) => (

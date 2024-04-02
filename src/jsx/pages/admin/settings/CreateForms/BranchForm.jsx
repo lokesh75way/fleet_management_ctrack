@@ -10,26 +10,25 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
-import {useTranslation} from'react-i18next';
-import { createNewBranch, editBranch } from "../../../../../services/api/BranchServices";
+import { useTranslation } from "react-i18next";
+import {
+  createNewBranch,
+  editBranch,
+} from "../../../../../services/api/BranchServices";
 import { editCompany } from "../../../../../services/api/CompanyServices";
- 
+
 const BranchForm = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t('newBranch'), t('settings'),t('changePassword')];
-  const component = [MyAccount, UserSetting,ManagePassword];
- 
+  const tabHeading = [t("newBranch"), t("settings"), t("changePassword")];
+  const component = [MyAccount, UserSetting, ManagePassword];
+
   const navigate = useNavigate();
   const { id } = useParams();
 
-    component.pop();
-    tabHeading.pop();
+  component.pop();
+  tabHeading.pop();
 
-  //  if(!id){
-  //   component.pop();
-  //   tabHeading.pop();
-  // }
   const totalTabs = tabHeading.length;
   const {
     register,
@@ -43,36 +42,32 @@ const BranchForm = () => {
       activeIndex === 0 ? branchAccountSchema : companySettingSchema
     ),
   });
-
-  const onSubmit = async(data) => {
+  
+  const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
-          try{
+          try {
             const Branchdata = {
               ...data,
-              branchId :id
-            }
-            await editBranch(Branchdata)
-            console.log("Brach created", data)
+              branchId: id,
+            };
+            await editBranch(Branchdata);
             notifySuccess("Branch Updated!");
             navigate("/branch");
             return;
-          }
-          catch(e){
-            console.log(e)
+          } catch (e) {
             notifyError("Some error occured !!");
           }
-          return
+          return;
         } else {
-          try{
+          try {
             await createNewBranch(data);
             notifySuccess("New Branch Created!");
             navigate("/branch");
             return;
-          }
-          catch(e){
-            console.log(e)
+          } catch (e) {
+            console.log(e);
             notifyError("Some error occured !!");
           }
         }
@@ -80,14 +75,14 @@ const BranchForm = () => {
         notifyError("Some error occured !!");
       }
     }
+    console.log("Hello")
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-    console.log("data after submit",data)
   };
   return (
     <>
       <MainPagetitle
         mainTitle="Branch"
-        pageTitle={id? "Edit" : "Create"}
+        pageTitle={id ? "Edit" : "Create"}
         parentTitle={"Branch"}
       />
       <div className="m-2 p-2">

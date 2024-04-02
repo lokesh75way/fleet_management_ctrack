@@ -8,7 +8,11 @@ import VehicleServices from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 
+import {useTranslation} from 'react-i18next'
+
 const Vehicle = () => {
+
+  const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
   const {can} = usePermissions()
   const arrowleft = clsx({
@@ -20,6 +24,7 @@ const Vehicle = () => {
     "fa-solid fa-angle-right": !isRtl,
   });
   //   const { setAddVehicle, addVehicle } = useContext(ThemeContext);
+
 
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
@@ -91,30 +96,14 @@ const Vehicle = () => {
     // vehicle.current.showModal();
   };
 
-  const handleSubmit = (e) => {
-    console.log("I am here");
-    e.preventDefault();
-    if (editData.id === 0) {
-      editData.id = editData.simNumber - 1;
-      tableData.push(editData);
-    } else {
-      const updateTable = tableData.map((table) => {
-        if (table.id === editData.id) {
-          return { ...table, ...editData };
-        }
-        return table;
-      });
-      setTableData(updateTable);
-    }
-  };
 
   const vehicle = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
-        pageTitle={"Vehicle"}
-        parentTitle={"Home"}
+        mainTitle={t('vehicle')}
+        pageTitle={t('vehicle')}
+        parentTitle={t('home')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -123,14 +112,14 @@ const Vehicle = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Vehicle</h4>
+                    <h4 className="heading mb-0">{t('vehicle')}</h4>
                     <div>
                      {can('vehicle','add') && <Link
                         to={"/vehicle/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                       >
-                        + Add Vehicle Info
+                        + {t('addVehicleInfo')}
                       </Link>}{" "}
                     </div>
                   </div>
@@ -144,14 +133,14 @@ const Vehicle = () => {
                     >
                       <thead>
                         <tr>
-                          <th>Vehicle Name</th>
-                          <th>Plate Number</th>
-                          <th>Branch</th>
-                          <th>SIM Number</th>
-                          <th>IMEI Number</th>
-                          <th>Registration Number</th>
-                          <th>Weight Capacity</th>
-                          {(can('vehicle','modify') || can('vehicle','delete')) && <th>Action</th>}
+                          <th>{t('vehicleName')}</th>
+                          <th>{t('plateNumber')}</th>
+                          <th>{t('branch')}</th>
+                          <th>{t('simNumber')}</th>
+                          <th>{t('IMEINumber')}</th>
+                          <th>{t('registrationNumber')}</th>
+                          <th>{t('weightCapacity')}</th>
+                          {(can('vehicle','modify') || can('vehicle','delete')) && <th>{t('action')}</th>}
                         </tr>
                       </thead>
                       <tbody>
@@ -164,11 +153,11 @@ const Vehicle = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        Showing {activePage.current * sort + 1} to{" "}
+                      {t('showing')} {activePage.current * sort + 1} {t('to')}{" "}
                         {data.length > (activePage.current + 1) * sort
                           ? (activePage.current + 1) * sort
                           : data.length}{" "}
-                        of {data.length} entries
+                        {t('of')} {data.length} {t('entries')}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 const createGroup = async (body) => {
-  return axios.post("/business-groups", body);
+  const data = await axios.post("/business-groups", body);
+  return data.data.data
 };
 
 const getGroups = async (page) => {
@@ -17,7 +18,6 @@ const deleteGroup = async (body) => {
   return axios.delete(`/business-group/${body}`);
 };
 const updateGroup = async (body) => {
-  console.log(body)
   return axios.patch("/business-groups",body);
 };
 

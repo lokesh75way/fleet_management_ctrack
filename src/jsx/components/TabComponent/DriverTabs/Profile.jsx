@@ -4,6 +4,9 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
+import { useParams } from "react-router-dom";
+
+import {useTranslation} from 'react-i18next'
 import {
   branchOptions,
   companyOptions,
@@ -31,7 +34,8 @@ const Profile = ({
       padding: ".25rem 0 ",
     }),
   };
-
+  const {t} = useTranslation();
+  const { id } = useParams();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
 
@@ -40,7 +44,7 @@ const Profile = ({
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Business Group <span className="text-danger">*</span>
+            {t('businessGroup')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="businessGroupId"
@@ -73,7 +77,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Company <span className="text-danger">*</span>
+          {t('company')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="companyId"
@@ -101,7 +105,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Branch <span className="text-danger">*</span>
+          {t('branch')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="branchId"
@@ -148,7 +152,7 @@ const Profile = ({
         </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            First Name <span className="text-danger">*</span>
+          {t('firstName')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -162,7 +166,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            Last Name <span className="text-danger">*</span>
+          {t('lastName')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -176,7 +180,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Employee Number <span className="text-danger">*</span>
+          {t('employeeNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -190,7 +194,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            Country <span className="text-danger">*</span>
+          {t('country')} <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -205,12 +209,10 @@ const Profile = ({
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div
-          className={`${
-            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
-          }`}
-        >
-          <label className="form-label">State</label>
+        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
+          <label className="form-label">
+          {t('state')}
+          </label>
           <div>
             <StateSelect
               countryid={countryid}
@@ -227,7 +229,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            City <span className="text-danger">*</span>
+          {t('city')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -241,7 +243,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Zip Code
+          {t('zipCode')}
           </label>
           <CustomInput
             type="number"
@@ -260,7 +262,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street1 <span className="text-danger">*</span>
+          {t('street1')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -274,7 +276,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            Street2
+          {t('street2')}
           </label>
           <CustomInput
             type="text"
@@ -287,7 +289,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Contact Number1 <span className="text-danger">*</span>
+          {t('contactNumber1')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -306,7 +308,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            Contact Number2 <span className="text-danger">*</span>
+          {t('contactNumber2')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -338,7 +340,7 @@ const Profile = ({
           style={{ width: "10%" }}
         >
           {" "}
-          Submit
+          {t('submit')}
         </Button>
       </div>
     </div>

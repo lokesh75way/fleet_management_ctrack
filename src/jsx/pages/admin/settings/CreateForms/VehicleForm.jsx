@@ -7,18 +7,23 @@ import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { vehicleGeneralSchema, vehicleProfileSchema, vehicleDocumentSchema } from '../../../../../yup' ;
 import useStorage from '../../../../../hooks/useStorage'
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
+import { createVehicles, updateVehicles } from "../../../../../services/api/VehicleService";
+
+import {useTranslation} from 'react-i18next'
 
 
 const VehicleForm = () => {
+
+  const {t} = useTranslation();
   const {saveData} = useStorage()
   const navigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = ["General", "Profile", "Document"];
+  const tabHeading = [t('general'), t('profile'), t('document')];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
@@ -28,31 +33,52 @@ const VehicleForm = () => {
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: activeIndex === 1? vehicleProfileSchema : vehicleDocumentSchema)
   })
   const { id } = useParams();
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
+  const location = useLocation();
+  const { formData } = location.state || {};
+  const onSubmit = async(data)=>{
+    if(activeIndex === (totalTabs - 2)){
       try{
-        saveData(data, 'vehicleData')
-        console.log(data)
-        notifySuccess("Saved !")
-        navigate("/vehicle");
-        return;
+        if(id){
+          try{
+            console.log(data)
+            await updateVehicles(data)
+            notifySuccess("Vehicle Updated Successfully")
+            navigate("/vehicle");
+            return;
+          }catch(e){
+            notifyError("Some Error occured")
+          }
+        }
+        else{
+          try{
+            console.log(data)
+            data.businessGroupId = getValues('businessId')
+            data.companyId = getValues('companyId')
+            data.branchId = getValues('branchId')
+            await createVehicles(data)
+            
+            notifySuccess("Vehicle created")
+            navigate("/vehicle");
+            return;
+          }catch(e){
+            notifyError("Some error occured")
+          }
+        }
       }
       catch(error){
-        notifyError("Some error occured !!")
+        notifyError("Some error occured")
       }
       return;
     }
-    notifySuccess("Saved !")
-    console.log(data)
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
 
   return (
     <>
       <MainPagetitle
-        mainTitle="Vehicle"
-        pageTitle={id?"Edit":"Create"}
-        parentTitle={"Vehicle"}
+        mainTitle={t('vehicle')}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t('vehicle')}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -91,6 +117,7 @@ const VehicleForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
+                          formData={formData}
                         />
                       </Tab.Pane>
                     );

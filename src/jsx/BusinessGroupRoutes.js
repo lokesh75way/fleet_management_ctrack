@@ -16,6 +16,8 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
+import PermissionDenied from "./pages/PermissionDenied";
+import { usePermissions } from "../context/PermissionContext";
 
 
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
@@ -97,79 +99,86 @@ const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 const BusinessGroupRoutes = () => {
   const allroutes = [
     // Dashboard
-    { url: "", component: <Home /> },
-    { url: "dashboard", component: <Home /> },
-    { url: "performance", component: <Performance /> },
-    { url: "project", component: <Projects /> },
-    { url: "task-summary", component: <TaskSummary /> },
-    { url: "manage-client", component: <ManageClient /> },
-    { url: "reports/generated", component: <Report /> },
-    { url: "driver", component: <Driver /> },
-    { url: "company", component: <Company /> },
-    { url: "company/:id", component: <Company /> },
-    { url: "business", component: <Business /> },
-    { url: "general", component: <General /> },
-    { url: "master", component: <Master /> },
-    { url: "technician/details", component: <Technician /> },
-    { url: "technician/edit/:id", component: <TechnicianForm /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
-    { url: "company-tracking", component: <CompanyTracking /> },
-    { url: "vehicle/create", component: <VehicleForm /> },
-    { url: "driver/create", component: <DriverForm /> },
-    { url: "driver/edit/:id", component: <DriverForm /> },
-    { url: "technician/details/create", component: <TechnicianForm /> },
-    { url: "subUser/create", component: <SubUserForm /> },
-    { url: "subUser", component: <SubUser /> },
+    { module:"*", url: "", component: <Home /> },
+    { module:"*", url: "dashboard", component: <Home /> },
+    { module:"*", url: "performance", component: <Performance /> },
+    { module:"*", url: "project", component: <Projects /> },
+    { module:"*", url: "task-summary", component: <TaskSummary /> },
+    { module:"*", url: "/businessUser/my-profile/edit", component: <MyProfile /> },
+    { module:"*", url: "/app-profile", component: <BusinessUserProfile /> },
+    { module:"*", url: "app-profile", component: <AdminProfile /> },
+    { module:"*", url: "changepassword", component: <ChangePassword /> },
+    { module:"*", url: "manage-client", component: <ManageClient /> },
+    { module:"*", url: "contactUs", component: <ContactUs /> },
+    { module:"*", url: "reports/generated", component: <Report /> },
+    { module:"*", url: "general", component: <General /> },
+    { module:"*", url: "master", component: <Master /> },
 
-    { url: "/settings/alert", component: <Alert /> },
-    { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
-    { url: "/settings/expense", component: <Expense /> },
-    { url: "/settings/geofence", component: <Geofence /> },
-    { url: "/settings/geofence/map", component: <GeofenceMap /> },
+    { module:"technician", url: "technician/details", component: <Technician /> },
+    { module:"technician",operation:"add", url: "technician/details/create", component: <TechnicianForm /> },
+    { module:"technician", url: "technician/tasks", component: <TechnicianTask /> },
+    { module:"technician",operation:"modify", url: "technician/edit/:id", component: <TechnicianForm /> },
+    
+    { module:"vehicle", url: "vehicle-tracking", component: <DriverTracking /> },
+    { module:"vehicle",operation:"add", url: "vehicle/create", component: <VehicleForm /> },
+    { module:"vehicle", url: "Vehicle", component: <Vehicle /> },
+    { module:"vehicle",operation:"modify", url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+    { module:"vehicle", url: "vehicle-tracking/:id", component: <DriverTracking /> },
+    
+    { module:"comapny", url: "company", component: <Company /> },
+    { module:"comapny", url: "company/:id", component: <Company /> },
+    { module:"company",operation:"add", url: "company/create", component: <CompanyForm /> },
+    { module:"company",operation:"modify", url: "company/edit/:id", component: <CompanyForm /> },
+    { module:"company", url: "company-tracking", component: <CompanyTracking /> },
+    
+    { module:"driver", url: "driver", component: <Driver /> },
+    { module:"driver",operation:"add", url: "driver/create", component: <DriverForm /> },
+    { module:"driver",operation:"modify", url: "driver/edit/:id", component: <DriverForm /> },
+    
+    { module:"subUser",operation:"add", url: "subUser/create", component: <SubUserForm /> },
+    { module:"subUser", url: "subUser", component: <SubUser /> },
+    
+    { module:"business", url: "business-group", component: <BusinessUser/> },
+    { module:"business",operation:"add", url: "business/create", component: <BusinessForm /> },
+    { module:"business", url: "business-group/:id", component: <BusinessUser/> },
+    { module:"business", url: "business", component: <Business /> },
 
-    { url: "contactUs", component: <ContactUs /> },
-    { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle /> },
-    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
-    { url: "company/create", component: <CompanyForm /> },
-    { url: "company/edit/:id", component: <CompanyForm /> },
-    { url: "business/create", component: <BusinessForm /> },
-    { url: "branch/create", component: <BranchForm /> },
-    { url: "branch/edit/:id", component: <BranchForm  /> },
-    { url: "branch", component: <Branch /> },
-    { url: "business-group", component: <BusinessUser/> },
-    { url: "business-group/:id", component: <BusinessUser/> },
-    { url: "branch", component: <Branch /> },
-    { url: "branch/:id", component: <Branch /> },
-    { url: "/businessUser/my-profile/edit", component: <MyProfile /> },
-    { url: "/app-profile", component: <BusinessUserProfile /> },
-    // Manage Profile
-    { url: "app-profile", component: <AdminProfile /> },
-    { url: "changepassword", component: <ChangePassword /> },
+    { module:"settings", url: "/settings/alert", component: <Alert /> },
+    { module:"settings", url: "/settings/classifyTrips", component: <ClassifyTrips /> },
+    { module:"settings", url: "/settings/expense", component: <Expense /> },
+    { module:"settings", url: "/settings/geofence", component: <Geofence /> },
+    { module:"settings", url: "/settings/geofence/map", component: <GeofenceMap /> },
+
+
+    { module:"branch",operation:"add", url: "branch/create", component: <BranchForm /> },
+    { module:"branch",operation:"modify", url: "branch/edit/:id", component: <BranchForm  /> },
+    { module:"branch", url: "branch", component: <Branch /> },
+    { module:"branch", url: "branch", component: <Branch /> },
+    { module:"branch", url: "branch/:id", component: <Branch /> },
+
 
     // groups
-    { url: "groups", component: <CreateGroups /> },
-    { url: "groups/permission", component: <Permission /> },
+    { module:"groups", url: "groups", component: <CreateGroups /> },
+    { module:"groups", url: "groups/permission", component: <Permission /> },
 
      //Reports
-     { url: "/reports/activity", component: <ActivityReport /> },
-     { url: "/reports/geofence-address", component: <GeofenceAddress /> },
-     { url: "/reports/sensor", component: <Sensor /> },
-     { url: "/reports/alert", component: <AlertReport /> },
-     { url: "/reports/reminder", component: <Reminder /> },
-     { url: "/reports/expense", component: <ExpenseReport /> },
-     { url: "/reports/fuel", component: <FuelReport /> },
-     { url: "/reports/rpm", component: <RPM /> },
-     { url: "/reports/temperature", component: <Temperature /> },
-     { url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
-     { url: "/reports/obd", component: <OBD /> },
-     { url: "/reports/billing", component: <Billing /> },
-     { url: "/reports/customized", component: <Customized /> },
-     { url: "/reports/logs", component: <Logs /> },
-     { url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
-     { url: "/reports/elock", component: <Elock /> },
-     { url: "/reports/trip-classification", component: <TripClassification /> },
+     { module:"reports", url: "/reports/activity", component: <ActivityReport /> },
+     { module:"reports", url: "/reports/geofence-address", component: <GeofenceAddress /> },
+     { module:"reports", url: "/reports/sensor", component: <Sensor /> },
+     { module:"reports", url: "/reports/alert", component: <AlertReport /> },
+     { module:"reports", url: "/reports/reminder", component: <Reminder /> },
+     { module:"reports", url: "/reports/expense", component: <ExpenseReport /> },
+     { module:"reports", url: "/reports/fuel", component: <FuelReport /> },
+     { module:"reports", url: "/reports/rpm", component: <RPM /> },
+     { module:"reports", url: "/reports/temperature", component: <Temperature /> },
+     { module:"reports", url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
+     { module:"reports", url: "/reports/obd", component: <OBD /> },
+     { module:"reports", url: "/reports/billing", component: <Billing /> },
+     { module:"reports", url: "/reports/customized", component: <Customized /> },
+     { module:"reports", url: "/reports/logs", component: <Logs /> },
+     { module:"reports", url: "/reports/hardware-maintenance", component: <HardwareMaintenance /> },
+     { module:"reports", url: "/reports/elock", component: <Elock /> },
+     { module:"reports", url: "/reports/trip-classification", component: <TripClassification /> },
   ];
 
   function NotFound() {
@@ -182,19 +191,29 @@ const BusinessGroupRoutes = () => {
       return <Error404 />;
     }
   }
+  const {can} = usePermissions()
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route element={<AdminLayout />}>
-          {allroutes.map((data, i) => (
+          {allroutes.map((data, i) => {
+            if (!can(data.module, data.operation || 'view')) {
+              // console.log(data.module, data.url, 'create')
+               return <Route
+                key={i}
+                exact
+                path={`${data.url}`}
+                element={<PermissionDenied />}
+              />
+            }
             <Route
               key={i}
               exact
               path={`${data.url}`}
               element={data.component}
             />
-          ))}
+        })}
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

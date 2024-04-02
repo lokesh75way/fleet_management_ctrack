@@ -4,7 +4,7 @@ import CustomInput from "../../Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from "react-timezone-select";
-import { currencyOptions } from "../VehicleTabs/Options";
+import { currencyOptions, distanceCounterOptions } from "../VehicleTabs/Options";
 import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
@@ -31,15 +31,15 @@ const UserSetting = ({
   register,
 }) => {
   const { t } = useTranslation();
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
   const [dValues, setDvalues] = useState({});
+  const [selectedTimezone, setSelectedTimezone] = useState(
+     dValues?.businessGroupId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
   const location = useLocation();
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
+      padding: ".25rem 0 ",
     }),
   };
   const { id } = useParams();
@@ -52,7 +52,6 @@ const UserSetting = ({
 
   useEffect(() => {
     if (dValues && id) {
-      console.log(dValues);
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
       setValue("unitOfDistance", dValues.businessGroupId?.unitOfDistance)
@@ -62,6 +61,16 @@ const UserSetting = ({
       setValue("currency", dValues.businessGroupId?.currency);
       setValue("timezone",dValues.businessGroupId?.timezone)
       setValue("unitOfFuel",dValues.businessGroupId?.unitOfFuel)
+    }
+    else{
+      setValue('unitOfDistance',unitOfDistanceOptions[0]?.value)
+      setValue('unitOfFuel',unitOfFuelOptions[0]?.value)
+      setValue('language', languageOptions[0]?.value );
+      setValue('dateFormat',dateFormatOptions[0]?.value);
+      setValue('timeFormat',timeFormatOptions[0]?.value)
+      setValue('status',statusOptions[0]?.value);
+      setValue('currency',currencyOptions[0]?.value)
+      setValue('workStartDay', weekStartDayOptions[0]?.value)
     }
   }, [dValues, id]);
 
@@ -75,7 +84,7 @@ const UserSetting = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("dateFormat", newValue.value)}
+                onChange={(newValue) => setValue("dateFormat", newValue?.value)}
                 options={dateFormatOptions}
                 ref={ref}
                 name={name}
@@ -227,7 +236,7 @@ const UserSetting = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{value , label : value}}
+                value={selectedTimezone}
               />
             )}
           />

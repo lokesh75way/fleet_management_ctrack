@@ -66,22 +66,24 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
-         
           delete data["oldPassword"];
           delete data["newPassword"];
           delete data["retypePassword"];
-        
+
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
         } else {
-          await createGroup(data);
-          notifySuccess("New Business group Created!");
+          const {success , message} = await createGroup(data);
+          if (success === false) {
+            notifyError(message);
+            return;
+          }
+          notifySuccess(message);
         }
         navigate("/business");
 
         return;
       } catch (error) {
-        await updateGroup(data);
         notifyError("Some error occured !!");
       }
     } else if (activeIndex === 2) {
@@ -94,7 +96,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         };
         await changePassword(passwordData);
         notifySuccess("Password has been changed");
-        navigate("/business")
+        navigate("/business");
       } catch (error) {
         notifyError("Password is not changes!");
       }

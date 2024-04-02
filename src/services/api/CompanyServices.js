@@ -13,7 +13,8 @@ export const getCompany = async (page) => {
  
 };
 export const addCompany = async (body) => {
-  return axios.post("/companies", body);
+  const data = await axios.post("/companies", body);
+  return data.data.data;
 };
 export const deleteCompany = async (_id) => {
   console.log(_id);

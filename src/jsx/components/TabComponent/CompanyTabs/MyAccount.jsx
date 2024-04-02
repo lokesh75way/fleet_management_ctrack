@@ -7,11 +7,13 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
+import AsyncSelect from "react-select/async";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
+import { businessGroupOptions } from "../../ReusableApi/Api";
 
 const MyAccount = ({
   setValue,
@@ -23,8 +25,9 @@ const MyAccount = ({
   control,
   formData
 }) => {
+  const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
   const { t } = useTranslation();
   const { checkRole, checkUserName } = useStorage();
@@ -32,6 +35,7 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [bussinessGpLable, setBussinessGpLable] = useState(null)
   const role = localStorage.getItem("role");
 
   const customStyles = {
@@ -41,17 +45,12 @@ const MyAccount = ({
     }),
   };
 
-  const [businessUserOptions,setBusinessUserOptions] = useState([])
-  const getBusinessGroup = async()=>{
-    const {data} = await getGroups()
-    setBusinessUserOptions(data.map((item) => ({
-      label: item.businessGroupId.groupName,
-      value: item.businessGroupId._id,
-    })));
-  }
+  
   useEffect(()=>{
-    getBusinessGroup()
+    // getBusinessGroup()
+    businessGroupOptions()
   },[])
+
 
   const companyOptions = DummyData.filter(
     (item) => item.role === "company"
@@ -60,15 +59,8 @@ const MyAccount = ({
     value: item.country,
   }));
 
-  useEffect(() => {
-    if (role === "businessgroup") {
-      setTempValue(localStorage.getItem("loginDetails-name"));
-      setValue("parent", localStorage.getItem("loginDetails-name"));
-    }
-  }, []);
 
   const { id } = useParams();
-  const companyData = JSON.parse(localStorage.getItem("userJsonData"));
 //   let newData = [];
 // if(id){
 //   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
@@ -76,7 +68,8 @@ const MyAccount = ({
 // }
 useEffect(()=>{
   if(formData && id){
-    setValue("businessGroupId",formData[0].companyId?.businessGroupId?.businessGroupId)
+    console.log("data:",formData)
+    setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
     setValue("companyName",formData[0].companyId?.companyName)
     setValue("userName", formData[0].userName)
     setValue("email",formData[0].email)
@@ -90,8 +83,12 @@ useEffect(()=>{
     setValue("faxNumber",formData[0].companyId?.faxNumber)
     setValue("zipCode",formData[0].companyId?.zipCode)
     setValue("city",formData[0].companyId?.city)
-    const capacity = formData[0].companyId?.capacity + " days"
-    setValue("storageCapacity",capacity)
+    setValue("storageCapacity",formData[0].companyId?.capacity )
+    setValue("country",formData[0].country)
+    setValue("state",formData[0].state || '' )
+    setDefaultCountry({ name:formData[0].country })
+    setSelectStateName({name : formData[0].state || ''})
+    setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
   }
 },[formData,id])
 
@@ -104,48 +101,28 @@ useEffect(()=>{
             {t("businessGroup")}
             <span className="text-danger">*</span>
           </label>
-          {checkRole() === "SUPER_ADMIN" ? (
             <Controller
               name="businessGroupId"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <Select
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
                   onChange={(newValue) => {
-                    setTempValue(newValue.label);
+                    console.log(newValue)
+                    setBussinessGpLable(newValue.label)
                     setValue("businessGroupId", newValue.value);
                   }}
-                  options={businessUserOptions}
+                  loadOptions={businessGroupOptions}
                   ref={ref}
+                  isDisabled={checkRole() !== "SUPER_ADMIN"}
                   name={name}
                   styles={customStyles}
-                  value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
+                  value={{label: bussinessGpLable , value : value}}
                 />
               )}
             />
-          ) : (
-            <Controller
-              name="businessGroupId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) => {
-                    setTempValue(newValue.label);
-                    setValue("businessGroupId", newValue.label);
-                  }}
-                  options={[{ value: checkUserName(), label: checkUserName() }]}
-                  ref={ref}
-                  isDisabled={localStorage.getItem("role") !== "Admin"}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={[
-                    { value: checkUserName(), label: checkUserName() },
-                  ]}
-                />
-              )}
-            />
-          )}
           {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -310,11 +287,12 @@ useEffect(()=>{
           <CountrySelect
             onChange={(e) => {
               console.log(e);
-              setSelectStateName({ name: "Select State" });
+              setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false);
             }}
+            defaultValue={defaultCountry}
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
@@ -475,8 +453,7 @@ useEffect(()=>{
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t("submit")}
+          {"Next"}
         </Button>
       </div>
     </div>

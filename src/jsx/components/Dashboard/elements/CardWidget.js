@@ -7,7 +7,10 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { FaRegBuilding, FaTools } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 
+import {useTranslation} from 'react-i18next'
+
 const CardWidget = () => {
+  const { t } = useTranslation();
   const role = localStorage.getItem("role");
   // Define the order for each role
   const roleOrders = {
@@ -42,7 +45,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Business User</h6>
+                        <h6>{t('totalBusinessUser')}</h6>
                         <h3>{getCount("businessgroup")}</h3>
                       </div>
                       <div className="icon-box bg-primary-light">
@@ -65,13 +68,13 @@ const CardWidget = () => {
                       labels={["Running", "Idle", "Stopped"]}
                       width={160}
                       data={[12, 10, 15]}
-                      completeLabel="Total"
+                      completeLabel={t('total')}
                     />
                     <ul className="project-list">
                       {" "}
                       <li>
                         {" "}
-                        <h6>All Vehicles</h6>{" "}
+                        <h6>{t('allVehicles')}</h6>{" "}
                       </li>
                       <li>
                         <svg
@@ -83,7 +86,7 @@ const CardWidget = () => {
                         >
                           <rect width="10" height="10" rx="3" fill="#3AC977" />
                         </svg>{" "}
-                        Running
+                        {t('running')}
                       </li>
                       <li>
                         <svg
@@ -100,7 +103,7 @@ const CardWidget = () => {
                             fill="var(--primary)"
                           />
                         </svg>{" "}
-                        Idle
+                        {t('idle')}
                       </li>
                       <li>
                         <svg
@@ -117,7 +120,7 @@ const CardWidget = () => {
                             fill="var(--secondary)"
                           />
                         </svg>{" "}
-                        Stopped
+                        {t('stopped')}
                       </li>
                     </ul>
                   </div>
@@ -132,7 +135,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Companies</h6>
+                        <h6>{t('totalCompanies')}</h6>
                         <h3>{getCount("company")}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -161,7 +164,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0" >
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Users</h6>
+                        <h6>{t('totalUsers')}</h6>
                         <h3>10</h3>
                       </div>
                       <div className="icon-box bg-danger-ligh">
@@ -180,7 +183,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Branches</h6>
+                        <h6>{t('totalBranches')}</h6>
                         <h3>{getCount("branch")}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -209,7 +212,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Technician</h6>
+                        <h6>{t('totalTechnician')}</h6>
                         <h3>{getCount("Technician")}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -238,7 +241,7 @@ const CardWidget = () => {
                   <div className="card-body depostit-card p-0 z-0" >
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>Total Driver</h6>
+                        <h6>{t('totalDriver')}</h6>
                         <h3>{getCount("Driver")}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">

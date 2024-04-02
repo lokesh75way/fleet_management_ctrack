@@ -5,10 +5,12 @@ import GroupTable from '../components/Tables/GroupTable';
 import { useNavigate } from 'react-router-dom';
 import TemplateServices from '../../services/api/TemplateServices';
 
+import {useTranslation} from 'react-i18next'
+
 
 const CreateGroups = () => {
 
-
+    const {t} = useTranslation();
     // const templateData = JSON.parse(localStorage.getItem("templateData")) || []
 
     useEffect(() => {
@@ -16,7 +18,7 @@ const CreateGroups = () => {
           try {
             const templateData = await TemplateServices.getTemplates();
             console.log("Received template data:", templateData);
-            setGroupsDataState(templateData.data); // Assuming 'data' property contains template data array
+            setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
           } catch (error) {
             console.error("Error fetching template data:", error);
           }
@@ -69,14 +71,14 @@ const CreateGroups = () => {
         chageData(activePag.current * sort, (activePag.current + 1) * sort);
         settest(i);
     };
-    const onConfirmDelete = (index) => {
+    const onConfirmDelete = async (index, id) => {
 
         const newdata = groupsDataState.filter((e,i)=>{
             if(index != i) return e;
         })
         localStorage.setItem('templateData', JSON.stringify(newdata))
         setGroupsDataState(newdata);
-
+        await TemplateServices.deleteTemplate(id);
     }
 
     const handleAddGroup = ()=>{
@@ -89,7 +91,7 @@ const CreateGroups = () => {
 
     return (
         <>
-            <MainPagetitle mainTitle="Feature Templates" pageTitle={'Feature Templates'} parentTitle={'Settings'} />
+            <MainPagetitle mainTitle={t('featureTemplates')} pageTitle={t('featureTemplates')} parentTitle={t('settings')} />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-xl-12">
@@ -97,25 +99,25 @@ const CreateGroups = () => {
                             <div className="card-body p-0">
                                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                                        <h4 className="heading mb-0">Feature Template</h4>
+                                        <h4 className="heading mb-0">{t('featureTemplates')}</h4>
                                         <div>
                                             <button  className="btn btn-primary btn-sm ms-1" data-bs-toggle="offcanvas"
                                                 onClick={handleAddGroup}
-                                            >+ Add New</button> {""}
+                                            >+ {t('addNew')}</button> {""}
                                         </div>
                                     </div>
                                     <div id="employee-tbl_wrapper" className="dataTables_wrapper no-footer">
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>Short Name</th>
-                                                    <th>Template Name</th>
-                                                    <th>Username</th>
-                                                    <th>Contact Number</th>
-                                                    <th>Location</th>
-                                                    <th>User Template</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
+                                                    <th>{t('shortName')}</th>
+                                                    <th>{t('templateName')}</th>
+                                                    <th>{t('username')}</th>
+                                                    <th>{t('contactNumber')}</th>
+                                                    <th>{t('location')}</th>
+                                                    <th>{t('userTemplate')}</th>
+                                                    <th>{t('status')}</th>
+                                                    <th>{t('action')}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -124,11 +126,11 @@ const CreateGroups = () => {
                                         </table>
                                         <div className="d-sm-flex text-center justify-content-between align-items-center">
                                             <div className="dataTables_info">
-                                                Showing {activePag.current * sort + 1} to{" "}
+                                            {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
                                                 {data.length > (activePag.current + 1) * sort
                                                     ? (activePag.current + 1) * sort
                                                     : data.length}{" "}
-                                                of {data.length} entries
+                                                {t('of')} {data.length} {t('entries')}
                                             </div>
                                             <div
                                                 className="dataTables_paginate paging_simple_numbers"
