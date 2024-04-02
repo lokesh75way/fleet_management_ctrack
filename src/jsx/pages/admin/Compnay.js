@@ -42,8 +42,7 @@ const Company = () => {
   const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
   const { id } = useParams();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
-  usePagination();
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =usePagination();
 
   const { control, setValue, getValue } = useForm();
   const customStyles = {
