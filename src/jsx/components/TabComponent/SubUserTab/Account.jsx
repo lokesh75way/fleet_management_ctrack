@@ -164,7 +164,7 @@ const Account = ({
   let parentbgname;
   if (role === 'COMPANY') {
     const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
-    parentbgname = parentbgnamefilter[0].parentBusinessGroup;
+    parentbgname = parentbgnamefilter[0]?.parentBusinessGroup;
   }
 
   const branchData = User.filter(

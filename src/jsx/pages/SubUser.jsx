@@ -52,14 +52,15 @@ import { usePermissions } from "../../context/PermissionContext";
   const userData = JSON.parse(localStorage.getItem('userJsonData'))
   var UserData;
   if(checkRole() === 'COMPANY'){
-    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'company' && item.parent === userName))
+    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'STAFF' ))
   }
+
   else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'admin' )
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && (item.type === 'ADMIN' || item.type === 'STAFF') )
 
-  const [tableData, setTableData] = useState(UserData);
+  const [tableData, setTableData] = useState(UserData || [] );
   const [editData, setEditData] = useState();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
