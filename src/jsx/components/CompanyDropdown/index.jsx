@@ -19,7 +19,7 @@ const CompanyDropdown = ({
     const {page} = usePagination();
     useEffect(() => {
         const fetchBusinessGroups = async () => {
-            const response = await getCompany(undefined, groupId ? groupId : undefined);
+            const response = await getCompany(page, groupId ? groupId : undefined);
             console.log(groupId)
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
             console.log(response.data, "this is groud data")
