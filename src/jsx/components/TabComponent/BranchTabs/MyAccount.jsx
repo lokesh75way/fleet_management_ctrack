@@ -74,6 +74,11 @@ const MyAccount = ({
       setCompanyDisabled(true);
       console.log("companyId", userDetails?.user.businessGroupId)
     }
+    if(userDetails.user.role === 'BUSINESS_GROUP'){
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setBusinessDisabled(true);
+    }
 },[])
 
   const businessGroupOptions = async (inputValue) => {

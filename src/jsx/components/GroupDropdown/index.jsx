@@ -9,6 +9,7 @@ const GroupDropdown = ({
     isDisabled,
     name
 }) => {
+    console.log(value, "this is isDisabled")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     useEffect(() => {

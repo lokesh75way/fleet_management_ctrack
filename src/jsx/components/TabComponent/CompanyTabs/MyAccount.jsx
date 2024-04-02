@@ -14,6 +14,7 @@ import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
+import GroupDropdown from "../../GroupDropdown";
 
 const MyAccount = ({
   setValue,
@@ -36,8 +37,9 @@ const MyAccount = ({
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [bussinessGpLable, setBussinessGpLable] = useState(null)
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
   const role = localStorage.getItem("role");
-
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -59,6 +61,17 @@ const MyAccount = ({
     value: item.country,
   }));
 
+
+  useEffect(() => {
+    if(checkRole() !== "SUPER_ADMIN"){
+      console.log("super admin")
+      setIsBuisnessGroupDisabled(true)
+    }
+    if(userDetails.user.role === 'BUSINESS_GROUP'){
+      console.log(userDetails?.user.businessGroupId,"sbhsjksbfkjsfabfkjasf")
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+    }
+},[])
 
   const { id } = useParams();
 //   let newData = [];
@@ -105,25 +118,38 @@ useEffect(()=>{
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <AsyncSelect
-                  cacheOptions
-                  defaultOptions
+                // <AsyncSelect
+                //   cacheOptions
+                //   defaultOptions
+                //   onChange={(newValue) => {
+                //     console.log(newValue)
+                //     setBussinessGpLable(newValue.label)
+                //     setValue("businessGroupId", newValue.value);
+                //   }}
+                //   loadOptions={businessGroupOptions}
+                //   ref={ref}
+                //   isDisabled={checkRole() !== "SUPER_ADMIN"}
+                //   name={name}
+                //   styles={customStyles}
+                //   value={{label: bussinessGpLable , value : value}}
+                // />
+                <GroupDropdown
                   onChange={(newValue) => {
                     console.log(newValue)
-                    setBussinessGpLable(newValue.label)
+                    setBussinessGpLable(newValue.value)
                     setValue("businessGroupId", newValue.value);
+                    
                   }}
-                  loadOptions={businessGroupOptions}
-                  ref={ref}
-                  isDisabled={checkRole() !== "SUPER_ADMIN"}
-                  name={name}
-                  styles={customStyles}
-                  value={{label: bussinessGpLable , value : value}}
-                />
+                  value={value}
+                    ref={ref}
+                    isDisabled={isBuisnessGroupDisabled}
+                    name={name}
+                    customStyles={customStyles}
+                  />
               )}
             />
           {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
-        </div>
+        </div> 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t("companyName")} <span className="text-danger">*</span>
