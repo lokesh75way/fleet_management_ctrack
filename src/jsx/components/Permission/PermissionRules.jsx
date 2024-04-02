@@ -10,6 +10,7 @@ import TemplateServices from "../../../services/api/TemplateServices";
 import { useNavigate, useParams } from "react-router-dom";
 import {useTranslation} from 'react-i18next'
 import Error from "../Error/Error";
+import { notifyError, notifySuccess } from "../../../utils/toast";
 
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
@@ -133,65 +134,6 @@ const handleSubModulePermisssionChange = (
 
   const [isError, setIsErrror] = useState(false);
 
-  const handleSave = async () => {
-    if (!newGroupData.name) {
-      setIsErrror(true);
-      return ;
-    }
-
-    try {
-
-      setIsErrror(false);
-      console.log(data, 'data-;;')
-      const flattenedPermissions = data.reduce((acc, module) => {
-        const mainModulePermissions = {
-          moduleId: module._id,
-          add: module.permission.add,
-          view: module.permission.view,
-          modify: module.permission.modify,
-          delete: module.permission.delete,
-        };
-
-        acc.push(mainModulePermissions);
-
-        if (module.subModules && module.subModules.length > 0 && !id) {
-          module.subModules.forEach((subModule) => {
-            const subModulePermissions = {
-              moduleId: subModule.id,
-              add: subModule.permission.add,
-              view: subModule.permission.view,
-              modify: subModule.permission.modify,
-              delete: subModule.permission.delete,
-            };
-            acc.push(subModulePermissions);
-          });
-        }
-
-        return acc;
-      }, []);
-
-      const tempGroupData = {
-        ...newGroupData,
-        permission: flattenedPermissions,
-      };
-
-      setNewGroupData((prev) => ({
-        ...prev,
-        permission: flattenedPermissions,
-      }));
-
-      const method = id ? TemplateServices.udpateTemplate : TemplateServices.createTemplate; 
-      await method(tempGroupData);
-      // console.log("this is the temoGrioyp data name", tempGroupData);
-      // setGroupsDataState((prevState) => [...prevState, tempGroupData]);
-      setSubModuleIndexArray([]);
-
-      console.log("Data saved successfully");
-      navigate('/groups')
-    } catch (error) {
-      console.error("Error saving data:", error);
-    }
-  };
 
   useEffect(() => {
     if (isEditTrue !== -1) {
@@ -281,6 +223,75 @@ const handleSubModulePermisssionChange = (
   
   const groupNames = groupsDataState.map(e=>e.name);
   console.log("this is group data state ",groupNames);
+
+
+  const handleSave = async () => {
+    if (!newGroupData.name) {
+      setIsErrror(true);
+      return ;
+    }
+
+    if (groupNames.includes(newGroupData.name)) {
+
+      notifyError('Group Name already exists')
+      return;
+    }
+
+    try {
+
+      setIsErrror(false);
+      console.log(data, 'data-;;')
+      const flattenedPermissions = data.reduce((acc, module) => {
+        const mainModulePermissions = {
+          moduleId: module._id,
+          add: module.permission.add,
+          view: module.permission.view,
+          modify: module.permission.modify,
+          delete: module.permission.delete,
+        };
+
+        acc.push(mainModulePermissions);
+
+        if (module.subModules && module.subModules.length > 0 && !id) {
+          module.subModules.forEach((subModule) => {
+            const subModulePermissions = {
+              moduleId: subModule.id,
+              add: subModule.permission.add,
+              view: subModule.permission.view,
+              modify: subModule.permission.modify,
+              delete: subModule.permission.delete,
+            };
+            acc.push(subModulePermissions);
+          });
+        }
+
+        
+        return acc;
+      }, []);
+
+      const tempGroupData = {
+        ...newGroupData,
+        permission: flattenedPermissions,
+      };
+
+      setNewGroupData((prev) => ({
+        ...prev,
+        permission: flattenedPermissions,
+      }));
+
+      const method = id ? TemplateServices.udpateTemplate : TemplateServices.createTemplate; 
+      await method(tempGroupData);
+      // console.log("this is the temoGrioyp data name", tempGroupData);
+      // setGroupsDataState((prevState) => [...prevState, tempGroupData]);
+      setSubModuleIndexArray([]);
+
+      console.log("Data saved successfully");
+      notifySuccess('saved');
+      navigate('/groups')
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  };
 
   useEffect(() => {
     fetchTemplates();
