@@ -7,7 +7,7 @@ import axios from "axios";
 export const getCompany = async (page, groupId) => {
   let url = "/companies";
   let params = [];
-  if (page !== undefined) {
+  if (page) {
     params.push(`page=${page}`);
     params.push(`limit=${10}`);
   }

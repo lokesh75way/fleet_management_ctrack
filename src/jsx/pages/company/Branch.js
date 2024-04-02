@@ -23,6 +23,7 @@ import { getCompany } from "../../../services/api/CompanyServices";
 import CompanyDropdown from "../../components/CompanyDropdown";
 import BranchDropdown from "../../components/BranchDropdown";
 import { getSelectValues } from "../../../utils/helper";
+import ParentBranchDropdown from "../../components/ParentBranch";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -88,23 +89,15 @@ const Branch = () => {
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  // const defaultValues = getSelectValues();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+
+  const defaultValues = getSelectValues();
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
     usePagination();
 
-  // const fetchAllCompany = async()=>{
-  //   try {
-  //     const {data, success} = await getCompany()
-  //     console.log("this is the company data",data.data.data)
-  //     setCompanies(data.data.data);
-  //   } catch (error) {
-  //     console.log("Error in fetching data", error);
-  //   }
-  // }
-
-  const fetchAllBranch = async () => {
+  const fetchAllBranch = async (page,id) => {
     try {
-      const { data, success } = await getAllBranch(page);
+      console.log({id})
+      const { data, success } = await getAllBranch(page,id);
       setTableData(data.data);
       setCount(data.totalCount);
       setBranches(data.data);
@@ -133,6 +126,10 @@ const Branch = () => {
     label: branch.branchName,
   }));
 
+  const handleCompanyChange = (selectedOption) => {
+    setSelectedCompany(selectedOption); // Update selected company
+  };
+
   //   const handleCompanyChange = selectedOption => {
   //     setSelectedCompany(selectedOption);
   //     setFilter({value: selectedOption.value, label: selectedOption.label}); // Update the filter for companies
@@ -141,8 +138,10 @@ const Branch = () => {
 
   // Handler function for branch selection
   const handleBranchChange = (selectedOption) => {
-    console.log("Selected branch:", selectedOption);
-    // Implement your logic here
+    console.log("Selected branch:", selectedOption.value);
+    setFilter(selectedOption);
+    setPage(1);
+    fetchAllBranch(1,selectedOption.value)
   };
 
   const onConfirmDelete = async (id) => {
@@ -199,6 +198,7 @@ const Branch = () => {
                             onChange={async (newValue) => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
+                              handleBranchChange(newValue)
                             }}
                             value={value}
                             customStyles={customStyles}
@@ -214,15 +214,13 @@ const Branch = () => {
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <BranchDropdown
-                            onChange={(newValue) => {
-                              console.log("newValue", newValue);
-                              const valuesArray = newValue.map(
-                                (item) => item.value
-                              );
-                              // setValue("Branch", valuesArray);
-                              // setValue("branchIds", valuesArray);
-                            }}
-                            key={companyId}
+                          key={companyId}
+                          onChange={(newValue) => {
+                          const valuesArray = newValue.map(item => item.value);
+                          setValue("parent", valuesArray);
+                          setValue("branchIds", valuesArray);
+                          
+                        }}
                             companyId={companyId}
                             value={value}
                             customStyles={customStyles}
