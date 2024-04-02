@@ -7,8 +7,9 @@ import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useLocation, useParams } from "react-router-dom";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { storageCapacityOptions } from "../VehicleTabs/Options";
+import FileUploader from "../../../../components/FileUploader";
 
 const MyAccount = ({
   data,
@@ -20,15 +21,15 @@ const MyAccount = ({
   errors,
   control,
 }) => {
-  const [defaultCountry,setDefaultCountry] = useState();
+  const [defaultCountry, setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "",
   });
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const location = useLocation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  
+
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [dValues, setDvalues] = useState({});
   const { id } = useParams();
@@ -39,49 +40,50 @@ const MyAccount = ({
       padding: ".25rem 0 ",
     }),
   };
-  useEffect(()=>{
+  useEffect(() => {
     if (id) {
       const data = location.state[0];
       setDvalues(data);
-     
     }
-  },[id])
-  useEffect(()=>{
-    console.log(dValues)
-    if(dValues && id){
-
-      setValue("groupName",dValues.businessGroupId?.groupName)
-      setValue("userName", dValues.userName)
-      setValue("email",dValues.email)
-      setValue("mobileNumber",dValues.mobileNumber)
-      setValue("whatsappContactNumber",dValues.businessGroupId?.whatsappContactNumber)
-      setValue("helpDeskEmail",dValues.businessGroupId?.helpDeskEmail)
-      setValue("helpDeskTelephoneNumber",dValues.businessGroupId?.helpDeskTelephoneNumber)
-      setValue("street1",dValues.businessGroupId?.street1)
-      setValue("street2",dValues.businessGroupId?.street2)
-      setValue("capacity",dValues.businessGroupId?.capacity)
-      setValue("contactPerson",dValues.businessGroupId?.contactPerson)
-      setValue("faxNumber",dValues?.businessGroupId?.faxNumber)
-      setValue("zipCode",dValues.businessGroupId?.zipCode)
-      setValue("city",dValues.businessGroupId?.city)
-      setDefaultCountry({ name:dValues.country })
-      setValue("country",dValues.country)
-      setSelectStateName({name : dValues.state || ''})
-      setValue("state",dValues.state || '')
+  }, [id]);
+  useEffect(() => {
+    console.log(dValues);
+    if (dValues && id) {
+      setValue("groupName", dValues.businessGroupId?.groupName);
+      setValue("userName", dValues.userName);
+      setValue("email", dValues.email);
+      setValue("mobileNumber", dValues.mobileNumber);
+      setValue(
+        "whatsappContactNumber",
+        dValues.businessGroupId?.whatsappContactNumber
+      );
+      setValue("helpDeskEmail", dValues.businessGroupId?.helpDeskEmail);
+      setValue(
+        "helpDeskTelephoneNumber",
+        dValues.businessGroupId?.helpDeskTelephoneNumber
+      );
+      setValue("street1", dValues.businessGroupId?.street1);
+      setValue("street2", dValues.businessGroupId?.street2);
+      setValue("capacity", dValues.businessGroupId?.capacity);
+      setValue("contactPerson", dValues.businessGroupId?.contactPerson);
+      setValue("faxNumber", dValues?.businessGroupId?.faxNumber);
+      setValue("zipCode", dValues.businessGroupId?.zipCode);
+      setValue("city", dValues.businessGroupId?.city);
+      setDefaultCountry({ name: dValues.country });
+      setValue("country", dValues.country);
+      setSelectStateName({ name: dValues.state || "" });
+      setValue("state", dValues.state || "");
+    } else {
+      setValue("capacity", storageCapacityOptions[1].value);
     }
-  else{
-    setValue('capacity',storageCapacityOptions[1].value)
-  }
-    
-  },[dValues,id])
-
+  }, [dValues, id]);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('businessGroupName')} <span className="text-danger">*</span>
+            {t("businessGroupName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -95,7 +97,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('username')} <span className="text-danger">*</span>
+            {t("username")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -109,7 +111,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('email')}<span className="text-danger">*</span>
+            {t("email")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -124,7 +127,8 @@ const MyAccount = ({
         {!id && (
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">
-            {t('password')}<span className="text-danger">*</span>
+              {t("password")}
+              <span className="text-danger">*</span>
             </label>
             <CustomInput
               type="password"
@@ -139,7 +143,8 @@ const MyAccount = ({
         )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('helpDeskEmail')}<span className="text-danger">*</span>
+            {t("helpDeskEmail")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -153,7 +158,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('helpDeskTelephoneNumber')}<span className="text-danger">*</span>
+            {t("helpDeskTelephoneNumber")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -163,30 +169,36 @@ const MyAccount = ({
             name="helpDeskTelephoneNumber"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={getValues("helpDeskTelephoneNumber")}
           />
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('mobileNumber')}<span className="text-danger">*</span>
+            {t("mobileNumber")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             register={register}
-            
             name="mobileNumber"
             label="Mobile Number"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={getValues("mobileNumber")}
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('whatsappContactNumber')}</label>
+          <label className="form-label">{t("whatsappContactNumber")}</label>
           <CustomInput
             type="number"
             register={register}
@@ -195,26 +207,29 @@ const MyAccount = ({
             name="whatsappContactNumber"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={getValues("whatsappContactNumber")}
           />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('country')}<span className="text-danger">*</span>
+            {t("country")}
+            <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
               setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);
-              setIsStateDisabled(false)
+              setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
             defaultValue={defaultCountry}
-            
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -223,10 +238,10 @@ const MyAccount = ({
             isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
           }`}
         >
-          <label className="form-label">{t('state')}</label>
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
-              countryid={isStateDisabled ? 0: countryid}
+              countryid={isStateDisabled ? 0 : countryid}
               onChange={(e) => {
                 setstateid(e.id);
                 setValue("state", e.name);
@@ -240,7 +255,8 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('city')}<span className="text-danger">*</span>
+            {t("city")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -249,14 +265,12 @@ const MyAccount = ({
             name="city"
             placeholder=""
             defaultValue={getValues("city")}
-
-            
           />
           <Error errorName={errors.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('zipCode')}
+            {t("zipCode")}
           </label>
           <CustomInput
             type="number"
@@ -265,14 +279,17 @@ const MyAccount = ({
             name="zipCode"
             placeholder=""
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             defaultValue={getValues("zipCode")}
           />
           <Error errorName={errors.zipCode} />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('storageCapacity')}</label>
+          <label className="form-label">{t("storageCapacity")}</label>
           <Controller
             name="capacity"
             control={control}
@@ -283,22 +300,25 @@ const MyAccount = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label : value , value}}
+                value={{ label: value, value }}
                 // def={storageCapacityOptions[0]}
               />
             )}
           />
 
-            <p style={{fontStyle: "italic"}}>
-              {t('forMoreThan120DaysPlease')}<a href="#" class="link-primary">{t('contact')}</a> {t('yourAccountManager')}
-            </p>
-
+          <p style={{ fontStyle: "italic" }}>
+            {t("forMoreThan120DaysPlease")}
+            <a href="#" class="link-primary">
+              {t("contact")}
+            </a>{" "}
+            {t("yourAccountManager")}
+          </p>
         </div>
-
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street1')}<span className="text-danger">*</span>
+            {t("street1")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -312,7 +332,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street2')}
+            {t("street2")}
           </label>
           <CustomInput
             type="text"
@@ -324,7 +344,7 @@ const MyAccount = ({
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('contactPerson')}</label>
+          <label className="form-label">{t("contactPerson")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -336,7 +356,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('faxNumber')}
+            {t("faxNumber")}
           </label>
           <CustomInput
             type="number"
@@ -347,15 +367,9 @@ const MyAccount = ({
             defaultValue={getValues("faxNumber")}
           />
         </div>
-        <div className="col-xl-6 mb-3" >
-          <label className="form-label">{t('uploadLogo')}</label>
-          <input
-            type="file"
-            {...register('businessGroupLogo')}
-            label="Business Group Logo"
-            name="businessGroupLogo"
-            className="form-control"
-          />
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">{t("uploadLogo")}</label>
+          <FileUploader register={register}/>
           <Error errorName={errors.businessGroupLogo} />
         </div>
       </div>
