@@ -6,6 +6,7 @@ import CompanyTable from "../../components/Tables/CompanyTable";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import {clsx} from 'clsx'
+import { notifySuccess } from "../../../utils/toast";
 
 
 const Company = () => {
@@ -51,6 +52,7 @@ const Company = () => {
   // for deleting data in table
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
+    notifySuccess('Company deleted successfully!')
     setTableData(updatedData);
   };
   const editDrawerOpen = (item) => {
