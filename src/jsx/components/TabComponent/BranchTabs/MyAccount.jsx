@@ -95,6 +95,8 @@ const MyAccount = ({
       setDvalues(data);
     }
   }, [id]);
+
+  console.log(errors);
   useEffect(() => {
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
