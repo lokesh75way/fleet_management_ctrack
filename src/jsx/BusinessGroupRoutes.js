@@ -18,6 +18,7 @@ import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 import PermissionDenied from "./pages/PermissionDenied";
 import { usePermissions } from "../context/PermissionContext";
+import { GiConsoleController } from "react-icons/gi";
 
 const TripClassification = React.lazy(() =>
   import("./pages/company/reports/TripClassification")
@@ -184,8 +185,8 @@ const BusinessGroupRoutes = () => {
       component: <DriverTracking />,
     },
 
-    { module: "comapny", url: "company", component: <Company /> },
-    { module: "comapny", url: "company/:id", component: <Company /> },
+    { module: "company", url: "company", component: <Company /> },
+    { module: "company", url: "company/:id", component: <Company /> },
     {
       module: "company",
       operation: "add",

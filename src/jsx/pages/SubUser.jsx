@@ -46,7 +46,7 @@ import useStorage from "../../hooks/useStorage";
   else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
-  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && item.type === 'STAFF' )
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && (item.type === 'ADMIN' || item.type === 'STAFF') )
 
   const [tableData, setTableData] = useState([] );
   const [editData, setEditData] = useState();
