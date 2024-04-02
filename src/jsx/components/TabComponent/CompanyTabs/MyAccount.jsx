@@ -25,7 +25,6 @@ const MyAccount = ({
   control,
   formData
 }) => {
-  console.log(errors)
   const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "",

@@ -46,6 +46,9 @@ const Account = ({
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
+  const [groupId, setGroupId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
+
   const { t } = useTranslation();
   const customStyles = {
     control: (base) => ({
@@ -357,6 +360,8 @@ const Account = ({
               <GroupDropdown
                 onChange={async (newValue) => {
                   setValue("businessUser", newValue.value);
+                  setGroupId(newValue.value);
+                  setCompanyId(null);
                 }}
                 value={value}
                 customStyles={customStyles}
@@ -394,7 +399,10 @@ const Account = ({
               <CompanyDropdown
               onChange={async (newValue) => {
                 setValue("parentCompany", newValue.value);
+                setCompanyId(newValue.value);
               }}
+              key={groupId}
+              groupId={groupId}
               value={value}
               customStyles={customStyles}
               name={name}
@@ -432,6 +440,8 @@ const Account = ({
                 setValue("Branch", valuesArray);
                 setValue("branchIds", valuesArray);
               }}
+              key={companyId}
+              companyId={companyId}
               value={value}
               customStyles={customStyles}
               name={name}

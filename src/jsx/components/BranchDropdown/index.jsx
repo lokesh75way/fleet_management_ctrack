@@ -6,6 +6,7 @@ const BranchDropdown = ({
     value,
     customStyles,
     name,
+    companyId,
     isDisabled,
     ref
 }) => {
@@ -13,7 +14,7 @@ const BranchDropdown = ({
     const [selectedOption, setSelectedOption] = useState(value);
     useEffect(() => {
         const fetchBusinessGroups = async () => {
-            const response = await getAllBranch();
+            const response = await getAllBranch(companyId ? companyId : undefined);
             const groupOptions = response.data.data.map(item => ({ value: item?._id, label: item?.branchName }));
             console.log(response.data, "this is Branch data")
             console.log(groupOptions, "this is Branch options")
@@ -35,7 +36,7 @@ const BranchDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={isDisabled}
+                isDisabled={isDisabled || !companyId}
                 isMulti
                 />         
     );

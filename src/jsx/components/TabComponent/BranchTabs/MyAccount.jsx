@@ -34,6 +34,8 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
+  const [groupId, setGroupId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
 
   const customStyles = {
     control: (base) => ({
@@ -154,6 +156,8 @@ const MyAccount = ({
                     console.log(newValue)
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
+                    setGroupId(newValue.value);
+                    setCompanyId(null);
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -192,6 +196,7 @@ const MyAccount = ({
                     console.log(newValue)
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
+                    setGroupId(newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -234,6 +239,8 @@ const MyAccount = ({
                 //   }} 
                 // />
                 <CompanyDropdown
+                key={groupId}
+                groupId={groupId}
                   onChange={(newValue) => {
                     console.log(newValue)
                     setValue("companyId", newValue.value);
@@ -271,10 +278,13 @@ const MyAccount = ({
                 //   }}
                 // />
                 <CompanyDropdown
+                key={groupId}
+                groupId={groupId}
                 onChange={(newValue) => {
                   console.log(newValue)
                   setValue("companyId", newValue.value);
                   setValue("companyName", newValue.value);
+                  setCompanyId(newValue.value);
                 }}
                 value={value}
                 customStyles={customStyles}
@@ -311,6 +321,8 @@ const MyAccount = ({
               //   }}
               // />
               <ParentBranchDropdown
+              key={companyId}
+              companyId={companyId}
                 onChange={async (newValue) => {
                   console.log(newValue)
                   setValue("parentBranchId", newValue.value);
