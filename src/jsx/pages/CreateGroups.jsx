@@ -110,13 +110,8 @@ const CreateGroups = () => {
                                         <table id="empoloyees-tblwrapper" className="table ItemsCheckboxSec dataTable no-footer mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>{t('shortName')}</th>
+                                                    <th>{t('SNo.')}</th>
                                                     <th>{t('templateName')}</th>
-                                                    <th>{t('username')}</th>
-                                                    <th>{t('contactNumber')}</th>
-                                                    <th>{t('location')}</th>
-                                                    <th>{t('userTemplate')}</th>
-                                                    <th>{t('status')}</th>
                                                     <th>{t('action')}</th>
                                                 </tr>
                                             </thead>
