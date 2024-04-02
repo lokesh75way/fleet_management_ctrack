@@ -370,6 +370,7 @@ export const english = {
       "featureTemplate": "Feature Template",
       "addNew": "Add New",
       "shortName": "Short Name",
+      "serialNumber": "S No.",
       "templateName": "Template Name",
       "username": "Username",
       "contactNumber": "Contact Number",
