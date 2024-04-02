@@ -103,7 +103,7 @@ const CreateGroups = () => {
                     >
                       <thead>
                         <tr>
-                          <th className="text-center">{t("shortName")}</th>
+                          <th className="text-center">{t("serialNumber")}</th>
                           <th className="text-center">{t("templateName")}</th>
                           <th className="text-center">{t("action")}</th>
                         </tr>
