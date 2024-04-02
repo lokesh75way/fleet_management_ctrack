@@ -102,7 +102,7 @@ function App(props) {
         return <BusinessGroupRoutes />;
       case "COMPANY":
         return <CompanyRoutes />;
-        case "user":
+        case "User":
         return <UserRoutes/>
     }
   }
