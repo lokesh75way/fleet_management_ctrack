@@ -86,7 +86,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
           // data.id = existingData.length + 1;
           data.role = "user";
           data.parent = userName;
-          data.type = "admin";
+          data.type = "STAFF";
           const response = await createUser(data)
           console.log('this is response', response)
           if (response.error) {

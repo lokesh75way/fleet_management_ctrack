@@ -33,8 +33,22 @@ import { usePermissions } from "../../context/PermissionContext";
     }, []);
     
   const navigate = useNavigate();
+  const {checkRole,checkUserName} = useStorage()
+  const role = checkRole()
+  const userName = checkUserName()
+  const userData = JSON.parse(localStorage.getItem('userJsonData'))
+  var UserData;
+  if(checkRole() === 'COMPANY'){
+    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'STAFF' ))
+  }
 
-  const [tableData, setTableData] = useState([]);
+  else if(checkRole() === 'BUSINESS_GROUP'){
+    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
+  } 
+  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'user' && (item.type === 'ADMIN' || item.type === 'STAFF') )
+
+  const [tableData, setTableData] = useState([] );
+  const [editData, setEditData] = useState();
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
