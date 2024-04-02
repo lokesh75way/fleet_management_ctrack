@@ -27,7 +27,7 @@ const changePassword = async (body) => {
 }
 
 const fileUpload = async (body) => {
-  const data = axios.post("/file-upload",body);
+  const data = await axios.post("/file-upload",body);
   console.log(data)
   return data;
 }

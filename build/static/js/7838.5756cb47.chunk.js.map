@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/7838.5756cb47.chunk.js","mappings":"qJAEA,MAMA,EANgBA,KAEZC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,W","sources":["jsx/pages/company/reports/Billing.jsx"],"sourcesContent":["import React from 'react'\n\nconst Billing = () => {\n  return (\n    <h1>Billing</h1>\n  )\n}\n\nexport default Billing"],"names":["Billing","_jsx","children"],"sourceRoot":""}

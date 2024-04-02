@@ -182,7 +182,7 @@ const Account = ({
 
   const newData = userData.filter((data) => data._id == id);
 
-  const defaultValues = getSelectValues();
+  // const defaultValues = getSelectValues();
 
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
@@ -407,7 +407,7 @@ const Account = ({
               customStyles={customStyles}
               name={name}
               ref={ref}
-              isDisabled={defaultValues?.company?.disabled}
+              // isDisabled={defaultValues?.company?.disabled}
             />
             )}
           />
@@ -446,7 +446,7 @@ const Account = ({
               customStyles={customStyles}
               name={name}
               ref={ref}
-              isDisabled={defaultValues?.branch?.disabled}
+              // isDisabled={defaultValues?.branch?.disabled}
   
             />
             )}
