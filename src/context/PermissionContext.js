@@ -13,7 +13,7 @@ export function PermissionProvider({ children }) {
   // const permissions = state?.auth?.permission[0]
   // const [userPermission, setUserPermission] = useState(permissions || [])
   const permissions = JSON.parse(localStorage.getItem('permission'))
-  const [userPermission, setUserPermission] = useState(permissions?.[0]?.permission || [])
+  const [userPermission, setUserPermission] = useState(permissions?.permission || [])
   // Function to transform permissions array into object format to get quicker access
   const transformPermissions = (userPermission, field) => {
     const permissionsByModuleId = {};
@@ -23,7 +23,7 @@ export function PermissionProvider({ children }) {
       permissionsByBasePath[permission?.moduleId?.basePath] = permission;
       return;
     });
-    console.log(permissionsByBasePath)
+
     setPermissionsByModuleId(permissionsByModuleId)
     setPermissionsByBasePath(permissionsByBasePath)
   };
