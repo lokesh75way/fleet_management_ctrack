@@ -48,7 +48,7 @@ const Account = ({
   const [isEdit, setIsEdit] = useState(false);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
-
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
     control: (base) => ({
@@ -58,7 +58,6 @@ const Account = ({
 
 
   };
-
   async function onGroupChange(groupId) {
     console.log("groupId", groupId)
     console.log("allCompanies", allCompanies)
@@ -182,7 +181,7 @@ const Account = ({
 
   const newData = userData.filter((data) => data._id == id);
 
-  const defaultValues = getSelectValues();
+  // const defaultValues = getSelectValues();
 
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
@@ -193,9 +192,11 @@ const Account = ({
   const [businessUserValue, setBusinessUserValue] = useState();
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
+  const [businessDisabled, setBusinessDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(false);
+
 
   useEffect(() => {
-   
     let tempcompanyOptions;
     if (role === "BUSINESS_GROUP") {
 
@@ -275,7 +276,27 @@ const Account = ({
   }, [businessUserValue, companyValue, parentValue]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
-
+  useEffect(() => {
+    if(userDetails.user.role === 'COMPANY'){
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setValue("businessUser", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setBusinessDisabled(true);
+      
+      setValue("parentCompany", userDetails?.user.companyId)
+      setCompanyId(userDetails?.user.companyId);
+      setCompanyDisabled(true);
+      console.log("parentCompany", userDetails?.user.businessGroupId)
+    }
+    if(userDetails.user.role === 'BUSINESS_GROUP'){
+      
+      // setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setValue("businessUser", userDetails?.user.businessGroupId);
+      console.log(userDetails?.user.businessGroupId, "dsggsgs")
+      // setBusinessDisabled(true);
+    }
+},[])
   useEffect(() => {
     const id = filteredUserData[0]?._id;
     id ? setIsEdit(true) : setIsEdit(false);
@@ -285,6 +306,7 @@ const Account = ({
     const selectedBranchId = filteredUserData[0]?.branchIds;
     setValue("featureTemplateId", selectedTemplateId);
     setValue("businessUser", selectedGroupId);
+    console.log("selectedGroupId", selectedGroupId)
     loadDatainDropdowns();
     setValue("parentCompany", selectedCompanyId);
     setValue("Branch", selectedBranchId);
@@ -358,6 +380,7 @@ const Account = ({
               //   styles={customStyles}
               // />
               <GroupDropdown
+              key={groupId}
                 onChange={async (newValue) => {
                   setValue("businessUser", newValue.value);
                   setGroupId(newValue.value);
@@ -366,7 +389,7 @@ const Account = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                // isDisabled={defaultValues?.business?.disabled}
+                isDisabled={businessDisabled}
                 name={name}
               />
             )}
@@ -407,7 +430,7 @@ const Account = ({
               customStyles={customStyles}
               name={name}
               ref={ref}
-              isDisabled={defaultValues?.company?.disabled}
+              isDisabled={companyDisabled}
             />
             )}
           />
@@ -446,7 +469,7 @@ const Account = ({
               customStyles={customStyles}
               name={name}
               ref={ref}
-              isDisabled={defaultValues?.branch?.disabled}
+              isDisabled={false}
   
             />
             )}
