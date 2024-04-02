@@ -88,7 +88,7 @@ const Branch = () => {
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-  const defaultValues = getSelectValues();
+  // const defaultValues = getSelectValues();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
 
@@ -228,7 +228,7 @@ const Branch = () => {
                             customStyles={customStyles}
                             ref={ref}
                             name={name}
-                            isDisabled={defaultValues?.branch?.disabled}
+                            isDisabled={false}
                           />
                         )}
                       />
