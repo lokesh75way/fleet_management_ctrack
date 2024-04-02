@@ -2,9 +2,13 @@ import axios from "axios";
 import initAxios from "./Axios";
 initAxios()
 
-export const getUser = async () => {
+export const getUser = async (page) => {
   try{
-    const response = await axios.get("/users")
+    let url = '/users'
+    if (page !== undefined) {
+      url += `?page=${page}&limit=${10}`;
+    }
+    const response = await axios.get(url)
     return response?.data?.data
   }catch(error){
     return { error: "Couldn't fetch User" }

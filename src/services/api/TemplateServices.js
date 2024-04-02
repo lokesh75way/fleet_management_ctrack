@@ -5,9 +5,14 @@ import initAxios from "./Axios";
 initAxios()
 
 
-export const getTemplates = async () => {
+export const getTemplates = async (page) => {
   try {
-    const response = await axios.get("/feature-template");
+    console.log("page is here ", page)
+    let url = "/feature-template";
+    if (page !== undefined) {
+    url += `?page=${page}&limit=${10}`;
+  }
+    const response = await axios.get(url);
       return response.data;
   } catch(error){
     console.error("Error fetching templates:", error);

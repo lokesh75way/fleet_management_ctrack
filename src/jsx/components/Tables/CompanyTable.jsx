@@ -22,7 +22,7 @@ const CompanyTable = ({
   var filterData = tableData;
   console.log(tableData)
  
-  setDataLength(filterData?.length)
+  // setDataLength(filterData?.length)
   return (
     <>
       {filterData.map((item, index) => {
