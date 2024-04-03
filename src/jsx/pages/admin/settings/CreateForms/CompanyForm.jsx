@@ -64,6 +64,12 @@ const CompanyForm = () => {
         if (id) {
           try {
             // data.businessGroupId = getValues("businessId");
+            if (data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file.length === 0) {
+              delete data.file;
+            }
             await editCompany(data);
             notifySuccess("Company Updated Successfully");
             navigate("/company");
