@@ -1,30 +1,52 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { fileUpload } from "../services/api/BusinessGroup";
-import { notifyError } from "../utils/toast";
-import Dropzone, { useDropzone } from "react-dropzone";
+import { notifyError, notifySuccess } from "../utils/toast";
 
-const FileUploader = ({ register }) => {
-  const [file, setFile] = useState();
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".webp"],
-    },
-    maxSize: 500000,
-    onDrop:async (acceptedFiles) => {
-      const url = await fileUpload(acceptedFiles[0])
-      console.log(url)
-    },
-  });
-  
+const FileUploader = ({
+  register,
+  name,
+  label,
+  defaultValue,
+  setValue,
+  setLoading,
+  loading,
+}) => {
+  const upload_Preset = "our_cloudinary_upload_preset";
+
+  const fileUploader = async (e) => {
+    try {
+      setLoading(true);
+      const acceptedFiles = e.target.files;
+      const formData = new FormData();
+      formData.append("file", acceptedFiles[0]);
+      formData.append("upload_preset", upload_Preset);
+      if (e.target.files[0]) {
+        const { message, data } = await fileUpload(formData);
+        setValue(name, data.link);
+        notifySuccess(message);
+      }
+    } catch (error) {
+      console.log("[FILE_UPLOAD_ERROR]", error);
+      notifyError("file is not uploaded");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
-      )}
+    <div>
+      <input
+        type="file"
+        {...register(`${name}`)}
+        name={name}
+        label={label}
+        style={{ height: "46px" }}
+        className="form-control"
+        onChange={fileUploader}
+        defaultValue={defaultValue}
+        disabled={loading}
+        accept="image/*"
+      />
     </div>
   );
 };

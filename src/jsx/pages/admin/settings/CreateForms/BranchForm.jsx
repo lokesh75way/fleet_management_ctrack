@@ -75,7 +75,6 @@ const BranchForm = () => {
         notifyError("Some error occured !!");
       }
     }
-    console.log("Hello")
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (
