@@ -66,9 +66,15 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
           delete data["oldPassword"];
           delete data["newPassword"];
           delete data["retypePassword"];
-
+          if (data.logo.length === 0) {
+            delete data.logo;
+          }
+          if (data.file.length === 0) {
+            delete data.file;
+          }
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
+          return;
         } else {
           if (data.logo.length === 0) {
             delete data.logo;

@@ -52,6 +52,12 @@ const BranchForm = () => {
               ...data,
               branchId: id,
             };
+            if (data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file.length === 0) {
+              delete data.file;
+            }
             await editBranch(Branchdata);
             notifySuccess("Branch Updated!");
             navigate("/branch");
