@@ -178,6 +178,9 @@ const handleSubModulePermisssionChange = (
     fetchData();
   }, []);
 
+
+  const [editGroupName,setEditGroupName] = useState();
+
   const fetchTemplates = async () => {
     try {
       const templateData = await TemplateServices.getTemplates();
@@ -186,6 +189,9 @@ const handleSubModulePermisssionChange = (
         // setCurrentTemplate();
         const filteredData = templateData.data.data.find(d => d._id === id);
         setNewGroupData(filteredData);
+
+        setEditGroupName(filteredData.name)
+
         const updatedData = moduleData.data.map((module) => {
           const permission = filteredData.permission.find(
             (perm) => perm.moduleId === module._id
@@ -225,17 +231,31 @@ const handleSubModulePermisssionChange = (
   console.log("this is group data state ",groupNames);
 
 
+  // console.log(editData.name);
+
   const handleSave = async () => {
     if (!newGroupData.name) {
       setIsErrror(true);
       return ;
     }
 
-    if (groupNames.includes(newGroupData.name)) {
+    if(id){
 
-      notifyError('Group Name already exists')
-      return;
+      if (groupNames.includes(newGroupData.name)  && newGroupData.name !== editGroupName) {
+  
+        notifyError('Feature Template name already exists')
+        return;
+      }
     }
+    else{
+      
+      if (groupNames.includes(newGroupData.name)) {
+  
+        notifyError('Feature Template name already exists')
+        return;
+      }
+    }
+
 
     try {
 
@@ -306,7 +326,7 @@ const handleSubModulePermisssionChange = (
           <Card.Title>{t('permission')}</Card.Title>
         </Card.Header>
 
-        <div className="d-flex justify-content-between m-2 mt-4 p-3" >
+        <div className="d-flex justify-content-between m-2 mt-4 p-3 mb-0 pb-0">
 
           <div>
 
