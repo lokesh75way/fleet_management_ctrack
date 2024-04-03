@@ -70,7 +70,14 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
         } else {
-          const {success , message} = await createGroup(data);
+          if (data.logo.length === 0) {
+            delete data.logo;
+          }
+          if (data.file.length === 0) {
+            delete data.file;
+          }
+      
+          const { success, message } = await createGroup(data);
           if (success === false) {
             notifyError(message);
             return;

@@ -62,6 +62,12 @@ const BranchForm = () => {
           return;
         } else {
           try {
+            if (data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file.length === 0) {
+              delete data.file;
+            }
             await createNewBranch(data);
             notifySuccess("New Branch Created!");
             navigate("/branch");
