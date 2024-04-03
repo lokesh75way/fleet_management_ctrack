@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
+import usePagination from '../../../hooks/usePagination';
 import { Loader } from "rsuite";
 
 const BusinessUser = () => {
