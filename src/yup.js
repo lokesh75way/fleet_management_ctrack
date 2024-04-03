@@ -160,9 +160,7 @@ export const companyAccountSchema = yup
     logo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        if (!value[0]) return true;
-        const extension = value[0].name.split(".").pop().toLowerCase();
-        return extension === "jpg" || extension === "png";
+        return true
       }),
   })
   .required();
@@ -261,11 +259,12 @@ export const businessGroupAccountSchema = yup
     logo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        console.log(value);
-        if (!value[0]) return true;
-        // if(typeof value === 'string') return true;
-        const extension = value[0].name.split(".").pop().toLowerCase();
-        return extension === "jpg" || extension === "png";
+        // console.log(value);
+        // if (!value[0]) return true;
+        // // if(typeof value === 'string') return true;
+        // const extension = value[0].name.split(".").pop().toLowerCase();
+        // return extension === "jpg" || extension === "png";
+        return true
       }),
   })
   .required();
@@ -278,11 +277,7 @@ export const businessGroupSettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        console.log(value);
-        if (typeof value === "string") return true;
-        if (!value[0]) return true;
-        const extension = value[0].name.split(".").pop().toLowerCase();
-        return extension === "jpg" || extension === "png";
+        return true
       }),
   })
   .required();
@@ -295,11 +290,7 @@ export const companySettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        console.log(value);
-        if (!value[0]) return true;
-        // if(typeof value === 'string') return true;
-        const extension = value[0].name.split(".").pop().toLowerCase();
-        return extension === "jpg" || extension === "png";
+        return true
       }),
   })
   .required();
