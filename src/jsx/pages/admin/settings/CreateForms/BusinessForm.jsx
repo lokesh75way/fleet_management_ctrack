@@ -57,9 +57,6 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         ? businessGroupSettingSchema
         : businessGroupAccountSchema
     ),
-    defaultValues: {
-      // storageCapacity : storageCapacityOptions[0]
-    },
   });
 
   const onSubmit = async (data) => {
