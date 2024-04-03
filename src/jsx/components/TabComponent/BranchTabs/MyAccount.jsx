@@ -121,6 +121,8 @@ const MyAccount = ({
   }, [id]);
 
   console.log(errors);
+
+  console.log("ye he state ...........",selectStateName);
   useEffect(() => {
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
@@ -263,7 +265,7 @@ const MyAccount = ({
                 //     value: getValues('companyId'),
                 //   }} 
                 // />
-                <CompanyDropdown
+                <CompanyDropdown 
                   key={groupId}
                   groupId={groupId}
                   onChange={(newValue) => {
@@ -388,7 +390,7 @@ const MyAccount = ({
             onChange={(e) => {
               setSelectStateName({ name: "" });
               setCountryid(e.id);
-              setValue("country", e.id);
+              setValue("country", e.name);
               setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
@@ -409,12 +411,12 @@ const MyAccount = ({
               countryid={countryid}
               onChange={(e) => {
                 setstateid(e.id);
-                setValue("state", e.id);
+                setValue("state", e.name);
               }}
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-              defaultValue={selectStateName}
+              defaultValue={selectStateName.name?selectStateName:{name:"Select State"}}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
