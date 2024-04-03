@@ -532,7 +532,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.add}
+                checked={element.permission?.add}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -548,7 +548,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.view}
+                checked={element.permission?.view}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -564,7 +564,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.modify}
+                checked={element.permission?.modify}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -580,7 +580,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.delete}
+                checked={element.permission?.delete}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
