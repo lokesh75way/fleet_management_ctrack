@@ -14,6 +14,7 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
+import { useEffect } from "react";
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
 const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
