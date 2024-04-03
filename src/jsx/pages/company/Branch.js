@@ -89,18 +89,30 @@ const Branch = () => {
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-
+  const [selectedBranch, setSelectedBranch] = useState(null);
   const defaultValues = getSelectValues();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
 
-  const fetchAllBranch = async (page,id) => {
+  const fetchAllBranch = async (page, CompanyId, branchId) => {
+    console.log({companyId},{branchId})
     try {
-      console.log({id})
-      const { data, success } = await getAllBranch(page,id);
-      setTableData(data.data);
-      setCount(data.totalCount);
-      setBranches(data.data);
+      if (CompanyId) {
+        const { data, success } = await getAllBranch(undefined, CompanyId);
+        setTableData(data.data);
+        setCount(data.totalCount);
+        setBranches(data.data);
+      } else if (branchId) {
+        const { data, success } = await getAllBranch(undefined, undefined,branchId);
+        setTableData(data.data);
+        setCount(data.totalCount);
+        setBranches(data.data);
+      } else {
+        const { data, success } = await getAllBranch(page);
+        setTableData(data.data);
+        setCount(data.totalCount);
+        // setBranches(data.data);
+      }
     } catch (error) {
       console.log("Error in fetching data", error);
     }
@@ -120,28 +132,28 @@ const Branch = () => {
     (branch) =>
       selectedCompany && branch.companyId._id === selectedCompany.value
   );
-  console.log({ filteredBranches });
+
   const branchOptions = filteredBranches.map((branch) => ({
     value: branch._id,
     label: branch.branchName,
   }));
 
   const handleCompanyChange = (selectedOption) => {
-    setSelectedCompany(selectedOption); // Update selected company
+    console.log("Selected company:", selectedOption.value);
+    setSelectedCompany(selectedOption);
+    setFilter(selectedOption);
+    setCompanyId(selectedOption.value);
+    setPage(1);
+    fetchAllBranch(1, selectedOption.value);
   };
 
-  //   const handleCompanyChange = selectedOption => {
-  //     setSelectedCompany(selectedOption);
-  //     setFilter({value: selectedOption.value, label: selectedOption.label}); // Update the filter for companies
-  //     setFilter2({value: 'All Branches', label: 'All Branches'}); // Reset the branch filter
-  // };
-
   // Handler function for branch selection
-  const handleBranchChange = (selectedOption) => {
-    console.log("Selected branch:", selectedOption.value);
-    setFilter(selectedOption);
+  const handleBranchChange = (branchOption) => {
+    console.log("Selected branch:", branchOption.value);
+    setSelectedBranch(branchOption);
+    setFilter2(branchOption);
     setPage(1);
-    fetchAllBranch(1,selectedOption.value)
+    fetchAllBranch(1,undefined,branchOption.value);
   };
 
   const onConfirmDelete = async (id) => {
@@ -198,12 +210,14 @@ const Branch = () => {
                             onChange={async (newValue) => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
-                              handleBranchChange(newValue)
+                              handleCompanyChange(newValue);
                             }}
-                            value={value}
+                            value={{ label: "All Companies",
+                            value: "All Companies"}}
                             customStyles={customStyles}
                             name={name}
                             ref={ref}
+                        
                             isDisabled={false}
                           />
                         )}
@@ -213,16 +227,19 @@ const Branch = () => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <BranchDropdown
-                          key={companyId}
-                          onChange={(newValue) => {
-                          const valuesArray = newValue.map(item => item.value);
-                          setValue("parent", valuesArray);
-                          setValue("branchIds", valuesArray);
-                          
-                        }}
+                          <ParentBranchDropdown
+                            key={companyId}
+                            onChange={(newValue) => {
+                              // const valuesArray = newValue.map(
+                              //   (item) => item.value
+                              // );
+                              setValue("parent", newValue.value);
+                              setValue("branchIds", newValue);
+                              handleBranchChange(newValue);
+                            }}
                             companyId={companyId}
-                            value={value}
+                             value={{ label: "Choose Branch",
+                            value: "Choose Branch"}}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}

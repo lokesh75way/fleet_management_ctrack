@@ -3,13 +3,17 @@ import initAxios from './Axios';
 
 initAxios();
 
-export const getAllBranch = async (page,companyId) => {
+export const getAllBranch = async (page,companyId, branchId) => {
+    console.log("thi", branchId)
     let url = '/branches';
     if (page !== undefined) {
         url += `?page=${page}&limit=${10}`;
       }
     if (companyId) {
-        url += `?companyId=${companyId}`;
+            url += `?companyId=${companyId}`;
+    }
+    if(branchId){
+        url += `?branchId=${branchId}`;
     }
     const data = await axios.get(url);
     return data.data;

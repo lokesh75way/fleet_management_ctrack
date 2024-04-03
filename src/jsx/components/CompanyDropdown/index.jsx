@@ -13,7 +13,7 @@ const CompanyDropdown = ({
     isDisabled
 }) => {
 
-    console.log(groupId, "this is value")
+    // console.log(groupId, "this is value")
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const {page} = usePagination();
@@ -22,8 +22,8 @@ const CompanyDropdown = ({
             const response = await getCompany(page, groupId ? groupId : undefined);
             console.log(groupId)
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
-            console.log(response.data, "this is groud data")
-            console.log(options, "this is Company op tions")
+            // console.log(response.data, "this is groud data")
+            // console.log(options, "this is Company op tions")
             setdropdownOptions(options);
         };
         fetchBusinessGroups();
