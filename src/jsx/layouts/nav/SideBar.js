@@ -45,39 +45,43 @@ const SideBar = () => {
   const navigate = useNavigate();
 
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const modulePermissions = userDetails.permissions?.[0].permission;
-  const viewableModules = modulePermissions.filter(item => item.view === true).map(item => ({
-    moduleId: item.moduleId._id,
-    title: item.moduleId.title,
-    basePath: item.moduleId.basePath
-  }));
-  const role = userDetails?.user?.role;
-  const type = userDetails?.user?.type;
-
-  let MenuList;
-  switch (role) {
-    case "COMPANY":
-      MenuList = AdminMenuList;
-      break;
-    case "SUPER_ADMIN":
-      MenuList = AdminMenuList;
-      break;
-    case "BUSINESS_GROUP":
-      MenuList = AdminMenuList;
-      break;
-    default:
-      MenuList = AdminMenuList; // Default case if role doesn't match any case
-  }
-  const viewmoduleTitles = viewableModules.map(item => item.title);
-
-  const filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
-
-  // if(type === "STAFF"){
-   
+  let filteredAdminMenuList = [];
+  if (userDetails && userDetails.permissions?.[0]) {
     
-  //   const updatedMenuItems = MenuList.filter(item => item.title !== "Feature Template");
-  //   MenuList = updatedMenuItems;
-  // }
+    const modulePermissions = userDetails.permissions?.[0].permission;
+    const viewableModules = modulePermissions.filter(item => item.view === true).map(item => ({
+      moduleId: item.moduleId._id,
+      title: item.moduleId.title,
+      basePath: item.moduleId.basePath
+    }));
+    const role = userDetails?.user?.role;
+    const type = userDetails?.user?.type;
+  
+    let MenuList;
+    switch (role) {
+      case "COMPANY":
+        MenuList = AdminMenuList;
+        break;
+      case "SUPER_ADMIN":
+        MenuList = AdminMenuList;
+        break;
+      case "BUSINESS_GROUP":
+        MenuList = AdminMenuList;
+        break;
+      default:
+        MenuList = AdminMenuList; // Default case if role doesn't match any case
+    }
+    const viewmoduleTitles = viewableModules.map(item => item.title);
+  
+    filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
+  
+    // if(type === "STAFF"){
+     
+      
+    //   const updatedMenuItems = MenuList.filter(item => item.title !== "Feature Template");
+    //   MenuList = updatedMenuItems;
+    // }
+  }
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {}, []);
