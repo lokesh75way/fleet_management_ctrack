@@ -27,9 +27,8 @@ const changePassword = async (body) => {
 }
 
 const fileUpload = async (body) => {
-  const data = await axios.post("/file-upload",body);
-  console.log(data)
-  return data;
+  const data = await axios.post("/file-upload", body);
+  return data?.data;
 }
 
 export { createGroup, getGroups, deleteGroup, updateGroup , changePassword , fileUpload};

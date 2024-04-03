@@ -6,10 +6,30 @@ export const vehicleGeneralSchema = yup
     vehicleName: yup.string().required("Vehicle name is required"),
     serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
-    imeiNumber: yup.number().positive().integer().required("IMEI Number is required").typeError("IMEI Number must be a number"),
-    simNumber: yup.number().positive().integer().required("Sim Number is required").typeError("Sim Number must be a number"),
-    secondarySimNumber: yup.number().positive().integer().typeError("Secondary Sim Number must be a number"),
-    deviceAccuracyTolerance: yup.number().positive().integer().min(0).max(100).typeError("Device Accuracy Tolerance must be a number"),
+    imeiNumber: yup
+      .number()
+      .positive()
+      .integer()
+      .required("IMEI Number is required")
+      .typeError("IMEI Number must be a number"),
+    simNumber: yup
+      .number()
+      .positive()
+      .integer()
+      .required("Sim Number is required")
+      .typeError("Sim Number must be a number"),
+    secondarySimNumber: yup
+      .number()
+      .positive()
+      .integer()
+      .typeError("Secondary Sim Number must be a number"),
+    deviceAccuracyTolerance: yup
+      .number()
+      .positive()
+      .integer()
+      .min(0)
+      .max(100)
+      .typeError("Device Accuracy Tolerance must be a number"),
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -136,6 +156,14 @@ export const companyAccountSchema = yup
       .string()
       .required("Help Desk Telephone Number is required")
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
+
+    logo: yup
+      .mixed()
+      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+        if (!value[0]) return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
+      }),
   })
   .required();
 
@@ -153,7 +181,7 @@ export const branchAccountSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
-   
+
     newPassword: yup
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -203,7 +231,6 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup
   .object({
     // branch: yup.string().required(),
-
     groupName: yup.string().required("Please enter a Business Group Name"),
     userName: yup.string().required("Please enter a User Name"),
     country: yup.string().required("Please select a Country"),
@@ -231,6 +258,32 @@ export const businessGroupAccountSchema = yup
     helpDeskTelephoneNumber: yup
       .string()
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
+    logo: yup
+      .mixed()
+      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+        console.log(value);
+        if (!value[0]) return true;
+        // if(typeof value === 'string') return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
+      }),
+  })
+  .required();
+
+export const businessGroupSettingSchema = yup
+  .object({
+    dateFormat: yup.string(),
+    timeFormat: yup.string(),
+    unitOfDistance: yup.string(),
+    file: yup
+      .mixed()
+      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+        console.log(value);
+        if (typeof value === "string") return true;
+        if (!value[0]) return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
+      }),
   })
   .required();
 
@@ -239,40 +292,14 @@ export const companySettingSchema = yup
     dateFormat: yup.string(),
     timeFormat: yup.string(),
     unitOfDistance: yup.string(),
-    companyLogo: yup
+    file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        if (!value) return true;
-        for (let i = 0; i < value.length; i++) {
-          const extension = value[i].name
-            .substring(value[i].name.lastIndexOf(".") + 1)
-            .toLowerCase();
-          if (extension !== "jpg" && extension !== "png") {
-            return false;
-          }
-        }
-        return true;
-      }),
-  })
-  .required();
-export const businessGroupSettingSchema = yup
-  .object({
-    dateFormat: yup.string(),
-    timeFormat: yup.string(),
-    unitOfDistance: yup.string(),
-    businessGroupLogo: yup
-      .mixed()
-      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        if (!value) return true;
-        for (let i = 0; i < value.length; i++) {
-          const extension = value[i].name
-            .substring(value[i].name.lastIndexOf(".") + 1)
-            .toLowerCase();
-          if (extension !== "jpg" && extension !== "png") {
-            return false;
-          }
-        }
-        return true;
+        console.log(value);
+        if (!value[0]) return true;
+        // if(typeof value === 'string') return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
       }),
   })
   .required();
@@ -373,7 +400,7 @@ export const subUserAccountSchema = yup
     featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
-      .test('isEdit', 'Password is required', function(value) {
+      .test("isEdit", "Password is required", function (value) {
         const { isEdit } = this.parent;
         if (isEdit) {
           return true;
@@ -383,7 +410,7 @@ export const subUserAccountSchema = yup
       }),
     confirmPassword: yup
       .string()
-      .test('isEdit', 'Password is required', function(value) {
+      .test("isEdit", "Password is required", function (value) {
         const { isEdit } = this.parent;
         if (isEdit) {
           return true;

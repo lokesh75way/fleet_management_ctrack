@@ -21,6 +21,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 import { useLocation, useParams } from "react-router-dom";
+import FileUploader from "../../../../components/FileUploader";
 
 const UserSetting = ({
   setValue,
@@ -30,6 +31,7 @@ const UserSetting = ({
   control,
   register,
 }) => {
+  const [loading , setLoading] = useState(false);
   const { t } = useTranslation();
   const [dValues, setDvalues] = useState({});
   const [selectedTimezone, setSelectedTimezone] = useState(
@@ -49,7 +51,6 @@ const UserSetting = ({
       setDvalues(data);
     }
   }, [id]);
-
   useEffect(() => {
     if (dValues && id) {
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
@@ -243,14 +244,17 @@ const UserSetting = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("uploadFile")}</label>
-          <CustomInput
-            type="file"
+          <FileUploader
             register={register}
-            label="Business Group Logo"
-            name="businessGroupLogo"
+            label="Business Group File"
+            name="file"
             className="form-control"
+            setValue={setValue}
+            setLoading={setLoading}
+            loading={loading}
           />
-          <Error errorName={errors.businessGroupLogo} />
+          {loading && <small>Uploading...</small>}
+          <Error errorName={errors.file} />
         </div>
       </div>
       <div
@@ -263,6 +267,7 @@ const UserSetting = ({
       >
         <Button
           type="submit"
+          disabled={loading}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
