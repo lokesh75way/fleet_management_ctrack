@@ -81,10 +81,10 @@ const CompanyForm = () => {
           return;
         } else {
           try {
-            if (data.logo.length === 0) {
+            if (data.logo && data.logo.length === 0) {
               delete data.logo;
             }
-            if (data.file.length === 0) {
+            if (data.file && data.file.length === 0) {
               delete data.file;
             }
             data.businessGroupId = getValues("businessGroupId");
