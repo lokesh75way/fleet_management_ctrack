@@ -18,7 +18,12 @@ import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
-
+import BusinessForm from "./pages/admin/settings/CreateForms/BusinessForm";
+import BusinessUser from "./pages/businessUser/BusinessUser";
+import CompanyForm from "./pages/admin/settings/CreateForms/CompanyForm";
+import Company from "./pages/admin/Compnay";
+import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
+const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
 
 const Performance = React.lazy(() => import("./components/Dashboard/Performance"));
 const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
@@ -336,6 +341,21 @@ const CompanyRoutes = () => {
     // drivers
     { url: "driver/edit/:id", component: <DriverForm /> },
     { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+
+    //
+    { module: 'business',operation:'add', url: "business/create", component: <BusinessForm /> },
+  { module: 'business',operation:'modify', url: "business/edit/:id", component: <BusinessForm /> },
+  { module: 'business', url: "business-group", component: <BusinessUser /> },
+  { module: 'business', url: "business-group/:id", component: <BusinessUser /> },
+  { module: 'business', url: "business", component: <Business /> },
+
+  //company
+
+  { module: 'company',operation:'add', url: "company/create", component: <CompanyForm /> },
+  { module: 'company',operation:'modify', url: "company/edit/:id", component: <CompanyForm /> },
+  { module: 'company', url: "company/:id", component: <Company /> },
+  { module: 'company', url: "company", component: <Company /> },
+  { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
   ];
 
 
