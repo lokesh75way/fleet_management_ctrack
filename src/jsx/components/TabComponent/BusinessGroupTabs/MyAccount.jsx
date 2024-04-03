@@ -21,6 +21,7 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+  const [loading, setLoading] = useState(false);
   const [defaultCountry, setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "",
@@ -46,8 +47,8 @@ const MyAccount = ({
       setDvalues(data);
     }
   }, [id]);
+
   useEffect(() => {
-    console.log(dValues);
     if (dValues && id) {
       setValue("groupName", dValues.businessGroupId?.groupName);
       setValue("userName", dValues.userName);
@@ -369,8 +370,18 @@ const MyAccount = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("uploadLogo")}</label>
-          <FileUploader register={register}/>
-          <Error errorName={errors.businessGroupLogo} />
+          <FileUploader
+            setValue={setValue}
+            register={register}
+            label="Business Group Logo"
+            name="logo"
+            getValue={getValues}
+            setLoading={setLoading}
+            loading={loading}
+          />
+          {loading && <small>Uploading...</small>}
+
+          <Error errorName={errors.logo} />
         </div>
       </div>
       <div
@@ -383,6 +394,7 @@ const MyAccount = ({
       >
         <Button
           type="submit"
+          disabled={loading}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

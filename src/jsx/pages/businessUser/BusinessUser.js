@@ -17,8 +17,10 @@ import { ThemeContext } from "../../../context/ThemeContext";
 
 import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
+import Loader from "../../../components/Loader";
 
 const BusinessUser = () => {
+  const [isLoading , setIsLoading] = useState(false);
   const [deleteId, setDeleteId] = useState();
   const { isRtl } = useContext(ThemeContext);
   const arrowleft = clsx({
@@ -64,11 +66,15 @@ const BusinessUser = () => {
 
   async function getGroupData(page) {
     try {
+      setIsLoading(true);
       const { data, totalPage, totalCount } = await getGroups(page);
       setTableData(data);
       setLength(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
+    }
+    finally{
+      setIsLoading(false)
     }
   }
 
@@ -111,6 +117,8 @@ const BusinessUser = () => {
         pageTitle={t("businessGroup")}
         parentTitle={t("home")}
       />
+      {
+        isLoading ? <Loader/>: 
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">
@@ -228,13 +236,8 @@ const BusinessUser = () => {
           </div>
         </div>
       </div>
-      {/* <CompanyOffcanvas 
-                ref={company}
-                Title={ editData.id === 0 ? "Add Company" : "Edit Company"}
-                handleSubmit={handleSubmit}
-                editData={editData}
-                setEditData={setEditData}
-            /> */}
+      }
+     
     </>
   );
 };

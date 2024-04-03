@@ -14,6 +14,7 @@ import {useTranslation} from 'react-i18next'
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
+import FileUploader from "../../../../components/FileUploader";
 
 const MyAccount = ({
   setValue,
@@ -25,6 +26,7 @@ const MyAccount = ({
   control,
   formData
 }) => {
+  const [loading, setLoading] = useState(false);
   const [defaultCountry,setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "",
@@ -429,13 +431,16 @@ useEffect(()=>{
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">{t('uploadLogo')}</label>
-          <input
-            type="file"
-            {...register('businessGroupLogo')}
+          <FileUploader
+            setValue={setValue}
+            register={register}
             label="Business Group Logo"
-            name="businessGroupLogo"
-            className="form-control"
+            name="logo"
+            getValue={getValues}
+            setLoading={setLoading}
+            loading={loading}
           />
+           {loading && <small>Uploading...</small>}
           <Error errorName={errors.businessGroupLogo} />
         </div>
       </div>
