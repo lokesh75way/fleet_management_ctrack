@@ -354,6 +354,19 @@ const UserRoutes = () => {
   { module: 'company', url: "company/:id", component: <Company /> },
   { module: 'company', url: "company", component: <Company /> },
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
+
+  //user
+  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
+
+  //branch
+  { module: 'branch',operation:'add', url: "branch/create", component: <BranchForm /> },
+  { module: 'branch', url: "branch", component: <Branch /> },
+  { module: 'branch',operation:'modify', url: "branch/edit/:id", component: <BranchForm /> },
+  { module: 'branch', url: "branch", component: <Branch /> },
+  { module: 'branch', url: "branch/cid/:id", component: <Branch /> },
+  { module: 'branch', url: "branch/bid/:id", component: <Branch /> },
   ];
 
 
