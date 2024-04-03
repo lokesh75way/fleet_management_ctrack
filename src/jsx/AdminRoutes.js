@@ -179,7 +179,7 @@ const allroutes = [
   { module: 'reports', url: "/reports/trip-classification", component: <TripClassification /> },
 ];
 const AdminRoutes = () => {
-  const { can } = usePermissions()
+  const { can, setUserPermission } = usePermissions()
   const navigate = useNavigate()
   function NotFound() {
     const url = allroutes.map((route) => route.url);
@@ -190,6 +190,10 @@ const AdminRoutes = () => {
       return <Error404 />;
     }
   }
+  useEffect(() => {
+    const permissions = JSON.parse(localStorage.getItem("permission"));
+    setUserPermission(permissions?.[0]?.permission);
+  }, []);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
