@@ -49,10 +49,10 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
       );
       if (permission) {
         module.permission = {
-          add: permission.add,
-          view: permission.view,
-          modify: permission.modify,
-          delete: permission.delete,
+          add: permission?.add,
+          view: permission?.view,
+          modify: permission?.modify,
+          delete: permission?.delete,
         };
       }
 
@@ -64,7 +64,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
 
     // Clear subModuleIndexArray
     setSubModuleIndexArray(updatedData.filter(d => {
-      return !(!d.permission.delete && !d.permission.view && !d.permission.modify && !d.permission.add)
+      return !(!d.permission?.delete && !d.permission?.view && !d.permission?.modify && !d.permission?.add)
     }).map(d => d._id));
 
     console.log("Data copied successfully");
@@ -198,10 +198,10 @@ const handleSubModulePermisssionChange = (
           );
           if (permission) {
             module.permission = {
-              add: permission.add,
-              view: permission.view,
-              modify: permission.modify,
-              delete: permission.delete,
+              add: permission?.add,
+              view: permission?.view,
+              modify: permission?.modify,
+              delete: permission?.delete,
             };
           }
           return module;
@@ -264,10 +264,10 @@ const handleSubModulePermisssionChange = (
       const flattenedPermissions = data.reduce((acc, module) => {
         const mainModulePermissions = {
           moduleId: module._id,
-          add: module.permission.add,
-          view: module.permission.view,
-          modify: module.permission.modify,
-          delete: module.permission.delete,
+          add: module.permission?.add,
+          view: module.permission?.view,
+          modify: module.permission?.modify,
+          delete: module.permission?.delete,
         };
 
         acc.push(mainModulePermissions);
@@ -276,10 +276,10 @@ const handleSubModulePermisssionChange = (
           module.subModules.forEach((subModule) => {
             const subModulePermissions = {
               moduleId: subModule.id,
-              add: subModule.permission.add,
-              view: subModule.permission.view,
-              modify: subModule.permission.modify,
-              delete: subModule.permission.delete,
+              add: subModule.permission?.add,
+              view: subModule.permission?.view,
+              modify: subModule.permission?.modify,
+              delete: subModule.permission?.delete,
             };
             acc.push(subModulePermissions);
           });
