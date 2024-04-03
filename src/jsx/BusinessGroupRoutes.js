@@ -225,6 +225,13 @@ const BusinessGroupRoutes = () => {
       url: "subUser/create",
       component: <SubUserForm />,
     },
+    {
+      module: "subUser",
+      operation: "add",
+      url: "subUser/edit/:id",
+      component: <SubUserForm />,
+    },
+    
     { module: "subUser", url: "subUser", component: <SubUser /> },
 
     { module: "business", url: "business-group", component: <BusinessUser /> },

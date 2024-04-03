@@ -140,7 +140,7 @@ const SideBar = () => {
               return (
                 <li
                   className={` ${
-                    url === data.to || url === "/" + data?.to?.split("/")[0] || data.url === url
+                    url === data.to || url === "dashboard" + data?.to?.split("/")[0] || data.url === url
                       ? "mm-active text-primary"
                       : ""
                   }`}

@@ -74,6 +74,11 @@ const MyAccount = ({
       setCompanyDisabled(true);
       console.log("companyId", userDetails?.user.businessGroupId)
     }
+    if(userDetails.user.role === 'BUSINESS_GROUP'){
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setBusinessDisabled(true);
+    }
 },[])
 
   const businessGroupOptions = async (inputValue) => {
@@ -84,9 +89,7 @@ const MyAccount = ({
         label: item.businessGroupId.groupName,
         value: item.businessGroupId._id,
       }))
-
-      return response;
-
+      return response;  
     } catch (error) {
       console.error("Error fetching business group options:", error);
       return []; // Return empty array in case of an error

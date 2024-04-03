@@ -6,7 +6,6 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
 import { clsx } from "clsx";
-
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import useStorage from "../../../hooks/useStorage";
@@ -16,78 +15,34 @@ import {
   getCompany,
 } from "../../../services/api/CompanyServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
-
 import { getGroups } from "../../../services/api/BusinessGroup";
-
+import usePagination from "../../../hooks/usePagination";
 
 
 const Company = () => {
-
-
-  const [businessGroupNames,setBusinessGroupNames] = useState();
-  async function getGroupData() {
-    try {
-      const { data, totalLength } = await getGroups();
-      setBusinessGroupNames(data);
-
-    } catch (error) {
-      console.log("Error in fetching data", error);
-    }
-  }
-
-  useEffect(() => {
-    getGroupData();
-  }, []);
-
-
-const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
-
-useEffect(() => {
-  if (businessGroupNames) {
-    setBusinessGroupOptions(businessGroupNames.map(item => ({
-      label: item.businessGroupId?.groupName, // Assuming name is the property you want to use for the label
-      value: item._id, // Assuming id is the property you want to use for the value
-    })));
-  }
-}, [businessGroupNames]);
-
-  console.log('this is daaaaataaaaa', businessGroupNames);
-
-
+  const [businessGroupNames, setBusinessGroupNames] = useState();
   
   
-  const {isRtl} = useContext(ThemeContext);
-  const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-  const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
-  const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const [selectFilter, setFilter] = useState({
     value: "All Business Groups",
     label: "All Business Groups",
   });
+  const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
-  let CompanyData = allData.filter((item) => item.role === "company");
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
   const { id } = useParams();
-
-
-  useEffect(() => {
-    if (id) {
-      const user = JSON.parse(localStorage.getItem("userJsonData"));
-      const username = user.filter((data) => data.id === id)[0].userName;
-
-      setFilter({
-        value: username,
-        label: username,
-      });
-      setValue("parent", username);
-      setTempValue(username);
-    }
-  }, [id]);
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =usePagination();
 
   const { control, setValue, getValue } = useForm();
   const customStyles = {
@@ -102,38 +57,14 @@ useEffect(() => {
     }),
   };
 
-  const activePag = useRef(0);
-  const [dataLength, setDataLength] = useState(CompanyData.length);
-  const [page, setPage] = useState(activePag.current + 1);
-  const [length, setLength] = useState(0);
-  const [editData, setEditData] = useState({
-    id: 0,
-    title: "",
-    contact: 0,
-    email: "",
-    status: "",
-    location: "",
-    usergroup: "",
-  });
-  const sort = 10;
-
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
-  };
-
-  const fetchAllCompany = async (page) => {
+  const fetchAllCompany = async (page, businessGroupId) => {
     try {
-      const { data, success, totalCount } = await getCompany(page);
+      const { data, success, totalCount } = await getCompany(
+        page,
+        businessGroupId
+      );
       setTableData(data.data.data);
-      // console.log(data.data.totalCount)
-      setLength(data.data.totalCount);
+      setCount(data.data.totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
@@ -142,65 +73,51 @@ useEffect(() => {
     fetchAllCompany(page);
   }, [page]);
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
-
-  activePag.current === 0 && chageData(0, sort);
-  let pagination = Array(Math.ceil(length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = async (i) => {
-    activePag.current = i;
-    setPage(i+1);
-    settest(i);
+  const handleChangeBusinessGroup = (selectedOption) => {
+    console.log("this is the selected options", selectedOption);
+    setFilter(selectedOption);
+    setPage(1); 
+    fetchAllCompany(1, selectedOption.value); 
   };
-  // for deleting data in table
-  const onConfirmDelete = async(_id) => {
-    try{
-      await deleteCompany(_id)
-      fetchAllCompany()
-      notifySuccess("Company Deleted")
+  async function getGroupData() {
+    try {
+      const { data, totalLength } = await getGroups();
+      setBusinessGroupNames(data);
+    } catch (error) {
+      console.log("Error in fetching data", error);
     }
-    catch(e){
-      notifyError("Something Went Wrong")
+  }
+
+  useEffect(() => {
+    getGroupData();
+  }, []);
+
+  useEffect(() => {
+    if (businessGroupNames) {
+      setBusinessGroupOptions(
+        businessGroupNames.map((item) => ({
+          label: item.businessGroupId?.groupName, 
+          value: item.businessGroupId?._id, 
+        }))
+      );
+    }
+  }, [businessGroupNames]);
+
+  // for deleting data in table
+  const onConfirmDelete = async (_id) => {
+    try {
+      await deleteCompany(_id);
+      fetchAllCompany();
+      notifySuccess("Company Deleted");
+    } catch (e) {
+      notifyError("Something Went Wrong");
     }
   };
   const editDrawerOpen = (_id) => {
-    const data = tableData.filter((item)=> item._id === _id)
-    console.log(data)
-    navigate(`edit/${_id}`, {state : {formData:data}});
+    const data = tableData.filter((item) => item._id === _id);
+    console.log(data);
+    navigate(`edit/${_id}`, { state: { formData: data } });
   };
-  // const handleSubmit=(e)=>{
-  //     e.preventDefault();
-  //     const updateTable = tableData.map((table)=>{
-  //         if(table.id === editData.id) {
-  //             console.log(table.id)
-  //             return {...table, ...editData };
-  //         }
-  //         return table;
-  //     })
-  //     setTableData(updateTable)
-  // }
-
-
-
-
-  // const d = JSON.parse(localStorage.getItem("userJsonData"));
-  // let businessGroupOptions = d
-  //   .filter((item) => item.role === "businessgroup")
-  //   .map((item) => ({
-  //     label: item.userName,
-  //     value: item.id,
-  //   }));
-  // businessGroupOptions = [
-  //   ...businessGroupOptions,
-  //   { label: "All", value: "All" },
-  // ];
-
-
-  const company = useRef();
-  const edit = useRef();
   const { can } = usePermissions();
   return (
     <>
@@ -227,10 +144,7 @@ useEffect(() => {
                             onChange={(newValue) => {
                               setTempValue(newValue.label);
                               setValue("companyOptions", newValue.label);
-                              setFilter({
-                                value: newValue.value,
-                                label: newValue.label,
-                              });
+                              handleChangeBusinessGroup(newValue);
                             }}
                             ref={ref}
                             menuPortalTarget={document.body}
@@ -285,7 +199,7 @@ useEffect(() => {
                         <CompanyTable
                           tableData={tableData}
                           tempValue={tempValue}
-                          setDataLength={setDataLength}
+                          // setDataLength={setDataLength}
                           // getData={getData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
@@ -294,11 +208,9 @@ useEffect(() => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {activePag.current * sort + 1} {t("to")}{" "}
-                        {length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : length}{" "}
-                        {t("of")} {length} {t("entries")}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
@@ -306,43 +218,34 @@ useEffect(() => {
                       >
                         <Link
                           className={`paginate_button ${
-                            activePag.current === 0
-                              ? "previous disabled"
-                              : "previous"
+                            page === 1 ? "previous disabled" : "previous"
                           }`}
                           to="/company"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          onClick={() => prevPage(page - 1)}
                         >
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {pagination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/company"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
                           className={`paginate_button ${
-                            activePag.current === pagination.length - 1
-                              ? "next disabled"
-                              : "next"
+                            page * 10 >= totalCount ? "next disabled" : "next"
                           }`}
                           to="/company"
-                          onClick={() =>
-                            activePag.current + 1 < pagination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
                         </Link>
