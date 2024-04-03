@@ -31,6 +31,8 @@ const Account = ({
   errors,
   control,
 }) => {
+
+  console.log(errors);
   const [selectStateName, setSelectStateName] = useState("");
   const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
@@ -333,12 +335,12 @@ const Account = ({
           "state",
           filteredUserData[0] ? filteredUserData[0]?.state : ""
         );
-        setSelectStateName({ name: filteredUserData[0]?.state })
+        setSelectStateName({ name: filteredUserData[0]?.state || '' })
       }
 
       setValue(
         "_id",
-        filteredUserData[0] ? filteredUserData[0]?._id : id
+        filteredUserData[0] ? filteredUserData[0]?._id : id 
       );
       async function loadDatainDropdowns() {
         await onGroupChange(selectedGroupId);
@@ -355,6 +357,8 @@ const Account = ({
   if (isLoading) {
     return <div>Loading...</div>
   }
+
+
 
   return (
     <div className="p-4">

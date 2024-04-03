@@ -31,7 +31,7 @@ export const createUser = async (data) => {
     console.log("response", response)
     return response?.data?.data
   }catch(error){
-    console.log("error")
+    console.log(error)
     return { error: "Couldn't Create User" }
   }
 }
