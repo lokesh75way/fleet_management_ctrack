@@ -63,6 +63,8 @@ const Company = () => {
         page,
         businessGroupId
       );
+      const permissions = JSON.parse(localStorage.getItem('permission'));
+      setUserPermission(permissions?.[0]?.permission);
       setTableData(data.data.data);
       setCount(data.data.totalCount);
     } catch (error) {
@@ -118,7 +120,7 @@ const Company = () => {
     console.log(data);
     navigate(`edit/${_id}`, { state: { formData: data } });
   };
-  const { can } = usePermissions();
+  const { can, setUserPermission } = usePermissions();
   return (
     <>
       <MainPagetitle
@@ -197,6 +199,7 @@ const Company = () => {
                       </thead>
                       <tbody>
                         <CompanyTable
+                        key={tableData}
                           tableData={tableData}
                           tempValue={tempValue}
                           // setDataLength={setDataLength}
