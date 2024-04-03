@@ -140,12 +140,14 @@ const MyAccount = ({
       setValue("street2", dValues.street2);
       setDefaultCountry({ name: dValues.country })
       setValue("country", dValues.country)
-      setSelectStateName({ name: dValues.state })
+      setSelectStateName({ name: dValues.state || '' })
       setValue("state", dValues.state)
     }
   }, [dValues, id]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
+
+  console.log( 'this is comming state ................',selectStateName);
 
   return (
     <div className="p-4">
@@ -416,7 +418,8 @@ const MyAccount = ({
               containerClassName="bg-white"
               inputClassName="border border-white"
               placeHolder="Select State"
-              defaultValue={selectStateName.name?selectStateName:{name:"Select State"}}
+              // defaultValue={selectStateName}
+              defaultValue={ selectStateName}
             />
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
