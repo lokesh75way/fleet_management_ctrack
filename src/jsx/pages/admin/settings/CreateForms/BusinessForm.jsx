@@ -74,6 +74,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
           }
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
+          return;
         } else {
           if (data.logo.length === 0) {
             delete data.logo;
