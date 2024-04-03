@@ -14,6 +14,7 @@ import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
+import { useEffect } from "react";
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
 const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
@@ -179,7 +180,7 @@ const allroutes = [
   { module: 'reports', url: "/reports/trip-classification", component: <TripClassification /> },
 ];
 const AdminRoutes = () => {
-  const { can } = usePermissions()
+  const { can, setUserPermission } = usePermissions()
   const navigate = useNavigate()
   function NotFound() {
     const url = allroutes.map((route) => route.url);
@@ -190,6 +191,10 @@ const AdminRoutes = () => {
       return <Error404 />;
     }
   }
+  useEffect(() => {
+    const permissions = JSON.parse(localStorage.getItem("permission"));
+    setUserPermission(permissions?.[0]?.permission);
+  }, []);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>

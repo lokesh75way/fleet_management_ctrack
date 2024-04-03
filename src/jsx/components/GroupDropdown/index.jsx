@@ -40,7 +40,6 @@ const GroupDropdown = ({
                 ref={ref}
                 name={name}
                 isDisabled={isDisabled}
-                // isDisabled={isDisabled}
                 />
     );
 }

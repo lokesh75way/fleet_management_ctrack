@@ -18,7 +18,7 @@ import usePagination from "../../hooks/usePagination";
 
     const {t} = useTranslation();
     const {isRtl} = useContext(ThemeContext);
-    const {can} = usePermissions()
+    const {can, setUserPermission} = usePermissions()
     const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
     const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
     //call get api from userservice
@@ -29,6 +29,8 @@ import usePagination from "../../hooks/usePagination";
     const fetchUser = async () => {
       setIsLoading(true)
       const {data,count } = await getUser(page);
+      const permissions = JSON.parse(localStorage.getItem('permission'));
+      setUserPermission(permissions?.[0]?.permission);
       setTableData(data)
       setCount(count)
       setIsLoading(false);
@@ -42,15 +44,22 @@ import usePagination from "../../hooks/usePagination";
   const role = checkRole()
   const userName = checkUserName()
   const userData = JSON.parse(localStorage.getItem('userJsonData'))
+  const currUser = JSON.parse(localStorage.getItem('userDetails'))
   var UserData;
   if(checkRole() === 'COMPANY'){
-    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'STAFF' ))
+    UserData = userData.filter((item)=> (item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId))
   }
 
   else if(checkRole() === 'BUSINESS_GROUP'){
     UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
   } 
   else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && item.type === 'STAFF' )
+  else if(checkRole() === "USER") {
+    UserData = userData.filter((item) => {
+      // console.log(item, "iteeem");
+      return item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId;
+    });
+  }
 
   const [tableData, setTableData] = useState([] );
 
@@ -102,7 +111,7 @@ import usePagination from "../../hooks/usePagination";
                         </tr>
                       </thead>
                       <tbody>
-                        <SubUserTable tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} />
+                        <SubUserTable key={tableData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">

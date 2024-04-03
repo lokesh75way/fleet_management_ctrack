@@ -14,14 +14,15 @@ import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import {useTranslation} from 'react-i18next'
+import { usePermissions } from "../../../context/PermissionContext";
+import { CgChevronDoubleLeftR } from "react-icons/cg";
 
 const useBaseUrl = () => {
 
   const location = useLocation();
   const { pathname } = location;
   const segments = pathname.split("/");
-
-  
+  const {can} = usePermissions()
   const baseUrl = segments.slice(0, 2).join("/");
 
   return baseUrl;
@@ -44,23 +45,39 @@ const SideBar = () => {
   const navigate = useNavigate();
 
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const modulePermissions = userDetails.permissions?.[0].permission;
+  const viewableModules = modulePermissions.filter(item => item.view === true).map(item => ({
+    moduleId: item.moduleId._id,
+    title: item.moduleId.title,
+    basePath: item.moduleId.basePath
+  }));
   const role = userDetails?.user?.role;
-  // const type = userDetails?.user?.type;
+  const type = userDetails?.user?.type;
 
   let MenuList;
   switch (role) {
     case "COMPANY":
-      MenuList = CompanyMenuList;
+      MenuList = AdminMenuList;
       break;
     case "SUPER_ADMIN":
       MenuList = AdminMenuList;
       break;
     case "BUSINESS_GROUP":
-      MenuList = BusinessGroupMenuList;
+      MenuList = AdminMenuList;
       break;
     default:
-      MenuList = CompanyMenuList; // Default case if role doesn't match any case
+      MenuList = AdminMenuList; // Default case if role doesn't match any case
   }
+  const viewmoduleTitles = viewableModules.map(item => item.title);
+
+  const filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
+
+  // if(type === "STAFF"){
+   
+    
+  //   const updatedMenuItems = MenuList.filter(item => item.title !== "Feature Template");
+  //   MenuList = updatedMenuItems;
+  // }
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {}, []);
@@ -94,7 +111,7 @@ const SideBar = () => {
   path = path[path.length - 1];
 
   useEffect(() => {
-    MenuList.forEach((data) => {
+    filteredAdminMenuList.forEach((data) => {
       data.content?.forEach((item) => {
         if (path === item.to) {
           setState({ active: data.title });
@@ -134,7 +151,7 @@ const SideBar = () => {
     >
       <div className="deznav-scroll" >
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
-          {MenuList.map((data, index) => {
+          {filteredAdminMenuList.map((data, index) => {
             let menuClass = data.classsChange;
             if (menuClass !== "menu-title") {
               return (

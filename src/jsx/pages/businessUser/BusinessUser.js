@@ -26,13 +26,15 @@ const BusinessUser = () => {
   const [isLoading, setIsLoading] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { can } = usePermissions();
+  const { can, setUserPermission } = usePermissions();
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
 
   async function getGroupData() {
     try {
+      const permissions = JSON.parse(localStorage.getItem('permission'));
+      setUserPermission(permissions?.[0]?.permission);
       const { data, totalPage, totalCount } = await getGroups(page);
       setTableData(data);
       setCount(totalCount);
@@ -112,6 +114,7 @@ const BusinessUser = () => {
                         </thead>
                         <tbody>
                           <BusinessTable
+                          key={tableData}
                             tableData={tableData}
                             onConfirmDelete={onConfirmDelete}
                             editDrawerOpen={editDrawerOpen}

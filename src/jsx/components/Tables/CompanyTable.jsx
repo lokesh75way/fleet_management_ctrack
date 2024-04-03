@@ -17,8 +17,8 @@ const CompanyTable = ({
   const { getBranch } = useStorage();
   const { can } = usePermissions()
 
-  const editPermission = true
-  const deletePermission = true
+  const editPermission = can('company','modify');
+  const deletePermission = can('company','delete')
   var filterData = tableData;
   console.log(tableData)
  
