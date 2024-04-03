@@ -265,7 +265,7 @@ const MyAccount = ({
                 //     value: getValues('companyId'),
                 //   }} 
                 // />
-                <CompanyDropdown
+                <CompanyDropdown 
                   key={groupId}
                   groupId={groupId}
                   onChange={(newValue) => {
