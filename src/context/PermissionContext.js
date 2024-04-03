@@ -18,7 +18,7 @@ export function PermissionProvider({ children }) {
   const transformPermissions = (userPermission, field) => {
     const permissionsByModuleId = {};
     const permissionsByBasePath = {};
-    userPermission.forEach(permission => {
+    (userPermission ?? []).forEach(permission => {
       // permissionsByModuleId[data?.moduleId?.moduleId] = permission.permission;
       permissionsByBasePath[permission?.moduleId?.basePath] = permission;
       return;
