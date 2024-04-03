@@ -17,6 +17,9 @@ import { useLocation } from "react-router-dom";
 import GroupDropdown from "../../GroupDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import useStorage from "../../../../hooks/useStorage";
+import { getUser } from "../../../../services/api/UserServices";
+import { use } from "i18next";
 
 const MyAccount = ({
   setValue,
@@ -28,6 +31,7 @@ const MyAccount = ({
   control,
 }) => {
   // const defaultValues = getSelectValues();
+
   const [selectStateName, setSelectStateName] = useState({
     name: "",
   });
@@ -36,7 +40,9 @@ const MyAccount = ({
   const [tempValue, setTempValue] = useState();
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
-
+  const [businessDisabled, setBusinessDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(false);
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -46,14 +52,29 @@ const MyAccount = ({
 
   const { t } = useTranslation();
   const location = useLocation();
-  
+
   const [isStateDisabled, setIsStateDisabled] = useState(true);
 
   // const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
   // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
-  const [defaultCountry,setDefaultCountry] = useState();
+  const [defaultCountry, setDefaultCountry] = useState();
+
   
+
+  useEffect(() => {
+    if(userDetails.user.role === 'COMPANY'){
+      let bus
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setBusinessDisabled(true);
+      
+      setValue("companyId", userDetails?.user.companyId)
+      setCompanyId(userDetails?.user.companyId);
+      setCompanyDisabled(true);
+      console.log("companyId", userDetails?.user.businessGroupId)
+    }
+},[])
 
   const businessGroupOptions = async (inputValue) => {
     try {
@@ -63,15 +84,15 @@ const MyAccount = ({
         label: item.businessGroupId.groupName,
         value: item.businessGroupId._id,
       }))
-      
-      return response;  
-      
+
+      return response;
+
     } catch (error) {
       console.error("Error fetching business group options:", error);
       return []; // Return empty array in case of an error
     }
   };
-  
+
   const allCompanyOptions = async (inputValue) => {
     try {
       const companyResponse = await getCompany();
@@ -81,13 +102,13 @@ const MyAccount = ({
         value: item.companyId?._id,
       }));
       console.log("RES:-> ", response);
-      return response; 
+      return response;
     } catch (error) {
       console.error("Error fetching company options:", error);
       return []; // Return empty array in case of an error
     }
   };
- 
+
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -95,6 +116,8 @@ const MyAccount = ({
       setDvalues(data);
     }
   }, [id]);
+
+  console.log(errors);
   useEffect(() => {
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
@@ -110,10 +133,10 @@ const MyAccount = ({
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
       setValue("street2", dValues.street2);
-      setDefaultCountry({ name:dValues.country })
-      setValue("country",dValues.country)
-      setSelectStateName({name : dValues.state})
-      setValue("state",dValues.state)
+      setDefaultCountry({ name: dValues.country })
+      setValue("country", dValues.country)
+      setSelectStateName({ name: dValues.state })
+      setValue("state", dValues.state)
     }
   }, [dValues, id]);
 
@@ -153,7 +176,6 @@ const MyAccount = ({
                 // />
                 <GroupDropdown
                   onChange={async (newValue) => {
-                    console.log(newValue)
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
@@ -162,7 +184,7 @@ const MyAccount = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={false}
+                  isDisabled={businessDisabled}
                   name={name}
                 />
 
@@ -193,7 +215,7 @@ const MyAccount = ({
                 // />
                 <GroupDropdown
                   onChange={async (newValue) => {
-                    console.log(newValue)
+               
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
@@ -201,7 +223,7 @@ const MyAccount = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={false}
+                  isDisabled={businessDisabled}
                   name={name}
                 />
               )}
@@ -239,17 +261,17 @@ const MyAccount = ({
                 //   }} 
                 // />
                 <CompanyDropdown
-                key={groupId}
-                groupId={groupId}
+                  key={groupId}
+                  groupId={groupId}
                   onChange={(newValue) => {
-                    console.log(newValue)
+                   
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={false}
+                  isDisabled={companyDisabled}
                   name={name}
                 />
               )}
@@ -278,20 +300,19 @@ const MyAccount = ({
                 //   }}
                 // />
                 <CompanyDropdown
-                key={groupId}
-                groupId={groupId}
-                onChange={(newValue) => {
-                  console.log(newValue)
-                  setValue("companyId", newValue.value);
-                  setValue("companyName", newValue.value);
-                  setCompanyId(newValue.value);
-                }}
-                value={value}
-                customStyles={customStyles}
-                ref={ref}
-                isDisabled={false}
-                name={name}
-              />
+                  key={groupId}
+                  groupId={groupId}
+                  onChange={(newValue) => {
+                    setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.value);
+                    setCompanyId(newValue.value);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  isDisabled={companyDisabled}
+                  name={name}
+                />
               )}
             />
           )}
@@ -305,7 +326,6 @@ const MyAccount = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              console.log(value, "Brancg value"),
               // <AsyncSelect
               //   onChange={(newValue) => {
               //     setParentValue(newValue.value);
@@ -321,10 +341,9 @@ const MyAccount = ({
               //   }}
               // />
               <ParentBranchDropdown
-              key={companyId}
-              companyId={companyId}
+                key={companyId}
+                companyId={companyId}
                 onChange={async (newValue) => {
-                  console.log(newValue)
                   setValue("parentBranchId", newValue.value);
                   setValue("parentBranch", newValue.value);
                   setValue("parent", newValue.value);
@@ -373,14 +392,13 @@ const MyAccount = ({
             inputClassName="border border-white"
             placeHolder="Select Country"
             defaultValue={defaultCountry}
-            // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyD0ata[0].country : "" }}
+          // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyD0ata[0].country : "" }}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div
-          className={`${
-            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
-          }`}
+          className={`${isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+            }`}
         >
           <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>

@@ -169,7 +169,7 @@ export const companyAccountSchema = yup
 
 export const branchAccountSchema = yup
   .object({
-    branch: yup.string().required(),
+    branchName: yup.string().required(),
     companyId: yup.string().required("Company Name is required "),
     businessGroupId: yup.string().required("Business Group Name is required "),
     country: yup.string().required("Please select a Country"),
