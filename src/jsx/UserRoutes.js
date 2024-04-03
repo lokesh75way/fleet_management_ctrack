@@ -354,6 +354,11 @@ const UserRoutes = () => {
   { module: 'company', url: "company/:id", component: <Company /> },
   { module: 'company', url: "company", component: <Company /> },
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
+
+  //user
+  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
   ];
 
 
