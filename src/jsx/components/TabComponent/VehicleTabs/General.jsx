@@ -18,8 +18,15 @@ import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
-
 import {useTranslation} from 'react-i18next'
+
+import CompanyDropdown from "../../CompanyDropdown";
+import ParentBranchDropdown from "../../ParentBranch";
+import GroupDropdown from "../../GroupDropdown";
+
+
+
+
 
 const General = ({
   register,
@@ -30,6 +37,15 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
+
+
+  const [groupId, setGroupId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
+
+  const [businessDisabled, setBusinessDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(false);
+
+
   const { checkRole, checkUserName } = useStorage();
   const [tempValue, setTempValue] = useState();
   const customStyles = {
@@ -61,6 +77,9 @@ const General = ({
     businessGroupOptions()
     allCompanyOptions()
   },[])
+
+
+  
 
   const {t} = useTranslation();
 
@@ -188,16 +207,26 @@ const General = ({
             name="branch"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.label);
-                  setValue("branch", newValue.label);
-                  setValue("branchId", newValue.value);
-                }}
-                options={branchOptions}
+              <ParentBranchDropdown
+                key={companyId}
+                companyId={companyId}
+                onChange={async (newValue) => {
+                  // setValue("parentBranchId", newValue.value);
+
+                  console.log('ye he newValueeeeeeeee',newValue);
+                  setValue("branch", newValue.value);
+                  setValue("branchID", newValue.value);
+
+                  // setTempValue(newValue.label);
+                  // setValue("branch", newValue.label);
+                  // setValue("branchId", newValue.value);
+                }
+                }
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
+                isDisabled={false}
                 name={name}
-                styles={customStyles}
               />
             )}
           />
