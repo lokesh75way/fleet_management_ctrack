@@ -58,6 +58,8 @@ const General = ({
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
+
+
   const role = checkRole()
 
   // useEffect(()=>{
@@ -151,21 +153,20 @@ const General = ({
             name="businessGroupId"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                onChange={(newValue) => {
-                  setTempValue(newValue?.value);
-                  setValue("businessGroupId", newValue?.label);
-                  setValue("businessId", newValue?.value);
-                }}
-                isDisabled={role !== "SUPER_ADMIN"}
-                loadOptions={businessGroupOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
-              />
+              <GroupDropdown
+              onChange={async (newValue) => {
+                await setValue("businessGroupId", newValue.value);
+                await setValue("businessId", newValue.value);
+                await setValue("businessGroupName", newValue.value);
+                setGroupId(newValue.value);
+                setCompanyId(null);
+              }}
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={businessDisabled}
+              name={name}
+            />
             )}
           />
           {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
@@ -179,21 +180,21 @@ const General = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                onChange={(newValue) => {
-                  setTempValue(newValue?.value);
-                  setValue("company", newValue?.label);
-                  setValue("companyId", newValue?.value);
-                }}
-                isDisabled={role === "COMPANY"}
-                loadOptions={allCompanyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={{label:getValues('company'), value :getValues('company')}}
-              />
+              <CompanyDropdown 
+              key={groupId}
+              groupId={groupId}
+              onChange={(newValue) => {
+               
+                setCompanyId(newValue.value)
+                setValue("companyId", newValue.value);
+                setValue("company", newValue.value);
+              }}
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={companyDisabled}
+              name={name}
+            />
             )}
           />
           {!getValues("company") && <Error errorName={errors.company} />}
@@ -212,14 +213,8 @@ const General = ({
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-
-                  console.log('ye he newValueeeeeeeee',newValue);
                   setValue("branch", newValue.value);
                   setValue("branchID", newValue.value);
-
-                  // setTempValue(newValue.label);
-                  // setValue("branch", newValue.label);
-                  // setValue("branchId", newValue.value);
                 }
                 }
                 value={value}
@@ -311,8 +306,8 @@ const General = ({
             name="serverAddress"
             placeholder=""
           />
-        </div>
         <Error errorName={errors.serverAddress} />
+        </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
           {t('simNumber')}  <span className="text-danger">*</span>
@@ -347,8 +342,10 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) =>
+                onChange={(newValue) =>{
                   setValue("distanceCounter", newValue.value)
+                }
+                  
                 }
                 options={distanceCounterOptions}
                 ref={ref}
@@ -370,7 +367,9 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) =>
-                  setValue("unitOfDistance", newValue.value)
+                  {                    
+                    setValue("unitOfDistance", newValue.value)
+                  }
                 }
                 options={unitOfDistanceOptions}
                 ref={ref}

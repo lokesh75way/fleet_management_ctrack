@@ -77,8 +77,10 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <label className="form-check-label" style={{ marginBottom: "0" }}>
               {t('immovable')}
               </label>
+
             </div>
           </div>
+              <Error errorName={errors.vehicleCategory} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('DVIRTemplate')}<span className="text-danger">*</span></label>
@@ -279,20 +281,21 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                      onChange={(newValue) =>
-                        setValue("distanceQuantitySelect", newValue.value)
-                      }
-                      options={distanceQuantitySelectOptions}
-                      ref={ref}
-                      name={name}
-                      styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+                    onChange={(newValue) =>
+                      setValue("distanceQuantitySelect", newValue.value)
+                    }
+                    options={distanceQuantitySelectOptions}
+                    ref={ref}
+                    name={name}
+                    styles={customStyles}
+                    defaultValue={distanceQuantitySelectOptions[0]}
                     />
-                  )}
+                    )}
                 />
               </>
             )}
           </div>
+            <Error errorName={errors.distance} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('durationBasedFuelConsumption')} </label>
@@ -316,16 +319,16 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               control={control}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
-                  onChange={(newValue) =>
-                    setValue("durationSelect", newValue.value)
-                  }
-                  options={durationSelectOptions}
-                  ref={ref}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={durationSelectOptions[0]}
+                onChange={(newValue) =>
+                  setValue("durationSelect", newValue.value)
+                }
+                options={durationSelectOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={durationSelectOptions[0]}
                 />
-              )}
+                )}
             />
             {isCheckedDBFC2 && (
               <>
@@ -343,20 +346,21 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                      onChange={(newValue) =>
-                        setValue("durationQuantitySelect", newValue.value)
-                      }
-                      options={distanceQuantitySelectOptions}
-                      ref={ref}
-                      name={name}
-                      styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+                    onChange={(newValue) =>
+                      setValue("durationQuantitySelect", newValue.value)
+                    }
+                    options={distanceQuantitySelectOptions}
+                    ref={ref}
+                    name={name}
+                    styles={customStyles}
+                    defaultValue={distanceQuantitySelectOptions[0]}
                     />
-                  )}
+                    )}
                 />
               </>
             )}
           </div>
+            <Error errorName={errors.duration} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('fuelIdlingConsumption')}</label>
@@ -413,6 +417,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="vinNumber"
             placeholder=""
           />
+          <Error errorName={errors.vinNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -506,6 +511,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </label>
           </div>
         </div>
+            
      
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">{t('distanceCost')}<span className="text-danger">*</span></label>
@@ -579,6 +585,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="sleepModeDuration"
             placeholder=""
           />
+          <Error errorName={errors.sleepModeDuration} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -625,6 +632,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.underweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('overweightTolerance')}</label>
@@ -639,6 +647,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.overweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('loadingUnloadingTolerance')} </label>
@@ -653,6 +662,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.loadingUnloadingTolerance} />
             </div>
           </>
    
