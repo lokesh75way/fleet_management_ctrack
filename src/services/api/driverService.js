@@ -6,8 +6,9 @@ export const createDriver = async (body) => {
   return axios.post("/drivers", body);
 };
 
-export const updateDriver = async (body) => {
-  return axios.patch("/drivers", body);
+export const updateDriver = async (id, body) => {
+  console.log("this is the id", body)
+  return axios.put(`/drivers/${id}`, body);
 };
 
 export const getDrivers = async (pageNo, limit) => {

@@ -60,10 +60,9 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     "Business Group": "/business",
     "Branch" : "/branch",
     "Sub User" : "/user",
-    "Feature Templates": "/groups"
+    "Feature Templates": "/groups",
+    "Driver" : '/driver'
   };
-
- 
 
   return (
     <>

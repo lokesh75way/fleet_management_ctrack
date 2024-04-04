@@ -13,6 +13,9 @@ import {
   businessGroupOptions,
 } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
+import GroupDropdown from "../../GroupDropdown";
+import CompanyDropdown from "../../CompanyDropdown";
+import BranchDropdown from "../../BranchDropdown";
 
 const Profile = ({
   setValue,
@@ -23,11 +26,14 @@ const Profile = ({
   errors,
 }) => {
   const [selectStateName, setSelectStateName] = useState({
-    name: "Select State",
+    name: "",
   });
+  const [stateid, setstateid] = useState(0);
   const { control } = useForm();
   const [countryid, setCountryid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [groupId, setGroupId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -38,6 +44,8 @@ const Profile = ({
   const { id } = useParams();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
+
+  
 
   return (
     <div className="p-4">
@@ -52,22 +60,18 @@ const Profile = ({
             rules={{ required: true }}
             disabled={true}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  // newValue.value should be mongoId
-                  setValue("businessGroupId", newValue?.value);
+              <GroupDropdown
+                onChange={async (newValue) => {
+                  setValue("businessGroupId", newValue.value);
+                  console.log("this inside busijedd", newValue.value)
+                  setGroupId(newValue.value);
+                  setCompanyId(null);
                 }}
-                isDisabled={role === "company" || role === "businessgroup"}
-                options={businessGroupOptions}
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
+                isDisabled={false}
                 name={name}
-                styles={customStyles}
-                defaultValue={{
-                  label:
-                    businessGroupOptions.filter((el) => el.value === value) ||
-                    " ",
-                  value: value,
-                }}
               />
             )}
           />
@@ -84,21 +88,20 @@ const Profile = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  setValue("companyId", newValue?.value);
-                }}
-                isDisabled={role === "company"}
-                options={companyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={{
-                  label:
-                    companyOptions.filter((el) => el.value === value) || " ",
-                  value: value,
-                }}
-              />
+              <CompanyDropdown
+              onChange={async (newValue) => {
+                setValue("parentCompany", newValue.value);
+                setValue("companyId", newValue.value)
+                setCompanyId(newValue.value);
+              }}
+              key={groupId}
+              groupId={groupId}
+              value={value}
+              customStyles={customStyles}
+              name={name}
+              ref={ref}
+              isDisabled={false}
+            />
             )}
           />
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
@@ -112,44 +115,24 @@ const Profile = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
+              <BranchDropdown
                 onChange={(newValue) => {
-                  setValue("branchId", newValue?.value);
-                }}
-                options={branchOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={{
-                  label:
-                    branchOptions.filter((el) => el.value === value) || " ",
-                  value: value,
-                }}
+                  const valuesArray = newValue.map(item => item.value);
+                  setValue("Branch", valuesArray);
+                  setValue("branchId", valuesArray);
+              }}
+              key={companyId}
+              companyId={companyId}
+              value={value}
+              customStyles={customStyles}
+              name={name}
+              ref={ref}
+              isDisabled={false}
               />
             )}
           />
           {!getValues("branchId") && <Error errorName={errors.branchId} />}
         </div>
-        {/* <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            Employee Designation <span className="text-danger">*</span>
-          </label>
-          <Controller
-            name="employeeDesignation"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("employeeDesignation", newValue.value)}}
-                options={employeeDesignationOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={employeeDesignationOptions[0]}
-              />
-            )}
-          />
-          { !getValues('employeeDesignation') && <Error errorName={errors.employeeDesignation} />}
-        </div> */}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
           {t('firstName')}<span className="text-danger">*</span>
@@ -184,6 +167,7 @@ const Profile = ({
           </label>
           <CustomInput
             type="number"
+          
             register={register}
             label="Employee Number"
             name="employeeNumber"
@@ -199,7 +183,7 @@ const Profile = ({
           <CountrySelect
             onChange={(e) => {
               setSelectStateName({ name: "Select State" });
-              setCountryid(e.name);
+              setCountryid(e.id);
               setValue("country", e.name);
               setIsStateDisabled(false);
             }}
@@ -213,18 +197,18 @@ const Profile = ({
           <label className="form-label">
           {t('state')}
           </label>
-          <div>
+          <div style={{ background: "white" }}>
             <StateSelect
-              countryid={countryid}
+              countryid={isStateDisabled ? 0 : countryid}
               onChange={(e) => {
+                setstateid(e.id);
                 setValue("state", e.name);
               }}
               containerClassName="bg-white"
-              inputClassName="border border-white"
+              inputClassName="border border-white customSelectHeight"
               placeHolder="Select State"
               defaultValue={selectStateName}
             />
-            {!getValues("state") && <Error errorName={errors.state} />}
           </div>
         </div>
         <div className="col-xl-6 mb-3">

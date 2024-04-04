@@ -13,15 +13,22 @@ const CustomInput = ({
   min,
   disabled,
 }) => {
-
+  const handleKeyDown = (e) => {
+    if (e.currentTarget.type === "number") {
+      if (e.key === "e" || e.key === "E") {
+        e.preventDefault();
+      }
+    }
+  };
   return (
     <div>
       <input
         {...register(`${name}`)}
         name={name}
         type={type}
+        onKeyDown={handleKeyDown}
         label={label}
-        style={{...style, height : "46px"}}
+        style={{ ...style, height: "46px" }}
         value={value}
         placeholder={placeholder}
         className="form-control"

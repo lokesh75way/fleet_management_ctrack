@@ -27,10 +27,13 @@ const BranchDropdown = ({
     }
     , []);
     useEffect(() => {
-        const selected = dropDownOptions.filter((option) => value && value.includes(option.value));
-        setSelectedOption(selected);
+        if (value && Array.isArray(value)) {
+            const selected = dropDownOptions.filter(option => value.some(val => val === option.value));
+            setSelectedOption(selected);
+        } else {
+            setSelectedOption(value);
+        }
     }, [value, dropDownOptions]);
-
     return (
             <Select
                 options = {dropDownOptions}

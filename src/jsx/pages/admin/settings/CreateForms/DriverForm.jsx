@@ -14,18 +14,18 @@ import {
   driverDocumentSchema,
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import {
   createDriver,
   getDriverById,
+  updateDriver,
 } from "../../../../../services/api/driverService";
 
 const DriverForm = () => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t('profile'), t('additionalInfo'), t('document')];
+  const tabHeading = [t("profile"), t("additionalInfo"), t("document")];
   const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
   const { id: driverId } = useParams();
@@ -60,38 +60,38 @@ const DriverForm = () => {
       navigate("/driver");
     }
   }
-
+  console.log(errors, 'erro0rs-:', getValues())
   useEffect(() => {
     if (driverId) getDriver(driverId);
   }, [driverId]);
 
   const onSubmitHanlder = async (data) => {
-    console.log({ formData: data });
-    if (activeIndex === totalTabs - 1) {
-      try {
-        if (driverId) {
-          notifySuccess("Driver Updated!");
-          navigate("/driver");
-          return;
+    console.log({ data });
+    try {
+        if (activeIndex === totalTabs - 2) {
+            if (driverId) {
+                await updateDriver(driverId, data);
+                notifySuccess("Driver Updated!");
+                navigate("/driver");
+            } else {
+                await createDriver(data);
+                notifySuccess(t("newDriverCreated"));
+                navigate("/driver");
+            }
         } else {
-          await createDriver(data);
-          // notifySuccess("Branch Added Successfully !!");
-          notifySuccess(t('newDriverCreated'));
-          navigate("/driver");
-          return;
+            setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
         }
-      } catch (error) {
-        notifyError(t('someErrorOccurred'));
-      }
+    } catch (error) {
+        notifyError(t("someErrorOccurred"));
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  };
+};
+
   return (
     <>
       <MainPagetitle
-        mainTitle={t('driver')}
+        mainTitle={t("driver")}
         pageTitle={driverId ? t("edit") : t("create")}
-        parentTitle={t('driver')}
+        parentTitle={t("driver")}
       />
       <div className="m-2 p-2">
         <FormProvider>
