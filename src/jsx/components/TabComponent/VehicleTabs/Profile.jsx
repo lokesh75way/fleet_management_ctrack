@@ -61,7 +61,9 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 type="radio"
                 className="form-check-input"
                 name="optradioCustom1"
-                onChange={() => setValue("vehicleCategory", "MOVABLE")}
+                onChange={() => {setValue("vehicleCategory", "MOVABLE")
+                setTempValue('vechicleCategory')
+              }}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
               {t('movable')}
@@ -71,7 +73,9 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <input
                 type="radio"
                 className="form-check-input"
-                onChange={() => setValue("vehicleCategory", "IMMOVABLE")}
+                onChange={() => {setValue("vehicleCategory", "IMMOVABLE")
+                setTempValue('vehicleCategory')
+              }}
                 name="optradioCustom1"
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
@@ -80,7 +84,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
             </div>
           </div>
-              <Error errorName={errors.vehicleCategory} />
+             {!getValues("vehicleCategory") && <Error errorName={errors.vehicleCategory} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('DVIRTemplate')}<span className="text-danger">*</span></label>

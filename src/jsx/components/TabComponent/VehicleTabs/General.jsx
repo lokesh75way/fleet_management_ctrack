@@ -344,6 +344,7 @@ const General = ({
               <Select
                 onChange={(newValue) =>{
                   setValue("distanceCounter", newValue.value)
+                  setTempValue("frgefrg")
                 }
                   
                 }
@@ -355,7 +356,7 @@ const General = ({
               />
             )}
           />
-          <Error errorName={errors.distanceCounter} />
+          {!getValues("distanceCounter") && <Error errorName={errors.distanceCounter} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -369,6 +370,7 @@ const General = ({
                 onChange={(newValue) =>
                   {                    
                     setValue("unitOfDistance", newValue.value)
+                    setTempValue(newValue.value);
                   }
                 }
                 options={unitOfDistanceOptions}
@@ -379,7 +381,7 @@ const General = ({
               />
             )}
           />
-          <Error errorName={errors.unitOfDistance} />
+          {!getValues("unitOfDistance") && <Error errorName={errors.unitOfDistance} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
