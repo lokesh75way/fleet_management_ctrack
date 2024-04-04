@@ -30,12 +30,12 @@ const CompanyTable = ({
           {/* <td>
             <span>{item.id}</span>
           </td> */}
-          <td>
+          <td className="text-center">
             <span className="text-primary">{item?.companyId?.companyName}</span>
           </td>
           <td>
-            <div className="products">
-              <div>
+            <div className="products d-flex justify-content-center">
+              <div >
                 <h6>{item?.companyId?.businessGroupId?.groupName}</h6>
               </div>
             </div>
@@ -43,13 +43,13 @@ const CompanyTable = ({
           {/* <td>
             <span>{item.mobileNumber}</span>
           </td> */}
-          <td>
+          <td className="text-center">
             <span>{item.country}</span>
           </td>
-          <td>
+          <td className="text-center">
             <span>{item?.email}</span>
           </td>
-          <td>
+          <td className="text-center">
             <Link
               to={`/branch/cid/${item?.companyId?.id}`}
               className="text-primary badge light border-0 badge-count"
@@ -57,8 +57,8 @@ const CompanyTable = ({
               {getBranch(item?.companyId?.userName)}
             </Link>
           </td>
-          <td>
-            <span>{item?.companyId?.zipCode}</span>
+          <td className="text-center">
+            <span>{item?.companyId?.zipCode ? item?.companyId?.zipCode : <span className='ps-4'>-</span> }</span>
           </td>
           {(editPermission || deletePermission) && <td>
             <span className="d-flex justify-content-center">

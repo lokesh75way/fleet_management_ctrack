@@ -4,7 +4,7 @@ import initAxios from './Axios';
 initAxios();
 
 export const getAllBranch = async (page,companyId, branchId) => {
-    console.log("thi", branchId)
+
     let url = '/branches';
     if (page !== undefined) {
         url += `?page=${page}&limit=${10}`;
