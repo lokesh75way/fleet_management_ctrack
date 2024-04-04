@@ -49,10 +49,10 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
       );
       if (permission) {
         module.permission = {
-          add: permission.add,
-          view: permission.view,
-          modify: permission.modify,
-          delete: permission.delete,
+          add: permission?.add,
+          view: permission?.view,
+          modify: permission?.modify,
+          delete: permission?.delete,
         };
       }
 
@@ -64,7 +64,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
 
     // Clear subModuleIndexArray
     setSubModuleIndexArray(updatedData.filter(d => {
-      return !(!d.permission.delete && !d.permission.view && !d.permission.modify && !d.permission.add)
+      return !(!d.permission?.delete && !d.permission?.view && !d.permission?.modify && !d.permission?.add)
     }).map(d => d._id));
 
     console.log("Data copied successfully");
@@ -178,6 +178,9 @@ const handleSubModulePermisssionChange = (
     fetchData();
   }, []);
 
+
+  const [editGroupName,setEditGroupName] = useState();
+
   const fetchTemplates = async () => {
     try {
       const templateData = await TemplateServices.getTemplates();
@@ -186,16 +189,19 @@ const handleSubModulePermisssionChange = (
         // setCurrentTemplate();
         const filteredData = templateData.data.data.find(d => d._id === id);
         setNewGroupData(filteredData);
+
+        setEditGroupName(filteredData.name)
+
         const updatedData = moduleData.data.map((module) => {
           const permission = filteredData.permission.find(
             (perm) => perm.moduleId === module._id
           );
           if (permission) {
             module.permission = {
-              add: permission.add,
-              view: permission.view,
-              modify: permission.modify,
-              delete: permission.delete,
+              add: permission?.add,
+              view: permission?.view,
+              modify: permission?.modify,
+              delete: permission?.delete,
             };
           }
           return module;
@@ -225,17 +231,31 @@ const handleSubModulePermisssionChange = (
   console.log("this is group data state ",groupNames);
 
 
+  // console.log(editData.name);
+
   const handleSave = async () => {
     if (!newGroupData.name) {
       setIsErrror(true);
       return ;
     }
 
-    if (groupNames.includes(newGroupData.name)) {
+    if(id){
 
-      notifyError('Group Name already exists')
-      return;
+      if (groupNames.includes(newGroupData.name)  && newGroupData.name !== editGroupName) {
+  
+        notifyError('Feature Template name already exists')
+        return;
+      }
     }
+    else{
+      
+      if (groupNames.includes(newGroupData.name)) {
+  
+        notifyError('Feature Template name already exists')
+        return;
+      }
+    }
+
 
     try {
 
@@ -244,10 +264,10 @@ const handleSubModulePermisssionChange = (
       const flattenedPermissions = data.reduce((acc, module) => {
         const mainModulePermissions = {
           moduleId: module._id,
-          add: module.permission.add,
-          view: module.permission.view,
-          modify: module.permission.modify,
-          delete: module.permission.delete,
+          add: module.permission?.add,
+          view: module.permission?.view,
+          modify: module.permission?.modify,
+          delete: module.permission?.delete,
         };
 
         acc.push(mainModulePermissions);
@@ -256,10 +276,10 @@ const handleSubModulePermisssionChange = (
           module.subModules.forEach((subModule) => {
             const subModulePermissions = {
               moduleId: subModule.id,
-              add: subModule.permission.add,
-              view: subModule.permission.view,
-              modify: subModule.permission.modify,
-              delete: subModule.permission.delete,
+              add: subModule.permission?.add,
+              view: subModule.permission?.view,
+              modify: subModule.permission?.modify,
+              delete: subModule.permission?.delete,
             };
             acc.push(subModulePermissions);
           });
@@ -306,7 +326,7 @@ const handleSubModulePermisssionChange = (
           <Card.Title>{t('permission')}</Card.Title>
         </Card.Header>
 
-        <div className="d-flex justify-content-between m-2 mt-4 p-3" >
+        <div className="d-flex justify-content-between m-2 mt-4 p-3 mb-0 pb-0">
 
           <div>
 
@@ -512,7 +532,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.add}
+                checked={element.permission?.add}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -528,7 +548,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.view}
+                checked={element.permission?.view}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -544,7 +564,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.modify}
+                checked={element.permission?.modify}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,
@@ -560,7 +580,7 @@ const handleSubModulePermisssionChange = (
             <td>
               <input
                 type="checkbox"
-                checked={element.permission.delete}
+                checked={element.permission?.delete}
                 onChange={(e) =>
                   handleSubModulePermisssionChange(
                     e.target.checked,

@@ -37,7 +37,7 @@ const Branch = () => {
     "fa-solid fa-angle-left": isRtl,
     "fa-solid fa-angle-right": !isRtl,
   });
-  const { can } = usePermissions();
+  const { can, setUserPermission } = usePermissions();
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -116,6 +116,8 @@ const Branch = () => {
         setBranches(data.data);
       } else {
         const { data, success } = await getAllBranch(page);
+        const permissions = JSON.parse(localStorage.getItem('permission'));
+        setUserPermission(permissions?.[0]?.permission);
         setTableData(data.data);
         setCount(data.totalCount);
         // setBranches(data.data);
@@ -303,6 +305,7 @@ const Branch = () => {
                       </thead>
                       <tbody>
                         <SubCompanyTable
+                          key={tableData}
                           tempValue={tempValue}
                           // setDataLength={setDataLength}
                           tempValue2={tempValue2}

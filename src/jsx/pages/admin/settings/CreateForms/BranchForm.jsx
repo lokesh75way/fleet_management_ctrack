@@ -52,16 +52,29 @@ const BranchForm = () => {
               ...data,
               branchId: id,
             };
+            if (data.logo && data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file && data.file.length === 0) {
+              delete data.file;
+            }
             await editBranch(Branchdata);
             notifySuccess("Branch Updated!");
             navigate("/branch");
             return;
           } catch (e) {
+            console.log(e)
             notifyError("Some error occured !!");
           }
           return;
         } else {
           try {
+            if (data.logo && data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file && data.file.length === 0) {
+              delete data.file;
+            }
             await createNewBranch(data);
             notifySuccess("New Branch Created!");
             navigate("/branch");
@@ -72,10 +85,10 @@ const BranchForm = () => {
           }
         }
       } catch (error) {
+        console.log(error)
         notifyError("Some error occured !!");
       }
     }
-    console.log("Hello")
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (

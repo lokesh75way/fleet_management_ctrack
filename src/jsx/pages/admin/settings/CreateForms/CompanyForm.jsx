@@ -64,6 +64,12 @@ const CompanyForm = () => {
         if (id) {
           try {
             // data.businessGroupId = getValues("businessId");
+            if (data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file.length === 0) {
+              delete data.file;
+            }
             await editCompany(data);
             notifySuccess("Company Updated Successfully");
             navigate("/company");
@@ -75,6 +81,12 @@ const CompanyForm = () => {
           return;
         } else {
           try {
+            if (data.logo && data.logo.length === 0) {
+              delete data.logo;
+            }
+            if (data.file && data.file.length === 0) {
+              delete data.file;
+            }
             data.businessGroupId = getValues("businessGroupId");
             const { success, message } = await addCompany(data);
             if (!success) {

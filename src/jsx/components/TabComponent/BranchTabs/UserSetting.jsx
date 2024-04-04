@@ -22,9 +22,11 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 import { getValue } from "@testing-library/user-event/dist/utils";
+import FileUploader from "../../../../components/FileUploader";
 
 const UserSetting = ({ setValue,getValues ,handleSubmit, onSubmit,errors, control, register }) => {
 const {t} = useTranslation();
+const [loading ,setLoading] = useState();
   const [selectedTimezone, setSelectedTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone)
   const [dValues, setDvalues] = useState([]);
   const location = useLocation();
@@ -217,13 +219,16 @@ const {t} = useTranslation();
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">{t('uploadFile')}</label>
-          <CustomInput
-            type="file"
+          <FileUploader
+            setValue={setValue}
             register={register}
-            label="Business Group Logo"
-            name="businessGroupLogo"
-            className="form-control"
+            label="Business Group file"
+            name="file"
+            getValue={getValues}
+            setLoading={setLoading}
+            loading={loading}
           />
+          {loading && <small>Uploading...</small>}
           <Error errorName={errors.businessGroupLogo} />
         </div>
 

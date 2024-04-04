@@ -21,6 +21,7 @@ import {
   fuelEconomyScalingOptions,
 } from "../VehicleTabs/Options";
 import { useParams } from "react-router-dom";
+import FileUploader from "../../../../components/FileUploader";
 
 const UserSetting = ({
   setValue,
@@ -37,6 +38,7 @@ const UserSetting = ({
   const [selectedTimezone, setSelectedTimezone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
+  const [loading , setLoading] = useState(false)
 
   const customStyles = {
     control: (base) => ({
@@ -270,13 +272,16 @@ const UserSetting = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("uploadFile")}</label>
-          <CustomInput
-            type="file"
+          <FileUploader
             register={register}
-            label="Company Logo"
-            name="companyLogo"
+            label="Business Group File"
+            name="file"
             className="form-control"
+            setValue={setValue}
+            setLoading={setLoading}
+            loading={loading}
           />
+          {loading && <small>Uploading...</small>}
           <Error errorName={errors.companyLogo} />
         </div>
       </div>

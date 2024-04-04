@@ -57,9 +57,6 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         ? businessGroupSettingSchema
         : businessGroupAccountSchema
     ),
-    defaultValues: {
-      // storageCapacity : storageCapacityOptions[0]
-    },
   });
 
   const onSubmit = async (data) => {
@@ -69,11 +66,26 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
           delete data["oldPassword"];
           delete data["newPassword"];
           delete data["retypePassword"];
-
+          if (data.logo.length === 0) {
+            delete data.logo;
+          }
+          if (data.file.length === 0) {
+            delete data.file;
+          }
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
+          navigate("/business");
+          return;
         } else {
-          const {success , message} = await createGroup(data);
+          // console.log(data)
+          if (data.logo && data.logo.length === 0) {
+            delete data.logo;
+          }
+          if (data.file &&data.file.length === 0) {
+            delete data.file;
+          }
+      
+          const { success, message } = await createGroup(data);
           if (success === false) {
             notifyError(message);
             return;
@@ -84,6 +96,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
 
         return;
       } catch (error) {
+        console.log(error)
         notifyError("Some error occured !!");
       }
     } else if (activeIndex === 2) {
