@@ -175,7 +175,7 @@ const Branch = () => {
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
     navigate(`edit/${item}`, { state: filteredData });
-    // company.current.showModal();
+    
   };
 
   const d = JSON.parse(localStorage.getItem("userJsonData"));
@@ -257,10 +257,10 @@ const Branch = () => {
                               handleBranchChange(newValue);
                             }}
                             companyId={companyId}
-                            value={{
+                            value={[{
                               label: "Choose Branch",
                               value: "Choose Branch",
-                            }}
+                            }]}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}

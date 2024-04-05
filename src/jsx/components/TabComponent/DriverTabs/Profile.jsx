@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate,useLocation } from "react-router-dom";
 
 import {useTranslation} from 'react-i18next'
 import {
@@ -16,6 +16,9 @@ import CustomInput from "../../Input/CustomInput";
 import GroupDropdown from "../../GroupDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
+import { getDriverById } from "../../../../services/api/driverService";
+import { notifyError } from "../../../../utils/toast";
+import ParentBranchDropdown from "../../ParentBranch";
 
 const Profile = ({
   setValue,
@@ -24,16 +27,20 @@ const Profile = ({
   onSubmit,
   getValues,
   errors,
+  reset,
+  control
 }) => {
   const [selectStateName, setSelectStateName] = useState({
     name: "",
   });
   const [stateid, setstateid] = useState(0);
-  const { control } = useForm();
   const [countryid, setCountryid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
+  const [editData, setEditData] = useState({});
+  const [dValues, setDvalues] = useState([]);
+  const [defaultCountry, setDefaultCountry] = useState();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -42,10 +49,60 @@ const Profile = ({
   };
   const {t} = useTranslation();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
 
-  
+  // async function getDriver(id) {
+  //   try {
+  //     const data = await getDriverById(id);
+  //     setDvalues(data);
+  //   } catch (error) {
+  //     notifyError("Some error occured !!");
+  //     navigate("/driver");
+  //   }
+  // }
+  // console.log(errors, 'erro0rs-:', getValues())
+  // useEffect(() => {
+  //   if (id) getDriver(id);
+  // }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (dValues && id) {
+      console.log("this:-", dValues)
+      setValue("businessGroupName", dValues.businessGroupId?.groupName);
+      setValue("businessGroupId", dValues.businessGroupId?._id);
+      setValue("companyName", dValues.companyId?.companyName);
+      setValue("companyId", dValues.companyId?._id);
+      setCompanyId(dValues.companyId?._id);
+      setValue("branchId", dValues.branchId?._id);
+      setValue("branchName", dValues.branchId?.branchName);
+      setValue("firstName", dValues.firstName);
+      setValue("lastName", dValues.lastName);
+      setValue("city", dValues.city);
+      setValue("employeeNumber", dValues.employeeNumber);
+      setValue("country", dValues.country);
+      setValue("zipCode", dValues.zipCode);
+      setValue("street1", dValues.street1);
+      setValue("street2", dValues.street2);
+      setValue("contact1", dValues.contact1);
+      setValue("contact2", dValues.contact2);
+      setDefaultCountry({ name: dValues.country })
+      setValue("country", dValues.country)
+      setSelectStateName({ name: dValues.state || '' })
+      setValue("state", dValues.state)
+    }
+  }, [dValues, id]);
+
+  const [bussinessGpLable, setBussinessGpLable] = useState(null)
 
   return (
     <div className="p-4">
@@ -54,27 +111,52 @@ const Profile = ({
           <label className="form-label">
             {t('businessGroup')} <span className="text-danger">*</span>
           </label>
-          <Controller
-            name="businessGroupId"
-            control={control}
-            rules={{ required: true }}
-            disabled={true}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <GroupDropdown
-                onChange={async (newValue) => {
-                  setValue("businessGroupId", newValue.value);
-                  console.log("this inside busijedd", newValue.value)
-                  setGroupId(newValue.value);
-                  setCompanyId(null);
-                }}
-                value={value}
-                customStyles={customStyles}
-                ref={ref}
-                isDisabled={false}
-                name={name}
-              />
-            )}
-          />
+          {id ? (
+            <Controller
+              name="businessGroupId"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => {
+        
+                return (
+                <GroupDropdown
+                  onChange={ (newValue) => {
+                     setValue("businessGroupId", newValue.value);
+                     setValue("businessGroupName", newValue.value);
+                    setGroupId(newValue.value);
+                    setCompanyId(null);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  // isDisabled={businessDisabled}
+                  name={name}
+                />
+
+              )}}
+            />
+          ) : (
+            <Controller
+              name="businessGroupId"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <GroupDropdown
+                  onChange={ (newValue) => {
+               
+                     setValue("businessGroupId", newValue.value);
+                     setValue("businessGroupName", newValue.value);
+                    setGroupId(newValue.value);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  // isDisabled={businessDisabled}
+                  name={name}
+                />
+              )}
+            />
+          )}
           {!getValues("businessGroupId") && (
             <Error errorName={errors.businessGroupId} />
           )}
@@ -83,27 +165,50 @@ const Profile = ({
           <label className="form-label">
           {t('company')} <span className="text-danger">*</span>
           </label>
-          <Controller
-            name="companyId"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <CompanyDropdown
-              onChange={async (newValue) => {
-                setValue("parentCompany", newValue.value);
-                setValue("companyId", newValue.value)
-                setCompanyId(newValue.value);
-              }}
-              key={groupId}
-              groupId={groupId}
-              value={value}
-              customStyles={customStyles}
-              name={name}
-              ref={ref}
-              isDisabled={false}
+          {id ? (
+            <Controller
+              name="companyId"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <CompanyDropdown 
+                  key={groupId}
+                  groupId={groupId}
+                  onChange={(newValue) => {
+                    setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.value);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  // isDisabled={companyDisabled}
+                  name={name}
+                />
+              )}
             />
-            )}
-          />
+          ) : (
+            <Controller
+              name="companyId"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { onChange, value, name, ref } }) => (
+                <CompanyDropdown
+                  key={groupId}
+                  groupId={groupId}
+                  onChange={(newValue) => {
+                    setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.value);
+                    setCompanyId(newValue.value);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  // isDisabled={companyDisabled}
+                  name={name}
+                />
+              )}
+            />
+          )}
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
@@ -115,20 +220,20 @@ const Profile = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <BranchDropdown
-                onChange={(newValue) => {
-                  const valuesArray = newValue.map(item => item.value);
-                  setValue("Branch", valuesArray);
-                  setValue("branchId", valuesArray);
-              }}
+              <ParentBranchDropdown
               key={companyId}
               companyId={companyId}
+              onChange={async (newValue) => {
+                setValue("branchId", newValue.value);
+                setValue("branchName", newValue.value);
+              }
+              }
               value={value}
               customStyles={customStyles}
-              name={name}
               ref={ref}
               isDisabled={false}
-              />
+              name={name}
+            />
             )}
           />
           {!getValues("branchId") && <Error errorName={errors.branchId} />}
@@ -143,7 +248,7 @@ const Profile = ({
             label="First Name"
             name="firstName"
             placeholder="first name"
-            defaultValue={""}
+            defaultValue={''}
           />
           <Error errorName={errors.firstName} />
         </div>
@@ -157,7 +262,7 @@ const Profile = ({
             label="Last Name"
             name="lastName"
             placeholder="last name"
-            defaultValue={""}
+            defaultValue={''}
           />
           <Error errorName={errors.lastName} />
         </div>
@@ -190,6 +295,7 @@ const Profile = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
+             defaultValue={defaultCountry}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>

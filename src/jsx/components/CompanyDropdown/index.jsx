@@ -14,13 +14,13 @@ const CompanyDropdown = ({
 }) => {
 
     // console.log(groupId, "this is value")
-    const [dropdownOptions, setdropdownOptions] = useState([]);
+        const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const {page} = usePagination();
     useEffect(() => {
         const fetchBusinessGroups = async () => {
             const response = await getCompany(page, groupId ? groupId : undefined);
-            console.log(groupId)
+            // console.log(groupId)
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
             // console.log(response.data, "this is groud data")
             // console.log(options, "this is Company op tions")

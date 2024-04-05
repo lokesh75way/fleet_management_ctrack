@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
@@ -6,7 +6,7 @@ import Select from "react-select";
 import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import '../../../../scss/pages/_driver-tracking.scss';
 import {useTranslation} from 'react-i18next'
 
@@ -15,10 +15,12 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
 
   const {t} = useTranslation();
   const { id } = useParams();
+  const location = useLocation();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id === parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [date, setDate] = useState({})
+  const [dValues, setDvalues] = useState([]);
 
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
@@ -31,6 +33,27 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
     setSelectedOption(e.target.value);
     setValue("licenseAvailable", e.target.value);
   };
+
+  useEffect(() => {
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (dValues && id) {
+      console.log("this:-", dValues)
+
+      setValue("age", dValues.age);
+      setValue("drivingExperience", dValues?.drivingExperience);
+      setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
+      setValue("mediclaimNumber", dValues?.mediclaimNumber);
+ 
+
+    }
+  }, [dValues, id]);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>

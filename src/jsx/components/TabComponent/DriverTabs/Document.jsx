@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -23,12 +22,19 @@ const Document = ({
   const { fields, append, remove } = useFieldArray({
     control,
     name: "documents",
+    // Initialize fields with one default document object
+    fields: [{
+      documentType: "",
+      file: "",
+      issueDate: "",
+      expireDate: ""
+    }]
   });
 
   const [tempValue, setTempValue] = useState(null);
   const [loading , setLoading] = useState(false);
-  const [issueDate, setIssueDate] = useState()
-  const [expiryDate, setExpiryDate] = useState()
+  const [issueDate, setIssueDate] = useState();
+  const [expiryDate, setExpiryDate] = useState();
   const { t } = useTranslation();
 
   const customStyles = {
@@ -37,7 +43,7 @@ const Document = ({
       padding: ".25rem 0 ",
     }),
   };
-console.log(issueDate, expiryDate)
+
   const [driverDocumentOptions, setDriverDocumentOptions] = useState([
     { value: "DRIVING_LICENSE", label: "Driving License" },
     { value: "AADHAR_CARD", label: "Aadhar Card" },
@@ -45,16 +51,6 @@ console.log(issueDate, expiryDate)
     { value: "BANK_ACCOUNT", label: "Bank Account" },
     { value: "MEDICLAIM", label: "Mediclaim" },
   ]);
-  console.log("hi",getValues())
-
-  useEffect(()=>{
-    append({
-      documentType: tempValue,
-      file: "",
-      issueDate: "",
-      expireDate: "",
-    })
-  },[])
 
   return (
     <div className="p-4">
@@ -119,14 +115,6 @@ console.log(issueDate, expiryDate)
                     {t("uploadFile")}
                     <span className="text-danger">*</span>
                   </label>
-                  {/* <input
-                    type="file"
-                    {...register(`documents.${index}.file`)}
-                    label="Document Name"
-                    name={`documents.${index}.file`}
-                    // onChange={(newValue)=> console.log(newValue.target.value)}
-                    className="form-control customDateHeight"
-                  /> */}
                   <FileUploader
                     register={register}
                     label="Document Name"

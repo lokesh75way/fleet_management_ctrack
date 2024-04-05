@@ -40,7 +40,7 @@ const DriverForm = () => {
     handleSubmit,
     reset,
   } = useForm({
-    defaultValues: editData,
+    // defaultValues: editData,
     resolver: yupResolver(
       activeIndex === 0
         ? driverProfileSchema
@@ -50,20 +50,20 @@ const DriverForm = () => {
     ),
   });
 
-  async function getDriver(driverId) {
-    try {
-      const data = await getDriverById(driverId);
-      setEditData(data);
-      reset(data);
-    } catch (error) {
-      notifyError("Some error occured !!");
-      navigate("/driver");
-    }
-  }
-  console.log(errors, 'erro0rs-:', getValues())
-  useEffect(() => {
-    if (driverId) getDriver(driverId);
-  }, [driverId]);
+  // async function getDriver(driverId) {
+  //   try {
+  //     const data = await getDriverById(driverId);
+  //     setEditData(data);
+  //     reset(data);
+  //   } catch (error) {
+  //     notifyError("Some error occured !!");
+  //     navigate("/driver");
+  //   }
+  // }
+  // // console.log(errors, 'erro0rs-:', getValues())
+  // useEffect(() => {
+  //   if (driverId) getDriver(driverId);
+  // }, [driverId]);
 
   const onSubmitHanlder = async (data) => {
     console.log({ data });

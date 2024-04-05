@@ -164,23 +164,6 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                // <AsyncSelect
-                // cacheOptions 
-                // defaultOptions
-                //   onChange={(newValue) => {
-                //     setBusinessUserValue(newValue.label);
-                //     setValue("businessGroupId", newValue.value);
-                //     setValue("businessGroupName", newValue.label);
-                //   }}
-                //   loadOptions={businessGroupOptions}
-                //   ref={ref}
-                //   name={name}
-                //   styles={customStyles}
-                //   value={{
-                //     label: getValues('businessGroupName'),
-                //     value: getValues('businessGroupId'),
-                //   }}
-                // />
                 <GroupDropdown
                   onChange={async (newValue) => {
                     await setValue("businessGroupId", newValue.value);
@@ -203,23 +186,6 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                // <AsyncSelect
-                //   onChange={(newValue) => {
-                //     setBusinessUserValue(newValue.label);
-                //     setValue("businessGroupId", newValue.value);
-                //     setValue("businessGroupName", newValue.label);
-                //   }}
-                //   loadOptions={businessGroupOptions}
-                //   ref={ref}
-                //   isDisabled={defaultValues?.business?.disabled}
-                //   name={name}
-                //   styles={customStyles}
-                //   defaultOptions
-                //   value={{
-                //     label: getValues('businessGroupName'),
-                //     value: getValues('businessGroupId'),
-                //   }}
-                // />
                 <GroupDropdown
                   onChange={async (newValue) => {
                
@@ -251,22 +217,6 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                // <AsyncSelect
-                //   onChange={(newValue) => {
-                //     setCompanyValue(newValue.label);
-                //     setValue("companyId", newValue.value);
-                //     setValue("companyName", newValue.label);
-                //   }}
-                //   loadOptions={allCompanyOptions}
-                //   ref={ref}
-                //   name={name}
-                //   styles={customStyles}
-                //   defaultOptions
-                //   value={{
-                //     label: getValues('companyName'),
-                //     value: getValues('companyId'),
-                //   }} 
-                // />
                 <CompanyDropdown 
                   key={groupId}
                   groupId={groupId}
@@ -289,23 +239,6 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                // <AsyncSelect
-                //   onChange={(newValue) => {
-                //     setCompanyValue(newValue.label);
-                //     setValue("companyId", newValue.value);
-                //     setValue("companyName", newValue.label);
-                //   }}
-                //   isDisabled={defaultValues?.company?.disabled}
-                //   options={companyOptions}
-                //   ref={ref}
-                //   name={name}
-                //   styles={customStyles}
-                //   defaultOptions
-                //   value={{
-                //     label: getValues('companyName'),
-                //     value: getValues('companyId'),
-                //   }}
-                // />
                 <CompanyDropdown
                   key={groupId}
                   groupId={groupId}
@@ -333,20 +266,6 @@ const MyAccount = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <AsyncSelect
-              //   onChange={(newValue) => {
-              //     setParentValue(newValue.value);
-              //     setValue("parentBranch", newValue.value);
-              //   }}
-              //   options={parentOptions}
-              //   ref={ref}
-              //   name={name}
-              //   styles={customStyles}
-              //   value={{
-              //     label: getValues('parentBranch'),
-              //     value: getValues('parentBranchId')
-              //   }}
-              // />
               <ParentBranchDropdown
                 key={companyId}
                 companyId={companyId}
