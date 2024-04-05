@@ -63,7 +63,7 @@ const Profile = ({
   //     navigate("/driver");
   //   }
   // }
-  // console.log(errors, 'erro0rs-:', getValues())
+  console.log(errors, 'erro0rs-:', getValues())
   // useEffect(() => {
   //   if (id) getDriver(id);
   // }, [id]);
@@ -117,7 +117,6 @@ const Profile = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => {
-        
                 return (
                 <GroupDropdown
                   onChange={ (newValue) => {
@@ -223,7 +222,7 @@ const Profile = ({
               <ParentBranchDropdown
               key={companyId}
               companyId={companyId}
-              onChange={async (newValue) => {
+              onChange={(newValue) => {
                 setValue("branchId", newValue.value);
                 setValue("branchName", newValue.value);
               }
@@ -430,7 +429,7 @@ const Profile = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t('next')}
         </Button>
       </div>
     </div>

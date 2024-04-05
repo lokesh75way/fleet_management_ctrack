@@ -313,7 +313,7 @@ export const driverProfileSchema = yup
   .object({
     companyId: yup.string().required("Company is required "),
     businessGroupId: yup.string().required("Business group is required "),
-    branchId: yup.array().of(yup.string().required("Branch is required ")),
+    branchId: yup.string().required("Branch is required "),
     firstName: yup.string().required("First Name is required "),
     lastName: yup.string().required("Last Name is required "),
     employeeNumber: yup.number().typeError("Employee Number must be a number"),
@@ -379,8 +379,8 @@ export const driverDocumentSchema = yup
           //   return true;
           // }),
           ,
-        issueDate: yup.date().typeError('Issue date is required'),
-        expireDate: yup.date().typeError('Expiry date is required'),
+        issueDate: yup.string().typeError('Issue date is required'),
+        expireDate: yup.string().typeError('Expiry date is required'),
       })
     ),
   })

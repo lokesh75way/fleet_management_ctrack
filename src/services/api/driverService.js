@@ -3,6 +3,7 @@ import initAxios from "./Axios";
 initAxios();
 
 export const createDriver = async (body) => {
+  console.log("body", body)
   return axios.post("/drivers", body);
 };
 

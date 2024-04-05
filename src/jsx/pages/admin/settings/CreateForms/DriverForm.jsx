@@ -40,7 +40,9 @@ const DriverForm = () => {
     handleSubmit,
     reset,
   } = useForm({
-    // defaultValues: editData,
+    defaultValues: {
+      documents:[{documentType:'', file:"",issueDate:"", expireDate:"" }]
+    },
     resolver: yupResolver(
       activeIndex === 0
         ? driverProfileSchema
@@ -66,14 +68,16 @@ const DriverForm = () => {
   // }, [driverId]);
 
   const onSubmitHanlder = async (data) => {
-    console.log({ data });
+    const issueDate=data.documents[0].issueDate;
+    console.log('ki:-', issueDate)
     try {
-        if (activeIndex === totalTabs - 2) {
+        if (activeIndex === totalTabs - 1) {
             if (driverId) {
-                await updateDriver(driverId, data);
-                notifySuccess("Driver Updated!");
-                navigate("/driver");
+              await updateDriver(driverId, data);
+              notifySuccess("Driver Updated!");
+              navigate("/driver");
             } else {
+                
                 await createDriver(data);
                 notifySuccess(t("newDriverCreated"));
                 navigate("/driver");

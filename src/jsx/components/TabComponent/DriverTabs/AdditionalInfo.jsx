@@ -66,7 +66,8 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               <DatePicker
                 selected={date.dateOfBirth || new Date()}
                 className="form-control customDateHeight"
-                onChange={(newValue) => {setDate({
+                onChange={(newValue) => {
+                  setDate({
                   ...date,
                   dateOfBirth : newValue
                 })
@@ -143,7 +144,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               <input
                 type="radio"
                 className="form-check-input"
-                style={{backgroundColor : 'white'}}
+                // style={{backgroundColor : 'white'}}
                 id="customRadioBox987"
                 name="optradioCustom1"
                 value="yes"
@@ -162,7 +163,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               <input
                 type="radio"
                 className="form-check-input"
-                style={{backgroundColor : 'white'}}
+                // style={{backgroundColor : 'white'}}
                 id="customRadioBox988"
                 value="no"
                 checked={selectedOption === "no"}
@@ -326,7 +327,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             <input
               type="checkbox"
               className="form-check-input"
-              style={{backgroundColor : 'white'}}
+              // style={{backgroundColor : 'white'}}
               id="customCheckBox1"
             />
           </div>
@@ -342,7 +343,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
       >
         <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
           {" "}
-          {t('submit')}
+          {t('next')}
         </Button>
       </div>
     </div>

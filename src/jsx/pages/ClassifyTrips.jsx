@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { classifyTripsSchema } from "../../yup";
 import { Nav, Tab } from "react-bootstrap";
 import { filterClassifyTable } from "../../utils/helper";
+import { getTrips } from "../../services/api/ClassifyTripServices";
 
 const ClassifyTrip = (ref) => {
   const [filterData, setFilterData] = useState({
@@ -25,7 +26,7 @@ const ClassifyTrip = (ref) => {
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab, PlannedTab, CompletedTab];
 
-  const [tableData, setTableData] = useState(ClassifyTripData);
+  const [tableData, setTableData] = useState([]);
   const {
     register,
     setValue,
@@ -62,10 +63,21 @@ const ClassifyTrip = (ref) => {
       }
     }
   };
-
+  const tripData = async()=>{
+    try {
+      const data = await getTrips();
+      console.log("trip Data",data.data);
+      setTableData(data.data)
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    }
+  }
+  useEffect(()=>{
+    tripData();
+  },[])
   const submitFilterHandler = (val) => {
     console.log(val);
-    const data = filterClassifyTable(val, ClassifyTripData);
+    // const data = filterClassifyTable(val, ClassifyTripData);
     console.log(data)
     setTableData(data);
   };
@@ -206,11 +218,12 @@ const ClassifyTrip = (ref) => {
 export default ClassifyTrip;
 
 const ActiveTab = ({tableData1}) => {
-  const [tableData, setTableData] = useState(tableData1);
+  console.log("1s:-",tableData1.data)
+  const [tableData, setTableData] = useState(tableData1.data ?? []);
   console.log(tableData)
   useEffect(() => {
-    const data = tableData1.filter((data) => data.status === "active");
-    console.log(data)
+    const data = (tableData1.data ?? []).filter((data) => data.tripStatus === "ONGOING");
+    console.log("2s-",data)
     setTableData(data);
   }, [tableData1]);
   const {
@@ -374,11 +387,11 @@ const ActiveTab = ({tableData1}) => {
 };
 
 const PlannedTab = ({tableData1}) => {
-  const [tableData, setTableData] = useState(tableData1);
+  const [tableData, setTableData] = useState(tableData1.data ?? []);
 
-  useEffect(()=>{setTableData(tableData1)},[tableData1])
+  useEffect(()=>{setTableData((tableData1.data ?? []))},[tableData1])
   useEffect(() => {
-    const data = tableData.filter((data) => data.status === "planned");
+    const data = (tableData1.data ?? []).filter((data) => data.status === "planned");
     setTableData(data);
   }, []);
   const {

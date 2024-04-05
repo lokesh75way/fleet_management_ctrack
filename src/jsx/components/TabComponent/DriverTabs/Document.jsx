@@ -22,13 +22,7 @@ const Document = ({
   const { fields, append, remove } = useFieldArray({
     control,
     name: "documents",
-    // Initialize fields with one default document object
-    fields: [{
-      documentType: "",
-      file: "",
-      issueDate: "",
-      expireDate: ""
-    }]
+
   });
 
   const [tempValue, setTempValue] = useState(null);
@@ -142,6 +136,7 @@ const Document = ({
                         }
                         className="form-control customDateHeight"
                         onChange={(newValue) =>{ 
+                          console.log(newValue.toISOString().split('T')[0])
                           setIssueDate(newValue) 
                           setValue(`documents.${index}.issueDate`, newValue.toISOString().split('T')[0])
                         }}
@@ -165,6 +160,7 @@ const Document = ({
                          expiryDate ||
                           new Date()
                         }
+                        dateFormat='yyyy-MM-dd'
                         className="form-control customDateHeight"
                         onChange={(newValue) =>{
                           setExpiryDate(newValue)
