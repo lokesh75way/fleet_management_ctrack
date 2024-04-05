@@ -12,8 +12,8 @@ const deleteVehicles = async (body) => {
   console.log(body);
   return axios.delete(`/vehicles/${body}`);
 };
-const updateVehicles = async (body) => {
-  return axios.patch("/vehicles");
+const updateVehicles = async (body,id) => {
+  return axios.patch(`/vehicles/${id}`,body);
 };
 
 export { createVehicles, getVehicles, deleteVehicles, updateVehicles };

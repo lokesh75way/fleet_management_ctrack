@@ -36,6 +36,7 @@ const General = ({
   control,
   handleSubmit,
   onSubmit,
+  formData
 }) => {
 
 
@@ -121,24 +122,34 @@ const General = ({
       (item) => item.userName === checkUserName()
     )
   }
-  const[formData,setFormData] = useState([])
+  // const[formData,setFormData] = useState([])
   useEffect(()=>{
+
+    console.log('meeee huuu yahahahahahahaha',formData);
+    
     if(formData && id){
-      setValue("businessGroupId",formData[0]?.companyId?.businessGroupId?.groupName || businessGroupOptions[0])
-      // setValue("companyName",formData[0].companyId?.companyName)
-      // setValue("userName", formData[0].userName)
-      // setValue("email",formData[0].email)
-      // setValue("mobileNumber",formData[0].mobileNumber)
-      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
-      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
-      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
-      // setValue("street1",formData[0].companyId?.street1)
-      // setValue("street2",formData[0].companyId?.street2)
-      // setValue("contactPerson",formData[0].companyId?.contactPerson)
-      // setValue("faxNumber",formData[0].companyId?.faxNumber)
-      // setValue("zipCode",formData[0].companyId?.zipCode)
-      // setValue("city",formData[0].companyId?.city)
-      // setValue("storageCapacity",formData[0].companyId?.capacity )
+
+      setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
+      console.log('imei number ',formData?.[0].imeiNumber);
+      setValue("imeiNumber",formData?.[0].imeiNumber)
+
+      setValue("vehicleName",formData?.[0].vehicleName)
+      setValue("plateNumber",formData?.[0].plateNumber)
+      setValue("branch",formData?.[0].branch)
+      setValue("simNumber",formData?.[0].simNumber)
+      setValue("IMEINumber",formData?.[0].IMEINumber)
+      setValue("registrationNumber",formData?.[0].registrationNumber)
+      setValue("weightCapacity",formData?.[0].weightCapacity)
+      
+      setValue("deviceType",formData?.[0].deviceType)
+      setValue("serverAddress",formData?.[0].serverAddress)
+      setValue("distanceCounter",formData?.[0].distanceCounter)
+      setValue("unitOfDistance",formData?.[0].unitOfDistance)
+      setValue("deviceAccuracyTolerance",formData?.[0].deviceAccuracyTolerance)
+
+
+
+
     }
   },[formData,id])
 
@@ -157,7 +168,7 @@ const General = ({
               onChange={async (newValue) => {
                 await setValue("businessGroupId", newValue.value);
                 await setValue("businessId", newValue.value);
-                await setValue("businessGroupName", newValue.value);
+                await setValue("businessGroupName", newValue.label);
                 setGroupId(newValue.value);
                 setCompanyId(null);
               }}
@@ -187,7 +198,7 @@ const General = ({
                
                 setCompanyId(newValue.value)
                 setValue("companyId", newValue.value);
-                setValue("company", newValue.value);
+                setValue("company", newValue.label);
               }}
               value={value}
               customStyles={customStyles}
@@ -213,7 +224,7 @@ const General = ({
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.value);
+                  setValue("branch", newValue.label);
                   setValue("branchID", newValue.value);
                 }
                 }
@@ -237,6 +248,7 @@ const General = ({
             label="Vehicle Name"
             name="vehicleName"
             placeholder=""
+            defaultValue={getValues('vehicleName')}
           />
           <Error errorName={errors.vehicleName} />
         </div>
@@ -275,6 +287,7 @@ const General = ({
             name="imeiNumber"
             label="IMEI Number"
             placeholder=""
+            defaultValue={getValues('imeiNumber')}
           />
           <Error errorName={errors.imeiNumber} />
         </div>
@@ -305,6 +318,7 @@ const General = ({
             register={register}
             name="serverAddress"
             placeholder=""
+            defaultValue={getValues('serverAddress')}
           />
         <Error errorName={errors.serverAddress} />
         </div>
@@ -352,7 +366,8 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={distanceCounterOptions[0]}
+                // defaultValue={distanceCounterOptions[0]}
+                value={{label:getValues('distanceCounter'), value :getValues('distanceCounter')}}
               />
             )}
           />
@@ -377,7 +392,7 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfDistanceOptions[0]}
+                value={{label:getValues('unitOfDistance'), value :getValues('unitOfDistance')}}
               />
             )}
           />
@@ -414,6 +429,7 @@ const General = ({
             register={register}
             name="deviceAccuracyTolerance"
             placeholder=""
+            defaultValue={getValues("deviceAccuracyTolerance")}
           />
           <Error errorName={errors.deviceAccuracyTolerance} />
         </div>
