@@ -26,6 +26,16 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
 
   const [filteredUserData, setFilteredUserData] = useState(newData);
 
+  const hanldeLeaveInput = (type, val) => {
+    const prvs = getValues("leave");
+    const newVal = prvs?.filter((v) => v.leaveType !== type) ?? [];
+    newVal.push({
+      leaveType: type,
+      days: val,
+    });
+    setValue("leave", newVal);
+  };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -51,6 +61,9 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("CASUAL", e.target.value);
+            }}
             label="No Of Days"
             name="noOfDaysCL"
             placeholder=""
@@ -82,6 +95,9 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("SICK", e.target.value);
+            }}
             label="No Of DaysSL"
             name="noOfDays"
             placeholder=""
@@ -113,6 +129,9 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("PRIVILEGE", e.target.value);
+            }}
             label="No Of Days"
             name="noOfDaysPL"
             placeholder=""
@@ -122,7 +141,6 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           />
           <Error errorName={errors.noOfDaysPL} />
         </div>
-        
       </div>
       <div
         style={{
@@ -132,7 +150,11 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           Submit
         </Button>

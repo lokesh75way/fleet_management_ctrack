@@ -6,11 +6,12 @@ import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import { useParams } from "react-router-dom";
-import DummyData from '../../../../users.json'
+import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import CompanyDropdown from "../../CompanyDropdown";
 const General = ({
   register,
   setValue,
@@ -20,11 +21,10 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState(null);
   const [tempValue, setTempValue] = useState();
-  const {checkRole,checkUserName} = useStorage()
+  const { checkRole, checkUserName } = useStorage();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -33,23 +33,25 @@ const General = ({
   };
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
-    setValue("fuelSensor", e.target.value);
+    setValue("gender", e.target.value);
   };
   var companyOptions;
-  if(checkRole() === 'admin'){
-    companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+  if (checkRole() === "admin") {
+    companyOptions = DummyData.filter((item) => item.role === "company").map(
+      (item) => ({
+        label: item.userName,
+        value: item.id,
+      })
+    );
+  } else if (checkRole() === "businessgroup") {
+    companyOptions = DummyData.filter(
+      (item) => item.role === "company" && item.parent === checkUserName()
+    ).map((item) => ({
       label: item.userName,
       value: item.id,
     }));
-  }
-  else if(checkRole() === 'businessgroup'){
-    companyOptions = DummyData.filter((item) => item.role === "company" && item.parent === checkUserName() ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  }
-  else if(checkRole()==='company'){
-    companyOptions = [{label: checkUserName(),value: checkUserName()}]
+  } else if (checkRole() === "company") {
+    companyOptions = [{ label: checkUserName(), value: checkUserName() }];
   }
 
   const { id } = useParams();
@@ -62,31 +64,48 @@ const General = ({
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('company')} <span className="text-danger">*</span>
+            {t("company")} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="parentCompany"
+            name="companyId"
             control={control}
+            rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value);setValue("parentCompany", newValue.value)}}
-                options={companyOptions}
+              // <AsyncSelect
+              //   onChange={(newValue) => {
+              //     setCompanyValue(newValue.label);
+              //     setValue("companyId", newValue.value);
+              //     setValue("companyName", newValue.label);
+              //   }}
+              //   isDisabled={defaultValues?.company?.disabled}
+              //   options={companyOptions}
+              //   ref={ref}
+              //   name={name}
+              //   styles={customStyles}
+              //   defaultOptions
+              //   value={{
+              //     label: getValues('companyName'),
+              //     value: getValues('companyId'),
+              //   }}
+              // />
+              <CompanyDropdown
+                onChange={(newValue) => {
+                  setValue("companyId", newValue.value);
+                }}
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
                 name={name}
-                styles={customStyles}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].parentCompany : ""
-                }
               />
             )}
           />
-          {!getValues('leaveTime') &&<Error errorName={errors.parentCompany} />}
+          {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('firstName')} <span className="text-danger">*</span>
+            {t("firstName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -102,7 +121,7 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('middleName')}</label>
+          <label className="form-label">{t("middleName")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -117,7 +136,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('lastName')} <span className="text-danger">*</span>
+            {t("lastName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -134,24 +153,25 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('technicianNumber')} <span className="text-danger">*</span>
+            {t("technicianNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             register={register}
             label="Technician Number"
-            name="technicianNumber"
+            name="technicianNo"
             placeholder=""
             defaultValue={
-              filteredUserData[0] ? filteredUserData[0].technicianNumber : ""
+              filteredUserData[0] ? filteredUserData[0].technicianNo : ""
             }
           />
-          <Error errorName={errors.technicianNumber} />
+          <Error errorName={errors.technicianNo} />
         </div>
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('email')}<span className="text-danger">*</span>
+            {t("email")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -165,7 +185,7 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('gender')}</label>
+          <label className="form-label">{t("gender")}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -176,7 +196,7 @@ const General = ({
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('male')}
+                {t("male")}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
@@ -188,7 +208,7 @@ const General = ({
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('female')}
+                {t("female")}
               </label>
             </div>
           </div>
@@ -197,7 +217,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('mobileNumber')} <span className="text-danger">*</span>
+            {t("mobileNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -205,7 +225,10 @@ const General = ({
             label="Mobile Number"
             name="mobileNumber"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
             defaultValue={
               filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
@@ -215,7 +238,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('emergencyContact')} <span className="text-danger">*</span>
+            {t("emergencyContact")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -223,7 +246,10 @@ const General = ({
             label="Emergency Contact"
             name="emergencyContact"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
             defaultValue={
               filteredUserData[0] ? filteredUserData[0].emergencyContact : ""
@@ -233,7 +259,8 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
-          {t('dateOfJoin')}<span className="text-danger">*</span>
+            {t("dateOfJoin")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfJoin"
@@ -257,7 +284,8 @@ const General = ({
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
             {" "}
-            {t('dateOfBirth')}<span className="text-danger">*</span>
+            {t("dateOfBirth")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfBirth"
@@ -295,7 +323,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

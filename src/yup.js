@@ -449,7 +449,7 @@ export const expenseSchema = yup
   .required();
 export const technicianTaskSchema = yup
   .object({
-    technician: yup.string().required("Select a Technician "),
+    technicianId: yup.string().required("Select a Technician "),
     taskCategory: yup.string().required("Select a Category "),
     taskPriority: yup.string().required("Select a task priority "),
     taskName: yup.string().required("Task Name is required "),
@@ -472,10 +472,11 @@ export const geofenceMapSchema = yup
   .required();
 export const technicianGeneralSchema = yup
   .object({
+    companyId: yup.string().required("Select a company"),
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
-    technicianNumber: yup
+    technicianNo: yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
@@ -505,10 +506,17 @@ export const technicianAddressSchema = yup
   .required();
 export const technicianLeaveSchema = yup
   .object({
-    leaveTime: yup.string().required("Select type of leave "),
-    noOfDays: yup.number().required("Enter total number of leaves "),
+    leave: yup
+      .array(
+        yup.object({
+          leaveType: yup.string().required("Select type of leave "),
+          days: yup.number().required("Enter total number of leaves "),
+        })
+      )
+      .required(),
   })
   .required();
+  
 export const classifyTripsSchema = yup
   .object({
     startTime: yup.string().required("Trip start time is required "),
