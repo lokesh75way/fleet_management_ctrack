@@ -76,7 +76,8 @@ const BusinessForm = React.lazy(() =>
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
-const Expense = React.lazy(() => import("./pages/Expense"));
+const Expense = React.lazy(() => import("./pages/Expense/Expense"));
+const ExpenseForm = React.lazy(() => import("./pages/Expense/ExpenseForm"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ClassifyTripForm = React.lazy(() => import("./pages/ClassifyTrip/ClassifyTripForm"));
@@ -132,6 +133,7 @@ const allroutes = [
   { module: 'settings', url: "/settings/classifyTrips/create", component: <ClassifyTripForm /> },
   { module: 'settings', url: "/settings/classifyTrips/edit/:id", component: <ClassifyTripForm /> },
   { module: 'settings', url: "/settings/expense", component: <Expense /> },
+  { module: 'settings', url: "/settings/expense/create", component: <ExpenseForm /> },
   { module: 'settings', url: "/settings/geofence", component: <Geofence /> },
   { module: 'settings', url: "/settings/geofence/map", component: <GeofenceMap /> },
   { module: 'settings', url: "/settings/geofence/map/edit/:id", component: <GeofenceMap /> },

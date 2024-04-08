@@ -8,7 +8,7 @@ const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item.id}</span></td>
+                    <td><span>{item._id}</span></td>
                     <td>
                         <div className="products">
                             <div>

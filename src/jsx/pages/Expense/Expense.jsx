@@ -2,17 +2,18 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 
-import { IMAGES } from "../constant/theme";
-import MainPagetitle from "../layouts/MainPagetitle";
-import InviteCustomer from "../constant/ModalList";
-import { ExpenseData } from "../components/Tables/Tables";
-import ExpenseTable from "../components/Tables/ExpenseTable";
-import ExpenseOffcanvas from "../constant/ExpenseOffcanvas";
+import { IMAGES } from "../../constant/theme";
+import MainPagetitle from "../../layouts/MainPagetitle";
+import InviteCustomer from "../../constant/ModalList";
+import { ExpenseData } from "../../components/Tables/Tables";
+import ExpenseTable from "../../components/Tables/ExpenseTable";
+// import ExpenseOffcanvas from "../constant/ExpenseOffcanvas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {expenseSchema} from '../../yup'
+import {expenseSchema} from '../../../yup'
 
 import {useTranslation} from 'react-i18next'
+import { getExpenses } from "../../../services/api/ExpenseServices";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -28,7 +29,7 @@ const headers = [
 const Driver = (ref) => {
 
   const {t} = useTranslation();
-  const [tableData, setTableData] = useState(ExpenseData);
+  const [tableData, setTableData] = useState([]);
   const {
     register,
     setValue,
@@ -69,6 +70,19 @@ const Driver = (ref) => {
   };
 
   // const[formData, setFormData] = useState()
+  const getAllExpenses = async()=>{
+    try {
+      const {data, success} = await getExpenses();
+      console.log(data,"expense")
+      setTableData(data);
+    } catch (error) {
+      console.log("Error", error)
+    }
+  }
+  useEffect(()=>{
+    getAllExpenses();
+  },[])
+
 
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
@@ -96,17 +110,7 @@ const Driver = (ref) => {
   const onSubmit = (data) => {
     console.log(data);
   };
-  // const handleSubmit=(e)=>{
-  //     e.preventDefault();
-  //     const updateTable = tableData.map((table)=>{
-  //         if(table.id === editData.id) {
-  //             console.log(table.id)
-  //             return {...table, ...editData };
-  //         }
-  //         return table;
-  //     })
-  //     setTableData(updateTable)
-  // }
+
 
   const expense = useRef();
   return (
@@ -126,10 +130,10 @@ const Driver = (ref) => {
                     <h4 className="heading mb-0">{t('expense')}</h4>
                     <div>
                       <Link
-                        to={"#"}
+                        to={"/settings/expense/create"}
                         className="btn btn-primary btn-sm ms-1"
-                        data-bs-toggle="offcanvas"
-                        onClick={() => {expense.current.showModal(); console.log(expense)}}
+                        // data-bs-toggle="offcanvas"
+                        // onClick={() => {expense.current.showModal(); console.log(expense)}}
                       >
                         + {t('addExpense')}
                       </Link>{" "}
@@ -218,7 +222,7 @@ const Driver = (ref) => {
           </div>
         </div>
       </div>
-      <ExpenseOffcanvas
+      {/* <ExpenseOffcanvas
         ref={expense}
         editData={editData}
         register={register}
@@ -231,7 +235,7 @@ const Driver = (ref) => {
         control={control}
         clearErrors={clearErrors}
         Title={editData.id === 0 ? t('addExpense') :  t('editExpense')}
-      />
+      /> */}
     </>
   );
 };

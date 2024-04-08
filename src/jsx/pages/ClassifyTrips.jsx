@@ -79,10 +79,11 @@ const ClassifyTrip = (ref) => {
     getAllTrips();
   },[])
 
-  const submitFilterHandler = (val) => {
-    console.log(val);
-    const data = filterClassifyTable(val, ClassifyTripData);
-    console.log(data)
+  const submitFilterHandler = async(val) => {
+    console.log(val, "km:-");
+    // const data = filterClassifyTable(val, ClassifyTripData);
+    // console.log(data)
+    await getAllTrips()
     setTableData(data);
   };
 
