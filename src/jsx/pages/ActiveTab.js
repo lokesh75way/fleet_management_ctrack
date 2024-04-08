@@ -7,24 +7,13 @@ import ClassifyTripTable from "../components/Tables/ClassifyTripTable";
 import { classifyTripsSchema } from "../../yup";
 import { deleteTrip, getTrips } from '../../services/api/ClassifyTripServices';
 import { notifySuccess } from '../../utils/toast';
-const ActiveTab = ({tableData1,tabType, getAllTrips}) => {
+import { ThemeContext } from '../../context/ThemeContext';
+const ActiveTab = ({tableData1,tabType}) => {
 
     const [tableData, setTableData] = useState(tableData1);
+    const [status, setStatus] = useState('')
 
-    useEffect(() => {
-      // const data = tableData1.filter((data) => data.tripStatus === 'ONGOING');
-      const filteredData = tableData1.filter((data) => {
-        if (tabType === "Active Trips") {
-          return data.tripStatus === "ONGOING";
-        } else if (tabType === "Planned Trips") {
-          return data.tripStatus === "JUST_STARTED";
-        } else if (tabType === "Completed Trips") {
-          return data.tripStatus === "COMPLETED";
-        }
-      });
-  
-      setTableData(filteredData);
-    }, [tableData1]);
+
     const {
       register,
       setValue,
@@ -61,7 +50,30 @@ const ActiveTab = ({tableData1,tabType, getAllTrips}) => {
         }
       }
     };
+
+    useEffect(() => {
+      let status = '';
   
+      // Set status based on tabType
+      if (tabType === "Active Trips") {
+        status = 'ONGOING';
+      } else if (tabType === "Planned Trips") {
+        status = 'JUST_STARTED';
+      } else if (tabType === "Completed Trips") {
+        status = 'COMPLETED';
+      }
+  
+      getAllTrips(status); // Call getAllTrips with the determined status
+    }, [tabType]);
+
+    const getAllTrips = async (status) => {
+      try {
+        const { data, success } = await getTrips(1, 10, status); // Assuming getTrips takes page, limit, and status as arguments
+        setTableData(data);
+      } catch (error) {
+        console.log("Error", error);
+      }
+    };
     // const[formData, setFormData] = useState()
   
     useEffect(() => {

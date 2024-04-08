@@ -48,8 +48,8 @@ const ClassifyTrip = (ref) => {
     location: "",
   });
   const navigate = useNavigate();
-  const [tableData, setTableData] = useState([]);
-  console.log(tableData, "ji:-")
+    const [tableData, setTableData] = useState([]);
+  // console.log(tableData, "ji:-")
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
   );
@@ -67,21 +67,10 @@ const ClassifyTrip = (ref) => {
   };
 
 
-  const getAllTrips = async()=>{
-    try {
-      const {data, success} = await getTrips();
-      setTableData(data);
-    } catch (error) {
-      console.log("Error", error)
-    }
-  }
-  useEffect(()=>{
-    getAllTrips();
-  },[])
 
   const submitFilterHandler = (val) => {
-    console.log(val);
-    const data = filterClassifyTable(val, ClassifyTripData);
+    console.log(val,"gh:-");
+    // const data = filterClassifyTable(val, ClassifyTripData);
     console.log(data)
     setTableData(data);
   };
@@ -194,7 +183,7 @@ const ClassifyTrip = (ref) => {
                     handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
                     tabType={data} 
-                    getAllTrips = {getAllTrips}
+                    
                   />
                 </Tab.Pane>
               );
@@ -215,6 +204,7 @@ const ClassifyTrip = (ref) => {
           getValues={getValues}
           Title={"Add Filter"}
           data={ClassifyTripData}
+          
         />
         </form>
         </FormProvider>
