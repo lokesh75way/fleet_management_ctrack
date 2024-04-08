@@ -7,7 +7,7 @@ import { clsx } from "clsx";
 import VehicleServices from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
-
+import usePagination from "../../hooks/usePagination";
 import {useTranslation} from 'react-i18next'
 
 const Vehicle = () => {
@@ -53,11 +53,16 @@ const Vehicle = () => {
       }
     }
   };
+
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+  usePagination();
+
   async function getVehicleData() {
     try {
-      const { data , totalLength} = await getVehicles();
+      const { data , totalLength,totalCount} = await getVehicles();
       console.log(data)
       setTableData(data);
+      // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
@@ -156,51 +161,48 @@ const Vehicle = () => {
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
-                      <div className="dataTables_info">
-                      {t('showing')} {activePage.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePage.current + 1) * sort
-                          ? (activePage.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
-                      </div>
+                    <div className="dataTables_info">
+                          {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                          {Math.min(page * 10, totalCount)} {t("of")}{" "}
+                          {totalCount} {t("entries")}
+                        </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className="paginate_button previous disabled"
-                          to="/vehicle"
-                          onClick={() =>
-                            activePage.current > 0 &&
-                            onClick(activePage.current - 1)
-                          }
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/vehicle"
-                              className={`paginate_button  ${
-                                activePage.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
-                        </span>
-                        <Link
-                          className="paginate_button next"
-                          to="/vehicle"
-                          onClick={() =>
-                            activePage.current + 1 < paggination.length &&
-                            onClick(activePage.current + 1)
-                          }
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                         <Link
+                            className={`paginate_button ${
+                              page === 1 ? "previous disabled" : "previous"
+                            }`}
+                            to="/vehicle"
+                            onClick={() => prevPage(page - 1)}
+                          >
+                            <i className={arrowleft} />
+                          </Link>
+                          <span>
+                            {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                              (number) => (
+                                <Link
+                                  key={number}
+                                  className={`paginate_button ${
+                                    page === number + 1 ? "current" : ""
+                                  }`}
+                                  onClick={() => goToPage(number + 1)}
+                                >
+                                  {number + 1}
+                                </Link>
+                              )
+                            )}
+                          </span>
+                          <Link
+                            className={`paginate_button ${
+                              page * 10 >= totalCount ? "next disabled" : "next"
+                            }`}
+                            to="/vehicle"
+                            onClick={() => nextPage(page + 1)}
+                          >
+                            <i className={arrowright} />
+                          </Link>
                       </div>
                     </div>
                   </div>

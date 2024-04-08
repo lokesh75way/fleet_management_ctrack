@@ -17,6 +17,8 @@ import '../../scss/pages/_driver-tracking.scss'
 
 import {useTranslation} from 'react-i18next'
 
+import ParentBranchDropdown from "../components/ParentBranch";
+
 const AlertOffcanvas = forwardRef(
   (
     {
@@ -29,9 +31,13 @@ const AlertOffcanvas = forwardRef(
       handleSubmit,
       onSubmit,
       clearErrors,
+      editData
     },
     ref
   ) => {
+
+
+    console.log('edit data inside modal',editData);
     const [addEmploye, setAddEmploye] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const [selectedOption2, setSelectedOption2] = useState(null);
@@ -76,6 +82,19 @@ const AlertOffcanvas = forwardRef(
       }),
     };
     const {t} = useTranslation();
+
+
+    useEffect(() => {
+      if (editData && editData?._id) {
+        setValue("branchId", editData.branchId);
+        setValue("object", editData.object)
+        setValue("sevirity", editData.sevirity)
+        setValue("sevirity", editData.sevirity)
+
+      }
+    }, [editData]);
+
+    console.log(errors);
     return (
       <>
         <Offcanvas
@@ -104,23 +123,41 @@ const AlertOffcanvas = forwardRef(
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">{t('branch')}</label>
                     <Controller
-                      name="branch"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            {setTempValue(newValue.value);
-                            setValue("branch", newValue.value)}
-                          }
-                          options={branchOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={branchOptions[0]}
-                        />
-                      )}
-                    />
-                    { !getValues('branch') && <Error errorName={errors.branch} />}
+            name="branchId"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              // <AsyncSelect
+              //   onChange={(newValue) => {
+              //     setParentValue(newValue.value);
+              //     setValue("parentBranch", newValue.value);
+              //   }}
+              //   options={parentOptions}
+              //   ref={ref}
+              //   name={name}
+              //   styles={customStyles}
+              //   value={{
+              //     label: getValues('parentBranch'),
+              //     value: getValues('parentBranchId')
+              //   }}
+              // />
+              <ParentBranchDropdown
+                // key={companyId}
+                // companyId={companyId}
+                onChange={async (newValue) => {
+                  setValue("branchId", newValue.value);
+                  setTempValue('branchId');
+                }
+                }
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                isDisabled={false}
+                name={name}
+              />
+            )}
+          />
+                    { !getValues('branchId') && <Error errorName={errors.branchId} />}
                   </div>
 
                   <div className="col-xl-6 mb-3">
@@ -130,8 +167,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="vehicle"
-                          checked={selectedOption === "vehicle"}
+                          value="VEHICLE"
+                          checked={selectedOption === "VEHICLE"}
                           onChange={handleChange}
                         />
                         <label
@@ -145,8 +182,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="vehicleGroup"
-                          checked={selectedOption === "vehicleGroup"}
+                          value="VEHICLE_GROUP"
+                          checked={selectedOption === "VEHICLE_GROUP"}
                           onChange={handleChange}
                         />
                         <label
@@ -160,8 +197,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="vehicleType"
-                          checked={selectedOption === "vehicleType"}
+                          value="VEHICLE_TYPE"
+                          checked={selectedOption === "VEHICLE_TYPE"}
                           onChange={handleChange}
                         />
                         <label
@@ -199,7 +236,7 @@ const AlertOffcanvas = forwardRef(
                    { !getValues('object') && <Error errorName={errors.object} />}
                   </div>
                  
-                    <div className={`${ selectedOption !== 'vehicleGroup' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
+                    <div className={`${ selectedOption !== 'VEHICLE_GROUP' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
                     <label className="form-label">
                     {t('objectGroup')} <span className="text-danger">*</span>
                     </label>
@@ -257,8 +294,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="start"
-                          checked={selectedOption2 === "start"}
+                          value="START"
+                          checked={selectedOption2 === "START"}
                           onChange={handleChange2}
                         />
                         <label
@@ -272,8 +309,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="cancel"
-                          checked={selectedOption2 === "cancel"}
+                          value="CANCEL"
+                          checked={selectedOption2 === "CANCEL"}
                           onChange={handleChange2}
                         />
                         <label
@@ -287,8 +324,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="both"
-                          checked={selectedOption2 === "both"}
+                          value="BOTH"
+                          checked={selectedOption2 === "BOTH"}
                           onChange={handleChange2}
                         />
                         <label
@@ -308,8 +345,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="everyday"
-                          checked={selectedOption3 === "everyday"}
+                          value="EVERYDAY"
+                          checked={selectedOption3 === "EVERYDAY"}
                           onChange={handleChange3}
                         />
                         <label
@@ -323,8 +360,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="custom"
-                          checked={selectedOption3 === "custom"}
+                          value="CUSTOM"
+                          checked={selectedOption3 === "CUSTOM"}
                           onChange={handleChange3}
                         />
                         <label
@@ -335,6 +372,7 @@ const AlertOffcanvas = forwardRef(
                         </label>
                       </div>
                     </div>
+                      { !getValues('validDays') && <Error errorName={errors.validDays} />}
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">{t('validTimeFrom')}</label>

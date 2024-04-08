@@ -38,7 +38,7 @@ const VehicleForm = () => {
   
 
   const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 2)){
+    if(activeIndex === (totalTabs - 1)){
       try{
         if(id){
           try{
@@ -59,6 +59,7 @@ const VehicleForm = () => {
             data.businessGroupId = getValues('businessId')
             data.companyId = getValues('companyId')
             data.branchId = getValues('branchId')
+
             await createVehicles(data)
             
             notifySuccess("Vehicle created")

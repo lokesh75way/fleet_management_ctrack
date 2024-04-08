@@ -24,11 +24,15 @@ const UpdateVehicleForm = () => {
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+
+    defaultValues: {
+      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
+    },
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
   })
 
   const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 2)){
+    if(activeIndex === (totalTabs - 1)){
       try{
         if(id){
           try{

@@ -11,9 +11,10 @@ import AlertTable from "../components/Tables/AlertTable";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { alertSchema } from "../../yup";
+import { notifySuccess } from "../../utils/toast";
 
 import {useTranslation} from 'react-i18next'
-
+import { createAlert,getAllAlert,deleteAlert,getAlertById } from "../../services/api/AlertServices";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -26,21 +27,14 @@ const headers = [
   { label: "User Group", key: "usergroup" },
 ];
 
+
+
 const Alert = () => {
 
   const {t} = useTranslation();
  
   const [tableData, setTableData] = useState(AlertData);
-  const [editData, setEditData] = useState({
-    id: 0,
-    status: "",
-    title: "",
-    contact: 0,
-    age: 0,
-    drivingExperience: 0,
-    gender: "",
-    location: "",
-  });
+  const [editData, setEditData] = useState();
   const {
     register,
     formState: { errors },
@@ -53,8 +47,35 @@ const Alert = () => {
     resolver: yupResolver(alertSchema),
   });
 
-  const onSubmit = (data) => {
+
+  const [newData , setNewData] = useState('false');
+
+  const onSubmit = async(data) => {
     console.log(data);
+
+    const payload = {
+      alertName: data.alertName,
+      alertType: data.alertType,
+      value: data.alertValue,
+      basedOn: data.basedOn,
+      branchId: data.branchId,
+      object: data.object,
+      objectGroup: data.objectGroup,
+      severity: data.severity,
+      validDays: data.validDays,
+      validFrom: data.validTimeFrom1,
+      validTo: data.validTimeFrom2,
+      // action: string;
+      // isDeleted : boolean;
+    }
+
+    await createAlert(payload);
+
+    notifySuccess('New Alert Created');
+
+    setNewData(payload);
+
+    console.log(payload);
   };
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
@@ -85,12 +106,20 @@ const Alert = () => {
     chageData(activePag.current * sort, (activePag.current + 1) * sort);
     settest(i);
   };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const onConfirmDelete = async(id) => {
+    console.log('this is id',id);
+    await deleteAlert(id);
+    await getAlertData();
+
   };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
+  const editDrawerOpen = async(id) => {
+
+    
+    console.log('this is idd',id);
+    const alertDataById = await getAlertById(id)
+    console.log('this is data by id',alertDataById.data.data.data);
+    setEditData(alertDataById.data.data.data);
+    // tableData.map((table) => table.id === item && setEditData(table));
 
     // setEditTableData(item);
     alert.current.showModal();
@@ -99,6 +128,26 @@ const Alert = () => {
   const invite = useRef();
   // const employe = useRef();
   const alert = useRef();
+
+
+  async function getAlertData() {
+    try {
+      // const permissions = JSON.parse(localStorage.getItem('permission'));
+      // setUserPermission(permissions?.[0]?.permission);
+      const { data, totalPage, totalCount } = await getAllAlert();
+      setTableData(data);
+      console.log('data came',data);
+      // setCount(totalCount);
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    } finally {
+      // setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getAlertData();
+  },[newData]);
 
   return (
     <>
@@ -144,8 +193,7 @@ const Alert = () => {
                           <th>{t('alertName')}</th>
                           <th>{t('alertType')}</th>
                           <th>{t('createdDate')}</th>
-                          <th>{t('notification')}</th>
-                          <th>{t('reason')}</th>
+                          <th>{t('severity')}</th>
                           <th>{t('action')}</th>
                         </tr>
                       </thead>

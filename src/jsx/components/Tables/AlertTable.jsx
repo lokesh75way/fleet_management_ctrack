@@ -8,26 +8,23 @@ const AlertTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item.id}</span></td>
+                    <td><span>{index+1}</span></td>
                     <td>
                         <div className="products">
-                                <h6>{item.name}</h6>
+                                <h6>{item.alertName}</h6>
                         </div>
                     </td>
                     <td><span>{item.alertType}</span></td>
                     <td>
-                        <span>{item.createdDate}</span>
+                        <span>{item.createdAt}</span>
                     </td>
                     <td>
-                        <span>{item.notification}</span>
-                    </td>
-                    <td>
-                        <span>{item.reason}</span>
+                        <span>{item.severity}</span>
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
-                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
+                        <span onClick={()=>editDrawerOpen(item._id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item._id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
 
                         </span>
                     </td>

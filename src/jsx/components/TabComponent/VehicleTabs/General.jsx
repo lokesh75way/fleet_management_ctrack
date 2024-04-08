@@ -124,15 +124,22 @@ const General = ({
   }
   // const[formData,setFormData] = useState([])
   useEffect(()=>{
-
-    console.log('meeee huuu yahahahahahahaha',formData);
     
     if(formData && id){
 
-      setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
+      console.log('updated form data',formData);
+
+      setValue("businessGroupId",formData?.[0].businessGroupId)
+      setValue("businessId",formData?.[0].businessGroupId)
+      setValue("company",formData?.[0].companyId)
+
+      // setValue("branch",formData?.[0].branchId._id)
+      // setValue("branchId",formData?.[0].branchId._id)
+      // setValue("branchName",formData?.[0].branchId._id)
+
+      setValue("businessGroupName",formData?.[0].businessGroupName)
       console.log('imei number ',formData?.[0].imeiNumber);
       setValue("imeiNumber",formData?.[0].imeiNumber)
-
       setValue("vehicleName",formData?.[0].vehicleName)
       setValue("plateNumber",formData?.[0].plateNumber)
       setValue("branch",formData?.[0].branch)
@@ -224,8 +231,9 @@ const General = ({
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.label);
-                  setValue("branchID", newValue.value);
+                  setValue("branchId", newValue.value);
+                  setValue("branch", newValue.value);
+                  setValue("branchName", newValue.label);
                 }
                 }
                 value={value}
@@ -311,7 +319,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('serverAddress')} 
+          {t('serverAddress')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -349,7 +357,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('distanceCounter')} 
+          {t('distanceCounter')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="distanceCounter"
@@ -375,7 +383,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('unitOfDistance')} 
+          {t('unitOfDistance')} <span className="text-danger">*</span>
           </label>
           <Controller
             name="unitOfDistance"
@@ -448,7 +456,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')} 
+          {t('next')} 
         </Button>
       </div>
     </div>

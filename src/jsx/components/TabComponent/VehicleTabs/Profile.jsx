@@ -70,7 +70,8 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       
       setValue("plateNumber",formData[0].plateNumber || '' )
       setValue("vehicleCategory",formData[0].vehicleCategory || '' )
-      setValue("purchaseAmmount",formData[0].purchaseAmount || '' )
+      setValue("purchaseAmount",formData[0].purchaseAmount || '' )
+      setValue("DVIRTemplate",formData[0].DVIRTemplate || '' )
       setValue("weightCapacity",formData[0].weightCapacity || '' )
       setValue("companyAverage",formData[0].companyAverage || '' )
       setValue("permit",formData[0].permit || '' )
@@ -104,7 +105,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.plateNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('vehicleCategory')}</label>
+          <label className="form-label">{t('vehicleCategory')}</label> <span className="text-danger">*</span>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -303,7 +304,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           {!getValues('fuelType') && <Error errorName={errors.fuelType} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('distanceBasedFuelConsumption')} </label>
+          <label className="form-label">{t('distanceBasedFuelConsumption')} </label><span className="text-danger">*</span>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -352,7 +353,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             <Error errorName={errors.distance} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('durationBasedFuelConsumption')} </label>
+          <label className="form-label">{t('durationBasedFuelConsumption')} </label> <span className="text-danger">*</span>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -462,7 +463,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('vinNumber')} :
+          {t('vinNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -568,7 +569,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             
      
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">{t('distanceCost')}<span className="text-danger">*</span></label>
+            <label className="form-label">{t('distanceCost')}</label>
             <div className={`${!isCheckedCBO ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
@@ -585,7 +586,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
   
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">{t('duration')}<span className="text-danger">*</span></label>
+            <label className="form-label">{t('duration')}</label>
             <div className={`${!isCheckedCBO2 ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
@@ -630,7 +631,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('sleepModeDuration')}
+          {t('sleepModeDuration')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -674,7 +675,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       
           <>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('underweightTolerance')}</label>
+              <label className="form-label">{t('underweightTolerance')}</label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -689,7 +690,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <Error errorName={errors.underweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('overweightTolerance')}</label>
+              <label className="form-label">{t('overweightTolerance')}</label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -704,7 +705,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <Error errorName={errors.overweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('loadingUnloadingTolerance')} </label>
+              <label className="form-label">{t('loadingUnloadingTolerance')} </label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -851,7 +852,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> {t('submit')}</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> {t('next')}</Button>
       </div>
     </div>
   );

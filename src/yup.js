@@ -433,7 +433,7 @@ export const subUserAccountSchema = yup
   .required();
 export const alertSchema = yup
   .object({
-    branch: yup.string().required("Select a Branch "),
+    branchId: yup.string().required("Select a Branch "),
     basedOn: yup.string().required("Choose an option "),
     object: yup.string().required("Select an option "),
     alertName: yup.string().required("Alert Name is required "),
