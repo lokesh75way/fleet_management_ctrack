@@ -1,10 +1,15 @@
-import React,{useEffect, useRef} from 'react';
-import * as L from 'leaflet';
-import { FeatureGroup } from 'react-leaflet';
-import { EditControl } from 'react-leaflet-draw';
+import React, { useEffect, useRef } from "react";
+import * as L from "leaflet";
+import { FeatureGroup } from "react-leaflet";
+import { EditControl } from "react-leaflet-draw";
 
-export default function EditControlFC({ geojson, setGeojson }) {
-  const ref =useRef(null);
+export default function EditControlFC({
+  geojson,
+  setGeojson,
+  geofenceHanlder,
+  setValue,
+}) {
+  const ref = useRef(null);
 
   useEffect(() => {
     if (ref.current?.getLayers().length === 0 && geojson) {
@@ -28,10 +33,29 @@ export default function EditControlFC({ geojson, setGeojson }) {
 
   const handleChange = () => {
     const geo = ref.current?.toGeoJSON();
-    console.log(geo);
-    if (geo?.type === 'FeatureCollection') {
+    if (geo?.type === "FeatureCollection") {
       setGeojson(geo);
     }
+  };
+  const onCreatedhandler = (e) => {
+    if(e.layerType === 'circle'){
+      const geo = ref.current?.toGeoJSON();
+      const data = geo.features.map((loc) => ({
+        type: 'Circle',
+        coordinates: loc.geometry.coordinates,
+        duration : e.layer._mRadius
+      }));
+      setValue("location", data);
+    }else{
+
+      const geo = ref.current?.toGeoJSON();
+      const data = geo.features.map((loc) => ({
+        type: loc.geometry.type,
+        coordinates: loc.geometry.coordinates,
+      }));
+      setValue("location", data);
+    }
+   
   };
 
   return (
@@ -39,7 +63,7 @@ export default function EditControlFC({ geojson, setGeojson }) {
       <EditControl
         position="topright"
         onEdited={handleChange}
-        onCreated={handleChange}
+        onCreated={onCreatedhandler}
         onDeleted={handleChange}
         draw={{
           rectangle: false,

@@ -160,7 +160,13 @@ export const companyAccountSchema = yup
     logo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        if (typeof value === "string") {
+          return true;
+        }
+
+        // // if(typeof value === 'string') return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
       }),
   })
   .required();
@@ -261,10 +267,14 @@ export const businessGroupAccountSchema = yup
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
         // console.log(value);
         // if (!value[0]) return true;
+        if (typeof value === "string") {
+          return true;
+        }
+
         // // if(typeof value === 'string') return true;
-        // const extension = value[0].name.split(".").pop().toLowerCase();
-        // return extension === "jpg" || extension === "png";
-        return true
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
+        // return true
       }),
   })
   .required();
@@ -277,7 +287,13 @@ export const businessGroupSettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        if(typeof value === 'string'){
+          return true;
+        }
+        
+        // // if(typeof value === 'string') return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
       }),
   })
   .required();
@@ -290,7 +306,13 @@ export const companySettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        if(typeof value === 'string'){
+          return true;
+        }
+        
+        // // if(typeof value === 'string') return true;
+        const extension = value[0].name.split(".").pop().toLowerCase();
+        return extension === "jpg" || extension === "png";
       }),
   })
   .required();
@@ -460,7 +482,7 @@ export const technicianTaskSchema = yup
   .required();
 export const geofenceMapSchema = yup
   .object({
-    company: yup.string().required("Enter company name "),
+    company: yup.string().required("Parent company required"),
     name: yup.string().required("Enter Geofence name "),
     category: yup.string().required("Select a Category "),
     geofenceAccess: yup.string().required("Choose access method "),
@@ -468,6 +490,7 @@ export const geofenceMapSchema = yup
     contactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+      location: yup.array().required('Geofence location required')  
   })
   .required();
 export const technicianGeneralSchema = yup
