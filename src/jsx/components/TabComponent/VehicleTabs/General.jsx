@@ -126,37 +126,26 @@ const General = ({
   useEffect(()=>{
     
     if(formData && id){
-
-      console.log('updated form data',formData);
-
-      setValue("businessGroupId",formData?.[0].businessGroupId)
-      setValue("businessId",formData?.[0].businessGroupId)
-      setValue("company",formData?.[0].companyId)
-
-      // setValue("branch",formData?.[0].branchId._id)
-      // setValue("branchId",formData?.[0].branchId._id)
-      // setValue("branchName",formData?.[0].branchId._id)
-
-      setValue("businessGroupName",formData?.[0].businessGroupName)
-      console.log('imei number ',formData?.[0].imeiNumber);
-      setValue("imeiNumber",formData?.[0].imeiNumber)
-      setValue("vehicleName",formData?.[0].vehicleName)
-      setValue("plateNumber",formData?.[0].plateNumber)
-      setValue("branch",formData?.[0].branch)
-      setValue("simNumber",formData?.[0].simNumber)
-      setValue("IMEINumber",formData?.[0].IMEINumber)
-      setValue("registrationNumber",formData?.[0].registrationNumber)
-      setValue("weightCapacity",formData?.[0].weightCapacity)
+      const FormData = formData[0];
+      setValue("businessGroupId",FormData?.businessGroupId)
+      setValue("businessId",FormData?.businessGroupId)
+      setValue("company",FormData?.companyId)
+      setValue("businessGroupName",FormData?.businessGroupName)
+      console.log('imei number ',FormData?.imeiNumber);
+      setValue("imeiNumber",FormData?.imeiNumber)
+      setValue("vehicleName",FormData?.vehicleName)
+      setValue("plateNumber",FormData?.plateNumber)
+      setValue("branch",FormData?.branch)
+      setValue("simNumber",FormData?.simNumber)
+      setValue("IMEINumber",FormData?.IMEINumber)
+      setValue("registrationNumber",FormData?.registrationNumber)
+      setValue("weightCapacity",FormData?.weightCapacity)
       
-      setValue("deviceType",formData?.[0].deviceType)
-      setValue("serverAddress",formData?.[0].serverAddress)
-      setValue("distanceCounter",formData?.[0].distanceCounter)
-      setValue("unitOfDistance",formData?.[0].unitOfDistance)
-      setValue("deviceAccuracyTolerance",formData?.[0].deviceAccuracyTolerance)
-
-
-
-
+      setValue("deviceType",FormData?.deviceType)
+      setValue("serverAddress",FormData?.serverAddress)
+      setValue("distanceCounter",FormData?.distanceCounter)
+      setValue("unitOfDistance",FormData?.unitOfDistance)
+      setValue("deviceAccuracyTolerance",FormData?.deviceAccuracyTolerance)
     }
   },[formData,id])
 
@@ -172,10 +161,10 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-              onChange={async (newValue) => {
-                await setValue("businessGroupId", newValue.value);
-                await setValue("businessId", newValue.value);
-                await setValue("businessGroupName", newValue.label);
+              onChange={ (newValue) => {
+                setValue("businessGroupId", newValue.value);
+                setValue("businessId", newValue.value);
+                setValue("businessGroupName", newValue.label);
                 setGroupId(newValue.value);
                 setCompanyId(null);
               }}

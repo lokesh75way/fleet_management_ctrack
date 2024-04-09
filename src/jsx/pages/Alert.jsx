@@ -53,29 +53,13 @@ const Alert = () => {
   const onSubmit = async(data) => {
     console.log(data);
 
-    const payload = {
-      alertName: data.alertName,
-      alertType: data.alertType,
-      value: data.alertValue,
-      basedOn: data.basedOn,
-      branchId: data.branchId,
-      object: data.object,
-      objectGroup: data.objectGroup,
-      severity: data.severity,
-      validDays: data.validDays,
-      validFrom: data.validTimeFrom1,
-      validTo: data.validTimeFrom2,
-      // action: string;
-      // isDeleted : boolean;
-    }
-
-    await createAlert(payload);
+    await createAlert(data);
 
     notifySuccess('New Alert Created');
 
-    setNewData(payload);
+    setNewData(data);
 
-    console.log(payload);
+    console.log('this is submit data',data);
   };
   const [data, setData] = useState(
     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
@@ -114,10 +98,8 @@ const Alert = () => {
   };
   const editDrawerOpen = async(id) => {
 
-    
-    console.log('this is idd',id);
     const alertDataById = await getAlertById(id)
-    console.log('this is data by id',alertDataById.data.data.data);
+    // console.log('this is data by id',alertDataById.data.data.data);
     setEditData(alertDataById.data.data.data);
     // tableData.map((table) => table.id === item && setEditData(table));
 

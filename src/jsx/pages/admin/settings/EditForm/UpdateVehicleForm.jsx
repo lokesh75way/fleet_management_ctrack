@@ -31,45 +31,33 @@ const UpdateVehicleForm = () => {
     resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
   })
 
-  const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 1)){
-      try{
-        if(id){
-          try{
-            console.log(data)
-
-            data.businessGroupName = getValues('businessGroupName')
-            await updateVehicles(data,id)
-            notifySuccess("Vehicle Updated Successfully")
-            navigate("/vehicle");
-            return;
-          }catch(e){
-            notifyError("Some Error occured")
-          }
-        }
-        else{
-          try{
-            console.log(data)
-            data.businessGroupId = getValues('businessId')
-            data.companyId = getValues('companyId')
-            data.branchId = getValues('branchId')
-            await createVehicles(data)
-            
-            notifySuccess("Vehicle created")
-            navigate("/vehicle");
-            return;
-          }catch(e){
-            notifyError("Some error occured")
-          }
-        }
-      }
-      catch(error){
-        notifyError("Some error occured")
-      }
+  const onSubmit = async (data) => {
+    if (activeIndex !== totalTabs - 1) {
+      setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
       return;
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+  
+    try {
+      const vehicleData = {
+        ...data,
+        businessGroupId: getValues('businessId'),
+        companyId: getValues('companyId'),
+        branchId: getValues('branchId'),
+      };
+  
+      if (id) {
+        await updateVehicles(vehicleData, id);
+        notifySuccess("Vehicle Updated Successfully");
+      } else {
+        await createVehicles(vehicleData);
+        notifySuccess("Vehicle created");
+      }
+  
+      navigate("/vehicle");
+    } catch (error) {
+      notifyError("Some error occurred");
+    }
+  };
 
   const { id } = useParams();
   const location = useLocation();

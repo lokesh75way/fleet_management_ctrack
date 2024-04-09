@@ -438,7 +438,7 @@ export const alertSchema = yup
     object: yup.string().required("Select an option "),
     alertName: yup.string().required("Alert Name is required "),
     alertType: yup.string().required("Select an Alert Type "),
-    alertValue: yup.string().required("Choose an Alert Value "),
+    value: yup.string().required("Choose an Alert Value "),
     validDays: yup.string().required("Choose Valid day options "),
     severity: yup.string().required("Choose Severity options "),
     //  userName: yup.string().required("User Name is required "),
