@@ -26,8 +26,8 @@ const TechnicianTaskTable = ({
             <span>{item.taskCategory}</span>
           </td>
           <td>
-            <span>{`${item.technicianId?.firstName ?? ""} ${
-              item.technicianId?.lastName ?? ""
+            <span>{`${item.technician?.firstName ?? ""} ${
+              item.technician?.lastName ?? ""
             }`}</span>
           </td>
           <td>

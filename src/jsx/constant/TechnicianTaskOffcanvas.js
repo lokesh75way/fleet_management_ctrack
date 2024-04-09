@@ -16,9 +16,9 @@ import "../../scss/pages/_driver-tracking.scss";
 import {
   taskCategoryOptions,
   severityOptions,
-  technicianOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
 import { useTranslation } from "react-i18next";
+import TechnicianDropdown from "../components/TechnicianDropdown";
 
 const TechnicianOffcanvas = forwardRef(
   (
@@ -64,7 +64,7 @@ const TechnicianOffcanvas = forwardRef(
         reset();
         clearErrors();
         if (editData)
-          reset({ ...editData, technicianId: editData.technicianId._id });
+          reset({ ...editData, technician: editData.technician._id });
       }
     }, [addEmploye]);
 
@@ -98,24 +98,24 @@ const TechnicianOffcanvas = forwardRef(
                         {t("technician")} <span className="text-danger">*</span>
                       </label>
                       <Controller
-                        name="technicianId"
+                        name="technician"
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <Select
+                          <TechnicianDropdown
                             onChange={(newValue) => {
-                              setValue("technicianId", newValue.value);
+                              setValue("technician", newValue.value);
                             }}
-                            options={technicianOptions}
+                            value={value}
+                            customStyles={customStyles}
                             ref={ref}
                             name={name}
-                            styles={customStyles}
-                            defaultValue={technicianOptions[0]}
                           />
                         )}
                       />
-                      {!getValues("technicianId") && (
-                        <Error errorName={errors.technicianId} />
+
+                      {!getValues("technician") && (
+                        <Error errorName={errors.technician} />
                       )}
                     </div>
                     <div className="col-xl-6 mb-3">
@@ -136,7 +136,7 @@ const TechnicianOffcanvas = forwardRef(
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            defaultValue={taskCategoryOptions[0]}
+                            value={getValues("taskCategory")}
                           />
                         )}
                       />
@@ -178,7 +178,7 @@ const TechnicianOffcanvas = forwardRef(
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            defaultValue={severityOptions[0]}
+                            value={getValues("taskPriority")}
                           />
                         )}
                       />

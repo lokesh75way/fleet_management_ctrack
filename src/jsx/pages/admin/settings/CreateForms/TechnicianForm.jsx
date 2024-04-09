@@ -65,7 +65,11 @@ const TechnicianForm = () => {
           return;
         }
       } catch (error) {
-        notifyError(t("someErrorOccurred"));
+        const validationErr = error.response?.data?.data?.errors;
+        if (validationErr && validationErr.length > 0) {
+          notifyError(validationErr[0].msg);
+        } else notifyError(t("someErrorOccurred"));
+        return;
       }
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));

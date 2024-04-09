@@ -32,9 +32,9 @@ const Technician = () => {
 
   const fetchAllTechnicians = async (page, businessGroupId) => {
     try {
-      const { data, totalCount } = await getTechnicians(page, 10);
-      setTableData(data);
-      setCount(totalCount);
+      const { technicians, count } = await getTechnicians(page, 10);
+      setTableData(technicians);
+      setCount(count);
     } catch (error) {
       notifyError("Error in fetching data");
     }

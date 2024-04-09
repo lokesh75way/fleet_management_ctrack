@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
-import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import { useParams } from "react-router-dom";
-import DummyData from "../../../../users.json";
-import useStorage from "../../../../hooks/useStorage";
 import "../../../../scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
@@ -21,46 +17,19 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
-  const { t } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [tempValue, setTempValue] = useState();
-  const { checkRole, checkUserName } = useStorage();
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
-  const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("gender", e.target.value);
-  };
-  var companyOptions;
-  if (checkRole() === "admin") {
-    companyOptions = DummyData.filter((item) => item.role === "company").map(
-      (item) => ({
-        label: item.userName,
-        value: item.id,
-      })
-    );
-  } else if (checkRole() === "businessgroup") {
-    companyOptions = DummyData.filter(
-      (item) => item.role === "company" && item.parent === checkUserName()
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  } else if (checkRole() === "company") {
-    companyOptions = [{ label: checkUserName(), value: checkUserName() }];
-  }
+   const [tempGender, setTempGender] = useState("");
+   const { t } = useTranslation();
+   const customStyles = {
+     control: (base) => ({
+       ...base,
+       padding: ".25rem 0 ", // Adjust the height as needed
+     }),
+   };
+   const handleChange = (e) => {
+     setTempGender(e.target.value);
+     setValue("gender", e.target.value);
+   };
 
-  const { id } = useParams();
-
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
-
-  const [filteredUserData, setFilteredUserData] = useState(newData);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -69,30 +38,13 @@ const General = ({
             {t("company")} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="companyId"
+            name="company"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <AsyncSelect
-              //   onChange={(newValue) => {
-              //     setCompanyValue(newValue.label);
-              //     setValue("companyId", newValue.value);
-              //     setValue("companyName", newValue.label);
-              //   }}
-              //   isDisabled={defaultValues?.company?.disabled}
-              //   options={companyOptions}
-              //   ref={ref}
-              //   name={name}
-              //   styles={customStyles}
-              //   defaultOptions
-              //   value={{
-              //     label: getValues('companyName'),
-              //     value: getValues('companyId'),
-              //   }}
-              // />
               <CompanyDropdown
                 onChange={(newValue) => {
-                  setValue("companyId", newValue.value);
+                  setValue("company", newValue.value);
                 }}
                 value={value}
                 customStyles={customStyles}
@@ -101,7 +53,7 @@ const General = ({
               />
             )}
           />
-          {!getValues("companyId") && <Error errorName={errors.companyId} />}
+          {!getValues("company") && <Error errorName={errors.company} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -113,9 +65,6 @@ const General = ({
             label="First Name"
             name="firstName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].firstName : ""
-            }
           />
           <Error errorName={errors.firstName} />
         </div>
@@ -128,9 +77,6 @@ const General = ({
             label="middleName"
             name="middleName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].middleName : ""
-            }
           />
         </div>
 
@@ -144,9 +90,6 @@ const General = ({
             label="Last Name"
             name="lastName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].lastName : ""
-            }
           />
           <Error errorName={errors.lastName} />
         </div>
@@ -161,9 +104,6 @@ const General = ({
             label="Technician Number"
             name="technicianNo"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].technicianNo : ""
-            }
           />
           <Error errorName={errors.technicianNo} />
         </div>
@@ -179,7 +119,6 @@ const General = ({
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].email : ""}
           />
           <Error errorName={errors.email} />
         </div>
@@ -191,8 +130,8 @@ const General = ({
               <input
                 type="radio"
                 className="form-check-input"
-                value="male"
-                checked={selectedOption === "male"}
+                value="MALE"
+                checked={(getValues("gender") ?? tempGender) === "MALE"}
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
@@ -203,8 +142,8 @@ const General = ({
               <input
                 type="radio"
                 className="form-check-input"
-                value="female"
-                checked={selectedOption === "female"}
+                value="FEMALE"
+                checked={(getValues("gender") ?? tempGender) === "FEMALE"}
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
@@ -230,9 +169,6 @@ const General = ({
               e.target.value = temp < 1 ? "" : temp;
             }}
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
-            }
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -251,9 +187,6 @@ const General = ({
               e.target.value = temp < 1 ? "" : temp;
             }}
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].emergencyContact : ""
-            }
           />
           <Error errorName={errors.emergencyContact} />
         </div>
@@ -267,15 +200,15 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("dateOfJoin") || new Date()}
+                selected={
+                  getValues("dateOfJoin")
+                    ? new Date(getValues("dateOfJoin"))
+                    : new Date()
+                }
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setTempValue(newValue);
                   setValue("dateOfJoin", newValue);
                 }}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].dateOfJoin : ""
-                }
               />
             )}
           />
@@ -292,15 +225,15 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("dateOfBirth") || new Date()}
+                selected={
+                  getValues("dateOfBirth")
+                    ? new Date(getValues("dateOfBirth"))
+                    : new Date()
+                }
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setTempValue(newValue);
                   setValue("dateOfBirth", newValue);
                 }}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].dateOfBirth : ""
-                }
               />
             )}
           />

@@ -449,7 +449,7 @@ export const expenseSchema = yup
   .required();
 export const technicianTaskSchema = yup
   .object({
-    technicianId: yup.string().required("Select a Technician "),
+    technician: yup.string().required("Select a Technician "),
     taskCategory: yup.string().required("Select a Category "),
     taskPriority: yup.string().required("Select a task priority "),
     taskName: yup.string().required("Task Name is required "),
@@ -472,7 +472,7 @@ export const geofenceMapSchema = yup
   .required();
 export const technicianGeneralSchema = yup
   .object({
-    companyId: yup.string().required("Select a company"),
+    company: yup.string().required("Select a company"),
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
@@ -493,15 +493,19 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    country: yup.string().required("Please select a Country "),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
+    address: yup
+      .object({
+        zipCode: yup
+          .number()
+          .positive("Zip Code must be a positive number")
+          .integer("Zip Code must be an integer")
+          .nullable(true)
+          .transform((_, val) => (val ? Number(val) : null)),
+        country: yup.string().required("Please select a Country "),
+        city: yup.string().required("Please enter a City "),
+        street1: yup.string().required("Please enter street1 address "),
+      })
+      .required(),
   })
   .required();
 export const technicianLeaveSchema = yup

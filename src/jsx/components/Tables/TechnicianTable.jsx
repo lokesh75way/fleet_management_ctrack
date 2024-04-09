@@ -25,7 +25,7 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
               /> */}
               <div>
                 <h6>{item.firstName}</h6>
-                <span>Web Designer</span>
+                {/* <span>Web Designer</span> */}
               </div>
             </div>
           </td>
@@ -38,10 +38,10 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
           </td>
 
           <td>
-            <span>{item.country}</span>
+            <span>{item.address.country}</span>
           </td>
           <td>
-            <span>{item.technicianNumber}</span>
+            <span>{item.technicianNo}</span>
           </td>
           <td>
             <span className="d-flex justify-content-center">
