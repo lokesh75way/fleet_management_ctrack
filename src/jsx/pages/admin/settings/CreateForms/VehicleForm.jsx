@@ -35,12 +35,16 @@ const VehicleForm = () => {
   const { id } = useParams();
   const location = useLocation();
   const { formData } = location.state || {};
+  
+
   const onSubmit = async(data)=>{
     if(activeIndex === (totalTabs - 2)){
       try{
         if(id){
           try{
             console.log(data)
+
+            data.businessGroupName = getValues('businessGroupName')
             await updateVehicles(data)
             notifySuccess("Vehicle Updated Successfully")
             navigate("/vehicle");
@@ -72,7 +76,6 @@ const VehicleForm = () => {
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
-
   return (
     <>
       <MainPagetitle
