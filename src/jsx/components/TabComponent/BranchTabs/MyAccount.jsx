@@ -38,10 +38,15 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
+
+
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
+
+
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
+  
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
     control: (base) => ({
