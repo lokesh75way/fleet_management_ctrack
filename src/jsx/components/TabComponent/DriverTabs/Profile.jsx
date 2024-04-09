@@ -21,6 +21,7 @@ const Profile = ({
   onSubmit,
   getValues,
   errors,
+  formData
 }) => {
   const [selectStateName, setSelectStateName] = useState({
     name: "Select State",
@@ -38,6 +39,9 @@ const Profile = ({
   const { id } = useParams();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
+
+
+  
 
   return (
     <div className="p-4">
