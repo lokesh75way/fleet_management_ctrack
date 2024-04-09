@@ -1,6 +1,6 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, use, useNavigate, useParams } from "react-router-dom";
-import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
@@ -14,16 +14,21 @@ import {
   technicianLeaveSchema,
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import {
+  createTechnician,
+  getTechnicianById,
+  updateTechnician,
+} from "../../../../../services/api/TechnicianService";
 
-const TechnicianForm = ({ Title, editData, setEditData }) => {
-
-  const {t} = useTranslation();
+const TechnicianForm = () => {
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
-  const tabHeading = [t('general'), t('address'), t('leave')];
+  const tabHeading = [t("general"), t("address"), t("leave")];
   const component = [General, Address, Leave];
   const totalTabs = tabHeading.length;
+  const [editData, setEditData] = useState({});
 
   const {
     register,
@@ -32,7 +37,9 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
     getValues,
     control,
     handleSubmit,
+    reset,
   } = useForm({
+    defaultValues: editData,
     resolver: yupResolver(
       activeIndex === 0
         ? technicianGeneralSchema
@@ -41,51 +48,54 @@ const TechnicianForm = ({ Title, editData, setEditData }) => {
         : technicianLeaveSchema
     ),
   });
-  const { id } = useParams();
-  const onSubmit = (data) => {
+  const { id: techId } = useParams();
+
+  const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
-        const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-        if (id) {
-          const val = JSON.parse(localStorage.getItem("userJsonData"));
-          const indexToUpdate = val.findIndex((item) => item.id == id);
-          if (indexToUpdate !== -1) {
-            val[indexToUpdate] = { ...data, id, Designation: "Technician" };
-            localStorage.setItem("userJsonData", JSON.stringify(val));
-            notifySuccess(t('technicianUpdated'));
-            navigate("/technician");
-          }
+        if (techId) {
+          await updateTechnician(data, techId);
+          notifySuccess("Technincian created");
+          navigate("/technician/details");
           return;
         } else {
-          data = { ...data, Designation: "Technician" };
-          const existingData = JSON.parse(localStorage.getItem("userJsonData"));
-          data.id = existingData.length + 1;
-          existingData.push(data);
-          localStorage.setItem("userJsonData", JSON.stringify(existingData));
-          // notifySuccess("Branch Added Successfully !!");
-          notifySuccess(t('newTechnicianCreated'));
-          navigate("/technician");
+          await createTechnician(data);
+          notifySuccess("Technincian created");
+          navigate("/technician/details");
           return;
         }
       } catch (error) {
-        notifyError(t('someErrorOccurred'));
+        const validationErr = error.response?.data?.data?.errors;
+        if (validationErr && validationErr.length > 0) {
+          notifyError(validationErr[0].msg);
+        } else notifyError(t("someErrorOccurred"));
+        return;
       }
     }
-    notifySuccess(t('saved'))
-    console.log(data);
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 
-
-  if(!id){
-    component.pop();
-    tabHeading.pop();
+  async function getTechnician(id) {
+    try {
+      const data = await getTechnicianById(id);
+      setEditData(data);
+      reset(data);
+    } catch (error) {
+      notifyError("Some error occured !!");
+      navigate("/technician/details");
+    }
   }
+
+  useEffect(() => {
+    if (techId) getTechnician(techId);
+  }, [techId]);
+
   return (
     <>
       <MainPagetitle
-        mainTitle={t('technician')}
-        pageTitle={id ? t("edit") : t("create")}
-        parentTitle={t('general')}
+        mainTitle={t("technician")}
+        pageTitle={techId ? t("edit") : t("create")}
+        parentTitle={t("general")}
       />
       <div className="m-2 p-2">
         <FormProvider>
