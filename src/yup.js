@@ -487,10 +487,11 @@ export const geofenceMapSchema = yup
   .required();
 export const technicianGeneralSchema = yup
   .object({
+    company: yup.string().required("Select a company"),
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
-    technicianNumber: yup
+    technicianNo: yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
@@ -507,23 +508,34 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    country: yup.string().required("Please select a Country "),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
+    address: yup
+      .object({
+        zipCode: yup
+          .number()
+          .positive("Zip Code must be a positive number")
+          .integer("Zip Code must be an integer")
+          .nullable(true)
+          .transform((_, val) => (val ? Number(val) : null)),
+        country: yup.string().required("Please select a Country "),
+        city: yup.string().required("Please enter a City "),
+        street1: yup.string().required("Please enter street1 address "),
+      })
+      .required(),
   })
   .required();
 export const technicianLeaveSchema = yup
   .object({
-    leaveTime: yup.string().required("Select type of leave "),
-    noOfDays: yup.number().required("Enter total number of leaves "),
+    leave: yup
+      .array(
+        yup.object({
+          leaveType: yup.string().required("Select type of leave "),
+          days: yup.number().required("Enter total number of leaves "),
+        })
+      )
+      .required(),
   })
   .required();
+  
 export const classifyTripsSchema = yup
   .object({
     startTime: yup.string().required("Trip start time is required "),
