@@ -4,6 +4,10 @@ import DatePicker from "react-datepicker";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Error from "../../Error/Error";
+
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import '../../../../scss/pages/_driver-tracking.scss'
 import {
   options,
@@ -16,7 +20,9 @@ import {
 import CustomInput from "../../Input/CustomInput";
 import {useTranslation} from 'react-i18next'
 
-const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, getValues}) => {
+
+const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, getValues,formData}) => {
+  const id = useParams();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
@@ -38,6 +44,50 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
   }
 
   const {t} = useTranslation();
+
+  useEffect(()=>{
+    if(formData && id){
+      // setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
+      // setValue("companyName",formData[0].companyId?.companyName)
+      // setValue("userName", formData[0].userName)
+      // setValue("email",formData[0].email)
+      // setValue("mobileNumber",formData[0].mobileNumber)
+      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
+      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
+      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
+      // setValue("street1",formData[0].companyId?.street1)
+      // setValue("street2",formData[0].companyId?.street2)
+      // setValue("contactPerson",formData[0].companyId?.contactPerson)
+      // setValue("faxNumber",formData[0].companyId?.faxNumber)
+      // setValue("zipCode",formData[0].companyId?.zipCode)
+      // setValue("city",formData[0].companyId?.city)
+      // setValue("storageCapacity",formData[0].companyId?.capacity )
+      // setValue("country",formData[0].country)
+      // setValue("state",formData[0].state || '' )
+      // setDefaultCountry({ name:formData[0].country })
+      // setSelectStateName({name : formData[0].state || ''})
+      // setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
+      
+      setValue("plateNumber",formData[0].plateNumber || '' )
+      setValue("vehicleCategory",formData[0].vehicleCategory || '' )
+      setValue("purchaseAmmount",formData[0].purchaseAmount || '' )
+      setValue("weightCapacity",formData[0].weightCapacity || '' )
+      setValue("companyAverage",formData[0].companyAverage || '' )
+      setValue("permit",formData[0].permit || '' )
+      setValue("registrationNumber",formData[0].registrationNumber || '' )
+      setValue("fuelType",formData[0].fuelType || '' )
+      setValue("fuelIdlingConsumption",formData[0].fuelIdlingConsumption || '' )
+      setValue("vinNumber",formData[0].vinNumber || '' )
+      setValue("engineNumber",formData[0].engineNumber || '' )
+      setValue("duration",formData[0].duration || '' )
+      setValue("sleepModeDuration",formData[0].sleepModeDuration || '' )
+      setValue("underweightTolerance",formData[0].underweightTolerance || '' )
+      setValue("overweightTolerance",formData[0].overweightTolerance || '' )
+      setValue("loadingUnloadingTolerance",formData[0].loadingUnloadingTolerance || '' )
+      
+
+    }
+  },[formData,id])
 
   return (
     <div className="p-4">
@@ -61,7 +111,9 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 type="radio"
                 className="form-check-input"
                 name="optradioCustom1"
-                onChange={() => setValue("vehicleCategory", "MOVABLE")}
+                onChange={() => {setValue("vehicleCategory", "MOVABLE")
+                setTempValue('vechicleCategory')
+              }}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
               {t('movable')}
@@ -71,14 +123,18 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <input
                 type="radio"
                 className="form-check-input"
-                onChange={() => setValue("vehicleCategory", "IMMOVABLE")}
+                onChange={() => {setValue("vehicleCategory", "IMMOVABLE")
+                setTempValue('vehicleCategory')
+              }}
                 name="optradioCustom1"
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
               {t('immovable')}
               </label>
+
             </div>
           </div>
+             {!getValues("vehicleCategory") && <Error errorName={errors.vehicleCategory} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('DVIRTemplate')}<span className="text-danger">*</span></label>
@@ -279,20 +335,21 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                      onChange={(newValue) =>
-                        setValue("distanceQuantitySelect", newValue.value)
-                      }
-                      options={distanceQuantitySelectOptions}
-                      ref={ref}
-                      name={name}
-                      styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+                    onChange={(newValue) =>
+                      setValue("distanceQuantitySelect", newValue.value)
+                    }
+                    options={distanceQuantitySelectOptions}
+                    ref={ref}
+                    name={name}
+                    styles={customStyles}
+                    defaultValue={distanceQuantitySelectOptions[0]}
                     />
-                  )}
+                    )}
                 />
               </>
             )}
           </div>
+            <Error errorName={errors.distance} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('durationBasedFuelConsumption')} </label>
@@ -316,16 +373,16 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               control={control}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
-                  onChange={(newValue) =>
-                    setValue("durationSelect", newValue.value)
-                  }
-                  options={durationSelectOptions}
-                  ref={ref}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={durationSelectOptions[0]}
+                onChange={(newValue) =>
+                  setValue("durationSelect", newValue.value)
+                }
+                options={durationSelectOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                defaultValue={durationSelectOptions[0]}
                 />
-              )}
+                )}
             />
             {isCheckedDBFC2 && (
               <>
@@ -343,20 +400,21 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                      onChange={(newValue) =>
-                        setValue("durationQuantitySelect", newValue.value)
-                      }
-                      options={distanceQuantitySelectOptions}
-                      ref={ref}
-                      name={name}
-                      styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+                    onChange={(newValue) =>
+                      setValue("durationQuantitySelect", newValue.value)
+                    }
+                    options={distanceQuantitySelectOptions}
+                    ref={ref}
+                    name={name}
+                    styles={customStyles}
+                    defaultValue={distanceQuantitySelectOptions[0]}
                     />
-                  )}
+                    )}
                 />
               </>
             )}
           </div>
+            <Error errorName={errors.duration} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('fuelIdlingConsumption')}</label>
@@ -413,6 +471,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="vinNumber"
             placeholder=""
           />
+          <Error errorName={errors.vinNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -506,6 +565,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             </label>
           </div>
         </div>
+            
      
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">{t('distanceCost')}<span className="text-danger">*</span></label>
@@ -579,6 +639,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             name="sleepModeDuration"
             placeholder=""
           />
+          <Error errorName={errors.sleepModeDuration} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -625,6 +686,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.underweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('overweightTolerance')}</label>
@@ -639,6 +701,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.overweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('loadingUnloadingTolerance')} </label>
@@ -653,6 +716,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
+              <Error errorName={errors.loadingUnloadingTolerance} />
             </div>
           </>
    
