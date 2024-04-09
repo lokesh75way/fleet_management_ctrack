@@ -28,6 +28,7 @@ import { getVehicles, statusData } from "../../../utils/helper";
 import CheckboxTree from 'react-checkbox-tree'
 import DriverCompanyItem from "../Tracking/DriverTabComponent3";
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
+import DriverItem from "../Tracking/DriverItem";
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
   const componentData = {
     name: "Company1",
@@ -109,23 +110,28 @@ const DriverTabComponent1 = (props) => {
   const { Running, Idle, Stopped, Inactive, nodata, total } = status;
   const [selectValue, setSelectValue] = useState("All");
   const [vehicles, setVehicles] = useState([]);
+
   useEffect(() => {
     const data = getVehicles(selectValue);
     setVehicles(data);
   }, [selectValue]);
+
   const items = JSON.parse(localStorage.getItem("userJsonData"))
     .filter((item) => item.designation === "vehicle")
     .map((data) => ({
       id: data.id,
       name: data.vehicleName,
     }));
+
   const handleSearch = (item) => {
+    console.log(item, "::-item")
     const vehicleData = getVehicles(selectValue);
     console.log(vehicleData);
     const filteredData = Object.entries(vehicleData).filter((vehicle) => {
       const vec = vehicle[1].filter((data) => data.id == item.id);
       return vec.length > 0;
     });
+
     const convertedData = filteredData.reduce((acc, [company, dataArray]) => {
       dataArray.map((data) => {
         if (data.vehicleName === item.name) {
@@ -136,6 +142,7 @@ const DriverTabComponent1 = (props) => {
     }, {});
     setVehicles(convertedData);
   };
+
   return (
     <>
       <div className="vehicle_tracking-object">
@@ -235,6 +242,7 @@ const DriverTabComponent2 = (props) => {
   const [filterApplied, setFilterApplied] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
   const jsonData = JSON.parse(localStorage.getItem("userJsonData"));
+  const [companyDrivers, setCompanyDrivers] = useState([]);
   const [company, setCompany] = useState(
     jsonData.filter((item) => item.role === "company")
   );
@@ -247,27 +255,84 @@ const DriverTabComponent2 = (props) => {
   const notAllocated = drivers.filter(
     (item) => item.activityStatus === "Not Allocated"
   );
+
+  useEffect(() => {
+    const newCompanyDrivers = company.reduce((acc, company) => {
+      const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
+      console.log(companyDrivers, )
+      if (companyDrivers.length > 0) {
+        acc[company.userName] = companyDrivers;
+      }
+      return acc;
+    }, {}); 
+    setCompanyDrivers(newCompanyDrivers);
+  }, [company]);
+
+  useEffect(() => {
+    console.log(selectValue)
+  const companyDrivers = company.reduce((acc, company) => {
+    const drivers = jsonData.filter((item) => 
+      item.designation === "Driver" && 
+      item.parentCompany === company.userName &&
+      (selectValue != "All" ? item.activityStatus === selectValue: true)
+    );
+
+    if (drivers.length > 0) {
+      acc[company.userName] = drivers;
+    }
+    return acc;
+  }, {});
+  setCompanyDrivers(companyDrivers);
+  }, [selectValue]);
+
   const total = drivers.length;
   console.log(drivers)
-  const handleOnSelect = (results) => {
-    setSelectValue("All");
-    setFilterApplied(true);
-    setIsDisable(true);
-    var companyDriver = jsonData.filter(
-      (item) => item.designation === "Driver" && item.id === results.id
+  const handleOnSelect = (item) => {
+    const selectedCompanyId = item.id;
+
+  const companyDriversData = company.reduce((acc, company) => {
+    const driversForCompany = jsonData.filter((driver) =>
+      driver.designation === "Driver" &&
+      driver.parentCompany === company.userName &&
+      driver.id === selectedCompanyId
     );
-    var search = company.filter(
-      (item) => item.userName === companyDriver[0].parentCompany
-    );
-    setDrivers(companyDriver);
-    setCompany(search);
+
+    if (driversForCompany.length > 0) {
+      acc[company.userName] = driversForCompany;
+    }
+    return acc;
+  }, {});
+console.log(companyDriversData, "::--" )
+  setCompanyDrivers(companyDriversData);
   };
+
+
+
+  // const handleOnSelect = (results) => {
+  //   setSelectValue("All");
+  //   setFilterApplied(true);
+  //   setIsDisable(true);
+  //   var companyDriver = jsonData.filter(
+  //     (item) => item.designation === "Driver" && item.id === results.id
+  //   );
+  //   var search = company.filter(
+  //     (item) => item.userName === companyDriver[0].parentCompany
+  //   );
+  //   setDrivers(companyDriver);
+  //   setCompany(search);
+  // };
   const handleOnSearch = (string, results) => {
-    setSelectValue("All");
-    setIsDisable(false);
-    setFilterApplied(false);
-    setDrivers(jsonData.filter((item) => item.designation === "Driver"));
-    setCompany(jsonData.filter((item) => item.role === "company"));
+    if(string === ""){
+      const newCompanyDrivers = company.reduce((acc, company) => {
+        const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
+        console.log(companyDrivers, )
+        if (companyDrivers.length > 0) {
+          acc[company.userName] = companyDrivers;
+        }
+        return acc;
+      }, {}); 
+      setCompanyDrivers(newCompanyDrivers);
+    }
   };
   const handleSelectAll = (id, company, drivers, index) => {
     var checkboxArray = [...selectedDrivers];
@@ -304,32 +369,32 @@ const DriverTabComponent2 = (props) => {
     console.log(updatedDrivers);
     setSelectedDrivers(updatedDrivers);
   };
-  useEffect(() => {
-    if (selectValue !== "All") {
-      setCompany(jsonData.filter((item) => item.role === "company"));
-      setFilterApplied(true);
-      if (selectValue === "Allocated") {
-        const companyName = allocated
-          .map((item) => item.parentCompany)
-          .filter((value, index, array) => array.indexOf(value) === index);
-        setCompany(
-          company.filter((item1) =>
-            companyName.some((item2) => item2 === item1.userName)
-          )
-        );
-      }
-      if (selectValue === "Not Allocated") {
-        const companyName = notAllocated
-          .map((item) => item.parentCompany)
-          .filter((value, index, array) => array.indexOf(value) === index);
-        setCompany(
-          company.filter((item1) =>
-            companyName.some((item2) => item2 === item1.userName)
-          )
-        );
-      }
-    } else setFilterApplied(false);
-  }, [selectValue]);
+  // useEffect(() => {
+  //   if (selectValue !== "All") {
+  //     setCompany(jsonData.filter((item) => item.role === "company"));
+  //     setFilterApplied(true);
+  //     if (selectValue === "Allocated") {
+  //       const companyName = allocated
+  //         .map((item) => item.parentCompany)
+  //         .filter((value, index, array) => array.indexOf(value) === index);
+  //       setCompany(
+  //         company.filter((item1) =>
+  //           companyName.some((item2) => item2 === item1.userName)
+  //         )
+  //       );
+  //     }
+  //     if (selectValue === "Not Allocated") {
+  //       const companyName = notAllocated
+  //         .map((item) => item.parentCompany)
+  //         .filter((value, index, array) => array.indexOf(value) === index);
+  //       setCompany(
+  //         company.filter((item1) =>
+  //           companyName.some((item2) => item2 === item1.userName)
+  //         )
+  //       );
+  //     }
+  //   } else setFilterApplied(false);
+  // }, [selectValue]);
   const items = jsonData
     .filter((item) => item.designation === "Driver")
     .map((item) => {
@@ -372,7 +437,7 @@ const DriverTabComponent2 = (props) => {
               ? "vehicle_tracking-active"
               : isDisable && "pe-none"
           }`}
-          onClick={() => setSelectValue("Total")}
+          onClick={() => setSelectValue("All")}
         >
           <p>{total}</p>
           <span>Total</span>
@@ -392,116 +457,13 @@ const DriverTabComponent2 = (props) => {
           onSelect={handleOnSelect}
         />
       </div>
-      <div
-        className="d-flex flex-column  p-2"
-        style={{
-          marginTop: ".5rem",
-          height: "65vh",
-          overflowY: "scroll",
-        }}
-      >
-        {company.map((d, i) => {
-          var driver = [];
-          if (selectedDrivers.length === 0)
-            company.map(
-              (item) => selectedDrivers.push([]) && selectAll.push(false)
-            );
-          if (filterApplied) {
-            if (selectValue === "All") driver = drivers;
-            else if (selectValue === "Allocated")
-              driver = allocated.filter(
-                (item) => item.parentCompany === d.userName
-              );
-            else if (selectValue === "Not Allocated")
-              driver = notAllocated.filter(
-                (item) => item.parentCompany === d.userName
-              );
-            else if (selectValue === "Total")
-              driver = jsonData.filter(
-                (item) =>
-                  item.designation === "Driver" &&
-                  item.parentCompany === d.userName
-              );
-          } else {
-            driver = jsonData.filter(
-              (item) =>
-                item.designation === "Driver" &&
-                item.parentCompany === d.userName
-            );
-          }
-          return (
-            <Accordion
-              className="accordion accordion-primary"
-              defaultActiveKey="0"
-            >
-              <Accordion.Item
-                className="accordion-item"
-                key={i}
-                eventKey={`$/{i}`}
-              >
-                <Accordion.Header className="accordian-header rounded-sm">
-                  <div
-                    className="form-check custom-checkbox bs_exam_topper_all"
-                    style={{ marginRight: "10px" }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id={`customCheckBox${i}`}
-                      onChange={() => handleSelectAll(d.id, company, driver, i)}
-                      onClick={() => handleSelect(i)}
-                      checked={selectAll[i]}
-                      required
-                    />
-                  </div>
-                  {d.userName}
-                </Accordion.Header>
-                {driver.length === 0 ? (
-                  <Accordion.Body className="p-2 text-center fs-4 heading ">
-                    No Record Found
-                  </Accordion.Body>
-                ) : (
-                  driver.map((item, index) => {
-                    return (
-                      <Accordion.Body
-                        className="accordian-body"
-                        eventKey={`${i}`}
-                      >
-                        <div
-                          key={index}
-                          onClick={() => {
-                            setSelectDriver(selectDriver.concat(item.id));
-                          }}
-                          className={`d-flex align-items-center border-bottom heading driver-select-object p-2`}
-                        >
-                          <div className="form-check custom-checkbox ms-3 me-3 bs_exam_topper">
-                            <input
-                              type="checkbox"
-                              className="form-check-input"
-                              onChange={() => handleDriverSelect(item.id, i)}
-                              checked={selectedDrivers[i].includes(item.id)}
-                              required
-                            />
-                          </div>
-                          <span className="fs-4 ms-2">
-                            {item.firstName} {item.lastName}
-                          </span>
-                        </div>
-                      </Accordion.Body>
-                    );
-                  })
-                )}
-              </Accordion.Item>
-            </Accordion>
-          );
-        })}
-      </div>
-      <div className="mt-3 text-center">
-        <Button className="btn-md" variant="primary">
-          Save Selection
-        </Button>
-      </div>
+      {
+        <DriverItem
+        key={companyDrivers}
+          drivers={companyDrivers}
+          handleToggleCardPositionHandler={props.handleToggleCardPosition}
+        />
+        }
     </>
   );
 };
