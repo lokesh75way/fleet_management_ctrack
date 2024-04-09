@@ -2,10 +2,10 @@ import axios from "axios";
 import initAxios from "./Axios";
 initAxios();
 
-export const getTrips = async (pageNo=1, limit=10 ,status) => {
-  const { data } = await axios.get(`/trips?page=${pageNo}&limit=${limit}&status=${status}`);
+export const getTrips = async (pageNo=1 ,status) => {
+  const { data } = await axios.get(`/trips?page=${pageNo}&limit=${10}&status=${status}`);
 //   console.log(data.data.length, "ko:-")
-  return { data: data.data.data, totalLength: data.data.length };
+  return { data: data.data.data, totalLength: data.data.count };
 };
 
 export const createTrip = async (body) => {

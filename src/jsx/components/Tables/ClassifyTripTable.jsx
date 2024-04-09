@@ -11,7 +11,7 @@ const ClassifyTripTable = ({
   editDrawerOpen,
   active,
 }) => {
-  console.log("gdf-:",tableData)
+  
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString); 
     const day = date.getDate().toString().padStart(2, '0'); 

@@ -17,10 +17,9 @@ import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanv
 
 const ClassifyTrip = (ref) => {
   const [filterData, setFilterData] = useState({
-    from: new Date(),
-    to: new Date(),
-    branch: "All",
-    search: "",
+    driverId: "", 
+    start: new Date(),
+    end: new Date(),
   });
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab,ActiveTab,ActiveTab];
@@ -48,46 +47,16 @@ const ClassifyTrip = (ref) => {
     location: "",
   });
   const navigate = useNavigate();
-    const [tableData, setTableData] = useState([]);
-  // console.log(tableData, "ji:-")
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
-
-
+  const [tableData, setTableData] = useState([]);
 
   const submitFilterHandler = (val) => {
-    console.log(val,"gh:-");
-    // const data = filterClassifyTable(val, ClassifyTripData);
-    console.log(data)
-    setTableData(data);
+    // console.log(val,"gh:-");
+    // const data = filterClassifyTable(val, tableData);
+    // console.log(data)
+    // setTableData(data);
   };
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
 
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);

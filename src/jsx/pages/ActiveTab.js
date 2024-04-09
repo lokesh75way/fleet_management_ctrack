@@ -1,195 +1,173 @@
-import react from 'react';
+import react from "react";
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ClassifyTripTable from "../components/Tables/ClassifyTripTable";
 import { classifyTripsSchema } from "../../yup";
-import { deleteTrip, getTrips } from '../../services/api/ClassifyTripServices';
-import { notifySuccess } from '../../utils/toast';
-import { ThemeContext } from '../../context/ThemeContext';
-const ActiveTab = ({tableData1,tabType}) => {
+import { deleteTrip, getTrips } from "../../services/api/ClassifyTripServices";
+import { notifySuccess } from "../../utils/toast";
+import { ThemeContext } from "../../context/ThemeContext";
+import usePagination from "../../hooks/usePagination";
+import { useTranslation } from "react-i18next";
+import clsx from "clsx";
+const ActiveTab = ({ tableData1, tabType }) => {
+  const [tableData, setTableData] = useState(tableData1);
+  const [status, setStatus] = useState("");
 
-    const [tableData, setTableData] = useState(tableData1);
-    const [status, setStatus] = useState('')
+  const {
+    register,
+    setValue,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    resolver: yupResolver(classifyTripsSchema),
+  });
+  const [editData, setEditData] = useState({
+    id: 0,
+    status: "",
+    title: "",
+    contact: 0,
+    age: 0,
+    drivingExperience: 0,
+    gender: "",
+    location: "",
+  });
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
+    usePagination();
 
+  useEffect(() => {
+    let status = "";
+    if (tabType === "Active Trips") {
+      status = "ONGOING";
+    } else if (tabType === "Planned Trips") {
+      status = "JUST_STARTED";
+    } else if (tabType === "Completed Trips") {
+      status = "COMPLETED";
+    }
 
-    const {
-      register,
-      setValue,
-      getValues,
-      handleSubmit,
-      formState: { errors },
-      control,
-    } = useForm({
-      resolver: yupResolver(classifyTripsSchema),
-    });
-    const [editData, setEditData] = useState({
-      id: 0,
-      status: "",
-      title: "",
-      contact: 0,
-      age: 0,
-      drivingExperience: 0,
-      gender: "",
-      location: "",
-    });
-    const [data, setData] = useState(
-      document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-    );
-    const sort = 10;
-    const navigate = useNavigate()
-    const activePag = useRef(0);
-    const [test, settest] = useState(0);
-    const chageData = (frist, sec) => {
-      for (var i = 0; i < data.length; ++i) {
-        if (i >= frist && i < sec) {
-          // data[i].classList.remove("d-none");
-        } else {
-          // data[i].classList.add("d-none");
-        }
-      }
-    };
+    getAllTrips(status);
+  }, [tabType, page]);
 
-    useEffect(() => {
-      let status = '';
-  
-      // Set status based on tabType
-      if (tabType === "Active Trips") {
-        status = 'ONGOING';
-      } else if (tabType === "Planned Trips") {
-        status = 'JUST_STARTED';
-      } else if (tabType === "Completed Trips") {
-        status = 'COMPLETED';
-      }
-  
-      getAllTrips(status); // Call getAllTrips with the determined status
-    }, [tabType]);
+  const getAllTrips = async (status) => {
+    try {
+      const { data, success, totalLength } = await getTrips(page, status); // Assuming getTrips takes page, limit, and status as arguments
+      setTableData(data);
+      setCount(totalLength);
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
 
-    const getAllTrips = async (status) => {
-      try {
-        const { data, success } = await getTrips(1, 10, status); // Assuming getTrips takes page, limit, and status as arguments
-        setTableData(data);
-      } catch (error) {
-        console.log("Error", error);
-      }
-    };
-    // const[formData, setFormData] = useState()
-  
-    useEffect(() => {
-      setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-    }, [test]);
-  
-    activePag.current === 0 && chageData(0, sort);
-    let paggination = Array(Math.ceil(data.length / sort))
-      .fill()
-      .map((_, i) => i + 1);
-    const onClick = (i) => {
-      activePag.current = i;
-      chageData(activePag.current * sort, (activePag.current + 1) * sort);
-      settest(i);
-    };
+  const onConfirmDelete = async (id) => {
+    await deleteTrip(id);
+    notifySuccess("Trip Deleted");
+    await getAllTrips();
+  };
 
-    const onConfirmDelete = async (id) => {
-      await deleteTrip(id);
-      notifySuccess("Trip Deleted");
-      await getAllTrips()
-    };
+  const editDrawerOpen = (item) => {
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`, { state: filteredData });
+  };
 
-    const editDrawerOpen = (item) => {
-      const filteredData = tableData.filter((data) => data._id === item);
-      navigate(`edit/${item}`, { state: filteredData });
-    };
-  
-    const classifyTrips = useRef();
-    const classifyTripsFilter = useRef();
-    console.log(tableData)
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card">
-              <div className="card-body p-0">
-                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
-                  <div
-                    id="employee-tbl_wrapper"
-                    className="dataTables_wrapper no-footer"
+  const classifyTrips = useRef();
+  const classifyTripsFilter = useRef();
+  console.log(tableData);
+  return (
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-xl-12">
+          <div className="card">
+            <div className="card-body p-0">
+              <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+                <div
+                  id="employee-tbl_wrapper"
+                  className="dataTables_wrapper no-footer"
+                >
+                  <table
+                    id="empoloyees-tblwrapper"
+                    className="table ItemsCheckboxSec dataTable no-footer mb-0"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                    <thead>
+                      <tr>
+                        <th>Trip ID</th>
+                        <th>Start Time</th>
+                        <th>Start Location</th>
+                        <th>Reach Time</th>
+                        <th>Reach Location</th>
+                        <th>Distance</th>
+                        <th>Fuel Consumption</th>
+                        <th>Driver</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ClassifyTripTable
+                        active={true}
+                        editData={editData}
+                        tableData={tableData}
+                        onConfirmDelete={onConfirmDelete}
+                        editDrawerOpen={editDrawerOpen}
+                        setEditData={setEditData}
+                      />
+                    </tbody>
+                  </table>
+                  <div className="d-sm-flex text-center justify-content-between align-items-center">
+                    <div className="dataTables_info">
+                      {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                      {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                      {t("entries")}
+                    </div>
+                    <div
+                      className="dataTables_paginate paging_simple_numbers"
+                      id="example2_paginate"
                     >
-                      <thead>
-                        <tr>
-                          <th>Trip ID</th>
-                          <th>Start Time</th>
-                          <th>Start Location</th>
-                          <th>Reach Time</th>
-                          <th>Reach Location</th>
-                          <th>Distance</th>
-                          <th>Fuel Consumption</th>
-                          <th>Driver</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ClassifyTripTable
-                          active={true}
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                        />
-                      </tbody>
-                    </table>
-                    <div className="d-sm-flex text-center justify-content-between align-items-center">
-                      <div className="dataTables_info">
-                        Showing {activePag.current * sort + 1} to{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        of {data.length} entries
-                      </div>
-                      <div
-                        className="dataTables_paginate paging_simple_numbers"
-                        id="example2_paginate"
+                      <Link
+                        className={`paginate_button ${
+                          page === 1 ? "previous disabled" : "previous"
+                        }`}
+                        to="/branch"
+                        onClick={() => prevPage(page - 1)}
                       >
-                        <Link
-                          className="paginate_button previous disabled"
-                          to="/settings/classifyTrips"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
-                        >
-                          <i className="fa-solid fa-angle-left" />
-                        </Link>
-                        <span>
-                          {paggination.map((number, i) => (
+                        <i className={arrowleft} />
+                      </Link>
+                      <span>
+                        {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                          (number) => (
                             <Link
-                              key={i}
-                              to="/settings/classifyTrips"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
+                              key={number}
+                              className={`paginate_button ${
+                                page === number + 1 ? "current" : ""
+                              }`}
+                              onClick={() => goToPage(number + 1)}
                             >
-                              {number}
+                              {number + 1}
                             </Link>
-                          ))}
-                        </span>
-                        <Link
-                          className="paginate_button next"
-                          to="/settings/classifyTrips"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
-                        >
-                          <i className="fa-solid fa-angle-right" />
-                        </Link>
-                      </div>
+                          )
+                        )}
+                      </span>
+                      <Link
+                        className={`paginate_button ${
+                          page * 10 >= totalCount ? "next disabled" : "next"
+                        }`}
+                        to="/branch"
+                        onClick={() => nextPage(page + 1)}
+                      >
+                        <i className={arrowright} />
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -198,7 +176,8 @@ const ActiveTab = ({tableData1,tabType}) => {
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-  export default ActiveTab;
+export default ActiveTab;

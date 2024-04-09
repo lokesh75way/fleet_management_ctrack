@@ -545,3 +545,13 @@ export const classifyTripsSchema = yup
     driverId: yup.string().required("Driver name is required "),
   })
   .required();
+
+export const classifyTripsFilterCanvas = yup
+  .object({
+    // startTime: yup.string().("Trip start time is required "),
+    startLocation: yup.string().required("Trip start Location is required "),
+    // reachTime: yup.string().required("Trip reach time is required "),
+    reachLocation: yup.string().required("Trip reach Location is required "),
+    driverId: yup.string().required("Driver name is required "),
+  })
+  .required();
