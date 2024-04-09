@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DepositlineChart from "./DepositlineChart";
 import AllProjectDonutChart from "./AllProjectDonutChart";
 import { SVGICON } from "../../../constant/theme";
@@ -9,9 +9,10 @@ import { GrUserPolice } from "react-icons/gr";
 
 import {useTranslation} from 'react-i18next'
 
-const CardWidget = () => {
+const CardWidget = ({usageData}) => {
   const { t } = useTranslation();
   const role = localStorage.getItem("role");
+  const [vehicleData, setVehicleData] = React.useState([0, 0, 0]);
   // Define the order for each role
   const roleOrders = {
     admin: ["allvehicles","businessgroup", "company", "users"],
@@ -34,6 +35,15 @@ const CardWidget = () => {
     return count || 0;
   };
 
+  useEffect(() => {
+
+    const parseVehicleData = usageData?.vehicle
+      ? [usageData.vehicle.running || 0, usageData.vehicle.idle || 0, usageData.vehicle.stopped || 0]
+      : [0, 0, 0];
+    console.log("parseVehicleData", parseVehicleData);  
+    setVehicleData(parseVehicleData);
+  }, [usageData?.vehicle?.running]);
+
   return (
     <>
       {order.map((cardType, index) => {
@@ -46,7 +56,7 @@ const CardWidget = () => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalBusinessUser')}</h6>
-                        <h3>{getCount("businessgroup")}</h3>
+                        <h3>{usageData?.groups?.buisnesses || 0}</h3>
                       </div>
                       <div className="icon-box bg-primary-light">
                         {SVGICON.BusinessGroup}
@@ -64,10 +74,11 @@ const CardWidget = () => {
                 <div className="card same-card">
                   <div className="card-body d-flex justify-content-center align-items-center  py-2">
                     <AllProjectDonutChart
+                    key={vehicleData}
                       colors={["#3AC977", "var(--primary)", "var(--secondary)"]}
                       labels={["Running", "Idle", "Stopped"]}
                       width={160}
-                      data={[12, 10, 15]}
+                      data={vehicleData}
                       completeLabel={t('total')}
                     />
                     <ul className="project-list">
@@ -136,7 +147,7 @@ const CardWidget = () => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalCompanies')}</h6>
-                        <h3>{getCount("company")}</h3>
+                        <h3>{usageData?.groups?.companies || 0}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
                         <HiOutlineBuildingOffice2
@@ -165,7 +176,7 @@ const CardWidget = () => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalUsers')}</h6>
-                        <h3>10</h3>
+                        <h3>{usageData?.groups?.users || 0}</h3>
                       </div>
                       <div className="icon-box bg-danger-ligh">
                         {SVGICON.Employe}

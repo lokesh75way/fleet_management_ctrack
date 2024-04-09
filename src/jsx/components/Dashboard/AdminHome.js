@@ -63,8 +63,10 @@ import ApexLine5 from "../charts/apexcharts/Line5";
 import ApexLine4 from "../charts/apexcharts/Line4";
 import PolarChart from "../charts/Chartjs/polar";
 import Notification from "./Notification";
+import {getDashboardTasks, getFleetStatus, getFleetUsage} from "../../../services/api/DashboardServices";
 
 import {useTranslation} from 'react-i18next'
+import Loader from "../Loader";
 
 const speed = {
   data: [
@@ -106,7 +108,14 @@ const Home = () => {
   const [selectedDataTable, setSelectedDataTable] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
+  const [vehicleData, setVehicleData] = useState({});
+  const [groupData, setGroupData] = useState({});
+  const [activeUsers, setActiveUsers] = useState({});
+  const [usageData, setUsageData] = useState({});
+  const [statusData, setStatusData] = useState([0, 0, 0, 0]);
+  const [applicationUsage, setApplicationUsage] = useState([0, 0]);
+  const [tasksData, setTasksData] = useState({xAxis: [], series: []});
+  const [isLoading, setIsLoading] = useState(true);
   const {t} = useTranslation();
 
   const {
@@ -164,6 +173,29 @@ const Home = () => {
 
   const role = localStorage.getItem("role");
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const usageApiData = await getFleetUsage();
+      const statusApiData = await getFleetStatus();
+      const tasksApiData = await getDashboardTasks();
+      setVehicleData(usageApiData.vehicle);
+      setGroupData(usageApiData.groups);
+      setActiveUsers(usageApiData.activeUsers);
+      setUsageData(usageApiData);
+      setStatusData([statusApiData.cancelled, statusApiData.yetToStart, statusApiData.complete, statusApiData.progress]);
+      setApplicationUsage([usageApiData.applicationUsage.mobile, usageApiData.applicationUsage.web]);
+      setTasksData(tasksApiData);
+      console.log("task", tasksApiData.series);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       {/* Modal component */}
@@ -211,7 +243,9 @@ const Home = () => {
                 className="row"
                 style={{ padding: "1px", marginTop: "1rem" }}
               >
-                <CardWidget />
+                <CardWidget 
+                  usageData={usageData}
+                  />
               </div>
             </div>
           )}
@@ -224,7 +258,7 @@ const Home = () => {
                 className="row"
                 style={{ padding: "1px", marginRight: ".1rem", marginLeft : '.2rem' }}
               >
-                <ActiveUserMap />
+                <ActiveUserMap usageData={usageData} />
               </div>
             </div>
           )}
@@ -258,6 +292,7 @@ const Home = () => {
                   style={{ flexWrap: "wrap" }}
                 >
                   <AllProjectDonutChart
+                  key={statusData}
                     colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
                     labels={[
                       "Cancelled",
@@ -266,7 +301,7 @@ const Home = () => {
                       "Progress",
                     ]}
                     width={300}
-                    data={[18, 19, 25, 23]}
+                    data={statusData}
                     completeLabel={t("total")}
                   />
                   <ul className="project-list">
@@ -446,9 +481,10 @@ const Home = () => {
               >
                 <div>
                   <ChartPie
+                  key={applicationUsage}
                     color1={"#49be25"}
                     color2={"#5179cf"}
-                    Chartdata={[45, 55]}
+                    Chartdata={applicationUsage}
                     labels={["Web User", "Mobile User"]}
                   />
                 </div>
@@ -521,9 +557,10 @@ const Home = () => {
               >
                 <div>
                   <ChartPie
+                  key={applicationUsage}
                     color1={"#f58505"}
                     color2={"#1ef6ea"}
-                    Chartdata={[80, 20]}
+                    Chartdata={applicationUsage}
                   />
                 </div>
                 <div>
@@ -704,41 +741,10 @@ const Home = () => {
                 // style={{ flexWrap: "wrap" }}
               >
                 <ApexLine4
+                key={tasksData}
                   height={300}
-                  categories={[
-                    "05-08-17",
-                    "09-11-23",
-                    "03-06-29",
-                    "10-04-18",
-                    "07-12-31",
-                    "01-10-22",
-                    "06-09-25",
-                    "02-01-14",
-                    "08-03-10",
-                    "11-05-27",
-                    "04-07-12",
-                    "12-02-24",
-                  ]}
-                  series={[
-                    {
-                      name: "Upcoming Tasks",
-                      data: [
-                        65, 65, 65, 120, 120, 80, 120, 100, 100, 120, 120, 120,
-                      ],
-                    },
-                    {
-                      name: "Missed Tasks",
-                      data: [50, 100, 35, 35, 0, 0, 80, 20, 40, 40, 40, 40],
-                    },
-                    {
-                      name: "Incomplete Tasks",
-                      data: [20, 40, 20, 80, 40, 40, 20, 60, 60, 20, 110, 60],
-                    },
-                    {
-                      name: "Completed tasks",
-                      data: [10, 20, 10, 40, 60, 30, 80, 20, 50, 90, 10, 110],
-                    },
-                  ]}
+                  categories={tasksData?.xAxis}
+                  series={tasksData?.series}
                 />
               </div>
             </div>
