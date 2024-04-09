@@ -57,7 +57,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
         <span className="d-flex justify-content-center">
           {editPermission && <span
             className="cursor-pointer"
-            onClick={() => editDrawerOpen(item.id)}
+            onClick={() => editDrawerOpen(item._id)}
           >
             <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
           </span>}

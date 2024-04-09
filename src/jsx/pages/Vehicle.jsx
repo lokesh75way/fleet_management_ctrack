@@ -86,13 +86,17 @@ const Vehicle = () => {
   // delete function
   const onConfirmDelete = (id) => {
     deleteVehicles(id);
-    getVehicleData();
+    getVehicleData(id);
     setDeleteId(id);
   };
   // Edit function
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    navigate(`edit/${item}`);
+  const editDrawerOpen = (id) => {
+    // tableData.map((table) => table.id === id && setEditData(table));
+
+    const data = tableData.filter((item) => item._id === id);
+    console.log('myData',data);
+
+    navigate(`edit/${id}`,{ state: { formData: data } });
     // vehicle.current.showModal();
   };
 

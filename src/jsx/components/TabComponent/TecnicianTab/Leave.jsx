@@ -1,30 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import { useForm, Controller } from "react-hook-form";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import {useParams} from 'react-router-dom'
 
-const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control,errors,getValues }) => {
-
-  const[tempValue,setTempValue] = useState()
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
+const Leave = ({
+  handleNext,
+  register,
+  setValue,
+  handleSubmit,
+  onSubmit,
+  control,
+  errors,
+  getValues,
+}) => {
+  const hanldeLeaveInput = (type, val) => {
+    const prvs = getValues("leave");
+    const newVal = prvs?.filter((v) => v.leaveType !== type) ?? [];
+    newVal.push({
+      leaveType: type,
+      days: val,
+    });
+    setValue("leave", newVal);
   };
-
-  const { id } = useParams();
-
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
-
-  const [filteredUserData, setFilteredUserData] = useState(newData);
 
   return (
     <div className="p-4">
@@ -51,11 +48,15 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("CASUAL", e.target.value);
+            }}
             label="No Of Days"
             name="noOfDaysCL"
-            placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].noOfDaysCL : ""
+            value={
+              (getValues("leave") ?? []).filter(
+                (l) => l.leaveType === "CASUAL"
+              )?.[0]?.days
             }
           />
           <Error errorName={errors.noOfDaysCL} />
@@ -82,12 +83,17 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("SICK", e.target.value);
+            }}
+            value={
+              (getValues("leave") ?? []).filter(
+                (l) => l.leaveType === "SICK"
+              )?.[0]?.days
+            }
             label="No Of DaysSL"
             name="noOfDays"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].noOfDaysSL : ""
-            }
           />
           <Error errorName={errors.noOfDaysSL} />
         </div>
@@ -113,16 +119,20 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           <CustomInput
             type="text"
             register={register}
+            onInput={(e) => {
+              hanldeLeaveInput("PRIVILEGE", e.target.value);
+            }}
+            value={
+              (getValues("leave") ?? []).filter(
+                (l) => l.leaveType === "PRIVILEGE"
+              )?.[0]?.days
+            }
             label="No Of Days"
             name="noOfDaysPL"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].noOfDaysPL : ""
-            }
           />
           <Error errorName={errors.noOfDaysPL} />
         </div>
-        
       </div>
       <div
         style={{
@@ -132,7 +142,11 @@ const Leave = ({ handleNext, register, setValue, handleSubmit, onSubmit, control
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           Submit
         </Button>

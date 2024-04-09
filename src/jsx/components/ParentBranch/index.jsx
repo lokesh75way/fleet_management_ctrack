@@ -40,7 +40,7 @@ const ParentBranchDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={isDisabled}
+                // isDisabled={isDisabled || !companyId}
                 />
     );
 }

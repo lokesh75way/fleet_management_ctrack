@@ -18,8 +18,15 @@ import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
-
 import {useTranslation} from 'react-i18next'
+
+import CompanyDropdown from "../../CompanyDropdown";
+import ParentBranchDropdown from "../../ParentBranch";
+import GroupDropdown from "../../GroupDropdown";
+
+
+
+
 
 const General = ({
   register,
@@ -29,7 +36,17 @@ const General = ({
   control,
   handleSubmit,
   onSubmit,
+  formData
 }) => {
+
+
+  const [groupId, setGroupId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);
+
+  const [businessDisabled, setBusinessDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(false);
+
+
   const { checkRole, checkUserName } = useStorage();
   const [tempValue, setTempValue] = useState();
   const customStyles = {
@@ -42,6 +59,8 @@ const General = ({
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
+
+
   const role = checkRole()
 
   // useEffect(()=>{
@@ -61,6 +80,9 @@ const General = ({
     businessGroupOptions()
     allCompanyOptions()
   },[])
+
+
+  
 
   const {t} = useTranslation();
 
@@ -100,24 +122,34 @@ const General = ({
       (item) => item.userName === checkUserName()
     )
   }
-  const[formData,setFormData] = useState([])
+  // const[formData,setFormData] = useState([])
   useEffect(()=>{
+
+    console.log('meeee huuu yahahahahahahaha',formData);
+    
     if(formData && id){
-      setValue("businessGroupId",formData[0]?.companyId?.businessGroupId?.groupName || businessGroupOptions[0])
-      // setValue("companyName",formData[0].companyId?.companyName)
-      // setValue("userName", formData[0].userName)
-      // setValue("email",formData[0].email)
-      // setValue("mobileNumber",formData[0].mobileNumber)
-      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
-      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
-      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
-      // setValue("street1",formData[0].companyId?.street1)
-      // setValue("street2",formData[0].companyId?.street2)
-      // setValue("contactPerson",formData[0].companyId?.contactPerson)
-      // setValue("faxNumber",formData[0].companyId?.faxNumber)
-      // setValue("zipCode",formData[0].companyId?.zipCode)
-      // setValue("city",formData[0].companyId?.city)
-      // setValue("storageCapacity",formData[0].companyId?.capacity )
+
+      setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
+      console.log('imei number ',formData?.[0].imeiNumber);
+      setValue("imeiNumber",formData?.[0].imeiNumber)
+
+      setValue("vehicleName",formData?.[0].vehicleName)
+      setValue("plateNumber",formData?.[0].plateNumber)
+      setValue("branch",formData?.[0].branch)
+      setValue("simNumber",formData?.[0].simNumber)
+      setValue("IMEINumber",formData?.[0].IMEINumber)
+      setValue("registrationNumber",formData?.[0].registrationNumber)
+      setValue("weightCapacity",formData?.[0].weightCapacity)
+      
+      setValue("deviceType",formData?.[0].deviceType)
+      setValue("serverAddress",formData?.[0].serverAddress)
+      setValue("distanceCounter",formData?.[0].distanceCounter)
+      setValue("unitOfDistance",formData?.[0].unitOfDistance)
+      setValue("deviceAccuracyTolerance",formData?.[0].deviceAccuracyTolerance)
+
+
+
+
     }
   },[formData,id])
 
@@ -132,21 +164,20 @@ const General = ({
             name="businessGroupId"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                onChange={(newValue) => {
-                  setTempValue(newValue?.value);
-                  setValue("businessGroupId", newValue?.label);
-                  setValue("businessId", newValue?.value);
-                }}
-                isDisabled={role !== "SUPER_ADMIN"}
-                loadOptions={businessGroupOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={{label:getValues('businessGroupId'), value :getValues('businessGroupId')}}
-              />
+              <GroupDropdown
+              onChange={async (newValue) => {
+                await setValue("businessGroupId", newValue.value);
+                await setValue("businessId", newValue.value);
+                await setValue("businessGroupName", newValue.label);
+                setGroupId(newValue.value);
+                setCompanyId(null);
+              }}
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={businessDisabled}
+              name={name}
+            />
             )}
           />
           {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
@@ -160,21 +191,21 @@ const General = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <AsyncSelect
-                cacheOptions
-                defaultOptions
-                onChange={(newValue) => {
-                  setTempValue(newValue?.value);
-                  setValue("company", newValue?.label);
-                  setValue("companyId", newValue?.value);
-                }}
-                isDisabled={role === "COMPANY"}
-                loadOptions={allCompanyOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={{label:getValues('company'), value :getValues('company')}}
-              />
+              <CompanyDropdown 
+              key={groupId}
+              groupId={groupId}
+              onChange={(newValue) => {
+               
+                setCompanyId(newValue.value)
+                setValue("companyId", newValue.value);
+                setValue("company", newValue.label);
+              }}
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={companyDisabled}
+              name={name}
+            />
             )}
           />
           {!getValues("company") && <Error errorName={errors.company} />}
@@ -188,16 +219,20 @@ const General = ({
             name="branch"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  setTempValue(newValue.label);
+              <ParentBranchDropdown
+                key={companyId}
+                companyId={companyId}
+                onChange={async (newValue) => {
+                  // setValue("parentBranchId", newValue.value);
                   setValue("branch", newValue.label);
-                  setValue("branchId", newValue.value);
-                }}
-                options={branchOptions}
+                  setValue("branchID", newValue.value);
+                }
+                }
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
+                isDisabled={false}
                 name={name}
-                styles={customStyles}
               />
             )}
           />
@@ -213,6 +248,7 @@ const General = ({
             label="Vehicle Name"
             name="vehicleName"
             placeholder=""
+            defaultValue={getValues('vehicleName')}
           />
           <Error errorName={errors.vehicleName} />
         </div>
@@ -251,6 +287,7 @@ const General = ({
             name="imeiNumber"
             label="IMEI Number"
             placeholder=""
+            defaultValue={getValues('imeiNumber')}
           />
           <Error errorName={errors.imeiNumber} />
         </div>
@@ -281,9 +318,10 @@ const General = ({
             register={register}
             name="serverAddress"
             placeholder=""
+            defaultValue={getValues('serverAddress')}
           />
-        </div>
         <Error errorName={errors.serverAddress} />
+        </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
           {t('simNumber')}  <span className="text-danger">*</span>
@@ -318,18 +356,22 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) =>
+                onChange={(newValue) =>{
                   setValue("distanceCounter", newValue.value)
+                  setTempValue("frgefrg")
+                }
+                  
                 }
                 options={distanceCounterOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={distanceCounterOptions[0]}
+                // defaultValue={distanceCounterOptions[0]}
+                value={{label:getValues('distanceCounter'), value :getValues('distanceCounter')}}
               />
             )}
           />
-          <Error errorName={errors.distanceCounter} />
+          {!getValues("distanceCounter") && <Error errorName={errors.distanceCounter} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -341,17 +383,20 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) =>
-                  setValue("unitOfDistance", newValue.value)
+                  {                    
+                    setValue("unitOfDistance", newValue.value)
+                    setTempValue(newValue.value);
+                  }
                 }
                 options={unitOfDistanceOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={unitOfDistanceOptions[0]}
+                value={{label:getValues('unitOfDistance'), value :getValues('unitOfDistance')}}
               />
             )}
           />
-          <Error errorName={errors.unitOfDistance} />
+          {!getValues("unitOfDistance") && <Error errorName={errors.unitOfDistance} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
@@ -384,6 +429,7 @@ const General = ({
             register={register}
             name="deviceAccuracyTolerance"
             placeholder=""
+            defaultValue={getValues("deviceAccuracyTolerance")}
           />
           <Error errorName={errors.deviceAccuracyTolerance} />
         </div>
