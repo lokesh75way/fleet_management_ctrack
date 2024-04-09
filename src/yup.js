@@ -459,6 +459,11 @@ export const expenseSchema = yup
       .number()
       .required("Reference Number a required ")
       .typeError("Reference Number must be a number"),
+    odometer: yup
+      .number()
+      .typeError("Odometer Number must be a number")
+      .optional(),
+    workHour : yup.string().typeError("WorkHour Number must be valid").optional(),
     //  userName: yup.string().required("User Name is required "),
   })
   .required();
@@ -538,10 +543,8 @@ export const technicianLeaveSchema = yup
   
 export const classifyTripsSchema = yup
   .object({
-    // startTime: yup.string().("Trip start time is required "),
-    startLocation: yup.string().required("Trip start Location is required "),
-    // reachTime: yup.string().required("Trip reach time is required "),
-    reachLocation: yup.string().required("Trip reach Location is required "),
+    startDate: yup.string().required("Trip start Location is required "),
+    endDate: yup.string().required("Trip reach Location is required "),
     driverId: yup.string().required("Driver name is required "),
   })
   .required();

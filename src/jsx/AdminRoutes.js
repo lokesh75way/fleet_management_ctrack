@@ -134,6 +134,7 @@ const allroutes = [
   { module: 'settings', url: "/settings/classifyTrips/edit/:id", component: <ClassifyTripForm /> },
   { module: 'settings', url: "/settings/expense", component: <Expense /> },
   { module: 'settings', url: "/settings/expense/create", component: <ExpenseForm /> },
+  { module: 'settings', url: "/settings/expense/edit/:id", component: <ExpenseForm /> },
   { module: 'settings', url: "/settings/geofence", component: <Geofence /> },
   { module: 'settings', url: "/settings/geofence/map", component: <GeofenceMap /> },
   { module: 'settings', url: "/settings/geofence/map/edit/:id", component: <GeofenceMap /> },

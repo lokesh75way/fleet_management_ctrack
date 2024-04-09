@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { expenseSchema } from "./../../../yup"; 
+import { expenseSchema } from "./../../../yup";
 
-import SettingExpense from "./SettingExpense"; 
+import SettingExpense from "./SettingExpense";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { createExpense, updateExpense } from "../../../services/api/ExpenseServices";
+import { notifyError, notifySuccess } from "../../../utils/toast";
 
 const ExpenseForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["Expense"]; // Change the tab heading to "Expense"
   const component = [SettingExpense]; // Use the Expense component for all tabs
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { id } = useParams();
   const totalTabs = tabHeading.length;
   const {
@@ -25,20 +27,45 @@ const ExpenseForm = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(expenseSchema), // Use the expense schema for form validation
+    
   });
+  const navigate = useNavigate();
+  console.log(errors, "ds:-", getValues('fromDate'));
 
   const onSubmit = async (data) => {
-    try {
-    //   await createExpense(data); // Call your API function to create an expense
-      // Handle success
-    } catch (error) {
-      // Handle error
+    if (id) {
+      try {
+        if (data.bill.length === 0) {
+          delete data.bill;
+        }
+        if(data.file.length === 0){
+          delete data.file;
+        }
+        await updateExpense(id,data);
+        notifySuccess("Expense Updated!");
+        navigate("/settings/expense");
+      } catch (e) {
+        console.log(e);
+        notifyError("Some error occured !!");
+      }
+    } else {
+      try {
+        if (data.bill.length === 0) {
+          delete data.bill;
+        }
+        await createExpense(data);
+        notifySuccess(t("New Expense Created"));
+        navigate("/settings/expense");
+      } catch (error) {
+        console.log(error);
+        notifyError("Some error occured !!");
+      }
     }
   };
 
   return (
     <>
-        <MainPagetitle
+      <MainPagetitle
         mainTitle={t("expense")}
         pageTitle={id ? t("edit") : t("create")}
         parentTitle={t("expense")}

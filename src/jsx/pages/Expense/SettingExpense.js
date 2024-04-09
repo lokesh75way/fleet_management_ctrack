@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -9,6 +9,8 @@ import CustomInput from "../../components/Input/CustomInput";
 import ParentBranchDropdown from "../../components/ParentBranch";
 import Error from "../../components/Error/Error";
 import VehicleDropdown from "../../components/VehicleDropdown";
+import { TypeOptions } from "../../components/TabComponent/VehicleTabs/Options";
+import FileUploader from "../../../components/FileUploader";
 
 const SettingExpense = ({
   Title,
@@ -24,6 +26,7 @@ const SettingExpense = ({
   clearErrors,
 }) => {
   const [startDate, setStartDate] = useState(new Date());
+  const [workHour, setWorkHour] = useState(new Date());
   const [startDate2, setStartDate2] = useState(new Date());
   const [addEmploye, setAddEmploye] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -31,8 +34,10 @@ const SettingExpense = ({
   const [selectedOption2, setSelectedOption2] = useState(null);
   const [selectedOption3, setSelectedOption3] = useState(null);
   const [tempValue, setTempValue] = useState();
+  const [dValues, setDvalues] = useState([]);
 
   const nav = useNavigate();
+  const location = useLocation();
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
     setValue("category", e.target.value);
@@ -41,50 +46,61 @@ const SettingExpense = ({
     setSelectedOption2(e.target.value);
     setValue("jobAllocation", e.target.value);
   };
-  useEffect(() => {
-    if (addEmploye === true) {
-      clearErrors("branch");
-      clearErrors("category");
-      clearErrors("type");
-      clearErrors("amount");
-      clearErrors("referenceNumber");
-      setValue("amount", "");
-      setValue("referenceNumber", "");
-      setValue("description", "");
-    }
-  }, [addEmploye]);
+
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+  const { id } = useParams();
+  useEffect(() => {
+    if (id) {
+      const data = location.state[0];
+      setDvalues(data);
+    }
+  }, [id]);
 
+  useEffect(() => {
+    if (id && dValues?.fromDate && dValues?.toDate && dValues?.expenseDate) {
+      setValue("branch", dValues?.branch);
+      setValue("type", dValues?.type);
+      setValue("amount", dValues?.amount);
+      setValue("referenceNumber", dValues?.referenceNumber);
+      setValue("odometer", dValues?.odometer);
+      setValue("workHour", dValues?.workHour);
+      const  fromDate = new Date(dValues?.fromDate)
+      setValue('fromDate', fromDate)
+      const  toDate = new Date(dValues?.toDate)
+      setValue('toDate', toDate)
+      const  expenseDate = new Date(dValues?.expenseDate)
+      setValue('expenseDate', expenseDate)
+    }
+  }, [dValues, id]);
   return (
     <>
       <div className="p-4">
         <div className="row" style={{ width: "70%", margin: "auto" }}>
-          <div className="col-xl-6 mb-3 ">
+          <div className="col-xl-6 mb-3">
             <label className="form-label">
-              {t("branch")}
+              {t("branchId")}
               <span className="text-danger">*</span>
             </label>
             <Controller
-              name="branchId"
+              name="branch"
               control={control}
               render={({ field: { onChange, value, name, ref } }) => (
                 <ParentBranchDropdown
-                onChange={(newValue) => {
-                  setValue("branchId", newValue.value);
-                  setValue("branchId", newValue.value);
-                }}
-                value={value}
-                customStyles={customStyles}
-                ref={ref}
-                name={name}
-              />
+                  onChange={(newValue) => {
+                    setValue("branch", newValue.value);
+                  }}
+                  value={value}
+                  customStyles={customStyles}
+                  ref={ref}
+                  name={name}
+                />
               )}
             />
             {!getValues("branch") && <Error errorName={errors.branch} />}
@@ -99,8 +115,8 @@ const SettingExpense = ({
                 <input
                   type="radio"
                   className="form-check-input"
-                  value="variable"
-                  checked={selectedOption === "variable"}
+                  value="VARIABLE"
+                  checked={selectedOption === "VARIABLE"}
                   onChange={handleChange}
                 />
                 <label
@@ -114,15 +130,15 @@ const SettingExpense = ({
                 <input
                   type="radio"
                   className="form-check-input"
-                  value="fix"
-                  checked={selectedOption === "fix"}
+                  value="FIX"
+                  checked={selectedOption === "FIX"}
                   onChange={handleChange}
                 />
                 <label
                   className="form-check-label"
                   style={{ marginBottom: "0" }}
                 >
-                  {t("fix")}
+                  {t("FIX")}
                 </label>
               </div>
             </div>
@@ -133,7 +149,7 @@ const SettingExpense = ({
             <label className="form-label">{t("considerJob")}</label>
             <div
               className={`${
-                selectedOption !== "variable"
+                selectedOption !== "VARIABLE"
                   ? "form-check custom-checkbox mb-3 pe-none"
                   : "form-check custom-checkbox mb-3"
               }`}
@@ -271,10 +287,11 @@ const SettingExpense = ({
                     setTempValue(newValue.value);
                     setValue("type", newValue.value);
                   }}
-                  // options={TypeOptions}
+                  options={TypeOptions}
                   ref={ref}
                   name={name}
                   styles={customStyles}
+                  // value={value}
                   // defaultValue={TypeOptions[0]}
                 />
               )}
@@ -285,7 +302,7 @@ const SettingExpense = ({
           <>
             <div
               className={`${
-                selectedOption !== "fix"
+                selectedOption !== "FIX"
                   ? "col-xl-6 mb-3 pe-none"
                   : "col-xl-6 mb-3"
               }`}
@@ -296,22 +313,25 @@ const SettingExpense = ({
               <Controller
                 name="fromDate"
                 control={control}
-                render={({ value, name }) => (
-                  <DatePicker
-                    selected={getValues("fromDate") || new Date()}
-                    className="form-control"
-                    onChange={(newValue) => {
-                      setTempValue(newValue);
-                      setValue("fromDate", newValue);
-                    }}
-                  />
-                )}
+                render={({ value, name }) => {
+                  // const value = dValues?.fromDate;
+                  console.log({ value });
+                  return (
+                    <DatePicker
+                      selected={getValues('fromDate') || new Date()}
+                      className="form-control"
+                      onChange={(newValue) => {
+                        setValue("fromDate", newValue);
+                      }}
+                    />
+                  );
+                }}
               />
               {!getValues("fromDate") && <Error errorName={errors.fromDate} />}
             </div>
             <div
               className={`${
-                selectedOption !== "fix"
+                selectedOption !== "FIX"
                   ? "col-xl-6 mb-3 pe-none"
                   : "col-xl-6 mb-3"
               }`}
@@ -339,7 +359,7 @@ const SettingExpense = ({
 
           <div
             className={`${
-              selectedOption !== "fix"
+              selectedOption !== "FIX"
                 ? "col-xl-6 mb-3 pe-none"
                 : "col-xl-6 mb-3"
             }`}
@@ -393,7 +413,7 @@ const SettingExpense = ({
           <>
             <div
               className={`${
-                selectedOption !== "variable"
+                selectedOption !== "VARIABLE"
                   ? "col-xl-6 mb-3 pe-none"
                   : "col-xl-6 mb-3"
               }`}
@@ -411,7 +431,7 @@ const SettingExpense = ({
             </div>
             <div
               className={`${
-                selectedOption !== "variable"
+                selectedOption !== "VARIABLE"
                   ? "col-xl-6 mb-3 pe-none"
                   : "col-xl-6 mb-3"
               }`}
@@ -419,12 +439,21 @@ const SettingExpense = ({
               <label htmlFor="exampleFormControlInput3" className="form-label">
                 {t("workHour")}
               </label>
-              <CustomInput
-                type="time"
-                register={register}
-                label="Work Hour"
+              <Controller
                 name="workHour"
-                placeholder=""
+                control={control}
+                render={({ value, name }) => (
+                  <DatePicker
+                    selected={workHour}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    dateFormat="h:mm aa"
+                    timeIntervals={15}
+                    className="form-control customDateHeight"
+                    onChange={(newValue) => setWorkHour(newValue)}
+                    value={value}
+                  />
+                )}
               />
             </div>
           </>
@@ -433,13 +462,16 @@ const SettingExpense = ({
             <label htmlFor="exampleFormControlInput3" className="form-label">
               {t("billUpload")}
             </label>
-            <CustomInput
-              type="file"
+            <FileUploader
+              setValue={setValue}
               register={register}
-              label="Bill Upload"
-              name="billUpload"
-              placeholder=""
+              label="bill"
+              name="bill"
+              getValue={getValues}
+              setLoading={setLoading}
+              loading={loading}
             />
+            {loading && <small>Uploading...</small>}
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -470,7 +502,7 @@ const SettingExpense = ({
             }}
             className="btn btn-primary me-1"
           >
-            Submit
+            {id ? "Update" : "Submit"}
           </button>
           <Link
             to={"#"}

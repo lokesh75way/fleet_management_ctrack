@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 
 import { IMAGES } from "../../constant/theme";
@@ -13,23 +13,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {expenseSchema} from '../../../yup'
 
 import {useTranslation} from 'react-i18next'
-import { getExpenses } from "../../../services/api/ExpenseServices";
+import { deleteExpense, getExpenses } from "../../../services/api/ExpenseServices";
+import usePagination from "../../../hooks/usePagination";
+import { ThemeContext } from "../../../context/ThemeContext";
+import clsx from "clsx";
+import { notifySuccess } from "../../../utils/toast";
 
-const headers = [
-  { label: "Employee ID", key: "emplid" },
-  { label: "Employee Name", key: "title" },
-  { label: "Department", key: "department" },
-  { label: "Email Address", key: "email" },
-  { label: "Contact Number", key: "contact" },
-  { label: "Gender", key: "gender" },
-  { label: "Location", key: "location" },
-  { label: "Status", key: "status" },
-];
-
-const Driver = (ref) => {
+const Expense = (ref) => {
 
   const {t} = useTranslation();
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
+
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
   const {
     register,
     setValue,
@@ -53,28 +57,17 @@ const Driver = (ref) => {
     gender: "",
     location: "",
   });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
-  };
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
+    usePagination();
+
 
   // const[formData, setFormData] = useState()
   const getAllExpenses = async()=>{
     try {
-      const {data, success} = await getExpenses();
-      console.log(data,"expense")
+      const {data, success, totalLength} = await getExpenses(page);
+      // console.log(data,"expense")
       setTableData(data);
+      setCount(totalLength)
     } catch (error) {
       console.log("Error", error)
     }
@@ -83,33 +76,20 @@ const Driver = (ref) => {
     getAllExpenses();
   },[])
 
+  console.log(errors, "ds:-", getValues())
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const onConfirmDelete = async (id) => {
+    await deleteExpense(id);
+    notifySuccess("Expense Deleted");
+    await getAllExpenses();
   };
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`, { state: filteredData });
+    // company.current.showModal();
+  };
 
-    // setEditTableData(item);
-    expense.current.showModal();
-  };
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
 
   const expense = useRef();
@@ -169,49 +149,46 @@ const Driver = (ref) => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
-                          to="/expense"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          className={`paginate_button ${
+                            page === 1 ? "previous disabled" : "previous"
+                          }`}
+                          to="/setting/expense"
+                          onClick={() => prevPage(page - 1)}
                         >
-                          <i className="fa-solid fa-angle-left" />
+                          <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/expense"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
-                          className="paginate_button next"
-                          to="/expense"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          className={`paginate_button ${
+                            page * 10 >= totalCount ? "next disabled" : "next"
+                          }`}
+                          to="/setting/expense"
+                          onClick={() => nextPage(page + 1)}
                         >
-                          <i className="fa-solid fa-angle-right" />
+                          <i className={arrowright} />
                         </Link>
                       </div>
                     </div>
@@ -240,4 +217,4 @@ const Driver = (ref) => {
   );
 };
 
-export default Driver;
+export default Expense;
