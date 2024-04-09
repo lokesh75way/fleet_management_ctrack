@@ -13,8 +13,8 @@ import {
 } from "react-leaflet";
 import EditControlFC from "../components/maps/EditControl";
 
-const Map = ({ geofenceHanlder, setValue, getValues, defaultValues }) => {
-  const [lineString , setLineString] = useState([]);
+const Map = ({ geofenceHanlder, setValue, getValues, defaultValues ,errors}) => {
+  const [lineString, setLineString] = useState([]);
   const [points, setPoints] = useState([]);
   const [circles, setCircles] = useState([]);
   const [polygon, setPolygon] = useState([]);
@@ -25,51 +25,33 @@ const Map = ({ geofenceHanlder, setValue, getValues, defaultValues }) => {
 
   useEffect(() => {
     if (defaultValues?.location) {
+      setLineString([])
+      setCircles([]);
+      setPoints([]);
+      setPolygon([]);
       defaultValues?.location.map((loc) => {
         if (loc.type === "Circle") {
-          setCircles((prev) => [
-            {
-              type: loc?.type,
-              coordinates: loc?.coordinates.reverse(),
-              duration: loc?.duration,
-            },
-          ]);
+          setCircles((prev) => [...prev, loc]);
         }
         if (loc.type === "Polygon") {
-          const coords = loc.coordinates.map((cor) =>
-            cor.map((c) => c.reverse())
-          );
-          setPolygon((prev) => [
+          setPolygon((prev) => [...prev,
             {
               type: loc.type,
-              coordinates: coords,
+              coordinates: loc.coordinates,
             },
           ]);
         }
 
         if (loc.type === "Point") {
-          setPoints((prev) => [
-            {
-              type: loc.type,
-              coordinates: loc.coordinates.reverse(),
-            },
-          ]);
+          setPoints((prev) => [...prev, loc]);
         }
-        console.log(loc);
 
         if (loc.type === "LineString") {
-          const coords = loc.coordinates.map((cor) =>
-           cor.reverse()
-          );
-          setLineString((prev) => [
-            {
-              type: loc.type,
-              coordinates:coords,
-            },
-          ]);
+          setLineString((prev) => [...prev, loc]);
         }
       });
     }
+   
   }, [defaultValues]);
 
   return (
@@ -77,7 +59,7 @@ const Map = ({ geofenceHanlder, setValue, getValues, defaultValues }) => {
       style={{
         display: "flex",
         height: "85vh",
-        border: !getValues("location") ? "3px solid #ff5e5e" : null,
+        border: errors.location ? "3px solid #ff5e5e" : null,
       }}
     >
       <div style={{ width: "100%" }}>
@@ -90,46 +72,16 @@ const Map = ({ geofenceHanlder, setValue, getValues, defaultValues }) => {
             <Popup>Dubai Trade Center</Popup>
             <Tooltip>Dubai Trade Center</Tooltip>
           </Marker>
-          {points.map((point, index) => {
-            return (
-              <Marker
-                key={index}
-                styles={{ background: "red" }}
-                position={point.coordinates}
-              ></Marker>
-            );
-          })}
+        
           <EditControlFC
-            geojson={geojson}
-            setGeojson={setGeojson}
+            points={points}
+            lineString={lineString}
+            circles={circles}
+            polygon={polygon}
+            setValues={setValue}
             geofenceHanlder={geofenceHanlder}
-            setValue={setValue}
+            defaultValues={defaultValues}
           />
-          {circles?.map((circle, index) => (
-            <Circle
-              key={index}
-              center={circle.coordinates}
-              radius={circle?.duration}
-            ></Circle>
-          ))}
-
-          {polygon?.map((poly, index) => (
-            <Polygon
-              key={index}
-              pathOptions={{ color: '#3388FF' }}
-              positions={poly.coordinates}
-            ></Polygon>
-          ))}
-
-          {
-            lineString?.map((line,index)=>(
-              <Polyline
-              key={index}
-              pathOptions={{ color: '#3388FF' }}
-              positions={line.coordinates}
-            ></Polyline>
-            ))
-          }
         </MapContainer>
       </div>
     </div>

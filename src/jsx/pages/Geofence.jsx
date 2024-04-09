@@ -44,7 +44,7 @@ const Geofence = (ref) => {
     "fa-solid fa-angle-right": !isRtl,
   });
 
-  const [tableData, setTableData] = useState(GeofenceData);
+  const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
     status: "",

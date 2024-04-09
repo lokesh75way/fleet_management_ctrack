@@ -33,7 +33,6 @@ const GeofenceDetail = () => {
   const [companyDisabled, setCompanyDisabled] = useState(false);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
-  const [geofenceData, setGeofenceData] = useState([]);
 
   const customStyles = {
     control: (base) => ({
@@ -46,7 +45,6 @@ const GeofenceDetail = () => {
     if (id) {
       const { data } = await getGeofenceById(id);
       setDefaultData(data);
-      console.log(data)
       setValue("company", data.company);
       setValue("name", data.name);
       setValue("category", data.category);
@@ -101,14 +99,6 @@ const GeofenceDetail = () => {
     setValue("geofenceAccess", e.target.value);
   };
 
-  const geofenceHanlder = (geo) => {
-    const geoFenceData = geo.features.map((data) => ({
-      type: data.geometry.type,
-      coordinates: data.geometry.coordinates,
-    }));
-
-    setGeofenceData(geoFenceData);
-  };
 
   const onSubmit = async (data) => {
     try {
@@ -116,7 +106,7 @@ const GeofenceDetail = () => {
         console.log(data, id);
         const {success} = await updateGeofence(id, data);
         if (success) {
-          notifySuccess("New Geofence Created!");
+          notifySuccess("Geofence updated successfully!");
           navigate("/settings/geofence");
         }
         return;
@@ -356,10 +346,10 @@ const GeofenceDetail = () => {
         {/* Right side */}
         <div className="col-md-9" style={{ paddingLeft: "15px" }}>
           <Map
-            geofenceHanlder={geofenceHanlder}
             setValue={setValue}
             getValues={getValues}
             defaultValues={defaultData}
+            errors={errors}
           />
         </div>
       </div>

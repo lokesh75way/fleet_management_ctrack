@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
 const GeofenceTable = ({tableData, onConfirmDelete, editDrawerOpen,page}) => {
+    console.log(tableData)
     return (
         <>
             {tableData.map((item, index) => (
