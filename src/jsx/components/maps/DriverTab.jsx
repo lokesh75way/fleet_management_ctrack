@@ -1,32 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Badge, Button, Nav, Tab } from "react-bootstrap";
+import { Nav, Tab } from "react-bootstrap";
 import "../../../scss/pages/_driver-tracking.scss";
-import {
-  FaSearch,
-  FaFilter,
-  FaSortAlphaDown,
-  FaCircle,
-  FaWifi,
-  FaBatteryFull,
-  FaEdit,
-  FaTrashAlt,
-  FaLocationArrow,
-} from "react-icons/fa";
-import { GrUserPolice } from "react-icons/gr";
-import { BsArrowRepeat } from "react-icons/bs";
-import { MdFence, MdDelete, MdAddLocationAlt } from "react-icons/md";
-import { IoIosNavigate } from "react-icons/io";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-import DeleteModal from "../Modal/DeleteModal";
-import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
-import { companyOptions } from "../TabComponent/VehicleTabs/Options";
+
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
 import { getVehicles, statusData } from "../../../utils/helper";
-import CheckboxTree from 'react-checkbox-tree'
-import DriverCompanyItem from "../Tracking/DriverTabComponent3";
+
+
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
 import DriverItem from "../Tracking/DriverItem";
 const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
@@ -124,9 +105,9 @@ const DriverTabComponent1 = (props) => {
     }));
 
   const handleSearch = (item) => {
-    console.log(item, "::-item")
+
     const vehicleData = getVehicles(selectValue);
-    console.log(vehicleData);
+
     const filteredData = Object.entries(vehicleData).filter((vehicle) => {
       const vec = vehicle[1].filter((data) => data.id == item.id);
       return vec.length > 0;
@@ -259,7 +240,7 @@ const DriverTabComponent2 = (props) => {
   useEffect(() => {
     const newCompanyDrivers = company.reduce((acc, company) => {
       const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
-      console.log(companyDrivers, )
+
       if (companyDrivers.length > 0) {
         acc[company.userName] = companyDrivers;
       }
@@ -269,7 +250,7 @@ const DriverTabComponent2 = (props) => {
   }, [company]);
 
   useEffect(() => {
-    console.log(selectValue)
+
   const companyDrivers = company.reduce((acc, company) => {
     const drivers = jsonData.filter((item) => 
       item.designation === "Driver" && 
@@ -286,7 +267,7 @@ const DriverTabComponent2 = (props) => {
   }, [selectValue]);
 
   const total = drivers.length;
-  console.log(drivers)
+
   const handleOnSelect = (item) => {
     const selectedCompanyId = item.id;
 
@@ -302,30 +283,15 @@ const DriverTabComponent2 = (props) => {
     }
     return acc;
   }, {});
-console.log(companyDriversData, "::--" )
+
   setCompanyDrivers(companyDriversData);
   };
 
-
-
-  // const handleOnSelect = (results) => {
-  //   setSelectValue("All");
-  //   setFilterApplied(true);
-  //   setIsDisable(true);
-  //   var companyDriver = jsonData.filter(
-  //     (item) => item.designation === "Driver" && item.id === results.id
-  //   );
-  //   var search = company.filter(
-  //     (item) => item.userName === companyDriver[0].parentCompany
-  //   );
-  //   setDrivers(companyDriver);
-  //   setCompany(search);
-  // };
   const handleOnSearch = (string, results) => {
     if(string === ""){
       const newCompanyDrivers = company.reduce((acc, company) => {
         const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
-        console.log(companyDrivers, )
+
         if (companyDrivers.length > 0) {
           acc[company.userName] = companyDrivers;
         }
@@ -342,10 +308,10 @@ console.log(companyDriversData, "::--" )
       checkboxArray[index] = [];
       setSelectedDrivers(checkboxArray);
     }
-    console.log(checkboxArray);
+
   };
   const handleSelect = (ind) => {
-    console.log(selectAll);
+
     setSelectAll((prev) => {
       const newArr = [...prev];
       newArr[ind] = !newArr[ind];
@@ -366,35 +332,10 @@ console.log(companyDriversData, "::--" )
         handleSelect(ind);
       }
     }
-    console.log(updatedDrivers);
+
     setSelectedDrivers(updatedDrivers);
   };
-  // useEffect(() => {
-  //   if (selectValue !== "All") {
-  //     setCompany(jsonData.filter((item) => item.role === "company"));
-  //     setFilterApplied(true);
-  //     if (selectValue === "Allocated") {
-  //       const companyName = allocated
-  //         .map((item) => item.parentCompany)
-  //         .filter((value, index, array) => array.indexOf(value) === index);
-  //       setCompany(
-  //         company.filter((item1) =>
-  //           companyName.some((item2) => item2 === item1.userName)
-  //         )
-  //       );
-  //     }
-  //     if (selectValue === "Not Allocated") {
-  //       const companyName = notAllocated
-  //         .map((item) => item.parentCompany)
-  //         .filter((value, index, array) => array.indexOf(value) === index);
-  //       setCompany(
-  //         company.filter((item1) =>
-  //           companyName.some((item2) => item2 === item1.userName)
-  //         )
-  //       );
-  //     }
-  //   } else setFilterApplied(false);
-  // }, [selectValue]);
+  
   const items = jsonData
     .filter((item) => item.designation === "Driver")
     .map((item) => {
@@ -476,7 +417,7 @@ const DriverTabComponent3 = (props) => {
 
   // Function to handle search
   const handleSearch = (query) => {
-    console.log("Search Query:", query);
+
     const fenceData = geoData.filter((item) => item.id === query.id);
     setTableData(fenceData);
   };
