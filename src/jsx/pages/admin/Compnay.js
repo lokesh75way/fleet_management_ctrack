@@ -186,15 +186,15 @@ const Company = () => {
                       <thead>
                         <tr>
                           {/* <th>{t('id')}</th> */}
-                          <th>{t("companyName")}</th>
-                          <th>{t("businessGroup")}</th>
+                          <th className="text-center">{t("companyName")}</th>
+                          <th className="text-center" >{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}
-                          <th>{t("location")}</th>
-                          <th>{t("email")}</th>
-                          <th>{t("branches")}</th>
-                          <th>{t("zipCode")}</th>
+                          <th className="text-center">{t("location")}</th>
+                          <th className="text-center">{t("email")}</th>
+                          <th className="text-center">{t("branches")}</th>
+                          <th className="text-center">{t("zipCode")}</th>
                           {(can("company", "edit") ||
-                            can("company", "delete")) && <th>{t("action")}</th>}
+                            can("company", "delete")) && <th className="d-flex justify-content-center">{t("action")}</th>}  
                         </tr>
                       </thead>
                       <tbody>
