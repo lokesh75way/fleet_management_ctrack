@@ -28,7 +28,8 @@ const Profile = ({
   getValues,
   errors,
   reset,
-  control
+  control,
+  formData
 }) => {
   const [selectStateName, setSelectStateName] = useState({
     name: "",
@@ -54,19 +55,8 @@ const Profile = ({
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
 
-  // async function getDriver(id) {
-  //   try {
-  //     const data = await getDriverById(id);
-  //     setDvalues(data);
-  //   } catch (error) {
-  //     notifyError("Some error occured !!");
-  //     navigate("/driver");
-  //   }
-  // }
+
   console.log(errors, 'erro0rs-:', getValues())
-  // useEffect(() => {
-  //   if (id) getDriver(id);
-  // }, [id]);
 
   useEffect(() => {
     if (id) {

@@ -4,13 +4,14 @@ import Select from "react-select";
 import usePagination from '../../../hooks/usePagination';
 
 const BranchDropdown = ({
-    onChange,
-    value,
-    customStyles,
-    name,
-    companyId,
-    isDisabled,
-    ref
+  onChange,
+  value,
+  customStyles,
+  name,
+  companyId,
+  isDisabled,
+  ref,
+  isMulti = true,
 }) => {
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);

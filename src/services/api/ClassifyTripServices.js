@@ -1,17 +1,21 @@
 import axios from "axios";
 import initAxios from "./Axios";
 initAxios();
-export const getTrips = async () => {
-    const { data } = await axios.get(`/trips`);
-    return { data: data.data };
-  };
-  
+
+export const getTrips = async (pageNo=1 ,status) => {
+  const { data } = await axios.get(`/trips?page=${pageNo}&limit=${10}&status=${status}`);
+//   console.log(data.data.length, "ko:-")
+  return { data: data.data.data, totalLength: data.data.count };
+};
+
 export const createTrip = async (body) => {
   return axios.post("/trips", body);
 };
 
-export const updateTrip = async (body) => {
-  return axios.patch("/trips", body);
+export const updateTrip = async (id,body) => {
+  return axios.patch(`/trips/${id}`, body);
 };
 
-
+export const deleteTrip = async (id) => {
+  return axios.delete(`/trips/${id}`);
+};

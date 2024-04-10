@@ -4,7 +4,6 @@ export const vehicleGeneralSchema = yup
     company: yup.string().required("Company name id required"),
     businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
-    serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
     imeiNumber: yup
       .number()
@@ -30,6 +29,10 @@ export const vehicleGeneralSchema = yup
       .min(0)
       .max(100)
       .typeError("Device Accuracy Tolerance must be a number"),
+      serverAddress: yup.string().url('Server address must be a valid URL').required(),
+      distanceCounter: yup.string().required('Distance counter is required'),
+      unitOfDistance: yup.string().required('Unit of distance is required'),
+      
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -49,8 +52,8 @@ export const vehicleProfileSchema = yup
       .positive()
       .integer()
       .typeError("Passenger seats must be a number"),
-    distanceCost: yup.number().positive().integer(),
-    durationCost: yup.number().positive().integer(),
+    // distanceCost: yup.number().positive().integer(),
+    // durationCost: yup.number().positive().integer(),
     GPSWarranty: yup.string().required("GPS Warranty is required "),
     weightCapacity: yup
       .number()
@@ -64,6 +67,18 @@ export const vehicleProfileSchema = yup
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
+
+
+    vehicleCategory: yup.string().required('Vehicle category is required'),
+    vinNumber: yup.number().typeError('VIN number must be a number').required(),
+    distance: yup.number().typeError('Distance must be a number').required(),
+    duration: yup.number().typeError('Duration must be a number').required(),
+    sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
+    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number').required(),
+    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number').required(),
+    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number').required(),
+
+    
   })
   .required();
 
@@ -424,7 +439,7 @@ export const alertSchema = yup
     object: yup.string().required("Select an option "),
     alertName: yup.string().required("Alert Name is required "),
     alertType: yup.string().required("Select an Alert Type "),
-    alertValue: yup.string().required("Choose an Alert Value "),
+    value: yup.string().required("Choose an Alert Value "),
     validDays: yup.string().required("Choose Valid day options "),
     severity: yup.string().required("Choose Severity options "),
     //  userName: yup.string().required("User Name is required "),
@@ -473,10 +488,11 @@ export const geofenceMapSchema = yup
   .required();
 export const technicianGeneralSchema = yup
   .object({
+    company: yup.string().required("Select a company"),
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
-    technicianNumber: yup
+    technicianNo: yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
@@ -493,29 +509,50 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    country: yup.string().required("Please select a Country "),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
+    address: yup
+      .object({
+        zipCode: yup
+          .number()
+          .positive("Zip Code must be a positive number")
+          .integer("Zip Code must be an integer")
+          .nullable(true)
+          .transform((_, val) => (val ? Number(val) : null)),
+        country: yup.string().required("Please select a Country "),
+        city: yup.string().required("Please enter a City "),
+        street1: yup.string().required("Please enter street1 address "),
+      })
+      .required(),
   })
   .required();
 export const technicianLeaveSchema = yup
   .object({
-    leaveTime: yup.string().required("Select type of leave "),
-    noOfDays: yup.number().required("Enter total number of leaves "),
+    leave: yup
+      .array(
+        yup.object({
+          leaveType: yup.string().required("Select type of leave "),
+          days: yup.number().required("Enter total number of leaves "),
+        })
+      )
+      .required(),
   })
   .required();
+  
 export const classifyTripsSchema = yup
   .object({
-    startTime: yup.string().required("Trip start time is required "),
+    // startTime: yup.string().("Trip start time is required "),
     startLocation: yup.string().required("Trip start Location is required "),
-    reachTime: yup.string().required("Trip reach time is required "),
+    // reachTime: yup.string().required("Trip reach time is required "),
     reachLocation: yup.string().required("Trip reach Location is required "),
-    driver: yup.string().required("Driver name is required "),
+    driverId: yup.string().required("Driver name is required "),
+  })
+  .required();
+
+export const classifyTripsFilterCanvas = yup
+  .object({
+    // startTime: yup.string().("Trip start time is required "),
+    startLocation: yup.string().required("Trip start Location is required "),
+    // reachTime: yup.string().required("Trip reach time is required "),
+    reachLocation: yup.string().required("Trip reach Location is required "),
+    driverId: yup.string().required("Driver name is required "),
   })
   .required();
