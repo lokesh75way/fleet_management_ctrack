@@ -89,8 +89,11 @@ const Driver = () => {
     }
   };
   const editDrawerOpen = (item) => {
+    // navigate(`/driver/edit/${item._id}`);
     setEditData(item);
-    navigate(`/driver/edit/${item._id}`);
+    const filteredData = tableData.filter((data) => data._id === item._id);
+    console.log("filtered", filteredData, item)
+    navigate(`/driver/edit/${item._id}`, { state: filteredData });
   };
 
   return (

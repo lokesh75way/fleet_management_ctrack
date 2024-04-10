@@ -20,6 +20,7 @@ const ClassifyTrip = (ref) => {
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab,ActiveTab,ActiveTab];
 
+  const [tableData, setTableData] = useState([]);
   const {
     register,
     setValue,
@@ -43,8 +44,6 @@ const ClassifyTrip = (ref) => {
     location: "",
   });
   const navigate = useNavigate();
-  const [tableData, setTableData] = useState([]);
-
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
