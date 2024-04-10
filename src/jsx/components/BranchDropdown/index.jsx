@@ -26,8 +26,6 @@ const BranchDropdown = ({
         value: item?._id,
         label: item?.branchName,
       }));
-      console.log(response.data, "this is Branch data");
-      console.log(groupOptions, "this is Branch options");
       setdropDownOptions(groupOptions);
     };
     fetchBusinessGroups();

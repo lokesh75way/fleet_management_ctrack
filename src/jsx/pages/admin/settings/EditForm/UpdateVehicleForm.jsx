@@ -28,11 +28,10 @@ const UpdateVehicleForm = () => {
   })
 
   const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 2)){
+    if(activeIndex === (totalTabs - 1)){
       try{
         if(id){
           try{
-            console.log(data)
 
             data.businessGroupName = getValues('businessGroupName')
             await updateVehicles(data,id)
@@ -45,7 +44,6 @@ const UpdateVehicleForm = () => {
         }
         else{
           try{
-            console.log(data)
             data.businessGroupId = getValues('businessId')
             data.companyId = getValues('companyId')
             data.branchId = getValues('branchId')
@@ -70,8 +68,6 @@ const UpdateVehicleForm = () => {
   const { id } = useParams();
   const location = useLocation();
   const { formData } = location.state || {};
-
-  console.log('formData',formData);
 
   return (
     <>

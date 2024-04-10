@@ -22,6 +22,7 @@ import {useTranslation} from 'react-i18next'
 
 import CompanyDropdown from "../../CompanyDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 
 
@@ -76,10 +77,10 @@ const General = ({
   //   setAllCompany(allCompany)
   // }
 
-  useEffect(()=>{
-    businessGroupOptions()
-    allCompanyOptions()
-  },[])
+  // useEffect(()=>{
+  //   businessGroupOptions()
+  //   allCompanyOptions()
+  // },[])
 
 
   
@@ -129,14 +130,19 @@ const General = ({
     
     if(formData && id){
 
-      setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
-      console.log('imei number ',formData?.[0].imeiNumber);
+      setValue("businessGroupId",formData?.[0]?.businessGroupId)
+      console.log('businessGroupId',formData?.[0]?.businessGroupId);
+      setGroupId(formData?.[0]?.businessGroupId);
+      setValue("companyId", formData?.[0]?.companyId)
+      setCompanyId(formData?.[0]?.companyId);
+      setValue("branch")
       setValue("imeiNumber",formData?.[0].imeiNumber)
 
       setValue("vehicleName",formData?.[0].vehicleName)
       setValue("plateNumber",formData?.[0].plateNumber)
-      setValue("branch",formData?.[0].branch)
+      setValue("branchIds",formData?.[0]?.branchIds)  
       setValue("simNumber",formData?.[0].simNumber)
+      setValue("secondrySimNumber",formData?.[0].secondrySimNumber)
       setValue("IMEINumber",formData?.[0].IMEINumber)
       setValue("registrationNumber",formData?.[0].registrationNumber)
       setValue("weightCapacity",formData?.[0].weightCapacity)
@@ -187,7 +193,7 @@ const General = ({
           {t('company')}  <span className="text-danger">*</span>
           </label>
           <Controller
-            name="company"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
@@ -195,10 +201,8 @@ const General = ({
               key={groupId}
               groupId={groupId}
               onChange={(newValue) => {
-               
                 setCompanyId(newValue.value)
                 setValue("companyId", newValue.value);
-                setValue("company", newValue.label);
               }}
               value={value}
               customStyles={customStyles}
@@ -208,32 +212,47 @@ const General = ({
             />
             )}
           />
-          {!getValues("company") && <Error errorName={errors.company} />}
+          {!getValues("company") && <Error errorName={errors.companyId} />}
         </div>
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
           {t('branch')} 
-          </label>
+          </label> 
           <Controller
             name="branch"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
-                key={companyId}
-                companyId={companyId}
-                onChange={async (newValue) => {
-                  // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.label);
-                  setValue("branchID", newValue.value);
-                }
-                }
-                value={value}
-                customStyles={customStyles}
-                ref={ref}
-                isDisabled={false}
-                name={name}
-              />
+              // <ParentBranchDropdown
+              //   key={companyId}
+              //   companyId={companyId}
+              //   onChange={async (newValue) => {
+              //     // setValue("parentBranchId", newValue.value);
+              //     setValue("branch", newValue.label);
+              //     setValue("branchIds", newValue.value);
+              //   }
+              //   }
+              //   value={value}
+              //   customStyles={customStyles}
+              //   ref={ref}
+              //   isDisabled={false}
+              //   name={name}
+              // />
+              <BranchDropdown
+              key={companyId}
+              companyId={companyId}
+              onChange={async (newValue) => {
+                // setValue("parentBranchId", newValue.value);
+                setValue("branch", newValue.label);
+                setValue("branchIds", newValue.value);
+              }
+              }
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={false}
+              name={name}
+            />
             )}
           />
         </div>
@@ -337,15 +356,15 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('secondarySimNumber')} <span className="text-danger">*</span>
+          {t('secondrySimNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             register={register}
-            name="secondarySimNumber"
+            name="secondrySimNumber"
             placeholder=""
           />
-          <Error errorName={errors.secondarySimNumber} />
+          <Error errorName={errors.secondrySimNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">

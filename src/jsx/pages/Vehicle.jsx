@@ -56,14 +56,12 @@ const Vehicle = () => {
   async function getVehicleData() {
     try {
       const { data , totalLength} = await getVehicles();
-      console.log(data)
       setTableData(data);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
   }
 
-  console.log(tableData);
   useEffect(() => {
     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
   }, [test]);
@@ -94,7 +92,6 @@ const Vehicle = () => {
     // tableData.map((table) => table.id === id && setEditData(table));
 
     const data = tableData.filter((item) => item._id === id);
-    console.log('myData',data);
 
     navigate(`edit/${id}`,{ state: { formData: data } });
     // vehicle.current.showModal();

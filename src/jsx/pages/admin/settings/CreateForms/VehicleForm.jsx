@@ -38,14 +38,17 @@ const VehicleForm = () => {
   
 
   const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 2)){
+    
+    console.log({activeIndex, totalTabs}, "tabswitch")
+    if(activeIndex === (totalTabs - 1)){
       try{
         if(id){
           try{
-            console.log(data)
+
 
             data.businessGroupName = getValues('businessGroupName')
             await updateVehicles(data)
+            console.log("sdfsdfsfsa")
             notifySuccess("Vehicle Updated Successfully")
             navigate("/vehicle");
             return;
@@ -55,7 +58,7 @@ const VehicleForm = () => {
         }
         else{
           try{
-            console.log(data)
+
             data.businessGroupId = getValues('businessId')
             data.companyId = getValues('companyId')
             data.branchId = getValues('branchId')

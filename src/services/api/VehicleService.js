@@ -5,7 +5,6 @@ const createVehicles = async (body) => {
 };
 const getVehicles = async (body) => {
   const {data} = await axios.get("/vehicles", body);
-  console.log(data)
   return {data :data.data.data , totalLength : data.data.totalLength};
 };
 const deleteVehicles = async (body) => {
