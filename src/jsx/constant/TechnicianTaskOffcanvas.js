@@ -59,14 +59,13 @@ const TechnicianOffcanvas = forwardRef(
       }),
     };
 
-    useEffect(() => {
-      if (addEmploye) {
-        reset();
-        clearErrors();
-        if (editData)
-          reset({ ...editData, technician: editData.technician._id });
-      }
-    }, [addEmploye]);
+     useEffect(() => {
+       reset({});
+       clearErrors();
+       if (addEmploye && editData) {
+         reset({ ...editData, technician: editData.technician._id });
+       } else setEditData();
+     }, [addEmploye]);
 
     return (
       <>
