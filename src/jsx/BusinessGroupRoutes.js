@@ -89,7 +89,7 @@ const BusinessForm = React.lazy(() =>
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
-const Expense = React.lazy(() => import("./pages/Expense"));
+const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const Permission = React.lazy(() => import("./pages/Permission"));
