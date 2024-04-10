@@ -672,7 +672,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           </div>
         </div>
       
-          <>
+          { isCheckedWC &&  <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('underweightTolerance')}</label>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
@@ -718,7 +718,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               </div>
               <Error errorName={errors.loadingUnloadingTolerance} />
             </div>
-          </>
+          </>}
    
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('fuelSensor')}</label>
@@ -764,7 +764,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">{t('noOfTanks')}</label>
-            <div className={`${ selectedOption !== 'multiple' ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
+            <div className={`${ selectedOption !== 'single' ?  "d-flex align-items-center" : "d-flex align-items-center pe-none" }`}>
               <CustomInput
                 type="number"
                 register={register}
