@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import "../../scss/pages/_driver-tracking.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
@@ -20,6 +25,7 @@ import {
 } from "react-icons/fa";
 import CustomInput from "../components/Input/CustomInput";
 import { findHighestAndLowestDates } from "../../utils/helper";
+import DriverDropdown from "../components/DriverDropdown";
 
 const ClassifyTripsFilterOffcanvas = forwardRef(
   (
@@ -32,10 +38,10 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
       setValue,
       getValues,
       handleSubmit,
-      onSubmit,
+      // onSubmit,
       filterData,
       setFilterData,
-      submitFilterHandler
+      submitFilterHandler,
     },
     ref
   ) => {
@@ -54,9 +60,14 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
         padding: ".25rem 0 ", // Adjust the height as needed
       }),
     };
-    const filterSubmitHandler = (e)=>{
-      e.preventDefault();
-      submitFilterHandler(filterData);
+    // const filterSubmitHandler = (e,data) => {
+    //   e.preventDefault();
+    //   console.log(data,"thisis")
+    //   // submitFilterHandler();
+    // };
+
+    const onSubmit = (data) =>{
+      console.log(data, "thisis")
     }
 
     return (
@@ -82,92 +93,60 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
           <div className="offcanvas-body">
             <div className="container-fluid">
               <FormProvider>
-                <form onSubmit={filterSubmitHandler}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="container">
                     <div className="row ">
                       <div className="col-xl-12 mb-3 ">
-                        <label className="form-label">Branch</label>
+                        <label className="form-label">Driver</label>
                         <Controller
-                          name="branch"
+                          name="driverId"
                           control={control}
                           render={({
                             field: { onChange, value, name, ref },
                           }) => (
-                            <Select
-                              onChange={(newValue) =>{
-                                setFilterData((prev)=>({
-                                  ...prev , 
-                                  branch : newValue
-                                }));
-                                setValue("branch", newValue.label)}
-                              }
-                              options={branchOptions}
+                            <DriverDropdown
+                              onChange={(newValue) => {
+                                setValue("driverId", newValue.value);
+                              }}
+                              value={value}
+                              customStyles={customStyles}
                               ref={ref}
                               name={name}
-                              styles={customStyles}
-                              defaultValue={branchOptions[0]}
                             />
                           )}
                         />
                       </div>
                       <div className="col-xl-12 mb-3 d-flex flex-column">
-                        <label className="form-label">From Date</label>
+                        <label className="form-label">Start Date</label>
                         <Controller
                           name="fromDate"
                           control={control}
                           render={({ value, name }) => (
                             <DatePicker
-                              selected={filterData.from}
+                              selected={filterData.start}
                               className="form-control"
                               onChange={(newValue) => {
-                                setFilterData((prev)=>({
-                                  ...prev , 
-                                  from : newValue
-                                }));
+                                setValue("fromDate", newValue);
                               }}
                             />
                           )}
                         />
                       </div>
                       <div className="col-xl-12 mb-3 d-flex flex-column">
-                        <label className="form-label">To Date</label>
+                        <label className="form-label">End Date</label>
                         <Controller
                           name="toDate"
                           control={control}
                           render={({ value, name }) => (
                             <DatePicker
-                              selected={filterData.to}
+                              selected={filterData.end}
                               className="form-control"
                               onChange={(newValue) => {
-                                setFilterData((prev)=>({
-                                  ...prev , 
-                                  to : newValue
-                                }));
-                                setTempValue(newValue);
                                 setValue("toDate", newValue);
                               }}
                             />
                           )}
                         />
-                      </div>
-
-                      <div className="col-xl-12 mb-3">
-                        <div className="search-driver-tab p-2 rounded-1 w-100">
-                          <input
-                            type="text"
-                            {...register("search")}
-                            label="Search"
-                            placeholder="search"
-                            onChange={(newValue)=> setFilterData((prev)=>({
-                              ...prev , 
-                              search : newValue.target.value
-                            })) }
-                            className="form-control-driver-tab"
-                          />
-                          <FaSearch
-                            style={{ fontSize: "1.5rem", padding: "2px" }}
-                          />
-                        </div>
                       </div>
                     </div>
                     <div className="row">

@@ -223,9 +223,9 @@ export const toleranceOptions = [
   { value: "40", label: "40" },
 ];
 export const tripStatusOptions = [
-  { value: "OnGoing", label: "OnGoing" },
-  { value: "Completed", label: "Completed" },
-  { value: "Just Started", label: "Just Started" },
+  { value: "ONGOING", label: "OnGoing" },
+  { value: "COMPLETED", label: "Completed" },
+  { value: "JUST_STARTED", label: "Just Started" },
 ];
 export const parentOptions = [
   { value: "branch1@example.com", label: "branch1@example.com" },

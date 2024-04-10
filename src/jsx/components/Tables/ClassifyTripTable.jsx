@@ -11,21 +11,32 @@ const ClassifyTripTable = ({
   editDrawerOpen,
   active,
 }) => {
+  
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString); 
+    const day = date.getDate().toString().padStart(2, '0'); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const year = date.getFullYear(); 
+    const hours = date.getHours().toString().padStart(2, '0'); 
+    const minutes = date.getMinutes().toString().padStart(2, '0'); 
+  
+    return `${day}-${month}-${year} ${hours}:${minutes}`; 
+  };
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item.tripId}</span>
+            <span>{item._id}</span>
           </td>
           <td>
-            <span>{item.startTime}</span>
+            <span>{formatDate(item.startTime)}</span>
           </td>
           <td>
             <span>{item.startLocation}</span>
           </td>
           <td>
-            <span>{item.reachTime}</span>
+            <span>{formatDate(item.reachTime)}</span>
           </td>
           <td>
             <span>{item.reachLocation}</span>
@@ -54,13 +65,14 @@ const ClassifyTripTable = ({
               <span
                 className="cursor-pointer"
                 style={{ marginRight: "3px", marginLeft: "7px" }}
+                onClick={() => editDrawerOpen(item._id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>
               <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.tripId}
+                id={item._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>

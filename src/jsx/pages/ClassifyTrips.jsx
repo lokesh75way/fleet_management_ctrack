@@ -1,31 +1,29 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
-
 import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
-import InviteCustomer from "../constant/ModalList";
-import ClassifyTripTable from "../components/Tables/ClassifyTripTable";
 import { ClassifyTripData } from "../components/Tables/Tables";
-import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanvas";
-import ClassifyTripsOffcanvas from "../constant/ClassifyTripsOffcanvas";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { classifyTripsSchema } from "../../yup";
 import { Nav, Tab } from "react-bootstrap";
 import { filterClassifyTable } from "../../utils/helper";
+import { createTrip, getTrips } from "../../services/api/ClassifyTripServices";
+import { notifySuccess } from "../../utils/toast";
+import ActiveTab from './ActiveTab'
+import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanvas";
+
 
 const ClassifyTrip = (ref) => {
   const [filterData, setFilterData] = useState({
-    from: new Date(),
-    to: new Date(),
-    branch: "All",
-    search: "",
+    driverId: "", 
+    start: new Date(),
+    end: new Date(),
   });
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
-  const component = [ActiveTab, PlannedTab, CompletedTab];
+  const component = [ActiveTab,ActiveTab,ActiveTab];
 
-  const [tableData, setTableData] = useState(ClassifyTripData);
   const {
     register,
     setValue,
@@ -37,6 +35,7 @@ const ClassifyTrip = (ref) => {
   } = useForm({
     resolver: yupResolver(classifyTripsSchema),
   });
+
   const [editData, setEditData] = useState({
     id: 0,
     status: "",
@@ -47,57 +46,43 @@ const ClassifyTrip = (ref) => {
     gender: "",
     location: "",
   });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
+  const navigate = useNavigate();
+  const [tableData, setTableData] = useState([]);
 
   const submitFilterHandler = (val) => {
-    console.log(val);
-    const data = filterClassifyTable(val, ClassifyTripData);
-    console.log(data)
-    setTableData(data);
+    // console.log(val,"gh:-");
+    // const data = filterClassifyTable(val, tableData);
+    // console.log(data)
+    // setTableData(data);
   };
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
+
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
   };
+
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    classifyTrips.current.showModal();
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`, { state: filteredData });
+    // classifyTrips.current.showModal();
   };
 
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
 
-  const onSubmit = (data) => {
-    console.log("Submit botn", data);
+
+  const onSubmit = async(data) => {
+    try {
+      await createTrip(data);
+      notifySuccess("New Trip Created!");
+      navigate("/settings/classifyTrips");
+    } catch (error) {
+      console.log("Error", error)
+    }
   };
+
 
   const [activeIndex, setActiveIndex] = useState(0);
   return (
@@ -108,6 +93,8 @@ const ClassifyTrip = (ref) => {
         parentTitle={"Settings"}
       />
       <div className="m-2 p-2 classify_trip-container">
+        <FormProvider>
+        <form onSubmit={handleSubmit(onSubmit)}>
         <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
           <Nav as="ul" className="nav-tabs classify-trips">
             <div>
@@ -124,7 +111,6 @@ const ClassifyTrip = (ref) => {
                 </Nav.Item>
               ))}
             </div>
-
             <div className="">
               <Link
                 to={"#"}
@@ -135,10 +121,10 @@ const ClassifyTrip = (ref) => {
                 + Filter
               </Link>{" "}
               <Link
-                to={"#"}
+                to={"/settings/classifyTrips/create"}
                 className="btn btn-primary btn-sm ms-1"
                 data-bs-toggle="offcanvas"
-                onClick={() => classifyTrips.current.showModal()}
+                // onClick={() => classifyTrips.current.showModal()}
               >
                 + Add Trips
               </Link>{" "}
@@ -146,8 +132,10 @@ const ClassifyTrip = (ref) => {
           </Nav>
           <Tab.Content className="pt-4">
             {tabHeading.map((data, i) => {
+              console.log("m",data)
               const Component = component[i];
               return (
+                
                 <Tab.Pane
                   eventKey={data.toLowerCase()}
                   key={i}
@@ -163,6 +151,8 @@ const ClassifyTrip = (ref) => {
                     errors={errors}
                     handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
+                    tabType={data} 
+                    
                   />
                 </Tab.Pane>
               );
@@ -183,21 +173,10 @@ const ClassifyTrip = (ref) => {
           getValues={getValues}
           Title={"Add Filter"}
           data={ClassifyTripData}
+          
         />
-        <ClassifyTripsOffcanvas
-          ref={classifyTrips}
-          // editData={editData}
-          // setEditData={setEditData}
-          handleSubmit={handleSubmit}
-          onSubmit={onSubmit}
-          register={register}
-          control={control}
-          errors={errors}
-          setValue={setValue}
-          getValues={getValues}
-          clearErrors={clearErrors}
-          Title={"Add Trips"}
-        />
+        </form>
+        </FormProvider>
       </div>
     </>
   );
@@ -205,524 +184,360 @@ const ClassifyTrip = (ref) => {
 
 export default ClassifyTrip;
 
-const ActiveTab = ({tableData1}) => {
-  const [tableData, setTableData] = useState(tableData1);
-  console.log(tableData)
-  useEffect(() => {
-    const data = tableData1.filter((data) => data.status === "active");
-    console.log(data)
-    setTableData(data);
-  }, [tableData1]);
-  const {
-    register,
-    setValue,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
-    resolver: yupResolver(classifyTripsSchema),
-  });
-  const [editData, setEditData] = useState({
-    id: 0,
-    status: "",
-    title: "",
-    contact: 0,
-    age: 0,
-    drivingExperience: 0,
-    gender: "",
-    location: "",
-  });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
 
-  // const[formData, setFormData] = useState()
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-  };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-    classifyTrips.current.showModal();
-  };
+// const PlannedTab = ({tableData1}) => {
+//   const [tableData, setTableData] = useState(tableData1);
 
-  const classifyTrips = useRef();
-  const classifyTripsFilter = useRef();
-  console.log(tableData)
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-xl-12">
-          <div className="card">
-            <div className="card-body p-0">
-              <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
-                <div
-                  id="employee-tbl_wrapper"
-                  className="dataTables_wrapper no-footer"
-                >
-                  <table
-                    id="empoloyees-tblwrapper"
-                    className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Trip ID</th>
-                        <th>Start Time</th>
-                        <th>Start Location</th>
-                        <th>Reach Time</th>
-                        <th>Reach Location</th>
-                        <th>Distance</th>
-                        <th>Fuel Consumption</th>
-                        <th>Driver</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ClassifyTripTable
-                        active={true}
-                        editData={editData}
-                        tableData={tableData}
-                        onConfirmDelete={onConfirmDelete}
-                        editDrawerOpen={editDrawerOpen}
-                        setEditData={setEditData}
-                      />
-                    </tbody>
-                  </table>
-                  <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                      Showing {activePag.current * sort + 1} to{" "}
-                      {data.length > (activePag.current + 1) * sort
-                        ? (activePag.current + 1) * sort
-                        : data.length}{" "}
-                      of {data.length} entries
-                    </div>
-                    <div
-                      className="dataTables_paginate paging_simple_numbers"
-                      id="example2_paginate"
-                    >
-                      <Link
-                        className="paginate_button previous disabled"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current > 0 &&
-                          onClick(activePag.current - 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-left" />
-                      </Link>
-                      <span>
-                        {paggination.map((number, i) => (
-                          <Link
-                            key={i}
-                            to="/settings/classifyTrips"
-                            className={`paginate_button  ${
-                              activePag.current === i ? "current" : ""
-                            } `}
-                            onClick={() => onClick(i)}
-                          >
-                            {number}
-                          </Link>
-                        ))}
-                      </span>
-                      <Link
-                        className="paginate_button next"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current + 1 < paggination.length &&
-                          onClick(activePag.current + 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   useEffect(()=>{setTableData(tableData1)},[tableData1])
+//   useEffect(() => {
+//     const data = tableData.filter((data) => data.status === "planned");
+//     setTableData(data);
+//   }, []);
+//   const {
+//     register,
+//     setValue,
+//     getValues,
+//     handleSubmit,
+//     formState: { errors },
+//     control,
+//   } = useForm({
+//     resolver: yupResolver(classifyTripsSchema),
+//   });
+//   const [editData, setEditData] = useState({
+//     id: 0,
+//     status: "",
+//     title: "",
+//     contact: 0,
+//     age: 0,
+//     drivingExperience: 0,
+//     gender: "",
+//     location: "",
+//   });
+//   const [data, setData] = useState(
+//     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
+//   );
+//   const sort = 10;
+//   const activePag = useRef(0);
+//   const [test, settest] = useState(0);
+//   const chageData = (frist, sec) => {
+//     for (var i = 0; i < data.length; ++i) {
+//       if (i >= frist && i < sec) {
+//         // data[i].classList.remove("d-none");
+//       } else {
+//         // data[i].classList.add("d-none");
+//       }
+//     }
+//   };
 
-const PlannedTab = ({tableData1}) => {
-  const [tableData, setTableData] = useState(tableData1);
+//   // const[formData, setFormData] = useState()
 
-  useEffect(()=>{setTableData(tableData1)},[tableData1])
-  useEffect(() => {
-    const data = tableData.filter((data) => data.status === "planned");
-    setTableData(data);
-  }, []);
-  const {
-    register,
-    setValue,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
-    resolver: yupResolver(classifyTripsSchema),
-  });
-  const [editData, setEditData] = useState({
-    id: 0,
-    status: "",
-    title: "",
-    contact: 0,
-    age: 0,
-    drivingExperience: 0,
-    gender: "",
-    location: "",
-  });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
+//   useEffect(() => {
+//     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
+//   }, [test]);
 
-  // const[formData, setFormData] = useState()
+//   activePag.current === 0 && chageData(0, sort);
+//   let paggination = Array(Math.ceil(data.length / sort))
+//     .fill()
+//     .map((_, i) => i + 1);
+//   const onClick = (i) => {
+//     activePag.current = i;
+//     chageData(activePag.current * sort, (activePag.current + 1) * sort);
+//     settest(i);
+//   };
+//   const onConfirmDelete = (id) => {
+//     const updatedData = tableData.filter((item) => item.id !== id);
+//     setTableData(updatedData);
+//   };
+//   const editDrawerOpen = (item) => {
+//     tableData.map((table) => table.id === item && setEditData(table));
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+//     // setEditTableData(item);
+//     classifyTrips.current.showModal();
+//   };
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-  };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
+//   const onSubmit = (data) => {
+//     console.log(data);
+//   };
 
-    // setEditTableData(item);
-    classifyTrips.current.showModal();
-  };
+//   const classifyTrips = useRef();
+//   const classifyTripsFilter = useRef();
+//   return (
+//     <div className="container-fluid">
+//       <div className="row">
+//         <div className="col-xl-12">
+//           <div className="card">
+//             <div className="card-body p-0">
+//               <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+//                 <div
+//                   id="employee-tbl_wrapper"
+//                   className="dataTables_wrapper no-footer"
+//                 >
+//                   <table
+//                     id="empoloyees-tblwrapper"
+//                     className="table ItemsCheckboxSec dataTable no-footer mb-0"
+//                   >
+//                     <thead>
+//                       <tr>
+//                         <th>Trip ID</th>
+//                         <th>Start Time</th>
+//                         <th>Start Location</th>
+//                         <th>Reach Time</th>
+//                         <th>Reach Location</th>
+//                         <th>Distance</th>
+//                         <th>Fuel Consumption</th>
+//                         <th>Driver</th>
+//                         <th>Action</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//                       <ClassifyTripTable
+//                         active={false}
+//                         editData={editData}
+//                         tableData={tableData}
+//                         onConfirmDelete={onConfirmDelete}
+//                         editDrawerOpen={editDrawerOpen}
+//                         setEditData={setEditData}
+//                       />
+//                     </tbody>
+//                   </table>
+//                   <div className="d-sm-flex text-center justify-content-between align-items-center">
+//                     <div className="dataTables_info">
+//                       Showing {activePag.current * sort + 1} to{" "}
+//                       {data.length > (activePag.current + 1) * sort
+//                         ? (activePag.current + 1) * sort
+//                         : data.length}{" "}
+//                       of {data.length} entries
+//                     </div>
+//                     <div
+//                       className="dataTables_paginate paging_simple_numbers"
+//                       id="example2_paginate"
+//                     >
+//                       <Link
+//                         className="paginate_button previous disabled"
+//                         to="/settings/classifyTrips"
+//                         onClick={() =>
+//                           activePag.current > 0 &&
+//                           onClick(activePag.current - 1)
+//                         }
+//                       >
+//                         <i className="fa-solid fa-angle-left" />
+//                       </Link>
+//                       <span>
+//                         {paggination.map((number, i) => (
+//                           <Link
+//                             key={i}
+//                             to="/settings/classifyTrips"
+//                             className={`paginate_button  ${
+//                               activePag.current === i ? "current" : ""
+//                             } `}
+//                             onClick={() => onClick(i)}
+//                           >
+//                             {number}
+//                           </Link>
+//                         ))}
+//                       </span>
+//                       <Link
+//                         className="paginate_button next"
+//                         to="/settings/classifyTrips"
+//                         onClick={() =>
+//                           activePag.current + 1 < paggination.length &&
+//                           onClick(activePag.current + 1)
+//                         }
+//                       >
+//                         <i className="fa-solid fa-angle-right" />
+//                       </Link>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
-  const classifyTrips = useRef();
-  const classifyTripsFilter = useRef();
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-xl-12">
-          <div className="card">
-            <div className="card-body p-0">
-              <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
-                <div
-                  id="employee-tbl_wrapper"
-                  className="dataTables_wrapper no-footer"
-                >
-                  <table
-                    id="empoloyees-tblwrapper"
-                    className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Trip ID</th>
-                        <th>Start Time</th>
-                        <th>Start Location</th>
-                        <th>Reach Time</th>
-                        <th>Reach Location</th>
-                        <th>Distance</th>
-                        <th>Fuel Consumption</th>
-                        <th>Driver</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ClassifyTripTable
-                        active={false}
-                        editData={editData}
-                        tableData={tableData}
-                        onConfirmDelete={onConfirmDelete}
-                        editDrawerOpen={editDrawerOpen}
-                        setEditData={setEditData}
-                      />
-                    </tbody>
-                  </table>
-                  <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                      Showing {activePag.current * sort + 1} to{" "}
-                      {data.length > (activePag.current + 1) * sort
-                        ? (activePag.current + 1) * sort
-                        : data.length}{" "}
-                      of {data.length} entries
-                    </div>
-                    <div
-                      className="dataTables_paginate paging_simple_numbers"
-                      id="example2_paginate"
-                    >
-                      <Link
-                        className="paginate_button previous disabled"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current > 0 &&
-                          onClick(activePag.current - 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-left" />
-                      </Link>
-                      <span>
-                        {paggination.map((number, i) => (
-                          <Link
-                            key={i}
-                            to="/settings/classifyTrips"
-                            className={`paginate_button  ${
-                              activePag.current === i ? "current" : ""
-                            } `}
-                            onClick={() => onClick(i)}
-                          >
-                            {number}
-                          </Link>
-                        ))}
-                      </span>
-                      <Link
-                        className="paginate_button next"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current + 1 < paggination.length &&
-                          onClick(activePag.current + 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+// const CompletedTab = ({tableData1}) => {
+//   const [tableData, setTableData] = useState(tableData1);
+//   useEffect(() => {
+//     const data = tableData.filter((data) => data.status === "completed");
+//     setTableData(data);
+//   }, [tableData1]);
+//   const {
+//     register,
+//     setValue,
+//     getValues,
+//     handleSubmit,
+//     formState: { errors },
+//     control,
+//   } = useForm({
+//     resolver: yupResolver(classifyTripsSchema),
+//   });
+//   const [editData, setEditData] = useState({
+//     id: 0,
+//     status: "",
+//     title: "",
+//     contact: 0,
+//     age: 0,
+//     drivingExperience: 0,
+//     gender: "",
+//     location: "",
+//   });
+//   const [data, setData] = useState(
+//     document.querySelectorAll("#employee-tbl_wrapper tbody tr")
+//   );
+//   const sort = 10;
+//   const activePag = useRef(0);
+//   const [test, settest] = useState(0);
+//   const chageData = (frist, sec) => {
+//     for (var i = 0; i < data.length; ++i) {
+//       if (i >= frist && i < sec) {
+//         // data[i].classList.remove("d-none");
+//       } else {
+//         // data[i].classList.add("d-none");
+//       }
+//     }
+//   };
 
-const CompletedTab = ({tableData1}) => {
-  const [tableData, setTableData] = useState(tableData1);
-  useEffect(() => {
-    const data = tableData.filter((data) => data.status === "completed");
-    setTableData(data);
-  }, [tableData1]);
-  const {
-    register,
-    setValue,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
-    resolver: yupResolver(classifyTripsSchema),
-  });
-  const [editData, setEditData] = useState({
-    id: 0,
-    status: "",
-    title: "",
-    contact: 0,
-    age: 0,
-    drivingExperience: 0,
-    gender: "",
-    location: "",
-  });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
+//   // const[formData, setFormData] = useState()
 
-  // const[formData, setFormData] = useState()
+//   useEffect(() => {
+//     setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
+//   }, [test]);
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+//   activePag.current === 0 && chageData(0, sort);
+//   let paggination = Array(Math.ceil(data.length / sort))
+//     .fill()
+//     .map((_, i) => i + 1);
+//   const onClick = (i) => {
+//     activePag.current = i;
+//     chageData(activePag.current * sort, (activePag.current + 1) * sort);
+//     settest(i);
+//   };
+//   const onConfirmDelete = (id) => {
+//     const updatedData = tableData.filter((item) => item.id !== id);
+//     setTableData(updatedData);
+//   };
+//   const editDrawerOpen = (item) => {
+//     tableData.map((table) => table.id === item && setEditData(table));
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
-  };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
+//     // setEditTableData(item);
+//     classifyTrips.current.showModal();
+//   };
+//   // const handleSubmit=(e)=>{
+//   //     e.preventDefault();
+//   //     const updateTable = tableData.map((table)=>{
+//   //         if(table.id === editData.id) {
+//   //             console.log(table.id)
+//   //             return {...table, ...editData };
+//   //         }
+//   //         return table;
+//   //     })
+//   //     setTableData(updateTable)
+//   // }
+//   const onSubmit = (data) => {
+//     console.log(data);
+//   };
 
-    // setEditTableData(item);
-    classifyTrips.current.showModal();
-  };
-  // const handleSubmit=(e)=>{
-  //     e.preventDefault();
-  //     const updateTable = tableData.map((table)=>{
-  //         if(table.id === editData.id) {
-  //             console.log(table.id)
-  //             return {...table, ...editData };
-  //         }
-  //         return table;
-  //     })
-  //     setTableData(updateTable)
-  // }
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  const classifyTrips = useRef();
-  const classifyTripsFilter = useRef();
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-xl-12">
-          <div className="card">
-            <div className="card-body p-0">
-              <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
-                <div
-                  id="employee-tbl_wrapper"
-                  className="dataTables_wrapper no-footer"
-                >
-                  <table
-                    id="empoloyees-tblwrapper"
-                    className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Trip ID</th>
-                        <th>Start Time</th>
-                        <th>Start Location</th>
-                        <th>Reach Time</th>
-                        <th>Reach Location</th>
-                        <th>Distance</th>
-                        <th>Fuel Consumption</th>
-                        <th>Driver</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ClassifyTripTable
-                        active={false}
-                        editData={editData}
-                        tableData={tableData}
-                        onConfirmDelete={onConfirmDelete}
-                        editDrawerOpen={editDrawerOpen}
-                        setEditData={setEditData}
-                      />
-                    </tbody>
-                  </table>
-                  <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                      Showing {activePag.current * sort + 1} to{" "}
-                      {data.length > (activePag.current + 1) * sort
-                        ? (activePag.current + 1) * sort
-                        : data.length}{" "}
-                      of {data.length} entries
-                    </div>
-                    <div
-                      className="dataTables_paginate paging_simple_numbers"
-                      id="example2_paginate"
-                    >
-                      <Link
-                        className="paginate_button previous disabled"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current > 0 &&
-                          onClick(activePag.current - 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-left" />
-                      </Link>
-                      <span>
-                        {paggination.map((number, i) => (
-                          <Link
-                            key={i}
-                            to="/settings/classifyTrips"
-                            className={`paginate_button  ${
-                              activePag.current === i ? "current" : ""
-                            } `}
-                            onClick={() => onClick(i)}
-                          >
-                            {number}
-                          </Link>
-                        ))}
-                      </span>
-                      <Link
-                        className="paginate_button next"
-                        to="/settings/classifyTrips"
-                        onClick={() =>
-                          activePag.current + 1 < paggination.length &&
-                          onClick(activePag.current + 1)
-                        }
-                      >
-                        <i className="fa-solid fa-angle-right" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
+//   const classifyTrips = useRef();
+//   const classifyTripsFilter = useRef();
+//   return (
+//     <div className="container-fluid">
+//       <div className="row">
+//         <div className="col-xl-12">
+//           <div className="card">
+//             <div className="card-body p-0">
+//               <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+//                 <div
+//                   id="employee-tbl_wrapper"
+//                   className="dataTables_wrapper no-footer"
+//                 >
+//                   <table
+//                     id="empoloyees-tblwrapper"
+//                     className="table ItemsCheckboxSec dataTable no-footer mb-0"
+//                   >
+//                     <thead>
+//                       <tr>
+//                         <th>Trip ID</th>
+//                         <th>Start Time</th>
+//                         <th>Start Location</th>
+//                         <th>Reach Time</th>
+//                         <th>Reach Location</th>
+//                         <th>Distance</th>
+//                         <th>Fuel Consumption</th>
+//                         <th>Driver</th>
+//                         <th>Action</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//                       <ClassifyTripTable
+//                         active={false}
+//                         editData={editData}
+//                         tableData={tableData}
+//                         onConfirmDelete={onConfirmDelete}
+//                         editDrawerOpen={editDrawerOpen}
+//                         setEditData={setEditData}
+//                       />
+//                     </tbody>
+//                   </table>
+//                   <div className="d-sm-flex text-center justify-content-between align-items-center">
+//                     <div className="dataTables_info">
+//                       Showing {activePag.current * sort + 1} to{" "}
+//                       {data.length > (activePag.current + 1) * sort
+//                         ? (activePag.current + 1) * sort
+//                         : data.length}{" "}
+//                       of {data.length} entries
+//                     </div>
+//                     <div
+//                       className="dataTables_paginate paging_simple_numbers"
+//                       id="example2_paginate"
+//                     >
+//                       <Link
+//                         className="paginate_button previous disabled"
+//                         to="/settings/classifyTrips"
+//                         onClick={() =>
+//                           activePag.current > 0 &&
+//                           onClick(activePag.current - 1)
+//                         }
+//                       >
+//                         <i className="fa-solid fa-angle-left" />
+//                       </Link>
+//                       <span>
+//                         {paggination.map((number, i) => (
+//                           <Link
+//                             key={i}
+//                             to="/settings/classifyTrips"
+//                             className={`paginate_button  ${
+//                               activePag.current === i ? "current" : ""
+//                             } `}
+//                             onClick={() => onClick(i)}
+//                           >
+//                             {number}
+//                           </Link>
+//                         ))}
+//                       </span>
+//                       <Link
+//                         className="paginate_button next"
+//                         to="/settings/classifyTrips"
+//                         onClick={() =>
+//                           activePag.current + 1 < paggination.length &&
+//                           onClick(activePag.current + 1)
+//                         }
+//                       >
+//                         <i className="fa-solid fa-angle-right" />
+//                       </Link>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
