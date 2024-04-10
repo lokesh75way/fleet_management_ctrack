@@ -59,6 +59,7 @@ const TechnicianForm = () => {
           navigate("/technician/details");
           return;
         } else {
+          console.log("dataof submit", data.dateOfJoin, data.dateOfBirth)
           await createTechnician(data);
           notifySuccess("Technincian created");
           navigate("/technician/details");

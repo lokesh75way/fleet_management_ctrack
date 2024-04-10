@@ -17,19 +17,24 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
-   const [tempGender, setTempGender] = useState("");
-   const { t } = useTranslation();
-   const customStyles = {
-     control: (base) => ({
-       ...base,
-       padding: ".25rem 0 ", // Adjust the height as needed
-     }),
-   };
-   const handleChange = (e) => {
-     setTempGender(e.target.value);
-     setValue("gender", e.target.value);
-   };
+  const [tempGender, setTempGender] = useState("");
+  const [date, setDate] = useState({})
+  const { t } = useTranslation();
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: ".25rem 0 ", // Adjust the height as needed
+    }),
+  };
+  const handleChange = (e) => {
+    setTempGender(e.target.value);
+    setValue("gender", e.target.value);
+  };
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
+  const maxDate = new Date();
 
+  console.log(date, "thisisdate")
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -200,14 +205,11 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={
-                  getValues("dateOfJoin")
-                    ? new Date(getValues("dateOfJoin"))
-                    : new Date()
-                }
+                selected={date.dateOfJoin || new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setValue("dateOfJoin", newValue);
+                  setDate({ ...date, dateOfJoin: newValue });
+                  setValue("dateOfJoin", newValue.toISOString().split("T")[0]);
                 }}
               />
             )}
@@ -225,15 +227,22 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={
-                  getValues("dateOfBirth")
-                    ? new Date(getValues("dateOfBirth"))
-                    : new Date()
-                }
+                selected={date.dateOfBirth || new Date()}
+                minDate={minDate}
+                maxDate={maxDate}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setValue("dateOfBirth", newValue);
+                  setDate({
+                    ...date,
+                    dateOfBirth: newValue,
+                  });
+                  setValue("dateOfBirth", newValue.toISOString().split("T")[0]);
                 }}
+                dateFormat="dd-MM-yyyy"
+                showYearDropdown
+                scrollableYearDropdown={true}
+                popperClassName="date-picker-reports"
+                yearDropdownItemNumber={50}
               />
             )}
           />
