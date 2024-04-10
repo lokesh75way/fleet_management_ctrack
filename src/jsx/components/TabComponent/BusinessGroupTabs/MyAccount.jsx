@@ -30,7 +30,6 @@ const MyAccount = ({
   const location = useLocation();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [dValues, setDvalues] = useState({});
   const { id } = useParams();

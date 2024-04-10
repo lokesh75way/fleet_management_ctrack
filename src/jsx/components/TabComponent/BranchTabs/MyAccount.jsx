@@ -269,20 +269,6 @@ const MyAccount = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <AsyncSelect
-              //   onChange={(newValue) => {
-              //     setParentValue(newValue.value);
-              //     setValue("parentBranch", newValue.value);
-              //   }}
-              //   options={parentOptions}
-              //   ref={ref}
-              //   name={name}
-              //   styles={customStyles}
-              //   value={{
-              //     label: getValues('parentBranch'),
-              //     value: getValues('parentBranchId')
-              //   }}
-              // />
               <ParentBranchDropdown
                 key={companyId}
                 companyId={companyId}

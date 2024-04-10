@@ -19,7 +19,7 @@ const CompanyDropdown = ({
     useEffect(() => {
         const fetchBusinessGroups = async () => {
             const response = await getCompany(page, groupId ? groupId : undefined);
-            console.log(groupId)
+            // console.log(groupId)
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
             setdropdownOptions(options);
         };

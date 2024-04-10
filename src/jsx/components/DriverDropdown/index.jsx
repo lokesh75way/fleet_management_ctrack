@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getGroups } from '../../../services/api/BusinessGroup';
 import Select from "react-select";
-const GroupDropdown = ({
+import { getDrivers } from '../../../services/api/driverService';
+const DriverDropdown = ({
     onChange,
     value,
     customStyles,
@@ -9,21 +9,22 @@ const GroupDropdown = ({
     isDisabled,
     name
 }) => {
-    console.log(value, "thiiis:-")
+    // console.log(value, "this is isDisabled")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     useEffect(() => {
-        const fetchBusinessGroups = async () => {
-            const response = await getGroups();
-            const groupOptions = response.data.map((item) => ({
-                label: item?.businessGroupId?.groupName,
-                value: item?.businessGroupId?._id,
+        const fetchDrivers = async () => {
+            const response = await getDrivers();
+            console.log(response.data,"dsis");
+            const driverOptions = response.data.map((item) => ({
+                label: item?.firstName,
+                value: item?._id,
             }));
             // console.log(response.data, "this is groud data")
-            // console.log(groupOptions, "this is group options")
-            setdropDownOptions(groupOptions);
+            // console.log(driverOptions, "this is group options")
+            setdropDownOptions(driverOptions);
         };
-        fetchBusinessGroups();
+        fetchDrivers();
     }
     , []);
     useEffect(() => {
@@ -39,8 +40,7 @@ const GroupDropdown = ({
                 styles={customStyles}
                 ref={ref}
                 name={name}
-                isDisabled={isDisabled}
                 />
     );
 }
-export default GroupDropdown;
+export default DriverDropdown;

@@ -4,13 +4,14 @@ import Select from "react-select";
 import usePagination from '../../../hooks/usePagination';
 
 const BranchDropdown = ({
-    onChange,
-    value,
-    customStyles,
-    name,
-    companyId,
-    isDisabled,
-    ref
+  onChange,
+  value,
+  customStyles,
+  name,
+  companyId,
+  isDisabled,
+  ref,
+  isMulti = true,
 }) => {
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
@@ -19,18 +20,21 @@ const BranchDropdown = ({
         const fetchBusinessGroups = async () => {
             const response = await getAllBranch(undefined,companyId ? companyId : undefined);
             const groupOptions = response.data.data.map(item => ({ value: item?._id, label: item?.branchName }));
-            console.log(response.data, "this is Branch data")
-            console.log(groupOptions, "this is Branch options")
+            // console.log(response.data, "this is Branch data")
+            // console.log(groupOptions, "this is Branch options")
             setdropDownOptions(groupOptions);
         };
         fetchBusinessGroups();
     }
     , []);
     useEffect(() => {
-        const selected = dropDownOptions.filter((option) => value && value.includes(option.value));
-        setSelectedOption(selected);
+        if (value && Array.isArray(value)) {
+            const selected = dropDownOptions.filter(option => value.some(val => val === option.value));
+            setSelectedOption(selected);
+        } else {
+            setSelectedOption(value);
+        }
     }, [value, dropDownOptions]);
-
     return (
             <Select
                 options = {dropDownOptions}

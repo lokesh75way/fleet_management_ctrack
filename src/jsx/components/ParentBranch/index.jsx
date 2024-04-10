@@ -20,8 +20,8 @@ const ParentBranchDropdown = ({
         const fetchBusinessGroups = async () => {
             const response = await getAllBranch(undefined,companyId ? companyId : undefined);
             const groupOptions = response.data.data.map(item => ({ value: item?._id, label: item?.branchName }));
-            console.log(response.data, "this is Branch data")
-            console.log(groupOptions, "this is Branch options")
+            // console.log(response.data, "this is Branch data")
+            // console.log(groupOptions, "this is Branch options")
             setdropDownOptions(groupOptions);
         };
         fetchBusinessGroups();

@@ -14,7 +14,7 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item.id}</span>
+            <span>{item._id}</span>
           </td>
           <td>
             <div className="products">
@@ -25,7 +25,7 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
               /> */}
               <div>
                 <h6>{item.firstName}</h6>
-                <span>Web Designer</span>
+                {/* <span>Web Designer</span> */}
               </div>
             </div>
           </td>
@@ -38,23 +38,23 @@ const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
           </td>
 
           <td>
-            <span>{item.country}</span>
+            <span>{item.address.country}</span>
           </td>
           <td>
-            <span>{item.technicianNumber}</span>
+            <span>{item.technicianNo}</span>
           </td>
           <td>
             <span className="d-flex justify-content-center">
               <span
                 className="cursor-pointer"
-                onClick={() => editDrawerOpen(item.id)}
+                onClick={() => editDrawerOpen(item._id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>
               <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.id}
+                id={item._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>

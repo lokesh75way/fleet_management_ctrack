@@ -1,25 +1,30 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
-import TechnicianTaskTable from "../components/Tables/TechnicianTaskTable";
-import TechnicianTaskOffcanvas from "../constant/TechnicianTaskOffcanvas";
+import { Link, useNavigate } from "react-router-dom";
+import { CSVLink } from "react-csv";
+
+import { IMAGES } from "../../constant/theme";
+import MainPagetitle from "../../layouts/MainPagetitle";
+import InviteCustomer from "../../constant/ModalList";
+import { ExpenseData } from "../../components/Tables/Tables";
+import ExpenseTable from "../../components/Tables/ExpenseTable";
+// import ExpenseOffcanvas from "../constant/ExpenseOffcanvas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { technicianTaskSchema } from "../../yup";
-import { useTranslation } from "react-i18next";
-import { clsx } from "clsx";
-import { ThemeContext } from "../../context/ThemeContext";
-import usePagination from "../../hooks/usePagination";
-import {
-  createTask,
-  deleteTask,
-  getTasks,
-  updateTask,
-} from "../../services/api/TechnicianService";
-import { notifyError, notifySuccess } from "../../utils/toast";
+import {expenseSchema} from '../../../yup'
 
-const TechnicianTask = (ref) => {
-  const { t } = useTranslation();
+import {useTranslation} from 'react-i18next'
+import { deleteExpense, getExpenses } from "../../../services/api/ExpenseServices";
+import usePagination from "../../../hooks/usePagination";
+import { ThemeContext } from "../../../context/ThemeContext";
+import clsx from "clsx";
+import { notifySuccess } from "../../../utils/toast";
+
+const Expense = (ref) => {
+
+  const {t} = useTranslation();
+  const navigate = useNavigate();
+  const [tableData, setTableData] = useState([]);
+
   const { isRtl } = useContext(ThemeContext);
   const arrowleft = clsx({
     "fa-solid fa-angle-right": isRtl,
@@ -29,79 +34,71 @@ const TechnicianTask = (ref) => {
     "fa-solid fa-angle-left": isRtl,
     "fa-solid fa-angle-right": !isRtl,
   });
-  const [tableData, setTableData] = useState([]);
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
-    usePagination();
-  const [editData, setEditData] = useState();
-
-  const fetchAllTasks = async (page, businessGroupId) => {
-    try {
-      const { data, totalCount } = await getTasks(page, 10);
-      setTableData(data);
-      setCount(totalCount);
-    } catch (error) {
-      notifyError("Error in fetching data");
-    }
-  };
-  useEffect(() => {
-    fetchAllTasks(page);
-  }, [page]);
-
-  const onConfirmDelete = async (id) => {
-    try {
-      await deleteTask(id);
-      const updatedData = tableData.filter((item) => item._id !== id);
-      setTableData(updatedData);
-      setCount(totalCount - 1);
-      notifySuccess("Task Deleted");
-    } catch (e) {
-      notifyError("Something Went Wrong");
-    }
-  };
-  const editDrawerOpen = (item) => {
-    tableData.map((table) => table._id === item && setEditData(table));
-    technicianTask.current.showModal();
-  };
   const {
     register,
-    formState: { errors },
     setValue,
     getValues,
-    control,
     handleSubmit,
     clearErrors,
-    reset,
+    formState: { errors },
+    control,
   } = useForm({
-    resolver: yupResolver(technicianTaskSchema),
+    resolver: yupResolver(
+        expenseSchema
+    ),
   });
+  const [editData, setEditData] = useState({
+    id: 0,
+    status: "",
+    title: "",
+    contact: 0,
+    age: 0,
+    drivingExperience: 0,
+    gender: "",
+    location: "",
+  });
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
+    usePagination();
 
-  const onSubmit = async (data) => {
+
+  // const[formData, setFormData] = useState()
+  const getAllExpenses = async()=>{
     try {
-      if (data._id && data._id !== 0) {
-        // update data
-        await updateTask(data, data._id);
-        notifySuccess("Task Added Successfully !!");
-        technicianTask.current.closeModal();
-      } else {
-        await createTask(data);
-        notifySuccess("Task Added Successfully !!");
-        technicianTask.current.closeModal();
-      }
+      const {data, success, totalLength} = await getExpenses(page);
+      // console.log(data,"expense")
+      setTableData(data);
+      setCount(totalLength)
     } catch (error) {
-      const validationErr = error.response?.data?.data?.errors;
-      if (validationErr && validationErr.length > 0) {
-        notifyError(validationErr[0].msg);
-      } else notifyError(t("someErrorOccurred"));
+      console.log("Error", error)
     }
+  }
+  useEffect(()=>{
+    getAllExpenses();
+  },[])
+
+  console.log(errors, "ds:-", getValues())
+
+
+  const onConfirmDelete = async (id) => {
+    await deleteExpense(id);
+    notifySuccess("Expense Deleted");
+    await getAllExpenses();
+  };
+  const editDrawerOpen = (item) => {
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`, { state: filteredData });
+    // company.current.showModal();
   };
 
-  const technicianTask = useRef();
+
+
+  const expense = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle={t("technicianTask")}
-        pageTitle={t("technicianTask")}
-        parentTitle={t("technician")}
+        mainTitle={t('expense')}
+        pageTitle={t('expense')}
+        parentTitle={t('settings')}
       />
       <div className="container-fluid">
         <div className="row">
@@ -110,19 +107,15 @@ const TechnicianTask = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t("technicianTask")}</h4>
+                    <h4 className="heading mb-0">{t('expense')}</h4>
                     <div>
                       <Link
-                        to={"#"}
+                        to={"/settings/expense/create"}
                         className="btn btn-primary btn-sm ms-1"
-                        data-bs-toggle="offcanvas"
-                        onClick={() => {
-                          clearErrors();
-                          reset();
-                          technicianTask.current.showModal();
-                        }}
+                        // data-bs-toggle="offcanvas"
+                        // onClick={() => {expense.current.showModal(); console.log(expense)}}
                       >
-                        + {t("addTechnicianTask")}
+                        + {t('addExpense')}
                       </Link>{" "}
                     </div>
                   </div>
@@ -136,17 +129,17 @@ const TechnicianTask = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("taskName")}</th>
-                          <th>{t("taskCategory")}</th>
-                          <th>{t("technicianName")}</th>
-                          <th>{t("serviceLocation")}</th>
-                          <th>{t("reportingTime")}</th>
-                          <th>{t("action")}</th>
+                          <th>{t('id')}</th>
+                          <th>{t('vehicleName')}</th>
+                          <th>{t('expenseDate')}</th>
+                          <th>{t('amount')}</th>
+                          <th>{t('description')}</th>
+                          <th>{t('action')}</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <TechnicianTaskTable
+                        <ExpenseTable
+                          editData={editData}
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
@@ -168,7 +161,7 @@ const TechnicianTask = (ref) => {
                           className={`paginate_button ${
                             page === 1 ? "previous disabled" : "previous"
                           }`}
-                          to="#"
+                          to="/setting/expense"
                           onClick={() => prevPage(page - 1)}
                         >
                           <i className={arrowleft} />
@@ -192,7 +185,7 @@ const TechnicianTask = (ref) => {
                           className={`paginate_button ${
                             page * 10 >= totalCount ? "next disabled" : "next"
                           }`}
-                          to="#"
+                          to="/setting/expense"
                           onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
@@ -206,23 +199,22 @@ const TechnicianTask = (ref) => {
           </div>
         </div>
       </div>
-      <TechnicianTaskOffcanvas
-        ref={technicianTask}
+      {/* <ExpenseOffcanvas
+        ref={expense}
         editData={editData}
-        control={control}
+        register={register}
+        onSubmit={onSubmit}
         setValue={setValue}
         getValues={getValues}
-        onSubmit={onSubmit}
-        register={register}
-        errors={errors}
         setEditData={setEditData}
         handleSubmit={handleSubmit}
+        errors={errors}
+        control={control}
         clearErrors={clearErrors}
-        reset={reset}
-        Title={editData && editData._id !== 0 ? t("editTask") : t("addTask")}
-      />
+        Title={editData.id === 0 ? t('addExpense') :  t('editExpense')}
+      /> */}
     </>
   );
 };
 
-export default TechnicianTask;
+export default Expense;
