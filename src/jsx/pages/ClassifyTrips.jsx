@@ -43,7 +43,7 @@ const ClassifyTrip = (ref) => {
     gender: "",
     location: "",
   });
-
+  const navigate = useNavigate();
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
