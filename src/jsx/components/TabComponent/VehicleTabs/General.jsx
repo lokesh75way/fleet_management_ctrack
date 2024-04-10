@@ -312,6 +312,7 @@ const General = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
           {t('serverAddress')} 
+          <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -350,6 +351,7 @@ const General = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
           {t('distanceCounter')} 
+          <span className="text-danger">*</span>
           </label>
           <Controller
             name="distanceCounter"
@@ -376,6 +378,7 @@ const General = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
           {t('unitOfDistance')} 
+          <span className="text-danger">*</span>
           </label>
           <Controller
             name="unitOfDistance"
