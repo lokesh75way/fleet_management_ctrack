@@ -40,7 +40,7 @@ const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
-const Geofence = React.lazy(() => import("./pages/Geofence"));
+// const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
@@ -189,37 +189,37 @@ const UserRoutes = () => {
     { url: "blog-1", component: <HomeBlog /> },
     // { url: "manage-client", component: <ManageClient /> },
     { url: "reports/generated", component: <Report /> },
-    { url: "technician/details", component: <Technician /> },
+    // { url: "technician/details", component: <Technician /> },
     { url: "branch/:id", component: <Branch /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
-    { url: "/settings/alert", component: <Alert /> },
-    { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
-    { url: "/settings/expense", component: <Expense /> },
-    { url: "/settings/geofence", component: <Geofence /> },
-    { url: "/settings/geofence/map", component: <GeofenceMap /> },
+    // { url: "/settings/alert", component: <Alert /> },
+    // { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
+    // { url: "/settings/expense", component: <Expense /> },
+    // { url: "/settings/geofence", component: <Geofence /> },
+    // { url: "/settings/geofence/map", component: <GeofenceMap /> },
 
     { url: "contactUs", component: <ContactUs /> },
-    { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle /> },
-    { url: "vehicle/create", component: <VehicleForm /> },
-    { url: "driver/create", component: <DriverForm /> },
-    { url: "technician/details/create", component: <TechnicianForm /> },
+    // { url: "technician/tasks", component: <TechnicianTask /> },
+    // { url: "Vehicle", component: <Vehicle /> },
+    // { url: "vehicle/create", component: <VehicleForm /> },
+    // { url: "driver/create", component: <DriverForm /> },
+    // { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "branch/create", component: <BranchForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
 
     //Reports
     { url: "/reports/activity", component: <ActivityReport /> },
-    { url: "/reports/geofence-address", component: <GeofenceAddress /> },
+    // { url: "/reports/geofence-address", component: <GeofenceAddress /> },
     { url: "/reports/sensor", component: <Sensor /> },
-    { url: "/reports/alert", component: <AlertReport /> },
+    // { url: "/reports/alert", component: <AlertReport /> },
     { url: "/reports/reminder", component: <Reminder /> },
-    { url: "/reports/expense", component: <ExpenseReport /> },
+    // { url: "/reports/expense", component: <ExpenseReport /> },
     { url: "/reports/fuel", component: <FuelReport /> },
     { url: "/reports/rpm", component: <RPM /> },
     { url: "/reports/temperature", component: <Temperature /> },
-    { url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
+    // { url: "/reports/driver-behaviour", component: <DriverBehaviour /> },
     { url: "/reports/obd", component: <OBD /> },
     { url: "/reports/billing", component: <Billing /> },
     { url: "/reports/customized", component: <Customized /> },
@@ -230,14 +230,14 @@ const UserRoutes = () => {
 
     //Charts
     { url: "/charts/activity", component: <ActivityChart /> },
-    { url: "/charts/alert", component: <AlertChart /> },
+    // { url: "/charts/alert", component: <AlertChart /> },
     { url: "/charts/fuel", component: <FuelChart /> },
-    { url: "/charts/expense", component: <ExpenseChart /> },
+    // { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
-    { url: "technician", component: <Technician /> },
+    // { url: "technician", component: <Technician /> },
     { url: "branch", component: <Branch /> },
-    { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
+    // { url: "driver", component: <Driver /> },
+    // { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -252,7 +252,7 @@ const UserRoutes = () => {
     { url: 'add-email', component: <AddMail /> },
     { url: 'add-blog', component: <AddBlog /> },
     { url: 'blog-category', component: <BlogCategory /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
+    // { url: "vehicle-tracking/:id", component: <DriverTracking /> },
     ///AiKit    
     { url: 'auto-write', component: <AutoWriter /> },
     { url: 'scheduled', component: <Scheduler /> },
@@ -338,8 +338,8 @@ const UserRoutes = () => {
     { url: "groups/permission", component: <Permission /> },
 
     // drivers
-    { url: "driver/edit/:id", component: <DriverForm /> },
-    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+    // { url: "driver/edit/:id", component: <DriverForm /> },
+    // { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
 
     // buisness
     { module: 'business',operation:'add', url: "business/create", component: <BusinessForm /> },

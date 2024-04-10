@@ -138,52 +138,52 @@ const BusinessGroupRoutes = () => {
     { module: "*", url: "general", component: <General /> },
     { module: "*", url: "master", component: <Master /> },
 
-    {
-      module: "technician",
-      url: "technician/details",
-      component: <Technician />,
-    },
-    {
-      module: "technician",
-      operation: "add",
-      url: "technician/details/create",
-      component: <TechnicianForm />,
-    },
-    {
-      module: "technician",
-      url: "technician/tasks",
-      component: <TechnicianTask />,
-    },
-    {
-      module: "technician",
-      operation: "modify",
-      url: "technician/edit/:id",
-      component: <TechnicianForm />,
-    },
+    // {
+    //   module: "technician",
+    //   url: "technician/details",
+    //   component: <Technician />,
+    // },
+    // {
+    //   module: "technician",
+    //   operation: "add",
+    //   url: "technician/details/create",
+    //   component: <TechnicianForm />,
+    // },
+    // {
+    //   module: "technician",
+    //   url: "technician/tasks",
+    //   component: <TechnicianTask />,
+    // },
+    // {
+    //   module: "technician",
+    //   operation: "modify",
+    //   url: "technician/edit/:id",
+    //   component: <TechnicianForm />,
+    // },
 
-    {
-      module: "vehicle",
-      url: "vehicle-tracking",
-      component: <DriverTracking />,
-    },
-    {
-      module: "vehicle",
-      operation: "add",
-      url: "vehicle/create",
-      component: <VehicleForm />,
-    },
-    { module: "vehicle", url: "Vehicle", component: <Vehicle /> },
-    {
-      module: "vehicle",
-      operation: "modify",
-      url: "vehicle/edit/:id",
-      component: <UpdateVehicleForm />,
-    },
-    {
-      module: "vehicle",
-      url: "vehicle-tracking/:id",
-      component: <DriverTracking />,
-    },
+    // {
+    //   module: "vehicle",
+    //   url: "vehicle-tracking",
+    //   component: <DriverTracking />,
+    // },
+    // {
+    //   module: "vehicle",
+    //   operation: "add",
+    //   url: "vehicle/create",
+    //   component: <VehicleForm />,
+    // },
+    // { module: "vehicle", url: "Vehicle", component: <Vehicle /> },
+    // {
+    //   module: "vehicle",
+    //   operation: "modify",
+    //   url: "vehicle/edit/:id",
+    //   component: <UpdateVehicleForm />,
+    // },
+    // {
+    //   module: "vehicle",
+    //   url: "vehicle-tracking/:id",
+    //   component: <DriverTracking />,
+    // },
 
     { module: "company", url: "company", component: <Company /> },
     { module: "company", url: "company/:id", component: <Company /> },
@@ -205,19 +205,19 @@ const BusinessGroupRoutes = () => {
       component: <CompanyTracking />,
     },
 
-    { module: "driver", url: "driver", component: <Driver /> },
-    {
-      module: "driver",
-      operation: "add",
-      url: "driver/create",
-      component: <DriverForm />,
-    },
-    {
-      module: "driver",
-      operation: "modify",
-      url: "driver/edit/:id",
-      component: <DriverForm />,
-    },
+    // { module: "driver", url: "driver", component: <Driver /> },
+    // {
+    //   module: "driver",
+    //   operation: "add",
+    //   url: "driver/create",
+    //   component: <DriverForm />,
+    // },
+    // {
+    //   module: "driver",
+    //   operation: "modify",
+    //   url: "driver/edit/:id",
+    //   component: <DriverForm />,
+    // },
 
     {
       module: "subUser",
@@ -248,19 +248,19 @@ const BusinessGroupRoutes = () => {
     },
     { module: "business", url: "business", component: <Business /> },
 
-    { module: "settings", url: "/settings/alert", component: <Alert /> },
-    {
-      module: "settings",
-      url: "/settings/classifyTrips",
-      component: <ClassifyTrips />,
-    },
-    { module: "settings", url: "/settings/expense", component: <Expense /> },
-    { module: "settings", url: "/settings/geofence", component: <Geofence /> },
-    {
-      module: "settings",
-      url: "/settings/geofence/map",
-      component: <GeofenceMap />,
-    },
+    // { module: "settings", url: "/settings/alert", component: <Alert /> },
+    // {
+    //   module: "settings",
+    //   url: "/settings/classifyTrips",
+    //   component: <ClassifyTrips />,
+    // },
+    // { module: "settings", url: "/settings/expense", component: <Expense /> },
+    // { module: "settings", url: "/settings/geofence", component: <Geofence /> },
+    // {
+    //   module: "settings",
+    //   url: "/settings/geofence/map",
+    //   component: <GeofenceMap />,
+    // },
 
     {
       module: "branch",
@@ -288,19 +288,19 @@ const BusinessGroupRoutes = () => {
       url: "/reports/activity",
       component: <ActivityReport />,
     },
-    {
-      module: "reports",
-      url: "/reports/geofence-address",
-      component: <GeofenceAddress />,
-    },
+    // {
+    //   module: "reports",
+    //   url: "/reports/geofence-address",
+    //   component: <GeofenceAddress />,
+    // },
     { module: "reports", url: "/reports/sensor", component: <Sensor /> },
-    { module: "reports", url: "/reports/alert", component: <AlertReport /> },
+    // { module: "reports", url: "/reports/alert", component: <AlertReport /> },
     { module: "reports", url: "/reports/reminder", component: <Reminder /> },
-    {
-      module: "reports",
-      url: "/reports/expense",
-      component: <ExpenseReport />,
-    },
+    // {
+    //   module: "reports",
+    //   url: "/reports/expense",
+    //   component: <ExpenseReport />,
+    // },
     { module: "reports", url: "/reports/fuel", component: <FuelReport /> },
     { module: "reports", url: "/reports/rpm", component: <RPM /> },
     {
@@ -308,11 +308,11 @@ const BusinessGroupRoutes = () => {
       url: "/reports/temperature",
       component: <Temperature />,
     },
-    {
-      module: "reports",
-      url: "/reports/driver-behaviour",
-      component: <DriverBehaviour />,
-    },
+    // {
+    //   module: "reports",
+    //   url: "/reports/driver-behaviour",
+    //   component: <DriverBehaviour />,
+    // },
     { module: "reports", url: "/reports/obd", component: <OBD /> },
     { module: "reports", url: "/reports/billing", component: <Billing /> },
     {
@@ -327,11 +327,11 @@ const BusinessGroupRoutes = () => {
       component: <HardwareMaintenance />,
     },
     { module: "reports", url: "/reports/elock", component: <Elock /> },
-    {
-      module: "reports",
-      url: "/reports/trip-classification",
-      component: <TripClassification />,
-    },
+    // {
+    //   module: "reports",
+    //   url: "/reports/trip-classification",
+    //   component: <TripClassification />,
+    // },
   ];
 
   function NotFound() {
