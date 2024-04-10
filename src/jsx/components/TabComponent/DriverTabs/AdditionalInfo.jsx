@@ -10,10 +10,16 @@ import { useParams,useLocation } from "react-router-dom";
 import '../../../../scss/pages/_driver-tracking.scss';
 import {useTranslation} from 'react-i18next'
 
-const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues, control,errors }) => {
-
-
-  const {t} = useTranslation();
+const AdditionalInfo = ({
+  setValue,
+  register,
+  handleSubmit,
+  onSubmit,
+  getValues,
+  control,
+  errors,
+}) => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const location = useLocation();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
@@ -49,38 +55,46 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
       setValue("drivingExperience", dValues?.drivingExperience);
       setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
       setValue("mediclaimNumber", dValues?.mediclaimNumber);
- 
-
     }
   }, [dValues, id]);
-
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
+  const maxDate = new Date();
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t('dateOfBirth')}</label>
+          <label className="form-label">{t("dateOfBirth")}</label>
           <Controller
             name="dateOfBirth"
             control={control}
             render={({ value, name }) => (
               <DatePicker
                 selected={date.dateOfBirth || new Date()}
+                minDate={minDate}
+                maxDate={maxDate}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
                   setDate({
-                  ...date,
-                  dateOfBirth : newValue
-                })
-                  setValue('dateOfBirth', newValue.toISOString().split('T')[0])
-                }
-              }
+                    ...date,
+                    dateOfBirth: newValue,
+                  });
+                  setValue("dateOfBirth", newValue.toISOString().split("T")[0]);
+                }}
                 dateFormat="dd-MM-yyyy"
+                showYearDropdown
+                scrollableYearDropdown={true}
+                popperClassName="date-picker-reports"
+                yearDropdownItemNumber={50}
               />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('age')}<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("age")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -92,7 +106,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           <Error errorName={errors.age} />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t('dateOfJoining')}</label>
+          <label className="form-label">{t("dateOfJoining")}</label>
           <Controller
             name="dateOfJoining"
             control={control}
@@ -109,7 +123,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t('dateOfLeaving')}</label>
+          <label className="form-label">{t("dateOfLeaving")}</label>
           <Controller
             name="dateOfLeaving"
             control={control}
@@ -126,7 +140,10 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('drivingExperienceSince')}<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("drivingExperienceSince")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -138,7 +155,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           <Error errorName={errors.drivingExperience} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('licenseAvailable')}</label>
+          <label className="form-label">{t("licenseAvailable")}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -156,7 +173,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 htmlFor="customRadioBox987"
                 style={{ marginBottom: "0" }}
               >
-                {t('yes')}
+                {t("yes")}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
@@ -175,7 +192,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                 htmlFor="customRadioBox988"
                 style={{ marginBottom: "0" }}
               >
-                {t('no')}
+                {t("no")}
               </label>
             </div>
           </div>
@@ -238,6 +255,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
                   />
                 )}
               />
+              <Error errorName={errors.licenseNumber} />
             </div>
             <div className="col-xl-6 mb-3 d-flex flex-column">
               <label className="form-label">{t('licenseExpiryDate')}</label>
@@ -262,7 +280,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           </>
     
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('lifeInsuranceNumber')}</label>
+          <label className="form-label">{t("lifeInsuranceNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -292,7 +310,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
               />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('mediclaimNumber')}</label>
+          <label className="form-label">{t("mediclaimNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -302,7 +320,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t('mediclaimExpiryDate')}</label>
+          <label className="form-label">{t("mediclaimExpiryDate")}</label>
           <Controller
                 name="mediclaimExpiryDate"
                 control={control}
@@ -322,7 +340,7 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
             />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('active')}</label>
+          <label className="form-label">{t("active")}</label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -341,7 +359,11 @@ const AdditionalInfo = ({ setValue, register, handleSubmit, onSubmit, getValues,
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           {t('next')}
         </Button>

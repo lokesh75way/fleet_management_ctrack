@@ -278,7 +278,7 @@ const Profile = ({
             onChange={(e) => {
               setSelectStateName({ name: "Select State" });
               setCountryid(e.id);
-              setValue("country", e.name);
+              setValue("country", e.id);
               setIsStateDisabled(false);
             }}
             containerClassName="bg-white"
