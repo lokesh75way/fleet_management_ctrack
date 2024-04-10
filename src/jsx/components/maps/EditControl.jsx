@@ -1,5 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FeatureGroup, Circle, Polygon, Polyline, Marker } from "react-leaflet";
+import L from 'react-leaflet-draw'
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  FeatureGroup,
+  Circle,
+  Polygon,
+  Polyline,
+  Marker,
+  GeoJSON,
+} from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import { useParams } from "react-router-dom";
 
@@ -13,108 +21,133 @@ export default function EditControlFC({
 }) {
   const ref = useRef(null);
   const { id } = useParams();
-  const [Layer, setLayer] = useState([]);
+  const [mapLayer, setmapLayer] = useState([]);
+  // const [polygonVertices, setPolygonVertices] = useState([]);
 
+  // const poly = [
+  //   {
+  //     type: "Feature",
+  //     properties: {},
+  //     geometry: {
+  //       type: "Polygon",
+  //       coordinates: [
+  //         [25.233565349394524, 55.29474574096975],
+  //         [25.216560585142492, 55.298524208285514],
+  //         [25.220598463683125, 55.30848573965209],
+  //         [25.22859617357562, 55.30290384707602]
+  //       ]
+  //     },
+  //   },
+  //   {
+  //     type: "Feature",
+  //     properties: {},
+  //     geometry: {
+  //       type: "Polygon",
+  //       coordinates: [
+  //         [25.233565349394524, 55.29474574096975],
+  //         [25.216560585142492, 55.298524208285514],
+  //         [25.220598463683125, 55.30848573965209],
+  //         [25.22859617357562, 55.30290384707602]
+  //       ]
+  //     },
+  //   },
+  // ];
 
   useEffect(() => {
     if (id && defaultValues?.location) {
-      setLayer([...defaultValues?.location]);
+      setmapLayer([...defaultValues?.location]);
     }
-  },[defaultValues]);
+  }, [defaultValues]);
 
   const editChange = (e) => {
-    console.log(e)
-    // if (layerType === "circle") {
-    //   const newCenter = [layer._latlng.lat, layer._latlng.lng];
-    //   const newRadius = layer._mRadius;
-    //   console.log(newCenter , newRadius)
-    // }
-    // const { _latlng } = layer;
-    // if (layerType === "circle") {
-    //   const data = [
-    //     {
-    //       type: "Circle",
-    //       coordinates: [_latlng.lat, _latlng.lng],
-    //       duration: layer._mRadius,
-    //     },
-    //   ];
-    //   console.log(data)
-    //   setLayer((lay) => [...lay, ...data]);
-    // } else if (layerType === "polygon") {
-    //   const coordinates = layer._latlngs[0].map((coords) => [
-    //     coords.lat,
-    //     coords.lng,
-    //   ]);
-    //   console.log(coordinates);
-    //   setLayer((lay) => [
-    //     ...polygon,
-    //     ...lay,
-    //     {
-    //       type: "Polygon",
-    //       coordinates: coordinates,
-    //     },
-    //   ]);
-    // } else if (layerType === "marker") {
-    //   setLayer((lay) => [
-    //     ...points,
-    //     ...lay,
-    //     {
-    //       type: "Point",
-    //       coordinates: [layer._latlng.lat, layer._latlng.lng],
-    //     },
-    //   ]);
-    // } else if (layerType === "polyline") {
-    //   const coordinates = layer._latlngs.map((coords) => [
-    //     coords.lat,
-    //     coords.lng,
-    //   ]);
-    //   setLayer((lay) => [
-    //     ...lineString,
-    //     ...lay,
-    //     {
-    //       type: "LineString",
-    //       coordinates: coordinates,
-    //     },
-    //   ]);
-    // }
+    const {
+      layers: { _layers },
+    } = e;
+    Object.values(_layers).map(({ _leaflet_id, editing }) => {
+      // console.log(_leaflet_id);
+      setmapLayer((layers) =>
+        mapLayer.map((l) => {
+          if (_leaflet_id !== l.id) {
+            return l;
+          }
+          if (l && l.type === "Polygon") {
+            const coordinates = editing?.latlngs[0][0].map((coords) => {
+              return [coords.lat, coords.lng];
+            });
+            return l.id === _leaflet_id ? { ...l, coordinates } : l;
+          }
+          if (l && l.type === "Circle") {
+            const coordinates = [
+              editing._shape._latlng.lat,
+              editing._shape._latlng.lng,
+            ];
+            const duration = editing._shape._mRadius;
+            return l.id === _leaflet_id ? { ...l, coordinates, duration } : l;
+          }
+          if (l && l.type === "LineString") {
+            const coordinates = editing?.latlngs[0].map((coords) => {
+              return [coords.lat, coords.lng];
+            });
+            return l.id === _leaflet_id ? { ...l, coordinates } : l;
+          }
+          if (l && l.type === "Point") {
+            const coordinates = [
+              editing._marker._latlng.lat,
+              editing._marker._latlng.lng,
+            ];
+            return l.id === _leaflet_id ? { ...l, coordinates } : l;
+          }
+        })
+      );
+    });
   };
 
   const deleteHandle = (e) => {
-    console.log(e)
-    setLayer([])
-    setValues("location", null);
+    const {
+      layers: { _layers },
+    } = e;
+    Object.values(_layers).map((_leaflet_id) => {
+      setmapLayer((layer) =>
+        layer.filter((l) => l.id !== _leaflet_id._leaflet_id)
+      );
+    });
   };
 
   const onCreatedhandler = (e) => {
     const { layerType, layer } = e;
     const { _latlng } = layer;
     if (layerType === "circle") {
-      const data = {
-        type: "Circle",
-        coordinates: [_latlng.lat, _latlng.lng],
-        duration: layer._mRadius,
-      };
-      console.log(data)
-      setLayer((lay) => [...lay, data]);
-
+      setmapLayer((lay) => {
+        return [
+          ...lay,
+          {
+            id: layer._leaflet_id,
+            type: "Circle",
+            coordinates: [_latlng.lat, _latlng.lng],
+            duration: layer._mRadius,
+          },
+        ];
+      });
     } else if (layerType === "polygon") {
       const coordinates = layer._latlngs[0].map((coords) => [
         coords.lat,
         coords.lng,
       ]);
-      setLayer((lay) => [
+      setmapLayer((lay) => [
         ...lay,
         {
+          id: layer._leaflet_id,
           type: "Polygon",
           coordinates: coordinates,
         },
       ]);
     } else if (layerType === "marker") {
-      setLayer((lay) => [
+      setmapLayer((lay) => [
         ...points,
         ...lay,
         {
           type: "Point",
+          id: layer._leaflet_id,
           coordinates: [layer._latlng.lat, layer._latlng.lng],
         },
       ]);
@@ -123,9 +156,10 @@ export default function EditControlFC({
         coords.lat,
         coords.lng,
       ]);
-      setLayer((lay) => [
+      setmapLayer((lay) => [
         ...lay,
         {
+          id: layer._leaflet_id,
           type: "LineString",
           coordinates: coordinates,
         },
@@ -134,19 +168,18 @@ export default function EditControlFC({
   };
 
   useEffect(() => {
-    if (Layer.length === 0) {
+    if (mapLayer.length === 0) {
       setValues("location", null);
       return;
     }
-    setValues("location", Layer);
-  }, [Layer.length]);
-console.log(lineString)
 
+    setValues("location", mapLayer);
+  }, [mapLayer]);
   return (
     <FeatureGroup ref={ref}>
       {circles?.map((circle, index) => (
         <Circle
-          key={index}
+          key={circle.id}
           center={circle.coordinates}
           radius={circle?.duration}
         ></Circle>
@@ -157,31 +190,24 @@ console.log(lineString)
 
       {polygon?.map((poly, index) => (
         <Polygon
-          key={index}
-          
-          pathOptions={{ color: "#3388FF" }}
+          key={poly.id}
+          pathOptions={{ color: "red" }}
           positions={poly.coordinates}
+          
         ></Polygon>
       ))}
 
       {lineString?.map((line, index) => (
         <Polyline
-          key={index}
-          editable
-          // pathOptions={{ color: "#3388FF",  weight : "4"}}
+          key={line.id}
           positions={line.coordinates}
           path={line.coordinates}
-          // positions={[
-          //   [25.237136826291625, 55.28349608054715],
-          //   [25.222306746512636, 55.26245663929878],
-          //   [25.22028785234644, 55.266149275926054],
-          //  ]}
-
         ></Polyline>
       ))}
 
       {/* <Circle center={[25.2233, 55.2869]} radius={1000} /> */}
       <EditControl
+        key={mapLayer.length}
         position="topright"
         onEdited={editChange}
         onCreated={onCreatedhandler}
@@ -194,7 +220,12 @@ console.log(lineString)
           marker: true,
           circlemarker: false,
         }}
+        edit={{ edit: true, remove: true }}
       />
+
+      {/* {poly.map((coords, index) => (
+        <GeoJSON key={index} data={coords} />
+      ))} */}
     </FeatureGroup>
   );
 }

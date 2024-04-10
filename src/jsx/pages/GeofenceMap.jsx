@@ -103,7 +103,6 @@ const GeofenceDetail = () => {
   const onSubmit = async (data) => {
     try {
       if (id) {
-        console.log(data, id);
         const {success} = await updateGeofence(id, data);
         if (success) {
           notifySuccess("Geofence updated successfully!");
@@ -122,6 +121,7 @@ const GeofenceDetail = () => {
     } catch (error) {
       console.log(error);
       notifyError("Some error occured !!");
+      return;
     }
   };
 
