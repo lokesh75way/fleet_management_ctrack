@@ -11,7 +11,7 @@ const ClassifyTripTable = ({
   editDrawerOpen,
   active,
 }) => {
-  console.log("gdf-:",tableData)
+  
   const formatDate = (dateTimeString) => {
     const date = new Date(dateTimeString); 
     const day = date.getDate().toString().padStart(2, '0'); 
@@ -20,7 +20,7 @@ const ClassifyTripTable = ({
     const hours = date.getHours().toString().padStart(2, '0'); 
     const minutes = date.getMinutes().toString().padStart(2, '0'); 
   
-    return `${day}-${month}-${year} | ${hours}:${minutes}`; 
+    return `${day}-${month}-${year} ${hours}:${minutes}`; 
   };
   return (
     <>
@@ -36,7 +36,7 @@ const ClassifyTripTable = ({
             <span>{item.startLocation}</span>
           </td>
           <td>
-            <span>{item.reachTime}</span>
+            <span>{formatDate(item.reachTime)}</span>
           </td>
           <td>
             <span>{item.reachLocation}</span>

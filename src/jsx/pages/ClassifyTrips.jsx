@@ -17,10 +17,9 @@ import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanv
 
 const ClassifyTrip = (ref) => {
   const [filterData, setFilterData] = useState({
-    from: new Date(),
-    to: new Date(),
-    branch: "All",
-    search: "",
+    driverId: "", 
+    start: new Date(),
+    end: new Date(),
   });
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab,ActiveTab,ActiveTab];
@@ -49,57 +48,15 @@ const ClassifyTrip = (ref) => {
   });
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
-  console.log(tableData, "ji:-")
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        // data[i].classList.remove("d-none");
-      } else {
-        // data[i].classList.add("d-none");
-      }
-    }
-  };
 
-
-  const getAllTrips = async()=>{
-    try {
-      const {data, success} = await getTrips();
-      setTableData(data);
-    } catch (error) {
-      console.log("Error", error)
-    }
-  }
-  useEffect(()=>{
-    getAllTrips();
-  },[])
-
-  const submitFilterHandler = async(val) => {
-    console.log(val, "km:-");
-    // const data = filterClassifyTable(val, ClassifyTripData);
+  const submitFilterHandler = (val) => {
+    // console.log(val,"gh:-");
+    // const data = filterClassifyTable(val, tableData);
     // console.log(data)
-    await getAllTrips()
-    setTableData(data);
+    // setTableData(data);
   };
 
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
 
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
@@ -195,7 +152,7 @@ const ClassifyTrip = (ref) => {
                     handleSubmit={handleSubmit}
                     onSubmit={onSubmit}
                     tabType={data} 
-                    getAllTrips = {getAllTrips}
+                    
                   />
                 </Tab.Pane>
               );
@@ -216,6 +173,7 @@ const ClassifyTrip = (ref) => {
           getValues={getValues}
           Title={"Add Filter"}
           data={ClassifyTripData}
+          
         />
         </form>
         </FormProvider>

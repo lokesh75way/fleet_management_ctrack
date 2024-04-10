@@ -438,7 +438,7 @@ export const alertSchema = yup
     object: yup.string().required("Select an option "),
     alertName: yup.string().required("Alert Name is required "),
     alertType: yup.string().required("Select an Alert Type "),
-    alertValue: yup.string().required("Choose an Alert Value "),
+    value: yup.string().required("Choose an Alert Value "),
     validDays: yup.string().required("Choose Valid day options "),
     severity: yup.string().required("Choose Severity options "),
     //  userName: yup.string().required("User Name is required "),
@@ -545,6 +545,16 @@ export const classifyTripsSchema = yup
   .object({
     startDate: yup.string().required("Trip start Location is required "),
     endDate: yup.string().required("Trip reach Location is required "),
+    driverId: yup.string().required("Driver name is required "),
+  })
+  .required();
+
+export const classifyTripsFilterCanvas = yup
+  .object({
+    // startTime: yup.string().("Trip start time is required "),
+    startLocation: yup.string().required("Trip start Location is required "),
+    // reachTime: yup.string().required("Trip reach time is required "),
+    reachLocation: yup.string().required("Trip reach Location is required "),
     driverId: yup.string().required("Driver name is required "),
   })
   .required();
