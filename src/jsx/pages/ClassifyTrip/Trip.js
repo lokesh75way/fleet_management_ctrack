@@ -159,7 +159,6 @@ const Trip = ({
                 <DriverDropdown
                   onChange={(newValue) => {
                     setValue("driverId", newValue.value);
-                    setValue("driverId", newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}

@@ -16,7 +16,7 @@ import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanv
 
 
 const ClassifyTrip = (ref) => {
-
+ 
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab,ActiveTab,ActiveTab];
 
@@ -44,15 +44,21 @@ const ClassifyTrip = (ref) => {
     location: "",
   });
 
-  const submitFilterHandler = (val) => {
-    console.log(val);
-    console.log(data)
-    setTableData(data);
+  const onConfirmDelete = (id) => {
+    const updatedData = tableData.filter((item) => item.id !== id);
+    setTableData(updatedData);
   };
 
+  const editDrawerOpen = (item) => {
+    const filteredData = tableData.filter((data) => data._id === item);
+    navigate(`edit/${item}`, { state: filteredData });
+    // classifyTrips.current.showModal();
+  };
   const filterData = (data) => {
+    console.log("filtergotresponse",data);
     setTableData(data)
   };
+console.log('td',tableData)
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
 
@@ -66,6 +72,7 @@ const ClassifyTrip = (ref) => {
       console.log("Error", error)
     }
   };
+
 
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -144,20 +151,9 @@ const ClassifyTrip = (ref) => {
           </Tab.Content>
         </Tab.Container>
         <ClassifyTripsFilterOffcanvas
-          submitFilterHandler={submitFilterHandler}
           ref={classifyTripsFilter}
-          handleSubmit={handleSubmit}
-          filterData={filterData}
-          setFilterData={setFilterData}
-          onSubmit={onSubmit}
-          register={register}
-          control={control}
-          errors={errors}
-          setValue={setValue}
-          getValues={getValues}
           Title={"Add Filter"}
-          data={ClassifyTripData}
-          
+          filterData={filterData}
         />
         </form>
         </FormProvider>
