@@ -120,12 +120,12 @@ export const ObjectOptions = [
   { value: "Test2", label: "Test2" },
 ];
 export const TypeOptions = [
-  { value: "Accidents", label: "Accidents" },
-  { value: "Bonuses", label: "Bonuses" },
-  { value: "BreakDown", label: "BreakDown" },
-  { value: "Fines", label: "Fines" },
-  { value: "Maintainance", label: "Maintainance" },
-  { value: "Fuel", label: "Fuel" },
+  { value: "ACCIDENT", label: "Accidents" },
+  { value: "BONUS", label: "Bonuses" },
+  { value: "BREAKDOWN", label: "BreakDown" },
+  { value: "FINE", label: "Fines" },
+  { value: "MAINTAINENSE", label: "Maintainance" },
+  { value: "FUEL", label: "Fuel" },
 ];
 export const jobOptions = [{ value: "Job1", label: "Job1" }];
 export const dateFormatOptions = [
