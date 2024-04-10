@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Link } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import Select from "react-select";
@@ -38,7 +43,9 @@ const AlertOffcanvas = forwardRef(
     const [tempVehicle, setTempVehicle] = useState("");
     const [tempValue, setTempValue] = useState("");
     const [tempValidDays, setTempValidDays] = useState("");
+    const [companyId, setCompanyId] = useState();
     const { t } = useTranslation();
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
     useImperativeHandle(ref, () => ({
       showModal() {
@@ -51,6 +58,12 @@ const AlertOffcanvas = forwardRef(
         setAddEmploye(false);
       },
     }));
+
+    useEffect(() => {
+      if (userDetails.user.role === "COMPANY") {
+        setCompanyId(userDetails?.user.companyId);
+      }
+    }, []);
 
     const customStyles = {
       control: (base) => ({
@@ -117,14 +130,12 @@ const AlertOffcanvas = forwardRef(
                         render={({ field: { onChange, value, name, ref } }) => (
                           <BranchDropdown
                             onChange={(newValue) => {
-                              console.log({ value });
                               setValue("branch", newValue.value);
                             }}
                             value={value}
                             customStyles={customStyles}
                             ref={ref}
-                            isMulti={false}
-                            // companyId={}
+                            companyId={companyId}
                             name={name}
                           />
                         )}

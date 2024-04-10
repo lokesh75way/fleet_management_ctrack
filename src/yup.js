@@ -549,9 +549,9 @@ export const technicianLeaveSchema = yup
   
 export const classifyTripsSchema = yup
   .object({
-    startDate: yup.string().required("Trip start Location is required "),
-    endDate: yup.string().required("Trip reach Location is required "),
-    driverId: yup.string().required("Driver name is required "),
+    startTime: yup.string().required("Trip start Location is required "),
+    reachTime: yup.string().required("Trip reach Location is required "),
+    driver: yup.string().required("Driver name is required "),
   })
   .required();
 
