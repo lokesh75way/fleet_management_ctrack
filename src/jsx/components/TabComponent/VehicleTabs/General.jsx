@@ -224,7 +224,7 @@ const General = ({
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.label);
+                  setValue("branch", newValue.value);
                   setValue("branchID", newValue.value);
                 }
                 }

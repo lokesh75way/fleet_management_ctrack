@@ -74,9 +74,9 @@ export const vehicleProfileSchema = yup
     distance: yup.number().typeError('Distance must be a number').required(),
     duration: yup.number().typeError('Duration must be a number').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
-    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number').required(),
-    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number').required(),
-    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number').required(),
+    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number'),
+    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number'),
+    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number'),
 
     
   })
