@@ -6,13 +6,13 @@ import { createRoot } from 'react-dom/client';
 import { MapContainer, TileLayer, GeoJSON,Marker,Popup ,Tooltip} from 'react-leaflet';
 import EditControlFC from './EditControl';
 
-const ShowMapContainer = ({ data }) => {
+const ShowMapContainer = ({ data, trackingData }) => {
 
   return (
     <div style={{ display: 'flex', height: '85vh' , position : "relative" , zIndex : 1}}>
     <div style={{ width: '100%' }}>
       <MapContainer
-        center={[ 25.2233, 55.2869]}
+        center={[ 24.420025, 54.49367]}
         zoom={14}
         zoomControl={false}
       >
@@ -20,7 +20,14 @@ const ShowMapContainer = ({ data }) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />       
-        <Marker styles={{background:'red'}} position={[ 25.2233, 55.2869]} ><Popup>Dubai Trade Center</Popup><Tooltip>Dubai Trade Center</Tooltip></Marker>
+        {
+          trackingData?.data?.map((item, index) => {
+            return(
+              <Marker styles={{background:'red'}} position={[ item.Latitude, item.Longitude]} ><Popup><h6>Name: {item?.vehicleId?.vehicleName}</h6><h6>Status: {item?.Status}</h6><h6>Location: {item?.Location}</h6></Popup><Tooltip>{item?.vehicleId?.vehicleName}</Tooltip></Marker>
+            )
+          })
+        }
+        
       </MapContainer>
     </div>
   </div>
