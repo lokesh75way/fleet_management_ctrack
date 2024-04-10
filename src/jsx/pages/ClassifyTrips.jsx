@@ -16,11 +16,7 @@ import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanv
 
 
 const ClassifyTrip = (ref) => {
-  const [filterData, setFilterData] = useState({
-    driverId: "", 
-    start: new Date(),
-    end: new Date(),
-  });
+
   const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
   const component = [ActiveTab,ActiveTab,ActiveTab];
 
@@ -54,18 +50,9 @@ const ClassifyTrip = (ref) => {
     setTableData(data);
   };
 
-
-
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const filterData = (data) => {
+    setTableData(data)
   };
-
-  const editDrawerOpen = (item) => {
-    const filteredData = tableData.filter((data) => data._id === item);
-    navigate(`edit/${item}`, { state: filteredData });
-  };
-
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
 
