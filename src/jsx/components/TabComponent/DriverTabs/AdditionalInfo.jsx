@@ -6,9 +6,9 @@ import Select from "react-select";
 import { licenseToDriveOptions } from "../VehicleTabs/Options";
 import CustomInput from "../../Input/CustomInput";
 import Error from "../../Error/Error";
-import { useParams, useLocation } from "react-router-dom";
-import "../../../../scss/pages/_driver-tracking.scss";
-import { useTranslation } from "react-i18next";
+import { useParams,useLocation } from "react-router-dom";
+import '../../../../scss/pages/_driver-tracking.scss';
+import {useTranslation} from 'react-i18next'
 
 const AdditionalInfo = ({
   setValue,
@@ -25,7 +25,7 @@ const AdditionalInfo = ({
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
   const newData = userData.filter((data) => data.id === parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
-  const [date, setDate] = useState({});
+  const [date, setDate] = useState({})
   const [dValues, setDvalues] = useState([]);
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -49,7 +49,7 @@ const AdditionalInfo = ({
 
   useEffect(() => {
     if (dValues && id) {
-      console.log("this:-", dValues);
+      console.log("this:-", dValues)
 
       setValue("age", dValues.age);
       setValue("drivingExperience", dValues?.drivingExperience);
@@ -115,12 +115,9 @@ const AdditionalInfo = ({
                 selected={date.dateOfJoining || new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setDate({ ...date, dateOfJoining: newValue });
-                  setValue(
-                    "dateOfJoining",
-                    newValue.toISOString().split("T")[0]
-                  );
-                }}
+                  setDate( {...date,
+                    dateOfJoining : newValue})
+                  setValue("dateOfJoining", newValue.toISOString().split('T')[0])}}
               />
             )}
           />
@@ -135,12 +132,9 @@ const AdditionalInfo = ({
                 selected={date.dateOfLeaving || new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setDate({ ...date, dateOfLeaving: newValue });
-                  setValue(
-                    "dateOfLeaving",
-                    newValue.toISOString().split("T")[0]
-                  );
-                }}
+                  setDate( {...date,
+                    dateOfLeaving : newValue})
+                  setValue("dateOfLeaving", newValue.toISOString().split('T')[0])}}
               />
             )}
           />
@@ -204,109 +198,87 @@ const AdditionalInfo = ({
           </div>
         </div>
 
-        <>
-          <div className="col-xl-6 mb-3 ">
-            <label className="form-label">{t("licenseNumber")}</label>
-            <div
-              className={`${
-                selectedOption !== "yes"
-                  ? "d-flex align-items-center pe-none"
-                  : "d-flex align-items-center"
-              }`}
-            >
-              <CustomInput
-                type="number"
-                register={register}
-                label="License Number"
-                style={{ marginRight: ".5rem" }}
-                name="licenseNumber"
-                placeholder=""
+          <>
+            <div className="col-xl-6 mb-3 ">
+              <label className="form-label">{t('licenseNumber')}</label>
+              <div className={`${ selectedOption !== "yes" ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
+                <CustomInput
+                  type="number"
+                  register={register}
+                  label="License Number"
+                  style={{ marginRight: ".5rem" }}
+                  name="licenseNumber"
+                  placeholder=""
+                />
+                <Error errorName={errors.licenseNumber} />
+              </div>
+            </div>
+            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3  pe-none" : "col-xl-6 mb-3 " }`}>
+              <label className="form-label">{t('licenseToDrive')}</label>
+              <Controller
+                name="licenseToDrive"
+                control={control}
+                render={({ field: { onChange, value, name, ref } }) => (
+                  <Select
+                    onChange={(newValue) =>
+                      setValue("licenseToDrive", newValue.value)
+                    }
+                    options={licenseToDriveOptions}
+                    ref={ref}
+                    name={name}
+                    styles={customStyles}
+                    defaultValue={licenseToDriveOptions[0]}
+                  />
+                  
+                )}
+                />
+                { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
+            </div>
+            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
+              <label className="form-label">{t('licenseIssueDate')}</label>
+              <Controller
+                name="licenseIssueDate"
+                control={control}
+                render={({ value, name }) => (
+                  <DatePicker
+                    selected={date.licenseIssueDate || new Date()}
+                    className="form-control customDateHeight"
+                    onChange={(newValue) =>
+                      {
+                        setDate({
+                          ...date,
+                          licenseIssueDate : newValue
+                        })
+                        setValue("licenseIssueDate", newValue.toISOString().split('T')[0])
+                      }
+                    }
+                  />
+                )}
               />
               <Error errorName={errors.licenseNumber} />
             </div>
-          </div>
-          <div
-            className={`${
-              selectedOption !== "yes"
-                ? "col-xl-6 mb-3  pe-none"
-                : "col-xl-6 mb-3 "
-            }`}
-          >
-            <label className="form-label">{t("licenseToDrive")}</label>
-            <Controller
-              name="licenseToDrive"
-              control={control}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) =>
-                    setValue("licenseToDrive", newValue.value)
-                  }
-                  options={licenseToDriveOptions}
-                  ref={ref}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={licenseToDriveOptions[0]}
-                />
-              )}
-            />
-            {!getValues("licenseToDrive") && (
-              <Error errorName={errors.licenseToDrive} />
-            )}
-          </div>
-          <div
-            className={`${
-              selectedOption !== "yes"
-                ? "col-xl-6 mb-3 d-flex flex-column  pe-none"
-                : "col-xl-6 mb-3 d-flex flex-column"
-            }`}
-          >
-            <label className="form-label">{t("licenseIssueDate")}</label>
-            <Controller
-              name="licenseIssueDate"
-              control={control}
-              render={({ value, name }) => (
-                <DatePicker
-                  selected={date.licenseIssueDate || new Date()}
-                  className="form-control customDateHeight"
-                  onChange={(newValue) => {
-                    setDate({
-                      ...date,
-                      licenseIssueDate: newValue,
-                    });
-                    setValue(
-                      "licenseIssueDate",
-                      newValue.toISOString().split("T")[0]
-                    );
-                  }}
-                />
-              )}
-            />
-          </div>
-          <div className="col-xl-6 mb-3 d-flex flex-column">
-            <label className="form-label">{t("licenseExpiryDate")}</label>
-            <Controller
-              name="licenseExpiryDate"
-              control={control}
-              render={({ value, name }) => (
-                <DatePicker
-                  selected={date.licenseExpiryDate || new Date()}
-                  className="form-control customDateHeight"
-                  onChange={(newValue) => {
-                    setDate({
-                      ...date,
-                      licenseExpiryDate: newValue,
-                    });
-                    setValue(
-                      "licenseExpiryDate",
-                      newValue.toISOString().split("T")[0]
-                    );
-                  }}
-                />
-              )}
-            />
-          </div>
-        </>
-
+            <div className="col-xl-6 mb-3 d-flex flex-column">
+              <label className="form-label">{t('licenseExpiryDate')}</label>
+              <Controller
+                name="licenseExpiryDate"
+                control={control}
+                render={({ value, name }) => (
+                  <DatePicker
+                    selected={date.licenseExpiryDate || new Date()}
+                    className="form-control customDateHeight"
+                    onChange={(newValue) =>{
+                      setDate({
+                        ...date, 
+                        licenseExpiryDate : newValue
+                      })
+                      setValue("licenseExpiryDate", newValue.toISOString().split('T')[0])
+                    }}
+                  />
+                )}
+              />
+            </div>
+          </>
+    
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t("lifeInsuranceNumber")}</label>
           <CustomInput
@@ -318,27 +290,24 @@ const AdditionalInfo = ({
           />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t("lifeInsuranceExpiry")}</label>
+          <label className="form-label">{t('lifeInsuranceExpiry')}</label>
           <Controller
-            name="lifeInsuranceExpiry"
-            control={control}
-            render={({ value, name }) => (
-              <DatePicker
-                selected={date.lifeInsuranceExpiry || new Date()}
-                className="form-control customDateHeight"
-                onChange={(newValue) => {
-                  setDate({
-                    ...date,
-                    lifeInsuranceExpiry: newValue,
-                  });
-                  setValue(
-                    "lifeInsuranceExpiry",
-                    newValue.toISOString().split("T")[0]
-                  );
-                }}
+                name="lifeInsuranceExpiry"
+                control={control}
+                render={({ value, name }) => (
+                  <DatePicker
+                    selected={date.lifeInsuranceExpiry || new Date()}
+                    className="form-control customDateHeight"
+                    onChange={(newValue) =>{
+                      setDate({
+                        ...date,
+                        lifeInsuranceExpiry :newValue
+                      })
+                      setValue("lifeInsuranceExpiry", newValue.toISOString().split('T')[0])
+                    }}
+                  />
+                )}
               />
-            )}
-          />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t("mediclaimNumber")}</label>
@@ -353,25 +322,22 @@ const AdditionalInfo = ({
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">{t("mediclaimExpiryDate")}</label>
           <Controller
-            name="mediclaimExpiryDate"
-            control={control}
-            render={({ value, name }) => (
-              <DatePicker
-                selected={date.mediclaimExpiryDate || new Date()}
-                className="form-control customDateHeight"
-                onChange={(newValue) => {
-                  setDate({
-                    ...date,
-                    mediclaimExpiryDate: newValue,
-                  });
-                  setValue(
-                    "mediclaimExpiryDate",
-                    newValue.toISOString().split("T")[0]
-                  );
-                }}
-              />
-            )}
-          />
+                name="mediclaimExpiryDate"
+                control={control}
+                render={({ value, name }) => (
+                  <DatePicker
+                    selected={date.mediclaimExpiryDate || new Date()}
+                    className="form-control customDateHeight"
+                    onChange={(newValue) =>{
+                      setDate({
+                        ...date,
+                        mediclaimExpiryDate :newValue
+                      })
+                      setValue("mediclaimExpiryDate", newValue.toISOString().split('T')[0])
+                    }}
+                  />
+                )}
+            />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t("active")}</label>
@@ -399,7 +365,7 @@ const AdditionalInfo = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("next")}
+          {t('next')}
         </Button>
       </div>
     </div>
