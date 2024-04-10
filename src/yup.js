@@ -75,8 +75,6 @@ export const vehicleProfileSchema = yup
 
     vehicleCategory: yup.string().required('Vehicle category is required'),
     vinNumber: yup.number().typeError('VIN number must be a number').required(),
-    // distance: yup.number().typeError('Distance must be a number').required(),
-    // duration: yup.number().typeError('Duration must be a number').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
     underweightTolerance: yup.number().typeError('Underweight tolerance must be a number').required(),
     overweightTolerance: yup.number().typeError('Overweight tolerance must be a number').required(),
@@ -88,33 +86,10 @@ export const vehicleProfileSchema = yup
 
 export const vehicleDocumentSchema = yup
   .object({
-    test: yup.array().of(
+    documents: yup.array().of(
       yup.object().shape({
-        fieldName: yup.string().required("This field is required"),
-        file: yup
-          .mixed()
-          .required("File is required")
-          .test(
-            "fileExist",
-            "File is required",
-            (value) => value && value.length
-          )
-          .test("fileSize", "File size is too large", (value) => {
-            console.log({ value });
-            return value && value.length > 0
-              ? value && value[0]?.size <= 1024 * 1024
-              : true;
-          })
-          .test("fileType", "Unsupported file type", (value) => {
-            if (value && value.length > 0)
-              return (
-                value &&
-                ["image/jpeg", "image/png", "application/pdf"].includes(
-                  value[0]?.type
-                )
-              );
-            return true;
-          }),
+        documentType: yup.string().required("This field is required"),
+        file: yup.string()
       })
     ),
   })

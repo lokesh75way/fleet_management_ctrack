@@ -9,82 +9,102 @@ import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { vehicleGeneralSchema, vehicleProfileSchema, vehicleDocumentSchema } from '../../../../../yup' ;
-import useStorage from '../../../../../hooks/useStorage'
+import {
+  vehicleGeneralSchema,
+  vehicleProfileSchema,
+  vehicleDocumentSchema,
+} from "../../../../../yup";
+import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import { createVehicles, updateVehicles } from "../../../../../services/api/VehicleService";
+import {
+  createVehicles,
+  updateVehicles,
+} from "../../../../../services/api/VehicleService";
 
-import {useTranslation} from 'react-i18next'
-
+import { useTranslation } from "react-i18next";
 
 const VehicleForm = () => {
-
-  const {t} = useTranslation();
-  const {saveData} = useStorage()
-  const navigate = useNavigate()
+  const { t } = useTranslation();
+  const { saveData } = useStorage();
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t('general'), t('profile'), t('document')];
+  const tabHeading = [t("general"), t("profile"), t("document")];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
     defaultValues: {
-      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
+      test: [{ fieldName: "", file: null, IssueDate: "", ExpiryDate: "" }],
     },
-    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: activeIndex === 1? vehicleProfileSchema : vehicleDocumentSchema)
-  })
+    resolver: yupResolver(
+      activeIndex === 0
+        ? vehicleGeneralSchema
+        : activeIndex === 1
+        ? vehicleProfileSchema
+        : vehicleDocumentSchema
+    ),
+  });
   const { id } = useParams();
   const location = useLocation();
   const { formData } = location.state || {};
-  
-
-  const onSubmit = async(data)=>{
-    
-    console.log({activeIndex, totalTabs}, "tabswitch")
-    if(activeIndex === (totalTabs - 1)){
-      try{
-        if(id){
-          try{
-
-
-            data.businessGroupName = getValues('businessGroupName')
-            await updateVehicles(data)
-            console.log("sdfsdfsfsa")
-            notifySuccess("Vehicle Updated Successfully")
+  const onSubmit = async (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        if (id) {
+          try {
+            data.businessGroupName = getValues("businessGroupName");
+            await updateVehicles(data);
+            notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");
             return;
-          }catch(e){
-            notifyError("Some Error occured")
+          } catch (e) {
+            notifyError("Some Error occured");
           }
-        }
-        else{
-          try{
+        } else {
+          try {
+            for (const key in data) {
+              const element = data[key];
+              if(data[key]===undefined|| data[key] === '' ){
+                delete data[key]
+              }
+            }
+            delete data.test
+            data.businessGroupId = getValues("businessId");
+            data.companyId = getValues("companyId");
+            data.branchId = getValues("branchId");
 
-            data.businessGroupId = getValues('businessId')
-            data.companyId = getValues('companyId')
-            data.branchId = getValues('branchId')
+            console.log(data);
             await createVehicles(data)
-            
-            notifySuccess("Vehicle created")
+
+            notifySuccess("Vehicle created");
             navigate("/vehicle");
             return;
-          }catch(e){
-            notifyError("Some error occured")
+          } catch (e) {
+            notifyError("Some error occured");
           }
         }
-      }
-      catch(error){
-        notifyError("Some error occured")
+      } catch (error) {
+        notifyError("Some error occured");
       }
       return;
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
+    setActiveIndex((prevIndex) => {
+
+      return Math.min(prevIndex + 1, totalTabs - 1)
+    });
+  };
   return (
     <>
       <MainPagetitle
-        mainTitle={t('vehicle')}
+        mainTitle={t("vehicle")}
         pageTitle={id ? t("edit") : t("create")}
-        parentTitle={t('vehicle')}
+        parentTitle={t("vehicle")}
       />
       <div className="m-2 p-2">
         <FormProvider>

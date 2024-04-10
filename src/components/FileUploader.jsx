@@ -18,13 +18,13 @@ const FileUploader = ({
     try {
       setLoading(true);
       const acceptedFiles = e.target.files;
-      console.log(e)
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
       formData.append("upload_preset", upload_Preset);
       if (e.target.files[0]) {
         const { message, data } = await fileUpload(formData);
-        // setValue(name, data.link);
+        console.log(name , data.link)
+        setValue(name, data.link);
         notifySuccess(message);
         onSuccess(data.link, name)
       }
