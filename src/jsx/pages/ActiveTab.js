@@ -78,8 +78,8 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const onConfirmDelete = async (id) => {
     await deleteTrip(id);
+    setTableData(prevTableData => prevTableData.filter(trip => trip._id !== id));
     notifySuccess("Trip Deleted");
-    await getAllTrips();
   };
 
   const editDrawerOpen = (item) => {

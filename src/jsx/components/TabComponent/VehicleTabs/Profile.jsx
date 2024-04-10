@@ -314,7 +314,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Distance"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 .4rem" }}
               name="distance"
               placeholder=""
             />
@@ -326,7 +326,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   type="number"
                   register={register}
                   label = "Distance Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
+                  style={{ width: "5rem", margin: " 0 .4rem" }}
                   name="distanceQuantity"
                   placeholder=""
                 />
@@ -364,7 +364,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Duration"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 .4rem" }}
               name="duration"
               placeholder=""
             />
@@ -386,12 +386,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             />
             {isCheckedDBFC2 && (
               <>
-                <span style={{ paddingLeft: ".6rem", paddingRight : ".6rem" }}>/</span>
+                <span style={{ paddingLeft: ".4rem", paddingRight : ".4rem" }}>/</span>
                 <CustomInput
                   type="number"
                   register={register}
                   label="Duration Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
+                  style={{ width: "5rem", margin: " 0 .4rem" }}
                   name="durationQuantity"
                   placeholder=""
                 />
