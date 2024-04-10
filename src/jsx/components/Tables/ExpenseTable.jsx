@@ -8,7 +8,7 @@ const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item.id}</span></td>
+                    <td><span>{item._id}</span></td>
                     <td>
                         <div className="products">
                             <div>
@@ -26,9 +26,8 @@ const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span onClick={()=>editDrawerOpen(item.id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
-                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
-
+                            <span onClick={()=>editDrawerOpen(item._id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item._id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
                         </span>
                     </td>
                 </tr>

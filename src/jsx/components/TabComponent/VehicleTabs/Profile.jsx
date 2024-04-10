@@ -447,7 +447,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             />
             {isCheckedDBFC2 && (
               <>
-                <span style={{ paddingLeft: ".6rem", paddingRight : ".6rem" }}>/</span>
+                <span style={{ paddingLeft: ".4rem", paddingRight : ".4rem" }}>/</span>
                 <CustomInput
                   type="number"
                   register={register}

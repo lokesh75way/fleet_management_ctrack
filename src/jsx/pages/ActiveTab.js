@@ -12,9 +12,13 @@ import usePagination from "../../hooks/usePagination";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 const ActiveTab = ({ tableData1, tabType }) => {
+  console.log("tabledata1",tableData1)
   const [tableData, setTableData] = useState(tableData1);
   const [status, setStatus] = useState("");
 
+  useEffect(()=>{
+    setTableData(tableData1);
+  },[tableData1])
   const {
     register,
     setValue,
@@ -64,7 +68,7 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const getAllTrips = async (status) => {
     try {
-      const { data, success, totalLength } = await getTrips(page, status); // Assuming getTrips takes page, limit, and status as arguments
+      const { data, success, totalLength } = await getTrips(page, status); 
       setTableData(data);
       setCount(totalLength);
     } catch (error) {
@@ -74,8 +78,8 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const onConfirmDelete = async (id) => {
     await deleteTrip(id);
+    setTableData(prevTableData => prevTableData.filter(trip => trip._id !== id));
     notifySuccess("Trip Deleted");
-    await getAllTrips();
   };
 
   const editDrawerOpen = (item) => {

@@ -179,7 +179,7 @@ export const companyAccountSchema = yup
     logo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        return true;
       }),
   })
   .required();
@@ -283,7 +283,7 @@ export const businessGroupAccountSchema = yup
         // // if(typeof value === 'string') return true;
         // const extension = value[0].name.split(".").pop().toLowerCase();
         // return extension === "jpg" || extension === "png";
-        return true
+        return true;
       }),
   })
   .required();
@@ -296,7 +296,7 @@ export const businessGroupSettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        return true;
       }),
   })
   .required();
@@ -309,7 +309,7 @@ export const companySettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        return true;
       }),
   })
   .required();
@@ -330,9 +330,9 @@ export const companyPasswordSchema = yup.object({
 
 export const driverProfileSchema = yup
   .object({
-    company: yup.string().required("Company is required "),
-    business: yup.string().required("Business group is required "),
-    branch: yup.string().required("Branch is required "),
+    companyId: yup.string().required("Company is required "),
+    businessGroupId: yup.string().required("Business group is required "),
+    branchId: yup.string().required("Branch is required "),
     firstName: yup.string().required("First Name is required "),
     lastName: yup.string().required("Last Name is required "),
     employeeNumber: yup.number().typeError("Employee Number must be a number"),
@@ -344,11 +344,11 @@ export const driverProfileSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     contact1: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits")
+      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits")
       .required("Contact Number1 is required "),
     contact2: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits"),
     country: yup.string().required("Please select a Country "),
     street1: yup.string().required("Please enter street1 address"),
     street2: yup.string(),
@@ -358,47 +358,48 @@ export const driverProfileSchema = yup
   .required();
 export const driverInfoSchema = yup
   .object({
+    dateOfBirth: yup.date().nullable(),
     age: yup
       .number()
       .typeError("Age must be a number")
       .required("Age is required"),
-    drivingExperienceSince: yup
+    dateOfJoining: yup.date().nullable(),
+    dateOfLeaving: yup.date().nullable(),
+    drivingExperience: yup
       .number()
       .typeError("Driving experience must be a number")
       .required("Driving experience is required"),
     licenseToDrive: yup.string(),
     licenseNumber: yup.string(),
+    licenseIssueDate: yup.date().nullable(),
+    licenseExpiryDate: yup.date().nullable(),
+    lifeInsuranceNumber: yup.string().typeError("Insurance must be a number"),
+    lifeInsuranceExpiry: yup.date().nullable(),
+    mediclaimNumber: yup.string().typeError("Medical claim must be a number"),
+    mediclaimExpiryDate: yup.date().nullable(),
   })
   .required();
 export const driverDocumentSchema = yup
   .object({
-    test: yup.array().of(
+    documents: yup.array().of(
       yup.object().shape({
-        fieldName: yup.string().required("This field is required"),
+        documentType: yup.string().required("This field is required"),
         file: yup
           .mixed()
           .required("File is required")
-          .test(
-            "fileExist",
-            "File is required",
-            (value) => value && value.length
-          )
-          .test("fileSize", "File size is too large", (value) => {
-            console.log({ value });
-            return value && value.length > 0
-              ? value && value[0]?.size <= 1024 * 1024
-              : true;
-          })
-          .test("fileType", "Unsupported file type", (value) => {
-            if (value && value.length > 0)
-              return (
-                value &&
-                ["image/jpeg", "image/png", "application/pdf"].includes(
-                  value[0]?.type
-                )
-              );
-            return true;
-          }),
+          // .test("fileType", "Unsupported file type", (value) => {
+          //   if (value && value.length > 0)
+          //     return (
+          //       value &&
+          //       ["image/jpeg", "image/png", "application/pdf"].includes(
+          //         value[0]?.type
+          //       )
+          //     );
+          //   return true;
+          // }),
+          ,
+        issueDate: yup.string().typeError('Issue date is required'),
+        expireDate: yup.string().typeError('Expiry date is required'),
       })
     ),
   })
@@ -463,6 +464,11 @@ export const expenseSchema = yup
       .number()
       .required("Reference Number a required ")
       .typeError("Reference Number must be a number"),
+    odometer: yup
+      .number()
+      .typeError("Odometer Number must be a number")
+      .optional(),
+    workHour : yup.string().typeError("WorkHour Number must be valid").optional(),
     //  userName: yup.string().required("User Name is required "),
   })
   .required();
@@ -542,20 +548,16 @@ export const technicianLeaveSchema = yup
   
 export const classifyTripsSchema = yup
   .object({
-    // startTime: yup.string().("Trip start time is required "),
-    startLocation: yup.string().required("Trip start Location is required "),
-    // reachTime: yup.string().required("Trip reach time is required "),
-    reachLocation: yup.string().required("Trip reach Location is required "),
+    startDate: yup.string().required("Trip start Location is required "),
+    endDate: yup.string().required("Trip reach Location is required "),
     driverId: yup.string().required("Driver name is required "),
   })
   .required();
 
 export const classifyTripsFilterCanvas = yup
   .object({
-    // startTime: yup.string().("Trip start time is required "),
-    startLocation: yup.string().required("Trip start Location is required "),
-    // reachTime: yup.string().required("Trip reach time is required "),
-    reachLocation: yup.string().required("Trip reach Location is required "),
     driverId: yup.string().required("Driver name is required "),
+    startDate: yup.string().required("Start date is required "),
+    endDate: yup.string().required("End date is required "),
   })
   .required();

@@ -2,14 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import Error from "../../Error/Error";
 import '../../../../scss/pages/_driver-tracking.scss'
 import { useTranslation } from 'react-i18next'
 import FileUploader from "../../../../components/FileUploader"
 
-const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
-
+const Document = ({
+  setValue,
+  handleSubmit,
+  onSubmit,
+  control,
+  getValues,
+  errors,
+  register,
+}) => {
   const { t } = useTranslation();
   const [tempValue, setTempValue] = useState(null);
   const [documents, setDocuments] = useState([]);
@@ -77,7 +84,10 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">{t('selectDocument')}<span className="text-danger">*</span></label>
+                  <label className="form-label">
+                    {t("selectDocument")}
+                    <span className="text-danger">*</span>
+                  </label>
                   <Controller
                     name={`test.${index}.fieldName`}
                     control={control}
@@ -132,7 +142,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                   <Error errorName={errors?.test?.[index]?.file} />
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
-                  <label className="form-label">{t('issueDate')}</label>
+                  <label className="form-label">{t("issueDate")}</label>
                   <Controller
                     name={`test.${index}.IssueDate`}
                     control={control}
@@ -166,7 +176,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                   {!getValues(`test.${index}.IssueDate`) && <Error errorName={errors?.test?.[index]?.IssueDate} />}
                 </div>
                 <div className="col-xl-3 d-flex flex-column  mb-2">
-                  <label className="form-label">{t('expiryDate')}</label>
+                  <label className="form-label">{t("expiryDate")}</label>
                   <Controller
                     name={`test.${index}.ExpiryDate`}
                     control={control}
@@ -211,12 +221,13 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
         >
           <Button type="submit" onClick={handleSubmit(onSubmit)}>
             {" "}
-            {t('submit')}
+            {t("submit")}
           </Button>
         </div>
       </div>
     </div>
   );
-};
+}
+
 
 export default Document;

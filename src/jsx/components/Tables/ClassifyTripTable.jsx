@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 const ClassifyTripTable = ({
   tableData,
@@ -13,14 +14,7 @@ const ClassifyTripTable = ({
 }) => {
   
   const formatDate = (dateTimeString) => {
-    const date = new Date(dateTimeString); 
-    const day = date.getDate().toString().padStart(2, '0'); 
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
-    const year = date.getFullYear(); 
-    const hours = date.getHours().toString().padStart(2, '0'); 
-    const minutes = date.getMinutes().toString().padStart(2, '0'); 
-  
-    return `${day}-${month}-${year} ${hours}:${minutes}`; 
+    return dayjs(dateTimeString).format('YYYY-MM-DD HH:MM')
   };
   return (
     <>
