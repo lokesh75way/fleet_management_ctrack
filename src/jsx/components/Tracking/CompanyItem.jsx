@@ -31,6 +31,12 @@ const CompanyItem = (props) => {
   //   });
   //   setNodes([...data]);
   // }, [props.vehicles]);
+
+  useEffect(() => {
+    let vehicleIds = [];
+    const data = nodes?.map((ele) => ele.children?.map((vehicle) => vehicleIds.push(vehicle.value) ));
+    handleCheck(vehicleIds);
+  }, [nodes])
   
   const handleCheck = (checked) => {
     setChecked(checked);
