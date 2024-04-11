@@ -95,7 +95,7 @@ const Alert = () => {
     try {
       // const permissions = JSON.parse(localStorage.getItem('permission'));
       // setUserPermission(permissions?.[0]?.permission);
-      const { data, totalPage, totalCount } = await getAllAlert();
+      const { data, totalPage, totalCount } = await getAlerts();
       setTableData(data);
       console.log('data came',data);
       // setCount(totalCount);
@@ -108,7 +108,7 @@ const Alert = () => {
 
   useEffect(() => {
     getAlertData();
-  },[newData]);
+  },[]);
 
   return (
     <>
