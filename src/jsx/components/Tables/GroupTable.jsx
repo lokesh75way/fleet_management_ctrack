@@ -21,7 +21,6 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
         setData(tableData.reverse());
     }, [tableData])
 
-    console.log('ye he feature data', data);
 
     return (
         <>

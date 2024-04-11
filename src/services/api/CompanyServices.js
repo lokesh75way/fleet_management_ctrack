@@ -17,7 +17,6 @@ export const getCompany = async (page, groupId) => {
   if (params.length > 0) {
     url += '?' + params.join('&');
   }
-  console.log(url, "url");
   return await axios.get(url);
 };
 export const addCompany = async (body) => {

@@ -76,7 +76,7 @@ const ManagePassword = ({
             <CustomInput
               type={showConfirmPassword ? "text" : "password"}
               register={register}
-              label="Retype Passwor"
+              label="Retype Password"
               name="confirmPassword"
               placeholder=""
             />

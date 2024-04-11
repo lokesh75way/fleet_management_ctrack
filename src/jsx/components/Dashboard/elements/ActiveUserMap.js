@@ -106,7 +106,7 @@ const {t} = useTranslation();
                       styles={{ background: "red" }}
                       position={[25.2233, 55.2869]}
                     >
-                      <Popup>Dubai Trade Center</Popup>
+                      <Popup>Dubai Trade Cdddddenter</Popup>
                       <Tooltip>Dubai Trade Center</Tooltip>
                     </Marker>
                    

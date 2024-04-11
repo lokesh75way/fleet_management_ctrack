@@ -20,15 +20,15 @@ const ParentBranchDropdown = ({
         const fetchBusinessGroups = async () => {
             const response = await getAllBranch(undefined,companyId ? companyId : undefined);
             const groupOptions = response.data.data.map(item => ({ value: item?._id, label: item?.branchName }));
-            console.log(response.data, "this is Branch data")
-            console.log(groupOptions, "this is Branch options")
+            // console.log(response.data, "this is Branch data")
+            // console.log(groupOptions, "this is Branch options")
             setdropDownOptions(groupOptions);
         };
         fetchBusinessGroups();
     }
     , []);
     useEffect(() => {
-        const selected = dropDownOptions.filter((option) => value && value.includes(option.value));
+        const selected = dropDownOptions.filter((option) => option.value === value);
         setSelectedOption(selected);
     }, [value, dropDownOptions]);
 
@@ -40,6 +40,7 @@ const ParentBranchDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
+                placeholder="Select Parent Branch"
                 // isDisabled={isDisabled || !companyId}
                 />
     );

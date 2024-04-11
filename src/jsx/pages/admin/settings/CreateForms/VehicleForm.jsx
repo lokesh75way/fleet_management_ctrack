@@ -37,9 +37,40 @@ const VehicleForm = () => {
   const { formData } = location.state || {};
   
 
-  const onSubmit = async (data) => {
-    if (activeIndex !== (totalTabs - 1)) {
-      setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+  const onSubmit = async(data)=>{
+    if(activeIndex === (totalTabs - 2)){
+      try{
+        if(id){
+          try{
+            console.log(data)
+
+            data.businessGroupName = getValues('businessGroupName')
+            await updateVehicles(data)
+            notifySuccess("Vehicle Updated Successfully")
+            navigate("/vehicle");
+            return;
+          }catch(e){
+            notifyError("Some Error occured")
+          }
+        }
+        else{
+          try{
+            console.log(data)
+            data.businessGroupId = getValues('businessId')
+            data.companyId = getValues('companyId')
+            data.branchId = getValues('branchId')
+            await createVehicles(data)
+            notifySuccess("Vehicle created")
+            navigate("/vehicle");
+            return;
+          }catch(e){
+            notifyError("Some error occured")
+          }
+        }
+      }
+      catch(error){
+        notifyError("Some error occured")
+      }
       return;
     }
   

@@ -44,16 +44,34 @@ const [loading ,setLoading] = useState();
     }
   },[id])
   useEffect(()=>{
-    setValue('dateFormat',dValues?.dateFormat ? dValues?.dateFormat : dateFormatOptions[0].value)
-    setValue('unitOfDistance',dValues?.unitOfDistance || unitOfDistanceOptions[0].value)
-    setValue('timeFormat',dValues?.timeFormat || timeFormatOptions[0].value)
-    setValue('unitOfFuel',dValues?.unitOfFuel || unitOfFuelOptions[0].value)
-    setValue('language',dValues?.language || languageOptions[0].value)
-    setValue('status',dValues?.status || statusOptions[0].value)
-    setValue('workStartDay',dValues?.workStartDay || dayOptions[0].value)
-    setValue('currency',dValues?.currency || currencyOptions[0].value)
-  },[])
-
+    if(dValues && id){
+    setValue('dateFormat',dValues?.dateFormat )
+    setValue('unitOfDistance',dValues?.unitOfDistance )
+    setValue('timeFormat',dValues?.timeFormat )
+    setValue('unitOfFuel',dValues?.unitOfFuel )
+    setValue('language',dValues?.language )
+    setValue('status',dValues?.status )
+    setValue('currency',dValues?.currency )
+    setValue('workStartDay',dValues?.workStartDay )
+    const timezone = dValues?.timezone
+    if(timezone){
+    setValue('timezone',dValues?.timezone )
+    setSelectedTimezone(timezone)
+    }
+    setValue('file',dValues?.file )
+  }else{
+      setValue('dateFormat',dateFormatOptions[0].value)
+      setValue('unitOfDistance',unitOfDistanceOptions[0].value)
+      setValue('timeFormat',timeFormatOptions[0].value)
+      setValue('unitOfFuel',unitOfFuelOptions[0].value)
+      setValue('language',languageOptions[0].value)
+      setValue('status',statusOptions[0].value)
+      setValue('currency',currencyOptions[0].value)
+      setValue('workStartDay',dayOptions[0].value)
+      setValue('timezone',Intl.DateTimeFormat().resolvedOptions().timeZone)
+    }
+  },[dValues])
+ 
 
   return (
     <div className="p-4">
@@ -168,11 +186,11 @@ const [loading ,setLoading] = useState();
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('worksStartDay')}</label>
           <Controller
-            name="worksstartday"
+            name="workStartDay"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("worksstartday", newValue.value)}
+                onChange={(newValue) => setValue("workStartDay", newValue.value)}
                 options={dayOptions}
                 ref={ref}
                 name={name}
@@ -208,7 +226,10 @@ const [loading ,setLoading] = useState();
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
                 // onChange={(newValue) => setValue("unitOfFuel", newValue.value)}
-                onChange={setSelectedTimezone}
+                onChange={(timeZone)=>{
+                  setSelectedTimezone(timeZone)
+                  setValue("timezone", timeZone.value)
+                }}
                 ref={ref}
                 name={name}
                 styles={customStyles}

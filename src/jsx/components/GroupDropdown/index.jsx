@@ -9,7 +9,7 @@ const GroupDropdown = ({
     isDisabled,
     name
 }) => {
-    console.log(value, "this is isDisabled")
+    console.log(value, "thiiis:-")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     useEffect(() => {
@@ -19,8 +19,8 @@ const GroupDropdown = ({
                 label: item?.businessGroupId?.groupName,
                 value: item?.businessGroupId?._id,
             }));
-            console.log(response.data, "this is groud data")
-            console.log(groupOptions, "this is group options")
+            // console.log(response.data, "this is groud data")
+            // console.log(groupOptions, "this is group options")
             setdropDownOptions(groupOptions);
         };
         fetchBusinessGroups();

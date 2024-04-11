@@ -6,24 +6,20 @@ import React, {
 } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider } from "react-hook-form";
 import Error from "../components/Error/Error";
 import {
-  branchOptions,
   alertTypeOptions,
   objectOptions,
   severityOptions,
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
 import "../../scss/pages/_driver-tracking.scss";
-
+import DatePicker from "react-datepicker";
 import { useTranslation } from "react-i18next";
-
-import ParentBranchDropdown from "../components/ParentBranch";
-import RadioButtonCustomComponent from "../components/RadioButtonCustomComponent";
+import BranchDropdown from "../components/BranchDropdown";
 
 const AlertOffcanvas = forwardRef(
   (
@@ -37,67 +33,71 @@ const AlertOffcanvas = forwardRef(
       handleSubmit,
       onSubmit,
       clearErrors,
+      reset,
       editData,
+      setEditData,
     },
     ref
   ) => {
     console.log("edit data inside modal", editData);
     const [addEmploye, setAddEmploye] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [selectedOption2, setSelectedOption2] = useState(null);
-    const [selectedOption3, setSelectedOption3] = useState(null);
-    const [tempValue, setTempValue] = useState();
+    const [tempVehicle, setTempVehicle] = useState("");
+    const [tempValue, setTempValue] = useState("");
+    const [tempValidDays, setTempValidDays] = useState("");
+    const [companyId, setCompanyId] = useState();
+    const { t } = useTranslation();
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
     useImperativeHandle(ref, () => ({
       showModal() {
         setAddEmploye(true);
       },
-    }));
-    useEffect(() => {
-      if (addEmploye === true) {
-        clearErrors("branch");
-        clearErrors("basedOn");
-        clearErrors("object");
-        clearErrors("alertType");
-        clearErrors("alertName");
-        clearErrors("severity");
-        clearErrors("value");
-        setValue("alertName", "");
-        setValue("validFrom", "");
-        setValue("validTo", "");
-      }
-    }, [addEmploye]);
-    const nav = useNavigate();
 
-    const handleChange = (e) => {
-      setSelectedOption(e.target.value);
-      setValue("basedOn", e.target.value);
-    };
-    const handleChange2 = (e) => {
-      setSelectedOption2(e.target.value);
-      setValue("value", e.target.value);
-    };
-    const handleChange3 = (e) => {
-      setSelectedOption3(e.target.value);
-      setValue("validDays", e.target.value);
-    };
+      closeModal() {
+        reset();
+        clearErrors();
+        setAddEmploye(false);
+      },
+    }));
+
+    useEffect(() => {
+      if (userDetails.user.role === "COMPANY") {
+        setCompanyId(userDetails?.user.companyId);
+      }
+    }, []);
+
     const customStyles = {
       control: (base) => ({
         ...base,
         padding: ".25rem 0 ",
       }),
     };
-    const { t } = useTranslation();
 
     useEffect(() => {
-      if (editData && editData?._id) {
-        setValue("branchId", editData.branchId);
-        setValue("object", editData.object);
-        setValue("sevirity", editData.sevirity);
-        setValue("sevirity", editData.sevirity);
-      }
-    }, [editData]);
+      reset({});
+      clearErrors();
+      if (addEmploye && editData) reset({ ...editData });
+      else setEditData();
+    }, [addEmploye]);
 
-    console.log(errors);
+    const handleBasedOn = (e) => {
+      setTempVehicle(e.target.value);
+      setValue("basedOn", e.target.value);
+    };
+    const handleValue = (e) => {
+      setTempValue(e.target.value);
+      setValue("value", e.target.value);
+    };
+    const handleValidDays = (e) => {
+      setTempValidDays(e.target.value);
+      setValue("validDays", e.target.value);
+    };
+    const handleActionChange = (e) => {
+      console.log({ e });
+      const vl = getValues(e.target.name);
+      setValue(e.target.name, e.target.checked);
+    };
+
     return (
       <>
         <Offcanvas
@@ -126,41 +126,94 @@ const AlertOffcanvas = forwardRef(
                     <div className="col-xl-6 mb-3 ">
                       <label className="form-label">{t("branch")}</label>
                       <Controller
-                        name="branchId"
+                        name="branch"
                         control={control}
-                        rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <ParentBranchDropdown
-                            // key={companyId}
-                            // companyId={companyId}
-                            onChange={async (newValue) => {
-                              setValue("branchId", newValue.value);
-                              setTempValue("branchId");
+                          <BranchDropdown
+                            onChange={(newValue) => {
+                              setValue("branch", newValue.value);
                             }}
                             value={value}
                             customStyles={customStyles}
                             ref={ref}
-                            isDisabled={false}
+                            companyId={companyId}
                             name={name}
                           />
                         )}
                       />
-                      {!getValues("branchId") && (
-                        <Error errorName={errors.branchId} />
+                      {!getValues("branch") && (
+                        <Error errorName={errors.branch} />
                       )}
                     </div>
 
-                    <RadioButtonCustomComponent
-                      selectedOption={selectedOption}
-                      handleChange={handleChange}
-                      getValues={getValues}
-                      errors={errors}    
-                      Title = "basedOn"
-                      options = {[{name:'vehicle',value:'VEHICLE'},{name:'vehicleGroup',value:'VEHICLE_GROUP'},{name:'vehicleType',value:'VEHICLE_TYPE'}]}                
-                      required={true}
-                      name ='basedOn'
-                    />
-
+                    <div className="col-xl-6 mb-3">
+                      <label className="form-label">
+                        {t("basedOn")}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <div
+                        className="basic-form"
+                        style={{ marginTop: ".5rem" }}
+                      >
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="VEHICLE"
+                            checked={
+                              (getValues("basedOn") ?? tempVehicle) ===
+                              "VEHICLE"
+                            }
+                            onChange={handleBasedOn}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("vehicle")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="VEHICLE_GROUP"
+                            checked={
+                              (getValues("basedOn") ?? tempVehicle) ===
+                              "VEHICLE_GROUP"
+                            }
+                            onChange={handleBasedOn}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("vehicleGroup")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="VEHICLE_TYPE"
+                            checked={
+                              (getValues("basedOn") ?? tempVehicle) ===
+                              "VEHICLE_TYPE"
+                            }
+                            onChange={handleBasedOn}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("vehicleType")}
+                          </label>
+                        </div>
+                      </div>
+                      {!getValues("basedOn") && (
+                        <Error errorName={errors.basedOn} />
+                      )}
+                    </div>
                     <div className="col-xl-6 mb-3 ">
                       <label className="form-label">
                         {t("object")} <span className="text-danger">*</span>
@@ -172,14 +225,17 @@ const AlertOffcanvas = forwardRef(
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
                             onChange={(newValue) => {
-                              setTempValue(newValue.value);
                               setValue("object", newValue.value);
                             }}
                             options={objectOptions}
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            defaultValue={objectOptions[0]}
+                            value={
+                              objectOptions.filter(
+                                (l) => l.value == getValues("object")
+                              )?.[0]
+                            }
                           />
                         )}
                       />
@@ -190,7 +246,8 @@ const AlertOffcanvas = forwardRef(
 
                     <div
                       className={`${
-                        selectedOption !== "VEHICLE_GROUP"
+                        (getValues("basedOn") ?? tempVehicle) !==
+                        "VEHICLE_GROUP"
                           ? "col-xl-6 mb-3 pe-none red"
                           : "col-xl-6 mb-3"
                       }`}
@@ -233,14 +290,17 @@ const AlertOffcanvas = forwardRef(
                         render={({ field: { onChange, value, name, ref } }) => (
                           <Select
                             onChange={(newValue) => {
-                              setTempValue(newValue.value);
                               setValue("alertType", newValue.value);
                             }}
                             options={alertTypeOptions}
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            defaultValue={alertTypeOptions[0]}
+                            value={
+                              objectOptions.filter(
+                                (l) => l.value == getValues("alertType")
+                              )?.[0]
+                            }
                           />
                         )}
                       />
@@ -248,46 +308,150 @@ const AlertOffcanvas = forwardRef(
                         <Error errorName={errors.alertType} />
                       )}
                     </div>
-
-                    <RadioButtonCustomComponent
-                      selectedOption={selectedOption2}
-                      handleChange={handleChange2}
-                      getValues={getValues}
-                      errors={errors}    
-                      Title = "value"
-                      options = {[{name:'start',value:'START'},{name:'cancel',value:'CANCEL'},{name:'both',value:'BOTH'}]}                
-                      required={true}
-                      name = 'value'
-                    />
-
-                    <RadioButtonCustomComponent
-                      selectedOption={selectedOption3}
-                      handleChange={handleChange3}
-                      getValues={getValues}
-                      errors={errors}    
-                      Title = "validDays"
-                      options = {[{name:'everyday',value:'EVERYDAY'},{name:'custom',value:'CUSTOM'}]}                
-                      required={true}
-                      name = 'validDays'
-                    />
-
+                    <div className="col-xl-6 mb-3">
+                      <label className="form-label">
+                        Value<span className="text-danger">*</span>
+                      </label>
+                      <div
+                        className="basic-form"
+                        style={{ marginTop: ".5rem" }}
+                      >
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="START"
+                            checked={
+                              (getValues("value") ?? tempValue) === "START"
+                            }
+                            onChange={handleValue}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("start")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="CANCEL"
+                            checked={
+                              (getValues("value") ?? tempValue) === "CANCEL"
+                            }
+                            onChange={handleValue}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("cancel")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="BOTH"
+                            checked={
+                              (getValues("value") ?? tempValue) === "BOTH"
+                            }
+                            onChange={handleValue}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("both")}
+                          </label>
+                        </div>
+                      </div>
+                      {!getValues("value") && (
+                        <Error errorName={errors.value} />
+                      )}
+                    </div>
+                    <div className="col-xl-6 mb-3">
+                      <label className="form-label">{t("validDays")}</label>
+                      <div
+                        className="basic-form"
+                        style={{ marginTop: ".5rem" }}
+                      >
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="EVERYDAY"
+                            checked={
+                              (getValues("value") ?? tempValidDays) ===
+                              "EVERYDAY"
+                            }
+                            onChange={handleValidDays}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("everyday")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="CUSTOM"
+                            checked={
+                              (getValues("value") ?? tempValidDays) === "CUSTOM"
+                            }
+                            onChange={handleValidDays}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("custom")}
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                     <div className="col-xl-6 mb-3 ">
                       <label className="form-label">{t("validTimeFrom")}</label>
                       <div className="d-flex align-items-center justify-content-evenly">
-                        <CustomInput
-                          type="time"
-                          register={register}
-                          label="Valid time From"
+                        <Controller
                           name="validFrom"
-                          placeholder=""
+                          control={control}
+                          render={({ value, name }) => (
+                            <DatePicker
+                              selected={
+                                getValues("validFrom")
+                                  ? new Date(getValues("validFrom"))
+                                  : new Date()
+                              }
+                              className="form-control customDateHeight"
+                              onChange={(newValue) =>
+                                setValue("validFrom", newValue)
+                              }
+                            />
+                          )}
                         />
                         <span className="px-1">{t("to")}</span>
-                        <CustomInput
-                          type="time"
-                          register={register}
-                          label="Valid Time From"
+                        <Controller
                           name="validTo"
-                          placeholder=""
+                          control={control}
+                          render={({ value, name }) => (
+                            <DatePicker
+                              selected={
+                                getValues("validTo")
+                                  ? new Date(getValues("validTo"))
+                                  : new Date()
+                              }
+                              className="form-control customDateHeight"
+                              onChange={(newValue) =>
+                                setValue("validTo", newValue)
+                              }
+                            />
+                          )}
                         />
                       </div>
                     </div>
@@ -299,8 +463,9 @@ const AlertOffcanvas = forwardRef(
                             <input
                               type="checkbox"
                               className="form-check-input"
-                              value=""
-                              defaultChecked
+                              name="action.SMS"
+                              checked={getValues("action.SMS")}
+                              onInput={handleActionChange}
                             />
                             {t("sms")}
                           </label>
@@ -310,7 +475,9 @@ const AlertOffcanvas = forwardRef(
                             <input
                               type="checkbox"
                               className="form-check-input"
-                              value=""
+                              name="action.Email"
+                              checked={getValues("action.Email")}
+                              onInput={handleActionChange}
                             />
                             {t("email")}
                           </label>
@@ -320,7 +487,9 @@ const AlertOffcanvas = forwardRef(
                             <input
                               type="checkbox"
                               className="form-check-input"
-                              value=""
+                              name="action.Notification"
+                              checked={getValues("action.Notification")}
+                              onInput={handleActionChange}
                             />
                             {t("notification")}
                           </label>
@@ -339,14 +508,17 @@ const AlertOffcanvas = forwardRef(
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
                           onChange={(newValue) => {
-                            setTempValue(newValue.value);
                             setValue("severity", newValue.value);
                           }}
                           options={severityOptions}
                           ref={ref}
                           name={name}
                           styles={customStyles}
-                          defaultValue={severityOptions[0]}
+                          value={
+                            objectOptions.filter(
+                              (l) => l.value == getValues("severity")
+                            )?.[0]
+                          }
                         />
                       )}
                     />
