@@ -100,19 +100,20 @@ const General = ({
   }
   // const[formData,setFormData] = useState([])
   useEffect(()=>{
+
+    
     if(formData && id){
 
       setValue("businessGroupId",formData?.[0]?.businessGroupId)
-      console.log('businessGroupId',formData?.[0]?.businessGroupId);
       setGroupId(formData?.[0]?.businessGroupId);
       setValue("companyId", formData?.[0]?.companyId)
       setCompanyId(formData?.[0]?.companyId);
-      setValue("branch")
       setValue("imeiNumber",formData?.[0].imeiNumber)
 
       setValue("vehicleName",formData?.[0].vehicleName)
       setValue("plateNumber",formData?.[0].plateNumber)
-      setValue("branchIds",formData?.[0]?.branchIds)  
+      setValue("branchId",formData?.[0]?.branchId.map(branch => branch._id))
+      setValue("branch", formData?.[0]?.branchId.map(branch => branch._id)) 
       setValue("simNumber",formData?.[0].simNumber)
       setValue("secondrySimNumber",formData?.[0].secondrySimNumber)
       setValue("IMEINumber",formData?.[0].IMEINumber)
@@ -169,12 +170,12 @@ const General = ({
               key={groupId}
               groupId={groupId}
               onChange={(newValue) => {
-                setCompanyId(newValue.value)
                 setValue("companyId", newValue.value);
+                setCompanyId(newValue.value)
               }}
               value={value}
               customStyles={customStyles}
-              ref={ref}
+              ref={ref} 
               isDisabled={companyDisabled}
               name={name}
             />
@@ -207,14 +208,14 @@ const General = ({
               //   name={name}
               // />
               <BranchDropdown
-              key={companyId}
-              companyId={companyId}
-              onChange={async (newValue) => {
-                // setValue("parentBranchId", newValue.value);
-                setValue("branch", newValue.label);
-                setValue("branchIds", newValue.value);
-              }
-              }
+                key={companyId}
+                companyId={companyId}
+                onChange={async (newValue) => {
+
+                  const valuesArray = newValue.map(item => item.value);
+                  setValue("Branch", valuesArray);
+                  setValue("branchId", valuesArray);
+                }}
               value={value}
               customStyles={customStyles}
               ref={ref}
