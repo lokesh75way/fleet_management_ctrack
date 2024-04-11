@@ -9,7 +9,7 @@ export function PermissionProvider({ children }) {
   const [permissionsByBasePath, setPermissionsByBasePath] = useState({});
   // need to access store/storage and set user permissions
   const state = useSelector(state => state);
-
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   // const permissions = state?.auth?.permission[0]
   // const [userPermission, setUserPermission] = useState(permissions || [])
   const permissions = JSON.parse(localStorage.getItem('permission'))
@@ -30,8 +30,9 @@ export function PermissionProvider({ children }) {
   useEffect(() => {
     transformPermissions(userPermission);
   }, [userPermission]);
+  const role = userDetails?.user?.role;
   const can = (module, operation) => {
-    if (module === '*') return true;
+    if (module === '*'|| role === 'BUSINESS_GROUP') return true;
     const modulePermissions = permissionsByBasePath[module];
     if (modulePermissions) {
       return modulePermissions[operation] === false ? false : true
