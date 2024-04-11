@@ -79,7 +79,6 @@ const Vehicle = () => {
     // tableData.map((table) => table.id === id && setEditData(table));
 
     const data = tableData.filter((item) => item._id === id);
-    console.log('myData',data);
 
     navigate(`edit/${id}`,{ state: { formData: data } });
     // vehicle.current.showModal();

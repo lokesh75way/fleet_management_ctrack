@@ -20,6 +20,7 @@ import {
   getDriverById,
   updateDriver,
 } from "../../../../../services/api/driverService";
+import { driverDocumentOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 
 const DriverForm = () => {
   const { t } = useTranslation();
@@ -41,7 +42,7 @@ const DriverForm = () => {
     reset,
   } = useForm({
     defaultValues: {
-      documents:[{documentType:'', file:"",issueDate:"", expireDate:"" }]
+      documents:[{documentType:driverDocumentOptions[0].label, file:"",issueDate:"", expireDate:"" }]
     },
     resolver: yupResolver(
       activeIndex === 0

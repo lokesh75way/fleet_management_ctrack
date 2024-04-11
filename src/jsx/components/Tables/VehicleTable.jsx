@@ -15,19 +15,13 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   if(tableData.length ===0){
     return;
   }
-
   return tableData?.map((item, index) => (
+  
     <tr key={item.id}>
       <td>
         <div className="products">
-          {/* <img  className="avatar avatar-md" alt="" /> */}
-          {/* <FaCar
-            className="avatar avatar-md p-2"
-            style={{ marginRight: ".4rem" }}
-          /> */}
           <div>
             <h6>{item.vehicleName}</h6>
-            <span>Car</span>
           </div>
         </div>
       </td>
