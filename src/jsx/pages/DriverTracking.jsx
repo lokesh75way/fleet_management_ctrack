@@ -36,7 +36,7 @@ const DriverTracking = () => {
   
   const getVehiclesStatus = async (ids) =>{
     try{
-      const data = await getVehiclesTraking( ids ?? "", vehicleStatus);
+      const data = await getVehiclesTraking(ids ?? "", vehicleStatus);
       setTrackingData(data ?? [])
       return;
     }catch(error){
@@ -44,22 +44,25 @@ const DriverTracking = () => {
     }
   }
 
-  useEffect(() => {
-    getVehiclesStatus();
-    // set interval for 2 minutes
-    const intervalId = setInterval(() => {
-      getVehiclesStatus();
-    }, 120000);
-    // clear interval
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, []);
-
   const getVehiclesByIds = () => {
     const queryString = vehicleIds.map(id => `id=${id}&`).join('');
     getVehiclesStatus(queryString);
   }
+
+  useEffect(() => {
+    let intervalId;
+    if(vehicleIds.length) {
+      getVehiclesByIds();
+
+      intervalId = setInterval(() => {
+        getVehiclesStatus();
+      }, 120000);
+    }
+    
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [vehicleIds])
   
 
   // const getCurrentPosition = () => {
