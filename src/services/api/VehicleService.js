@@ -15,4 +15,16 @@ const updateVehicles = async (body,id) => {
   return axios.patch(`/vehicles/${id}`,body);
 };
 
-export { createVehicles, getVehicles, deleteVehicles, updateVehicles };
+const getVehiclesByCompany = async () => {
+  const {data} = await axios.get("/vehicles/list", );
+  console.log(data)
+  return { data :data.data };
+};
+
+const getVehiclesTraking = async (id, status) => {
+  const {data} = await axios.get(`/vehicles/tracking?${id}&status=${status}`, );
+  console.log(data)
+  return { data :data.data };
+};
+
+export { createVehicles, getVehicles, deleteVehicles, updateVehicles, getVehiclesByCompany, getVehiclesTraking };

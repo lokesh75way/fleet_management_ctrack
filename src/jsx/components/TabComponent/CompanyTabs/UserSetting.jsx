@@ -64,6 +64,7 @@ const UserSetting = ({
       "unitOfFuel",
       formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value
     );
+    setSelectedTimezone(formData?.[0].companyId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone);
     setValue(
       "language",
       formData?.[0].companyId?.language || languageOptions[0].value
@@ -261,7 +262,11 @@ const UserSetting = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
                 // onChange={(newValue) => setValue("unitOfFuel", newValue.value)}
-                onChange={setSelectedTimezone}
+                onChange={(timeZone)=> {
+                  setSelectedTimezone(timeZone)
+                  setValue("timezone", timeZone.value)
+                }}
+                  
                 ref={ref}
                 name={name}
                 styles={customStyles}

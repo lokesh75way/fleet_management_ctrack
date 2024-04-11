@@ -1,9 +1,6 @@
-import React, { useState } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { ChromePicker } from "react-color";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Map from "./Map";
-import { BiNoEntry } from "react-icons/bi";
 import CustomInput from "../components/Input/CustomInput";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,18 +13,27 @@ import { Button } from "react-bootstrap";
 import Error from "../components/Error/Error";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  createGeofenceData,
+  getGeofenceById,
+  updateGeofence,
+} from "../../services/api/GeoFenceService";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import CompanyDropdown from "../components/CompanyDropdown";
 
 const GeofenceDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const [defaultData, setDefaultData] = useState();
   const [tempValue, setTempValue] = useState();
+  const [groupId, setGroupId] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
-  const mapContainerStyle = {
-    height: "100%",
-    width: "100%",
-  };
+  const [companyId, setCompanyId] = useState();
+  const [companyDisabled, setCompanyDisabled] = useState(false);
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -35,29 +41,44 @@ const GeofenceDetail = () => {
     }),
   };
 
-  const defaultCenter = {
-    lat: -3.745,
-    lng: -38.523,
+  const getGeofenceDataById = async () => {
+    if (id) {
+      const { data } = await getGeofenceById(id);
+      setDefaultData(data);
+      setValue("company", data.company);
+      setValue("name", data.name);
+      setValue("category", data.category);
+      setValue("contactNumber", data.contactNumber);
+      setValue("tolerance", data.tolerance);
+      setValue("geofenceAccess", data.geofenceAccess);
+      setSelectedOption(data.geofenceAccess);
+      setValue("description", data.description);
+      setValue("address", data.address);
+      
+      setValue('location',data.location)
+    }
   };
 
-  const [map, setMap] = useState(null);
+  useEffect(() => {
+    if (userDetails.user.role === "COMPANY") {
+      console.log(userDetails);
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
 
-  const onLoad = React.useCallback(
-    function callback(map) {
-      const bounds = new window.google.maps.LatLngBounds(defaultCenter);
-      map.fitBounds(bounds);
-      setMap(map);
-    },
-    [defaultCenter]
-  );
+      setValue("companyId", userDetails?.user.companyId);
+      setCompanyId(userDetails?.user.companyId);
+      setCompanyDisabled(true);
+      console.log("companyId", userDetails?.user.businessGroupId);
+    }
+    if (userDetails.user.role === "BUSINESS_GROUP") {
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+    }
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
-  // const handleColorChange = (color) => {
-  //   setFormData((prevData) => ({ ...prevData, color: color.hex }));
-  // };
+    if (id) {
+      getGeofenceDataById();
+    }
+  }, [id]);
 
   const {
     register,
@@ -68,49 +89,50 @@ const GeofenceDetail = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(geofenceMapSchema),
+    defaultValues : {
+      category : categoryOptions[0].value,
+      tolerance : toleranceOptions[0].value
+    }
   });
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
     setValue("geofenceAccess", e.target.value);
   };
 
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     try {
       if (id) {
-        const val = JSON.parse(localStorage.getItem("geofenceData"));
-        const indexToUpdate = val.findIndex((item) => item.id == id);
-        if (indexToUpdate !== -1) {
-          val[indexToUpdate] = { ...data, id };
-          localStorage.setItem("geofenceData", JSON.stringify(val));
-          notifySuccess("Geofence Updated!");
-          navigate("/vehicle-tracking");
+        const {success} = await updateGeofence(id, data);
+        if (success) {
+          notifySuccess("Geofence updated successfully!");
+          navigate("/settings/geofence");
         }
         return;
       } else {
-        data = { ...data };
-        const existingData = JSON.parse(localStorage.getItem("geofenceData"));
-        data.id = existingData.length + 1;
-        existingData.push(data);
-        localStorage.setItem("geofenceData", JSON.stringify(existingData));
-
-        notifySuccess("New Geofence Created!");
-        navigate("/vehicle-tracking");
+        console.log(data);
+        const { success } = await createGeofenceData(data);
+        if (success) {
+          notifySuccess("New Geofence Created!");
+          navigate("/settings/geofence");
+        }
         return;
       }
     } catch (error) {
+      console.log(error);
       notifyError("Some error occured !!");
+      return;
     }
   };
 
   const Geofence = JSON.parse(localStorage.getItem("geofenceData"));
   const GeoData = Geofence.filter((item) => item.id == id);
-
   const [filteredGeoData, setFilteredGeoData] = useState(GeoData);
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <div>
       <div style={{ padding: "10px", backgroundColor: "#FFFDFD" }}>
-        <h2 style={{ fontSize: "20px" }}>{t('geofenceDetail')}l</h2>
+        <h2 style={{ fontSize: "20px" }}>{t("geofenceDetail")}l</h2>
       </div>
 
       <div className="" style={{ display: "flex", height: "88vh" }}>
@@ -127,22 +149,34 @@ const GeofenceDetail = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-2">
                 <label htmlFor="company" className="form-label">
-                  {t('company')}:<span className="text-danger">*</span>
+                  {t("company")}:<span className="text-danger">*</span>
                 </label>
-                <CustomInput
-                  type="text"
+                <Controller
                   name="company"
-                  register={register}
-                  label="Company"
-                  defaultValue={
-                    filteredGeoData[0] ? filteredGeoData[0].company : ""
-                  }
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange, value, name, ref } }) => (
+                    <CompanyDropdown
+                      key={groupId}
+                      groupId={groupId}
+                      onChange={(newValue) => {
+                        setValue("company", newValue.value);
+                        setValue("companyName", newValue.value);
+                        setCompanyId(newValue.value);
+                      }}
+                      value={value}
+                      customStyles={customStyles}
+                      ref={ref}
+                      isDisabled={companyDisabled}
+                      name={name}
+                    />
+                  )}
                 />
                 <Error errorName={errors.company} />
               </div>
               <div className="mb-2">
                 <label htmlFor="company" className="form-label">
-                {t('name')}:<span className="text-danger">*</span>
+                  {t("name")}:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="text"
@@ -158,7 +192,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label className="form-label">
-                {t('category')}:<span className="text-danger">*</span>
+                  {t("category")}:<span className="text-danger">*</span>
                 </label>
                 <Controller
                   name="category"
@@ -174,11 +208,7 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      defaultValue={
-                        filteredGeoData[0]
-                          ? filteredGeoData[0].name
-                          : categoryOptions[0]
-                      }
+                      value={{value ,label : value}}
                     />
                   )}
                 />
@@ -188,7 +218,7 @@ const GeofenceDetail = () => {
               </div>
               <div className="mb-3">
                 <label className="form-label">
-                {t('geofenceAccess')}:<span className="text-danger">*</span>
+                  {t("geofenceAccess")}:<span className="text-danger">*</span>
                 </label>
                 <div
                   style={{ display: "flex", flexDirection: "row", gap: "5rem" }}
@@ -197,21 +227,21 @@ const GeofenceDetail = () => {
                     <input
                       type="radio"
                       className="form-check-input"
-                      value="public"
-                      checked={selectedOption === "public"}
+                      value="PUBLIC"
+                      checked={selectedOption === "PUBLIC"}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label">{t('public')}</label>
+                    <label className="form-check-label">{t("public")}</label>
                   </div>
                   <div className="form-check">
                     <input
                       type="radio"
                       className="form-check-input"
-                      value="private"
-                      checked={selectedOption === "private"}
+                      value="PRIVATE"
+                      checked={selectedOption === "PRIVATE"}
                       onChange={handleChange}
                     />
-                    <label className="form-check-label">{t('private')}</label>
+                    <label className="form-check-label">{t("private")}</label>
                   </div>
                 </div>
                 {!getValues("geofenceAccess") && (
@@ -221,7 +251,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label htmlFor="contactNumber" className="form-label">
-                {t('contactNumber')}:<span className="text-danger">*</span>
+                  {t("contactNumber")}:<span className="text-danger">*</span>
                 </label>
                 <CustomInput
                   type="number"
@@ -229,7 +259,10 @@ const GeofenceDetail = () => {
                   label="Contact Number"
                   name="contactNumber"
                   min="0"
-                  onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+                  onInput={(e) => {
+                    const temp = Math.max(0, e.target.value);
+                    e.target.value = temp < 1 ? "" : temp;
+                  }}
                   defaultValue={
                     filteredGeoData[0] ? filteredGeoData[0].contactNumber : ""
                   }
@@ -239,7 +272,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">
-                {t('address')}:
+                  {t("address")}:
                 </label>
                 <textarea
                   className="form-control"
@@ -254,7 +287,7 @@ const GeofenceDetail = () => {
 
               <div className="mb-3">
                 <label className="form-label">
-                {t('tolerance')}:<span className="text-danger">*</span>
+                  {t("tolerance")}:<span className="text-danger">*</span>
                 </label>
                 <Controller
                   name="tolerance"
@@ -270,12 +303,9 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      defaultValue={
-                        filteredGeoData[0]
-                          ? filteredGeoData[0].name
-                          : toleranceOptions[0]
-                      }
+                      value={{label : value , value : value}}
                     />
+                    
                   )}
                 />
                 {!getValues("tolerance") && (
@@ -284,7 +314,7 @@ const GeofenceDetail = () => {
               </div>
 
               <div className="mb-3">
-                <label className="form-label">{t('description')}:</label>
+                <label className="form-label">{t("description")}:</label>
                 <textarea
                   className="form-control"
                   {...register("description")}
@@ -295,6 +325,7 @@ const GeofenceDetail = () => {
                   }
                 />
               </div>
+              {!getValues("location") && <Error errorName={errors.location} />}
               <div
                 style={{
                   width: "100%",
@@ -305,7 +336,7 @@ const GeofenceDetail = () => {
               >
                 <Button type="submit" onClick={handleSubmit(onSubmit)}>
                   {" "}
-                  {t('next')}
+                  {t("submit")}
                 </Button>
               </div>
             </form>
@@ -314,7 +345,12 @@ const GeofenceDetail = () => {
 
         {/* Right side */}
         <div className="col-md-9" style={{ paddingLeft: "15px" }}>
-          <Map />
+          <Map
+            setValue={setValue}
+            getValues={getValues}
+            defaultValues={defaultData}
+            errors={errors}
+          />
         </div>
       </div>
     </div>

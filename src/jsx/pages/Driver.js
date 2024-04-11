@@ -6,9 +6,10 @@ import { clsx } from "clsx";
 
 import { ThemeContext } from "../../context/ThemeContext";
 import useStorage from "../../hooks/useStorage";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import { deleteDrivers, getDrivers } from "../../services/api/driverService";
 import { notifyError } from "../../utils/toast";
+import usePagination from "../../hooks/usePagination";
 
 const Driver = () => {
   const { isRtl } = useContext(ThemeContext);
@@ -23,19 +24,23 @@ const Driver = () => {
   const navigate = useNavigate();
 
   const [tableData, setTableData] = useState([]);
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
+    usePagination();
 
-  async function getDriversData(pageNo = 1, limit = 10) {
+  async function getDriversData(page) {
     try {
-      const { data, totalLength } = await getDrivers(pageNo, limit);
+      const { data, totalLength } = await getDrivers(page);
+      console.log(data,totalCount,'ji')
       setTableData(data);
+      setCount(totalLength);
     } catch (error) {
       notifyError("Some error occured !!");
     }
   }
 
   useEffect(() => {
-    getDriversData();
-  }, []);
+    getDriversData(page);
+  }, [page]);
 
   const [editData, setEditData] = useState({
     id: 0,
@@ -47,37 +52,8 @@ const Driver = () => {
     gender: "",
     location: "",
   });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
 
-  const {t} = useTranslation();
-  const sort = 10;
-  const activePage = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
-  };
-
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test, tableData]);
-
-  activePage.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePage.current = i;
-    chageData(activePage.current * sort, (activePage.current + 1) * sort);
-    settest(i);
-  };
+  const { t } = useTranslation();
 
   const onConfirmDelete = async (id) => {
     try {
@@ -92,16 +68,16 @@ const Driver = () => {
     // navigate(`/driver/edit/${item._id}`);
     setEditData(item);
     const filteredData = tableData.filter((data) => data._id === item._id);
-    console.log("filtered", filteredData, item)
+    console.log("filtered", filteredData, item);
     navigate(`/driver/edit/${item._id}`, { state: filteredData });
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle={t('drivers')}
-        pageTitle={t('drivers')}
-        parentTitle={t('home')}
+        mainTitle={t("drivers")}
+        pageTitle={t("drivers")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -110,7 +86,7 @@ const Driver = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('drivers')}</h4>
+                    <h4 className="heading mb-0">{t("drivers")}</h4>
                     <div>
                       <Link
                         to={"/driver/create"}
@@ -118,7 +94,7 @@ const Driver = () => {
                         data-bs-toggle="offcanvas"
                         // onClick={() => employe.current.showModal()}
                       >
-                        + {t('addDriver')}
+                        + {t("addDriver")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -132,14 +108,14 @@ const Driver = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
-                          <th>{t('employeeName')}</th>
-                          <th>{t('age')}</th>
-                          <th>{t('contactNumber')}</th>
-                          <th>{t('drivingExperienceSince')}</th>
-                          <th>{t('city')}</th>
-                          <th>{t('status')}</th>
-                          <th>{t('action')}</th>
+                          <th>{t("id")}</th>
+                          <th>{t("employeeName")}</th>
+                          <th>{t("age")}</th>
+                          <th>{t("contactNumber")}</th>
+                          <th>{t("drivingExperienceSince")}</th>
+                          <th>{t("city")}</th>
+                          <th>{t("status")}</th>
+                          <th>{t("action")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -154,47 +130,44 @@ const Driver = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePage.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePage.current + 1) * sort
-                          ? (activePage.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
+                          className={`paginate_button ${
+                            page === 1 ? "previous disabled" : "previous"
+                          }`}
                           to="/driver"
-                          onClick={() =>
-                            activePage.current > 0 &&
-                            onClick(activePage.current - 1)
-                          }
+                          onClick={() => prevPage(page - 1)}
                         >
                           <i className={arrowleft} />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/driver"
-                              className={`paginate_button  ${
-                                activePage.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
-                          className="paginate_button next"
+                          className={`paginate_button ${
+                            page * 10 >= totalCount ? "next disabled" : "next"
+                          }`}
                           to="/driver"
-                          onClick={() =>
-                            activePage.current + 1 < paggination.length &&
-                            onClick(activePage.current + 1)
-                          }
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className={arrowright} />
                         </Link>

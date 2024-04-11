@@ -211,17 +211,17 @@ const General = ({
                 key={companyId}
                 companyId={companyId}
                 onChange={async (newValue) => {
-
-                  const valuesArray = newValue.map(item => item.value);
-                  setValue("Branch", valuesArray);
-                  setValue("branchId", valuesArray);
-                }}
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              isDisabled={false}
-              name={name}
-            />
+                  // setValue("parentBranchId", newValue.value);
+                  setValue("branch", newValue.value);
+                  setValue("branchID", newValue.value);
+                }
+                }
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                isDisabled={false}
+                name={name}
+              />
             )}
           />
         </div>

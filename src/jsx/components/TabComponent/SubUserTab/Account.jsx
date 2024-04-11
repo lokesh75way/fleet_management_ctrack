@@ -31,14 +31,13 @@ const Account = ({
   errors,
   control,
 }) => {
-
   console.log(errors);
   const [selectStateName, setSelectStateName] = useState("");
   const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
   const [allBranches, setAllBranches] = useState([]);
-  const { checkRole, checkUser } = useStorage()
+  const { checkRole, checkUser } = useStorage();
   const [tempValue, setTempValue] = useState();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
@@ -57,15 +56,16 @@ const Account = ({
       ...base,
       padding: "0.25rem 0 ", // Adjust the height as needed
     }),
-
-
   };
   async function onGroupChange(groupId) {
-    console.log("groupId", groupId)
-    console.log("allCompanies", allCompanies)
+    console.log("groupId", groupId);
+    console.log("allCompanies", allCompanies);
     const companies = allCompanies
-      .filter(item => item?.companyId?.businessGroupId?._id == groupId)
-      .map(item => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
+      .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
+      .map((item) => ({
+        value: item?.companyId?._id,
+        label: item?.companyId?.companyName,
+      }));
     setCompanyOptions(companies);
     setValue("parentCompany", "");
     setBranchOptions([]);
@@ -73,10 +73,9 @@ const Account = ({
 
   async function onCompanyChange(companyId) {
     const branches = allBranches
-      .filter(item => item?.companyId?._id == companyId)
-      .map(item => ({ value: item?._id, label: item?.branchName }));
+      .filter((item) => item?.companyId?._id == companyId)
+      .map((item) => ({ value: item?._id, label: item?.branchName }));
     setBranchOptions(branches);
-
   }
 
   useEffect(() => {
@@ -85,9 +84,8 @@ const Account = ({
       const companyResponse = await getCompany();
       const branchResponse = await getAllBranch();
       if (response.error) {
-        notifyError(response.error)
-      }
-      else {
+        notifyError(response.error);
+      } else {
         const groups = response.data;
         setAllGroups(groups);
         const groupOptions = groups.map((item) => ({
@@ -97,7 +95,7 @@ const Account = ({
         setBusinessUserOptions(groupOptions);
       }
       if (companyResponse.error) {
-        notifyError(companyResponse.error)
+        notifyError(companyResponse.error);
       } else {
         const companies = companyResponse.data.data.data;
         const companyOptions = companies.map((item) => ({
@@ -108,7 +106,7 @@ const Account = ({
         // setCompanyOptions(companyOptions);
       }
       if (branchResponse.error) {
-        notifyError(branchResponse.error)
+        notifyError(branchResponse.error);
       } else {
         const branches = branchResponse.data.data;
         const branchOptions = branches.map((item) => ({
@@ -120,16 +118,16 @@ const Account = ({
         // setBranchOptions(branchOptions);
       }
       setIsLoading(false);
-    }
+    };
     setIsLoading(true);
-    fetchOptions()
+    fetchOptions();
   }, []);
 
   useEffect(() => {
     const fetchOptions = async () => {
       const response = await getTemplates();
       if (response.error) {
-        notifyError(response.error)
+        notifyError(response.error);
       } else {
         const templates = response.data.data;
         const tempOptions = templates.map((item) => ({
@@ -138,12 +136,11 @@ const Account = ({
         }));
         setTemplateOptions(tempOptions);
       }
-    }
-    fetchOptions()
+    };
+    fetchOptions();
   }, []);
 
-
-  const role = checkRole()
+  const role = checkRole();
   const { id } = useParams();
   const User = JSON.parse(localStorage.getItem("userJsonData"));
 
@@ -151,16 +148,13 @@ const Account = ({
   let defaultCompanyOptions;
 
   if (role === "SUPER_ADMIN") {
-
     defaultCompanyOptions = DummyData.filter(
       (item) => item.role === "company"
     ).map((item) => ({
       label: item.userName,
       value: item._id,
     }));
-
   } else {
-
     defaultCompanyOptions = DummyData.filter(
       (item) => item.role === "company" && item.parent === loggedinemail
     ).map((item) => ({
@@ -170,8 +164,10 @@ const Account = ({
   }
 
   let parentbgname;
-  if (role === 'COMPANY') {
-    const parentbgnamefilter = User.filter(user => user.parentCompany === loggedinemail);
+  if (role === "COMPANY") {
+    const parentbgnamefilter = User.filter(
+      (user) => user.parentCompany === loggedinemail
+    );
     parentbgname = parentbgnamefilter[0]?.parentBusinessGroup;
   }
 
@@ -197,37 +193,27 @@ const Account = ({
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
-
   useEffect(() => {
     let tempcompanyOptions;
     if (role === "BUSINESS_GROUP") {
-
-      tempcompanyOptions = DummyData.filter(
-        (item) => item.role === "company"
-      )
+      tempcompanyOptions = DummyData.filter((item) => item.role === "company")
         .filter((cp) => cp.parent === checkUser())
         .map((item) => ({
           label: item.userName,
           value: item._id,
         }));
-
     } else {
-
-      tempcompanyOptions = DummyData.filter(
-        (item) => item.role === "company"
-      )
+      tempcompanyOptions = DummyData.filter((item) => item.role === "company")
         .filter((cp) => cp.parent === businessUserValue)
         .map((item) => ({
           label: item.userName,
           value: item._id,
         }));
-
     }
-
 
     let tempparentOptions;
 
-    if (role === 'COMPANY') {
+    if (role === "COMPANY") {
       tempparentOptions = DummyData.filter((item) => item.role === "branch")
         .filter((br) => br.parentCompany === checkUser())
         .map((item) => ({
@@ -244,72 +230,67 @@ const Account = ({
     }
 
     let tempvehicleOptions;
-    if (role === 'COMPANY') {
-      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === checkUser()).map((item) => ({
+    if (role === "COMPANY") {
+      tempvehicleOptions = DummyData.filter(
+        (item) => item.vehicleName && item.company === checkUser()
+      ).map((item) => ({
         label: item.vehicleName,
         value: item._id,
       }));
-
     } else {
-      tempvehicleOptions = DummyData.filter(item => item.vehicleName && item.company === companyValue).map((item) => ({
+      tempvehicleOptions = DummyData.filter(
+        (item) => item.vehicleName && item.company === companyValue
+      ).map((item) => ({
         label: item.vehicleName,
         value: item._id,
       }));
-
-
     }
-
-
 
     tempcompanyOptions.push({ label: "None", value: 0 });
 
     // setBusinessUserOptions(tempbusinessUserOptions);
     if (businessUserValue) {
       // setCompanyOptions(tempcompanyOptions);
-    }
-    else {
-
+    } else {
       // setCompanyOptions([...defaultCompanyOptions, { label: "None", value: 0 }]);
     }
     setVehiclesOptions(tempvehicleOptions);
-
 
     setParentOptions(tempparentOptions);
   }, [businessUserValue, companyValue, parentValue]);
 
   const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
   useEffect(() => {
-    if(userDetails.user.role === 'COMPANY'){
+    if (userDetails.user.role === "COMPANY") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
       setValue("businessUser", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId);
       setBusinessDisabled(true);
-      
-      setValue("parentCompany", userDetails?.user.companyId)
+
+      setValue("parentCompany", userDetails?.user.companyId);
       setCompanyId(userDetails?.user.companyId);
       setCompanyDisabled(true);
-      console.log("parentCompany", userDetails?.user.businessGroupId)
+      console.log("parentCompany", userDetails?.user.businessGroupId);
     }
-    if(userDetails.user.role === 'BUSINESS_GROUP'){
-      
+    if (userDetails.user.role === "BUSINESS_GROUP") {
       // setValue("businessGroupId", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId);
       setValue("businessUser", userDetails?.user.businessGroupId);
-      console.log(userDetails?.user.businessGroupId, "dsggsgs")
+      console.log(userDetails?.user.businessGroupId, "dsggsgs");
       setBusinessDisabled(true);
     }
-},[])
+  }, []);
   useEffect(() => {
     const id = filteredUserData[0]?._id;
     id ? setIsEdit(true) : setIsEdit(false);
-    if(id){
+    if (id) {
       const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
       const selectedGroupId = filteredUserData[0]?.businessGroupId;
       const selectedCompanyId = filteredUserData[0]?.companyId;
       const selectedBranchId = filteredUserData[0]?.branchIds;
       setValue("featureTemplateId", selectedTemplateId);
       setValue("businessUser", selectedGroupId);
-      console.log("selectedGroupId", selectedGroupId)
+      console.log("selectedGroupId", selectedGroupId);
       loadDatainDropdowns();
       setValue("parentCompany", selectedCompanyId);
       setValue("Branch", selectedBranchId);
@@ -324,47 +305,37 @@ const Account = ({
         filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
       );
       if (id) {
-
         setValue(
           "country",
           filteredUserData[0] ? filteredUserData[0]?.country : ""
         );
 
-        setDefaultValue({ name: filteredUserData[0]?.country })
+        setDefaultValue({ name: filteredUserData[0]?.country });
         setValue(
           "state",
           filteredUserData[0] ? filteredUserData[0]?.state : ""
         );
-        setSelectStateName({ name: filteredUserData[0]?.state || '' })
+        setSelectStateName({ name: filteredUserData[0]?.state || "" });
       }
 
-      setValue(
-        "_id",
-        filteredUserData[0] ? filteredUserData[0]?._id : id 
-      );
+      setValue("_id", filteredUserData[0] ? filteredUserData[0]?._id : id);
       async function loadDatainDropdowns() {
         await onGroupChange(selectedGroupId);
         await onCompanyChange(selectedCompanyId);
       }
     }
     setValue("isEdit", isEdit);
-    
-
-  }, [TemplateOptions, allBranches, allCompanies, allGroups,]);
-
-
+  }, [TemplateOptions, allBranches, allCompanies, allGroups]);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
-
-
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('businessGroup')}</label>
+          <label className="form-label">{t("businessGroup")}</label>
 
           <Controller
             name="businessUser"
@@ -386,7 +357,7 @@ const Account = ({
               //   styles={customStyles}
               // />
               <GroupDropdown
-              key={groupId}
+                key={groupId}
                 onChange={async (newValue) => {
                   setValue("businessUser", newValue.value);
                   setGroupId(newValue.value);
@@ -402,9 +373,7 @@ const Account = ({
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            {t('company')}
-          </label>
+          <label className="form-label">{t("company")}</label>
 
           <Controller
             name="parentCompany"
@@ -426,23 +395,23 @@ const Account = ({
 
               // />
               <CompanyDropdown
-              onChange={async (newValue) => {
-                setValue("parentCompany", newValue.value);
-                setCompanyId(newValue.value);
-              }}
-              key={groupId}
-              groupId={groupId}
-              value={value}
-              customStyles={customStyles}
-              name={name}
-              ref={ref}
-              isDisabled={companyDisabled}
-            />
+                onChange={async (newValue) => {
+                  setValue("parentCompany", newValue.value);
+                  setCompanyId(newValue.value);
+                }}
+                key={groupId}
+                groupId={groupId}
+                value={value}
+                customStyles={customStyles}
+                name={name}
+                ref={ref}
+                isDisabled={companyDisabled}
+              />
             )}
           />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('branch')}</label>
+          <label className="form-label">{t("branch")}</label>
           <Controller
             name="Branch"
             control={control}
@@ -464,20 +433,19 @@ const Account = ({
               // />
               <BranchDropdown
                 onChange={(newValue) => {
-                console.log("newValue", newValue)
-                const valuesArray = newValue.map(item => item.value);
-                setValue("Branch", valuesArray);
-                setValue("branchIds", valuesArray);
-              }}
-              key={companyId}
-              companyId={companyId}
-              value={value}
-              customStyles={customStyles}
-              name={name}
-              ref={ref}
-              isDisabled={false}
-  
-            />
+                  console.log("newValue", newValue);
+                  const valuesArray = newValue.map((item) => item.value);
+                  setValue("Branch", valuesArray);
+                  setValue("branchIds", valuesArray);
+                }}
+                key={companyId}
+                companyId={companyId}
+                value={value}
+                customStyles={customStyles}
+                name={name}
+                ref={ref}
+                isDisabled={false}
+              />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -508,7 +476,7 @@ const Account = ({
         </div> */}
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t('email')} <span className="text-danger">*</span>
+            {t("email")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -523,7 +491,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('username')} <span className="text-danger">*</span>
+            {t("username")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -539,7 +507,7 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('mobileNumber')} <span className="text-danger">*</span>
+            {t("mobileNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -547,7 +515,10 @@ const Account = ({
             label="Mobile Number"
             name="mobileNumber"
             min="0"
-            onInput={(e) => { const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '' : temp }}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
             defaultValue={
               filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
@@ -557,7 +528,8 @@ const Account = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-            {t('country')}<span className="text-danger">*</span>
+            {t("country")}
+            <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -575,12 +547,11 @@ const Account = ({
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div
-          className={`${isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
-            }`}
+          className={`${
+            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+          }`}
         >
-          <label className="form-label">
-            {t('state')}
-          </label>
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={countryid}
@@ -596,63 +567,67 @@ const Account = ({
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
-        {!isEdit && (<><div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t('password')} <span className="text-danger">*</span>
-          </label>
-          <div className="position-relative">
-            <CustomInput
-              type={showPassword ? "text" : "password"}
-              register={register}
-              label="Password"
-              name="password"
-              placeholder=""
-              defaultValue={
-                filteredUserData[0] ? filteredUserData[0].password : ""
-              }
-            />
-            <span
-              className="showPasswordIcon"
-              onClick={() => {
-                setShowPassword(!showPassword);
-              }}
-            >
-              {showPassword ? <LuEyeOff /> : <LuEye />}
-
-            </span>
-          </div>
-          <Error errorName={errors.password} />
-        </div>
-          <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              {t('confirmPassword')} <span className="text-danger">*</span>
-            </label>
-            <div className="position-relative">
-              <CustomInput
-                type={showConfirmPassword ? "text" : "password"}
-                register={register}
-                label="Confirm Password"
-                name="confirmPassword"
-                placeholder=""
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].confirmPassword : ""
-                }
-              />
-              <span
-                className="showPasswordIcon"
-                onClick={() => {
-                  setConfirmShowPassword(!showConfirmPassword);
-                }}
-              >
-                {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
-
-              </span>
+        {!isEdit && (
+          <>
+            <div className="col-xl-6 mb-3 ">
+              <label className="form-label">
+                {t("password")} <span className="text-danger">*</span>
+              </label>
+              <div className="position-relative">
+                <CustomInput
+                  type={showPassword ? "text" : "password"}
+                  register={register}
+                  label="Password"
+                  name="password"
+                  placeholder=""
+                  defaultValue={
+                    filteredUserData[0] ? filteredUserData[0].password : ""
+                  }
+                />
+                <span
+                  className="showPasswordIcon"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? <LuEyeOff /> : <LuEye />}
+                </span>
+              </div>
+              <Error errorName={errors.password} />
             </div>
-            <Error errorName={errors.confirmPassword} />
-          </div> </>)}
+            <div className="col-xl-6 mb-3 ">
+              <label className="form-label">
+                {t("confirmPassword")} <span className="text-danger">*</span>
+              </label>
+              <div className="position-relative">
+                <CustomInput
+                  type={showConfirmPassword ? "text" : "password"}
+                  register={register}
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  placeholder=""
+                  defaultValue={
+                    filteredUserData[0]
+                      ? filteredUserData[0].confirmPassword
+                      : ""
+                  }
+                />
+                <span
+                  className="showPasswordIcon"
+                  onClick={() => {
+                    setConfirmShowPassword(!showConfirmPassword);
+                  }}
+                >
+                  {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
+                </span>
+              </div>
+              <Error errorName={errors.confirmPassword} />
+            </div>{" "}
+          </>
+        )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('featureTemplate')} <span className="text-danger">*</span>
+            {t("featureTemplate")} <span className="text-danger">*</span>
           </label>
           <Controller
             name="featureTemplateId"
@@ -668,8 +643,10 @@ const Account = ({
                 ref={field.ref}
                 name={field.name}
                 styles={customStyles}
-                value={TemplateOptions.find(option => option.value === field.value)}
-              // defaultValue={filteredUserData[0] ? TemplateOptions.find(option => option._id === filteredUserData[0].featureTemplateId) : ""}
+                value={TemplateOptions.find(
+                  (option) => option.value === field.value
+                )}
+                // defaultValue={filteredUserData[0] ? TemplateOptions.find(option => option._id === filteredUserData[0].featureTemplateId) : ""}
               />
             )}
           />
@@ -677,8 +654,7 @@ const Account = ({
             <Error errorName={errors.featureTemplateId} />
           )}
         </div>
-        <div className="col-xl-6 mb-3 ">
-        </div>
+        <div className="col-xl-6 mb-3 "></div>
       </div>
       <div
         style={{
@@ -694,7 +670,7 @@ const Account = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

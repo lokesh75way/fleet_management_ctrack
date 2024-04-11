@@ -35,7 +35,7 @@ const UserSetting = ({
   const { t } = useTranslation();
   const [dValues, setDvalues] = useState({});
   const [selectedTimezone, setSelectedTimezone] = useState(
-     dValues?.businessGroupId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+    dValues?.businessGroupId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
   const location = useLocation();
   const customStyles = {
@@ -60,7 +60,11 @@ const UserSetting = ({
       setValue("language", dValues.businessGroupId?.language);
       setValue("status", dValues.businessGroupId?.status);
       setValue("currency", dValues.businessGroupId?.currency);
-      setValue("timezone",dValues.businessGroupId?.timezone)
+      setValue("timezone",dValues?.businessGroupId?.timezone)
+      const timeZone =  dValues?.businessGroupId?.timezone
+      if(timeZone){
+        setSelectedTimezone(timeZone)
+      }
       setValue("unitOfFuel",dValues.businessGroupId?.unitOfFuel)
     }
     else{
@@ -233,7 +237,10 @@ const UserSetting = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
-                onChange={setSelectedTimezone}
+                onChange={ (timeZone) =>{
+                  setSelectedTimezone(timeZone)
+                  setValue("timezone", timeZone.value)
+                }}
                 ref={ref}
                 name={name}
                 styles={customStyles}

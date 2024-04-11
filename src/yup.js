@@ -76,9 +76,9 @@ export const vehicleProfileSchema = yup
     vehicleCategory: yup.string().required('Vehicle category is required'),
     vinNumber: yup.number().typeError('VIN number must be a number').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
-    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number').required(),
-    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number').required(),
-    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number').required(),
+    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number'),
+    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number'),
+    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number'),
 
     
   })
@@ -154,7 +154,7 @@ export const companyAccountSchema = yup
     logo: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true;
+        return true
       }),
   })
   .required();
@@ -255,10 +255,14 @@ export const businessGroupAccountSchema = yup
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
         // console.log(value);
         // if (!value[0]) return true;
+        if (typeof value === "string") {
+          return true;
+        }
+
         // // if(typeof value === 'string') return true;
         // const extension = value[0].name.split(".").pop().toLowerCase();
         // return extension === "jpg" || extension === "png";
-        return true;
+        return true
       }),
   })
   .required();
@@ -271,7 +275,7 @@ export const businessGroupSettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true;
+        return true
       }),
   })
   .required();
@@ -284,7 +288,7 @@ export const companySettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true;
+        return true
       }),
   })
   .required();
@@ -460,7 +464,7 @@ export const technicianTaskSchema = yup
   .required();
 export const geofenceMapSchema = yup
   .object({
-    company: yup.string().required("Enter company name "),
+    company: yup.string().required("Parent company required"),
     name: yup.string().required("Enter Geofence name "),
     category: yup.string().required("Select a Category "),
     geofenceAccess: yup.string().required("Choose access method "),
@@ -468,6 +472,7 @@ export const geofenceMapSchema = yup
     contactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+      location: yup.array().required('Geofence location required')  
   })
   .required();
 export const technicianGeneralSchema = yup
@@ -523,9 +528,9 @@ export const technicianLeaveSchema = yup
   
 export const classifyTripsSchema = yup
   .object({
-    startDate: yup.string().required("Trip start Location is required "),
-    endDate: yup.string().required("Trip reach Location is required "),
-    driverId: yup.string().required("Driver name is required "),
+    startTime: yup.string().required("Trip start Location is required "),
+    reachTime: yup.string().required("Trip reach Location is required "),
+    driver: yup.string().required("Driver name is required "),
   })
   .required();
 

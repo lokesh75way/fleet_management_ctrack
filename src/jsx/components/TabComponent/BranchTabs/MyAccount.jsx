@@ -127,7 +127,6 @@ const MyAccount = ({
 
   console.log(errors);
 
-  console.log("ye he state ...........",selectStateName);
   useEffect(() => {
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
@@ -152,7 +151,6 @@ const MyAccount = ({
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
 
-  console.log( 'this is comming state ................',selectStateName);
 
   return (
     <div className="p-4">

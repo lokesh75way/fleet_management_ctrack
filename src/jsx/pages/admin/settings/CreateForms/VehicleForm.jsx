@@ -81,9 +81,8 @@ const VehicleForm = () => {
             data.branchId = getValues("branchId");
 
             await createVehicles(data)
-
-            notifySuccess("Vehicle created");
-            // navigate("/vehicle");
+            notifySuccess("Vehicle created")
+            navigate("/vehicle");
             return;
           } catch (e) {
             notifyError("Some error occured");
