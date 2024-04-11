@@ -10,23 +10,26 @@ const FileUploader = ({
   setValue,
   setLoading,
   loading,
-  onSuccess
+  onSuccess,
 }) => {
   const upload_Preset = "our_cloudinary_upload_preset";
-
+  const [fileLink, setFileLink] = useState(null);
   const fileUploader = async (e) => {
     try {
+      e.preventDefault();
       setLoading(true);
       const acceptedFiles = e.target.files;
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
       formData.append("upload_preset", upload_Preset);
       if (e.target.files[0]) {
-        const { message, data } = await fileUpload(formData);
-        console.log(name , data.link)
-        setValue(name, data.link);
+        const {
+          message,
+          data: { link },
+        } = await fileUpload(formData);
+        setValue(name, link);
+        setFileLink(link);
         notifySuccess(message);
-        onSuccess(data.link, name)
       }
     } catch (error) {
       console.log("[FILE_UPLOAD_ERROR]", error);
@@ -38,20 +41,24 @@ const FileUploader = ({
 
   return (
     <div>
-      <input
-        type="file"
-        {...register(`${name}`)}
-        name={name}
-        label={label}
-        style={{ height: "46px" }}
-        className="form-control"
-        onChange={fileUploader}
-        defaultValue={defaultValue}
-        disabled={loading}
-        accept="image/*"
-      />
+      <div>
+        <input
+          type="file"
+          {...register(`${name}`)}
+          name={name}
+          label={label}
+          style={{ height: "46px" }}
+          className="form-control"
+          onChange={fileUploader}
+          defaultValue={defaultValue}
+          disabled={loading}
+          accept="image/*"
+        />
+      </div>
+      {fileLink && <small className="text-success">File uploaded </small>}
     </div>
   );
 };
 
 export default FileUploader;
+//

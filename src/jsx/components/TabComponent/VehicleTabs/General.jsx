@@ -26,9 +26,6 @@ import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 
 
-
-
-
 const General = ({
   register,
   setValue,
@@ -61,29 +58,7 @@ const General = ({
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
 
-
   const role = checkRole()
-
-  // useEffect(()=>{
-  //   getCompanyData()
-  //   getBusinessData()
-  // },[])
-  // let businessGroupOptions;
-  // const getCompanyData = async()=>{
-  //   const {data} = await getGroups()
-  //   businessGroupOptions = data.map((item)=>{
-  //     return 
-  //   })
-  //   setAllCompany(allCompany)
-  // }
-
-  // useEffect(()=>{
-  //   businessGroupOptions()
-  //   allCompanyOptions()
-  // },[])
-
-
-  
 
   const {t} = useTranslation();
 
@@ -125,9 +100,6 @@ const General = ({
   }
   // const[formData,setFormData] = useState([])
   useEffect(()=>{
-
-    console.log('meeee huuu yahahahahahahaha',formData);
-    
     if(formData && id){
 
       setValue("businessGroupId",formData?.[0]?.businessGroupId)
@@ -152,10 +124,6 @@ const General = ({
       setValue("distanceCounter",formData?.[0].distanceCounter)
       setValue("unitOfDistance",formData?.[0].unitOfDistance)
       setValue("deviceAccuracyTolerance",formData?.[0].deviceAccuracyTolerance)
-
-
-
-
     }
   },[formData,id])
 

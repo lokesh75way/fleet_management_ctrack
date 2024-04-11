@@ -91,10 +91,7 @@ const Document = ({
                         ref={ref}
                         name={name}
                         styles={customStyles}
-                        defaultValue={{
-                          label: "Select Document",
-                          value: "Select Document",
-                        }}
+                        defaultValue={{ label: value, value }}
                       />
                     )}
                   />

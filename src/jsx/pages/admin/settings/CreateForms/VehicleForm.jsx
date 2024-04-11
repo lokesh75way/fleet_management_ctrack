@@ -22,6 +22,7 @@ import {
 } from "../../../../../services/api/VehicleService";
 
 import { useTranslation } from "react-i18next";
+import { driverDocumentOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 
 const VehicleForm = () => {
   const { t } = useTranslation();
@@ -40,7 +41,7 @@ const VehicleForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      test: [{ fieldName: "", file: null, IssueDate: "", ExpiryDate: "" }],
+      documents: [{ documentType: driverDocumentOptions[0].label, file: null, issueDate: new Date(), expiryDate: new Date() }],
     },
     resolver: yupResolver(
       activeIndex === 0

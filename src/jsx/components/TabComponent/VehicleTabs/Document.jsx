@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
+import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import Error from "../../Error/Error";
 import "../../../../scss/pages/_driver-tracking.scss";
@@ -42,27 +43,29 @@ const Document = ({
     { value: "RTO_PASSING", label: "RTO_PASSING" },
     { value: "ROAD_TAX", label: "Road Tax" },
   ]);
-  const handleFileUploadSuccess = (fileLink, name) => {
-    const index = name.split(".")[1];
+  // const handleFileUploadSuccess = (fileLink, name) => {
+  //   const index = name.split(".")[1];
 
-    if (documents[index]) {
-      let temp = [...documents];
-      temp[index].file = fileLink;
-      setDocuments(temp);
-    } else {
-      let temp = [...documents];
-      temp[index] = {
-        documentType: getValues(`documents.${index}.fieldName`),
-        file: fileLink,
-        issueDate: getValues(`documents.${index}.IssueDate`),
-        expireDate: getValues(`documents.${index}.expireDate`),
-      };
-      setDocuments(temp);
-    }
+  //   if (documents[index]) {
+  //     let temp = [...documents];
+  //     temp[index].file = fileLink;
+  //     setDocuments(temp);
+  //   } else {
+  //     let temp = [...documents];
+  //     temp[index] = {
+  //       documentType: getValues(`documents.${index}.fieldName`),
+  //       file: fileLink,
+  //       issueDate: getValues(`documents.${index}.IssueDate`),
+  //       expireDate: getValues(`documents.${index}.expireDate`),
+  //     };
+  //     setDocuments(temp);
+  //   }
 
-    console.log(documents);
-    setValue('documents',documents)
-  };
+  //   console.log(documents);
+  //   setValue("documents", documents);
+  // };
+
+  console.log(getValues(`documents[0].documentType`));
 
   return (
     <div className="p-4">
@@ -71,9 +74,9 @@ const Document = ({
           <Button
             onClick={() => {
               append({
-                fieldName: tempValue,
+                documentType: tempValue,
                 file: null,
-                IssueDate: "",
+                issueDate: "",
                 expireDate: "",
               });
             }}
@@ -91,52 +94,31 @@ const Document = ({
                     {t("selectDocument")}
                     <span className="text-danger">*</span>
                   </label>
+             
                   <Controller
-                  key={item.id}
                     name={`documents.${index}.documentType`}
                     control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value, name, ref } }) => (
-                      <CreatableSelect
+                    render={({ field: { value, name, ref } }) => (
+                      <Select
                         onChange={(newValue) => {
-                          setTempValue(newValue?.value);
+                          console.log(newValue);
                           setValue(
-                            `documents.${index}.documentType`,
-                            newValue?.value
+                            `documents[${index}].documentType`,
+                            newValue.value
                           );
-                          if (documents[index]) {
-                            let temp = [...documents];
-                            temp[index].documentType = newValue?.value;
-                            setDocuments(temp);
-                          } else {
-                            let temp = [...documents];
-                            temp[index] = {
-                              documentType: newValue?.value,
-                              file: getValues(`documents.${index}.file`),
-                              issueDate: getValues(
-                                `documents.${index}.IssueDate`
-                              ),
-                              expireDate: getValues(
-                                `documents.${index}.expireDate`
-                              ),
-                            };
-                            setDocuments(temp);
-                          }
                         }}
-                        isClearable
                         options={driverDocumentOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
-                        defaultValue={{
-                          label: "Select Document",
-                          value: "Select Document",
-                        }}
+                        defaultValue={{ label: value, value }}
                       />
                     )}
                   />
-                  {!getValues(`documents.${index}.fieldName`) && (
-                    <Error errorName={errors?.documents?.[index]?.fieldName} />
+                  {!getValues(`documents.${index}.documentType`) && (
+                    <Error
+                      errorName={errors?.documents?.[index]?.documentType}
+                    />
                   )}
                 </div>
                 <div className="col-xl-3 mb-2">
@@ -152,7 +134,6 @@ const Document = ({
                     setValue={setValue}
                     setLoading={setLoading}
                     loading={loading}
-                    onSuccess={handleFileUploadSuccess}
                   />
                   <Error errorName={errors?.documents?.[index]?.file} />
                 </div>
