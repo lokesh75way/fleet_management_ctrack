@@ -10,7 +10,10 @@ import { getVehicles, statusData } from "../../../utils/helper";
 
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
 import DriverItem from "../Tracking/DriverItem";
-const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
+import { notifyError } from "../../../utils/toast";
+import { getVehiclesByCompany } from "../../../services/api/VehicleService";
+
+const DriverTab = ({ tabData, handleToggleCardPosition, isOutside, setVehicleIds, getVehiclesByIds, setVehicleStatus }) => {
   const componentData = {
     name: "Company1",
     drivers: [
@@ -75,6 +78,9 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
                   <Component
                     data={componentData}
                     handleToggleCardPosition={handleToggleCardPosition}
+                    setVehicleIds={setVehicleIds}
+                    getVehiclesByIds={getVehiclesByIds}
+                    setVehicleStatus={setVehicleStatus}
                   />
                 </Tab.Pane>
               );
@@ -87,14 +93,29 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside }) => {
 };
 
 const DriverTabComponent1 = (props) => {
+  const { setVehicleStatus } = props;
   const status = statusData();
   const { Running, Idle, Stopped, Inactive, nodata, total } = status;
   const [selectValue, setSelectValue] = useState("All");
   const [vehicles, setVehicles] = useState([]);
 
+  const [companyVehicle, setCompanyVehicle] = useState([]);
+
+  const getVehiclesList = async() =>{
+    try{
+      const data = await getVehiclesByCompany();
+      await setCompanyVehicle(data?.data ?? [])
+      return;
+    }catch(e){
+      notifyError("Some Error occured")
+    }
+  }
+
+
   useEffect(() => {
-    const data = getVehicles(selectValue);
-    setVehicles(data);
+    getVehiclesList();
+    // const data = getVehicles(selectValue);
+    // setVehicles(data);
   }, [selectValue]);
 
   const items = JSON.parse(localStorage.getItem("userJsonData"))
@@ -131,7 +152,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("Running")}
+          onClick={() => {setSelectValue("Running"); setVehicleStatus("Running"); } }
         >
           <p>{Running}</p>
           <span>Running</span>
@@ -141,7 +162,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 idle ${
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("Idle")}
+          onClick={() => { setSelectValue("Idle"); setVehicleStatus("Idle"); }}
         >
           <p>{Idle}</p>
           <span>Idle</span>
@@ -151,7 +172,7 @@ const DriverTabComponent1 = (props) => {
           className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("Stopped")}
+          onClick={() => { setSelectValue("Stopped"); setVehicleStatus("Stopped"); }}
         >
           <p>{Stopped}</p>
           <span>Stopped</span>
@@ -161,7 +182,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 inActive ${
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("Inactive")}
+          onClick={() => { setSelectValue("Inactive"); setVehicleStatus("Inactive"); }}
         >
           <p>{Inactive}</p>
           <span>InActive</span>
@@ -171,7 +192,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 noData ${
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("NoData")}
+          onClick={() => { setSelectValue("NoData"); setVehicleStatus("NoData"); }}
         >
           <p>{nodata}</p>
           <span>NoData</span>
@@ -180,7 +201,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 total ${
             selectValue === "All" && "vehicle_tracking-active"
           }`}
-          onClick={() => setSelectValue("All")}
+          onClick={() => { setSelectValue("All"); setVehicleStatus("All"); }}
         >
           <p>{total}</p>
           <span>Total</span>
@@ -207,7 +228,10 @@ const DriverTabComponent1 = (props) => {
       </div>
       {
         <CompanyItem
+          companyVehicle={companyVehicle ?? []}
+          setVehicleIds={props.setVehicleIds}
           vehicles={vehicles}
+          getVehiclesByIds={props.getVehiclesByIds}
           handleToggleCardPositionHandler={props.handleToggleCardPosition}
         />
       }
