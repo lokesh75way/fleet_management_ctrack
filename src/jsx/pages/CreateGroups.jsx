@@ -8,6 +8,7 @@ import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import usePagination from "../../hooks/usePagination";
 import { ThemeContext } from "../../context/ThemeContext";
+import ReactPaginate from "react-paginate";
 
 const CreateGroups = () => {
     const { isRtl } = useContext(ThemeContext);
@@ -67,6 +68,14 @@ const CreateGroups = () => {
     navigate("permission", { state: JSON.stringify(props) });
   };
 
+  const itemsPerPage=10;
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+
   return (
     <>
       <MainPagetitle
@@ -114,6 +123,8 @@ const CreateGroups = () => {
                           setIsEditTrue={setIsEditTrue}
                           tableData={groupsDataState}
                           onConfirmDelete={onConfirmDelete}
+                          currentPage={page} 
+                            itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -127,39 +138,23 @@ const CreateGroups = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className={`paginate_button ${
-                            page === 1 ? "previous disabled" : "previous"
-                          }`}
-                          to="/groups"
-                          onClick={() => prevPage(page - 1)}
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                            (number) => (
-                              <Link
-                                key={number}
-                                className={`paginate_button ${
-                                  page === number + 1 ? "current" : ""
-                                }`}
-                                onClick={() => goToPage(number + 1)}
-                              >
-                                {number + 1}
-                              </Link>
-                            )
-                          )}
-                        </span>
-                        <Link
-                          className={`paginate_button ${
-                            page * 10 >= totalCount ? "next disabled" : "next"
-                          }`}
-                          to="/groups"
-                          onClick={() => nextPage(page + 1)}
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                        <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />  
                       </div>
                     </div>
                   </div>

@@ -12,6 +12,7 @@ import { notifyError, notifySuccess } from "../../utils/toast";
 import { usePermissions } from "../../context/PermissionContext";
 import useStorage from "../../hooks/useStorage";
 import usePagination from "../../hooks/usePagination";
+import ReactPaginate from "react-paginate";
 
 
   const SubUser = () => {
@@ -70,6 +71,15 @@ import usePagination from "../../hooks/usePagination";
   const editDrawerOpen = (item) => {
     navigate(`/subUser/edit/${item}`);
   };
+
+  const itemsPerPage=10;
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
   return (
     <>
       <MainPagetitle mainTitle="User" pageTitle={"User"} parentTitle={"Home"} />
@@ -111,7 +121,8 @@ import usePagination from "../../hooks/usePagination";
                         </tr>
                       </thead>
                       <tbody>
-                        <SubUserTable key={tableData} tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} />
+                        <SubUserTable key={tableData} currentPage={page} 
+                            itemsPerPage={itemsPerPage}  tableData={tableData} onConfirmDelete={onConfirmDelete} editDrawerOpen={editDrawerOpen} />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
@@ -124,39 +135,23 @@ import usePagination from "../../hooks/usePagination";
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className={`paginate_button ${
-                            page === 1 ? "previous disabled" : "previous"
-                          }`}
-                          to="/business"
-                          onClick={() => prevPage(page - 1)}
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                            (number) => (
-                              <Link
-                                key={number}
-                                className={`paginate_button ${
-                                  page === number + 1 ? "current" : ""
-                                }`}
-                                onClick={() => goToPage(number + 1)}
-                              >
-                                {number + 1}
-                              </Link>
-                            )
-                          )}
-                        </span>
-                        <Link
-                          className={`paginate_button ${
-                            page * 10 >= totalCount ? "next disabled" : "next"
-                          }`}
-                          to="/business"
-                          onClick={() => nextPage(page + 1)}
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                       <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                       </div>
                     </div>
                   </div>

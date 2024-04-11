@@ -9,6 +9,8 @@ import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 
 import {useTranslation} from 'react-i18next'
+import ReactPaginate from "react-paginate";
+import usePagination from "../../hooks/usePagination";
 
 const Vehicle = () => {
 
@@ -28,9 +30,6 @@ const Vehicle = () => {
 
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
@@ -41,47 +40,33 @@ const Vehicle = () => {
     GPSDeviceType: "",
     distanceCounter: 0,
   });
-  const sort = 10;
-  const activePage = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
+
+  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
+  usePagination();
+  const itemsPerPage=10;
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
   };
-  async function getVehicleData() {
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  
+  async function getVehicleData(page) {
     try {
-      const { data , totalLength} = await getVehicles();
+      const { data , totalLength} = await getVehicles(page);
       console.log(data)
+      setCount(totalLength)
       setTableData(data);
     } catch (error) {
       console.log("Error in fetching data", error);
     }
   }
 
-  console.log(tableData);
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
   useEffect(() => {
-    getVehicleData();
-  }, [deleteId]);
-
-  activePage.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-
-  const onClick = (i) => {
-    activePage.current = i;
-    chageData(activePage.current * sort, (activePage.current + 1) * sort);
-    settest(i);
-  };
+    getVehicleData(page);
+  }, [deleteId,page]);
 
   // delete function
   const onConfirmDelete = (id) => {
@@ -152,55 +137,38 @@ const Vehicle = () => {
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
+                          currentPage={page} 
+                            itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePage.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePage.current + 1) * sort
-                          ? (activePage.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                      {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                          {Math.min(page * 10, totalCount)} {t("of")}{" "}
+                          {totalCount} {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className="paginate_button previous disabled"
-                          to="/vehicle"
-                          onClick={() =>
-                            activePage.current > 0 &&
-                            onClick(activePage.current - 1)
-                          }
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/vehicle"
-                              className={`paginate_button  ${
-                                activePage.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
-                        </span>
-                        <Link
-                          className="paginate_button next"
-                          to="/vehicle"
-                          onClick={() =>
-                            activePage.current + 1 < paggination.length &&
-                            onClick(activePage.current + 1)
-                          }
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                        <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                       </div>
                     </div>
                   </div>

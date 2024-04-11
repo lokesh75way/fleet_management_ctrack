@@ -24,6 +24,7 @@ import CompanyDropdown from "../../components/CompanyDropdown";
 import BranchDropdown from "../../components/BranchDropdown";
 import { getSelectValues } from "../../../utils/helper";
 import ParentBranchDropdown from "../../components/ParentBranch";
+import ReactPaginate from "react-paginate";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -96,6 +97,15 @@ const Branch = () => {
   const defaultValues = getSelectValues();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
+  
+  const itemsPerPage=10;
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
+  };
+  
+    const startIndex = (page - 1) * itemsPerPage;
+    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const fetchAllBranch = async (page, CompanyId, branchId) => {
     console.log({ companyId }, { branchId });
@@ -116,7 +126,7 @@ const Branch = () => {
         setBranches(data.data);
       } else {
         const { data, success } = await getAllBranch(page);
-        const permissions = JSON.parse(localStorage.getItem('permission'));
+        const permissions = JSON.parse(localStorage.getItem("permission"));
         setUserPermission(permissions?.[0]?.permission);
         setTableData(data.data);
         setCount(data.totalCount);
@@ -161,9 +171,9 @@ const Branch = () => {
     fetchAllBranch();
     setCompanyId(null);
     setCompanyDropdown({
-      label : "All companies",
-      value : "All companies"
-    })
+      label: "All companies",
+      value: "All companies",
+    });
   };
 
   const onConfirmDelete = async (id) => {
@@ -175,7 +185,6 @@ const Branch = () => {
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
     navigate(`edit/${item}`, { state: filteredData });
-    
   };
 
   const d = JSON.parse(localStorage.getItem("userJsonData"));
@@ -233,7 +242,7 @@ const Branch = () => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
                               handleCompanyChange(newValue);
-                              console.log(newValue)
+                              console.log(newValue);
                             }}
                             key={companyDropdown}
                             value={companyDropdown}
@@ -257,10 +266,12 @@ const Branch = () => {
                               handleBranchChange(newValue);
                             }}
                             companyId={companyId}
-                            value={[{
-                              label: "Choose Branch",
-                              value: "Choose Branch",
-                            }]}
+                            value={[
+                              {
+                                label: "Choose Branch",
+                                value: "Choose Branch",
+                              },
+                            ]}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}
@@ -311,6 +322,8 @@ const Branch = () => {
                           tempValue2={tempValue2}
                           editData={editData}
                           tableData={tableData}
+                          currentPage={page} 
+                          itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
@@ -327,39 +340,27 @@ const Branch = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className={`paginate_button ${
-                            page === 1 ? "previous disabled" : "previous"
-                          }`}
-                          to="/branch"
-                          onClick={() => prevPage(page - 1)}
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                            (number) => (
-                              <Link
-                                key={number}
-                                className={`paginate_button ${
-                                  page === number + 1 ? "current" : ""
-                                }`}
-                                onClick={() => goToPage(number + 1)}
-                              >
-                                {number + 1}
-                              </Link>
-                            )
-                          )}
-                        </span>
-                        <Link
-                          className={`paginate_button ${
-                            page * 10 >= totalCount ? "next disabled" : "next"
-                          }`}
-                          to="/branch"
-                          onClick={() => nextPage(page + 1)}
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                        <ReactPaginate
+                          previousLabel={
+                            <i className="fa-solid fa-angle-left"></i>
+                          }
+                          nextLabel={
+                            <i className="fa-solid fa-angle-right"></i>
+                          }
+                          breakLabel={"..."}
+                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                          marginPagesDisplayed={2}
+                          pageRangeDisplayed={5}
+                          onPageChange={handlePageClick}
+                          containerClassName={"pagination"}
+                          activeClassName={"active"}
+                          pageClassName="page-item"
+                          pageLinkClassName="page-link"
+                          previousClassName="page-item"
+                          previousLinkClassName="page-link"
+                          nextClassName="page-item"
+                          nextLinkClassName="page-link"
+                        />
                       </div>
                     </div>
                   </div>

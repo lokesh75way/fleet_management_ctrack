@@ -9,18 +9,20 @@ import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 
-const BusinessTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
+const BusinessTable = ({ tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen }) => {
   const {getCompany} = useStorage()
   const {can} = usePermissions()
   const editPermission = can('business', "modify");
   const deletePermission = can('business', "delete");
   const {isRtl} = useContext(ThemeContext)
+
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index} >
           <td>
-            <span>{index+1}</span>
+            <span>{startIndex + index}</span>
           </td>
           <td>
             <div className="products">

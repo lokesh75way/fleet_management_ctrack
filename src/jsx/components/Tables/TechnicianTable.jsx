@@ -6,15 +6,15 @@ import { IMAGES,SVGICON} from '../../constant/theme';
 import {useParams} from 'react-router-dom'
 
 
-const TechnicianTable = ({tableData, editDrawerOpen, onConfirmDelete}) => {
+const TechnicianTable = ({tableData,currentPage, itemsPerPage, editDrawerOpen, onConfirmDelete}) => {
 
-
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item._id}</span>
+            <span>{startIndex + index}</span>
           </td>
           <td>
             <div className="products">

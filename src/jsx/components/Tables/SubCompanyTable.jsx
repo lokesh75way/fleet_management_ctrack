@@ -7,7 +7,7 @@ import { IMAGES,SVGICON} from '../../constant/theme';
 import useStorage from '../../../hooks/useStorage'
 import { usePermissions } from '../../../context/PermissionContext'
 
-const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
+const SubCompanyTable = ({onConfirmDelete,params,currentPage, itemsPerPage, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
   var filterData = tableData;
 
   const {can} = usePermissions()
@@ -26,12 +26,13 @@ const SubCompanyTable = ({onConfirmDelete,params, tempValue,tempValue2,tableData
     branchCount[i] = filterData.filter((item)=> item.parentBranch === branchName).length
   }
   // setDataLength(filterData.length)
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
     return (
       <>
         {filterData.map((item, index) => (
           <tr key={index}>
             <td>
-              <span>{index + 1}</span>
+              <span>{startIndex + index}</span>
             </td>
             <td>
               <span className="text-primary">{item.branchName}</span>
