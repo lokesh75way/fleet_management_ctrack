@@ -21,7 +21,6 @@ const GroupTable = ({onConfirmDelete,currentPage, itemsPerPage,tableData, setIsE
         setData(tableData.reverse());
     }, [tableData])
 
-    console.log('ye he feature data', data);
     const startIndex = (currentPage - 1) * itemsPerPage + 1;
 
     return (

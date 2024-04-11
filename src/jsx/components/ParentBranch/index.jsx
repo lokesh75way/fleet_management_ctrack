@@ -28,7 +28,7 @@ const ParentBranchDropdown = ({
     }
     , []);
     useEffect(() => {
-        const selected = dropDownOptions.filter((option) => value && value.includes(option.value));
+        const selected = dropDownOptions.filter((option) => option.value === value);
         setSelectedOption(selected);
     }, [value, dropDownOptions]);
 
@@ -40,6 +40,7 @@ const ParentBranchDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
+                placeholder="Select Parent Branch"
                 // isDisabled={isDisabled || !companyId}
                 />
     );
