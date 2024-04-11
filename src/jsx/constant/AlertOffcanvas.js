@@ -1,13 +1,16 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
+import { Link } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { Controller, FormProvider, useForm } from "react-hook-form";
+import { Controller, FormProvider } from "react-hook-form";
 import Error from "../components/Error/Error";
 import {
-  branchOptions,
   alertTypeOptions,
   objectOptions,
   severityOptions,
@@ -16,8 +19,6 @@ import CustomInput from "../components/Input/CustomInput";
 import '../../scss/pages/_driver-tracking.scss'
 
 import {useTranslation} from 'react-i18next'
-
-import ParentBranchDropdown from "../components/ParentBranch";
 
 const AlertOffcanvas = forwardRef(
   (
@@ -31,7 +32,6 @@ const AlertOffcanvas = forwardRef(
       handleSubmit,
       onSubmit,
       clearErrors,
-      editData
     },
     ref
   ) => {
@@ -39,62 +39,38 @@ const AlertOffcanvas = forwardRef(
 
     console.log('edit data inside modal',editData);
     const [addEmploye, setAddEmploye] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [selectedOption2, setSelectedOption2] = useState(null);
-    const [selectedOption3, setSelectedOption3] = useState(null);
-    const [tempValue, setTempValue] = useState();
+    const [tempVehicle, setTempVehicle] = useState("");
+    const [tempValue, setTempValue] = useState("");
+    const [tempValidDays, setTempValidDays] = useState("");
+    const [companyId, setCompanyId] = useState();
+    const { t } = useTranslation();
+    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
     useImperativeHandle(ref, () => ({
       showModal() {
         setAddEmploye(true);
       },
+
+      closeModal() {
+        reset();
+        clearErrors();
+        setAddEmploye(false);
+      },
     }));
-    useEffect(()=>{
-      if(addEmploye === true){
-        clearErrors("branch")
-        clearErrors('basedOn')
-        clearErrors('object')
-        clearErrors('alertType')
-        clearErrors('alertName')
-        clearErrors('severity')
-        clearErrors('alertValue')
-        setValue('alertName','')
-        setValue('validTimeFrom1','')
-        setValue('validTimeFrom2','')
+
+    useEffect(() => {
+      if (userDetails.user.role === "COMPANY") {
+        setCompanyId(userDetails?.user.companyId);
       }
-    },[addEmploye])
-    const nav = useNavigate();
-    const handleChange = (e) => {
-      setSelectedOption(e.target.value);
-      setValue("basedOn", e.target.value);
-    };
-    const handleChange2 = (e) => {
-      setSelectedOption2(e.target.value);
-      setValue("alertValue", e.target.value);
-    };
-    const handleChange3 = (e) => {
-      setSelectedOption3(e.target.value);
-      setValue("validDays", e.target.value);
-    };
+    }, []);
+
     const customStyles = {
       control: (base) => ({
         ...base,
-        padding: ".25rem 0 ", 
+        padding: ".25rem 0 ",
       }),
     };
     const {t} = useTranslation();
-
-
-    useEffect(() => {
-      if (editData && editData?._id) {
-        setValue("branchId", editData.branchId);
-        setValue("object", editData.object)
-        setValue("sevirity", editData.sevirity)
-        setValue("sevirity", editData.sevirity)
-
-      }
-    }, [editData]);
-
-    console.log(errors);
     return (
       <>
         <Offcanvas
@@ -123,41 +99,23 @@ const AlertOffcanvas = forwardRef(
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">{t('branch')}</label>
                     <Controller
-            name="branchId"
-            control={control}
-            rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
-              // <AsyncSelect
-              //   onChange={(newValue) => {
-              //     setParentValue(newValue.value);
-              //     setValue("parentBranch", newValue.value);
-              //   }}
-              //   options={parentOptions}
-              //   ref={ref}
-              //   name={name}
-              //   styles={customStyles}
-              //   value={{
-              //     label: getValues('parentBranch'),
-              //     value: getValues('parentBranchId')
-              //   }}
-              // />
-              <ParentBranchDropdown
-                // key={companyId}
-                // companyId={companyId}
-                onChange={async (newValue) => {
-                  setValue("branchId", newValue.value);
-                  setTempValue('branchId');
-                }
-                }
-                value={value}
-                customStyles={customStyles}
-                ref={ref}
-                isDisabled={false}
-                name={name}
-              />
-            )}
-          />
-                    { !getValues('branchId') && <Error errorName={errors.branchId} />}
+                      name="branch"
+                      control={control}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            {setTempValue(newValue.value);
+                            setValue("branch", newValue.value)}
+                          }
+                          options={branchOptions}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={branchOptions[0]}
+                        />
+                      )}
+                    />
+                    { !getValues('branch') && <Error errorName={errors.branch} />}
                   </div>
 
                   <div className="col-xl-6 mb-3">
@@ -167,8 +125,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="VEHICLE"
-                          checked={selectedOption === "VEHICLE"}
+                          value="vehicle"
+                          checked={selectedOption === "vehicle"}
                           onChange={handleChange}
                         />
                         <label
@@ -182,8 +140,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="VEHICLE_GROUP"
-                          checked={selectedOption === "VEHICLE_GROUP"}
+                          value="vehicleGroup"
+                          checked={selectedOption === "vehicleGroup"}
                           onChange={handleChange}
                         />
                         <label
@@ -197,8 +155,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="VEHICLE_TYPE"
-                          checked={selectedOption === "VEHICLE_TYPE"}
+                          value="vehicleType"
+                          checked={selectedOption === "vehicleType"}
                           onChange={handleChange}
                         />
                         <label
@@ -236,7 +194,7 @@ const AlertOffcanvas = forwardRef(
                    { !getValues('object') && <Error errorName={errors.object} />}
                   </div>
                  
-                    <div className={`${ selectedOption !== 'VEHICLE_GROUP' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
+                    <div className={`${ selectedOption !== 'vehicleGroup' ?  "col-xl-6 mb-3 pe-none red" : "col-xl-6 mb-3"}`}>
                     <label className="form-label">
                     {t('objectGroup')} <span className="text-danger">*</span>
                     </label>
@@ -294,8 +252,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="START"
-                          checked={selectedOption2 === "START"}
+                          value="start"
+                          checked={selectedOption2 === "start"}
                           onChange={handleChange2}
                         />
                         <label
@@ -309,8 +267,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="CANCEL"
-                          checked={selectedOption2 === "CANCEL"}
+                          value="cancel"
+                          checked={selectedOption2 === "cancel"}
                           onChange={handleChange2}
                         />
                         <label
@@ -324,8 +282,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="BOTH"
-                          checked={selectedOption2 === "BOTH"}
+                          value="both"
+                          checked={selectedOption2 === "both"}
                           onChange={handleChange2}
                         />
                         <label
@@ -345,8 +303,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="EVERYDAY"
-                          checked={selectedOption3 === "EVERYDAY"}
+                          value="everyday"
+                          checked={selectedOption3 === "everyday"}
                           onChange={handleChange3}
                         />
                         <label
@@ -360,8 +318,8 @@ const AlertOffcanvas = forwardRef(
                         <input
                           type="radio"
                           className="form-check-input"
-                          value="CUSTOM"
-                          checked={selectedOption3 === "CUSTOM"}
+                          value="custom"
+                          checked={selectedOption3 === "custom"}
                           onChange={handleChange3}
                         />
                         <label
@@ -372,7 +330,6 @@ const AlertOffcanvas = forwardRef(
                         </label>
                       </div>
                     </div>
-                      { !getValues('validDays') && <Error errorName={errors.validDays} />}
                   </div>
                   <div className="col-xl-6 mb-3 ">
                     <label className="form-label">{t('validTimeFrom')}</label>
@@ -433,7 +390,7 @@ const AlertOffcanvas = forwardRef(
                 </div>
                 <div className="col-xl-6 mb-3 ">
                     <label className="form-label">
-                    {t('severity')} <span className="text-danger">*</span>
+                      {t("severity")} <span className="text-danger">*</span>
                     </label>
                     <Controller
                       name="severity"
@@ -441,38 +398,44 @@ const AlertOffcanvas = forwardRef(
                       rules={{ required: true }}
                       render={({ field: { onChange, value, name, ref } }) => (
                         <Select
-                          onChange={(newValue) =>
-                            {setTempValue(newValue.value);
-                            setValue("severity", newValue.value)}
-                          }
+                          onChange={(newValue) => {
+                            setValue("severity", newValue.value);
+                          }}
                           options={severityOptions}
                           ref={ref}
                           name={name}
                           styles={customStyles}
-                          defaultValue={severityOptions[0]}
+                          value={
+                            objectOptions.filter(
+                              (l) => l.value == getValues("severity")
+                            )?.[0]
+                          }
                         />
                       )}
                     />
-                    {!getValues('severity') && <Error errorName={errors.severity} />}
+                    {!getValues("severity") && (
+                      <Error errorName={errors.severity} />
+                    )}
                   </div>
-                <div>
-                  <button
-                    type="submit"
-                    onClick={() => {handleSubmit(onSubmit)}}
-                    className="btn btn-primary me-1 m-1"
-                  >
-                    {t('submit')}
-                  </button>
-                  <Link
-                    to={"#"}
-                    onClick={() => setAddEmploye(false)}
-                    className="btn btn-danger light ms-1 m-1"
-                  >
-                    {t('cancel')}
-                  </Link>
-                </div>
-              </form>
-              
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={() => {
+                        handleSubmit(onSubmit);
+                      }}
+                      className="btn btn-primary me-1 m-1"
+                    >
+                      {t("submit")}
+                    </button>
+                    <Link
+                      to={"#"}
+                      onClick={() => setAddEmploye(false)}
+                      className="btn btn-danger light ms-1 m-1"
+                    >
+                      {t("cancel")}
+                    </Link>
+                  </div>
+                </form>
               </FormProvider>
             </div>
           </div>

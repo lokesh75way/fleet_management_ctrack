@@ -8,27 +8,44 @@ const CompanyItem = (props) => {
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
 
+
   useEffect(() => {
-    const data = Object.entries(props.vehicles).map((data) => {
-      const childNode = data[1].map((data) => {
-        return { label: data.vehicleName, value: data.id };
+    const data = props?.companyVehicle.map((data) => {
+      const childNode = data?.vehicles?.map((subItem) => {
+        return { label: subItem?.vehicleName, value: subItem?._id };
       });
 
-      return { value: data[0], label: data[0], children: childNode };
+      return { value: data?._id, label: data?.companyName, children: childNode };
     });
     setNodes([...data]);
-  }, [props.vehicles]);
+  }, [props.companyVehicle]);
+
+
+  // useEffect(() => {
+  //   const data = Object.entries(props.vehicles).map((data) => {
+  //     const childNode = data[1].map((data) => {
+  //       return { label: data.vehicleName, value: data.id };
+  //     });
+
+  //     return { value: data[0], label: data[0], children: childNode };
+  //   });
+  //   setNodes([...data]);
+  // }, [props.vehicles]);
+  
   const handleCheck = (checked) => {
     setChecked(checked);
+    props.setVehicleIds(checked)
   };
   const handleExpand = (expanded) => {
     setExpanded(expanded);
   };
   const handleSubmit = () => {
-    const selectedObject = checked.map((data) => JSON.parse(data));
-    console.log(selectedObject)
+    props.getVehiclesByIds();
+    // const selectedObject = checked.map((data) => JSON.parse(data));
+    // console.log(selectedObject)
     props.handleToggleCardPositionHandler();
   };
+  
   return (
     <>
     <div className="checkboxTree">
@@ -76,7 +93,7 @@ const CompanyItem = (props) => {
           type="submit"
           onClick={handleSubmit}
         >
-          Save Selection
+          Save Selection 
         </Button>
       </div>
     </>

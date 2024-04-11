@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
+import dayjs from "dayjs";
 
 const ClassifyTripTable = ({
   tableData,
@@ -11,21 +12,25 @@ const ClassifyTripTable = ({
   editDrawerOpen,
   active,
 }) => {
+  
+  const formatDate = (dateTimeString) => {
+    return dayjs(dateTimeString).format('YYYY-MM-DD HH:MM')
+  };
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item.tripId}</span>
+            <span>{item._id}</span>
           </td>
           <td>
-            <span>{item.startTime}</span>
+            <span>{formatDate(item.startTime)}</span>
           </td>
           <td>
             <span>{item.startLocation}</span>
           </td>
           <td>
-            <span>{item.reachTime}</span>
+            <span>{formatDate(item.reachTime)}</span>
           </td>
           <td>
             <span>{item.reachLocation}</span>
@@ -54,13 +59,14 @@ const ClassifyTripTable = ({
               <span
                 className="cursor-pointer"
                 style={{ marginRight: "3px", marginLeft: "7px" }}
+                onClick={() => editDrawerOpen(item._id)}
               >
                 <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
               </span>
               <DeleteModal
                 className="cursor-pointer "
                 onConfirmDelete={onConfirmDelete}
-                id={item.tripId}
+                id={item._id}
               >
                 <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
               </DeleteModal>

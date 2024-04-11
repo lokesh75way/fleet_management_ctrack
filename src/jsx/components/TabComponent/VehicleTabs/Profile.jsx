@@ -315,7 +315,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Distance"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 .4rem" }}
               name="distance"
               placeholder=""
             />
@@ -327,7 +327,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   type="number"
                   register={register}
                   label = "Distance Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
+                  style={{ width: "5rem", margin: " 0 .4rem" }}
                   name="distanceQuantity"
                   placeholder=""
                 />
@@ -365,7 +365,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Duration"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 .4rem" }}
               name="duration"
               placeholder=""
             />
@@ -387,12 +387,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             />
             {isCheckedDBFC2 && (
               <>
-                <span style={{ paddingLeft: ".6rem", paddingRight : ".6rem" }}>/</span>
+                <span style={{ paddingLeft: ".4rem", paddingRight : ".4rem" }}>/</span>
                 <CustomInput
                   type="number"
                   register={register}
                   label="Duration Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
+                  style={{ width: "5rem", margin: " 0 .4rem" }}
                   name="durationQuantity"
                   placeholder=""
                 />
@@ -673,7 +673,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           </div>
         </div>
       
-          <>
+          { isCheckedWC &&  <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">{t('underweightTolerance')}</label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
@@ -719,7 +719,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               </div>
               <Error errorName={errors.loadingUnloadingTolerance} />
             </div>
-          </>
+          </>}
    
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('fuelSensor')}</label>
@@ -765,7 +765,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">{t('noOfTanks')}</label>
-            <div className={`${ selectedOption !== 'multiple' ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
+            <div className={`${ selectedOption !== 'single' ?  "d-flex align-items-center" : "d-flex align-items-center pe-none" }`}>
               <CustomInput
                 type="number"
                 register={register}

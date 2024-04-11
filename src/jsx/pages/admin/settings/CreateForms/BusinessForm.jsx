@@ -104,7 +104,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         const passwordData = {
           password: data.newPassword,
           oldPassword: data.oldPassword,
-          confirmPassword: data.retypePassword,
+          confirmPassword: data.confirmPassword,
           _id: id,
         };
         await changePassword(passwordData);

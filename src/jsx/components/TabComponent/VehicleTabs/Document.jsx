@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 import Error from "../../Error/Error";
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
-const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
-
+const Document = ({
+  setValue,
+  handleSubmit,
+  onSubmit,
+  control,
+  getValues,
+  errors,
+  register,
+}) => {
   const { t } = useTranslation();
   const [tempValue, setTempValue] = useState(null);
 
@@ -40,8 +47,18 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
-          <Button onClick={()=>append({fieldName:tempValue, file:null,IssueDate:"", ExpiryDate:"" })} className="ms-auto">
-            + {t('addDocument')}
+          <Button
+            onClick={() =>
+              append({
+                fieldName: tempValue,
+                file: "",
+                IssueDate: "",
+                ExpiryDate: "",
+              })
+            }
+            className="ms-auto"
+          >
+            + {t("addDocument")}
           </Button>
         </div>
         {fields.map((item, index) => {
@@ -49,7 +66,10 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">{t('selectDocument')}<span className="text-danger">*</span></label>
+                  <label className="form-label">
+                    {t("selectDocument")}
+                    <span className="text-danger">*</span>
+                  </label>
                   <Controller
                     name={`test.${index}.fieldName`}
                     control={control}
@@ -72,29 +92,33 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                       />
                     )}
                   />
-                   {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
+                  {!getValues(`test.${index}.fieldName`) && (
+                    <Error errorName={errors?.test?.[index]?.fieldName} />
+                  )}
                 </div>
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">{t('uploadFile')}<span className="text-danger">*</span></label>
+                  <label className="form-label">
+                    {t("uploadFile")}
+                    <span className="text-danger">*</span>
+                  </label>
                   <input
-                    type="file" 
+                    type="file"
                     {...register(`test.${index}.file`)}
                     label="Document Name"
                     name={`test.${index}.file`}
                     className="form-control customDateHeight"
                   />
-                  <Error errorName={errors?.test?.[index]?.file} /> 
+                  <Error errorName={errors?.test?.[index]?.file} />
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
-                  <label className="form-label">{t('issueDate')}</label>
+                  <label className="form-label">{t("issueDate")}</label>
                   <Controller
                     name={`test.${index}IssueDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`test.${index}IssueDate`) ||
-                          new Date()
+                          getValues(`test.${index}IssueDate`) || new Date()
                         }
                         className="form-control customDateHeight"
                         onChange={(newValue) =>
@@ -103,18 +127,19 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                       />
                     )}
                   />
-                  {!getValues(`test.${index}.IssueDate`) && <Error errorName={errors?.test?.[index]?.IssueDate} /> }
+                  {!getValues(`test.${index}.IssueDate`) && (
+                    <Error errorName={errors?.test?.[index]?.IssueDate} />
+                  )}
                 </div>
                 <div className="col-xl-3 d-flex flex-column  mb-2">
-                  <label className="form-label">{t('expiryDate')}</label>
+                  <label className="form-label">{t("expiryDate")}</label>
                   <Controller
                     name={`test.${index}ExpiryDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`test.${index}ExpiryDate`) ||
-                          new Date()
+                          getValues(`test.${index}ExpiryDate`) || new Date()
                         }
                         className="form-control customDateHeight"
                         onChange={(newValue) =>
@@ -123,7 +148,9 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
                       />
                     )}
                   />
-                  {!getValues(`test.${index}.ExpiryDate`) && <Error errorName={errors?.test?.[index]?.ExpiryDate} /> }
+                  {!getValues(`test.${index}.ExpiryDate`) && (
+                    <Error errorName={errors?.test?.[index]?.ExpiryDate} />
+                  )}
                 </div>
               </div>
             </>
@@ -139,7 +166,7 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
         >
           <Button type="submit" onClick={handleSubmit(onSubmit)}>
             {" "}
-            {t('submit')}
+            {t("submit")}
           </Button>
         </div>
       </div>

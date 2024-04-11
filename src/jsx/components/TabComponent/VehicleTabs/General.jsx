@@ -231,9 +231,8 @@ const General = ({
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-                  setValue("branchId", newValue.value);
-                  setValue("branch", newValue.value);
-                  setValue("branchName", newValue.label);
+                  setValue("branch", newValue.label);
+                  setValue("branchID", newValue.value);
                 }
                 }
                 value={value}
@@ -319,7 +318,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('serverAddress')} <span className="text-danger">*</span>
+          {t('serverAddress')} 
           </label>
           <CustomInput
             type="text"
@@ -357,7 +356,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('distanceCounter')} <span className="text-danger">*</span>
+          {t('distanceCounter')} 
           </label>
           <Controller
             name="distanceCounter"
@@ -383,7 +382,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('unitOfDistance')} <span className="text-danger">*</span>
+          {t('unitOfDistance')} 
           </label>
           <Controller
             name="unitOfDistance"

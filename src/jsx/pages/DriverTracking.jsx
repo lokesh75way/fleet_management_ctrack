@@ -10,6 +10,8 @@ import { MdFence } from "react-icons/md";
 import "../../scss/pages/_driver-tracking.scss";
 
 import {useTranslation} from 'react-i18next'
+import { getVehiclesTraking } from "../../services/api/VehicleService";
+import { notifyError } from "../../utils/toast";
 const DriverTracking = () => {
 
   const {t} = useTranslation();
@@ -27,6 +29,39 @@ const DriverTracking = () => {
   const handleToggleCardPosition = () => {
     setIsOutside(!isOutside);
   };
+
+  const [vehicleIds, setVehicleIds] = useState([]);
+  const [vehicleStatus, setVehicleStatus] = useState("");
+  const [trackingData, setTrackingData] = useState([]);
+  
+  const getVehiclesStatus = async (ids) =>{
+    try{
+      const data = await getVehiclesTraking( ids ?? "", vehicleStatus);
+      setTrackingData(data ?? [])
+      return;
+    }catch(error){
+      notifyError("Some Error occured")
+    }
+  }
+
+  useEffect(() => {
+    getVehiclesStatus();
+    // set interval for 2 minutes
+    const intervalId = setInterval(() => {
+      getVehiclesStatus();
+    }, 120000);
+    // clear interval
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, []);
+
+  const getVehiclesByIds = () => {
+    const queryString = vehicleIds.map(id => `id=${id}&`).join('');
+    getVehiclesStatus(queryString);
+  }
+  
+
   // const getCurrentPosition = () => {
   //   navigator.geolocation.getCurrentPosition((position) => {
   //     setCurrentPosition({
@@ -51,11 +86,15 @@ const DriverTracking = () => {
         onClick={() => setIsOutside(true)}
       />
       <div className="p-2" >
-        <ShowMap data={data} />
+        <ShowMap data={data} trackingData={trackingData} />
       </div>
       {/* <div style={{zIndex : 20}}> */}
         <DriverTab
           tabData={tabData}
+          setVehicleIds={setVehicleIds}
+          getVehiclesByIds={getVehiclesByIds}
+          vehicleIds={vehicleIds}
+          setVehicleStatus={setVehicleStatus}
           handleToggleCardPosition={handleToggleCardPosition}
           isOutside={isOutside}
         />

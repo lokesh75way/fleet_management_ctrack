@@ -1,40 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
-
-import { IMAGES } from "../constant/theme";
 import MainPagetitle from "../layouts/MainPagetitle";
 import AlertOffcanvas from "../constant/AlertOffcanvas";
-import useAlertSubmit from "../../hooks/useAlertSubmit";
 import { AlertData } from "../components/Tables/Tables";
 import AlertTable from "../components/Tables/AlertTable";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { alertSchema } from "../../yup";
-import { notifySuccess } from "../../utils/toast";
-
-import {useTranslation} from 'react-i18next'
-import { createAlert,getAllAlert,deleteAlert,getAlertById } from "../../services/api/AlertServices";
-
-const headers = [
-  { label: "Employee ID", key: "emplid" },
-  { label: "Employee Name", key: "title" },
-  { label: "Department", key: "department" },
-  { label: "Email Address", key: "email" },
-  { label: "Contact Number", key: "contact" },
-  { label: "Location", key: "location" },
-  { label: "Status", key: "status" },
-  { label: "User Group", key: "usergroup" },
-];
+import { useTranslation } from "react-i18next";
+import usePagination from "../../hooks/usePagination";
+import { notifyError, notifySuccess } from "../../utils/toast";
+import {
+  createAlert,
+  deleteAlert,
+  getAlerts,
+  updateAlert,
+} from "../../services/api/AlertService";
 
 
 
 const Alert = () => {
-
-  const {t} = useTranslation();
- 
-  const [tableData, setTableData] = useState(AlertData);
-  const [editData, setEditData] = useState();
+  const { t } = useTranslation();
   const {
     register,
     formState: { errors },
@@ -43,90 +29,65 @@ const Alert = () => {
     control,
     clearErrors,
     handleSubmit,
+    reset,
   } = useForm({
     resolver: yupResolver(alertSchema),
   });
 
+  const [tableData, setTableData] = useState([]);
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
+    usePagination();
+  const [editData, setEditData] = useState();
 
-  const [newData , setNewData] = useState('false');
-
-  const onSubmit = async(data) => {
-    console.log(data);
-
-    const payload = {
-      alertName: data.alertName,
-      alertType: data.alertType,
-      value: data.alertValue,
-      basedOn: data.basedOn,
-      branchId: data.branchId,
-      object: data.object,
-      objectGroup: data.objectGroup,
-      severity: data.severity,
-      validDays: data.validDays,
-      validFrom: data.validTimeFrom1,
-      validTo: data.validTimeFrom2,
-      // action: string;
-      // isDeleted : boolean;
-    }
-
-    await createAlert(payload);
-
-    notifySuccess('New Alert Created');
-
-    setNewData(payload);
-
-    console.log(payload);
-  };
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
+  const fetchAllAlerts = async (page, businessGroupId) => {
+    try {
+      const { data, count } = await getAlerts(page, 10);
+      setTableData(data);
+      setCount(count);
+    } catch (error) {
+      notifyError("Error in fetching data");
     }
   };
- 
   useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+    fetchAllAlerts(page);
+  }, [page]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
+  const onSubmit = async (data) => {
+    try {
+      if (data._id && data._id !== 0) {
+        // update data
+        await updateAlert(data, data._id);
+        notifySuccess("Task Added Successfully !!");
+        alert.current.closeModal();
+      } else {
+        await createAlert(data);
+        notifySuccess("Task Added Successfully !!");
+        alert.current.closeModal();
+      }
+    } catch (error) {
+      const validationErr = error.response?.data?.data?.errors;
+      if (validationErr && validationErr.length > 0) {
+        notifyError(validationErr[0].msg);
+      } else notifyError(t("someErrorOccurred"));
+    }
   };
-  const onConfirmDelete = async(id) => {
-    console.log('this is id',id);
-    await deleteAlert(id);
-    await getAlertData();
 
+  const onConfirmDelete = async (id) => {
+    try {
+      await deleteAlert(id);
+      const updatedData = tableData.filter((item) => item._id !== id);
+      setTableData(updatedData);
+      setCount(totalCount - 1);
+      notifySuccess("Task Deleted");
+    } catch (e) {
+      notifyError("Something Went Wrong");
+    }
   };
-  const editDrawerOpen = async(id) => {
-
-    
-    console.log('this is idd',id);
-    const alertDataById = await getAlertById(id)
-    console.log('this is data by id',alertDataById.data.data.data);
-    setEditData(alertDataById.data.data.data);
-    // tableData.map((table) => table.id === item && setEditData(table));
-
-    // setEditTableData(item);
+  const editDrawerOpen = (item) => {
+    tableData.map((table) => table._id === item && setEditData(table));
     alert.current.showModal();
   };
- 
-  const invite = useRef();
-  // const employe = useRef();
+
   const alert = useRef();
 
 
@@ -152,9 +113,9 @@ const Alert = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle={t('alert')}
-        pageTitle={t('alert')}
-        parentTitle={t('settings')}
+        mainTitle={t("alert")}
+        pageTitle={t("alert")}
+        parentTitle={t("settings")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -164,7 +125,7 @@ const Alert = () => {
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0" style={{ flex: 1 }}>
-                    {t('alert')}
+                      {t("alert")}
                     </h4>
                     <div className="d-flex">
                       <div>
@@ -172,9 +133,13 @@ const Alert = () => {
                           to={"#"}
                           className="btn btn-primary btn-sm ms-1"
                           data-bs-toggle="offcanvas"
-                          onClick={() => alert.current.showModal()}
+                          onClick={() => {
+                            clearErrors();
+                            reset();
+                            alert.current.showModal();
+                          }}
                         >
-                          + {t('addAlert')}
+                          + {t("addAlert")}
                         </Link>{" "}
                       </div>
                     </div>
@@ -189,12 +154,13 @@ const Alert = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('alerts')}</th>
-                          <th>{t('alertName')}</th>
-                          <th>{t('alertType')}</th>
-                          <th>{t('createdDate')}</th>
-                          <th>{t('severity')}</th>
-                          <th>{t('action')}</th>
+                          <th>{t("alerts")}</th>
+                          <th>{t("alertName")}</th>
+                          <th>{t("alertType")}</th>
+                          <th>{t("createdDate")}</th>
+                          <th>{t("notification")}</th>
+                          <th>{t("reason")}</th>
+                          <th>{t("action")}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -209,47 +175,44 @@ const Alert = () => {
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
                         <Link
-                          className="paginate_button previous disabled"
-                          to="/alert"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
+                          className={`paginate_button ${
+                            page === 1 ? "previous disabled" : "previous"
+                          }`}
+                          to="#"
+                          onClick={() => prevPage(page - 1)}
                         >
                           <i className="fa-solid fa-angle-left" />
                         </Link>
                         <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/settings/alert"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
+                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
+                            (number) => (
+                              <Link
+                                key={number}
+                                className={`paginate_button ${
+                                  page === number + 1 ? "current" : ""
+                                }`}
+                                onClick={() => goToPage(number + 1)}
+                              >
+                                {number + 1}
+                              </Link>
+                            )
+                          )}
                         </span>
                         <Link
-                          className="paginate_button next"
-                          to="/settings/alert"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
+                          className={`paginate_button ${
+                            page * 10 >= totalCount ? "next disabled" : "next"
+                          }`}
+                          to="#"
+                          onClick={() => nextPage(page + 1)}
                         >
                           <i className="fa-solid fa-angle-right" />
                         </Link>
@@ -264,7 +227,7 @@ const Alert = () => {
       </div>
       <AlertOffcanvas
         ref={alert}
-        Title={t('addAlert')}
+        Title={editData && editData._id !== 0 ? "Edit Alert" : t("addAlert")}
         editData={editData}
         setEditData={setEditData}
         register={register}
@@ -275,6 +238,7 @@ const Alert = () => {
         errors={errors}
         handleSubmit={handleSubmit}
         clearErrors={clearErrors}
+        reset={reset}
       />
     </>
   );
