@@ -41,7 +41,7 @@ const VehicleForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      documents: [{ documentType: driverDocumentOptions[0].label, file: null, issueDate: new Date(), expiryDate: new Date() }],
+      documents: [{ documentType:"INSURANCE", file: null, issueDate: new Date(), expiryDate: new Date() }],
     },
     resolver: yupResolver(
       activeIndex === 0
@@ -80,11 +80,10 @@ const VehicleForm = () => {
             data.companyId = getValues("companyId");
             data.branchId = getValues("branchId");
 
-            console.log(data);
             await createVehicles(data)
 
             notifySuccess("Vehicle created");
-            navigate("/vehicle");
+            // navigate("/vehicle");
             return;
           } catch (e) {
             notifyError("Some error occured");
