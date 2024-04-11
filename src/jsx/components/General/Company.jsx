@@ -5,9 +5,8 @@ import { CompanyData } from "../../components/Tables/Tables";
 import CompanyTable from "../../components/Tables/CompanyTable";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
-import {clsx} from 'clsx'
+import { clsx } from "clsx";
 import { notifySuccess } from "../../../utils/toast";
-
 
 const Company = () => {
   const [data, setData] = useState(
@@ -52,7 +51,7 @@ const Company = () => {
   // for deleting data in table
   const onConfirmDelete = (id) => {
     const updatedData = tableData.filter((item) => item.id !== id);
-    notifySuccess('Company deleted successfully!')
+    notifySuccess("Company deleted successfully!");
     setTableData(updatedData);
   };
   const editDrawerOpen = (item) => {
@@ -73,9 +72,15 @@ const Company = () => {
   };
   const company = useRef();
   const edit = useRef();
-  const {isRtl} = useContext(ThemeContext);
-const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
   return (
     <>
       <div className="">

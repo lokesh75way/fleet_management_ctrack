@@ -53,7 +53,11 @@ const Trip = ({
       setValue("distance", dValues?.distance);
       setValue("fuelConsumption", dValues?.fuelConsumption);
       setValue("tripStatus", dValues?.tripStatus);
-      setValue('driverId', dValues?.driverId)
+      setValue('driver', dValues?.driver)
+    }
+    else{
+      setValue("startTime", new Date());
+      setValue("reachTime", new Date());
     }
   }, [dValues, id]);
 
@@ -91,6 +95,7 @@ const Trip = ({
               name="startLocation"
               placeholder=""
             />
+            <br />
             <Error errorName={errors.startLocation} />
           </div>
           <div className="col-xl-6 mb-3">
@@ -108,6 +113,7 @@ const Trip = ({
                 />
               )}
             />
+            <br />
             <Error errorName={errors.reachTime} />
           </div>
           <div className="col-xl-6 mb-3">
@@ -152,13 +158,13 @@ const Trip = ({
               Driver <span className="text-danger">*</span>
             </label>
             <Controller
-              name="driverId"
+              name="driver"
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <DriverDropdown
                   onChange={(newValue) => {
-                    setValue("driverId", newValue.value);
+                    setValue("driver", newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}

@@ -13,6 +13,7 @@ const BranchDropdown = ({
   ref,
   isMulti = true,
 }) => {
+    console.log(!!companyId)
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const {page} = usePagination()
@@ -43,7 +44,7 @@ const BranchDropdown = ({
                 styles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={isDisabled || !companyId}
+                isDisabled={isDisabled || !!companyId}
                 isMulti
                 />         
     );

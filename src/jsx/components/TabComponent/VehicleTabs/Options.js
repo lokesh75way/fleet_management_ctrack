@@ -211,9 +211,9 @@ export const technicianOptions = [
   { value: "Aasish", label: "Aasish" },
 ];
 export const categoryOptions = [
-  { value: "Area", label: "Area" },
-  { value: "Stay In Zone", label: "Stay In Zone" },
-  { value: "Stay Awat From Zone", label: "Stay Awat From Zone" },
+  { value: "AREA", label: "Area" },
+  { value: "STAY_IN", label: "Stay In Zone" },
+  { value: "STAY_AWAY", label: "Stay Away From Zone" },
 ];
 export const toleranceOptions = [
   { value: "5", label: "5" },
