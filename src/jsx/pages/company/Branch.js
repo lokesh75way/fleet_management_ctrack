@@ -89,6 +89,10 @@ const Branch = () => {
     label: "All Companies",
     value: "All Companies",
   });
+  const [branchDropdown, setBranchDropdown] = useState({
+    label: "All Branches",
+    value: "All Branches",
+  });
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -98,7 +102,6 @@ const Branch = () => {
     usePagination();
 
   const fetchAllBranch = async (page, CompanyId, branchId) => {
-    console.log({ companyId }, { branchId });
     try {
       if (CompanyId) {
         const { data, success } = await getAllBranch(undefined, CompanyId);
@@ -141,7 +144,7 @@ const Branch = () => {
   }));
 
   const handleCompanyChange = (selectedOption) => {
-    console.log("Selected company:", selectedOption.value);
+
     setSelectedCompany(selectedOption);
     setFilter(selectedOption);
     setCompanyId(selectedOption.value);
@@ -151,7 +154,7 @@ const Branch = () => {
 
   // Handler function for branch selection
   const handleBranchChange = (branchOption) => {
-    console.log("Selected branch:", branchOption.value);
+
     setSelectedBranch(branchOption);
     setFilter2(branchOption);
     setPage(1);
@@ -160,6 +163,8 @@ const Branch = () => {
   const handleClearFilter = () => {
     fetchAllBranch();
     setCompanyId(null);
+    setValue("company", "");
+    setValue("parent", "");
     setCompanyDropdown({
       label : "All companies",
       value : "All companies"
@@ -229,14 +234,15 @@ const Branch = () => {
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <CompanyDropdown
+                          
                             onChange={async (newValue) => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
                               handleCompanyChange(newValue);
-                              console.log(newValue)
+
                             }}
-                            key={companyDropdown}
-                            value={companyDropdown}
+                            key={companyId}
+                            value={value? value : companyDropdown}
                             customStyles={customStyles}
                             name={name}
                             ref={ref}
@@ -253,14 +259,15 @@ const Branch = () => {
                             key={companyId}
                             onChange={(newValue) => {
                               setValue("parent", newValue.value);
-                              setValue("branchIds", newValue);
+                              
                               handleBranchChange(newValue);
                             }}
                             companyId={companyId}
-                            value={[{
-                              label: "Choose Branch",
-                              value: "Choose Branch",
-                            }]}
+                            // value={[{
+                            //   label: "Choose Branch",
+                            //   value: "Choose Branch",
+                            // }]}
+                            value={value? value : branchDropdown}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}
