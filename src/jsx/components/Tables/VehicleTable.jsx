@@ -15,7 +15,6 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   if(tableData.length ===0){
     return;
   }
-console.log(tableData)
   return tableData?.map((item, index) => (
   
     <tr key={item.id}>

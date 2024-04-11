@@ -10,10 +10,17 @@ const FileUploader = ({
   setValue,
   setLoading,
   loading,
-  onSuccess,
+  link = false
 }) => {
   const upload_Preset = "our_cloudinary_upload_preset";
   const [fileLink, setFileLink] = useState(null);
+  useEffect(() => {
+    if (link) {
+      setFileLink(link);
+      setValue(name, link)
+    }
+  }, []);
+
   const fileUploader = async (e) => {
     try {
       e.preventDefault();
@@ -55,7 +62,7 @@ const FileUploader = ({
           accept="image/*"
         />
       </div>
-      {fileLink && <small className="text-success">File uploaded </small>}
+      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={link}>here</a> </small>}
     </div>
   );
 };

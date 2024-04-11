@@ -365,18 +365,7 @@ export const driverDocumentSchema = yup
         documentType: yup.string().required("This field is required"),
         file: yup
           .mixed()
-          .required("File is required")
-          // .test("fileType", "Unsupported file type", (value) => {
-          //   if (value && value.length > 0)
-          //     return (
-          //       value &&
-          //       ["image/jpeg", "image/png", "application/pdf"].includes(
-          //         value[0]?.type
-          //       )
-          //     );
-          //   return true;
-          // }),
-          ,
+          .required("File is required"),
         issueDate: yup.string().typeError('Issue date is required'),
         expireDate: yup.string().typeError('Expiry date is required'),
       })

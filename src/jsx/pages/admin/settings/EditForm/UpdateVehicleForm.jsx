@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -9,65 +14,107 @@ import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
-import { useParams,useLocation } from "react-router-dom";
+import {
+  vehicleDocumentSchema,
+  vehicleGeneralSchema,
+  vehicleProfileSchema,
+} from "../../../../../yup";
+import { useParams, useLocation } from "react-router-dom";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { updateVehicles } from "../../../../../services/api/VehicleService";
 import { createVehicles } from "../../../../../services/api/VehicleService";
 
-
 const UpdateVehicleForm = () => {
-
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
-  })
+  const { formData } = location.state || {};
 
-  const onSubmit = async(data)=>{
-    if(activeIndex === (totalTabs - 1)){
-      try{
-        if(id){
-          try{
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      documents: [{
+        documentType: 'INSURANCE',
+        file: '',
+        expireDate:  new Date(),
+        issueDate:  new Date(),
+      }],
+    },
+    resolver: yupResolver(
+      activeIndex === 0
+        ? vehicleGeneralSchema
+        : activeIndex === 1
+        ? vehicleProfileSchema
+        : vehicleDocumentSchema
+    ),
+  });
 
-            data.businessGroupName = getValues('businessGroupName')
-            await updateVehicles(data,id)
-            notifySuccess("Vehicle Updated Successfully")
+
+  useEffect(()=>{
+    if(id){
+      formData[0].documents.map((docs,index)=>{
+        setValue(`documents.${index}.documentType`,docs.documentType);
+      })
+    }
+  },[])
+
+  const onSubmit = async (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        if (id) {
+          try {
+            data.businessGroupName = getValues("businessGroupName");
+            for (const key in data) {
+              const element = data[key];
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
+              }
+            }
+            console.log(data)
+            await updateVehicles(data, id);
+            notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");
             return;
-          }catch(e){
-            notifyError("Some Error occured")
+          } catch (e) {
+            notifyError("Some Error occured");
           }
-        }
-        else{
-          try{
-            data.businessGroupId = getValues('businessId')
-            data.companyId = getValues('companyId')
-            data.branchId = getValues('branchId')
-            await createVehicles(data)
-            
-            notifySuccess("Vehicle created")
+        } else {
+          try {
+            data.businessGroupId = getValues("businessId");
+            data.companyId = getValues("companyId");
+            data.branchId = getValues("branchId");
+            for (const key in data) {
+              const element = data[key];
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
+              }
+            }
+            await createVehicles(data);
+
+            notifySuccess("Vehicle created");
             navigate("/vehicle");
             return;
-          }catch(e){
-            notifyError("Some error occured")
+          } catch (e) {
+            notifyError("Some error occured");
           }
         }
-      }
-      catch(error){
-        notifyError("Some error occured")
+      } catch (error) {
+        notifyError("Some error occured");
       }
       return;
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
-
-  const { id } = useParams();
-  const location = useLocation();
-  const { formData } = location.state || {};
+  };
 
   return (
     <>

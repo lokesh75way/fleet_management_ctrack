@@ -1,9 +1,13 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
-import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
@@ -22,7 +26,6 @@ import {
 } from "../../../../../services/api/VehicleService";
 
 import { useTranslation } from "react-i18next";
-import { driverDocumentOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
 
 const VehicleForm = () => {
   const { t } = useTranslation();
@@ -32,6 +35,11 @@ const VehicleForm = () => {
   const tabHeading = [t("general"), t("profile"), t("document")];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
+
+  const { id } = useParams();
+  const location = useLocation();
+  const { formData } = location.state || {};
+
   const {
     register,
     formState: { errors },
@@ -40,9 +48,14 @@ const VehicleForm = () => {
     control,
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      documents: [{ documentType:"INSURANCE", file: null, issueDate: new Date(), expiryDate: new Date() }],
-    },
+      defaultValues: {
+        documents: [{
+          documentType: {label : 'INSURANCE' , value : 'INSURANCE'},
+          file: '',
+          expireDate:  new Date(),
+          issueDate:  new Date(),
+        }],
+      },
     resolver: yupResolver(
       activeIndex === 0
         ? vehicleGeneralSchema
@@ -51,15 +64,19 @@ const VehicleForm = () => {
         : vehicleDocumentSchema
     ),
   });
-  const { id } = useParams();
-  const location = useLocation();
-  const { formData } = location.state || {};
+
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (id) {
           try {
             data.businessGroupName = getValues("businessGroupName");
+            for (const key in data) {
+              const element = data[key];
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
+              }
+            }
             await updateVehicles(data);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");
@@ -71,17 +88,17 @@ const VehicleForm = () => {
           try {
             for (const key in data) {
               const element = data[key];
-              if(data[key]===undefined|| data[key] === '' ){
-                delete data[key]
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
               }
             }
-            delete data.test
+            delete data.test;
             data.businessGroupId = getValues("businessId");
             data.companyId = getValues("companyId");
             data.branchId = getValues("branchId");
 
-            await createVehicles(data)
-            notifySuccess("Vehicle created")
+            await createVehicles(data);
+            notifySuccess("Vehicle created");
             navigate("/vehicle");
             return;
           } catch (e) {
@@ -94,8 +111,7 @@ const VehicleForm = () => {
       return;
     }
     setActiveIndex((prevIndex) => {
-
-      return Math.min(prevIndex + 1, totalTabs - 1)
+      return Math.min(prevIndex + 1, totalTabs - 1);
     });
   };
   return (
