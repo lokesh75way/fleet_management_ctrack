@@ -33,11 +33,15 @@ const DriverTracking = () => {
   const [vehicleIds, setVehicleIds] = useState([]);
   const [vehicleStatus, setVehicleStatus] = useState("");
   const [trackingData, setTrackingData] = useState([]);
+  const [vehicleCounts, setVehicleCounts] = useState({});
+  const [centerCoordinate, setCenterCoordinate] = useState({});
   
   const getVehiclesStatus = async (ids) =>{
     try{
       const data = await getVehiclesTraking(ids ?? "", vehicleStatus);
-      setTrackingData(data ?? [])
+      setTrackingData(data?.data ?? []);
+      setVehicleCounts(data?.data?.count);
+      setCenterCoordinate(data?.data?.centerCoordinate);
       return;
     }catch(error){
       notifyError("Some Error occured")
@@ -55,7 +59,7 @@ const DriverTracking = () => {
       getVehiclesByIds();
 
       intervalId = setInterval(() => {
-        getVehiclesStatus();
+        getVehiclesByIds();
       }, 120000);
     }
     
@@ -89,7 +93,7 @@ const DriverTracking = () => {
         onClick={() => setIsOutside(true)}
       />
       <div className="p-2" >
-        <ShowMap data={data} trackingData={trackingData} />
+        <ShowMap data={data} trackingData={trackingData} centerCoordinate={centerCoordinate} />
       </div>
       {/* <div style={{zIndex : 20}}> */}
         <DriverTab
@@ -98,6 +102,7 @@ const DriverTracking = () => {
           getVehiclesByIds={getVehiclesByIds}
           vehicleIds={vehicleIds}
           setVehicleStatus={setVehicleStatus}
+          vehicleCounts={vehicleCounts}
           handleToggleCardPosition={handleToggleCardPosition}
           isOutside={isOutside}
         />
