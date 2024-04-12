@@ -157,7 +157,6 @@ const Document = ({
                          expiryDate ||
                           new Date()
                         }
-                        dateFormat='yyyy-MM-dd'
                         className="form-control customDateHeight"
                         onChange={(newValue) =>{
                           setExpiryDate(newValue)

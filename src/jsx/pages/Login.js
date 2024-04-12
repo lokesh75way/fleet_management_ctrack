@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import { connect, useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import React, { useState } from "react";
+import { connect, useDispatch } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
-  loadingToggleAction, loginAction,
-} from '../../store/actions/AuthActions';
+  loadingToggleAction,
+  loginAction,
+} from "../../store/actions/AuthActions";
 // import users from '../../users.json'
-
 import { useForm } from "react-hook-form";
 import logo from "../../images/logo/logo-full.png";
 import LogoWhite from "../../images/logo/logofull-white.png";
 import bg6 from "../../images/background/bg6.jpg";
 import { loginValidation } from "../../yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { notifyError } from '../../utils/toast';
+import { notifyError } from "../../utils/toast";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 
 function Login(props) {
   const [heartActive, setHeartActive] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     formState: { errors },
@@ -35,6 +37,8 @@ function Login(props) {
     dispatch(loadingToggleAction(true));
     dispatch(loginAction(email, password, navigate));
   }
+
+
 
   return (
     <div className="page-wraper">
@@ -120,11 +124,33 @@ function Login(props) {
                                 )}
                               </div>
                               <div className="form-group mb-3">
-                                <input
-                                  type="password"
-                                  className="form-control"
-                                  {...register("password")}
-                                />
+                                <div className="position-relative">
+                                  <input
+                                    type={showPassword ? "text" : "password"}
+                                    className="form-control"
+                                    {...register("password")}
+                                  />
+                                  {/* Eye icon to toggle password visibility */}
+                                  {showPassword ? (
+                                    <LuEyeOff
+                                      className="eye-icon"
+                                      style={{ position: 'absolute',
+                                        left: '91%',
+                                        bottom: '32%'
+                                      }}
+                                      onClick={() => setShowPassword(false)}
+                                    />
+                                  ) : (
+                                    <LuEye
+                                      className="eye-icon"
+                                      style={{ position: 'absolute',
+                                        left: '91%',
+                                        bottom: '32%'
+                                      }}
+                                      onClick={() => setShowPassword(true)}
+                                    />
+                                  )}
+                                </div>
                                 {errors?.password && (
                                   <div className="text-danger fs-12">
                                     {errors.password.message}
@@ -175,9 +201,7 @@ function Login(props) {
                                   <li>
                                     <Link
                                       target="_blank"
-                                      to={
-                                        "https://www.linkedin.com/in"
-                                      }
+                                      to={"https://www.linkedin.com/in"}
                                       className="fab fa-linkedin-in btn-linkedin"
                                     ></Link>
                                   </li>
@@ -220,15 +244,12 @@ function Login(props) {
                             {" "}
                             © Copyright by{" "}
                             <span
-                              className={`heart ${heartActive ? "" : "heart-blast"
-                                }`}
+                              className={`heart ${
+                                heartActive ? "" : "heart-blast"
+                              }`}
                               onClick={() => setHeartActive(!heartActive)}
                             ></span>
-                            <a
-                              href="#"
-                              rel="noreferrer"
-                              target="_blank"
-                            >
+                            <a href="#" rel="noreferrer" target="_blank">
                               {" "}
                               75way{" "}
                             </a>{" "}

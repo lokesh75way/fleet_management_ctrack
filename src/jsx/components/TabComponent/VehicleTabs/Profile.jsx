@@ -767,7 +767,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   label="Overweight Tolerance"
                   style={{ marginRight: ".5rem" }}
                   name="overweightTolerance"
-                  placeholder=""
+                  // placeholder=""
                 />
                 <span style={{ padding: " 0 1rem" }}>%</span>
               </div>
