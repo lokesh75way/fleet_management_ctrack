@@ -46,7 +46,9 @@ const SideBar = () => {
 
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   let filteredAdminMenuList = [];
-  if (userDetails && userDetails.permissions?.[0]) {
+  const role = userDetails?.user?.role;
+  const type = userDetails?.user?.type;
+  if (userDetails && userDetails.permissions?.[0] && role === 'USER') {
     
     const modulePermissions = userDetails.permissions?.[0].permission;
     const viewableModules = modulePermissions.filter(item => item.view === true).map(item => ({
@@ -54,34 +56,29 @@ const SideBar = () => {
       title: item.moduleId.title,
       basePath: item.moduleId.basePath
     }));
-    const role = userDetails?.user?.role;
-    const type = userDetails?.user?.type;
-  
-    let MenuList;
+    const viewmoduleTitles = viewableModules.map(item => item.title);
+    filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
+  }
+  let MenuList;
+  if(userDetails){
     switch (role) {
       case "COMPANY":
-        MenuList = AdminMenuList;
+        MenuList = CompanyMenuList;
         break;
       case "SUPER_ADMIN":
         MenuList = AdminMenuList;
         break;
       case "BUSINESS_GROUP":
-        MenuList = AdminMenuList;
+        MenuList = BusinessGroupMenuList;
         break;
+
       default:
-        MenuList = AdminMenuList; // Default case if role doesn't match any case
+        MenuList = [];
     }
-    const viewmoduleTitles = viewableModules.map(item => item.title);
-  
-    filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
-  
-    // if(type === "STAFF"){
-     
-      
-    //   const updatedMenuItems = MenuList.filter(item => item.title !== "Feature Template");
-    //   MenuList = updatedMenuItems;
-    // }
   }
+  console.log('====================================');
+  console.log(filteredAdminMenuList);
+  console.log('====================================');
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {}, []);
@@ -141,6 +138,7 @@ const SideBar = () => {
   const { pathname: url2 } = useLocation();
 
   const {t} = useTranslation();
+  const menuListToMap = role === 'USER' ? filteredAdminMenuList : MenuList;
   return (
     <div
       className={`deznav  border-right ${iconHover} ${
@@ -155,7 +153,7 @@ const SideBar = () => {
     >
       <div className="deznav-scroll" >
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
-          {filteredAdminMenuList.map((data, index) => {
+          {menuListToMap.map((data, index) => {
             let menuClass = data.classsChange;
             if (menuClass !== "menu-title") {
               return (

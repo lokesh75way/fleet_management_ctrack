@@ -7,13 +7,15 @@ const TechnicianTaskTable = ({
   tableData,
   onConfirmDelete,
   editDrawerOpen,
+  currentPage, itemsPerPage
 }) => {
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item._id}</span>
+            <span>{startIndex + index}</span>
           </td>
           <td>
             <div className="products">

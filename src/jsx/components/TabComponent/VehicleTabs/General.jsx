@@ -18,15 +18,12 @@ import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 import CompanyDropdown from "../../CompanyDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
-
-
-
-
 
 const General = ({
   register,
@@ -36,16 +33,13 @@ const General = ({
   control,
   handleSubmit,
   onSubmit,
-  formData
+  formData,
 }) => {
-
-
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
 
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
-
 
   const { checkRole, checkUserName } = useStorage();
   const [tempValue, setTempValue] = useState();
@@ -60,181 +54,174 @@ const General = ({
   const newData = userData.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
 
+  const role = checkRole();
 
-  const role = checkRole()
+  const { t } = useTranslation();
 
-  // useEffect(()=>{
-  //   getCompanyData()
-  //   getBusinessData()
-  // },[])
-  // let businessGroupOptions;
-  // const getCompanyData = async()=>{
-  //   const {data} = await getGroups()
-  //   businessGroupOptions = data.map((item)=>{
-  //     return 
-  //   })
-  //   setAllCompany(allCompany)
-  // }
-
-  useEffect(()=>{
-    businessGroupOptions()
-    allCompanyOptions()
-  },[])
-
-
-  
-
-  const {t} = useTranslation();
-
-  let companyOptions,branchOptions;
-  if(role === 'admin'){
-    companyOptions = DummyData.filter((item)=> item.role === 'company').map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-    branchOptions = DummyData.filter(
-      (item) => item.role === 'branch'
+  let companyOptions, branchOptions;
+  if (role === "admin") {
+    companyOptions = DummyData.filter((item) => item.role === "company").map(
+      (item) => ({
+        label: item.userName,
+        value: item.id,
+      })
+    );
+    branchOptions = DummyData.filter((item) => item.role === "branch").map(
+      (item) => ({
+        label: item.userName,
+        value: item.id,
+      })
+    );
+  } else if (role === "businessgroup") {
+    companyOptions = DummyData.filter(
+      (item) => item.role === "company" && item.parent === checkUserName()
     ).map((item) => ({
       label: item.userName,
       value: item.id,
     }));
-  }
-  else if(role === 'businessgroup'){
-    companyOptions = DummyData.filter((item)=> item.role === 'company' && item.parent === checkUserName()).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
     branchOptions = DummyData.filter(
-      (item) => item.parentBusinessGroup === checkUserName() && item.role === 'branch'
+      (item) =>
+        item.parentBusinessGroup === checkUserName() && item.role === "branch"
     ).map((item) => ({
       label: item.userName,
       value: item.id,
     }));
-  }
-  else if(role === 'company'){
+  } else if (role === "company") {
     branchOptions = DummyData.filter(
-      (item) => item.parentCompany === checkUserName() && item.role === 'branch'
+      (item) => item.parentCompany === checkUserName() && item.role === "branch"
     ).map((item) => ({
       label: item.userName,
       value: item.id,
     }));
     companyOptions = DummyData.filter(
       (item) => item.userName === checkUserName()
-    )
+    );
   }
   // const[formData,setFormData] = useState([])
-  useEffect(()=>{
-    
-    if(formData && id){
+  useEffect(() => {
+    if (formData && id) {
+      setValue("businessGroupId", formData?.[0]?.businessGroupId);
+      setGroupId(formData?.[0]?.businessGroupId);
+      setValue("companyId", formData?.[0]?.companyId);
+      setCompanyId(formData?.[0]?.companyId);
+      setValue("imeiNumber", formData?.[0].imeiNumber);
 
-      console.log('updated form data',formData);
+      setValue("vehicleName", formData?.[0].vehicleName);
+      setValue("plateNumber", formData?.[0].plateNumber);
+      setValue(
+        "branchId",
+        formData?.[0]?.branchId.map((branch) => branch._id)
+      );
+      setValue(
+        "branch",
+        formData?.[0]?.branchId.map((branch) => branch._id)
+      );
+      setValue("simNumber", formData?.[0].simNumber);
+      setValue("secondrySimNumber", formData?.[0].secondrySimNumber);
+      setValue("IMEINumber", formData?.[0].IMEINumber);
+      setValue("registrationNumber", formData?.[0].registrationNumber);
+      setValue("weightCapacity", formData?.[0].weightCapacity);
 
-      setValue("businessGroupId",formData?.[0].businessGroupId)
-      setValue("businessId",formData?.[0].businessGroupId)
-      setValue("company",formData?.[0].companyId)
+      setValue("deviceType", formData?.[0].deviceType);
+      setValue("serverAddress", formData?.[0].serverAddress);
+      setValue("distanceCounter", formData?.[0].distanceCounter);
+      setValue("unitOfDistance", formData?.[0].unitOfDistance);
+      setValue(
+        "deviceAccuracyTolerance",
+        formData?.[0].deviceAccuracyTolerance
+      );
 
-      // setValue("branch",formData?.[0].branchId._id)
-      // setValue("branchId",formData?.[0].branchId._id)
-      // setValue("branchName",formData?.[0].branchId._id)
-
-      setValue("businessGroupName",formData?.[0].businessGroupName)
-      console.log('imei number ',formData?.[0].imeiNumber);
-      setValue("imeiNumber",formData?.[0].imeiNumber)
-      setValue("vehicleName",formData?.[0].vehicleName)
-      setValue("plateNumber",formData?.[0].plateNumber)
-      setValue("branch",formData?.[0].branch)
-      setValue("simNumber",formData?.[0].simNumber)
-      setValue("IMEINumber",formData?.[0].IMEINumber)
-      setValue("registrationNumber",formData?.[0].registrationNumber)
-      setValue("weightCapacity",formData?.[0].weightCapacity)
       
-      setValue("deviceType",formData?.[0].deviceType)
-      setValue("serverAddress",formData?.[0].serverAddress)
-      setValue("distanceCounter",formData?.[0].distanceCounter)
-      setValue("unitOfDistance",formData?.[0].unitOfDistance)
-      setValue("deviceAccuracyTolerance",formData?.[0].deviceAccuracyTolerance)
-
-
-
-
     }
-  },[formData,id])
+  }, [formData, id]);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('businessGroup')} <span className="text-danger">*</span>
+            {t("businessGroup")} <span className="text-danger">*</span>
           </label>
           <Controller
             name="businessGroupId"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-              onChange={async (newValue) => {
-                await setValue("businessGroupId", newValue.value);
-                await setValue("businessId", newValue.value);
-                await setValue("businessGroupName", newValue.label);
-                setGroupId(newValue.value);
-                setCompanyId(null);
-              }}
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              isDisabled={businessDisabled}
-              name={name}
-            />
+                onChange={async (newValue) => {
+                  await setValue("businessGroupId", newValue.value);
+                  await setValue("businessId", newValue.value);
+                  await setValue("businessGroupName", newValue.label);
+                  setGroupId(newValue.value);
+                  setCompanyId(null);
+                }}
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                isDisabled={businessDisabled}
+                name={name}
+              />
             )}
           />
-          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
+          {!getValues("businessGroupId") && (
+            <Error errorName={errors.businessGroupId} />
+          )}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('company')}  <span className="text-danger">*</span>
+            {t("company")} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="company"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <CompanyDropdown 
-              key={groupId}
-              groupId={groupId}
-              onChange={(newValue) => {
-               
-                setCompanyId(newValue.value)
-                setValue("companyId", newValue.value);
-                setValue("company", newValue.label);
-              }}
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              isDisabled={companyDisabled}
-              name={name}
-            />
+              <CompanyDropdown
+                key={groupId}
+                groupId={groupId}
+                onChange={(newValue) => {
+                  setValue("companyId", newValue.value);
+                  setCompanyId(newValue.value);
+                }}
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                isDisabled={companyDisabled}
+                name={name}
+              />
             )}
           />
-          {!getValues("company") && <Error errorName={errors.company} />}
+          {!getValues("company") && <Error errorName={errors.companyId} />}
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-          {t('branch')} 
-          </label>
+          <label className="form-label">{t("branch")}</label>
           <Controller
             name="branch"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
+              // <ParentBranchDropdown
+              //   key={companyId}
+              //   companyId={companyId}
+              //   onChange={async (newValue) => {
+              //     // setValue("parentBranchId", newValue.value);
+              //     setValue("branch", newValue.label);
+              //     setValue("branchIds", newValue.value);
+              //   }
+              //   }
+              //   value={value}
+              //   customStyles={customStyles}
+              //   ref={ref}
+              //   isDisabled={false}
+              //   name={name}
+              // />
+              <BranchDropdown
                 key={companyId}
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
                   setValue("branch", newValue.label);
                   setValue("branchID", newValue.value);
-                }
-                }
+                }}
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
@@ -246,7 +233,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('vehicleName')} <span className="text-danger">*</span>
+            {t("vehicleName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -255,13 +242,13 @@ const General = ({
             label="Vehicle Name"
             name="vehicleName"
             placeholder=""
-            defaultValue={getValues('vehicleName')}
+            defaultValue={getValues("vehicleName")}
           />
           <Error errorName={errors.vehicleName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('deviceType')}  <span className="text-danger">*</span>
+            {t("deviceType")} <span className="text-danger">*</span>
           </label>
           <Controller
             name="deviceType"
@@ -277,7 +264,10 @@ const General = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues('deviceType'), value :getValues('deviceType')}}
+                value={{
+                  label: getValues("deviceType"),
+                  value: getValues("deviceType"),
+                }}
               />
             )}
           />
@@ -285,7 +275,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('IMEINumber')}  <span className="text-danger">*</span>
+            {t("IMEINumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -294,12 +284,12 @@ const General = ({
             name="imeiNumber"
             label="IMEI Number"
             placeholder=""
-            defaultValue={getValues('imeiNumber')}
+            defaultValue={getValues("imeiNumber")}
           />
           <Error errorName={errors.imeiNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('copyFrom')} </label>
+          <label className="form-label">{t("copyFrom")} </label>
           <Controller
             name="copyFrom"
             control={control}
@@ -318,20 +308,21 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('serverAddress')} 
+            {t("serverAddress")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
             name="serverAddress"
             placeholder=""
-            defaultValue={getValues('serverAddress')}
+            defaultValue={getValues("serverAddress")}
           />
-        <Error errorName={errors.serverAddress} />
+          <Error errorName={errors.serverAddress} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('simNumber')}  <span className="text-danger">*</span>
+            {t("simNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -344,70 +335,78 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('secondarySimNumber')} <span className="text-danger">*</span>
+            {t("secondrySimNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             register={register}
-            name="secondarySimNumber"
+            name="secondrySimNumber"
             placeholder=""
           />
-          <Error errorName={errors.secondarySimNumber} />
+          <Error errorName={errors.secondrySimNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('distanceCounter')} 
+            {t("distanceCounter")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="distanceCounter"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) =>{
-                  setValue("distanceCounter", newValue.value)
-                  setTempValue("frgefrg")
-                }
-                  
-                }
+                onChange={(newValue) => {
+                  setValue("distanceCounter", newValue.value);
+                  setTempValue("frgefrg");
+                }}
                 options={distanceCounterOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 // defaultValue={distanceCounterOptions[0]}
-                value={{label:getValues('distanceCounter'), value :getValues('distanceCounter')}}
+                value={{
+                  label: getValues("distanceCounter"),
+                  value: getValues("distanceCounter"),
+                }}
               />
             )}
           />
-          {!getValues("distanceCounter") && <Error errorName={errors.distanceCounter} />}
+          {!getValues("distanceCounter") && (
+            <Error errorName={errors.distanceCounter} />
+          )}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('unitOfDistance')} 
+            {t("unitOfDistance")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="unitOfDistance"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) =>
-                  {                    
-                    setValue("unitOfDistance", newValue.value)
-                    setTempValue(newValue.value);
-                  }
-                }
+                onChange={(newValue) => {
+                  setValue("unitOfDistance", newValue.value);
+                  setTempValue(newValue.value);
+                }}
                 options={unitOfDistanceOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{label:getValues('unitOfDistance'), value :getValues('unitOfDistance')}}
+                value={{
+                  label: getValues("unitOfDistance"),
+                  value: getValues("unitOfDistance"),
+                }}
               />
             )}
           />
-          {!getValues("unitOfDistance") && <Error errorName={errors.unitOfDistance} />}
+          {!getValues("unitOfDistance") && (
+            <Error errorName={errors.unitOfDistance} />
+          )}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
-          {t('speedDetection')} 
+            {t("speedDetection")}
           </label>
           <Controller
             name="speedDetection"
@@ -429,7 +428,8 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('deviceAccuracyTolerance')} <span className="text-danger">*</span>
+            {t("deviceAccuracyTolerance")}{" "}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"

@@ -152,7 +152,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
-          onClick={() => {setSelectValue("Running"); setVehicleStatus("Running"); } }
+          onClick={() => {setSelectValue("Running"); setVehicleStatus("RUNNING"); } }
         >
           <p>{Running}</p>
           <span>Running</span>
@@ -172,7 +172,7 @@ const DriverTabComponent1 = (props) => {
           className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("Stopped"); setVehicleStatus("Stopped"); }}
+          onClick={() => { setSelectValue("Stopped"); setVehicleStatus("STOP"); }}
         >
           <p>{Stopped}</p>
           <span>Stopped</span>
@@ -201,7 +201,7 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 total ${
             selectValue === "All" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("All"); setVehicleStatus("All"); }}
+          onClick={() => { setSelectValue("All"); setVehicleStatus(""); }}
         >
           <p>{total}</p>
           <span>Total</span>
