@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -9,61 +14,107 @@ import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { vehicleGeneralSchema, vehicleProfileSchema } from '../../../../../yup' ;
-import { useParams,useLocation } from "react-router-dom";
+import {
+  vehicleDocumentSchema,
+  vehicleGeneralSchema,
+  vehicleProfileSchema,
+} from "../../../../../yup";
+import { useParams, useLocation } from "react-router-dom";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { updateVehicles } from "../../../../../services/api/VehicleService";
 import { createVehicles } from "../../../../../services/api/VehicleService";
 
-
 const UpdateVehicleForm = () => {
-
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["General", "Profile", "Document"];
   const component = [General, Profile, Document];
   const totalTabs = tabHeading.length;
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-
-    defaultValues: {
-      test:[{fieldName:'', file:null,IssueDate:"", ExpiryDate:"" }]
-    },
-    resolver: yupResolver(activeIndex === 0 ? vehicleGeneralSchema: vehicleProfileSchema)
-  })
-
-  const onSubmit = async (data) => {
-    if (activeIndex !== totalTabs - 1) {
-      setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-      return;
-    }
-  
-    try {
-      const vehicleData = {
-        ...data,
-        businessGroupId: getValues('businessId'),
-        companyId: getValues('companyId'),
-        branchId: getValues('branchId'),
-      };
-  
-      if (id) {
-        await updateVehicles(vehicleData, id);
-        notifySuccess("Vehicle Updated Successfully");
-      } else {
-        await createVehicles(vehicleData);
-        notifySuccess("Vehicle created");
-      }
-  
-      navigate("/vehicle");
-    } catch (error) {
-      notifyError("Some error occurred");
-    }
-  };
-
-  const { id } = useParams();
-  const location = useLocation();
   const { formData } = location.state || {};
 
-  console.log('formData',formData);
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      documents: [{
+        documentType: 'INSURANCE',
+        file: '',
+        expireDate:  new Date(),
+        issueDate:  new Date(),
+      }],
+    },
+    resolver: yupResolver(
+      activeIndex === 0
+        ? vehicleGeneralSchema
+        : activeIndex === 1
+        ? vehicleProfileSchema
+        : vehicleDocumentSchema
+    ),
+  });
+
+
+  useEffect(()=>{
+    if(id){
+      formData[0].documents.map((docs,index)=>{
+        setValue(`documents.${index}.documentType`,docs.documentType);
+      })
+    }
+  },[])
+
+  const onSubmit = async (data) => {
+    if (activeIndex === totalTabs - 1) {
+      try {
+        if (id) {
+          try {
+            data.businessGroupName = getValues("businessGroupName");
+            for (const key in data) {
+              const element = data[key];
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
+              }
+            }
+            console.log(data)
+            await updateVehicles(data, id);
+            notifySuccess("Vehicle Updated Successfully");
+            navigate("/vehicle");
+            return;
+          } catch (e) {
+            notifyError("Some Error occured");
+          }
+        } else {
+          try {
+            data.businessGroupId = getValues("businessId");
+            data.companyId = getValues("companyId");
+            data.branchId = getValues("branchId");
+            for (const key in data) {
+              const element = data[key];
+              if (data[key] === undefined || data[key] === "") {
+                delete data[key];
+              }
+            }
+            await createVehicles(data);
+
+            notifySuccess("Vehicle created");
+            navigate("/vehicle");
+            return;
+          } catch (e) {
+            notifyError("Some error occured");
+          }
+        }
+      } catch (error) {
+        notifyError("Some error occured");
+      }
+      return;
+    }
+    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+  };
 
   return (
     <>

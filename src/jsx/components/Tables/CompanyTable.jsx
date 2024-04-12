@@ -10,6 +10,7 @@ import { usePermissions } from "../../../context/PermissionContext";
 const CompanyTable = ({
   tableData,
   tempValue,
+  currentPage, itemsPerPage,
   onConfirmDelete,
   editDrawerOpen,
   setDataLength
@@ -22,14 +23,14 @@ const CompanyTable = ({
   var filterData = tableData;
   console.log(tableData)
  
-  // setDataLength(filterData?.length)
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>
       {filterData.map((item, index) => {
         return <tr key={index}>
-          {/* <td>
-            <span>{item.id}</span>
-          </td> */}
+          <td>
+            <span>{startIndex + index}</span>
+          </td>
           <td className="text-center">
             <span className="text-primary">{item?.companyId?.companyName}</span>
           </td>

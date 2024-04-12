@@ -3,13 +3,14 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
-const GeofenceTable = ({tableData, onConfirmDelete, editDrawerOpen,page}) => {
+const GeofenceTable = ({tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen,page}) => {
     console.log(tableData)
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
     return (
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{(index+1)+((page-1)*10)}</span></td>
+                    <td><span>{startIndex + index}</span></td>
                     <td>
                         <h6>{item.name}</h6>
                     </td>

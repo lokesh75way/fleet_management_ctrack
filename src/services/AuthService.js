@@ -38,7 +38,7 @@ export function formatError(errorResponse) {
         case 'User not found':
             swal("Oops", "User not found", "error", { button: "Try Again!", });
             break;
-        case 'INVALID_PASSWORD':
+        case 'Invalid email or password':
             swal("Oops", "Invalid Password", "error", { button: "Try Again!", });
             break;
         case 'USER_DISABLED':

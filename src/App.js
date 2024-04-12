@@ -55,35 +55,38 @@ function App(props) {
   const { checkRole, checkType } = useStorage()
   let role = checkRole()
   let type = checkType()
+  console.log('====================================');
+  console.log(role, type);
+  console.log('====================================');
   const { setUserPermission } = usePermissions()
   const userPermission = useSelector(state => state.auth.permission);
   //useLocation
   const location = useLocation();
 
-  useEffect(() => {
-    const companyData = localStorage.getItem('companyData');
-    const vehicleData = localStorage.getItem('vehicleData');
-    const driver = localStorage.getItem("driverData");
-    const dataBranch = localStorage.getItem('branchData');
+  // useEffect(() => {
+  //   const companyData = localStorage.getItem('companyData');
+  //   const vehicleData = localStorage.getItem('vehicleData');
+  //   const driver = localStorage.getItem("driverData");
+  //   const dataBranch = localStorage.getItem('branchData');
 
-    const userData = localStorage.getItem('userData');
-    const technicianData = localStorage.getItem('technicianData');
-     const userJsonData = localStorage.getItem('userJsonData');
+  //   const userData = localStorage.getItem('userData');
+  //   const technicianData = localStorage.getItem('technicianData');
+  //    const userJsonData = localStorage.getItem('userJsonData');
 
-    const geoData = localStorage.getItem('geofenceData')
+  //   const geoData = localStorage.getItem('geofenceData')
 
-    if (!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
-    if (!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
-    if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));
-    if (!dataBranch) localStorage.setItem('branchData', JSON.stringify(SubCompanyData))
+  //   if (!companyData) localStorage.setItem('companyData', JSON.stringify(CompanyData))
+  //   if (!vehicleData) localStorage.setItem('vehicleData', JSON.stringify(VehicleData))
+  //   if (!driver) localStorage.setItem("driverData", JSON.stringify(DriverData));
+  //   if (!dataBranch) localStorage.setItem('branchData', JSON.stringify(SubCompanyData))
 
-    if (!userData) localStorage.setItem('userData', JSON.stringify(UserData))
-    if (!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
-    if (!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
-    if (!geoData) localStorage.setItem('geofenceData', JSON.stringify(GeofenceData))
+  //   if (!userData) localStorage.setItem('userData', JSON.stringify(UserData))
+  //   if (!technicianData) localStorage.setItem('technicianData', JSON.stringify(TechnicianData))
+  //   if (!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
+  //   if (!geoData) localStorage.setItem('geofenceData', JSON.stringify(GeofenceData))
 
 
-  }, [role])
+  // }, [role])
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

@@ -9,8 +9,9 @@ import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
-import usePagination from '../../../hooks/usePagination';
+import usePagination from "../../../hooks/usePagination";
 import { Loader } from "rsuite";
+import ReactPaginate from "react-paginate";
 
 const BusinessUser = () => {
   const [deleteId, setDeleteId] = useState();
@@ -28,12 +29,20 @@ const BusinessUser = () => {
   const navigate = useNavigate();
   const { can, setUserPermission } = usePermissions();
   const [tableData, setTableData] = useState([]);
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
     usePagination();
+    const itemsPerPage=10;
+
+    const handlePageClick = ({ selected }) => {
+      goToPage(selected + 1); 
+    };
+  
+    const startIndex = (page - 1) * itemsPerPage;
+    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   async function getGroupData() {
     try {
-      const permissions = JSON.parse(localStorage.getItem('permission'));
+      const permissions = JSON.parse(localStorage.getItem("permission"));
       setUserPermission(permissions?.[0]?.permission);
       const { data, totalPage, totalCount } = await getGroups(page);
       setTableData(data);
@@ -114,7 +123,9 @@ const BusinessUser = () => {
                         </thead>
                         <tbody>
                           <BusinessTable
-                          key={tableData}
+                            key={tableData}
+                            currentPage={page} 
+                            itemsPerPage={itemsPerPage} 
                             tableData={tableData}
                             onConfirmDelete={onConfirmDelete}
                             editDrawerOpen={editDrawerOpen}
@@ -131,39 +142,23 @@ const BusinessUser = () => {
                           className="dataTables_paginate paging_simple_numbers"
                           id="example2_paginate"
                         >
-                          <Link
-                            className={`paginate_button ${
-                              page === 1 ? "previous disabled" : "previous"
-                            }`}
-                            to="/business"
-                            onClick={() => prevPage(page - 1)}
-                          >
-                            <i className={arrowleft} />
-                          </Link>
-                          <span>
-                            {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                              (number) => (
-                                <Link
-                                  key={number}
-                                  className={`paginate_button ${
-                                    page === number + 1 ? "current" : ""
-                                  }`}
-                                  onClick={() => goToPage(number + 1)}
-                                >
-                                  {number + 1}
-                                </Link>
-                              )
-                            )}
-                          </span>
-                          <Link
-                            className={`paginate_button ${
-                              page * 10 >= totalCount ? "next disabled" : "next"
-                            }`}
-                            to="/business"
-                            onClick={() => nextPage(page + 1)}
-                          >
-                            <i className={arrowright} />
-                          </Link>
+                          <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                         </div>
                       </div>
                     </div>

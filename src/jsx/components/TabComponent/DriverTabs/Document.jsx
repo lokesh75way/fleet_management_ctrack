@@ -15,6 +15,7 @@ const Document = ({
   handleSubmit,
   onSubmit,
   getValues,
+  formData,
   control,
   errors,
   register,
@@ -22,7 +23,6 @@ const Document = ({
   const { fields, append, remove } = useFieldArray({
     control,
     name: "documents",
-
   });
 
   const [tempValue, setTempValue] = useState(null);
@@ -53,7 +53,7 @@ const Document = ({
           <Button
             onClick={() =>
               append({
-                documentType: tempValue,
+                documentType: "",
                 file: "",
                 issueDate: "",
                 expireDate: "",
@@ -67,7 +67,7 @@ const Document = ({
         {fields.map((item, index) => {
           return (
             <>
-              <div key={item.id} className="row mb-4 ">
+              <div  key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
                   <label className="form-label">
                     {t("selectDocument")}
@@ -91,10 +91,7 @@ const Document = ({
                         ref={ref}
                         name={name}
                         styles={customStyles}
-                        defaultValue={{
-                          label: "Select Document",
-                          value: "Select Document",
-                        }}
+                        defaultValue={{ label: value, value }}
                       />
                     )}
                   />
@@ -160,7 +157,6 @@ const Document = ({
                          expiryDate ||
                           new Date()
                         }
-                        dateFormat='yyyy-MM-dd'
                         className="form-control customDateHeight"
                         onChange={(newValue) =>{
                           setExpiryDate(newValue)

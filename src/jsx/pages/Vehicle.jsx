@@ -9,6 +9,8 @@ import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 import usePagination from "../../hooks/usePagination";
 import {useTranslation} from 'react-i18next'
+import ReactPaginate from "react-paginate";
+import usePagination from "../../hooks/usePagination";
 
 const Vehicle = () => {
 
@@ -28,9 +30,6 @@ const Vehicle = () => {
 
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
@@ -41,26 +40,23 @@ const Vehicle = () => {
     GPSDeviceType: "",
     distanceCounter: 0,
   });
-  const sort = 10;
-  const activePage = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
-    }
+
+  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
+  usePagination();
+  const itemsPerPage=10;
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
   };
 
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
-  usePagination();
-
-  async function getVehicleData() {
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  
+  async function getVehicleData(page) {
     try {
-      const { data , totalLength,totalCount} = await getVehicles();
+      const { data , totalLength} = await getVehicles(page);
       console.log(data)
+      setCount(totalLength)
       setTableData(data);
       // setCount(totalCount);
     } catch (error) {
@@ -68,25 +64,10 @@ const Vehicle = () => {
     }
   }
 
-  console.log(tableData);
-  useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
 
   useEffect(() => {
-    getVehicleData();
-  }, [deleteId]);
-
-  activePage.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-
-  const onClick = (i) => {
-    activePage.current = i;
-    chageData(activePage.current * sort, (activePage.current + 1) * sort);
-    settest(i);
-  };
+    getVehicleData(page);
+  }, [deleteId,page]);
 
   // delete function
   const onConfirmDelete = (id) => {
@@ -99,7 +80,6 @@ const Vehicle = () => {
     // tableData.map((table) => table.id === id && setEditData(table));
 
     const data = tableData.filter((item) => item._id === id);
-    console.log('myData',data);
 
     navigate(`edit/${id}`,{ state: { formData: data } });
     // vehicle.current.showModal();
@@ -157,52 +137,38 @@ const Vehicle = () => {
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
+                          currentPage={page} 
+                            itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
-                    <div className="dataTables_info">
-                          {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                      <div className="dataTables_info">
+                      {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
                           {Math.min(page * 10, totalCount)} {t("of")}{" "}
                           {totalCount} {t("entries")}
-                        </div>
+                      </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Link
-                            className={`paginate_button ${
-                              page === 1 ? "previous disabled" : "previous"
-                            }`}
-                            to="/vehicle"
-                            onClick={() => prevPage(page - 1)}
-                          >
-                            <i className={arrowleft} />
-                          </Link>
-                          <span>
-                            {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                              (number) => (
-                                <Link
-                                  key={number}
-                                  className={`paginate_button ${
-                                    page === number + 1 ? "current" : ""
-                                  }`}
-                                  onClick={() => goToPage(number + 1)}
-                                >
-                                  {number + 1}
-                                </Link>
-                              )
-                            )}
-                          </span>
-                          <Link
-                            className={`paginate_button ${
-                              page * 10 >= totalCount ? "next disabled" : "next"
-                            }`}
-                            to="/vehicle"
-                            onClick={() => nextPage(page + 1)}
-                          >
-                            <i className={arrowright} />
-                          </Link>
+                        <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                       </div>
                     </div>
                   </div>

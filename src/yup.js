@@ -1,7 +1,7 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
-    company: yup.string().required("Company name id required"),
+    companyId: yup.string().required("Company name id required"),
     businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
     deviceType: yup.string().required("Please select an option"),
@@ -17,7 +17,7 @@ export const vehicleGeneralSchema = yup
       .integer()
       .required("Sim Number is required")
       .typeError("Sim Number must be a number"),
-    secondarySimNumber: yup
+    secondrySimNumber: yup
       .number()
       .positive()
       .integer()
@@ -37,7 +37,7 @@ export const vehicleGeneralSchema = yup
   .required();
 export const vehicleProfileSchema = yup
   .object({
-    DVIRTemplate: yup.string().required("DIVR Template is required "),
+    dvirTemplate: yup.string().required("DIVR Template is required "),
     purchaseAmount: yup
       .number()
       .positive()
@@ -47,14 +47,18 @@ export const vehicleProfileSchema = yup
     registrationNumber: yup
       .string()
       .min(4, "Registration Number must be of 4 digit or more"),
-    passengerSeats: yup
+      passengerSeat: yup
       .number()
       .positive()
       .integer()
       .typeError("Passenger seats must be a number"),
-    // distanceCost: yup.number().positive().integer(),
-    // durationCost: yup.number().positive().integer(),
-    GPSWarranty: yup.string().required("GPS Warranty is required "),
+    distanceCostQuantity: yup.number()
+    .transform((value, originalValue) => originalValue === "" ? null : value)
+    .nullable().positive().integer(),
+    durationCostQuantity: yup.number()
+    .transform((value, originalValue) => originalValue === "" ? null : value)
+    .nullable().positive().integer(),
+    gpsWarranty: yup.number().typeError("Weight Capacity must be a number").required("GPS Warranty is required "),
     weightCapacity: yup
       .number()
       .positive()
@@ -71,8 +75,6 @@ export const vehicleProfileSchema = yup
 
     vehicleCategory: yup.string().required('Vehicle category is required'),
     vinNumber: yup.number().typeError('VIN number must be a number').required(),
-    distance: yup.number().typeError('Distance must be a number').required(),
-    duration: yup.number().typeError('Duration must be a number').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
     underweightTolerance: yup.number().typeError('Underweight tolerance must be a number'),
     overweightTolerance: yup.number().typeError('Overweight tolerance must be a number'),
@@ -84,33 +86,10 @@ export const vehicleProfileSchema = yup
 
 export const vehicleDocumentSchema = yup
   .object({
-    test: yup.array().of(
+    documents: yup.array().of(
       yup.object().shape({
-        fieldName: yup.string().required("This field is required"),
-        file: yup
-          .mixed()
-          .required("File is required")
-          .test(
-            "fileExist",
-            "File is required",
-            (value) => value && value.length
-          )
-          .test("fileSize", "File size is too large", (value) => {
-            console.log({ value });
-            return value && value.length > 0
-              ? value && value[0]?.size <= 1024 * 1024
-              : true;
-          })
-          .test("fileType", "Unsupported file type", (value) => {
-            if (value && value.length > 0)
-              return (
-                value &&
-                ["image/jpeg", "image/png", "application/pdf"].includes(
-                  value[0]?.type
-                )
-              );
-            return true;
-          }),
+        documentType: yup.string().required("This field is required"),
+        file: yup.string()
       })
     ),
   })
@@ -386,18 +365,7 @@ export const driverDocumentSchema = yup
         documentType: yup.string().required("This field is required"),
         file: yup
           .mixed()
-          .required("File is required")
-          // .test("fileType", "Unsupported file type", (value) => {
-          //   if (value && value.length > 0)
-          //     return (
-          //       value &&
-          //       ["image/jpeg", "image/png", "application/pdf"].includes(
-          //         value[0]?.type
-          //       )
-          //     );
-          //   return true;
-          // }),
-          ,
+          .required("File is required"),
         issueDate: yup.string().typeError('Issue date is required'),
         expireDate: yup.string().typeError('Expiry date is required'),
       })
