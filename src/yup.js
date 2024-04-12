@@ -1,10 +1,9 @@
 import * as yup from "yup";
 export const vehicleGeneralSchema = yup
   .object({
-    company: yup.string().required("Company name id required"),
+    companyId: yup.string().required("Company name id required"),
     businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
-    serverAddress: yup.string("Server Address is required"),
     deviceType: yup.string().required("Please select an option"),
     imeiNumber: yup
       .number()
@@ -18,7 +17,7 @@ export const vehicleGeneralSchema = yup
       .integer()
       .required("Sim Number is required")
       .typeError("Sim Number must be a number"),
-    secondarySimNumber: yup
+    secondrySimNumber: yup
       .number()
       .positive()
       .integer()
@@ -30,11 +29,15 @@ export const vehicleGeneralSchema = yup
       .min(0)
       .max(100)
       .typeError("Device Accuracy Tolerance must be a number"),
+      serverAddress: yup.string().url('Server address must be a valid URL').required(),
+      distanceCounter: yup.string().required('Distance counter is required'),
+      unitOfDistance: yup.string().required('Unit of distance is required'),
+      
   })
   .required();
 export const vehicleProfileSchema = yup
   .object({
-    DVIRTemplate: yup.string().required("DIVR Template is required "),
+    dvirTemplate: yup.string().required("DIVR Template is required "),
     purchaseAmount: yup
       .number()
       .positive()
@@ -44,14 +47,18 @@ export const vehicleProfileSchema = yup
     registrationNumber: yup
       .string()
       .min(4, "Registration Number must be of 4 digit or more"),
-    passengerSeats: yup
+      passengerSeat: yup
       .number()
       .positive()
       .integer()
       .typeError("Passenger seats must be a number"),
-    distanceCost: yup.number().positive().integer(),
-    durationCost: yup.number().positive().integer(),
-    GPSWarranty: yup.string().required("GPS Warranty is required "),
+    distanceCostQuantity: yup.number()
+    .transform((value, originalValue) => originalValue === "" ? null : value)
+    .nullable().positive().integer(),
+    durationCostQuantity: yup.number()
+    .transform((value, originalValue) => originalValue === "" ? null : value)
+    .nullable().positive().integer(),
+    gpsWarranty: yup.number().typeError("Weight Capacity must be a number").required("GPS Warranty is required "),
     weightCapacity: yup
       .number()
       .positive()
@@ -64,38 +71,25 @@ export const vehicleProfileSchema = yup
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
+
+
+    vehicleCategory: yup.string().required('Vehicle category is required'),
+    vinNumber: yup.number().typeError('VIN number must be a number').required(),
+    sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
+    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number'),
+    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number'),
+    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number'),
+
+    
   })
   .required();
 
 export const vehicleDocumentSchema = yup
   .object({
-    test: yup.array().of(
+    documents: yup.array().of(
       yup.object().shape({
-        fieldName: yup.string().required("This field is required"),
-        file: yup
-          .mixed()
-          .required("File is required")
-          .test(
-            "fileExist",
-            "File is required",
-            (value) => value && value.length
-          )
-          .test("fileSize", "File size is too large", (value) => {
-            console.log({ value });
-            return value && value.length > 0
-              ? value && value[0]?.size <= 1024 * 1024
-              : true;
-          })
-          .test("fileType", "Unsupported file type", (value) => {
-            if (value && value.length > 0)
-              return (
-                value &&
-                ["image/jpeg", "image/png", "application/pdf"].includes(
-                  value[0]?.type
-                )
-              );
-            return true;
-          }),
+        documentType: yup.string().required("This field is required"),
+        file: yup.string()
       })
     ),
   })
@@ -261,6 +255,10 @@ export const businessGroupAccountSchema = yup
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
         // console.log(value);
         // if (!value[0]) return true;
+        if (typeof value === "string") {
+          return true;
+        }
+
         // // if(typeof value === 'string') return true;
         // const extension = value[0].name.split(".").pop().toLowerCase();
         // return extension === "jpg" || extension === "png";
@@ -311,9 +309,9 @@ export const companyPasswordSchema = yup.object({
 
 export const driverProfileSchema = yup
   .object({
-    company: yup.string().required("Company is required "),
-    business: yup.string().required("Business group is required "),
-    branch: yup.string().required("Branch is required "),
+    companyId: yup.string().required("Company is required "),
+    businessGroupId: yup.string().required("Business group is required "),
+    branchId: yup.string().required("Branch is required "),
     firstName: yup.string().required("First Name is required "),
     lastName: yup.string().required("Last Name is required "),
     employeeNumber: yup.number().typeError("Employee Number must be a number"),
@@ -325,11 +323,11 @@ export const driverProfileSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     contact1: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits")
+      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits")
       .required("Contact Number1 is required "),
     contact2: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits"),
     country: yup.string().required("Please select a Country "),
     street1: yup.string().required("Please enter street1 address"),
     street2: yup.string(),
@@ -339,47 +337,37 @@ export const driverProfileSchema = yup
   .required();
 export const driverInfoSchema = yup
   .object({
+    dateOfBirth: yup.date().nullable(),
     age: yup
       .number()
       .typeError("Age must be a number")
       .required("Age is required"),
-    drivingExperienceSince: yup
+    dateOfJoining: yup.date().nullable(),
+    dateOfLeaving: yup.date().nullable(),
+    drivingExperience: yup
       .number()
       .typeError("Driving experience must be a number")
       .required("Driving experience is required"),
     licenseToDrive: yup.string(),
     licenseNumber: yup.string(),
+    licenseIssueDate: yup.date().nullable(),
+    licenseExpiryDate: yup.date().nullable(),
+    lifeInsuranceNumber: yup.string().typeError("Insurance must be a number"),
+    lifeInsuranceExpiry: yup.date().nullable(),
+    mediclaimNumber: yup.string().typeError("Medical claim must be a number"),
+    mediclaimExpiryDate: yup.date().nullable(),
   })
   .required();
 export const driverDocumentSchema = yup
   .object({
-    test: yup.array().of(
+    documents: yup.array().of(
       yup.object().shape({
-        fieldName: yup.string().required("This field is required"),
+        documentType: yup.string().required("This field is required"),
         file: yup
           .mixed()
-          .required("File is required")
-          .test(
-            "fileExist",
-            "File is required",
-            (value) => value && value.length
-          )
-          .test("fileSize", "File size is too large", (value) => {
-            console.log({ value });
-            return value && value.length > 0
-              ? value && value[0]?.size <= 1024 * 1024
-              : true;
-          })
-          .test("fileType", "Unsupported file type", (value) => {
-            if (value && value.length > 0)
-              return (
-                value &&
-                ["image/jpeg", "image/png", "application/pdf"].includes(
-                  value[0]?.type
-                )
-              );
-            return true;
-          }),
+          .required("File is required"),
+        issueDate: yup.string().typeError('Issue date is required'),
+        expireDate: yup.string().typeError('Expiry date is required'),
       })
     ),
   })
@@ -423,7 +411,7 @@ export const alertSchema = yup
     object: yup.string().required("Select an option "),
     alertName: yup.string().required("Alert Name is required "),
     alertType: yup.string().required("Select an Alert Type "),
-    alertValue: yup.string().required("Choose an Alert Value "),
+    value: yup.string().required("Choose an Alert Value "),
     validDays: yup.string().required("Choose Valid day options "),
     severity: yup.string().required("Choose Severity options "),
     //  userName: yup.string().required("User Name is required "),
@@ -444,6 +432,11 @@ export const expenseSchema = yup
       .number()
       .required("Reference Number a required ")
       .typeError("Reference Number must be a number"),
+    odometer: yup
+      .number()
+      .typeError("Odometer Number must be a number")
+      .optional(),
+    workHour : yup.string().typeError("WorkHour Number must be valid").optional(),
     //  userName: yup.string().required("User Name is required "),
   })
   .required();
@@ -460,7 +453,7 @@ export const technicianTaskSchema = yup
   .required();
 export const geofenceMapSchema = yup
   .object({
-    company: yup.string().required("Enter company name "),
+    company: yup.string().required("Parent company required"),
     name: yup.string().required("Enter Geofence name "),
     category: yup.string().required("Select a Category "),
     geofenceAccess: yup.string().required("Choose access method "),
@@ -468,14 +461,16 @@ export const geofenceMapSchema = yup
     contactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+      location: yup.array().required('Geofence location required')  
   })
   .required();
 export const technicianGeneralSchema = yup
   .object({
+    company: yup.string().required("Select a company"),
     firstName: yup.string().required("First Name is required "),
     middleName: yup.string(),
     lastName: yup.string().required("Last Name is required "),
-    technicianNumber: yup
+    technicianNo: yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
@@ -492,29 +487,46 @@ export const technicianGeneralSchema = yup
   .required();
 export const technicianAddressSchema = yup
   .object({
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    country: yup.string().required("Please select a Country "),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
+    address: yup
+      .object({
+        zipCode: yup
+          .number()
+          .positive("Zip Code must be a positive number")
+          .integer("Zip Code must be an integer")
+          .nullable(true)
+          .transform((_, val) => (val ? Number(val) : null)),
+        country: yup.string().required("Please select a Country "),
+        city: yup.string().required("Please enter a City "),
+        street1: yup.string().required("Please enter street1 address "),
+      })
+      .required(),
   })
   .required();
 export const technicianLeaveSchema = yup
   .object({
-    leaveTime: yup.string().required("Select type of leave "),
-    noOfDays: yup.number().required("Enter total number of leaves "),
+    leave: yup
+      .array(
+        yup.object({
+          leaveType: yup.string().required("Select type of leave "),
+          days: yup.number().required("Enter total number of leaves "),
+        })
+      )
+      .required(),
   })
   .required();
+  
 export const classifyTripsSchema = yup
   .object({
-    startTime: yup.string().required("Trip start time is required "),
-    startLocation: yup.string().required("Trip start Location is required "),
-    reachTime: yup.string().required("Trip reach time is required "),
-    reachLocation: yup.string().required("Trip reach Location is required "),
+    startTime: yup.string().required("Trip start Location is required "),
+    reachTime: yup.string().required("Trip reach Location is required "),
     driver: yup.string().required("Driver name is required "),
+  })
+  .required();
+
+export const classifyTripsFilterCanvas = yup
+  .object({
+    driverId: yup.string().required("Driver name is required "),
+    startDate: yup.string().required("Start date is required "),
+    endDate: yup.string().required("End date is required "),
   })
   .required();

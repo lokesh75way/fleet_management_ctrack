@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
-import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import { useParams } from "react-router-dom";
-import DummyData from '../../../../users.json'
-import useStorage from "../../../../hooks/useStorage";
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import CompanyDropdown from "../../CompanyDropdown";
 const General = ({
   register,
   setValue,
@@ -20,11 +17,9 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
-
-  const {t} = useTranslation();
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [tempValue, setTempValue] = useState();
-  const {checkRole,checkUserName} = useStorage()
+  const [tempGender, setTempGender] = useState("");
+  const [date, setDate] = useState({})
+  const { t } = useTranslation();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -32,61 +27,42 @@ const General = ({
     }),
   };
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("fuelSensor", e.target.value);
+    setTempGender(e.target.value);
+    setValue("gender", e.target.value);
   };
-  var companyOptions;
-  if(checkRole() === 'admin'){
-    companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  }
-  else if(checkRole() === 'businessgroup'){
-    companyOptions = DummyData.filter((item) => item.role === "company" && item.parent === checkUserName() ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  }
-  else if(checkRole()==='company'){
-    companyOptions = [{label: checkUserName(),value: checkUserName()}]
-  }
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
+  const maxDate = new Date();
 
-  const { id } = useParams();
-
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
-
-  const [filteredUserData, setFilteredUserData] = useState(newData);
+  console.log(date, "thisisdate")
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-      <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('company')} <span className="text-danger">*</span>
+            {t("company")} <span className="text-danger">*</span>
           </label>
           <Controller
-            name="parentCompany"
+            name="company"
             control={control}
+            rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {setTempValue(newValue.value);setValue("parentCompany", newValue.value)}}
-                options={companyOptions}
+              <CompanyDropdown
+                onChange={(newValue) => {
+                  setValue("company", newValue.value);
+                }}
+                value={value}
+                customStyles={customStyles}
                 ref={ref}
                 name={name}
-                styles={customStyles}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].parentCompany : ""
-                }
               />
             )}
           />
-          {!getValues('leaveTime') &&<Error errorName={errors.parentCompany} />}
+          {!getValues("company") && <Error errorName={errors.company} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('firstName')} <span className="text-danger">*</span>
+            {t("firstName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -94,30 +70,24 @@ const General = ({
             label="First Name"
             name="firstName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].firstName : ""
-            }
           />
           <Error errorName={errors.firstName} />
         </div>
 
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('middleName')}</label>
+          <label className="form-label">{t("middleName")}</label>
           <CustomInput
             type="text"
             register={register}
             label="middleName"
             name="middleName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].middleName : ""
-            }
           />
         </div>
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('lastName')} <span className="text-danger">*</span>
+            {t("lastName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -125,33 +95,28 @@ const General = ({
             label="Last Name"
             name="lastName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].lastName : ""
-            }
           />
           <Error errorName={errors.lastName} />
         </div>
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('technicianNumber')} <span className="text-danger">*</span>
+            {t("technicianNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             register={register}
             label="Technician Number"
-            name="technicianNumber"
+            name="technicianNo"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].technicianNumber : ""
-            }
           />
-          <Error errorName={errors.technicianNumber} />
+          <Error errorName={errors.technicianNo} />
         </div>
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('email')}<span className="text-danger">*</span>
+            {t("email")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="email"
@@ -159,36 +124,35 @@ const General = ({
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={filteredUserData[0] ? filteredUserData[0].email : ""}
           />
           <Error errorName={errors.email} />
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('gender')}</label>
+          <label className="form-label">{t("gender")}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                value="male"
-                checked={selectedOption === "male"}
+                value="MALE"
+                checked={(getValues("gender") ?? tempGender) === "MALE"}
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('male')}
+                {t("male")}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                value="female"
-                checked={selectedOption === "female"}
+                value="FEMALE"
+                checked={(getValues("gender") ?? tempGender) === "FEMALE"}
                 onChange={handleChange}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('female')}
+                {t("female")}
               </label>
             </div>
           </div>
@@ -197,7 +161,7 @@ const General = ({
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('mobileNumber')} <span className="text-danger">*</span>
+            {t("mobileNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -205,17 +169,17 @@ const General = ({
             label="Mobile Number"
             name="mobileNumber"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
-            }
           />
           <Error errorName={errors.mobileNumber} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('emergencyContact')} <span className="text-danger">*</span>
+            {t("emergencyContact")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -223,32 +187,30 @@ const General = ({
             label="Emergency Contact"
             name="emergencyContact"
             min="0"
-            onInput={(e)=>{const temp = Math.max(0, e.target.value); e.target.value = temp < 1 ? '': temp}}
+            onInput={(e) => {
+              const temp = Math.max(0, e.target.value);
+              e.target.value = temp < 1 ? "" : temp;
+            }}
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].emergencyContact : ""
-            }
           />
           <Error errorName={errors.emergencyContact} />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
-          {t('dateOfJoin')}<span className="text-danger">*</span>
+            {t("dateOfJoin")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfJoin"
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("dateOfJoin") || new Date()}
+                selected={date.dateOfJoin || new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setTempValue(newValue);
-                  setValue("dateOfJoin", newValue);
+                  setDate({ ...date, dateOfJoin: newValue });
+                  setValue("dateOfJoin", newValue.toISOString().split("T")[0]);
                 }}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].dateOfJoin : ""
-                }
               />
             )}
           />
@@ -257,22 +219,30 @@ const General = ({
         <div className="col-xl-6 mb-3 d-flex flex-column">
           <label className="form-label">
             {" "}
-            {t('dateOfBirth')}<span className="text-danger">*</span>
+            {t("dateOfBirth")}
+            <span className="text-danger">*</span>
           </label>
           <Controller
             name="dateOfBirth"
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("dateOfBirth") || new Date()}
+                selected={date.dateOfBirth || new Date()}
+                minDate={minDate}
+                maxDate={maxDate}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setTempValue(newValue);
-                  setValue("dateOfBirth", newValue);
+                  setDate({
+                    ...date,
+                    dateOfBirth: newValue,
+                  });
+                  setValue("dateOfBirth", newValue.toISOString().split("T")[0]);
                 }}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].dateOfBirth : ""
-                }
+                dateFormat="dd-MM-yyyy"
+                showYearDropdown
+                scrollableYearDropdown={true}
+                popperClassName="date-picker-reports"
+                yearDropdownItemNumber={50}
               />
             )}
           />
@@ -295,7 +265,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('submit')}
+          {t("submit")}
         </Button>
       </div>
     </div>

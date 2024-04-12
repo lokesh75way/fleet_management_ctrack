@@ -322,7 +322,7 @@ export const english = {
       "licenseIssueDate": "License Issued Date",
       "licenseExpiryDate": "License Expiry Date",
       "lifeInsuranceNumber": "Life Insurance Number",
-      "lifeInsuranceExpiryDtae": "Life Insurance Expiry Date",
+      "lifeInsuranceExpiry": "Life Insurance Expiry Date",
       "mediclaimNumber": "Mediclaim Number",
       "mediclaimExpiryDate": "Mediclaim Expiry Date",
 

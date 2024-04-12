@@ -168,6 +168,8 @@ const handleSubModulePermisssionChange = (
             subModules,
           };
         });
+
+        console.log('ye he new Data',newData);
         setData(newData);
         console.log({newData})
       } catch (error) {
@@ -319,6 +321,8 @@ const handleSubModulePermisssionChange = (
 
   console.log('is error : ',isError);
 
+  let isDisabled = false;
+
   return (
     <div >
       <Card>
@@ -458,6 +462,9 @@ const handleSubModulePermisssionChange = (
     const moduleData = data.find(module => module._id === mindex);
     if (!moduleData) return null; // Check if moduleData is undefined
 
+    if(moduleData.subModules.length > 0) isDisabled = true;
+    console.log('yeee aaa gaya module dataa',moduleData);
+
     return (
       <React.Fragment key={index}>
         <tr>
@@ -478,6 +485,7 @@ const handleSubModulePermisssionChange = (
               }
               className="form-check-input"
               name="add"
+              disabled = {isDisabled && moduleData.subModules.length > 0 }
             />
           </td>
           <td>
@@ -507,6 +515,7 @@ const handleSubModulePermisssionChange = (
                   mindex
                 )
               }
+              disabled = {isDisabled && moduleData.subModules.length > 0 }
               name="modify"
             />
           </td>
@@ -522,6 +531,7 @@ const handleSubModulePermisssionChange = (
                   mindex
                 )
               }
+              disabled = {isDisabled && moduleData.subModules.length > 0 }    
               name="delete"
             />
           </td>
@@ -538,7 +548,8 @@ const handleSubModulePermisssionChange = (
                     e.target.checked,
                     e.target.name,
                     mindex,
-                    i
+                    element.id
+                    
                   )
                 }
                 className="form-check-input"
@@ -554,7 +565,7 @@ const handleSubModulePermisssionChange = (
                     e.target.checked,
                     e.target.name,
                     mindex,
-                    i
+                    element.id
                   )
                 }
                 className="form-check-input"
@@ -570,7 +581,7 @@ const handleSubModulePermisssionChange = (
                     e.target.checked,
                     e.target.name,
                     mindex,
-                    i
+                    element.id
                   )
                 }
                 className="form-check-input"
@@ -586,7 +597,7 @@ const handleSubModulePermisssionChange = (
                     e.target.checked,
                     e.target.name,
                     mindex,
-                    i
+                    element.id
                   )
                 }
                 className="form-check-input"

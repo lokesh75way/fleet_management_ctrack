@@ -24,6 +24,7 @@ import CompanyDropdown from "../../components/CompanyDropdown";
 import BranchDropdown from "../../components/BranchDropdown";
 import { getSelectValues } from "../../../utils/helper";
 import ParentBranchDropdown from "../../components/ParentBranch";
+import ReactPaginate from "react-paginate";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
@@ -85,24 +86,55 @@ const Branch = () => {
     usergroup: "",
     branches: 0,
   });
-
+  const [companyDropdown, setCompanyDropdown] = useState({
+    label: "All Companies",
+    value: "All Companies",
+  });
+  const [branchDropdown, setBranchDropdown] = useState({
+    label: "All Branches",
+    value: "All Branches",
+  });
   const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
-
+  const [selectedBranch, setSelectedBranch] = useState(null);
   const defaultValues = getSelectValues();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
+  
+  const itemsPerPage=10;
 
-  const fetchAllBranch = async (page,id) => {
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
+  };
+  
+    const startIndex = (page - 1) * itemsPerPage;
+    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+
+  const fetchAllBranch = async (page, CompanyId, branchId) => {
     try {
-      console.log({id})
-      const { data, success } = await getAllBranch(page,id);
-      const permissions = JSON.parse(localStorage.getItem('permission'));
-      setUserPermission(permissions?.[0]?.permission);
-      setTableData(data.data);
-      setCount(data.totalCount);
-      setBranches(data.data);
+      if (CompanyId) {
+        const { data, success } = await getAllBranch(undefined, CompanyId);
+        setTableData(data.data);
+        setCount(data.totalCount);
+        setBranches(data.data);
+      } else if (branchId) {
+        const { data, success } = await getAllBranch(
+          undefined,
+          undefined,
+          branchId
+        );
+        setTableData(data.data);
+        setCount(data.totalCount);
+        setBranches(data.data);
+      } else {
+        const { data, success } = await getAllBranch(page);
+        const permissions = JSON.parse(localStorage.getItem("permission"));
+        setUserPermission(permissions?.[0]?.permission);
+        setTableData(data.data);
+        setCount(data.totalCount);
+        // setBranches(data.data);
+      }
     } catch (error) {
       console.log("Error in fetching data", error);
     }
@@ -111,39 +143,42 @@ const Branch = () => {
     fetchAllBranch(page);
   }, [page]);
 
-  //   // Map companies and branches to options for Select component
-  //   const companyOptions = companies.map(company => ({
-  //     value: company._id,
-  //     label: company.companyName
-  // }));
-
-  // Filter branches based on the selected company
   const filteredBranches = branches.filter(
     (branch) =>
       selectedCompany && branch.companyId._id === selectedCompany.value
   );
-  console.log({ filteredBranches });
+
   const branchOptions = filteredBranches.map((branch) => ({
     value: branch._id,
     label: branch.branchName,
   }));
 
   const handleCompanyChange = (selectedOption) => {
-    setSelectedCompany(selectedOption); // Update selected company
+
+    setSelectedCompany(selectedOption);
+    setFilter(selectedOption);
+    setCompanyId(selectedOption.value);
+    setPage(1);
+    fetchAllBranch(1, selectedOption.value);
   };
 
-  //   const handleCompanyChange = selectedOption => {
-  //     setSelectedCompany(selectedOption);
-  //     setFilter({value: selectedOption.value, label: selectedOption.label}); // Update the filter for companies
-  //     setFilter2({value: 'All Branches', label: 'All Branches'}); // Reset the branch filter
-  // };
-
   // Handler function for branch selection
-  const handleBranchChange = (selectedOption) => {
-    console.log("Selected branch:", selectedOption.value);
-    setFilter(selectedOption);
+  const handleBranchChange = (branchOption) => {
+
+    setSelectedBranch(branchOption);
+    setFilter2(branchOption);
     setPage(1);
-    fetchAllBranch(1,selectedOption.value)
+    fetchAllBranch(1, undefined, branchOption.value);
+  };
+  const handleClearFilter = () => {
+    fetchAllBranch();
+    setCompanyId(null);
+    setValue("company", "");
+    setValue("parent", "");
+    setCompanyDropdown({
+      label: "All companies",
+      value: "All companies",
+    });
   };
 
   const onConfirmDelete = async (id) => {
@@ -155,7 +190,6 @@ const Branch = () => {
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
     navigate(`edit/${item}`, { state: filteredData });
-    // company.current.showModal();
   };
 
   const d = JSON.parse(localStorage.getItem("userJsonData"));
@@ -191,18 +225,32 @@ const Branch = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("branches")}</h4>
                     <div className="d-flex align-items-center">
+                      <Link
+                        className="btn  btn-xxs"
+                        data-bs-toggle="offcanvas"
+                        onClick={handleClearFilter}
+                        style={{
+                          background: "gray",
+                          border: "gray",
+                          color: "white",
+                        }}
+                      >
+                        Clear
+                      </Link>
                       <Controller
                         name="company"
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <CompanyDropdown
+                          
                             onChange={async (newValue) => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
-                              handleBranchChange(newValue)
+                              handleCompanyChange(newValue);
                             }}
-                            value={value}
+                            key={companyId}
+                            value={value? value : companyDropdown}
                             customStyles={customStyles}
                             name={name}
                             ref={ref}
@@ -215,16 +263,19 @@ const Branch = () => {
                         control={control}
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
-                          <BranchDropdown
-                          key={companyId}
-                          onChange={(newValue) => {
-                          const valuesArray = newValue.map(item => item.value);
-                          setValue("parent", valuesArray);
-                          setValue("branchIds", valuesArray);
-                          
-                        }}
+                          <ParentBranchDropdown
+                            key={companyId}
+                            onChange={(newValue) => {
+                              setValue("parent", newValue.value);
+                              
+                              handleBranchChange(newValue);
+                            }}
                             companyId={companyId}
-                            value={value}
+                            // value={[{
+                            //   label: "Choose Branch",
+                            //   value: "Choose Branch",
+                            // }]}
+                            value={value? value : branchDropdown}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}
@@ -275,6 +326,8 @@ const Branch = () => {
                           tempValue2={tempValue2}
                           editData={editData}
                           tableData={tableData}
+                          currentPage={page} 
+                          itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
@@ -291,39 +344,27 @@ const Branch = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className={`paginate_button ${
-                            page === 1 ? "previous disabled" : "previous"
-                          }`}
-                          to="/branch"
-                          onClick={() => prevPage(page - 1)}
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                            (number) => (
-                              <Link
-                                key={number}
-                                className={`paginate_button ${
-                                  page === number + 1 ? "current" : ""
-                                }`}
-                                onClick={() => goToPage(number + 1)}
-                              >
-                                {number + 1}
-                              </Link>
-                            )
-                          )}
-                        </span>
-                        <Link
-                          className={`paginate_button ${
-                            page * 10 >= totalCount ? "next disabled" : "next"
-                          }`}
-                          to="/branch"
-                          onClick={() => nextPage(page + 1)}
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                        <ReactPaginate
+                          previousLabel={
+                            <i className="fa-solid fa-angle-left"></i>
+                          }
+                          nextLabel={
+                            <i className="fa-solid fa-angle-right"></i>
+                          }
+                          breakLabel={"..."}
+                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                          marginPagesDisplayed={2}
+                          pageRangeDisplayed={5}
+                          onPageChange={handlePageClick}
+                          containerClassName={"pagination"}
+                          activeClassName={"active"}
+                          pageClassName="page-item"
+                          pageLinkClassName="page-link"
+                          previousClassName="page-item"
+                          previousLinkClassName="page-link"
+                          nextClassName="page-item"
+                          nextLinkClassName="page-link"
+                        />
                       </div>
                     </div>
                   </div>

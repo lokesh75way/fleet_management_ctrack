@@ -2642,9 +2642,12 @@ textarea.form-control-lg {
   print-color-adjust: exact;
 }
 .form-check-input[type="checkbox"] {
+  border: 1px solid gray;
   border-radius: 0.25em;
+
 }
 .form-check-input[type="radio"] {
+  border: 1px solid gray;
   border-radius: 50%;
 }
 .form-check-input:active {

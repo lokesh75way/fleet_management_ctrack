@@ -17,6 +17,7 @@ import {
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import { getGroups } from "../../../services/api/BusinessGroup";
 import usePagination from "../../../hooks/usePagination";
+import ReactPaginate from "react-paginate";
 
 
 const Company = () => {
@@ -43,6 +44,13 @@ const Company = () => {
   const [tempValue, setTempValue] = useState("All");
   const { id } = useParams();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =usePagination();
+  
+  const itemsPerPage=10;
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1); 
+  };
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const { control, setValue, getValue } = useForm();
   const customStyles = {
@@ -185,16 +193,16 @@ const Company = () => {
                     >
                       <thead>
                         <tr>
-                          {/* <th>{t('id')}</th> */}
-                          <th>{t("companyName")}</th>
-                          <th>{t("businessGroup")}</th>
+                          <th>{t('id')}</th>
+                          <th className="text-center">{t("companyName")}</th>
+                          <th className="text-center" >{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}
-                          <th>{t("location")}</th>
-                          <th>{t("email")}</th>
-                          <th>{t("branches")}</th>
-                          <th>{t("zipCode")}</th>
+                          <th className="text-center">{t("location")}</th>
+                          <th className="text-center">{t("email")}</th>
+                          <th className="text-center">{t("branches")}</th>
+                          <th className="text-center">{t("zipCode")}</th>
                           {(can("company", "edit") ||
-                            can("company", "delete")) && <th>{t("action")}</th>}
+                            can("company", "delete")) && <th className="d-flex justify-content-center">{t("action")}</th>}  
                         </tr>
                       </thead>
                       <tbody>
@@ -202,8 +210,8 @@ const Company = () => {
                         key={tableData}
                           tableData={tableData}
                           tempValue={tempValue}
-                          // setDataLength={setDataLength}
-                          // getData={getData}
+                          currentPage={page} 
+                          itemsPerPage={itemsPerPage} 
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                         />
@@ -219,39 +227,23 @@ const Company = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className={`paginate_button ${
-                            page === 1 ? "previous disabled" : "previous"
-                          }`}
-                          to="/company"
-                          onClick={() => prevPage(page - 1)}
-                        >
-                          <i className={arrowleft} />
-                        </Link>
-                        <span>
-                          {[...Array(Math.ceil(totalCount / 10)).keys()].map(
-                            (number) => (
-                              <Link
-                                key={number}
-                                className={`paginate_button ${
-                                  page === number + 1 ? "current" : ""
-                                }`}
-                                onClick={() => goToPage(number + 1)}
-                              >
-                                {number + 1}
-                              </Link>
-                            )
-                          )}
-                        </span>
-                        <Link
-                          className={`paginate_button ${
-                            page * 10 >= totalCount ? "next disabled" : "next"
-                          }`}
-                          to="/company"
-                          onClick={() => nextPage(page + 1)}
-                        >
-                          <i className={arrowright} />
-                        </Link>
+                        <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                       </div>
                     </div>
                   </div>

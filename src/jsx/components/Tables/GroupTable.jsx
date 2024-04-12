@@ -4,7 +4,7 @@ import { FaEdit } from 'react-icons/fa'
 import DeleteModal from '../Modal/DeleteModal'
 import { useNavigate } from 'react-router-dom'
 
-const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
+const GroupTable = ({onConfirmDelete,currentPage, itemsPerPage,tableData, setIsEditTrue, isEditTrue}) => {
     const navigate = useNavigate()
     const [data, setData] = useState([]);
     const handleClick = (index, id)=>{
@@ -21,7 +21,7 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
         setData(tableData.reverse());
     }, [tableData])
 
-    console.log('ye he feature data', data);
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
 
     return (
         <>
@@ -29,7 +29,7 @@ const GroupTable = ({onConfirmDelete,tableData, setIsEditTrue, isEditTrue}) => {
                 <tr key={index}>
                     <td>
                         <div className="products d-flex justify-content-center">         
-                                <h6>{index +1}</h6>
+                                <h6>{startIndex+index}</h6>
                         </div>
                     </td>
                     <td>

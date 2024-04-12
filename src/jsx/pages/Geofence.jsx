@@ -1,13 +1,21 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import MainPagetitle from "../layouts/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import { GeofenceData } from "../components/Tables/Tables";
 import GeofenceTable from "../components/Tables/GeofenceTable";
-
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
+import { notifyError, notifySuccess } from "../../utils/toast";
+import {
+  deleteGeofenceData,
+  getGeofenceData,
+} from "../../services/api/GeoFenceService";
+import usePagination from "../../hooks/usePagination";
+import { ThemeContext } from "../../context/ThemeContext";
+import clsx from "clsx";
+import ReactPaginate from "react-paginate";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -20,8 +28,23 @@ const headers = [
   { label: "Status", key: "status" },
 ];
 
-const Driver = (ref) => {
-  const [tableData, setTableData] = useState(GeofenceData);
+const Geofence = (ref) => {
+ 
+  const navigate = useNavigate();
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
+    usePagination();
+
+  const { isRtl } = useContext(ThemeContext);
+  const arrowleft = clsx({
+    "fa-solid fa-angle-right": isRtl,
+    "fa-solid fa-angle-left": !isRtl,
+  });
+  const arrowright = clsx({
+    "fa-solid fa-angle-left": isRtl,
+    "fa-solid fa-angle-right": !isRtl,
+  });
+
+  const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
     id: 0,
     status: "",
@@ -32,67 +55,54 @@ const Driver = (ref) => {
     gender: "",
     location: "",
   });
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
-  const sort = 10;
-  const activePag = useRef(0);
-  const [test, settest] = useState(0);
-  const chageData = (frist, sec) => {
-    for (var i = 0; i < data.length; ++i) {
-      if (i >= frist && i < sec) {
-        data[i].classList.remove("d-none");
-      } else {
-        data[i].classList.add("d-none");
-      }
+
+  const itemsPerPage=10;
+
+    const handlePageClick = ({ selected }) => {
+      goToPage(selected + 1); 
+    };
+  
+    const startIndex = (page - 1) * itemsPerPage;
+    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+
+  const getData = async () => {
+    try {
+      const { geofences, count } = await getGeofenceData(page);
+      setCount(count);
+      setTableData(geofences);
+    } catch (error) {
+      notifyError(error);
     }
   };
 
   useEffect(() => {
-    setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
-  }, [test]);
+    getData();
+  }, [page]);
 
-  activePag.current === 0 && chageData(0, sort);
-  let paggination = Array(Math.ceil(data.length / sort))
-    .fill()
-    .map((_, i) => i + 1);
-  const onClick = (i) => {
-    activePag.current = i;
-    chageData(activePag.current * sort, (activePag.current + 1) * sort);
-    settest(i);
-  };
-  const onConfirmDelete = (id) => {
-    const updatedData = tableData.filter((item) => item.id !== id);
-    setTableData(updatedData);
+  const onConfirmDelete = async (id) => {
+    try {
+      const data = await deleteGeofenceData(id);
+      if(data.success){
+        notifySuccess(data.message);
+      }
+      getData(page);
+    } catch (error) {
+      notifyError(error)
+    }
+  
   };
   const editDrawerOpen = (item) => {
-    tableData.map((table) => table.id === item && setEditData(table));
-
-    // setEditTableData(item);
-    employe.current.showModal();
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updateTable = tableData.map((table) => {
-      if (table.id === editData.id) {
-        console.log(table.id);
-        return { ...table, ...editData };
-      }
-      return table;
-    });
-    setTableData(updateTable);
+    navigate(`/settings/geofence/map/edit/${item}`);
   };
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
-  
-  const employe = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle={t('geofence')}
-        pageTitle={t('geofence')}
-        parentTitle={t('settings')}
+        mainTitle={t("geofence")}
+        pageTitle={t("geofence")}
+        parentTitle={t("settings")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -101,7 +111,7 @@ const Driver = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('geofence')}</h4>
+                    <h4 className="heading mb-0">{t("geofence")}</h4>
                     <div className="d-flex">
                       <Link
                         to={"/settings/geofence/map"}
@@ -109,7 +119,7 @@ const Driver = (ref) => {
                         data-bs-toggle="offcanvas"
                         // onClick={() => employe.current.showModal()}
                       >
-                        + {t('showMap')}
+                        + {t("showMap")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -123,72 +133,56 @@ const Driver = (ref) => {
                     >
                       <thead>
                         <tr>
-                            <th>{t('geofenceID')}</th>
-                            <th>{t('geofenceName')}</th>
-                            <th>{t('geofenceType')}</th>
-                            <th>{t('contactNumber')}</th>
-                            <th>{t('address')}</th>
-                            <th>{t('description')}</th>
-                            <th>{t('geofenceAccess')}</th>
-                            <th>{t('action')}</th>
+                          <th>{t("geofenceID")}</th>
+                          <th>{t("geofenceName")}</th>
+                          <th>{t("geofenceType")}</th>
+                          <th>{t("contactNumber")}</th>
+                          <th>{t("address")}</th>
+                          <th>{t("description")}</th>
+                          <th>{t("geofenceAccess")}</th>
+                          <th>{t("action")}</th>
                         </tr>
                       </thead>
                       <tbody>
                         <GeofenceTable
+                          page={page}
                           editData={editData}
                           tableData={tableData}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
+                          currentPage={page} 
+                            itemsPerPage={itemsPerPage} 
                         />
                       </tbody>
                     </table>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                      {t('showing')} {activePag.current * sort + 1} {t('to')}{" "}
-                        {data.length > (activePag.current + 1) * sort
-                          ? (activePag.current + 1) * sort
-                          : data.length}{" "}
-                        {t('of')} {data.length} {t('entries')}
+                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
+                        {t("entries")}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <Link
-                          className="paginate_button previous disabled"
-                          to="/driver"
-                          onClick={() =>
-                            activePag.current > 0 &&
-                            onClick(activePag.current - 1)
-                          }
-                        >
-                          <i className="fa-solid fa-angle-left" />
-                        </Link>
-                        <span>
-                          {paggination.map((number, i) => (
-                            <Link
-                              key={i}
-                              to="/settings/geofence"
-                              className={`paginate_button  ${
-                                activePag.current === i ? "current" : ""
-                              } `}
-                              onClick={() => onClick(i)}
-                            >
-                              {number}
-                            </Link>
-                          ))}
-                        </span>
-                        <Link
-                          className="paginate_button next"
-                          to="/settings/geofence"
-                          onClick={() =>
-                            activePag.current + 1 < paggination.length &&
-                            onClick(activePag.current + 1)
-                          }
-                        >
-                          <i className="fa-solid fa-angle-right" />
-                        </Link>
+                       <ReactPaginate
+                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                            breakLabel={"..."}
+                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            activeClassName={"active"}
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                          />
                       </div>
                     </div>
                   </div>
@@ -198,15 +192,8 @@ const Driver = (ref) => {
           </div>
         </div>
       </div>
-      {/* <EmployeeOffcanvas 
-                ref={employe}
-                editData={editData}
-                setEditData={setEditData}
-                handleSubmit={handleSubmit}
-                Title={ editData.id === 0 ? "Add Driver" : "Edit Driver"}
-            /> */}
     </>
   );
 };
 
-export default Driver;
+export default Geofence;
