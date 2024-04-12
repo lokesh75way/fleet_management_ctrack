@@ -5,16 +5,19 @@ import DeleteModal from '../Modal/DeleteModal';
 import { IMAGES } from "../../constant/theme";
 import { usePermissions } from "../../../context/PermissionContext";
 
-const SubUserTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
+const SubUserTable = ({tableData,currentPage,itemsPerPage, onConfirmDelete, editDrawerOpen}) => {
   const {can} = usePermissions()
   const editPermission = can('subUser','modify')
   const deletePermission = can('subUser','delete')
+
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
+
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{index+1}</span>
+            <span>{startIndex + index}</span>
           </td>
           <td>
             <span className="text-primary">{item.userName}</span>

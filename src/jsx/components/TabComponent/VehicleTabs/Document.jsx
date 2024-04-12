@@ -1,31 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
-import CreatableSelect from 'react-select/creatable';
+import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import Error from "../../Error/Error";
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
+import { useTranslation } from "react-i18next";
+import FileUploader from "../../../../components/FileUploader";
 
-import {useTranslation} from 'react-i18next'
-
-const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors, register }) => {
-
+const Document = ({
+  setValue,
+  handleSubmit,
+  onSubmit,
+  formData,
+  control,
+  getValues,
+  errors,
+  register,
+}) => {
+  const [loading, setLoading] = useState();
   const { t } = useTranslation();
   const [tempValue, setTempValue] = useState(null);
-
+  const [documents, setDocuments] = useState([]);
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "test",
+    name: "documents",
   });
-
+console.log(errors)
   const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ",
     }),
   };
-
-  const [driverDocumentOptions, setDriverDocumentOptions] = useState([
+  const driverDocumentOptions = [
     { value: "INSURANCE", label: "INSURANCE" },
     { value: "PSU", label: "PSU" },
     { value: "REGISTRARION_CERTIFICATE", label: "REGISTRARION_CERTIFICATE" },
@@ -34,96 +43,195 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
     { value: "STATE_PERMIT", label: "STATE_PERMIT" },
     { value: "RTO_PASSING", label: "RTO_PASSING" },
     { value: "ROAD_TAX", label: "Road Tax" },
-  ]);
-
+  ];
+  const formFields =
+    formData && formData[0] && formData[0].documents
+      ? formData[0]?.documents
+      : fields;
+  // console.log(formFields)
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
-          <Button onClick={()=>append({fieldName:tempValue, file:null,IssueDate:"", ExpiryDate:"" })} className="ms-auto">
-            + {t('addDocument')}
+          <Button
+            onClick={() => {
+              append({
+                documentType: "",
+                file: null,
+                issueDate: "",
+                expireDate: "",
+              });
+              formFields.push({
+                documentType: "",
+                file: null,
+                issueDate: "",
+                expireDate: "",
+              });
+            }}
+            className="ms-auto"
+          >
+            + {t("addDocument")}
           </Button>
         </div>
-        {fields.map((item, index) => {
+        {formFields.map((item, index) => {
           return (
             <>
               <div key={item.id} className="row mb-4 ">
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">{t('selectDocument')}<span className="text-danger">*</span></label>
+                  <label className="form-label">
+                    {t("selectDocument")}
+                    <span className="text-danger">*</span>
+                  </label>
+
                   <Controller
-                    name={`test.${index}.fieldName`}
+                    name={`documents.${index}.documentType`}
                     control={control}
-                    rules={{ required: true }}
-                    render={({ field: { onChange, value, name, ref } }) => (
-                      <CreatableSelect
+                    render={({ field: { value, name, ref } }) => (
+                      <Select
                         onChange={(newValue) => {
-                          setTempValue(newValue?.value);
-                          setValue(`test.${index}.fieldName`, newValue?.value);
+                          console.log(newValue, index);
+                          console.log(
+                            "documents",
+                            index,
+                            "documentType",
+                            newValue.value
+                          );
+                          setValue(
+                            `documents[${index}].documentType`,
+                            newValue.value
+                          );
                         }}
-                        isClearable
                         options={driverDocumentOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
                         defaultValue={{
-                          label: "Select Document",
-                          value: "Select Document",
+                          value:
+                            formData && formData[0].documents.length > 0
+                              ? formData[0].documents[index].documentType
+                              : driverDocumentOptions[1].value,
+                          label:
+                            formData && formData[0].documents.length > 0
+                              ? formData[0].documents[index].documentType
+                              : driverDocumentOptions[1].label,
                         }}
                       />
                     )}
                   />
-                   {!getValues(`test.${index}.fieldName`) && <Error errorName={errors?.test?.[index]?.fieldName} /> }
+                  {!getValues(`documents.${index}.documentType`) && (
+                    <Error
+                      errorName={errors?.documents?.[index]?.documentType}
+                    />
+                  )}
                 </div>
                 <div className="col-xl-3 mb-2">
-                  <label className="form-label">{t('uploadFile')}<span className="text-danger">*</span></label>
-                  <input
-                    type="file" 
-                    {...register(`test.${index}.file`)}
-                    label="Document Name"
-                    name={`test.${index}.file`}
-                    className="form-control customDateHeight"
+                  <label className="form-label">
+                    {t("uploadFile")}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <FileUploader
+                    getValue={getValues}
+                    link={
+                      formData &&
+                      formData.length > 0 &&
+                      formData[0].documents &&
+                      formData[0].documents[index]?.file
+                        ? formData[0].documents[index]?.file
+                        : false
+                    }
+                    register={register}
+                    name={`documents.${index}.file`}
+                    label="Select File"
+                    defaultValue=""
+                    setValue={setValue}
+                    setLoading={setLoading}
+                    loading={loading}
                   />
-                  <Error errorName={errors?.test?.[index]?.file} /> 
+
+                  <Error errorName={errors?.documents?.[index]?.file ? "File is required" : '' } />
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
-                  <label className="form-label">{t('issueDate')}</label>
+                  <label className="form-label">{t("issueDate")}</label>
                   <Controller
-                    name={`test.${index}IssueDate`}
+                    name={`documents.${index}.issueDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`test.${index}IssueDate`) ||
-                          new Date()
+                          formData && formData[0]?.documents[index]?.issueDate
+                            ? new Date(formData[0]?.documents[index]?.issueDate)
+                            : getValues(`documents.${index}.issueDate`)
                         }
                         className="form-control customDateHeight"
-                        onChange={(newValue) =>
-                          setValue(`test.${index}IssueDate`, newValue)
-                        }
+                        onChange={(newValue) => {
+                          setValue(`documents.${index}.issueDate`, newValue);
+                          if (documents[index]) {
+                            let temp = [...documents];
+                            temp[index].issueDate = newValue;
+                            setDocuments(temp);
+                          } else {
+                            let temp = [...documents];
+                            temp[index] = {
+                              documentType: getValues(
+                                `documents.${index}.fieldName`
+                              ),
+                              file: getValues(`documents.${index}.file`),
+                              issueDate: newValue,
+                              expireDate: getValues(
+                                `documents.${index}.expireDate`
+                              ),
+                            };
+                            setDocuments(temp);
+                          }
+                        }}
                       />
                     )}
                   />
-                  {!getValues(`test.${index}.IssueDate`) && <Error errorName={errors?.test?.[index]?.IssueDate} /> }
+                  {!getValues(`documents.${index}.issueDate`) && (
+                    <Error errorName={errors?.documents?.[index]?.issueDate} />
+                  )}
                 </div>
                 <div className="col-xl-3 d-flex flex-column  mb-2">
-                  <label className="form-label">{t('expiryDate')}</label>
+                  <label className="form-label">{t("expiryDate")}</label>
                   <Controller
-                    name={`test.${index}ExpiryDate`}
+                    name={`documents.${index}.expireDate`}
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
                         selected={
-                          getValues(`test.${index}ExpiryDate`) ||
-                          new Date()
+                          formData && formData[0]?.documents[index]?.expireDate
+                            ? new Date(
+                                formData[0]?.documents[index]?.expireDate
+                              )
+                            : getValues(`documents.${index}.expireDate`)
                         }
                         className="form-control customDateHeight"
-                        onChange={(newValue) =>
-                          setValue(`test.${index}ExpiryDate`, newValue)
-                        }
+                        onChange={(newValue) => {
+                          setValue(`documents.${index}.expireDate`, newValue);
+                          if (documents[index]) {
+                            let temp = [...documents];
+                            temp[index].expireDate = newValue;
+                            setDocuments(temp);
+                          } else {
+                            let temp = [...documents];
+                            temp[index] = {
+                              documentType: getValues(
+                                `documents.${index}.fieldName`
+                              ),
+                              file: getValues(`documents.${index}.file`),
+                              issueDate: getValues(
+                                `documents.${index}.IssueDate`
+                              ),
+                              expireDate: newValue,
+                            };
+                          }
+                        }}
                       />
                     )}
                   />
-                  {!getValues(`test.${index}.ExpiryDate`) && <Error errorName={errors?.test?.[index]?.ExpiryDate} /> }
+                  {!getValues(`documents.${index}.expireDate`) && (
+                    <Error errorName={errors?.documents?.[index]?.expireDate} />
+                  )}
                 </div>
               </div>
             </>
@@ -137,9 +245,13 @@ const Document = ({ setValue, handleSubmit, onSubmit, control, getValues, errors
             margin: "2rem 0",
           }}
         >
-          <Button type="submit" onClick={handleSubmit(onSubmit)}>
+          <Button
+            type="submit"
+            disabled={loading}
+            onClick={handleSubmit(onSubmit)}
+          >
             {" "}
-            {t('submit')}
+            {t("submit")}
           </Button>
         </div>
       </div>

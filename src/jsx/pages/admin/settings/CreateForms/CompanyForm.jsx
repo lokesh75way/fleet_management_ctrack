@@ -115,7 +115,7 @@ const CompanyForm = () => {
 
         await changePassword(passwordData);
         notifySuccess("Password has been changed");
-        navigate("/companies");
+        navigate("/company");
       } catch (error) {
         console.log(error);
         notifyError("Password is not changes!");

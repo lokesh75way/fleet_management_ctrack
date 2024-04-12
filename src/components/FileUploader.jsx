@@ -10,19 +10,32 @@ const FileUploader = ({
   setValue,
   setLoading,
   loading,
+  link = false
 }) => {
   const upload_Preset = "our_cloudinary_upload_preset";
+  const [fileLink, setFileLink] = useState(null);
+  useEffect(() => {
+    if (link) {
+      setFileLink(link);
+      setValue(name, link)
+    }
+  }, []);
 
   const fileUploader = async (e) => {
     try {
+      e.preventDefault();
       setLoading(true);
       const acceptedFiles = e.target.files;
       const formData = new FormData();
       formData.append("file", acceptedFiles[0]);
       formData.append("upload_preset", upload_Preset);
       if (e.target.files[0]) {
-        const { message, data } = await fileUpload(formData);
-        setValue(name, data.link);
+        const {
+          message,
+          data: { link },
+        } = await fileUpload(formData);
+        setValue(name, link);
+        setFileLink(link);
         notifySuccess(message);
       }
     } catch (error) {
@@ -35,20 +48,24 @@ const FileUploader = ({
 
   return (
     <div>
-      <input
-        type="file"
-        {...register(`${name}`)}
-        name={name}
-        label={label}
-        style={{ height: "46px" }}
-        className="form-control"
-        onChange={fileUploader}
-        defaultValue={defaultValue}
-        disabled={loading}
-        accept="image/*"
-      />
+      <div>
+        <input
+          type="file"
+          {...register(`${name}`)}
+          name={name}
+          label={label}
+          style={{ height: "46px" }}
+          className="form-control"
+          onChange={fileUploader}
+          defaultValue={defaultValue}
+          disabled={loading}
+          accept="image/*"
+        />
+      </div>
+      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={link}>here</a> </small>}
     </div>
   );
 };
 
 export default FileUploader;
+//

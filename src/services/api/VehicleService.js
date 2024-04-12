@@ -3,10 +3,10 @@ import axios from "axios";
 const createVehicles = async (body) => {
   return axios.post("/vehicles", body);
 };
-const getVehicles = async (body) => {
-  const {data} = await axios.get("/vehicles", body);
+const getVehicles = async (page) => {
+  const {data} = await axios.get(`/vehicles?page=${page}&limit=${10}`);
   console.log(data)
-  return {data :data.data.data , totalLength : data.data.totalLength};
+  return {data :data.data.data , totalLength : data.data.totalCount};
 };
 const deleteVehicles = async (body) => {
   console.log(body);
@@ -16,4 +16,16 @@ const updateVehicles = async (body,id) => {
   return axios.patch(`/vehicles/${id}`,body);
 };
 
-export { createVehicles, getVehicles, deleteVehicles, updateVehicles };
+const getVehiclesByCompany = async () => {
+  const {data} = await axios.get("/vehicles/list", );
+  console.log(data)
+  return { data :data.data };
+};
+
+const getVehiclesTraking = async (id, status) => {
+  const {data} = await axios.get(`/vehicles/tracking?${id}&status=${status}`, );
+  console.log(data)
+  return { data :data.data };
+};
+
+export { createVehicles, getVehicles, deleteVehicles, updateVehicles, getVehiclesByCompany, getVehiclesTraking };

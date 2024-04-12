@@ -97,12 +97,15 @@ useEffect(()=>{
     setValue("faxNumber",formData[0].companyId?.faxNumber)
     setValue("zipCode",formData[0].companyId?.zipCode)
     setValue("city",formData[0].companyId?.city)
-    setValue("storageCapacity",formData[0].companyId?.capacity )
+    setValue("storageCapacity",formData[0].companyId.storageCapacity)
     setValue("country",formData[0].country)
     setValue("state",formData[0].state || '' )
     setDefaultCountry({ name:formData[0].country })
     setSelectStateName({name : formData[0].state || ''})
     setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
+  }else{
+    setValue("storageCapacity",storageCapacityOptions[1].value)
+  
   }
 },[formData,id])
 
@@ -393,10 +396,11 @@ useEffect(()=>{
                 ref={ref}
                 name="storageCapacity"
                 styles={customStyles}
+                // defaultValue={storageCapacityOptions[0].value}
                 value={{label: getValues("storageCapacity") ,value: getValues("storageCapacity")}}
               />
             )}
-          />
+          /> 
 
             <p style={{fontStyle: "italic"}}>
               {t('forMoreThan120DaysPlease')} <a href="#" class="link-primary">{t('contact')}</a> {t('yourAccountManager')}

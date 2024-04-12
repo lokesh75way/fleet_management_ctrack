@@ -3,12 +3,14 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
-const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
+const ExpenseTable = ({tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen}) => {
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
+
     return (
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item.id}</span></td>
+                    <td><span>{startIndex + index}</span></td>
                     <td>
                         <div className="products">
                             <div>
@@ -26,9 +28,8 @@ const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
                     </td>
                     <td>
                         <span className='d-flex justify-content-center'>
-                            <span onClick={()=>editDrawerOpen(item.id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
-                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item.id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
-
+                            <span onClick={()=>editDrawerOpen(item._id)} className='cursor-pointer' ><FaEdit style={{ color: "green", fontSize: "1.2rem" }} /></span>
+                            <DeleteModal className='cursor-pointer ' onConfirmDelete={onConfirmDelete} id={item._id} ><MdDelete style={{ color: "red", fontSize: "1.2rem" }} /></DeleteModal>
                         </span>
                     </td>
                 </tr>
