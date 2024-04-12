@@ -54,12 +54,12 @@ const TechnicianForm = () => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (techId) {
+          console.log(data)
           await updateTechnician(data, techId);
           notifySuccess("Technincian created");
           navigate("/technician/details");
           return;
         } else {
-          console.log("dataof submit", data.dateOfJoin, data.dateOfBirth)
           await createTechnician(data);
           notifySuccess("Technincian created");
           navigate("/technician/details");
@@ -80,6 +80,9 @@ const TechnicianForm = () => {
     try {
       const data = await getTechnicianById(id);
       setEditData(data);
+      setValue('noOfDaysCL',data.leave[0].days)
+      setValue('noOfDays',data.leave[1].days)
+      setValue('noOfDaysPL',data.leave[2].days)
       reset(data);
     } catch (error) {
       notifyError("Some error occured !!");
@@ -88,7 +91,10 @@ const TechnicianForm = () => {
   }
 
   useEffect(() => {
-    if (techId) getTechnician(techId);
+    if (techId) {
+     getTechnician(techId)
+      // setValue('noOfDaysCL')
+    };
   }, [techId]);
 
   return (

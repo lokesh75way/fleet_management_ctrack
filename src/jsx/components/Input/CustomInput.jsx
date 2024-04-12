@@ -4,6 +4,7 @@ const CustomInput = ({
   label,
   defaultValue,
   required,
+  onChange,
   placeholder,
   register,
   type,
@@ -35,6 +36,7 @@ const CustomInput = ({
         defaultValue={defaultValue}
         disabled={disabled}
         onInput={onInput}
+        onChange={onChange}
         min={min}
         autoComplete="off"
       />
