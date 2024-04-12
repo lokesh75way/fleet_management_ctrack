@@ -18,6 +18,8 @@ import {
 } from "../../services/api/AlertService";
 import ReactPaginate from "react-paginate";
 
+
+
 const Alert = () => {
   const { t } = useTranslation();
   const {
@@ -96,6 +98,26 @@ const Alert = () => {
   };
 
   const alert = useRef();
+
+
+  async function getAlertData() {
+    try {
+      // const permissions = JSON.parse(localStorage.getItem('permission'));
+      // setUserPermission(permissions?.[0]?.permission);
+      const { data, totalPage, totalCount } = await getAlerts();
+      setTableData(data);
+      console.log('data came',data);
+      // setCount(totalCount);
+    } catch (error) {
+      console.log("Error in fetching data", error);
+    } finally {
+      // setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getAlertData();
+  },[]);
 
   return (
     <>

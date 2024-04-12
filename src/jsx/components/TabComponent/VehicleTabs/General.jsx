@@ -455,7 +455,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("submit")}
+          {t('next')} 
         </Button>
       </div>
     </div>

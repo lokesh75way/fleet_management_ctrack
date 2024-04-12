@@ -140,6 +140,24 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       setValue("loadingUnloadingTolerance",formData[0].loadingUnloadingTolerance || '' )
       
 
+      setValue("plateNumber",FormData.plateNumber || '' )
+      setValue("vehicleCategory",FormData.vehicleCategory || '' )
+      setValue("purchaseAmount",FormData.purchaseAmount || '' )
+      setValue("DVIRTemplate",FormData.DVIRTemplate || '' )
+      setValue("weightCapacity",FormData.weightCapacity || '' )
+      setValue("companyAverage",FormData.companyAverage || '' )
+      setValue("permit",FormData.permit || '' )
+      setValue("registrationNumber",FormData.registrationNumber || '' )
+      setValue("fuelType",FormData.fuelType || '' )
+      setValue("fuelIdlingConsumption",FormData.fuelIdlingConsumption || '' )
+      setValue("vinNumber",FormData.vinNumber || '' )
+      setValue("engineNumber",FormData.engineNumber || '' )
+      setValue("duration",FormData.duration || '' )
+      setValue("sleepModeDuration",FormData.sleepModeDuration || '' )
+      setValue("underweightTolerance",FormData.underweightTolerance || '' )
+      setValue("overweightTolerance",FormData.overweightTolerance || '' )
+      setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
+      
     }
   },[formData,id])
 
@@ -158,7 +176,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.plateNumber} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('vehicleCategory')}</label>
+          <label className="form-label">{t('vehicleCategory')}</label> <span className="text-danger">*</span>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -361,7 +379,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           {!getValues('fuelType') && <Error errorName={errors.fuelType} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('distanceBasedFuelConsumption')} </label>
+          <label className="form-label">{t('distanceBasedFuelConsumption')} </label><span className="text-danger">*</span>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -411,7 +429,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             {/* <Error errorName={errors.distance} /> */}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('durationBasedFuelConsumption')} </label>
+          <label className="form-label">{t('durationBasedFuelConsumption')} </label> <span className="text-danger">*</span>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -525,7 +543,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('vinNumber')} :
+          {t('vinNumber')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -633,7 +651,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
             
      
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">{t('distanceCost')}<span className="text-danger">*</span></label>
+            <label className="form-label">{t('distanceCost')}</label>
             <div className={`${!isCheckedCBO ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
@@ -650,7 +668,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
   
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">{t('duration')}<span className="text-danger">*</span></label>
+            <label className="form-label">{t('duration')}</label>
             <div className={`${!isCheckedCBO2 ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
               <CustomInput
                 type="number"
@@ -696,7 +714,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('sleepModeDuration')}
+          {t('sleepModeDuration')} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -744,7 +762,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       
           { isCheckedWC &&  <>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('underweightTolerance')}</label>
+              <label className="form-label">{t('underweightTolerance')}</label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -759,7 +777,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <Error errorName={errors.underweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('overweightTolerance')}</label>
+              <label className="form-label">{t('overweightTolerance')}</label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -774,7 +792,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               <Error errorName={errors.overweightTolerance} />
             </div>
             <div className="col-xl-6 mb-3 ">
-              <label className="form-label">{t('loadingUnloadingTolerance')} </label>
+              <label className="form-label">{t('loadingUnloadingTolerance')} </label><span className="text-danger">*</span>
               <div className={`${!isCheckedWC ?  "d-flex align-items-center pe-none" : "d-flex align-items-center" }`}>
                 <CustomInput
                   type="number"
@@ -925,7 +943,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> {t('submit')}</Button>
+        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> {t('next')}</Button>
       </div>
     </div>
   );

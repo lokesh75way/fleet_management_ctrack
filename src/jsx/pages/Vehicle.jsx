@@ -7,10 +7,9 @@ import { clsx } from "clsx";
 import VehicleServices from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
-
+import usePagination from "../../hooks/usePagination";
 import {useTranslation} from 'react-i18next'
 import ReactPaginate from "react-paginate";
-import usePagination from "../../hooks/usePagination";
 
 const Vehicle = () => {
 
@@ -58,6 +57,7 @@ const Vehicle = () => {
       console.log(data)
       setCount(totalLength)
       setTableData(data);
+      // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
     }

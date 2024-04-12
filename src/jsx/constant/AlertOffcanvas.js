@@ -4,7 +4,7 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -39,6 +39,7 @@ const AlertOffcanvas = forwardRef(
     },
     ref
   ) => {
+    console.log("edit data inside modal", editData);
     const [addEmploye, setAddEmploye] = useState(false);
     const [tempVehicle, setTempVehicle] = useState("");
     const [tempValue, setTempValue] = useState("");
