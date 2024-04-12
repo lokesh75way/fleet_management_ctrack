@@ -10,7 +10,6 @@ import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 import usePagination from "../../hooks/usePagination";
 import {useTranslation} from 'react-i18next'
 import ReactPaginate from "react-paginate";
-import usePagination from "../../hooks/usePagination";
 
 const Vehicle = () => {
 
