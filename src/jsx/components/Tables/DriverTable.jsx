@@ -3,13 +3,15 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 
-const DriverTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
+const DriverTable = ({ tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen }) => {
+  const startIndex = (currentPage - 1) * itemsPerPage + 1;
+
   return (
     <>
       {tableData.map((item, index) => (
         <tr key={item.id}>
           <td>
-            <span>{item._id}</span>
+            <span>{startIndex + index}</span>
           </td>
           <td>
             <div className="products">

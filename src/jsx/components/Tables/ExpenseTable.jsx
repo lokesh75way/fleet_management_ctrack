@@ -3,12 +3,14 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
 
-const ExpenseTable = ({tableData, onConfirmDelete, editDrawerOpen}) => {
+const ExpenseTable = ({tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen}) => {
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
+
     return (
         <>
             {tableData.map((item, index) => (
                 <tr key={index}>
-                    <td><span>{item._id}</span></td>
+                    <td><span>{startIndex + index}</span></td>
                     <td>
                         <div className="products">
                             <div>
