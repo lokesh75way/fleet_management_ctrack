@@ -75,8 +75,7 @@ const VehicleForm = () => {
               const element = data[key];
               if (data[key] === undefined || data[key] === "") {
                 delete data[key];
-              }
-            }
+              }}
             await updateVehicles(data);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");

@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
+import ParentBranchDropdown from "../../ParentBranch";
 
 
 
@@ -111,20 +112,16 @@ const General = ({
 
       setValue("vehicleName", formData?.[0].vehicleName);
       setValue("plateNumber", formData?.[0].plateNumber);
-      setValue(
-        "branchId",
-        formData?.[0]?.branchId.map((branch) => branch._id)
-      );
-      setValue(
-        "branch",
-        formData?.[0]?.branchId.map((branch) => branch._id)
-      );
+      setValue("branchId", formData[0]?.branchId?._id)
+      // setValue(
+      //   "branch",
+      //   formData?.[0]?.branchId.map((branch) => branch._id)
+      // );
       setValue("simNumber", formData?.[0].simNumber);
       setValue("secondrySimNumber", formData?.[0].secondrySimNumber);
       setValue("IMEINumber", formData?.[0].IMEINumber);
       setValue("registrationNumber", formData?.[0].registrationNumber);
       setValue("weightCapacity", formData?.[0].weightCapacity);
-
       setValue("deviceType", formData?.[0].deviceType);
       setValue("serverAddress", formData?.[0].serverAddress);
       setValue("distanceCounter", formData?.[0].distanceCounter);
@@ -199,38 +196,38 @@ const General = ({
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t("branch")}</label>
           <Controller
-            name="branch"
+            name="branchId"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <ParentBranchDropdown
-              //   key={companyId}
-              //   companyId={companyId}
-              //   onChange={async (newValue) => {
-              //     // setValue("parentBranchId", newValue.value);
-              //     setValue("branch", newValue.label);
-              //     setValue("branchIds", newValue.value);
-              //   }
-              //   }
-              //   value={value}
-              //   customStyles={customStyles}
-              //   ref={ref}
-              //   isDisabled={false}
-              //   name={name}
-              // />
-              <BranchDropdown
+              <ParentBranchDropdown
                 key={companyId}
                 companyId={companyId}
                 onChange={async (newValue) => {
                   // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.label);
-                  setValue("branchID", newValue.value);
-                }}
+                  setValue("branch", newValue.value);
+                  setValue("branchId", newValue.value);
+                }
+                }
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
                 isDisabled={false}
                 name={name}
               />
+              // <BranchDropdown
+              //   key={companyId}
+              //   companyId={companyId}
+              //   onChange={async (newValue) => {
+              //     // setValue("parentBranchId", newValue.value);
+              //     setValue("branch", newValue.label);
+              //     setValue("branchID", newValue.value);
+              //   }}
+              //   value={value}
+              //   customStyles={customStyles}
+              //   ref={ref}
+              //   isDisabled={false}
+              //   name={name}
+              // />
             )}
           />
         </div>

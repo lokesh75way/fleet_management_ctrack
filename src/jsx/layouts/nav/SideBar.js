@@ -76,9 +76,6 @@ const SideBar = () => {
         MenuList = [];
     }
   }
-  console.log('====================================');
-  console.log(filteredAdminMenuList);
-  console.log('====================================');
 
   const [state, setState] = useReducer(reducer, initialState);
   useEffect(() => {}, []);

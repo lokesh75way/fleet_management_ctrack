@@ -9,6 +9,7 @@ import Error from "../../Error/Error";
 
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";
+import { useLocation, useParams } from "react-router-dom";
 
 const Document = ({
   setValue,
@@ -29,8 +30,11 @@ const Document = ({
   const [loading , setLoading] = useState(false);
   const [issueDate, setIssueDate] = useState();
   const [expiryDate, setExpiryDate] = useState();
-  const { t } = useTranslation();
+  const [dValues, setDvalues] = useState([]);
 
+  const { t } = useTranslation();
+  const { id } = useParams();
+  const location = useLocation();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -45,6 +49,25 @@ const Document = ({
     { value: "BANK_ACCOUNT", label: "Bank Account" },
     { value: "MEDICLAIM", label: "Mediclaim" },
   ]);
+
+
+  // useEffect(() => {
+  //   if (id) {
+  //     const data = location.state[0];
+  //     setDvalues(data);
+  //   }
+  // }, [id]);
+  // useEffect(() => {
+  //   if (dValues && id) {
+  //     console.log("here:-", dValues)
+
+  //   }
+  // }, [dValues, id]);
+  const formFields =
+  formData && formData[0] && formData[0].documents
+    ? formData[0]?.documents
+    : fields;
+  console.log(formFields, "here:-")
 
   return (
     <div className="p-4">

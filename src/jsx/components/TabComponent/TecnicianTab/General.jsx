@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
@@ -8,6 +8,7 @@ import "../../../../scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
 import CompanyDropdown from "../../CompanyDropdown";
+import { useParams } from "react-router-dom";
 const General = ({
   register,
   setValue,
@@ -18,12 +19,13 @@ const General = ({
   onSubmit,
 }) => {
   const [tempGender, setTempGender] = useState("");
-  const [date, setDate] = useState({})
+  const [date, setDate] = useState({});
   const { t } = useTranslation();
+  const { id } = useParams();
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
+      padding: ".25rem 0 ",
     }),
   };
   const handleChange = (e) => {
@@ -34,7 +36,21 @@ const General = ({
   minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
   const maxDate = new Date();
 
-  console.log(date, "thisisdate")
+  // console.log(date, "thisisdate")
+  console.log(
+    getValues("dateOfBirth"),
+    "birthdate",
+    new Date(getValues("dateOfBirth")),
+    date
+  );
+  // useEffect(() => {
+  //   if(getValues('dateOfBirth')&&getValues('dateOfJoin'))
+  //   setDate(prevState => ({
+  //     ...prevState,
+  //     dateOfBirth: new Date(getValues('dateOfBirth')),
+  //     dateOfJoin: new Date(getValues('dateOfJoin'))
+  //   }));`
+  // }, [id]);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -203,9 +219,14 @@ const General = ({
           <Controller
             name="dateOfJoin"
             control={control}
+            register={register}
             render={({ value, name }) => (
               <DatePicker
-                selected={date.dateOfJoin || new Date()}
+                selected={
+                  getValues("dateOfJoin")
+                    ? new Date(getValues("dateOfJoin"))
+                    : new Date()
+                }
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
                   setDate({ ...date, dateOfJoin: newValue });
@@ -227,7 +248,11 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={date.dateOfBirth || new Date()}
+              selected={
+                getValues("dateOfBirth")
+                  ? new Date(getValues("dateOfBirth"))
+                  : new Date()
+              }
                 minDate={minDate}
                 maxDate={maxDate}
                 className="form-control customDateHeight"
@@ -238,7 +263,6 @@ const General = ({
                   });
                   setValue("dateOfBirth", newValue.toISOString().split("T")[0]);
                 }}
-                dateFormat="dd-MM-yyyy"
                 showYearDropdown
                 scrollableYearDropdown={true}
                 popperClassName="date-picker-reports"
