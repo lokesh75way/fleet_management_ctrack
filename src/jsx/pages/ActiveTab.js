@@ -145,9 +145,9 @@ const ActiveTab = ({ tableData1, tabType }) => {
                       id="example2_paginate"
                     >
                        <Paginate
-                            pageCount={Math.ceil(totalCount / itemsPerPage)}
+                            totalCount={totalCount}
+                            itemsPerPage={itemsPerPage}
                             handlePageClick={handlePageClick}
-                            isRtl={isRtl}
                           />
                     </div>
                   </div>

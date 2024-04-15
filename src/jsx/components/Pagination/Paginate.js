@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactPaginate from "react-paginate";
-import { ICON } from "../../constant/theme";
+import { ThemeContext } from "../../../context/ThemeContext";
 
-const Paginate = ({ pageCount, handlePageClick, isRtl }) => {
+const Paginate = ({ totalCount, itemsPerPage, handlePageClick }) => {
+  const {isRtl} = useContext(ThemeContext);
+  const arrowLeft = (<i className="fa-solid fa-angle-left"></i>);
+  const arrowRight = (<i className="fa-solid fa-angle-right"></i>)
+
+  const pageCount = Math.ceil(totalCount / itemsPerPage);
   return (
     <ReactPaginate
-      previousLabel={!isRtl ? ICON.arrowLeft : ICON.arrowRight}
-      nextLabel={!isRtl ? ICON.arrowRight : ICON.arrowLeft}
+      previousLabel={!isRtl ? arrowLeft : arrowRight}
+      nextLabel={!isRtl ? arrowRight : arrowLeft}
       breakLabel={"..."}
       pageCount={pageCount}
       marginPagesDisplayed={2}
