@@ -41,7 +41,7 @@ const ParentBranchDropdown = ({
                 name={name}
                 ref={ref}
                 placeholder="Select Parent Branch"
-                // isDisabled={isDisabled || !companyId}
+                isDisabled={isDisabled}
                 />
     );
 }

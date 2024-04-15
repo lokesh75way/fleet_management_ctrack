@@ -131,7 +131,7 @@ const UserSetting = ({
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t("unitOfDistance")}</label>
           <Controller
-            name="fuelEconomyScaling"
+            name="unitOfDistance"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select

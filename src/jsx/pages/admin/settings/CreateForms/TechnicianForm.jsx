@@ -55,7 +55,7 @@ const TechnicianForm = () => {
       try {
         if (techId) {
           await updateTechnician(data, techId);
-          notifySuccess("Technincian created");
+          notifySuccess("Technincian updated!");
           navigate("/technician/details");
           return;
         } else {
