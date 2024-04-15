@@ -2,6 +2,11 @@ import EngliandImg from "../../images/svg/england.svg";
 import IndiaImg from "../../images/svg/india.svg";
 import ArabImg from "../../images/svg/united-arab-emirates.svg";
 
+export const ICON = {
+  arrowLeft:(<i className="fa-solid fa-angle-left"></i>),
+  arrowRight:(<i className="fa-solid fa-angle-right"></i>)
+};
+
 export const IMAGES = {
   Tab1: require("../../images/tab/1.jpg"),
   Avatar: require("../../images/avatar/1.jpg"),

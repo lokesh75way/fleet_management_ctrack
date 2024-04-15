@@ -25,19 +25,14 @@ import BranchDropdown from "../../components/BranchDropdown";
 import { getSelectValues } from "../../../utils/helper";
 import ParentBranchDropdown from "../../components/ParentBranch";
 import ReactPaginate from "react-paginate";
+import { ICON } from "../../constant/theme";
+import Paginate from "../../components/Pagination/Paginate";
 
 // import { SubCompanyData } from '../../components/Tables/Tables';
 
 const Branch = () => {
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+
   const { can, setUserPermission } = usePermissions();
 
   const { t } = useTranslation();
@@ -344,27 +339,11 @@ const Branch = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <ReactPaginate
-                          previousLabel={
-                            <i className="fa-solid fa-angle-left"></i>
-                          }
-                          nextLabel={
-                            <i className="fa-solid fa-angle-right"></i>
-                          }
-                          breakLabel={"..."}
-                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                          marginPagesDisplayed={2}
-                          pageRangeDisplayed={5}
-                          onPageChange={handlePageClick}
-                          containerClassName={"pagination"}
-                          activeClassName={"active"}
-                          pageClassName="page-item"
-                          pageLinkClassName="page-link"
-                          previousClassName="page-item"
-                          previousLinkClassName="page-link"
-                          nextClassName="page-item"
-                          nextLinkClassName="page-link"
-                        />
+                        <Paginate
+                            pageCount={Math.ceil(totalCount / itemsPerPage)}
+                            handlePageClick={handlePageClick}
+                            isRtl={isRtl}
+                          />
                       </div>
                     </div>
                   </div>

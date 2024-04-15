@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 
-import { IMAGES } from "../../constant/theme";
+import { ICON, IMAGES } from "../../constant/theme";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import InviteCustomer from "../../constant/ModalList";
 import { ExpenseData } from "../../components/Tables/Tables";
@@ -19,6 +19,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import clsx from "clsx";
 import { notifySuccess } from "../../../utils/toast";
 import ReactPaginate from "react-paginate";
+import Paginate from "../../components/Pagination/Paginate";
 
 const Expense = (ref) => {
 
@@ -27,14 +28,7 @@ const Expense = (ref) => {
   const [tableData, setTableData] = useState([]);
 
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+
   const {
     register,
     setValue,
@@ -169,22 +163,10 @@ const Expense = (ref) => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                       <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
+                        <Paginate
+                            pageCount={Math.ceil(totalCount / itemsPerPage)}
+                            handlePageClick={handlePageClick}
+                            isRtl={isRtl}
                           />
                       </div>
                     </div>

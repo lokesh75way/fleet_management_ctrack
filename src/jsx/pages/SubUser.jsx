@@ -13,6 +13,8 @@ import { usePermissions } from "../../context/PermissionContext";
 import useStorage from "../../hooks/useStorage";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
+import { ICON } from "../constant/theme";
+import Paginate from "../components/Pagination/Paginate";
 
 
   const SubUser = () => {
@@ -135,22 +137,10 @@ import ReactPaginate from "react-paginate";
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                       <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
+                        <Paginate
+                            pageCount={Math.ceil(totalCount / itemsPerPage)}
+                            handlePageClick={handlePageClick}
+                            isRtl={isRtl}
                           />
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import MainPagetitle from "../../layouts/MainPagetitle";
@@ -11,34 +11,21 @@ import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
 import usePagination from "../../../hooks/usePagination";
 import { Loader } from "rsuite";
-import ReactPaginate from "react-paginate";
+import Paginate from "../../components/Pagination/Paginate";
 
 const BusinessUser = () => {
+  const [isLoading, setIsLoading] = useState();
   const [deleteId, setDeleteId] = useState();
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
-  const [isLoading, setIsLoading] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { can, setUserPermission } = usePermissions();
   const [tableData, setTableData] = useState([]);
-  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
-    usePagination();
-    const itemsPerPage=10;
+  const { page, setCount, totalCount, goToPage } = usePagination();
+  const itemsPerPage = 10;
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   async function getGroupData() {
     try {
@@ -49,8 +36,6 @@ const BusinessUser = () => {
       setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -64,8 +49,11 @@ const BusinessUser = () => {
   };
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
-
     navigate(`/business/edit/${item}`, { state: filteredData });
+  };
+
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
   };
 
   return (
@@ -124,8 +112,8 @@ const BusinessUser = () => {
                         <tbody>
                           <BusinessTable
                             key={tableData}
-                            currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
                             tableData={tableData}
                             onConfirmDelete={onConfirmDelete}
                             editDrawerOpen={editDrawerOpen}
@@ -134,30 +122,18 @@ const BusinessUser = () => {
                       </table>
                       <div className="d-sm-flex text-center justify-content-between align-items-center">
                         <div className="dataTables_info">
-                          {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
-                          {Math.min(page * 10, totalCount)} {t("of")}{" "}
-                          {totalCount} {t("entries")}
+                          {t("showing")} {startIndex + 1} {t("to")}{" "}
+                          {Math.min(startIndex + itemsPerPage, totalCount)}{" "}
+                          {t("of")} {totalCount} {t("entries")}
                         </div>
                         <div
                           className="dataTables_paginate paging_simple_numbers"
                           id="example2_paginate"
                         >
-                          <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
+                          <Paginate
+                            pageCount={Math.ceil(totalCount / itemsPerPage)}
+                            handlePageClick={handlePageClick}
+                            isRtl={isRtl}
                           />
                         </div>
                       </div>
