@@ -88,16 +88,11 @@ const CompanyForm = () => {
               delete data.file;
             }
             data.businessGroupId = getValues("businessGroupId");
-            const { success, message } = await addCompany(data);
-            if (!success) {
-              notifyError(message);
-              return;
-            }
+            await addCompany(data);
             notifySuccess("New Company Created");
             navigate("/company");
             return;
           } catch (e) {
-            console.log(e);
             notifyError("Some error occured");
           }
         }

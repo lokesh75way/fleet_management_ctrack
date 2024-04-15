@@ -13,16 +13,8 @@ const Leave = ({
   errors,
   getValues,
 }) => {
-  const hanldeLeaveInput = (type, val) => {
-    const prvs = getValues("leave");
-    const newVal = prvs?.filter((v) => v.leaveType !== type) ?? [];
-    newVal.push({
-      leaveType: type,
-      days: val,
-    });
-    setValue("leave", newVal);
-  };
-
+ 
+  
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -48,16 +40,9 @@ const Leave = ({
           <CustomInput
             type="text"
             register={register}
-            onInput={(e) => {
-              hanldeLeaveInput("CASUAL", e.target.value);
-            }}
             label="No Of Days"
             name="noOfDaysCL"
-            value={
-              (getValues("leave") ?? []).filter(
-                (l) => l.leaveType === "CASUAL"
-              )?.[0]?.days
-            }
+            onChange={(e)=> {setValue("leave[0].days",e.target.value)}}
           />
           <Error errorName={errors.noOfDaysCL} />
         </div>
@@ -83,19 +68,12 @@ const Leave = ({
           <CustomInput
             type="text"
             register={register}
-            onInput={(e) => {
-              hanldeLeaveInput("SICK", e.target.value);
-            }}
-            value={
-              (getValues("leave") ?? []).filter(
-                (l) => l.leaveType === "SICK"
-              )?.[0]?.days
-            }
             label="No Of DaysSL"
             name="noOfDays"
             placeholder=""
+            onChange={(e)=> setValue("leave[1].days",e.target.value)}
           />
-          <Error errorName={errors.noOfDaysSL} />
+          <Error errorName={errors.noOfDays} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -109,6 +87,7 @@ const Leave = ({
             placeholder=""
             defaultValue="Privilege Leave"
             disabled
+            
           />
           <Error errorName={errors.privilegeLeave} />
         </div>
@@ -119,17 +98,9 @@ const Leave = ({
           <CustomInput
             type="text"
             register={register}
-            onInput={(e) => {
-              hanldeLeaveInput("PRIVILEGE", e.target.value);
-            }}
-            value={
-              (getValues("leave") ?? []).filter(
-                (l) => l.leaveType === "PRIVILEGE"
-              )?.[0]?.days
-            }
             label="No Of Days"
             name="noOfDaysPL"
-            placeholder=""
+            onChange={(e)=>{setValue("leave[2].days",e.target.value)}}
           />
           <Error errorName={errors.noOfDaysPL} />
         </div>

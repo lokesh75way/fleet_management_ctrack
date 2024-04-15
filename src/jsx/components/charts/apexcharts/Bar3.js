@@ -6,16 +6,6 @@ class ApexBar3 extends React.Component {
     super(props);
 
     this.state = {
-      // series: [
-      //   {
-      //     name: "Income",
-      //     data: [420, 550, 850, 220, 650],
-      //   },
-      //   {
-      //     name: "Expenses",
-      //     data: [170, 850, 101, 90, 250],
-      //   },
-      // ],
       options: {
         chart: {
           type: "bar",
@@ -73,7 +63,7 @@ class ApexBar3 extends React.Component {
           colors: ["transparent"],
         },
         xaxis: {
-          categories: ["Compeleted", "Incomplete", "Mixed", "Upcoming"],
+          categories: ["Type A", "Type B", "Type C", "Type D"],
         },
         fill: {
           colors: ["#b261dc", "#9a979a"],
