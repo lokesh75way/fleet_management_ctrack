@@ -16,8 +16,8 @@ const updateVehicles = async (body,id) => {
   return axios.patch(`/vehicles/${id}`,body);
 };
 
-const getVehiclesByCompany = async () => {
-  const {data} = await axios.get("/vehicles/list", );
+const getVehiclesByCompany = async (search = "") => {
+  const {data} = await axios.get(`/vehicles/list?search=${search}`, );
   console.log(data)
   return { data :data.data };
 };

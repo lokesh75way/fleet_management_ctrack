@@ -20,6 +20,7 @@ import { getAllBranch } from "../../../../services/api/BranchServices";
 import BranchDropdown from "../../BranchDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
 import GroupDropdown from "../../GroupDropdown";
+import ParentBranchDropdown from "../../ParentBranch";
 
 const Account = ({
   handleNext,
@@ -295,6 +296,7 @@ const Account = ({
       setValue("parentCompany", selectedCompanyId);
       setValue("Branch", selectedBranchId);
       setValue("branchIds", selectedBranchId);
+      setCompanyId(selectedCompanyId)
 
       setValue(
         "parentBusinessGroup",
@@ -336,7 +338,6 @@ const Account = ({
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
-
           <Controller
             name="businessUser"
             control={control}
@@ -417,35 +418,35 @@ const Account = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <Select
-              //   onChange={async (newValue) => {
-
-              //     const selectedValues = newValue.map(option => option.value);
-              //     setValue("Branch", selectedValues);
-              //     setValue("branchIds", selectedValues);
+              // <BranchDropdown
+              //   onChange={(newValue) => {
+              //     console.log("newValue", newValue);
+              //     const valuesArray = newValue.map((item) => item.value);
+              //     setValue("Branch", valuesArray);
+              //     setValue("branchIds", valuesArray);
               //   }}
-              //   options={branchOptions}
-              //   ref={ref}
+              //   key={companyId}
+              //   companyId={companyId}
+              //   value={value}
+              //   customStyles={customStyles}
               //   name={name}
-              //   styles={customStyles}
-              //   isMulti={true}
-              //   value={Array.isArray(value) ? value.map(val => branchOptions.find(option => option.value === val)) : []}
+              //   ref={ref}
+              //   isDisabled={false}
               // />
-              <BranchDropdown
-                onChange={(newValue) => {
-                  console.log("newValue", newValue);
-                  const valuesArray = newValue.map((item) => item.value);
-                  setValue("Branch", valuesArray);
-                  setValue("branchIds", valuesArray);
-                }}
-                key={companyId}
-                companyId={companyId}
-                value={value}
-                customStyles={customStyles}
-                name={name}
-                ref={ref}
-                isDisabled={false}
-              />
+              <ParentBranchDropdown
+              key={companyId}
+              companyId={companyId}
+              onChange={(newValue) => {
+                setValue("Branch", newValue.value);
+                setValue("branchIds", newValue.value);
+              }
+              }
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              isDisabled={!companyId}
+              name={name}
+            />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
