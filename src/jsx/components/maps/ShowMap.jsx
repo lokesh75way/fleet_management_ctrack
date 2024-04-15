@@ -24,7 +24,7 @@ const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
         {
           trackingData?.data?.map((item, index) => {
             return(
-              <Marker styles={{background:'red'}} position={[ item.Latitude, item.Longitude]} ><Popup><h6>Name: {item?.vehicleId?.vehicleName}</h6><h6>Status: {item?.Status}</h6><h6>Location: {item?.Location}</h6></Popup><Tooltip>{item?.vehicleId?.vehicleName}</Tooltip></Marker>
+              <Marker styles={{background:'red'}} position={[ item.Latitude, item.Longitude]} ><Popup><h6>Name: {item?.Vehicle_Name}</h6><h6>Status: {item?.Status}</h6><h6>Location: {item?.Location}</h6></Popup><Tooltip>{item?.Vehicle_Name}</Tooltip></Marker>
             )
           })
         }
