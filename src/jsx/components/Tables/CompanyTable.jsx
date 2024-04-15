@@ -55,7 +55,7 @@ const CompanyTable = ({
               to={`/branch/cid/${item?.companyId?.id}`}
               className="text-primary badge light border-0 badge-count"
             >
-              {getBranch(item?.companyId?.userName)}
+              {/* {getBranch(item?.companyId?.userName)} */}
             </Link>
           </td>
           <td className="text-center">

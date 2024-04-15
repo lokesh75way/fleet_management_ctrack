@@ -73,7 +73,7 @@ const Branch = () => {
   const role = localStorage.getItem("role");
   const { control, setValue, getValues, watch } = useForm();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const SubCompanyData = userData.filter((item) => item.role === "branch");
+  const SubCompanyData = userData?.filter((item) => item.role === "branch");
   const [companyId, setCompanyId] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
