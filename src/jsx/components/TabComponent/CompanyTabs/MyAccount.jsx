@@ -105,7 +105,7 @@ useEffect(()=>{
     setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
   }else{
     setValue("storageCapacity",storageCapacityOptions[1].value)
-  
+    
   }
 },[formData,id])
 
@@ -461,15 +461,7 @@ useEffect(()=>{
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">{t('uploadLogo')}</label>
-          <FileUploader
-            setValue={setValue}
-            register={register}
-            label="Business Group Logo"
-            name="logo"
-            getValue={getValues}
-            setLoading={setLoading}
-            loading={loading}
-          />
+                                                                                  
            {loading && <small>Uploading...</small>}
           <Error errorName={errors.businessGroupLogo} />
         </div>

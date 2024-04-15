@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { technicianTaskSchema } from "../../yup";
 import { useTranslation } from "react-i18next";
-import { clsx } from "clsx";
 import { ThemeContext } from "../../context/ThemeContext";
 import usePagination from "../../hooks/usePagination";
 import {
@@ -19,17 +18,11 @@ import {
 import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
 
+
 const TechnicianTask = (ref) => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+ 
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
@@ -78,16 +71,22 @@ const TechnicianTask = (ref) => {
 
   const onSubmit = async (data) => {
     try {
+      if(data.plannedReportingDate){
+        const newDate= new Date(data.plannedReportingDate).toLocaleDateString();
+        const parts = newDate.split('/');
+        const formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+        data.plannedReportingDate = formattedDate;
+       }
       if (data._id && data._id !== 0) {
-        // update data
         await updateTask(data, data._id);
-        notifySuccess("Task Added Successfully !!");
+        notifySuccess("Task Updated Successfully !!");
         technicianTask.current.closeModal();
       } else {
         await createTask(data);
-        notifySuccess("Task Added Successfully !!");
+        notifySuccess("Task Created Successfully !!");
         technicianTask.current.closeModal();
       }
+      fetchAllTasks()
     } catch (error) {
       const validationErr = error.response?.data?.data?.errors;
       if (validationErr && validationErr.length > 0) {
@@ -96,14 +95,12 @@ const TechnicianTask = (ref) => {
     }
   };
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const technicianTask = useRef();
   return (
@@ -161,8 +158,8 @@ const TechnicianTask = (ref) => {
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -177,22 +174,26 @@ const TechnicianTask = (ref) => {
                         id="example2_paginate"
                       >
                         <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
-                          />
+                          previousLabel={
+                            <i className="fa-solid fa-angle-left"></i>
+                          }
+                          nextLabel={
+                            <i className="fa-solid fa-angle-right"></i>
+                          }
+                          breakLabel={"..."}
+                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
+                          marginPagesDisplayed={2}
+                          pageRangeDisplayed={5}
+                          onPageChange={handlePageClick}
+                          containerClassName={"pagination"}
+                          activeClassName={"active"}
+                          pageClassName="page-item"
+                          pageLinkClassName="page-link"
+                          previousClassName="page-item"
+                          previousLinkClassName="page-link"
+                          nextClassName="page-item"
+                          nextLinkClassName="page-link"
+                        />
                       </div>
                     </div>
                   </div>

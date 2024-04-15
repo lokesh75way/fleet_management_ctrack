@@ -58,14 +58,14 @@ const TechnicianOffcanvas = forwardRef(
         padding: ".25rem 0 ", // Adjust the height as needed
       }),
     };
-
-     useEffect(() => {
-       reset({});
-       clearErrors();
-       if (addEmploye && editData) {
-         reset({ ...editData, technician: editData.technician._id });
-       } else setEditData();
-     }, [addEmploye]);
+    useEffect(() => {
+      reset({});
+      clearErrors();
+      if (addEmploye && editData) {
+        reset({ ...editData, technician: editData.technician._id });
+        setValue("description", editData.description);
+      } else setEditData();
+    }, [addEmploye]);
 
     return (
       <>
@@ -135,7 +135,15 @@ const TechnicianOffcanvas = forwardRef(
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            value={getValues("taskCategory")}
+                            value={value}
+                            defaultValue={{
+                              value: getValues("taskCategory")
+                                ? getValues("taskCategory")
+                                : taskCategoryOptions[0].value,
+                              label: getValues("taskCategory")
+                                ? getValues("taskCategory")
+                                : taskCategoryOptions[0].label,
+                            }}
                           />
                         )}
                       />
@@ -177,7 +185,14 @@ const TechnicianOffcanvas = forwardRef(
                             ref={ref}
                             name={name}
                             styles={customStyles}
-                            value={getValues("taskPriority")}
+                            defaultValue={{
+                              value: getValues("taskPriority")
+                                ? getValues("taskPriority")
+                                : severityOptions[0].value,
+                              label: getValues("taskPriority")
+                                ? getValues("taskPriority")
+                                : severityOptions[0].label,
+                            }}
                           />
                         )}
                       />
@@ -270,14 +285,22 @@ const TechnicianOffcanvas = forwardRef(
                     <div className="col-xl-6 mb-3">
                       <label className="form-label">{t("description")}</label>
                       <div className="mb-3 ">
-                        <textarea
-                          className="form-txtarea form-control"
-                          {...register}
-                          name="description"
-                          label="Description"
-                          rows="8"
-                          id="comment"
-                        ></textarea>
+                        <Controller
+                          name="description" 
+                          control={control}
+                          defaultValue="" 
+                          render={({ field }) => (
+                            <textarea
+                              className="form-txtarea form-control"
+                              register={register("description")}
+                              name="description"
+                              label="Description"
+                              rows="8"
+                              id="comment"
+                              {...field}
+                            />
+                          )}
+                        />
                       </div>
                     </div>
                   </div>
@@ -287,7 +310,6 @@ const TechnicianOffcanvas = forwardRef(
                       onClick={() => {
                         console.log("clicked here");
                         handleSubmit(onSubmit);
-                        console.log({ errors });
                       }}
                       className="btn btn-primary me-1 m-1"
                     >

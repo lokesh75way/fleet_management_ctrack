@@ -32,7 +32,7 @@ export function PermissionProvider({ children }) {
   }, [userPermission]);
   const role = userDetails?.user?.role;
   const can = (module, operation) => {
-    if (module === '*'|| role === 'BUSINESS_GROUP' || role === 'SUPER_ADMIN' || role === 'COMPANY') return true;
+    if (module === '*'|| role === 'BUSINESS_GROUP'|| role === 'SUPER_ADMIN' || role === 'COMPANY') return true;
     const modulePermissions = permissionsByBasePath[module];
     if (modulePermissions) {
       return modulePermissions[operation] === false ? false : true
