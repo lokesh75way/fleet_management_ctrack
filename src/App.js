@@ -55,9 +55,6 @@ function App(props) {
   const { checkRole, checkType } = useStorage()
   let role = checkRole()
   let type = checkType()
-  console.log('====================================');
-  console.log(role, type);
-  console.log('====================================');
   const { setUserPermission } = usePermissions()
   const userPermission = useSelector(state => state.auth.permission);
   //useLocation

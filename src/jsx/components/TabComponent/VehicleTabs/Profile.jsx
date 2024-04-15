@@ -44,6 +44,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
   }
 
   const {t} = useTranslation();
+  console.log(formData,"sd:-")
 
   useEffect(()=>{
     if(formData && id){
@@ -68,7 +69,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       // setSelectStateName({name : formData[0].state || ''})
       // setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
       
-      setValue("plateNumber",formData?.[0].plateNumber || '' )
+      setValue("plateNumber",formData[0].plateNumber || '' )
       setValue("vehicleCategory",formData[0].vehicleCategory || '' )
       setValue("dvirTemplate",formData[0].dvirTemplate || '' )
       setValue("purchaseAmount",formData[0].purchaseAmount || '' )
@@ -140,30 +141,30 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       setValue("loadingUnloadingTolerance",formData[0].loadingUnloadingTolerance || '' )
       
 
-      setValue("plateNumber",FormData.plateNumber || '' )
-      setValue("vehicleCategory",FormData.vehicleCategory || '' )
-      setValue("purchaseAmount",FormData.purchaseAmount || '' )
-      setValue("DVIRTemplate",FormData.DVIRTemplate || '' )
-      setValue("weightCapacity",FormData.weightCapacity || '' )
-      setValue("companyAverage",FormData.companyAverage || '' )
-      setValue("permit",FormData.permit || '' )
-      setValue("registrationNumber",FormData.registrationNumber || '' )
-      setValue("fuelType",FormData.fuelType || '' )
-      setValue("fuelIdlingConsumption",FormData.fuelIdlingConsumption || '' )
-      setValue("vinNumber",FormData.vinNumber || '' )
-      setValue("engineNumber",FormData.engineNumber || '' )
-      setValue("duration",FormData.duration || '' )
-      setValue("sleepModeDuration",FormData.sleepModeDuration || '' )
-      setValue("underweightTolerance",FormData.underweightTolerance || '' )
-      setValue("overweightTolerance",FormData.overweightTolerance || '' )
-      setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
+      // setValue("plateNumber",FormData.plateNumber || '' )
+      // setValue("vehicleCategory",FormData.vehicleCategory || '' )
+      // setValue("purchaseAmount",FormData.purchaseAmount || '' )
+      // setValue("DVIRTemplate",FormData.DVIRTemplate || '' )
+      // setValue("weightCapacity",FormData.weightCapacity || '' )
+      // setValue("companyAverage",FormData.companyAverage || '' )
+      // setValue("permit",FormData.permit || '' )
+      // setValue("registrationNumber",FormData.registrationNumber || '' )
+      // setValue("fuelType",FormData.fuelType || '' )
+      // setValue("fuelIdlingConsumption",FormData.fuelIdlingConsumption || '' )
+      // setValue("vinNumber",FormData.vinNumber || '' )
+      // setValue("engineNumber",FormData.engineNumber || '' )
+      // setValue("duration",FormData.duration || '' )
+      // setValue("sleepModeDuration",FormData.sleepModeDuration || '' )
+      // setValue("underweightTolerance",FormData.underweightTolerance || '' )
+      // setValue("overweightTolerance",FormData.overweightTolerance || '' )
+      // setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
       
     }
   },[formData,id])
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
+      <div className="row" style={{ width: "75%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t('plateNumber')}<span className="text-danger">*</span></label>
           <CustomInput
@@ -391,7 +392,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Distance"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 .4rem" }}
               name="distanceBasedDistanceQuantity"
               placeholder=""
             />
@@ -442,7 +443,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               type="number"
               register={register}
               label="Duration"
-              style={{ width: "6rem", margin: " 0 2rem" }}
+              style={{ width: "5rem", margin: " 0 1rem" }}
               name="durationBaseFuelConsumptionDurationQuanitty"
               placeholder=""
             />

@@ -58,7 +58,7 @@ const AdditionalInfo = ({
     }
   }, [dValues, id]);
   const minDate = new Date();
-  minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
+  minDate.setFullYear(minDate.getFullYear() - 100); 
   const maxDate = new Date();
   return (
     <div className="p-4">

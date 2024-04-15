@@ -45,30 +45,19 @@ const GeofenceDetail = () => {
     if (id) {
       const { data } = await getGeofenceById(id);
       setDefaultData(data);
-      setValue("company", data.company);
-      setValue("name", data.name);
-      setValue("category", data.category);
-      setValue("contactNumber", data.contactNumber);
-      setValue("tolerance", data.tolerance);
-      setValue("geofenceAccess", data.geofenceAccess);
+      reset(data);
       setSelectedOption(data.geofenceAccess);
-      setValue("description", data.description);
-      setValue("address", data.address);
-      
-      setValue('location',data.location)
     }
   };
 
   useEffect(() => {
     if (userDetails.user.role === "COMPANY") {
-      console.log(userDetails);
       setValue("businessGroupId", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId);
 
       setValue("companyId", userDetails?.user.companyId);
       setCompanyId(userDetails?.user.companyId);
       setCompanyDisabled(true);
-      console.log("companyId", userDetails?.user.businessGroupId);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
@@ -84,33 +73,33 @@ const GeofenceDetail = () => {
     register,
     formState: { errors },
     setValue,
+    watch,
     getValues,
     control,
     handleSubmit,
+    reset,
   } = useForm({
     resolver: yupResolver(geofenceMapSchema),
-    defaultValues : {
-      category : categoryOptions[0].value,
-      tolerance : toleranceOptions[0].value
-    }
+    defaultValues: {
+      category: categoryOptions[0].value,
+      tolerance: toleranceOptions[0].value,
+    },
   });
   const handleChange = (e) => {
     setSelectedOption(e.target.value);
     setValue("geofenceAccess", e.target.value);
   };
 
-
   const onSubmit = async (data) => {
     try {
       if (id) {
-        const {success} = await updateGeofence(id, data);
+        const { success } = await updateGeofence(id, data);
         if (success) {
           notifySuccess("Geofence updated successfully!");
           navigate("/settings/geofence");
         }
         return;
       } else {
-        console.log(data);
         const { success } = await createGeofenceData(data);
         if (success) {
           notifySuccess("New Geofence Created!");
@@ -208,7 +197,7 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      value={{value ,label : value}}
+                      value={{ value, label: value }}
                     />
                   )}
                 />
@@ -303,9 +292,8 @@ const GeofenceDetail = () => {
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      value={{label : value , value : value}}
+                      value={{ label: value, value: value }}
                     />
-                    
                   )}
                 />
                 {!getValues("tolerance") && (
@@ -347,6 +335,7 @@ const GeofenceDetail = () => {
         <div className="col-md-9" style={{ paddingLeft: "15px" }}>
           <Map
             setValue={setValue}
+            watch={watch}
             getValues={getValues}
             defaultValues={defaultData}
             errors={errors}

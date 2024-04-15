@@ -6,13 +6,14 @@ import { createRoot } from 'react-dom/client';
 import { MapContainer, TileLayer, GeoJSON,Marker,Popup ,Tooltip} from 'react-leaflet';
 import EditControlFC from './EditControl';
 
-const ShowMapContainer = ({ data, trackingData }) => {
+const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
 
   return (
     <div style={{ display: 'flex', height: '85vh' , position : "relative" , zIndex : 1}}>
     <div style={{ width: '100%' }}>
       <MapContainer
-        center={[ 24.420025, 54.49367]}
+        // center={[ 24.420025, 54.49367]}
+        center={[ centerCoordinate.latitude ?? 24.420025 , centerCoordinate.longitude ?? 54.49367]}
         zoom={14}
         zoomControl={false}
       >
@@ -23,7 +24,7 @@ const ShowMapContainer = ({ data, trackingData }) => {
         {
           trackingData?.data?.map((item, index) => {
             return(
-              <Marker styles={{background:'red'}} position={[ item.Latitude, item.Longitude]} ><Popup><h6>Name: {item?.vehicleId?.vehicleName}</h6><h6>Status: {item?.Status}</h6><h6>Location: {item?.Location}</h6></Popup><Tooltip>{item?.vehicleId?.vehicleName}</Tooltip></Marker>
+              <Marker styles={{background:'red'}} position={[ item.Latitude, item.Longitude]} ><Popup><h6>Name: {item?.Vehicle_Name}</h6><h6>Status: {item?.Status}</h6><h6>Location: {item?.Location}</h6></Popup><Tooltip>{item?.Vehicle_Name}</Tooltip></Marker>
             )
           })
         }

@@ -194,7 +194,11 @@ const Home = () => {
   }, []);
 
   if (isLoading) {
-    return <Loader />;
+    return(
+    <div style={{height: '100vh'}}>
+      <Loader />
+    </div> 
+    )
   }
   return (
     <>
