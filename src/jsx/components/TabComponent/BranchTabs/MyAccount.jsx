@@ -224,7 +224,6 @@ const MyAccount = ({
                   key={groupId}
                   groupId={groupId}
                   onChange={(newValue) => {
-                   
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.value);
                   }}

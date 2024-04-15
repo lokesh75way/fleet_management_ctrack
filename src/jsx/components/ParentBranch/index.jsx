@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getAllBranch } from '../../../services/api/BranchServices';
 import Select from "react-select";
-
 import usePagination from '../../../hooks/usePagination';
+
 const ParentBranchDropdown = ({
     onChange,
     value,
@@ -10,39 +10,70 @@ const ParentBranchDropdown = ({
     name,
     isDisabled,
     companyId,
-    ref
+    inputRef
 }) => {
-
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
-    const {page} = usePagination()
+    const { page, setPage } = usePagination();
+
     useEffect(() => {
-        const fetchBusinessGroups = async () => {
-            const response = await getAllBranch(undefined,companyId ? companyId : undefined);
-            const groupOptions = response.data.data.map(item => ({ value: item?._id, label: item?.branchName }));
-            // console.log(response.data, "this is Branch data")
-            // console.log(groupOptions, "this is Branch options")
-            setdropDownOptions(groupOptions);
-        };
-        fetchBusinessGroups();
-    }
-    , []);
+        fetchBranches();
+    }, [page, companyId]);
+
+    const fetchBranches = async () => {
+        try {
+            const response = await getAllBranch(page, companyId);
+            const newOptions = response.data.data.map(item => ({
+                value: item?._id,
+                label: item?.branchName
+            }));
+            if (page === 1) {
+                setdropDownOptions(newOptions);
+            } else {
+                setdropDownOptions(prevOptions => [...prevOptions, ...newOptions]);
+            }
+        } catch (error) {
+            console.error('Error fetching branches:', error);
+        }
+    };
+
     useEffect(() => {
-        const selected = dropDownOptions.filter((option) => option.value === value);
+        const selected = value ? dropDownOptions.find(option => option.value === value) : null;
         setSelectedOption(selected);
     }, [value, dropDownOptions]);
 
+    const handleChange = (newValue) => {
+        if (!newValue) {
+            newValue = {
+                target: inputRef,
+                value: '', 
+            };
+        }
+        onChange(newValue);
+    };
+
+    const handleMenuScroll = async (event) => {
+        const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+        if (bottom) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
+
     return (
-            <Select
-                options = {dropDownOptions}
-                value={selectedOption}
-                onChange={(newValue) => onChange(newValue)}
-                styles={customStyles}
-                name={name}
-                ref={ref}
-                placeholder="Select Parent Branch"
-                isDisabled={isDisabled}
-                />
+        <Select
+            options={dropDownOptions}
+            value={selectedOption}
+            onChange={handleChange} 
+            styles={customStyles}
+            name={name}
+            ref={inputRef}
+            placeholder="Select Parent Branch"
+            isDisabled={isDisabled}
+            isClearable
+            onMenuScrollToBottom={handleMenuScroll}
+            menuShouldScrollIntoView={false}
+        />
     );
-}
+};
+
 export default ParentBranchDropdown;
