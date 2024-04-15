@@ -140,6 +140,24 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       setValue("loadingUnloadingTolerance",formData[0].loadingUnloadingTolerance || '' )
       
 
+      setValue("plateNumber",FormData.plateNumber || '' )
+      setValue("vehicleCategory",FormData.vehicleCategory || '' )
+      setValue("purchaseAmount",FormData.purchaseAmount || '' )
+      setValue("DVIRTemplate",FormData.DVIRTemplate || '' )
+      setValue("weightCapacity",FormData.weightCapacity || '' )
+      setValue("companyAverage",FormData.companyAverage || '' )
+      setValue("permit",FormData.permit || '' )
+      setValue("registrationNumber",FormData.registrationNumber || '' )
+      setValue("fuelType",FormData.fuelType || '' )
+      setValue("fuelIdlingConsumption",FormData.fuelIdlingConsumption || '' )
+      setValue("vinNumber",FormData.vinNumber || '' )
+      setValue("engineNumber",FormData.engineNumber || '' )
+      setValue("duration",FormData.duration || '' )
+      setValue("sleepModeDuration",FormData.sleepModeDuration || '' )
+      setValue("underweightTolerance",FormData.underweightTolerance || '' )
+      setValue("overweightTolerance",FormData.overweightTolerance || '' )
+      setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
+      
     }
   },[formData,id])
 

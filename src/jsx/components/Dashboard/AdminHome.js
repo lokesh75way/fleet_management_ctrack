@@ -63,8 +63,10 @@ import ApexLine5 from "../charts/apexcharts/Line5";
 import ApexLine4 from "../charts/apexcharts/Line4";
 import PolarChart from "../charts/Chartjs/polar";
 import Notification from "./Notification";
+import {getDashboardTasks, getFleetStatus, getFleetUsage} from "../../../services/api/DashboardServices";
 
-import { useTranslation } from "react-i18next";
+import {useTranslation} from 'react-i18next'
+import Loader from "../Loader";
 
 const speed = {
   data: [
@@ -106,8 +108,15 @@ const Home = () => {
   const [selectedDataTable, setSelectedDataTable] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-
-  const { t } = useTranslation();
+  const [vehicleData, setVehicleData] = useState({});
+  const [groupData, setGroupData] = useState({});
+  const [activeUsers, setActiveUsers] = useState({});
+  const [usageData, setUsageData] = useState({});
+  const [statusData, setStatusData] = useState([0, 0, 0, 0]);
+  const [applicationUsage, setApplicationUsage] = useState([0, 0]);
+  const [tasksData, setTasksData] = useState({xAxis: [], series: []});
+  const [isLoading, setIsLoading] = useState(true);
+  const {t} = useTranslation();
 
   const {
     showCardWidget,
@@ -164,6 +173,29 @@ const Home = () => {
 
   const role = localStorage.getItem("role");
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const usageApiData = await getFleetUsage();
+      const statusApiData = await getFleetStatus();
+      const tasksApiData = await getDashboardTasks();
+      setVehicleData(usageApiData.vehicle);
+      setGroupData(usageApiData.groups);
+      setActiveUsers(usageApiData.activeUsers);
+      setUsageData(usageApiData);
+      setStatusData([statusApiData.cancelled, statusApiData.yetToStart, statusApiData.complete, statusApiData.progress]);
+      setApplicationUsage([usageApiData.applicationUsage.mobile, usageApiData.applicationUsage.web]);
+      setTasksData(tasksApiData);
+      console.log("task", tasksApiData.series);
+      setIsLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
       {/* Modal component */}
@@ -211,7 +243,9 @@ const Home = () => {
                 className="row"
                 style={{ padding: "1px", marginTop: "1rem" }}
               >
-                <CardWidget />
+                <CardWidget 
+                  usageData={usageData}
+                  />
               </div>
             </div>
           )}
@@ -228,7 +262,7 @@ const Home = () => {
                   marginLeft: ".2rem",
                 }}
               >
-                <ActiveUserMap />
+                <ActiveUserMap usageData={usageData} />
               </div>
             </div>
           )}
@@ -262,6 +296,7 @@ const Home = () => {
                   style={{ flexWrap: "wrap" }}
                 >
                   <AllProjectDonutChart
+                  key={statusData}
                     colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
                     labels={[
                       "Cancelled",
@@ -270,7 +305,7 @@ const Home = () => {
                       "Progress",
                     ]}
                     width={300}
-                    data={[18, 19, 25, 23]}
+                    data={statusData}
                     completeLabel={t("total")}
                   />
                   <ul className="project-list">
@@ -441,180 +476,13 @@ const Home = () => {
                   cursor: "pointer",
                 }}
               >
-                <div className="d-flex align-items-center">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      // marginBottom: "4rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("webVsMobileUser")}
-                  </h4>
-                </div>
-                <div
-                  className="card-body d-flex justify-content-center align-items-center py-2"
-                  style={{ flexWrap: "wrap" }}
-                >
-                  <div>
-                    <ChartPie
-                      color1={"#49be25"}
-                      color2={"#5179cf"}
-                      Chartdata={[45, 55]}
-                      labels={["Web User", "Mobile User"]}
-                    />
-                  </div>
-                  <div>
-                    <ul className="project-list p-3">
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#3AC977" />
-                        </svg>{" "}
-                        {t("webUser")}
-                      </li>
-
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                        </svg>{" "}
-                        {t("mobileUser")}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div
-          className="row "
-          style={{ marginLeft: "0.2rem", justifyContent: "" }}
-        >
-          {showApplicationUsage && (
-            <div className="col-xl-4 col-md-12" style={{ paddingLeft: 0 }}>
-              <div
-                className="card same-card p-2"
-                style={{
-                  // backgroundColor: "rgb(241 156 135 / 56%)",
-                  cursor: "pointer",
-                }}
-                onClick={() => openModal(<OverspeedTable />, "Overspeed")}
-              >
-                <div className="d-flex align-items-center justify-content-between">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      marginBottom: "4rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("applicationUsage")}
-                  </h4>
-                </div>
-
-                <div
-                  className="card-body d-flex justify-content-center align-items-center py-2"
-                  style={{ flexWrap: "wrap" }}
-                >
-                  <div>
-                    <ChartPie
-                      color1={"#f58505"}
-                      color2={"#1ef6ea"}
-                      Chartdata={[80, 20]}
-                    />
-                  </div>
-                  <div>
-                    <ul className="project-list p-3">
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#3AC977" />
-                        </svg>{" "}
-                        {t("webUser")}
-                      </li>
-
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                        </svg>{" "}
-                        {t("mobileUser")}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {showModelWiseDevices && (
-            <div className="col-xl-4 col-md-12">
-              <div
-                className="card same-card p-2"
-                style={{
-                  // backgroundColor: "rgb(144 238 144 / 56%)",
-                  cursor: "pointer",
-                }}
-                onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
-              >
-                <div className="d-flex align-items-center justify-content-between">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      marginBottom: "4rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("modelWiseDevices")}
-                  </h4>
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  ></div>
-                </div>
-                <div className="d-flex justify-content-center align-item-center">
-                  <AllProjectDonutChart
-                    colors={["#ea0d0d", "var(--primary)", "#3AC977", "#FF9F00"]}
-                    labels={[
-                      "Cancelled",
-                      "Yet To Start",
-                      "Complete",
-                      "Progress",
-                    ]}
-                    width={300}
-                    data={[1000, 290, 50, 30]}
-                    completeLabel={t("total")}
-                    size="60%"
+                <div>
+                  <ChartPie
+                  key={applicationUsage}
+                    color1={"#49be25"}
+                    color2={"#5179cf"}
+                    Chartdata={applicationUsage}
+                    labels={["Web User", "Mobile User"]}
                   />
                 </div>
               </div>
@@ -631,67 +499,12 @@ const Home = () => {
                 }}
                 onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
               >
-                <div className="d-flex align-items-center justify-content-between">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      marginBottom: "4rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("objectType")}
-                  </h4>
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  ></div>
-                </div>
-
-                <div className="d-flex justify-content-center align-item-center">
-                  <AllProjectDonutChart
-                    colors={[
-                      "#ea0d0d",
-                      "#FF5733",
-                      "#FFBD33",
-                      "#FFDD33",
-                      "#E0FF33",
-                      "#9FFF33",
-                      "#33FF4C",
-                      "#33FFBD",
-                      "#33FFE9",
-                      "#33E6FF",
-                      "#33A1FF",
-                      "#336DFF",
-                      "#3333FF",
-                      "#7E33FF",
-                      "#C633FF",
-                      "#FF33F5",
-                      "#FF33A8",
-                      "#FF3376",
-                      "#FF336B",
-                      "#FF554A",
-                      "#FF8533",
-                      "#FFA833",
-                      "#FFD133",
-                      "#FFFF33",
-                      "#D5FF33",
-                    ]}
-                    labels={[
-                      "Cancelled",
-                      "Yet To Start",
-                      "Complete",
-                      "Progress",
-                    ]}
-                    width={300}
-                    data={[
-                      1000, 290, 50, 30, 10, 28, 2, 4, 6, 8, 12, 12, 34, 23, 12,
-                      34, 56, 34, 12, 6, 78, 8, 81,
-                    ]}
-                    completeLabel={t("total")}
-                    size="60%"
+                <div>
+                  <ChartPie
+                  key={applicationUsage}
+                    color1={"#f58505"}
+                    color2={"#1ef6ea"}
+                    Chartdata={applicationUsage}
                   />
                 </div>
               </div>
@@ -829,60 +642,12 @@ const Home = () => {
                 }}
                 onClick={() => openModal(<OverspeedTable />, "Overspeed")}
               >
-                <div className="d-flex align-items-center justify-content-between">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      marginBottom: "2rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("categoryWiseTasks")}
-                  </h4>
-                </div>
-
-                <div className="card-body d-flex justify-content-center align-items-center py-2">
-                  <div>
-                    <ChartPie
-                      color1={"#f58505"}
-                      color2={"#1ef6ea"}
-                      Chartdata={[80, 20]}
-                    />
-                  </div>
-                  <div>
-                    <ul className="project-list p-3">
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#f58505" />
-                        </svg>{" "}
-                        Maintenance
-                        {/* {t("webUser")} */}
-                      </li>
-
-                      <li>
-                        <svg
-                          width="10"
-                          height="10"
-                          viewBox="0 0 10 10"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect width="10" height="10" rx="3" fill="#1ef6ea" />
-                        </svg>{" "}
-                        {/* {t("mobileUser")} */}
-                        Installed
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                <ApexLine4
+                key={tasksData}
+                  height={300}
+                  categories={tasksData?.xAxis}
+                  series={tasksData?.series}
+                />
               </div>
             </div>
           )}

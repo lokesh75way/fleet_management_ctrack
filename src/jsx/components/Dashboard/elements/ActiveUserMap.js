@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import WorldMap from "react-svg-worldmap";
 import { createRoot } from 'react-dom/client';
-import { MapContainer, TileLayer, GeoJSON,Marker,Popup ,Tooltip} from 'react-leaflet';
-import {useTranslation} from 'react-i18next'
+import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Tooltip } from 'react-leaflet';
+import { useTranslation } from 'react-i18next'
 // import EditControlFC from './EditControl';
 
 
@@ -19,7 +19,7 @@ const listBlog = [
   { title: "UAE", image: IMAGES.Uae, barvalue: "45%" },
   { title: "China", image: IMAGES.China, barvalue: "35%" },
 ];
-const listStateOfUAE = [
+const listStateOfUAE1 = [
   { title: "Abu Dhabi", image: IMAGES.Uae, barvalue: "80%" },
   { title: "Dubai", image: IMAGES.Uae, barvalue: "30%" },
   { title: "Sharjah", image: IMAGES.Uae, barvalue: "50%" },
@@ -72,51 +72,69 @@ const getStyle = ({
   // strokeOpacity: 0.2,
   cursor: "pointer",
 });
-const ActiveUserMap = () => {
-    const ShowMapContainer = ({ data }) => {
-        const [geojson, setGeojson] = React.useState({
-          type: 'FeatureCollection',
-          features: [],
-        });
-    }
+const ActiveUserMap = ({ usageData }) => {
+  const [listState, setListState] = React.useState([]);
+  const [markers, setMarkers] = React.useState([]);
+  const [centerLat, setCenterLat] = React.useState(25.2233);
+  const [centerLon, setCenterLon] = React.useState(55.2869);
+  const ShowMapContainer = ({ data }) => {
+    const [geojson, setGeojson] = React.useState({
+      type: 'FeatureCollection',
+      features: [],
+    });
+  }
 
-const {t} = useTranslation();
+  useEffect(() => {
+    const listStateOfUAE = usageData?.activeUsers?.map((item) => {
+      return {
+        title: item.title,
+        image: IMAGES[item.country],
+        barvalue: item.value + "%",
+      }
+    });
+    const mapMarkers = usageData?.activeUsers?.map((item) => {
+      return {
+        lat: item.lat,
+        lon: item.lon,
+        name: item.title
+      }
+    });
+    setMarkers(mapMarkers);
+    setCenterLat(markers.reduce((total, marker) => total + marker.lat, 0) / markers.length)
+    setCenterLon(markers.reduce((total, marker) => total + marker.lon, 0) / markers.length)
+    setListState(listStateOfUAE);
+  }, [usageData]);
+  const { t } = useTranslation();
   return (
     <>
       <div className="card overflow-hidden">
-        <div className="card-header border-0" style={{paddingBottom :0}}>
+        <div className="card-header border-0" style={{ paddingBottom: 0 }}>
           <h4 className="heading mb-0">{t('activeUsers')}</h4>
         </div>
         <div className="card-body pe-0">
           <div className="row">
             <div className="col-xl-8 active-map-main">
               {/* <div id="world-map" className="active-map text-center"> */}
-                  <div style={{ display: 'flex', height: '35vh' }}>
+              <div style={{ display: 'flex', height: '35vh' }}>
                 <div style={{ width: "100%" }}>
-                  <MapContainer
-                    center={[25.2233, 55.2869]}
-                    zoom={14}
-                    zoomControl={false}
-                  >
+                  <MapContainer center={[centerLat, centerLon ]} zoom={4} zoomControl={false}>
                     <TileLayer
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                       url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                     />
-                    <Marker
-                      styles={{ background: "red" }}
-                      position={[25.2233, 55.2869]}
-                    >
-                      <Popup>Dubai Trade Cdddddenter</Popup>
-                      <Tooltip>Dubai Trade Center</Tooltip>
-                    </Marker>
-                   
+                    {markers.map((marker, index) => (
+                      <Marker key={index} position={[marker.lat, marker.lon]}>
+                        <Popup>{marker.name}</Popup>
+                        <Tooltip>{marker.name}</Tooltip>
+                      </Marker>
+                    ))}
                   </MapContainer>
-                  </div>
                 </div>
+              </div>
               {/* </div> */}
             </div>
             <div className="col-xl-4 active-country dz-scroll">
-              {listStateOfUAE.map((item, i) => (
+              {listState?.map((item, i) => (
                 <div className="country-list" key={i}>
                   <img src={item.image} alt="" />
                   <div className="progress-box mt-0">
