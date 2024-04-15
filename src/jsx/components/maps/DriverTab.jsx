@@ -119,12 +119,12 @@ const DriverTabComponent1 = (props) => {
     // setVehicles(data);
   }, [selectValue]);
 
-  const items = JSON.parse(localStorage.getItem("userJsonData"))
+  const items = JSON.parse(localStorage?.getItem("userJsonData")) ? JSON.parse(localStorage?.getItem("userJsonData")) 
     .filter((item) => item.designation === "vehicle")
     .map((data) => ({
       id: data.id,
       name: data.vehicleName,
-    }));
+    })): [];
 
   const handleSearch = (item) => {
 
@@ -247,7 +247,7 @@ const DriverTabComponent2 = (props) => {
   const [selectDriver, setSelectDriver] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  const jsonData = JSON.parse(localStorage.getItem("userJsonData"));
+  const jsonData = JSON.parse(localStorage.getItem("userJsonData")) ? JSON.parse(localStorage.getItem("userJsonData")): [];
   const [companyDrivers, setCompanyDrivers] = useState([]);
   const [company, setCompany] = useState(
     jsonData.filter((item) => item.role === "company")
@@ -435,7 +435,7 @@ const DriverTabComponent2 = (props) => {
 };
 
 const DriverTabComponent3 = (props) => {
-  const geoData = JSON.parse(localStorage.getItem("geofenceData"));
+  const geoData = JSON.parse(localStorage.getItem("geofenceData")) ? JSON.parse(localStorage.getItem("geofenceData")) : [];
   const [tableData, setTableData] = useState(geoData);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -460,11 +460,11 @@ const DriverTabComponent3 = (props) => {
     const updatedData = tableData.filter((item) => item.id !== id);
     setTableData(updatedData);
 
-    const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
-    localStorage.setItem(
-      "geofenceData",
-      JSON.stringify(updatedLocalStorageData)
-    );
+    // const updatedLocalStorageData = geoData.filter((item) => item.id !== id);
+    // localStorage.setItem(
+    //   "geofenceData",
+    //   JSON.stringify(updatedLocalStorageData)
+    // );
   };
 
   const editDrawerOpen = (d) => {
