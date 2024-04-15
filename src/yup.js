@@ -76,11 +76,6 @@ export const vehicleProfileSchema = yup
     vehicleCategory: yup.string().required('Vehicle category is required'),
     vinNumber: yup.number().typeError('VIN number must be a number').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
-    underweightTolerance: yup.number().typeError('Underweight tolerance must be a number'),
-    overweightTolerance: yup.number().typeError('Overweight tolerance must be a number'),
-    loadingUnloadingTolerance: yup.number().typeError('Loading/unloading tolerance must be a number'),
-
-    
   })
   .required();
 
