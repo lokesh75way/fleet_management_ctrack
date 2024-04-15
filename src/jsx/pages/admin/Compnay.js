@@ -21,11 +21,9 @@ import ReactPaginate from "react-paginate";
 import { ICON } from "../../constant/theme";
 import Paginate from "../../components/Pagination/Paginate";
 
-
 const Company = () => {
   const [businessGroupNames, setBusinessGroupNames] = useState();
-  
-  
+
   const { isRtl } = useContext(ThemeContext);
 
   const { t } = useTranslation();
@@ -38,11 +36,13 @@ const Company = () => {
   const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
   const { id } = useParams();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =usePagination();
-  
-  const itemsPerPage=10;
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
+    usePagination();
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const [dropdownDisable, setDropdownDisable] = useState(false)
+  const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
   const startIndex = (page - 1) * itemsPerPage;
   const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
@@ -60,13 +60,20 @@ const Company = () => {
     }),
   };
 
-  const fetchAllCompany = async (page, businessGroupId) => {
+  const fetchAllCompany = async (page) => {
     try {
-      const { data, success, totalCount } = await getCompany(
-        page,
-        businessGroupId
-      );
-      const permissions = JSON.parse(localStorage.getItem('permission'));
+      let responseData;
+      if (userDetails?.user?.role === "SUPER_ADMIN"){
+        responseData = await getCompany(page);
+      }
+      else if (userDetails?.user?.role === "BUSINESS_GROUP") {
+        setDropdownDisable(true)
+        const businessId = userDetails?.user?.businessGroupId
+        responseData = await getCompany(page,businessId);
+        console.log({responseData})
+      }
+      const { data, success, totalCount } = responseData;
+      const permissions = JSON.parse(localStorage.getItem("permission"));
       setUserPermission(permissions?.[0]?.permission);
       setTableData(data.data.data);
       setCount(data.data.totalCount);
@@ -76,13 +83,14 @@ const Company = () => {
   };
   useEffect(() => {
     fetchAllCompany(page);
+
   }, [page]);
 
   const handleChangeBusinessGroup = (selectedOption) => {
     console.log("this is the selected options", selectedOption);
     setFilter(selectedOption);
-    setPage(1); 
-    fetchAllCompany(1, selectedOption.value); 
+    setPage(1);
+    fetchAllCompany(1, selectedOption.value);
   };
   async function getGroupData() {
     try {
@@ -101,8 +109,8 @@ const Company = () => {
     if (businessGroupNames) {
       setBusinessGroupOptions(
         businessGroupNames.map((item) => ({
-          label: item.businessGroupId?.groupName, 
-          value: item.businessGroupId?._id, 
+          label: item.businessGroupId?.groupName,
+          value: item.businessGroupId?._id,
         }))
       );
     }
@@ -157,6 +165,7 @@ const Company = () => {
                             name={name}
                             styles={customStyles}
                             options={businessGroupOptions}
+                            isDisabled={dropdownDisable}
                             value={[
                               {
                                 value: selectFilter.value,
@@ -188,25 +197,29 @@ const Company = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
+                          <th>{t("id")}</th>
                           <th className="text-center">{t("companyName")}</th>
-                          <th className="text-center" >{t("businessGroup")}</th>
+                          <th className="text-center">{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}
                           <th className="text-center">{t("location")}</th>
                           <th className="text-center">{t("email")}</th>
                           <th className="text-center">{t("branches")}</th>
                           <th className="text-center">{t("zipCode")}</th>
                           {(can("company", "edit") ||
-                            can("company", "delete")) && <th className="d-flex justify-content-center">{t("action")}</th>}  
+                            can("company", "delete")) && (
+                            <th className="d-flex justify-content-center">
+                              {t("action")}
+                            </th>
+                          )}
                         </tr>
                       </thead>
                       <tbody>
                         <CompanyTable
-                        key={tableData}
+                          key={tableData}
                           tableData={tableData}
                           tempValue={tempValue}
-                          currentPage={page} 
-                          itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                         />
@@ -223,11 +236,10 @@ const Company = () => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                            
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

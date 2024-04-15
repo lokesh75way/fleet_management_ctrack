@@ -39,6 +39,8 @@ const Profile = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
+  const [businessDisabled, setBusinessDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(false);
   const [editData, setEditData] = useState({});
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry, setDefaultCountry] = useState();
@@ -54,7 +56,7 @@ const Profile = ({
   const location = useLocation();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
-
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
   console.log(errors, 'erro0rs-:', getValues())
 
@@ -94,6 +96,26 @@ const Profile = ({
 
   const [bussinessGpLable, setBussinessGpLable] = useState(null)
 
+  useEffect(() => {
+    if(userDetails.user.role === 'COMPANY'){
+      let bus
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      setBusinessDisabled(true);
+      
+      setValue("companyId", userDetails?.user.companyId)
+      setCompanyId(userDetails?.user.companyId);
+      setCompanyDisabled(true);
+      console.log("companyId", userDetails?.user.businessGroupId)
+    }
+    if(userDetails.user.role === 'BUSINESS_GROUP'){
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setGroupId(userDetails?.user.businessGroupId);
+      console.log(groupId, "hii")
+      setBusinessDisabled(true);
+    }
+},[])
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -118,7 +140,7 @@ const Profile = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  // isDisabled={businessDisabled}
+                  isDisabled={businessDisabled}
                   name={name}
                 />
 
@@ -132,7 +154,6 @@ const Profile = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <GroupDropdown
                   onChange={ (newValue) => {
-               
                      setValue("businessGroupId", newValue.value);
                      setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
@@ -140,7 +161,7 @@ const Profile = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  // isDisabled={businessDisabled}
+                  isDisabled={businessDisabled}
                   name={name}
                 />
               )}
@@ -192,7 +213,7 @@ const Profile = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  // isDisabled={companyDisabled}
+                  isDisabled={companyDisabled}
                   name={name}
                 />
               )}
@@ -202,7 +223,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('branch')} <span className="text-danger">*</span>
+          {t('branch')}
           </label>
           <Controller
             name="branchId"
