@@ -41,26 +41,26 @@ import ReactPaginate from "react-paginate";
     }, [page]);
     
   const navigate = useNavigate();
-  const {checkRole,checkUserName} = useStorage()
-  const role = checkRole()
-  const userName = checkUserName()
-  const userData = JSON.parse(localStorage.getItem('userJsonData'))
-  const currUser = JSON.parse(localStorage.getItem('userDetails'))
-  var UserData;
-  if(checkRole() === 'COMPANY'){
-    UserData = userData.filter((item)=> (item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId))
-  }
+  // const {checkRole,checkUserName} = useStorage()
+  // const role = checkRole()
+  // const userName = checkUserName()
+  // const userData = JSON.parse(localStorage.getItem('userJsonData'))
+  // const currUser = JSON.parse(localStorage.getItem('userDetails'))
+  // var UserData;
+  // if(checkRole() === 'COMPANY'){
+  //   UserData = userData.filter((item)=> (item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId))
+  // }
 
-  else if(checkRole() === 'BUSINESS_GROUP'){
-    UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
-  } 
-  else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && item.type === 'STAFF' )
-  else if(checkRole() === "USER") {
-    UserData = userData.filter((item) => {
-      // console.log(item, "iteeem");
-      return item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId;
-    });
-  }
+  // else if(checkRole() === 'BUSINESS_GROUP'){
+  //   UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
+  // } 
+  // else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && item.type === 'STAFF' )
+  // else if(checkRole() === "USER") {
+  //   UserData = userData.filter((item) => {
+  //     // console.log(item, "iteeem");
+  //     return item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId;
+  //   });
+  // }
 
   const [tableData, setTableData] = useState([] );
 

@@ -22,7 +22,7 @@ import BusinessForm from "./pages/admin/settings/CreateForms/BusinessForm";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import Business from "./pages/businessUser/BusinessUser"
 import CompanyForm from "./pages/admin/settings/CreateForms/CompanyForm";
-import Company from "./pages/admin/Compnay";
+import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
 
 

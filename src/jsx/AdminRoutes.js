@@ -89,7 +89,7 @@ const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
 const Error404 = React.lazy(() => import("./pages/Error404"));
 const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
-const Company = React.lazy(() => import("./pages/admin/Compnay"));
+const Company = React.lazy(() => import("./pages/admin/Company"));
 const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));

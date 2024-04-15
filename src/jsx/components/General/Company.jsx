@@ -61,7 +61,7 @@ const Company = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const updateTable = tableData.map((table) => {
+    const updateTable = tableData?.map((table) => {
       if (table.id === editData.id) {
         console.log(table.id);
         return { ...table, ...editData };

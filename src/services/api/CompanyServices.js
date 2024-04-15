@@ -4,12 +4,12 @@ import axios from "axios";
 //   return axios.get("/companies");
 // };
 
-export const getCompany = async (page, groupId) => {
+export const getCompany = async (page, groupId , limit = 10) => {
   let url = "/companies";
   let params = [];
   if (page) {
     params.push(`page=${page}`);
-    params.push(`limit=${10}`);
+    params.push(`limit=${limit}`);
   }
   if (groupId !== undefined) {
     params.push(`businessGroupId=${groupId}`);

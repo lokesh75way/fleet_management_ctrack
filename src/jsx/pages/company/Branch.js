@@ -73,7 +73,7 @@ const Branch = () => {
   const role = localStorage.getItem("role");
   const { control, setValue, getValues, watch } = useForm();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const SubCompanyData = userData.filter((item) => item.role === "branch");
+  const SubCompanyData = userData?.filter((item) => item.role === "branch");
   const [companyId, setCompanyId] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
@@ -188,21 +188,21 @@ const Branch = () => {
   };
 
   const editDrawerOpen = (item) => {
-    const filteredData = tableData.filter((data) => data._id === item);
+    const filteredData = tableData?.filter((data) => data._id === item);
     navigate(`edit/${item}`, { state: filteredData });
   };
 
-  const d = JSON.parse(localStorage.getItem("userJsonData"));
+  // const d = JSON.parse(localStorage.getItem("userJsonData"));
 
   useEffect(() => {
     if (role === "admin") return;
     else if (role === "businessgroup") {
-      const filteredData = SubCompanyData.filter(
+      const filteredData = SubCompanyData?.filter(
         (item) => item.parentBusinessGroup === loggedinUser
       );
       setTableData(filteredData);
     } else if (role === "company") {
-      const filteredData = SubCompanyData.filter(
+      const filteredData = SubCompanyData?.filter(
         (item) => item.parentCompany === loggedinUser
       );
       setTableData(filteredData);
@@ -327,7 +327,7 @@ const Branch = () => {
                           editData={editData}
                           tableData={tableData}
                           currentPage={page} 
-                          itemsPerPage={itemsPerPage}
+                        itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
