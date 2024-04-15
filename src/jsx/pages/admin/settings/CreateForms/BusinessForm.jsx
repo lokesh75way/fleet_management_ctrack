@@ -81,22 +81,17 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
           if (data.logo && data.logo.length === 0) {
             delete data.logo;
           }
-          if (data.file &&data.file.length === 0) {
+          if (data.file && data.file.length === 0) {
             delete data.file;
           }
-      
-          const { success, message } = await createGroup(data);
-          if (success === false) {
-            notifyError(message);
-            return;
-          }
-          notifySuccess(message);
+          await createGroup(data);
+          notifySuccess("Business group created");
         }
         navigate("/business");
 
         return;
       } catch (error) {
-        console.log(error)
+        console.log(error);
         notifyError("Some error occured !!");
       }
     } else if (activeIndex === 2) {

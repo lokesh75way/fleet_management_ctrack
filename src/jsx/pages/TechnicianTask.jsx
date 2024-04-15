@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { technicianTaskSchema } from "../../yup";
 import { useTranslation } from "react-i18next";
-import { clsx } from "clsx";
 import { ThemeContext } from "../../context/ThemeContext";
 import usePagination from "../../hooks/usePagination";
 import {
@@ -22,17 +21,11 @@ import dayjs from "dayjs";
 import { ICON } from "../constant/theme";
 import Paginate from "../components/Pagination/Paginate";
 
+
 const TechnicianTask = (ref) => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+ 
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
@@ -86,15 +79,15 @@ const TechnicianTask = (ref) => {
         data.plannedReportingDate = formattedDate;
       }
       if (data._id && data._id !== 0) {
-        // update data
         await updateTask(data, data._id);
-        notifySuccess("Task Added Successfully !!");
+        notifySuccess("Task Updated Successfully !!");
         technicianTask.current.closeModal();
       } else {
         await createTask(data);
-        notifySuccess("Task Added Successfully !!");
+        notifySuccess("Task Created Successfully !!");
         technicianTask.current.closeModal();
       }
+      fetchAllTasks()
     } catch (error) {
       const validationErr = error.response?.data?.data?.errors;
       if (validationErr && validationErr.length > 0) {
@@ -103,14 +96,12 @@ const TechnicianTask = (ref) => {
     }
   };
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const technicianTask = useRef();
   return (
@@ -168,8 +159,8 @@ const TechnicianTask = (ref) => {
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
