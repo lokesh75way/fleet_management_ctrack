@@ -182,11 +182,11 @@ const Branch = () => {
   };
 
   const editDrawerOpen = (item) => {
-    const filteredData = tableData.filter((data) => data._id === item);
+    const filteredData = tableData?.filter((data) => data._id === item);
     navigate(`edit/${item}`, { state: filteredData });
   };
 
-  const d = JSON.parse(localStorage.getItem("userJsonData"));
+  // const d = JSON.parse(localStorage.getItem("userJsonData"));
 
   return (
     <>
@@ -300,7 +300,7 @@ const Branch = () => {
                           editData={editData}
                           tableData={tableData}
                           currentPage={page} 
-                          itemsPerPage={itemsPerPage}
+                        itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}

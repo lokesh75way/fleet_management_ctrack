@@ -49,7 +49,7 @@ const TechnicianForm = () => {
     ),
   });
   const { id: techId } = useParams();
-
+  console.log(errors, "error:-")
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
