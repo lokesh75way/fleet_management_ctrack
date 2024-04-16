@@ -61,8 +61,8 @@ const Header = ({ onNote }) => {
     });
   }, []);
   const data = JSON.parse(localStorage.getItem('userDetails'))
-  // const logo = data?.user?.logo;
-  const logo = 'https://res.cloudinary.com/ddxpchjay/image/upload/v1712236924/katz7loerwuacnstdsna.png';
+  const logo = data?.user?.logo;
+  // const logo = 'https://res.cloudinary.com/ddxpchjay/image/upload/v1712236924/katz7loerwuacnstdsna.png';
 
 
   const {t} = useTranslation();
@@ -327,7 +327,7 @@ const Header = ({ onNote }) => {
                   <Dropdown.Toggle className="nav-link i-false" as="div">
                     <div className="header-info2 d-flex align-items-center">
                       <div className="header-media">
-                        <img src={logo} alt="" />
+                        <img src={logo ? logo : IMAGES.Tab1} alt="logo" />
                       </div>
                       <div className="header-info">
                         <h6>{loginDetailsName} ({role})</h6>
@@ -340,7 +340,7 @@ const Header = ({ onNote }) => {
                       <div className="card-header py-2">
                         <div className="products">
                           <img
-                            src={logo}
+                            src={logo ? logo : IMAGES.Tab1}
                             className="avatar avatar-md"
                             alt=""
                           />

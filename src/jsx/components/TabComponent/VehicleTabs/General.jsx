@@ -54,53 +54,15 @@ const General = ({
     }),
   };
   const { id } = useParams();
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const newData = userData.filter((data) => data.id == parseInt(id, 10));
-  const [filteredUserData, setFilteredUserData] = useState(newData);
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  // const newData = userData?.filter((data) => data.id == parseInt(id, 10));
+  const [filteredUserData, setFilteredUserData] = useState([]);
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
 
   const role = checkRole();
 
   const { t } = useTranslation();
 
-  let companyOptions, branchOptions;
-  if (role === "admin") {
-    companyOptions = DummyData.filter((item) => item.role === "company").map(
-      (item) => ({
-        label: item.userName,
-        value: item.id,
-      })
-    );
-    branchOptions = DummyData.filter((item) => item.role === "branch").map(
-      (item) => ({
-        label: item.userName,
-        value: item.id,
-      })
-    );
-  } else if (role === "businessgroup") {
-    companyOptions = DummyData.filter(
-      (item) => item.role === "company" && item.parent === checkUserName()
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-    branchOptions = DummyData.filter(
-      (item) =>
-        item.parentBusinessGroup === checkUserName() && item.role === "branch"
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-  } else if (role === "company") {
-    branchOptions = DummyData.filter(
-      (item) => item.parentCompany === checkUserName() && item.role === "branch"
-    ).map((item) => ({
-      label: item.userName,
-      value: item.id,
-    }));
-    companyOptions = DummyData.filter(
-      (item) => item.userName === checkUserName()
-    );
-  }
   // const[formData,setFormData] = useState([])
   useEffect(() => {
     if (formData && id) {
@@ -135,6 +97,16 @@ const General = ({
     }
   }, [formData, id]);
 
+  useEffect(() => {
+    if(checkRole() !== "SUPER_ADMIN"){
+      setIsBuisnessGroupDisabled(true)
+    }
+    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
+      setValue("businessGroupId", userDetails?.user.businessGroupId);
+    }
+},[])
+
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -157,7 +129,7 @@ const General = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={businessDisabled}
+                isDisabled={isBuisnessGroupDisabled}
                 name={name}
               />
             )}

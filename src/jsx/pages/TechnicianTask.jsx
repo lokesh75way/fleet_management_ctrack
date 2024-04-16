@@ -17,6 +17,9 @@ import {
 } from "../../services/api/TechnicianService";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
+import dayjs from "dayjs";
+import { ICON } from "../constant/theme";
+import Paginate from "../components/Pagination/Paginate";
 
 
 const TechnicianTask = (ref) => {
@@ -71,12 +74,10 @@ const TechnicianTask = (ref) => {
 
   const onSubmit = async (data) => {
     try {
-      if(data.plannedReportingDate){
-        const newDate= new Date(data.plannedReportingDate).toLocaleDateString();
-        const parts = newDate.split('/');
-        const formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+      if (data.plannedReportingDate) {
+        const formattedDate = dayjs(data.plannedReportingDate).format('YYYY-MM-DD');
         data.plannedReportingDate = formattedDate;
-       }
+      }
       if (data._id && data._id !== 0) {
         await updateTask(data, data._id);
         notifySuccess("Task Updated Successfully !!");
@@ -173,27 +174,12 @@ const TechnicianTask = (ref) => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <ReactPaginate
-                          previousLabel={
-                            <i className="fa-solid fa-angle-left"></i>
-                          }
-                          nextLabel={
-                            <i className="fa-solid fa-angle-right"></i>
-                          }
-                          breakLabel={"..."}
-                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                          marginPagesDisplayed={2}
-                          pageRangeDisplayed={5}
-                          onPageChange={handlePageClick}
-                          containerClassName={"pagination"}
-                          activeClassName={"active"}
-                          pageClassName="page-item"
-                          pageLinkClassName="page-link"
-                          previousClassName="page-item"
-                          previousLinkClassName="page-link"
-                          nextClassName="page-item"
-                          nextLinkClassName="page-link"
-                        />
+                         <Paginate
+                            totalCount={totalCount}
+                            itemsPerPage={itemsPerPage}
+                            handlePageClick={handlePageClick}
+                            isRtl={isRtl}
+                          />
                       </div>
                     </div>
                   </div>

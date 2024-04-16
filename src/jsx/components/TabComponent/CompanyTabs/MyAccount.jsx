@@ -69,7 +69,7 @@ const MyAccount = ({
       console.log("super admin")
       setIsBuisnessGroupDisabled(true)
     }
-    if(userDetails.user.role === 'BUSINESS_GROUP'){
+    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
       console.log(userDetails?.user.businessGroupId,"sbhsjksbfkjsfabfkjasf")
       setValue("businessGroupId", userDetails?.user.businessGroupId);
     }
@@ -123,27 +123,11 @@ useEffect(()=>{
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                // <AsyncSelect
-                //   cacheOptions
-                //   defaultOptions
-                //   onChange={(newValue) => {
-                //     console.log(newValue)
-                //     setBussinessGpLable(newValue.label)
-                //     setValue("businessGroupId", newValue.value);
-                //   }}
-                //   loadOptions={businessGroupOptions}
-                //   ref={ref}
-                //   isDisabled={checkRole() !== "SUPER_ADMIN"}
-                //   name={name}
-                //   styles={customStyles}
-                //   value={{label: bussinessGpLable , value : value}}
-                // />
                 <GroupDropdown
                   onChange={(newValue) => {
                     console.log(newValue)
                     setBussinessGpLable(newValue.value)
                     setValue("businessGroupId", newValue.value);
-                    
                   }}
                   value={value}
                     ref={ref}
