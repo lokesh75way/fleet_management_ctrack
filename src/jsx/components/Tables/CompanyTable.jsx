@@ -17,17 +17,14 @@ const CompanyTable = ({
 }) => {
   const { getBranch } = useStorage();
   const { can } = usePermissions()
-
   const editPermission = can('company','modify');
   const deletePermission = can('company','delete')
-  var filterData = tableData;
-  console.log(tableData)
  
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>
-      {filterData.map((item, index) => {
-        return <tr key={index}>
+      {tableData?.map((item, index) => {
+        return (<tr key={index}>
           <td>
             <span>{startIndex + index}</span>
           </td>
@@ -41,9 +38,7 @@ const CompanyTable = ({
               </div>
             </div>
           </td>
-          {/* <td>
-            <span>{item.mobileNumber}</span>
-          </td> */}
+        
           <td className="text-center">
             <span>{item.country}</span>
           </td>
@@ -55,7 +50,7 @@ const CompanyTable = ({
               to={`/branch/cid/${item?.companyId?.id}`}
               className="text-primary badge light border-0 badge-count"
             >
-              {/* {getBranch(item?.companyId?.userName)} */}
+              {item?.branchIds?.length}
             </Link>
           </td>
           <td className="text-center">
@@ -78,7 +73,7 @@ const CompanyTable = ({
               </DeleteModal>}
             </span>
           </td>}
-        </tr>
+        </tr>)
       })}
     </>
   );

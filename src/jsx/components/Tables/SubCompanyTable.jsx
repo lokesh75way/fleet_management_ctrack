@@ -8,8 +8,7 @@ import useStorage from '../../../hooks/useStorage'
 import { usePermissions } from '../../../context/PermissionContext'
 
 const SubCompanyTable = ({onConfirmDelete,params,currentPage, itemsPerPage, tempValue,tempValue2,tableData,editDrawerOpen, setDataLength}) => {
-  var filterData = tableData;
-
+  let filterData = tableData;
   const {can} = usePermissions()
   const editPermission = can('branch','modify');
   const deletePermission = can('branch','delete');
@@ -19,11 +18,10 @@ const SubCompanyTable = ({onConfirmDelete,params,currentPage, itemsPerPage, temp
   if(tempValue2!=='All Branches'){
     filterData = tableData.filter((item)=> item.role === 'branch' && item.parentBranch === tempValue2)
   }
-  // console.log("this is data after filter",filterData,tempValue,tempValue2);
   var branchCount = []
   for(var i=0;i<filterData.length;i++){
-    const branchName = filterData[i].userName
-    branchCount[i] = filterData.filter((item)=> item.parentBranch === branchName).length
+    const branchId = filterData[i]._id
+    branchCount[i] = filterData.filter((item)=> item?.parentBranchId?._id === branchId).length
   }
   // setDataLength(filterData.length)
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
