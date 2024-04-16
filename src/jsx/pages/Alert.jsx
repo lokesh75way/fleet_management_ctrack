@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import MainPagetitle from "../layouts/MainPagetitle";
 import AlertOffcanvas from "../constant/AlertOffcanvas";
@@ -17,6 +17,9 @@ import {
   updateAlert,
 } from "../../services/api/AlertService";
 import ReactPaginate from "react-paginate";
+import { ICON } from "../constant/theme";
+import { ThemeContext } from "../../context/ThemeContext";
+import Paginate from "../components/Pagination/Paginate";
 
 
 
@@ -38,6 +41,7 @@ const Alert = () => {
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
+  const { isRtl } = useContext(ThemeContext);
   const [editData, setEditData] = useState();
   const itemsPerPage=10;
 
@@ -194,22 +198,10 @@ const Alert = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
+                         <Paginate
+                            totalCount={totalCount}
+                            itemsPerPage={itemsPerPage}
+                            handlePageClick={handlePageClick}
                           />
                       </div>
                     </div>

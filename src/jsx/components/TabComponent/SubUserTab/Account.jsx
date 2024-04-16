@@ -143,7 +143,7 @@ const Account = ({
 
   const role = checkRole();
   const { id } = useParams();
-  const User = JSON.parse(localStorage.getItem("userJsonData"));
+  // const User = JSON.parse(localStorage.getItem("userJsonData"));
 
   const loggedinemail = localStorage.getItem("loginDetails-name");
   let defaultCompanyOptions;
@@ -164,25 +164,8 @@ const Account = ({
     }));
   }
 
-  let parentbgname;
-  if (role === "COMPANY") {
-    const parentbgnamefilter = User.filter(
-      (user) => user.parentCompany === loggedinemail
-    );
-    parentbgname = parentbgnamefilter[0]?.parentBusinessGroup;
-  }
 
-  const branchData = User.filter(
-    (item) => item.role === "branch" && item._id == id
-  );
-
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-
-  const newData = userData.filter((data) => data._id == id);
-
-  // const defaultValues = getSelectValues();
-
-  const [filteredUserData, setFilteredUserData] = useState(newData);
+  const [filteredUserData, setFilteredUserData] = useState([]);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
   const [branchOptions, setBranchOptions] = useState([]);
@@ -194,73 +177,8 @@ const Account = ({
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
-  useEffect(() => {
-    let tempcompanyOptions;
-    if (role === "BUSINESS_GROUP") {
-      tempcompanyOptions = DummyData.filter((item) => item.role === "company")
-        .filter((cp) => cp.parent === checkUser())
-        .map((item) => ({
-          label: item.userName,
-          value: item._id,
-        }));
-    } else {
-      tempcompanyOptions = DummyData.filter((item) => item.role === "company")
-        .filter((cp) => cp.parent === businessUserValue)
-        .map((item) => ({
-          label: item.userName,
-          value: item._id,
-        }));
-    }
 
-    let tempparentOptions;
-
-    if (role === "COMPANY") {
-      tempparentOptions = DummyData.filter((item) => item.role === "branch")
-        .filter((br) => br.parentCompany === checkUser())
-        .map((item) => ({
-          label: item.userName,
-          value: item._id,
-        }));
-    } else {
-      tempparentOptions = DummyData.filter((item) => item.role === "branch")
-        .filter((br) => br.parentCompany === companyValue)
-        .map((item) => ({
-          label: item.userName,
-          value: item._id,
-        }));
-    }
-
-    let tempvehicleOptions;
-    if (role === "COMPANY") {
-      tempvehicleOptions = DummyData.filter(
-        (item) => item.vehicleName && item.company === checkUser()
-      ).map((item) => ({
-        label: item.vehicleName,
-        value: item._id,
-      }));
-    } else {
-      tempvehicleOptions = DummyData.filter(
-        (item) => item.vehicleName && item.company === companyValue
-      ).map((item) => ({
-        label: item.vehicleName,
-        value: item._id,
-      }));
-    }
-
-    tempcompanyOptions.push({ label: "None", value: 0 });
-
-    // setBusinessUserOptions(tempbusinessUserOptions);
-    if (businessUserValue) {
-      // setCompanyOptions(tempcompanyOptions);
-    } else {
-      // setCompanyOptions([...defaultCompanyOptions, { label: "None", value: 0 }]);
-    }
-    setVehiclesOptions(tempvehicleOptions);
-
-    setParentOptions(tempparentOptions);
-  }, [businessUserValue, companyValue, parentValue]);
-
-  const [filteredCompanyData, setFilteredCompanyData] = useState(branchData);
+  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
   useEffect(() => {
     if (userDetails.user.role === "COMPANY") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
@@ -343,20 +261,6 @@ const Account = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <Select
-              //   onChange={async (newValue) => {
-              //     await onGroupChange(newValue.value);
-              //     setBusinessUserValue(newValue.label);
-              //     setValue("parentBusinessGroup", newValue.value);
-              //     setValue("businessUser", newValue.value);
-              //   }}
-              //   options={businessUserOptions}
-              //   ref={ref}
-              //   isDisabled={defaultValues?.business?.disabled}
-              //   name={name}
-              //   value={businessUserOptions.find(option => option.value === value)}
-              //   styles={customStyles}
-              // />
               <GroupDropdown
                 key={groupId}
                 onChange={async (newValue) => {
@@ -381,20 +285,6 @@ const Account = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <Select
-              //   onChange={async (newValue) => {
-              //     await onCompanyChange(newValue.value);
-              //     setCompanyValue(newValue.label);
-              //     setValue("parentCompany", newValue.value);
-              //   }}
-              //   isDisabled={defaultValues?.company?.disabled}
-              //   options={companyOptions}
-              //   ref={ref}
-              //   name={name}
-              //   styles={customStyles}
-              //   value={companyOptions.find(option => option.value === value)}
-
-              // />
               <CompanyDropdown
                 onChange={async (newValue) => {
                   setValue("parentCompany", newValue.value);
@@ -418,21 +308,6 @@ const Account = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              // <BranchDropdown
-              //   onChange={(newValue) => {
-              //     console.log("newValue", newValue);
-              //     const valuesArray = newValue.map((item) => item.value);
-              //     setValue("Branch", valuesArray);
-              //     setValue("branchIds", valuesArray);
-              //   }}
-              //   key={companyId}
-              //   companyId={companyId}
-              //   value={value}
-              //   customStyles={customStyles}
-              //   name={name}
-              //   ref={ref}
-              //   isDisabled={false}
-              // />
               <ParentBranchDropdown
               key={companyId}
               companyId={companyId}
@@ -451,30 +326,6 @@ const Account = ({
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
-        {/* <div className="col-xl-6 mb-3">
-          <label className="form-label">{t('vehicle')}</label>
-          <Controller
-            name="accessibleVehicles"
-            control={control}
-            
-            render={({ field: { onChange, value, name, ref } }) => (
-              <Select
-                onChange={(newValue) => {
-                  setValue("vehicle", newValue);
-                }}
-                options={vehiclesOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                isMulti={true}
-                defaultValue={
-                  filteredUserData[0] ? filteredUserData[0].vehicle : ""
-                }
-              />
-            )}
-          />
-          {!getValues("vehicle") && <Error errorName={errors.parent} />}
-        </div> */}
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("email")} <span className="text-danger">*</span>

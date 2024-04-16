@@ -14,31 +14,48 @@ const CompanyDropdown = ({
 }) => {
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
-    const {page} = usePagination();
+    const { page, setPage } = usePagination();
+
     useEffect(() => {
-        const fetchBusinessGroups = async () => {
+        const fetchCompanies = async () => {
             const response = await getCompany(page, groupId ? groupId : undefined);
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
-            setdropdownOptions(options);
+            if (page === 1) {
+                // If it's the first page, set options directly
+                setdropdownOptions(options);
+            } else {
+                // If it's not the first page, append options to existing ones
+                setdropdownOptions(prevOptions => [...prevOptions, ...options]);
+            }
         };
-        fetchBusinessGroups();
-    }
-    , []);
+        fetchCompanies();
+    }, [page, groupId]);
+
     useEffect(() => {
         const selected = dropdownOptions.find((option) => option.value === value);
         setSelectedOption(selected);
     }, [value, dropdownOptions, groupId]);
 
+    const handleMenuScroll = async (event) => {
+        const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
+        if (bottom) {
+            setPage(prevPage => prevPage + 1);
+        }
+    };
+
     return (
-            <Select
-                options = {dropdownOptions}
-                value={selectedOption}
-                onChange={(newValue) => onChange(newValue)}
-                styles={customStyles}
-                name={name}
-                ref={ref}
-                isDisabled={isDisabled}
-                />
+        <Select
+            options={dropdownOptions}
+            value={selectedOption}
+            onChange={(newValue) => onChange(newValue)}
+            styles={customStyles}
+            name={name}
+            ref={ref}
+            isDisabled={isDisabled}
+            onMenuScrollToBottom={handleMenuScroll}
+            menuShouldScrollIntoView={false}
+        />
     );
-}
+};
+
 export default CompanyDropdown;

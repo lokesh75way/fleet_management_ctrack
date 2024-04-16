@@ -95,7 +95,6 @@ const VehicleForm = () => {
             data.businessGroupId = getValues("businessId");
             data.companyId = getValues("companyId");
             data.branchId = getValues("branchId");
-
             await createVehicles(data);
             notifySuccess("Vehicle created");
             navigate("/vehicle");

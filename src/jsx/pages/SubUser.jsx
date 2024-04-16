@@ -13,15 +13,16 @@ import { usePermissions } from "../../context/PermissionContext";
 import useStorage from "../../hooks/useStorage";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
+import { ICON } from "../constant/theme";
+import Paginate from "../components/Pagination/Paginate";
 
 
   const SubUser = () => {
 
     const {t} = useTranslation();
-    const {isRtl} = useContext(ThemeContext);
+
     const {can, setUserPermission} = usePermissions()
-    const arrowleft = clsx({'fa-solid fa-angle-right':isRtl, 'fa-solid fa-angle-left':!isRtl})
-    const arrowright = clsx({'fa-solid fa-angle-left':isRtl, 'fa-solid fa-angle-right':!isRtl})
+   
     //call get api from userservice
     const [isLoading, setIsLoading] = useState(true);
     const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
@@ -41,26 +42,6 @@ import ReactPaginate from "react-paginate";
     }, [page]);
     
   const navigate = useNavigate();
-  // const {checkRole,checkUserName} = useStorage()
-  // const role = checkRole()
-  // const userName = checkUserName()
-  // const userData = JSON.parse(localStorage.getItem('userJsonData'))
-  // const currUser = JSON.parse(localStorage.getItem('userDetails'))
-  // var UserData;
-  // if(checkRole() === 'COMPANY'){
-  //   UserData = userData.filter((item)=> (item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId))
-  // }
-
-  // else if(checkRole() === 'BUSINESS_GROUP'){
-  //   UserData = userData.filter((item)=> (item.role === 'user' && item.type === 'businessgroup' && item.parent === userName))
-  // } 
-  // else if(checkRole() === 'SUPER_ADMIN') UserData = userData.filter((item)=> item.role === 'USER' && item.type === 'STAFF' )
-  // else if(checkRole() === "USER") {
-  //   UserData = userData.filter((item) => {
-  //     // console.log(item, "iteeem");
-  //     return item.role === 'USER' && item.type === 'STAFF' && item.companyId === currUser.user.companyId;
-  //   });
-  // }
 
   const [tableData, setTableData] = useState([] );
 
@@ -135,22 +116,10 @@ import ReactPaginate from "react-paginate";
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                       <ReactPaginate
-                            previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                            nextLabel={<i className="fa-solid fa-angle-right"></i>}
-                            breakLabel={"..."}
-                            pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={5}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination"}
-                            activeClassName={"active"}
-                            pageClassName="page-item"
-                            pageLinkClassName="page-link"
-                            previousClassName="page-item"
-                            previousLinkClassName="page-link"
-                            nextClassName="page-item"
-                            nextLinkClassName="page-link"
+                        <Paginate
+                            totalCount={totalCount}
+                            itemsPerPage={itemsPerPage}
+                            handlePageClick={handlePageClick}
                           />
                       </div>
                     </div>

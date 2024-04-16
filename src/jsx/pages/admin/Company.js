@@ -18,19 +18,14 @@ import { notifyError, notifySuccess } from "../../../utils/toast";
 import { getGroups } from "../../../services/api/BusinessGroup";
 import usePagination from "../../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
+import { ICON } from "../../constant/theme";
+import Paginate from "../../components/Pagination/Paginate";
 
 const Company = () => {
   const [businessGroupNames, setBusinessGroupNames] = useState();
 
   const { isRtl } = useContext(ThemeContext);
-  const arrowleft = clsx({
-    "fa-solid fa-angle-right": isRtl,
-    "fa-solid fa-angle-left": !isRtl,
-  });
-  const arrowright = clsx({
-    "fa-solid fa-angle-left": isRtl,
-    "fa-solid fa-angle-right": !isRtl,
-  });
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
@@ -43,7 +38,8 @@ const Company = () => {
   const { id } = useParams();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
-
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const [dropdownDisable, setDropdownDisable] = useState(false)
   const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
@@ -64,12 +60,19 @@ const Company = () => {
     }),
   };
 
-  const fetchAllCompany = async (page, businessGroupId) => {
+  const fetchAllCompany = async (page) => {
     try {
-      const { data, success, totalCount } = await getCompany(
-        page,
-        businessGroupId
-      );
+      let responseData;
+      if (userDetails?.user?.role === "SUPER_ADMIN"){
+        responseData = await getCompany(page);
+      }
+      else if (userDetails?.user?.role === "BUSINESS_GROUP") {
+        setDropdownDisable(true)
+        const businessId = userDetails?.user?.businessGroupId
+        responseData = await getCompany(page,businessId);
+        console.log({responseData})
+      }
+      const { data, success, totalCount } = responseData;
       const permissions = JSON.parse(localStorage.getItem("permission"));
       setUserPermission(permissions?.[0]?.permission);
       setTableData(data.data.data);
@@ -80,6 +83,7 @@ const Company = () => {
   };
   useEffect(() => {
     fetchAllCompany(page);
+
   }, [page]);
 
   const handleChangeBusinessGroup = (selectedOption) => {
@@ -161,6 +165,7 @@ const Company = () => {
                             name={name}
                             styles={customStyles}
                             options={businessGroupOptions}
+                            isDisabled={dropdownDisable}
                             value={[
                               {
                                 value: selectFilter.value,
@@ -230,26 +235,10 @@ const Company = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                        <ReactPaginate
-                          previousLabel={
-                            <i className="fa-solid fa-angle-left"></i>
-                          }
-                          nextLabel={
-                            <i className="fa-solid fa-angle-right"></i>
-                          }
-                          breakLabel={"..."}
-                          pageCount={Math.ceil(totalCount / itemsPerPage)} // Calculate pageCount based on totalCount and itemsPerPage
-                          marginPagesDisplayed={2}
-                          pageRangeDisplayed={5}
-                          onPageChange={handlePageClick}
-                          containerClassName={"pagination"}
-                          activeClassName={"active"}
-                          pageClassName="page-item"
-                          pageLinkClassName="page-link"
-                          previousClassName="page-item"
-                          previousLinkClassName="page-link"
-                          nextClassName="page-item"
-                          nextLinkClassName="page-link"
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
                         />
                       </div>
                     </div>
