@@ -174,6 +174,9 @@ export const arabic = {
       "weightCapacity": "سعة الوزن",
       "action": "إجراء",
 
+      "vehicleNumber": "عدد المركبات",
+      "vehicleModel": "طراز السيارة",
+      "vehicleType": "نوع السيارة",
 
       "document": "وثيقة",
       "profile": "الملف الشخصي",
@@ -423,6 +426,7 @@ export const arabic = {
       "Technician Details": "تفاصيل الفني",
       "Technician Tasks": "مهام الفني",
       "Vehicle": "مركبة",
+      "Unassigned Vehicle": "مركبة",
       "Driver": "سائق",
       "Vehicle Tracking": "تتبع المركبة",
       "Feature Template": "قالب الميزة",

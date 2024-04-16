@@ -15,6 +15,7 @@ import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
 import { useEffect } from "react";
+import UnassinedVehicle from "./pages/UnassinedVehicle";
 const TripClassification = React.lazy(() => import("./pages/company/reports/TripClassification"));
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
 const HardwareMaintenance = React.lazy(() => import("./pages/company/reports/HardwareMaintenance"));
@@ -127,6 +128,7 @@ const allroutes = [
   { module: 'vehicle',operation:'add', url: "vehicle/create", component: <VehicleForm /> },
   { module: 'vehicle', url: "vehicle", component: <Vehicle /> },
   { module: 'vehicle',operation:'modify', url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+  { module: 'vehicle', url: "unassigned-vehicle", component: <UnassinedVehicle /> },
 
   { module: 'settings', url: "/settings/alert", component: <Alert /> },
   { module: 'settings', url: "/settings/classifyTrips", component: <ClassifyTrips /> },

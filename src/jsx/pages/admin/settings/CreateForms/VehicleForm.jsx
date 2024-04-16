@@ -38,7 +38,7 @@ const VehicleForm = () => {
 
   const { id } = useParams();
   const location = useLocation();
-  const { formData } = location.state || {};
+  const { formData, vehicle } = location.state || {};
 
   const {
     register,
@@ -55,6 +55,10 @@ const VehicleForm = () => {
           expireDate:  new Date(),
           issueDate:  new Date(),
         }],
+        vehicleName: vehicle?.Vehicle_Name,
+        imeiNumber: vehicle?.imeiNumber,
+        plateNumber: vehicle?.Vehicle_No,
+        registrationNumber: vehicle?.Vehicle_No,
       },
     resolver: yupResolver(
       activeIndex === 0
