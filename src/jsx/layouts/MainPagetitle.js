@@ -55,13 +55,14 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
   };
   const redirectTo = {
     Home: "/dashboard",
-    User: "/subUser",
+    User: "/user",
     Company: "/company",
     "Business Group": "/business",
     "Branch" : "/branch",
     "Sub User" : "/user",
     "Feature Templates": "/groups",
-    "Driver" : '/driver'
+    "Driver" : '/driver',
+    "Technician" : '/technician/details'
   };
 
   return (

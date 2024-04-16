@@ -63,7 +63,7 @@ export const AdminMenuList = [
     ),
     to: "/branch",
   },
-  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/user" },
   {
     title: "Technician",
     iconStyle: (

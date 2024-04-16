@@ -200,7 +200,7 @@ const TechnicianOffcanvas = forwardRef(
                         <Error errorName={errors.taskPriority} />
                       )}
                     </div>
-                    <div className="col-xl-6 mb-3">
+                    {/* <div className="col-xl-6 mb-3">
                       <label className="form-label">
                         {t("contactPersonName")}
                       </label>
@@ -211,7 +211,7 @@ const TechnicianOffcanvas = forwardRef(
                         label="Contact Person Name"
                         placeholder=""
                       />
-                    </div>
+                    </div> */}
                     <div className="col-xl-6 mb-3">
                       <label
                         htmlFor="exampleFormControlInput3"

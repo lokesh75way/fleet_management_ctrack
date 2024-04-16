@@ -12,6 +12,7 @@ const FileUploader = ({
   loading,
   link = false
 }) => {
+
   const upload_Preset = "our_cloudinary_upload_preset";
   const [fileLink, setFileLink] = useState(null);
   useEffect(() => {
@@ -19,10 +20,11 @@ const FileUploader = ({
       setFileLink(link);
       setValue(name, link)
     }
-  }, []);
+  }, [link]);
 
   const fileUploader = async (e) => {
     try {
+      setFileLink('')
       e.preventDefault();
       setLoading(true);
       const acceptedFiles = e.target.files;
@@ -62,10 +64,10 @@ const FileUploader = ({
           accept="image/*"
         />
       </div>
-      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={link}>here</a> </small>}
+      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={fileLink}>here</a> </small>}
     </div>
   );
 };
 
 export default FileUploader;
-//
+

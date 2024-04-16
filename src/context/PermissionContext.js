@@ -41,7 +41,7 @@ export function PermissionProvider({ children }) {
     return false;
   };
   return (
-    <PermissionContext.Provider value={{ can, setUserPermission }}>
+    <PermissionContext.Provider value={{ can, setUserPermission,userDetails }}>
       {children}
     </PermissionContext.Provider>
   );

@@ -76,7 +76,7 @@ const CreateGroups = () => {
       <MainPagetitle
         mainTitle={t("featureTemplates")}
         pageTitle={t("featureTemplates")}
-        parentTitle={t("settings")}
+        parentTitle={t("dashboard")}
       />
       <div className="container-fluid">
         <div className="row">

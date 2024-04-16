@@ -30,7 +30,7 @@ export const CompanyMenuList = [
     iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
     to:"/branch",
   },
-  { title: "User", iconStyle: SVGICON.Employe, to: "/subUser" },
+  { title: "User", iconStyle: SVGICON.Employe, to: "/user" },
   {
     title: "Technician",
     iconStyle: (

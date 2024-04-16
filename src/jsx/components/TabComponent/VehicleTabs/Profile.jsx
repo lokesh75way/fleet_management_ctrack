@@ -290,7 +290,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('gpsWarranty')}<span className="text-danger">*</span>
+          {t('GPSWarranty')}<span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
