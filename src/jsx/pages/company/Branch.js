@@ -65,10 +65,10 @@ const Branch = () => {
   };
   const loggedinUser = localStorage.getItem("loginDetails-name");
   // const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
-  const role = localStorage.getItem("role");
+  // const role = localStorage.getItem("role");
   const { control, setValue, getValues, watch } = useForm();
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const SubCompanyData = userData?.filter((item) => item.role === "branch");
+  const userData = JSON.parse(localStorage.getItem("userDetails"));
+  const role = userData?.user?.role;
   const [companyId, setCompanyId] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [editData, setEditData] = useState({
@@ -159,7 +159,6 @@ const Branch = () => {
 
   // Handler function for branch selection
   const handleBranchChange = (branchOption) => {
-
     setSelectedBranch(branchOption);
     setFilter2(branchOption);
     setPage(1);
@@ -188,21 +187,6 @@ const Branch = () => {
   };
 
   const d = JSON.parse(localStorage.getItem("userJsonData"));
-
-  useEffect(() => {
-    if (role === "admin") return;
-    else if (role === "businessgroup") {
-      const filteredData = SubCompanyData.filter(
-        (item) => item.parentBusinessGroup === loggedinUser
-      );
-      setTableData(filteredData);
-    } else if (role === "company") {
-      const filteredData = SubCompanyData.filter(
-        (item) => item.parentCompany === loggedinUser
-      );
-      setTableData(filteredData);
-    }
-  }, [loggedinUser, role, SubCompanyData]);
 
   return (
     <>
@@ -238,7 +222,6 @@ const Branch = () => {
                         rules={{ required: true }}
                         render={({ field: { onChange, value, name, ref } }) => (
                           <CompanyDropdown
-                          
                             onChange={async (newValue) => {
                               setValue("company", newValue.value);
                               setCompanyId(newValue.value);
@@ -249,7 +232,7 @@ const Branch = () => {
                             customStyles={customStyles}
                             name={name}
                             ref={ref}
-                            isDisabled={false}
+                            isDisabled={role === 'COMPANY' ? true : false}
                           />
                         )}
                       />
@@ -262,19 +245,14 @@ const Branch = () => {
                             key={companyId}
                             onChange={(newValue) => {
                               setValue("parent", newValue.value);
-                              
                               handleBranchChange(newValue);
                             }}
                             companyId={companyId}
-                            // value={[{
-                            //   label: "Choose Branch",
-                            //   value: "Choose Branch",
-                            // }]}
                             value={value? value : branchDropdown}
                             customStyles={customStyles}
                             ref={ref}
                             name={name}
-                            isDisabled={false}
+                            
                           />
                         )}
                       />

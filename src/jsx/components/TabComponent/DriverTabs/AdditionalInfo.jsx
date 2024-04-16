@@ -23,7 +23,7 @@ const AdditionalInfo = ({
   const { id } = useParams();
   const location = useLocation();
   const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const newData = userData.filter((data) => data.id === parseInt(id, 10));
+  const newData = userData?.filter((data) => data.id === parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [date, setDate] = useState({})
   const [dValues, setDvalues] = useState([]);
@@ -64,7 +64,7 @@ const AdditionalInfo = ({
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 d-flex flex-column">
-          <label className="form-label">{t("dateOfBirth")}</label>
+          <label className="form-label">{t("dateOfBirth")}<span className="text-danger">*</span></label>
           <Controller
             name="dateOfBirth"
             control={control}
@@ -101,7 +101,7 @@ const AdditionalInfo = ({
             label="Age"
             name="age"
             placeholder=""
-            defaultValue={filteredUserData[0]?.age || " "}
+            // defaultValue={filteredUserData[0]?.age || " "}
           />
           <Error errorName={errors.age} />
         </div>
@@ -150,12 +150,12 @@ const AdditionalInfo = ({
             label="Driving Experience Since"
             name="drivingExperience"
             placeholder=""
-            defaultValue={filteredUserData[0]?.drivingExperience || ""}
+            // defaultValue={filteredUserData[0]?.drivingExperience || ""}
           />
           <Error errorName={errors.drivingExperience} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t("licenseAvailable")}</label>
+          <label className="form-label">{t("licenseAvailable")}<span className="text-danger">*</span></label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -227,7 +227,7 @@ const AdditionalInfo = ({
                     ref={ref}
                     name={name}
                     styles={customStyles}
-                    defaultValue={licenseToDriveOptions[0]}
+                    // defaultValue={licenseToDriveOptions[0]}
                   />
                   
                 )}
@@ -235,7 +235,7 @@ const AdditionalInfo = ({
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
             <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
-              <label className="form-label">{t('licenseIssueDate')}</label>
+              <label className="form-label">{t('licenseIssueDate')}<span className="text-danger">*</span></label>
               <Controller
                 name="licenseIssueDate"
                 control={control}
@@ -258,7 +258,7 @@ const AdditionalInfo = ({
               <Error errorName={errors.licenseNumber} />
             </div>
             <div className="col-xl-6 mb-3 d-flex flex-column">
-              <label className="form-label">{t('licenseExpiryDate')}</label>
+              <label className="form-label">{t('licenseExpiryDate')}<span className="text-danger">*</span></label>
               <Controller
                 name="licenseExpiryDate"
                 control={control}
