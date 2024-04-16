@@ -24,7 +24,7 @@ const TechnicianTable = ({tableData,currentPage, itemsPerPage, editDrawerOpen, o
                 alt=""
               /> */}
               <div>
-                <h6>{item.firstName}</h6>
+                <h6>{item.firstName + item.lastName}</h6>
                 {/* <span>Web Designer</span> */}
               </div>
             </div>

@@ -501,7 +501,7 @@ export const technicianLeaveSchema = yup
     leave: yup
       .array(
         yup.object({
-          leaveType: yup.string().required("Select type of leave "),
+          // leaveType: yup.string().required("Select type of leave "),
           days: yup.number().required("Enter total number of leaves "),
         })
       )
