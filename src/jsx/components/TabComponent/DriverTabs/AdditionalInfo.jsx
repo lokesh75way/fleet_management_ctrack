@@ -27,6 +27,7 @@ const AdditionalInfo = ({
   const [filteredUserData, setFilteredUserData] = useState(newData);
   const [date, setDate] = useState({})
   const [dValues, setDvalues] = useState([]);
+  const [toggle, setToggle] = useState(false)
 
   const [selectedOption, setSelectedOption] = useState(null);
   const customStyles = {
@@ -50,16 +51,17 @@ const AdditionalInfo = ({
   useEffect(() => {
     if (dValues && id) {
       console.log("this:-", dValues)
-
       setValue("age", dValues.age);
       setValue("drivingExperience", dValues?.drivingExperience);
       setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
       setValue("mediclaimNumber", dValues?.mediclaimNumber);
+      setToggle(dValues?.active)
     }
   }, [dValues, id]);
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100); 
   const maxDate = new Date();
+  console.log(dValues, "checkbox")
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -339,7 +341,7 @@ const AdditionalInfo = ({
                 )}
             />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-6 mb-3">
           <label className="form-label">{t("active")}</label>
           <div className="d-flex align-items-center">
             <input
@@ -347,6 +349,9 @@ const AdditionalInfo = ({
               className="form-check-input"
               // style={{backgroundColor : 'white'}}
               id="customCheckBox1"
+              name="active"
+              checked={toggle}
+              onClick={()=>{setValue("active", !toggle); setToggle(!toggle)}}
             />
           </div>
         </div>

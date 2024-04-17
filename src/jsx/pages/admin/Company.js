@@ -20,6 +20,7 @@ import usePagination from "../../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../../constant/theme";
 import Paginate from "../../components/Pagination/Paginate";
+import GroupDropdown from "../../components/GroupDropdown";
 
 const Company = () => {
   const [businessGroupNames, setBusinessGroupNames] = useState();
@@ -39,7 +40,7 @@ const Company = () => {
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const [dropdownDisable, setDropdownDisable] = useState(false)
+  const [dropdownDisable, setDropdownDisable] = useState(false);
   const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
@@ -60,17 +61,16 @@ const Company = () => {
     }),
   };
 
-  const fetchAllCompany = async (page) => {
+  const fetchAllCompany = async (page,groupId) => {
     try {
       let responseData;
-      if (userDetails?.user?.role === "SUPER_ADMIN"){
-        responseData = await getCompany(page);
-      }
-      else if (userDetails?.user?.role === "BUSINESS_GROUP") {
-        setDropdownDisable(true)
-        const businessId = userDetails?.user?.businessGroupId[0]?._id
-        responseData = await getCompany(page,businessId);
-        console.log({responseData})
+      if (userDetails?.user?.role === "SUPER_ADMIN") {
+        responseData = await getCompany(page,groupId);
+      } else if (userDetails?.user?.role === "BUSINESS_GROUP") {
+        setDropdownDisable(true);
+        const businessId = userDetails?.user?.businessGroupId[0]?._id;
+        responseData = await getCompany(page, businessId);
+        // console.log({ responseData });
       }
       const { data, success, totalCount } = responseData;
       const permissions = JSON.parse(localStorage.getItem("permission"));
@@ -83,8 +83,12 @@ const Company = () => {
   };
   useEffect(() => {
     fetchAllCompany(page);
-
   }, [page]);
+  useEffect(()=>{
+    if(id){
+      fetchAllCompany(1,id)
+    }
+  },[id])
 
   const handleChangeBusinessGroup = (selectedOption) => {
     console.log("this is the selected options", selectedOption);
@@ -173,6 +177,7 @@ const Company = () => {
                               },
                             ]}
                           />
+                        
                         )}
                       />
                       {can("company", "add") && (

@@ -34,6 +34,7 @@ const UserSetting = ({
   const [loading , setLoading] = useState(false);
   const { t } = useTranslation();
   const [dValues, setDvalues] = useState({});
+  const [logo, setLogo] = useState(null)
   const [selectedTimezone, setSelectedTimezone] = useState(
     dValues?.businessGroupId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
   );
@@ -66,6 +67,7 @@ const UserSetting = ({
         setSelectedTimezone(timeZone)
       }
       setValue("unitOfFuel",dValues.businessGroupId?.unitOfFuel)
+      setLogo(dValues?.businessGroupId?.file);
     }
     else{
       setValue('unitOfDistance',unitOfDistanceOptions[0]?.value)
@@ -259,6 +261,7 @@ const UserSetting = ({
             setValue={setValue}
             setLoading={setLoading}
             loading={loading}
+            link={logo}
           />
           {loading && <small>Uploading...</small>}
           <Error errorName={errors.file} />

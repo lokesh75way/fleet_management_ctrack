@@ -49,7 +49,7 @@ const TechnicianForm = () => {
     ),
   });
   const { id: techId } = useParams();
-  console.log(errors, "error:-")
+  console.log(errors, "error:-", getValues())
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
@@ -80,6 +80,7 @@ const TechnicianForm = () => {
     try {
       const data = await getTechnicianById(id);
       setEditData(data);
+      console.log(data, "techdata")
       setValue('noOfDaysCL',data.leave[0].days)
       setValue('noOfDays',data.leave[1].days)
       setValue('noOfDaysPL',data.leave[2].days)
@@ -93,10 +94,9 @@ const TechnicianForm = () => {
   useEffect(() => {
     if (techId) {
      getTechnician(techId)
-      // setValue('noOfDaysCL')
+     
     };
   }, [techId]);
-
   return (
     <>
       <MainPagetitle

@@ -32,8 +32,7 @@ const Document = ({
   const [issueDate, setIssueDate] = useState();
   const [expiryDate, setExpiryDate] = useState();
   const [dValues, setDvalues] = useState([]);
-  const [logo, setLogo] = useState()
-
+  
   const { t } = useTranslation();
   const { id } = useParams();
   const location = useLocation();

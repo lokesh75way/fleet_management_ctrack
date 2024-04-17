@@ -17,9 +17,9 @@ const Address = ({
   handleSubmit,
   control,
   onSubmit,
+  defaultCountry,
 }) => {
   const { t } = useTranslation();
-
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -94,7 +94,7 @@ const Address = ({
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
-            
+            defaultValue={{name: getValues('address.country') }}
           />
           {!getValues("address.country") && (
             <Error errorName={errors["address.country"]} />

@@ -43,12 +43,12 @@ const MyAccount = ({
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
 
+
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
   
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  console.log(userDetails,groupId,companyId, 'we')
-  const customStyles = {
+    const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
@@ -70,14 +70,14 @@ const MyAccount = ({
   useEffect(() => {
     if(userDetails.user.role === 'COMPANY'){
       let bus
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
+      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
+      setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
       
-      setValue("companyId", userDetails?.user.companyId)
-      setCompanyId(userDetails?.user.companyId);
+      setValue("companyId", userDetails?.user.companyId[0]?._id)
+      setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
-      console.log("companyId", userDetails?.user.businessGroupId)
+      console.log("companyId", userDetails?.user.businessGroupId[0]?._id)
     }
     if(userDetails.user.role === 'BUSINESS_GROUP'){
       console.log(userDetails, 'grp')

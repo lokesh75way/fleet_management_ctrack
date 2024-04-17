@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCompany } from '../../../services/api/CompanyServices';
 import Select from "react-select";
 import usePagination from '../../../hooks/usePagination';
+import { usePermissions } from '../../../context/PermissionContext';
 
 const CompanyDropdown = ({
     onChange,
@@ -15,16 +16,16 @@ const CompanyDropdown = ({
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const { page, setPage } = usePagination();
+    const { userDetails } = usePermissions(); // Import usePermissions hook
 
     useEffect(() => {
         const fetchCompanies = async () => {
             const response = await getCompany(page, groupId ? groupId : undefined);
             const options = response.data.data.data.map((item) => ({ value: item?.companyId?._id, label: item?.companyId?.companyName }));
             if (page === 1) {
-                // If it's the first page, set options directly
                 setdropdownOptions(options);
             } else {
-                // If it's not the first page, append options to existing ones
+                
                 setdropdownOptions(prevOptions => [...prevOptions, ...options]);
             }
         };
@@ -32,9 +33,21 @@ const CompanyDropdown = ({
     }, [page, groupId]);
 
     useEffect(() => {
-        const selected = dropdownOptions.find((option) => option.value === value);
-        setSelectedOption(selected);
-    }, [value, dropdownOptions, groupId]);
+        if (userDetails && userDetails.user.role === "COMPANY") {
+            const companyId = userDetails.user.companyId[0]._id;
+            const companyName = userDetails.user.companyId[0].companyName;
+            const selectedCompany = { value: companyId, label: companyName };
+            setSelectedOption(selectedCompany);
+        }
+    }, [userDetails]);
+
+    useEffect(() => {
+        if(userDetails &&  userDetails.user.role !== "COMPANY")
+        {
+            const selected = dropdownOptions.find((option) => option.value === value);
+            setSelectedOption(selected);
+        }
+    }, [value, dropdownOptions, groupId,userDetails]);
 
     const handleMenuScroll = async (event) => {
         const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
@@ -42,7 +55,7 @@ const CompanyDropdown = ({
             setPage(prevPage => prevPage + 1);
         }
     };
-
+    console.log(dropdownOptions,selectedOption,"drop")
     return (
         <Select
             options={dropdownOptions}
