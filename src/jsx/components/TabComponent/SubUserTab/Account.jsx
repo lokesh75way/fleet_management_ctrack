@@ -195,16 +195,16 @@ const Account = ({
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
       // setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
-      setValue("businessUser", userDetails?.user.businessGroupId);
-      console.log(userDetails?.user.businessGroupId, "dsggsgs");
+      setGroupId(userDetails?.user.businessGroupId?._id);
+      setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
+      console.log(userDetails.user.businessGroupId[0]._id, "dsggsgs");
       setBusinessDisabled(true);
     }
   }, []);
 
   useEffect(()=>{
     if(formData && id){
-      setValue("businessGroupId",formData?.[0]?.businessGroupId)
+      setValue("businessUser",formData?.[0]?.businessGroupId)
       setValue("companyId",formData?.[0]?.companyId)
       setValue("branchIds",formData?.[0]?.branchIds[0]?._id)
       setValue("email",formData?.[0]?.email)

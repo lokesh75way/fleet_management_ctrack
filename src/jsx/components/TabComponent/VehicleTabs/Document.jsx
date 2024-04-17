@@ -89,13 +89,6 @@ console.log(errors)
                     render={({ field: { value, name, ref } }) => (
                       <Select
                         onChange={(newValue) => {
-                          console.log(newValue, index);
-                          console.log(
-                            "documents",
-                            index,
-                            "documentType",
-                            newValue.value
-                          );
                           setValue(
                             `documents[${index}].documentType`,
                             newValue.value

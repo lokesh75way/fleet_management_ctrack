@@ -68,7 +68,7 @@ const Company = () => {
       }
       else if (userDetails?.user?.role === "BUSINESS_GROUP") {
         setDropdownDisable(true)
-        const businessId = userDetails?.user?.businessGroupId
+        const businessId = userDetails?.user?.businessGroupId[0]?._id
         responseData = await getCompany(page,businessId);
         console.log({responseData})
       }

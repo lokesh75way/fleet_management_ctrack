@@ -109,9 +109,9 @@ const Profile = ({
       console.log("companyId", userDetails?.user.businessGroupId)
     }
     if(userDetails.user.role === 'BUSINESS_GROUP'){
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
-      console.log(groupId, "hii")
+      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
+      setGroupId(userDetails?.user.businessGroupId[0]?._id);
+      console.log(userDetails?.user.businessGroupId[0]?._id, "hii")
       setBusinessDisabled(true);
     }
 },[])

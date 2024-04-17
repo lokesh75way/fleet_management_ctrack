@@ -32,6 +32,7 @@ const Document = ({
   const [issueDate, setIssueDate] = useState();
   const [expiryDate, setExpiryDate] = useState();
   const [dValues, setDvalues] = useState([]);
+  const [logo, setLogo] = useState()
 
   const { t } = useTranslation();
   const { id } = useParams();
@@ -42,20 +43,22 @@ const Document = ({
       padding: ".25rem 0 ",
     }),
   };
-console.log({dValues})
-  const [driverDocumentOptions, setDriverDocumentOptions] = useState([
-    { value: "DRIVING_LICENSE", label: "Driving License" },
-    { value: "AADHAR_CARD", label: "Aadhar Card" },
-    { value: "PAN_CARD", label: "PAN Card" },
-    { value: "BANK_ACCOUNT", label: "Bank Account" },
-    { value: "MEDICLAIM", label: "Mediclaim" },
-  ]);
+
+  const driverDocumentOptions=[
+    { value: "DRIVING_LICENSE", label: "DRIVING_LICENSE" },
+    { value: "AADHAR_CARD", label: "AADHAR_CARD" },
+    { value: "PAN_CARD", label: "PAN_CARD" },
+    { value: "BANK_ACCOUNT", label: "BANK_ACCOUNT" },
+    { value: "MEDICLAIM", label: "MEDICLAIM" },
+  ];
 
 
   useEffect(() => {
     if (id) {
       const data = location.state[0];
       setDvalues(data);
+
+      setValue()
     }
   }, [id]);
 
@@ -63,7 +66,9 @@ console.log({dValues})
   dValues && dValues.documents
     ? dValues?.documents
     : fields;
-  console.log(formFields, "here:-")
+  console.log(dValues && dValues.documents?.length > 0
+    ? dValues?.documents[0]?.documentType
+    : driverDocumentOptions[1].value, "here:-")
 
   return (
     <div className="p-4">
@@ -105,13 +110,6 @@ console.log({dValues})
                     render={({ field: { value, name, ref } }) => (
                       <Select
                         onChange={(newValue) => {
-                          console.log(newValue, index);
-                          console.log(
-                            "documents",
-                            index,
-                            "documentType",
-                            newValue.value
-                          );
                           setValue(
                             `documents[${index}].documentType`,
                             newValue.value
@@ -149,10 +147,10 @@ console.log({dValues})
                     getValue={getValues}
                     link={
                       dValues &&
-                      dValues?.length > 0 &&
                       dValues?.documents &&
-                      dValues?.documents[index]?.file
-                        ? dValues.documents[index]?.file
+                      dValues?.documents.length > 0 &&
+                      dValues?.documents?.[index]?.file
+                        ? dValues.documents?.[index]?.file
                         : false
                     }
                     register={register}

@@ -43,11 +43,11 @@ const MyAccount = ({
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
 
-
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
   
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  console.log(userDetails,groupId,companyId, 'we')
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -80,8 +80,9 @@ const MyAccount = ({
       console.log("companyId", userDetails?.user.businessGroupId)
     }
     if(userDetails.user.role === 'BUSINESS_GROUP'){
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
+      console.log(userDetails, 'grp')
+      setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
+      setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
     }
 },[])
