@@ -92,6 +92,23 @@ export const AdminMenuList = [
     ],
   },
   {
+    title: "Unassigned Vehicle",
+    iconStyle: (
+      <FaCar
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/unassigned-vehicle",
+  },
+  {
     title: "Vehicle",
     iconStyle: (
       <FaCar

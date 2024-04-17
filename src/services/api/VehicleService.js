@@ -8,6 +8,13 @@ const getVehicles = async (page) => {
   console.log(data)
   return {data :data.data.data , totalLength : data.data.totalCount};
 };
+
+const getUnassignedVehicles = async (page) => {
+  const {data} = await axios.get(`/vehicles/unassigned?page=${page}&limit=${10}`);
+  console.log(data)
+  return {data :data.data.data , totalLength : data.data.totalCount};
+};
+
 const deleteVehicles = async (body) => {
   console.log(body);
   return axios.delete(`/vehicles/${body}`);
@@ -28,4 +35,4 @@ const getVehiclesTraking = async (id, status) => {
   return { data :data.data };
 };
 
-export { createVehicles, getVehicles, deleteVehicles, updateVehicles, getVehiclesByCompany, getVehiclesTraking };
+export { createVehicles, getVehicles, deleteVehicles, updateVehicles, getVehiclesByCompany, getVehiclesTraking, getUnassignedVehicles };
