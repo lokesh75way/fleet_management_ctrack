@@ -61,7 +61,7 @@ const TechnicianForm = () => {
           return;
         } else {
           await createTechnician(data);
-          notifySuccess("Technincian created");
+          notifySuccess("Technician created");
           navigate("/technician/details");
           return;
         }
@@ -102,7 +102,7 @@ const TechnicianForm = () => {
       <MainPagetitle
         mainTitle={t("technician")}
         pageTitle={techId ? t("edit") : t("create")}
-        parentTitle={t("general")}
+        parentTitle={t("technician")}
       />
       <div className="m-2 p-2">
         <FormProvider>

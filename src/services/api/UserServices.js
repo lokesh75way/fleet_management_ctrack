@@ -36,7 +36,7 @@ export const createUser = async (data) => {
   }
 }
 
-export const updateUser = async (data, id) => {
+export const updateUser = async (id, data) => {
   try {
     const response = await axios.put(`/users/${id}`, data)
     console.log("response", response)

@@ -119,9 +119,9 @@ const allroutes = [
 
 
 
-  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
-  { module: 'subUser', url: "subUser", component: <SubUser /> },
-  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
+  { module: 'subUser',operation:'add', url: "user/create", component: <SubUserForm /> },
+  { module: 'subUser', url: "user", component: <SubUser /> },
+  { module: 'subUser',operation:'modify', url: "user/edit/:id", component: <SubUserForm /> },
 
   { module: 'vehicle', url: "vehicle-tracking", component: <DriverTracking /> },
   { module: 'vehicle', url: "vehicle-tracking/:id", component: <DriverTracking /> },

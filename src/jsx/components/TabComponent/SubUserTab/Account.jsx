@@ -31,9 +31,11 @@ const Account = ({
   getValues,
   errors,
   control,
+  formData,
 }) => {
-  console.log(errors);
+  console.log({formData});
   const [selectStateName, setSelectStateName] = useState("");
+  const [defaultCountry,setDefaultCountry] = useState();
   const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
@@ -199,53 +201,23 @@ const Account = ({
       setBusinessDisabled(true);
     }
   }, []);
-  useEffect(() => {
-    const id = filteredUserData[0]?._id;
-    id ? setIsEdit(true) : setIsEdit(false);
-    if (id) {
-      const selectedTemplateId = filteredUserData[0]?.featureTemplateId;
-      const selectedGroupId = filteredUserData[0]?.businessGroupId;
-      const selectedCompanyId = filteredUserData[0]?.companyId;
-      const selectedBranchId = filteredUserData[0]?.branchIds;
-      setValue("featureTemplateId", selectedTemplateId);
-      setValue("businessUser", selectedGroupId);
-      console.log("selectedGroupId", selectedGroupId);
-      loadDatainDropdowns();
-      setValue("parentCompany", selectedCompanyId);
-      setValue("Branch", selectedBranchId);
-      setValue("branchIds", selectedBranchId);
-      setCompanyId(selectedCompanyId)
 
-      setValue(
-        "parentBusinessGroup",
-        filteredCompanyData[0] ? filteredCompanyData[0].parentBusinessGroup : ""
-      );
-      setValue(
-        "parentBranch",
-        filteredCompanyData[0] ? filteredCompanyData[0].parentBranch : ""
-      );
-      if (id) {
-        setValue(
-          "country",
-          filteredUserData[0] ? filteredUserData[0]?.country : ""
-        );
-
-        setDefaultValue({ name: filteredUserData[0]?.country });
-        setValue(
-          "state",
-          filteredUserData[0] ? filteredUserData[0]?.state : ""
-        );
-        setSelectStateName({ name: filteredUserData[0]?.state || "" });
-      }
-
-      setValue("_id", filteredUserData[0] ? filteredUserData[0]?._id : id);
-      async function loadDatainDropdowns() {
-        await onGroupChange(selectedGroupId);
-        await onCompanyChange(selectedCompanyId);
-      }
+  useEffect(()=>{
+    if(formData && id){
+      setValue("businessGroupId",formData?.[0]?.businessGroupId)
+      setValue("companyId",formData?.[0]?.companyId)
+      setValue("branchIds",formData?.[0]?.branchIds[0]?._id)
+      setValue("email",formData?.[0]?.email)
+      setValue("userName",formData?.[0]?.userName)
+      setValue("mobileNumber",formData?.[0]?.mobileNumber)
+      setValue("country",formData[0].country)
+      setDefaultCountry({ name:formData[0].country })
+      setValue("state",formData[0].state || '' )
+      setSelectStateName({name : formData[0].state || ''})    
+      setValue("featureTemplateId",formData?.[0]?.featureTemplateId)
     }
-    setValue("isEdit", isEdit);
-  }, [TemplateOptions, allBranches, allCompanies, allGroups]);
+  },[formData,id])
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -394,7 +366,7 @@ const Account = ({
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
             // value={getValues("country")}
-            defaultValue={defaultValue}
+            defaultValue={defaultCountry}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
@@ -419,7 +391,7 @@ const Account = ({
           </div>
           {!getValues("state") && <Error errorName={errors.state} />}
         </div>
-        {!isEdit && (
+        {!id && (
           <>
             <div className="col-xl-6 mb-3 ">
               <label className="form-label">

@@ -356,9 +356,9 @@ const UserRoutes = () => {
   { module: 'company', url: "company-tracking", component: <CompanyTracking /> },
 
   //user
-  { module: 'subUser',operation:'add', url: "subUser/create", component: <SubUserForm /> },
+  { module: 'subUser',operation:'add', url: "user/create", component: <SubUserForm /> },
   { module: 'subUser', url: "subUser", component: <SubUser /> },
-  { module: 'subUser',operation:'modify', url: "subUser/edit/:id", component: <SubUserForm /> },
+  { module: 'subUser',operation:'modify', url: "user/edit/:id", component: <SubUserForm /> },
 
   //branch
   { module: 'branch',operation:'add', url: "branch/create", component: <BranchForm /> },

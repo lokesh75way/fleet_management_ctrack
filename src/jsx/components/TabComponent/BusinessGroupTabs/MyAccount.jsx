@@ -31,6 +31,7 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [logo, setLogo] = useState(null)
   const [dValues, setDvalues] = useState({});
   const { id } = useParams();
 
@@ -63,6 +64,8 @@ const MyAccount = ({
         dValues.businessGroupId?.helpDeskTelephoneNumber
       );
       setValue("street1", dValues.businessGroupId?.street1);
+      setValue('logo', dValues?.businessGroupId?.logo)
+      setLogo(dValues?.businessGroupId?.logo);
       setValue("street2", dValues.businessGroupId?.street2);
       setValue("capacity", dValues.businessGroupId?.capacity);
       setValue("contactPerson", dValues.businessGroupId?.contactPerson);
@@ -77,7 +80,6 @@ const MyAccount = ({
       setValue("capacity", storageCapacityOptions[1].value);
     }
   }, [dValues, id]);
-
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -377,6 +379,7 @@ const MyAccount = ({
             getValue={getValues}
             setLoading={setLoading}
             loading={loading}
+            link={logo}
           />
           {loading && <small>Uploading...</small>}
 

@@ -307,7 +307,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("secondrySimNumber")} <span className="text-danger">*</span>
+            {t("secondarySimNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"

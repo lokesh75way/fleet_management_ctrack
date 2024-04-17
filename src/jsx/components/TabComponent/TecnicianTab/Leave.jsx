@@ -21,6 +21,7 @@ const Leave = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Casual Leave
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -36,6 +37,7 @@ const Leave = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             No of Days
+
           </label>
           <CustomInput
             type="text"
@@ -49,6 +51,7 @@ const Leave = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Sick Leave
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -78,6 +81,7 @@ const Leave = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             Privilege Leave
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"

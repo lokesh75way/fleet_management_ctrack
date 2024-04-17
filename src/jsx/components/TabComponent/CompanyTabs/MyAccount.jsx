@@ -40,6 +40,7 @@ const MyAccount = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [bussinessGpLable, setBussinessGpLable] = useState(null)
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [logo, setLogo] = useState(null)
   const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
@@ -71,7 +72,7 @@ const MyAccount = ({
     }
     if(userDetails?.user?.role === 'BUSINESS_GROUP'){
       console.log(userDetails?.user.businessGroupId,"sbhsjksbfkjsfabfkjasf")
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      setValue("businessGroupId", userDetails?.user?.businessGroupId);
     }
 },[])
 
@@ -103,6 +104,7 @@ useEffect(()=>{
     setDefaultCountry({ name:formData[0].country })
     setSelectStateName({name : formData[0].state || ''})
     setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
+    setLogo(formData?.[0].companyId?.logo)
   }else{
     setValue("storageCapacity",storageCapacityOptions[1].value)
     
@@ -129,9 +131,9 @@ useEffect(()=>{
                     setBussinessGpLable(newValue.value)
                     setValue("businessGroupId", newValue.value);
                   }}
-                  value={value}
+                    value={value}
                     ref={ref}
-                    isDisabled={isBuisnessGroupDisabled}
+                    // isDisabled={isBuisnessGroupDisabled}
                     name={name}
                     customStyles={customStyles}
                   />
@@ -170,19 +172,6 @@ useEffect(()=>{
           />
           <Error errorName={errors.userName} />
         </div>
-        {/* <div className="col-xl-6 mb-3">
-          <label className="form-label">Company<span className="text-danger">*</span></label>
-          <CustomInput
-            type="text"
-            register={register}
-            required
-            label="Company"
-            name="company"
-            placeholder=""
-            defaultValue={filteredCompanyData[0] ? filteredCompanyData[0].company : ''}
-          />
-           <Error errorName={errors.company} />
-        </div> */}
 
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -445,7 +434,16 @@ useEffect(()=>{
         </div>
         <div className="col-xl-6 mb-3" >
           <label className="form-label">{t('uploadLogo')}</label>
-                                                                                  
+          <FileUploader
+            setValue={setValue}
+            register={register}
+            label="Business Group Logo"
+            name="logo"
+            getValue={getValues}
+            setLoading={setLoading}
+            loading={loading}
+            link={logo}
+          />                                                                      
            {loading && <small>Uploading...</small>}
           <Error errorName={errors.businessGroupLogo} />
         </div>

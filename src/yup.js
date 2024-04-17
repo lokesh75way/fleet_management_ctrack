@@ -360,8 +360,8 @@ export const driverDocumentSchema = yup
         file: yup
           .mixed()
           .required("File is required"),
-        issueDate: yup.string().typeError('Issue date is required'),
-        expireDate: yup.string().typeError('Expiry date is required'),
+        // issueDate: yup.string().typeError('Issue date is required'),
+        // expireDate: yup.string().typeError('Expiry date is required'),
       })
     ),
   })

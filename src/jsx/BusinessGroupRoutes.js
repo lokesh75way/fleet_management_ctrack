@@ -222,17 +222,17 @@ const BusinessGroupRoutes = () => {
     {
       module: "subUser",
       operation: "add",
-      url: "subUser/create",
+      url: "user/create",
       component: <SubUserForm />,
     },
     {
       module: "subUser",
       operation: "add",
-      url: "subUser/edit/:id",
+      url: "user/edit/:id",
       component: <SubUserForm />,
     },
     
-    { module: "subUser", url: "subUser", component: <SubUser /> },
+    { module: "subUser", url: "user", component: <SubUser /> },
 
     { module: "business", url: "business-group", component: <BusinessUser /> },
     {

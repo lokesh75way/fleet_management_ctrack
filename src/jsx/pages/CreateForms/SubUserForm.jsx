@@ -1,5 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
@@ -22,7 +22,9 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   const component = [Account];
   const totalTabs = tabHeading.length;
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { formData } = location.state || {};
+  console.log(formData, "datahgf:-")
   const {
     register,
     formState: { errors },
@@ -46,22 +48,41 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       console.log(data.Branch);
       data.branchId = data.Branch;
     }
-
-    try {
-      data.role = "USER";
-      data.parent = userName;
-      data.type = "STAFF";
-      const response = await createUser(data);
-      console.log("this is response", response);
-      if (response.error) {
-        notifyError(response.error);
-      } else {
-        data._id = response._id;
-        notifySuccess("User created successfully !!");
-        navigate("/subUser");
+    if(id){
+      try {
+        // data.role = "USER";
+        // data.parent = userName;
+        // data.type = "STAFF";
+        const response = await updateUser(id,data);
+        console.log("this is response", response);
+        if (response.error) {
+          notifyError(response.error);
+        } else {
+          data._id = response._id;
+          notifySuccess("User updated successfully !!");
+          navigate("/user");
+        }
+      } catch (error) {
+        notifyError("Something Went Wrong");
       }
-    } catch (error) {
-      notifyError("Something Went Wrong");
+    }
+    else{
+      try {
+        data.role = "USER";
+        data.parent = userName;
+        data.type = "STAFF";
+        const response = await createUser(data);
+        console.log("this is response", response);
+        if (response.error) {
+          notifyError(response.error);
+        } else {
+          data._id = response._id;
+          notifySuccess("User created successfully !!");
+          navigate("/user");
+        }
+      } catch (error) {
+        notifyError("Something Went Wrong");
+      }
     }
   };
   const { id } = useParams();
@@ -109,6 +130,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
                           errors={errors}
                           onSubmit={onSubmit}
                           handleSubmit={handleSubmit}
+                          formData = {formData}
                         />
                       </Tab.Pane>
                     );

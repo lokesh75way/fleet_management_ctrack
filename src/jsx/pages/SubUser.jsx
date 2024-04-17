@@ -49,8 +49,9 @@ import Paginate from "../components/Pagination/Paginate";
      await deleteUser(id);
   };
 
-  const editDrawerOpen = (item) => {
-    navigate(`/subUser/edit/${item}`);
+  const editDrawerOpen = (_id) => {
+    const data = tableData.filter((item) => item._id === _id);
+    navigate(`/user/edit/${_id}`,{ state: { formData: data } });
   };
 
   const itemsPerPage=10;
@@ -74,7 +75,7 @@ import Paginate from "../components/Pagination/Paginate";
                     <h4 className="heading mb-0">{t('users')}</h4>
                     <div>
                       {can('subUser','add') && <Link
-                        to={"/subUser/create"}
+                        to={"/user/create"}
                         className="btn btn-primary btn-sm ms-1"
                         data-bs-toggle="offcanvas"
                         // onClick={()=>subuser.current.showModal()}

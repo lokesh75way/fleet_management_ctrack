@@ -145,7 +145,7 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t("gender")}</label>
+          <label className="form-label">{t("gender")}<span className="text-danger">*</span></label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input

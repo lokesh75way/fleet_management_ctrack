@@ -67,7 +67,7 @@ const Technician = () => {
       <MainPagetitle
         mainTitle={t("technicianDetails")}
         pageTitle={t("technicianDetails")}
-        parentTitle={t("technician")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">

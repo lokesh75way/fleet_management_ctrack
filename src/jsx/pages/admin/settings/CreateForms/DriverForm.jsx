@@ -42,7 +42,14 @@ const DriverForm = () => {
     reset,
   } = useForm({
     defaultValues: {
-      documents:[{documentType:driverDocumentOptions[0].label, file:"",issueDate:"", expireDate:"" }]
+      documents: [
+        {
+          documentType: {label : 'Driving License' , value : 'DRIVING_LICENSE'},
+          file: "",
+          expireDate: new Date(),
+          issueDate: new Date(),
+        },
+      ],
     },
     resolver: yupResolver(
       activeIndex === 0
@@ -69,27 +76,35 @@ const DriverForm = () => {
   // }, [driverId]);
 
   const onSubmitHanlder = async (data) => {
-    const issueDate=data.documents[0].issueDate;
-    console.log('ki:-', issueDate)
     try {
-        if (activeIndex === totalTabs - 1) {
-            if (driverId) {
-              await updateDriver(driverId, data);
-              notifySuccess("Driver Updated!");
-              navigate("/driver");
-            } else {
-                
-                await createDriver(data);
-                notifySuccess(t("newDriverCreated"));
-                navigate("/driver");
-            }
-        } else {
-            setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+      if (activeIndex === totalTabs - 1) {
+        const issueDate = new Date(data.documents[0].issueDate);
+        const expireDate = new Date(data.documents[0].expireDate);
+
+        // Check if issueDate and expireDate are valid dates
+        if (isNaN(issueDate.getTime()) || isNaN(expireDate.getTime())) {
+            throw new Error("Invalid date format");
         }
+
+        // Convert issueDate and expireDate to ISO strings
+        const formattedIssueDate = issueDate.toISOString();
+        const formattedExpireDate = expireDate.toISOString();
+        if (driverId) {
+          await updateDriver(driverId, { ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          notifySuccess("Driver Updated!");
+          navigate("/driver");
+        } else {
+          await createDriver({ ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          notifySuccess(t("newDriverCreated"));
+          navigate("/driver");
+        }
+      } else {
+        setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+      }
     } catch (error) {
-        notifyError(t("someErrorOccurred"));
+      notifyError(t("someErrorOccurred"));
     }
-};
+  };
 
   return (
     <>
