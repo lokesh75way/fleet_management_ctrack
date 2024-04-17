@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
@@ -15,10 +15,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { notifyError } from "../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import login_logo from "../../images/login_logo.png";
+import { ThemeContext } from "../../context/ThemeContext";
+import "../../scss/pages/_login.scss";
+import { clsx } from "clsx";
 
 function Login(props) {
   const [heartActive, setHeartActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const { isRtl } = useContext(ThemeContext);
+
+  const imageLogin = clsx({
+    "img-login-rtl": isRtl,
+    "img-login": !isRtl,
+  });
+
   const {
     register,
     formState: { errors },
@@ -44,19 +54,32 @@ function Login(props) {
       <div className="browse-job login-style3">
         <div
           className="bg-img-fix"
-          style={{ background: "#fff url(" + bg6 + ")", height: "100%" }}
+          style={{
+            background: "#fff url(" + bg6 + ")",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "750px",
+          }}
         >
           <section class="p-md-4 p-xl-5">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-12 col-xxl-11">
-                  <div class="card border-light-subtle shadow-sm">
+                  <div
+                    class="card border-light-subtle shadow-sm"
+                    style={{ height: "auto", marginBottom: 0, border: 0 }}
+                  >
                     <div class="row g-0">
                       <div class="col-12 col-md-6">
                         <img
                           src={login_logo}
-                          style={{height :'99%'}}
-                          className="img-fluid rounded-start w-100 object-fit-cover overflow-hidden"
+                          style={{
+                            height: "100%",
+                          }}
+                          className={`img-fluid w-100 object-fit-cover overflow-hidden ${imageLogin}`}
+                          alt="Login Logo"
                         ></img>
                       </div>
                       <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
@@ -142,8 +165,8 @@ function Login(props) {
                                                 className="eye-icon"
                                                 style={{
                                                   position: "absolute",
-                                                  left: "91%",
-                                                  bottom: "32%",
+                                                  left: isRtl ? "4%" : "91%",
+                                                  bottom: isRtl ? "32%" : "32%",
                                                 }}
                                                 onClick={() =>
                                                   setShowPassword(false)
@@ -154,8 +177,8 @@ function Login(props) {
                                                 className="eye-icon"
                                                 style={{
                                                   position: "absolute",
-                                                  left: "91%",
-                                                  bottom: "32%",
+                                                  left: isRtl ? "4%" : "91%",
+                                                  bottom: isRtl ? "32%" : "32%",
                                                 }}
                                                 onClick={() =>
                                                   setShowPassword(true)
@@ -186,6 +209,9 @@ function Login(props) {
                                             <label
                                               className="form-check-label"
                                               htmlFor="check1"
+                                              style={{
+                                                paddingLeft: isRtl ? "5px" : 0,
+                                              }}
                                             >
                                               Remember me
                                             </label>

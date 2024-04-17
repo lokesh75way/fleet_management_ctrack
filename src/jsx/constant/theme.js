@@ -2083,10 +2083,30 @@ export const SVGICON = {
     <path d="M12.2515 12.6998V3.74982" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     <path fillRule="evenodd" clipRule="evenodd" d="M7.25049 12.6998L12.2515 20.6368L17.2525 12.6998H7.25049Z" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>`,
-  ArrowLeft: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.25 12.2743L19.25 12.2743" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M10.2998 18.2987L4.2498 12.2747L10.2998 6.24969" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>`,
+  ArrowLeft: (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4.25 12.2743L19.25 12.2743"
+        stroke="#130F26"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.2998 18.2987L4.2498 12.2747L10.2998 6.24969"
+        stroke="#130F26"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
   ArrowLeft2: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M15.5 19L8.5 12L15.5 5" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>`,
@@ -2499,7 +2519,6 @@ export const SVGICON = {
       </defs>
     </svg>
   ),
-  
 };
 const appTheme = {
   IMAGES,
