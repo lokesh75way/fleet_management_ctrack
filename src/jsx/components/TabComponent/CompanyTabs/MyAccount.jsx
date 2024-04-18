@@ -16,7 +16,7 @@ import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
 import FileUploader from "../../../../components/FileUploader";
 import GroupDropdown from "../../GroupDropdown";
-
+import { LuEye, LuEyeOff } from "react-icons/lu";
 const MyAccount = ({
   setValue,
   getValues,
@@ -40,6 +40,7 @@ const MyAccount = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [bussinessGpLable, setBussinessGpLable] = useState(null)
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const [logo, setLogo] = useState(null)
   const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -71,8 +72,8 @@ const MyAccount = ({
       setIsBuisnessGroupDisabled(true)
     }
     if(userDetails?.user?.role === 'BUSINESS_GROUP'){
-      console.log(userDetails?.user.businessGroupId?._id,"sbhsjksbfkjsfabfkjasf")
-      setValue("businessGroupId", userDetails?.user?.businessGroupId?._id);
+      console.log(userDetails?.user.businessGroupId[0]?._id,"sbhsjksbfkjsfabfkjasf")
+      setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
     }
 },[])
 
@@ -193,20 +194,31 @@ useEffect(()=>{
         </div>
         {!id && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              {t("password")}
-              <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="password"
-              register={register}
-              name="password"
-              label="password"
-              placeholder=""
-              defaultValue={getValues("password")}
-            />
-            <Error errorName={errors.password} />
-          </div>
+              <label className="form-label">
+                {t("password")} <span className="text-danger">*</span>
+              </label>
+              <div className="position-relative">
+                <CustomInput
+                  type={showPassword ? "text" : "password"}
+                  register={register}
+                  label="Password"
+                  name="password"
+                  placeholder=""
+                  defaultValue={
+                    getValues("password")
+                  }
+                />
+                <span
+                  className="showPasswordIcon"
+                  onClick={() => {
+                    setShowPassword(!showPassword);
+                  }}
+                >
+                  {showPassword ? <LuEyeOff /> : <LuEye />}
+                </span>
+              </div>
+              <Error errorName={errors.password} />
+            </div>
         )}
        
         <div className="col-xl-6 mb-3 ">

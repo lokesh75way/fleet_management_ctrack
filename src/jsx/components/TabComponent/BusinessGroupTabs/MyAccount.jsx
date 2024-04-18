@@ -10,7 +10,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { storageCapacityOptions } from "../VehicleTabs/Options";
 import FileUploader from "../../../../components/FileUploader";
-
+import { LuEye, LuEyeOff } from "react-icons/lu";
 const MyAccount = ({
   data,
   setValue,
@@ -33,6 +33,7 @@ const MyAccount = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [logo, setLogo] = useState(null)
   const [dValues, setDvalues] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const { id } = useParams();
 
   const customStyles = {
@@ -130,20 +131,28 @@ const MyAccount = ({
         </div>
         {!id && (
           <div className="col-xl-6 mb-3 ">
-            <label className="form-label">
-              {t("password")}
-              <span className="text-danger">*</span>
-            </label>
+          <label className="form-label">
+            {t("password")} <span className="text-danger">*</span>
+          </label>
+          <div className="position-relative">
             <CustomInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               register={register}
+              label="Password"
               name="password"
-              label="password"
               placeholder=""
-              defaultValue={getValues("password")}
             />
-            <Error errorName={errors.password} />
+            <span
+              className="showPasswordIcon"
+              onClick={() => {
+                setShowPassword(!showPassword);
+              }}
+            >
+              {showPassword ? <LuEyeOff /> : <LuEye />}
+            </span>
           </div>
+          <Error errorName={errors.password} />
+        </div>
         )}
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">

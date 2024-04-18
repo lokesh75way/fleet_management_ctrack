@@ -37,9 +37,12 @@ const AdditionalInfo = ({
     }),
   };
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("licenseAvailable", e.target.value);
+    const value = e.target.value === "yes" ? true : false;
+    setSelectedOption(value);
+    setValue("licenseAvailable", value);
   };
+  
+  
 
   useEffect(() => {
     if (id) {
@@ -55,13 +58,21 @@ const AdditionalInfo = ({
       setValue("drivingExperience", dValues?.drivingExperience);
       setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
       setValue("mediclaimNumber", dValues?.mediclaimNumber);
+      setValue('dateOfBirth', dValues?.dateOfBirth)
+      setValue('dateOfJoining', dValues?.dateOfJoining)
+      setValue('dateOfLeaving', dValues?.dateOfLeaving)
+      setValue('licenseExpiryDate', dValues?.licenseExpiryDate)
+      setValue('licenseIssueDate', dValues?.licenseIssueDate)
+      setValue('lifeInsuranceExpiry', dValues?.lifeInsuranceExpiry)
+      setValue('mediclaimExpiryDate', dValues?.mediclaimExpiryDate)
+      setSelectedOption(dValues.licenseAvailable)
       setToggle(dValues?.active)
     }
   }, [dValues, id]);
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100); 
   const maxDate = new Date();
-  console.log(dValues, "checkbox")
+  // console.log(dValues, "checkbox", date, getValues('dateOfBirth'))
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -72,18 +83,18 @@ const AdditionalInfo = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={date.dateOfBirth || new Date()}
+              selected={getValues("dateOfBirth")? new Date(getValues("dateOfBirth")) : new Date()}
+                // selected={date.dateOfBirth || new Date()}
                 minDate={minDate}
                 maxDate={maxDate}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setDate({
-                    ...date,
-                    dateOfBirth: newValue,
-                  });
-                  setValue("dateOfBirth", newValue.toISOString().split("T")[0]);
+                  // setDate({
+                  //   ...date,
+                  //   dateOfBirth: newValue,
+                  // });
+                  setValue("dateOfBirth", newValue);
                 }}
-                dateFormat="dd-MM-yyyy"
                 showYearDropdown
                 scrollableYearDropdown={true}
                 popperClassName="date-picker-reports"
@@ -114,12 +125,10 @@ const AdditionalInfo = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={date.dateOfJoining || new Date()}
+              selected={getValues("dateOfJoining")? new Date(getValues("dateOfJoining")) : new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setDate( {...date,
-                    dateOfJoining : newValue})
-                  setValue("dateOfJoining", newValue.toISOString().split('T')[0])}}
+                  setValue("dateOfJoining", newValue)}}
               />
             )}
           />
@@ -131,12 +140,11 @@ const AdditionalInfo = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={date.dateOfLeaving || new Date()}
+              selected={getValues("dateOfLeaving")? new Date(getValues("dateOfLeaving")) : new Date()}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  setDate( {...date,
-                    dateOfLeaving : newValue})
-                  setValue("dateOfLeaving", newValue.toISOString().split('T')[0])}}
+                  
+                  setValue("dateOfLeaving", newValue)}}
               />
             )}
           />
@@ -166,8 +174,8 @@ const AdditionalInfo = ({
                 // style={{backgroundColor : 'white'}}
                 id="customRadioBox987"
                 name="optradioCustom1"
-                value="yes"
-                checked={selectedOption === "yes"}
+                value='yes'
+                checked={selectedOption === true}
                 onChange={handleChange}
               />
               <label
@@ -185,7 +193,7 @@ const AdditionalInfo = ({
                 // style={{backgroundColor : 'white'}}
                 id="customRadioBox988"
                 value="no"
-                checked={selectedOption === "no"}
+                checked={selectedOption === false}
                 onChange={handleChange}
                 name="optradioCustom1"
               />
@@ -236,22 +244,19 @@ const AdditionalInfo = ({
                 />
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
-            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
+            <div className={`${ selectedOption !== true ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
               <label className="form-label">{t('licenseIssueDate')}<span className="text-danger">*</span></label>
               <Controller
                 name="licenseIssueDate"
                 control={control}
                 render={({ value, name }) => (
                   <DatePicker
-                    selected={date.licenseIssueDate || new Date()}
+                  selected={getValues("licenseIssueDate")? new Date(getValues("licenseIssueDate")) : new Date()}
                     className="form-control customDateHeight"
                     onChange={(newValue) =>
                       {
-                        setDate({
-                          ...date,
-                          licenseIssueDate : newValue
-                        })
-                        setValue("licenseIssueDate", newValue.toISOString().split('T')[0])
+                        
+                        setValue("licenseIssueDate", newValue)
                       }
                     }
                   />
@@ -266,14 +271,10 @@ const AdditionalInfo = ({
                 control={control}
                 render={({ value, name }) => (
                   <DatePicker
-                    selected={date.licenseExpiryDate || new Date()}
+                    selected={getValues("licenseExpiryDate")? new Date(getValues("licenseExpiryDate")) : new Date()}
                     className="form-control customDateHeight"
                     onChange={(newValue) =>{
-                      setDate({
-                        ...date, 
-                        licenseExpiryDate : newValue
-                      })
-                      setValue("licenseExpiryDate", newValue.toISOString().split('T')[0])
+                      setValue("licenseExpiryDate", newValue)
                     }}
                   />
                 )}
@@ -298,14 +299,11 @@ const AdditionalInfo = ({
                 control={control}
                 render={({ value, name }) => (
                   <DatePicker
-                    selected={date.lifeInsuranceExpiry || new Date()}
+                  selected={getValues("lifeInsuranceExpiry")? new Date(getValues("lifeInsuranceExpiry")) : new Date()}
                     className="form-control customDateHeight"
                     onChange={(newValue) =>{
-                      setDate({
-                        ...date,
-                        lifeInsuranceExpiry :newValue
-                      })
-                      setValue("lifeInsuranceExpiry", newValue.toISOString().split('T')[0])
+                      
+                      setValue("lifeInsuranceExpiry", newValue)
                     }}
                   />
                 )}
@@ -328,14 +326,10 @@ const AdditionalInfo = ({
                 control={control}
                 render={({ value, name }) => (
                   <DatePicker
-                    selected={date.mediclaimExpiryDate || new Date()}
+                  selected={getValues("mediclaimExpiryDate")? new Date(getValues("mediclaimExpiryDate")) : new Date()}
                     className="form-control customDateHeight"
                     onChange={(newValue) =>{
-                      setDate({
-                        ...date,
-                        mediclaimExpiryDate :newValue
-                      })
-                      setValue("mediclaimExpiryDate", newValue.toISOString().split('T')[0])
+                      setValue("mediclaimExpiryDate", newValue)
                     }}
                   />
                 )}

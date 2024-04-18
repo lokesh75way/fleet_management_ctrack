@@ -82,7 +82,7 @@ function Register(props) {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minHeight: "750px",
+            minHeight: "800px",
           }}
         >
           <section class="p-md-4">

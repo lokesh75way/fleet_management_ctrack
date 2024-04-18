@@ -61,10 +61,12 @@ div#mCSB_1 {
 
 @media all and(max-width: 768px) {
 	.bg-img-fix {
-		height: 150vh !important;
+		height: max-content !important;
+    	padding: .5rem 0;
 	}
 	.bg-img-fix-signup {
-		height: 160vh !important;
+		height: max-content !important;
+    	padding: 1rem 0;
 	}
 	.img-login {
 		border-top-left-radius: 0.3rem !important;

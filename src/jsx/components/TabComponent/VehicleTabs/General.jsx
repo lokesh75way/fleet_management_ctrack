@@ -119,10 +119,10 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-                onChange={async (newValue) => {
-                  await setValue("businessGroupId", newValue.value);
-                  await setValue("businessId", newValue.value);
-                  await setValue("businessGroupName", newValue.label);
+                onChange={ (newValue) => {
+                   setValue("businessGroupId", newValue.value);
+                   setValue("businessId", newValue.value);
+                   setValue("businessGroupName", newValue.label);
                   setGroupId(newValue.value);
                   setCompanyId(null);
                 }}
