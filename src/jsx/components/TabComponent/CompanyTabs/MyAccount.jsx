@@ -169,6 +169,7 @@ useEffect(()=>{
             name="userName"
             placeholder=""
             defaultValue={getValues('userName')}
+            disabled={id ? true : false}
           />
           <Error errorName={errors.userName} />
         </div>
@@ -187,6 +188,7 @@ useEffect(()=>{
             defaultValue={
               getValues('email')
             }
+            disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
         </div>

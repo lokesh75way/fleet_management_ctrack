@@ -108,6 +108,7 @@ const MyAccount = ({
             name="userName"
             placeholder=""
             defaultValue={getValues("userName")}
+            disabled={id ? true : false}
           />
           <Error errorName={errors.userName2} />
         </div>
@@ -123,6 +124,7 @@ const MyAccount = ({
             label="email"
             placeholder=""
             defaultValue={getValues("email")}
+            disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
         </div>
