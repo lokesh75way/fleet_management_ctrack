@@ -71,8 +71,8 @@ const MyAccount = ({
       setIsBuisnessGroupDisabled(true)
     }
     if(userDetails?.user?.role === 'BUSINESS_GROUP'){
-      console.log(userDetails?.user.businessGroupId?._id,"sbhsjksbfkjsfabfkjasf")
-      setValue("businessGroupId", userDetails?.user?.businessGroupId?._id);
+      console.log(userDetails?.user.businessGroupId[0]?._id,"sbhsjksbfkjsfabfkjasf")
+      setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
     }
 },[])
 
