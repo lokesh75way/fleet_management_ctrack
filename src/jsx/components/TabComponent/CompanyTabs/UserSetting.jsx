@@ -39,6 +39,7 @@ const UserSetting = ({
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
   const [loading , setLoading] = useState(false)
+  const [logo, setLogo] = useState(null)
 
   const customStyles = {
     control: (base) => ({
@@ -46,7 +47,6 @@ const UserSetting = ({
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
   useEffect(() => {
     setValue(
       "dateFormat",
@@ -81,6 +81,7 @@ const UserSetting = ({
       "currency",
       formData?.[0].companyId?.currency || currencyOptions[0].value
     );
+    setLogo(formData?.[0].companyId?.file)
   },[]);
 
   return (
@@ -285,6 +286,7 @@ const UserSetting = ({
             setValue={setValue}
             setLoading={setLoading}
             loading={loading}
+            link={logo}
           />
           {loading && <small>Uploading...</small>}
           <Error errorName={errors.companyLogo} />

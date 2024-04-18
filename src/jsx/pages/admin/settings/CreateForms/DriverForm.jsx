@@ -44,7 +44,7 @@ const DriverForm = () => {
     defaultValues: {
       documents: [
         {
-          documentType: {label : 'Driving License' , value : 'DRIVING_LICENSE'},
+          documentType: {label : "DRIVING_LICENSE", value : "DRIVING_LICENSE"},
           file: "",
           expireDate: new Date(),
           issueDate: new Date(),
@@ -76,6 +76,7 @@ const DriverForm = () => {
   // }, [driverId]);
 
   const onSubmitHanlder = async (data) => {
+    console.log(data,"editdata")
     try {
       if (activeIndex === totalTabs - 1) {
         const issueDate = new Date(data.documents[0].issueDate);

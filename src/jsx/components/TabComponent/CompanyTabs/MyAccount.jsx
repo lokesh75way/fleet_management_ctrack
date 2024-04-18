@@ -71,8 +71,8 @@ const MyAccount = ({
       setIsBuisnessGroupDisabled(true)
     }
     if(userDetails?.user?.role === 'BUSINESS_GROUP'){
-      console.log(userDetails?.user.businessGroupId,"sbhsjksbfkjsfabfkjasf")
-      setValue("businessGroupId", userDetails?.user?.businessGroupId);
+      console.log(userDetails?.user.businessGroupId?._id,"sbhsjksbfkjsfabfkjasf")
+      setValue("businessGroupId", userDetails?.user?.businessGroupId?._id);
     }
 },[])
 
@@ -133,7 +133,7 @@ useEffect(()=>{
                   }}
                     value={value}
                     ref={ref}
-                    // isDisabled={isBuisnessGroupDisabled}
+                    isDisabled={isBuisnessGroupDisabled}
                     name={name}
                     customStyles={customStyles}
                   />
@@ -156,7 +156,6 @@ useEffect(()=>{
           />
           <Error errorName={errors.companyName} />
         </div>
-
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
           {t('username')} <span className="text-danger">*</span>
