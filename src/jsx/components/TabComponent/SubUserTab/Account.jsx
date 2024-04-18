@@ -33,7 +33,6 @@ const Account = ({
   control,
   formData,
 }) => {
-  console.log({formData});
   const [selectStateName, setSelectStateName] = useState("");
   const [defaultCountry,setDefaultCountry] = useState();
   const [defaultValue, setDefaultValue] = useState("");
@@ -183,15 +182,15 @@ const Account = ({
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
   useEffect(() => {
     if (userDetails.user.role === "COMPANY") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setValue("businessUser", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
+      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
+      setValue("businessUser", userDetails?.user.businessGroupId[0]?._id);
+      setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
 
-      setValue("parentCompany", userDetails?.user.companyId);
-      setCompanyId(userDetails?.user.companyId);
+      setValue("parentCompany", userDetails?.user.companyId[0]?._id);
+      setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
-      console.log("parentCompany", userDetails?.user.businessGroupId);
+      console.log("parentCompany", userDetails?.user.businessGroupId[0]?._id);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
       // setValue("businessGroupId", userDetails?.user.businessGroupId);
