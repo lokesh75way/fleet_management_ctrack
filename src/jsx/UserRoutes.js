@@ -357,7 +357,7 @@ const UserRoutes = () => {
 
   //user
   { module: 'subUser',operation:'add', url: "user/create", component: <SubUserForm /> },
-  { module: 'subUser', url: "subUser", component: <SubUser /> },
+  { module: 'subUser', url: "user", component: <SubUser /> },
   { module: 'subUser',operation:'modify', url: "user/edit/:id", component: <SubUserForm /> },
 
   //branch
