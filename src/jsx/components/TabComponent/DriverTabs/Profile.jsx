@@ -58,7 +58,7 @@ const Profile = ({
   const loggedInUser = localStorage.getItem("loginDetails-name");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
-  console.log(errors, 'erro0rs-:', getValues())
+  // console.log(errors, 'erro0rs-:', getValues())
 
   useEffect(() => {
     if (id) {
@@ -69,7 +69,7 @@ const Profile = ({
 
   useEffect(() => {
     if (dValues && id) {
-      console.log("this:-", dValues)
+      // console.log("this:-", dValues)
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
       setValue("businessGroupId", dValues.businessGroupId?._id);
       setValue("companyName", dValues.companyId?.companyName);

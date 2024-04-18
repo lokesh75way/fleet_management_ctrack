@@ -37,9 +37,12 @@ const AdditionalInfo = ({
     }),
   };
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("licenseAvailable", e.target.value);
+    const value = e.target.value === "yes" ? true : false;
+    setSelectedOption(value);
+    setValue("licenseAvailable", value);
   };
+  
+  
 
   useEffect(() => {
     if (id) {
@@ -62,6 +65,7 @@ const AdditionalInfo = ({
       setValue('licenseIssueDate', dValues?.licenseIssueDate)
       setValue('lifeInsuranceExpiry', dValues?.lifeInsuranceExpiry)
       setValue('mediclaimExpiryDate', dValues?.mediclaimExpiryDate)
+      setSelectedOption(dValues.licenseAvailable)
       setToggle(dValues?.active)
     }
   }, [dValues, id]);
@@ -170,8 +174,8 @@ const AdditionalInfo = ({
                 // style={{backgroundColor : 'white'}}
                 id="customRadioBox987"
                 name="optradioCustom1"
-                value="yes"
-                checked={selectedOption === "yes"}
+                value='yes'
+                checked={selectedOption === true}
                 onChange={handleChange}
               />
               <label
@@ -189,7 +193,7 @@ const AdditionalInfo = ({
                 // style={{backgroundColor : 'white'}}
                 id="customRadioBox988"
                 value="no"
-                checked={selectedOption === "no"}
+                checked={selectedOption === false}
                 onChange={handleChange}
                 name="optradioCustom1"
               />
@@ -240,7 +244,7 @@ const AdditionalInfo = ({
                 />
                 { !getValues('licenseToDrive') && <Error errorName={errors.licenseToDrive} />}
             </div>
-            <div className={`${ selectedOption !== "yes" ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
+            <div className={`${ selectedOption !== true ?  "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column" }`}>
               <label className="form-label">{t('licenseIssueDate')}<span className="text-danger">*</span></label>
               <Controller
                 name="licenseIssueDate"
