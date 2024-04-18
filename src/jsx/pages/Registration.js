@@ -104,15 +104,9 @@ function Register(props) {
                           alt="Login Logo"
                         ></img>
                         <div
-                          style={{
-                            position: "absolute",
-                            top: "5%",
-                            left: "5%",
-                            padding: "10px",
-                            backgroundColor: "grey",
-                            borderRadius: "50%",
-                          }}
-                        >
+                        
+                          className="sm-mt-4 button_left_arrow"
+                          >
                           <NavLink to="/login">{SVGICON.ArrowLeft}</NavLink>
                         </div>
                       </div>

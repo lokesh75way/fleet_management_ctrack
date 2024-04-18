@@ -1,92 +1,110 @@
-
 .logo-header {
-    margin-bottom: 2rem;
-	.logo-white {
-		margin-left: 0.625rem;
-	}
+  margin-bottom: 2rem;
+  .logo-white {
+    margin-left: 0.625rem;
+  }
 }
-
+.button_left_arrow {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  padding: 10px;
+  background-color: grey;
+  border-radius: 50%;
+}
 .login-form .forget-pass {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-	
+  display: block;
+  margin-top: 20px;
+  text-align: center;
 }
 .dz-social {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .dz-social-icon {
-    display: inline-flex;
-    margin: 0 -3px;
-    padding: 0;
-    text-align: center;
-	li{ 
-		font-size: 12px;
-		margin-right: 0.2rem;
-		a {
-			color: #ffffff;
-			font-size: 14px;
-			height: 35px;
-			line-height: 34px;
-			padding: 0;
-			width: 35px;
-			border-radius: 4px;
-		}
-	}
+  display: inline-flex;
+  margin: 0 -3px;
+  padding: 0;
+  text-align: center;
+  li {
+    font-size: 12px;
+    margin-right: 0.2rem;
+    a {
+      color: #ffffff;
+      font-size: 14px;
+      height: 35px;
+      line-height: 34px;
+      padding: 0;
+      width: 35px;
+      border-radius: 4px;
+    }
+  }
 }
-.bg-img-fix, .bg-img-fix-signup{
-	height: 100vh !important;
-	&:before{
-}
+.bg-img-fix,
+.bg-img-fix-signup {
+  height: 100vh !important;
+  &:before {
+  }
 
-.img-login {
-	border-top-left-radius: 0.3rem;
-	border-top-right-radius: 0rem;
-	border-bottom-left-radius: 0.3rem;
-	border-bottom-right-radius: 0rem;
-}
+  .img-login {
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0rem;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0rem;
+  }
 
-.img-login-rtl {
-	border-top-left-radius: 0rem;
-	border-top-right-radius: 0.3rem;
-	border-bottom-left-radius: 0rem;
-	border-bottom-right-radius: 0.3rem;
-}
-
+  .img-login-rtl {
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0.3rem;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0.3rem;
+  }
 }
 div#mCSB_1 {
-    margin-top: 100px;
+  margin-top: 100px;
 }
 
 @media all and(max-width: 768px) {
-	.bg-img-fix {
-		height: max-content !important;
-    	padding: .5rem 0;
-	}
-	.bg-img-fix-signup {
-		height: max-content !important;
-    	padding: 1rem 0;
-	}
-	.img-login {
-		border-top-left-radius: 0.3rem !important;
-		border-top-right-radius: 0.3rem !important;
-		border-bottom-left-radius: 0rem !important;
-		border-bottom-right-radius: 0rem !important;
-	}
-	.img-login-rtl {
-		border-top-left-radius: 0.3rem !important;
-		border-top-right-radius: 0.3rem !important;
-		border-bottom-left-radius: 0rem !important;
-		border-bottom-right-radius: 0rem !important;
-	}
+  .bg-img-fix {
+    height: max-content !important;
+    padding: 0.5rem 0;
+  }
+  .bg-img-fix-signup {
+    height: max-content !important;
+    padding: 1rem 0;
+  }
+  .img-login {
+    border-top-left-radius: 0.3rem !important;
+    border-top-right-radius: 0.3rem !important;
+    border-bottom-left-radius: 0rem !important;
+    border-bottom-right-radius: 0rem !important;
+  }
+  .img-login-rtl {
+    border-top-left-radius: 0.3rem !important;
+    border-top-right-radius: 0.3rem !important;
+    border-bottom-left-radius: 0rem !important;
+    border-bottom-right-radius: 0rem !important;
+  }
+  .button_left_arrow {
+    top: 10%;
+  }
 }
 
-@media all and (max-width: 400px) {
-	.bg-img-fix {
-		height: 130vh !important;
-	}
-	.bg-img-fix-signup {
-		height: 140vh !important;
-	}
+@media screen and (max-width: 400px) {
+  .bg-img-fix {
+    height: 130vh !important;
+  }
+  .bg-img-fix-signup {
+    height: 140vh !important;
+  }
+  .button_left_arrow {
+    top: 10% !important;
+  }
 }
+// @media all and (max-width: 400px) {
+
+// 	.button_left_arrow{
+// 		background-color: red !important;
+// 		top:10% !important;
+// 	}
+// }
