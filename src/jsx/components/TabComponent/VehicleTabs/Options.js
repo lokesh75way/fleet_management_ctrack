@@ -163,7 +163,7 @@ export const dayOptions = [
   { value: "MONDAY", label: "MONDAY" },
   { value: "TUESDAY", label: "TUESDAY" },
   { value: "WEDNESDAY", label: "WEDNESDAY" },
-  { value: "THRUSDAY", label: "THRUSDAY" },
+  { value: "THURSDAY", label: "THURSDAY" },
   { value: "FRIDAY", label: "FRIDAY" },
   { value: "SATURDAY", label: "SATURDAY" },
 ];
