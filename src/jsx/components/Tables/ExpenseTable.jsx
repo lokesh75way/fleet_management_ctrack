@@ -2,9 +2,14 @@ import React, { useEffect } from 'react'
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from '../Modal/DeleteModal';
+import dayjs from 'dayjs';
 
 const ExpenseTable = ({tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen}) => {
     const startIndex = (currentPage - 1) * itemsPerPage + 1;
+
+    const formatDate = (dateTimeString) => {
+        return dayjs(dateTimeString).format('YYYY-MM-DD HH:MM')
+      };
 
     return (
         <>
@@ -19,7 +24,7 @@ const ExpenseTable = ({tableData,currentPage, itemsPerPage, onConfirmDelete, edi
                             </div>
                         </div>
                     </td>
-                    <td><span>{item.expenseDate}</span></td>
+                    <td><span>{formatDate(item.expenseDate)}</span></td>
                     <td>
                         <span>{item.amount}</span>
                     </td>

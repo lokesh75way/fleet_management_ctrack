@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import MainPagetitle from "../layouts/MainPagetitle";
 import AlertOffcanvas from "../constant/AlertOffcanvas";
 import { AlertData } from "../components/Tables/Tables";
@@ -25,6 +25,7 @@ import Paginate from "../components/Pagination/Paginate";
 
 const Alert = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -66,15 +67,17 @@ const Alert = () => {
   }, [page]);
 
   const onSubmit = async (data) => {
-    try {
+        try {
       if (data._id && data._id !== 0) {
         // update data
         await updateAlert(data, data._id);
-        notifySuccess("Task Added Successfully !!");
+        notifySuccess("Task Updated Successfully !!");
+        fetchAllAlerts(page)
         alert.current.closeModal();
       } else {
         await createAlert(data);
         notifySuccess("Task Added Successfully !!");
+        fetchAllAlerts(page)
         alert.current.closeModal();
       }
     } catch (error) {

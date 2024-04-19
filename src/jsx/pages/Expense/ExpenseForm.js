@@ -30,17 +30,17 @@ const ExpenseForm = () => {
     
   });
   const navigate = useNavigate();
-  console.log(errors, "ds:-", getValues('fromDate'));
+  console.log(errors, "ds:-", getValues());
 
   const onSubmit = async (data) => {
     if (id) {
       try {
-        if (data.bill.length === 0) {
-          delete data.bill;
-        }
-        if(data.file.length === 0){
-          delete data.file;
-        }
+        // if (data.bill.length === 0) {
+        //   delete data.bill;
+        // }
+        // if(data.file.length === 0){
+        //   delete data.file;
+        // }
         await updateExpense(id,data);
         notifySuccess("Expense Updated!");
         navigate("/settings/expense");

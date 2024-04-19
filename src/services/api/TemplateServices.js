@@ -1,4 +1,3 @@
-import { get } from "react-scroll/modules/mixins/scroller";
 import requests from "./Axios";
 import axios from "axios";
 import initAxios from "./Axios";

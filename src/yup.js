@@ -394,19 +394,17 @@ export const subUserAccountSchema = yup
     country: yup.string().required("Please select a Country"),
   })
   .required();
-export const alertSchema = yup
-  .object({
-    branchId: yup.string().required("Select a Branch "),
-    basedOn: yup.string().required("Choose an option "),
-    object: yup.string().required("Select an option "),
-    alertName: yup.string().required("Alert Name is required "),
-    alertType: yup.string().required("Select an Alert Type "),
-    value: yup.string().required("Choose an Alert Value "),
-    validDays: yup.string().required("Choose Valid day options "),
-    severity: yup.string().required("Choose Severity options "),
-    //  userName: yup.string().required("User Name is required "),
-  })
-  .required();
+  export const alertSchema = yup.object({
+    branch: yup.array()
+    .required('Select at least one option'), 
+    basedOn: yup.string().required('Choose an option'),
+    object: yup.string().required('Select an option'),
+    alertName: yup.string().required('Alert Name is required'),
+    alertType: yup.string().required('Select an Alert Type'),
+    value: yup.string().required('Choose an Alert Value'),
+    validDays: yup.string().required('Choose Valid day options'),
+    severity: yup.string().required('Choose Severity options'),
+  }).required();
 export const expenseSchema = yup
   .object({
     branch: yup.string().required("Select a Branch "),
@@ -416,8 +414,9 @@ export const expenseSchema = yup
       .number()
       .required("Enter an Amount ")
       .typeError("Amount must be a number"),
-    fromDate: yup.date().required("Enter the date "),
-    toDate: yup.date().required("Enter the date "),
+    fromDate: yup.date(),
+    toDate: yup.date(),
+    expenseDate: yup.date().required('Expense date is required'),
     referenceNumber: yup
       .number()
       .required("Reference Number a required ")

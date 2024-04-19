@@ -13,7 +13,7 @@ const GroupTable = ({onConfirmDelete,currentPage, itemsPerPage,tableData, setIsE
             isEditTrue : isEditTrue,
             setIsEditTrue : setIsEditTrue,
         }
-        console.log(props)
+        // console.log(props)
         navigate(`permission/${id}`, {state:JSON.stringify(props)})
     }
 
