@@ -2,6 +2,7 @@ export const arabic = {
   translation: {
       "businessGroup":"مجموعة الأعمال",
       "addBusinessGroup": "+ إضافة مجموعة الأعمال",
+      "allBusinessGroup": "جميع مجموعات الأعمال",
       "previous": "السابق",
       "next": "التالي",
       "edit": "تعديل",
@@ -73,12 +74,14 @@ export const arabic = {
       "entries": "المدخلات",
 
       "newCompany": "شركة جديدة",
-
+      "allCompanies": "جميع الشركات",
 
 
       "branchName": "اسم الفرع",
       "parentBranch": "الفرع الأصلي",
       "childBranches": "فروع الطفل",
+      'selectParentBranch':"اختر الفرع الرئيسي",
+
       "addBranch": "إضافة فرع",
 
       "username": "اسم المستخدم",
@@ -578,8 +581,7 @@ export const arabic = {
       "drivingExperience": "خبرة القيادة",
       "location": "الموقع",
       "status": "الحالة",
-      "action": "الإجراء"
+      "action": "الإجراء",
 
-    
   }
 }

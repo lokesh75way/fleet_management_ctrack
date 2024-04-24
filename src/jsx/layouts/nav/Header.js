@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
@@ -64,7 +64,13 @@ const Header = ({ onNote }) => {
   const logo = data?.user?.logo;
   // const logo = 'https://res.cloudinary.com/ddxpchjay/image/upload/v1712236924/katz7loerwuacnstdsna.png';
 
-
+  const ref=useRef()
+  const removeShow=(e)=>{
+    console.log("event",e)
+    if(e.target.classList.includes("show")){
+      e.target.classList.remove("show")
+    }
+  }
   const {t} = useTranslation();
 
   const { lang, setLang, setIsRtl,direction ,changeDirectionLayout} = useContext(ThemeContext);
@@ -297,12 +303,16 @@ const Header = ({ onNote }) => {
                 <Dropdown.Menu
                   align="end"
                   className="mt-2 dropdown-menu dropdown-menu-end"
+                  ref={ref}
                 >
                   <Link
                     className="dropdown-item"
                     to="#"
                     onClick={() => {i18n.changeLanguage("ar"); setLang('ar'); setIsRtl(true);
                     changeDirectionLayout({ value: "rtl", label: "RTL" });
+                    if (ref.current && ref.current.classList.contains("show")) {
+                      ref.current.classList.remove("show");
+                    }
                   }}
                   >
                     Arabic
@@ -312,6 +322,7 @@ const Header = ({ onNote }) => {
                     to="#"
                     onClick={() => {i18n.changeLanguage("en"); setLang('en'); setIsRtl(false);
                     changeDirectionLayout({ value: "ltr", label: "LTR" });
+                    ref.current.classList.remove("show");
                   }}
                   >
                     English
@@ -321,6 +332,7 @@ const Header = ({ onNote }) => {
                     to="#"
                     onClick={() => {i18n.changeLanguage("es"); setLang('es'); setIsRtl(false);
                     changeDirectionLayout({ value: "ltr", label: "LTR" });
+                    ref.current.classList.remove("show");
                   }}
                   >
                     Spanish

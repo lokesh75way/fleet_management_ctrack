@@ -32,7 +32,7 @@ const Company = () => {
   const [tableData, setTableData] = useState([]);
   const [selectFilter, setFilter] = useState({
     value: "All Business Groups",
-    label: "All Business Groups",
+    label: t('allBusinessGroup'),
   });
   const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
@@ -173,7 +173,7 @@ const Company = () => {
                             value={[
                               {
                                 value: selectFilter.value,
-                                label: selectFilter.label,
+                                label: t('allBusinessGroup'),
                               },
                             ]}
                           />

@@ -2,6 +2,7 @@ export const spanish = {
   translation: {
     businessGroup: "Grupo Empresarial",
     addBusinessGroup: "+ Agregar Grupo Empresarial",
+    allBusinessGroup: "Todos los Grupos Empresariales",
     previous: "Anterior",
     next: "Siguiente",
     edit: "Editar",
@@ -73,6 +74,7 @@ export const spanish = {
 
     branchName: "Nombre de la Sucursal",
     parentBranch: "Sucursal Principal",
+    selectParentBranch:"Seleccionar Sucursal Principal",
     childBranches: "Sucursales Hijas",
     addBranch: "Agregar Sucursal",
 
@@ -333,6 +335,7 @@ export const spanish = {
     dashboard: "Tablero",
     businessGroup: "Grupo Empresarial",
     company: "Empresa",
+    allCompanies: "Todas las Empresas",
     branch: "Sucursal",
     user: "Usuario",
     technician: "Técnico",
@@ -622,5 +625,6 @@ export const spanish = {
     location: "Ubicación",
     status: "Estado",
     action: "Acción",
+
   },
 };
