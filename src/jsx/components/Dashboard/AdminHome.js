@@ -472,48 +472,72 @@ const Home = () => {
             </div>
           )}
 
-          {showWebVsMobileUser && (
-            <div className="col-xl-5 col-md-12">
+{
+    showWebVsMobileUser &&( <div className="col-xl-5 col-md-12">
+            <div
+              className="card same-card mb-3 p-2"
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <div className="d-flex align-items-center">
+                <h4
+                  className="text-black fs-4 p-3"
+                  style={{
+                    // marginBottom: "4rem",
+                    whiteSpace: "nowrap", // Added: prevent text from wrapping
+                    overflow: "hidden", // Added: hide overflow
+                    textOverflow: "ellipsis", // Added: show ellipsis for overflow
+                  }}
+                >
+                  {t('webVsMobileUser')}
+                </h4>
+              </div>
               <div
-                className="card same-card mb-3 p-2"
-                style={{
-                  cursor: "pointer",
-                }}
+                className="card-body d-flex justify-content-center align-items-center py-2"
+                style={{ flexWrap: "wrap" }}
               >
                 <div>
                   <ChartPie
                   key={applicationUsage}
-                    color1={"#49be25"}
-                    color2={"#5179cf"}
+                    color1={"#49BE25"}
+                    color2={"#5179CF"}
                     Chartdata={applicationUsage}
                     labels={["Web User", "Mobile User"]}
                   />
                 </div>
-              </div>
-            </div>
-          )}
-
-          {showObjectType && (
-            <div className="col-xl-4 col-md-12">
-              <div
-                className="card same-card p-2"
-                style={{
-                  // backgroundColor: "rgb(144 238 144 / 56%)",
-                  cursor: "pointer",
-                }}
-                onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
-              >
                 <div>
-                  <ChartPie
-                  key={applicationUsage}
-                    color1={"#f58505"}
-                    color2={"#1ef6ea"}
-                    Chartdata={applicationUsage}
-                  />
+                  <ul className="project-list p-3">
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#49BE25" />
+                      </svg>{" "}
+                      {t('webUser')}
+                    </li>
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#5179CF" />
+                      </svg>{" "}
+                      {t('mobileUser')}
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
-          )}
+          </div>)}
+
         </div>
 
         <div
@@ -636,28 +660,70 @@ const Home = () => {
           className="row "
           style={{ marginLeft: "0.2rem", justifyContent: "" }}
         >
-          {showCategoryWiseTask && (
-            <div className="col-xl-6 col-md-12" style={{ paddingLeft: 0 }}>
+          {
+    showApplicationUsage && ( <div className="col-xl-5 col-md-12" style={{ paddingLeft: 0 }}>
+            <div
+              className="card same-card p-2"
+              style={{
+                // backgroundColor: "rgb(241 156 135 / 56%)",
+                cursor: "pointer",
+              }}
+              onClick={() => openModal(<OverspeedTable />, "Overspeed")}
+            >
+              <div className="d-flex align-items-center justify-content-between">
+                <h4
+                  className="text-black fs-4 p-3"
+                  
+                >
+                  {t('technicianTask')}
+                </h4>
+              </div>
               <div
-                className="card same-card p-2"
-                style={{
-                  // backgroundColor: "rgb(241 156 135 / 56%)",
-                  cursor: "pointer",
-                }}
-                onClick={() => openModal(<OverspeedTable />, "Overspeed")}
+                className="card-body d-flex justify-content-center align-items-center py-2"
+                style={{ flexWrap: "wrap" }}
               >
-                <ApexLine4
-                key={tasksData}
-                  height={300}
-                  categories={tasksData?.xAxis}
-                  series={tasksData?.series}
-                />
+                <div>
+                  <ChartPie
+                  key={applicationUsage}
+                    color1={"#F58505"}
+                    color2={"#1EF6EA"}
+                    Chartdata={applicationUsage}
+                  />
+                </div>
+                <div>
+                  <ul className="project-list p-3">
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#F58505" />
+                      </svg>{" "}
+                      {t('installation')}
+                    </li>
+                    <li>
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <rect width="10" height="10" rx="3" fill="#1EF6EA" />
+                      </svg>{" "}
+                      {t('maintenance')}
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          )}
+          </div>)}
 
           {showTop5Technician && (
-            <div className="col-xl-6 col-md-12">
+            <div className="col-xl-7 col-md-12">
               <div
                 className="card same-card p-2"
                 style={{

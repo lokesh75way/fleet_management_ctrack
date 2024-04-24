@@ -316,6 +316,15 @@ const Header = ({ onNote }) => {
                   >
                     English
                   </Link>
+                  <Link
+                    className="dropdown-item"
+                    to="#"
+                    onClick={() => {i18n.changeLanguage("es"); setLang('es'); setIsRtl(false);
+                    changeDirectionLayout({ value: "ltr", label: "LTR" });
+                  }}
+                  >
+                    Spanish
+                  </Link>
                 </Dropdown.Menu>
               </Dropdown>
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DepositlineChart from "./DepositlineChart";
 import AllProjectDonutChart from "./AllProjectDonutChart";
 import { SVGICON } from "../../../constant/theme";
@@ -8,35 +8,71 @@ import { FaRegBuilding, FaTools } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 
 import {useTranslation} from 'react-i18next'
+import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getCompany } from "../../../../services/api/CompanyServices";
+import { getUser } from "../../../../services/api/UserServices";
+import { getAllBranch } from "../../../../services/api/BranchServices";
+import { getTechnicians } from "../../../../services/api/TechnicianService";
+import { checkAutoLogin } from "../../../../services/AuthService";
+import { getDrivers } from "../../../../services/api/driverService";
 
 const CardWidget = ({usageData}) => {
   const { t } = useTranslation();
-  const role = localStorage.getItem("role");
+  const loggedUser = JSON.parse(localStorage.getItem("userDetails"));
+  const role = loggedUser?.user?.role;
   const [vehicleData, setVehicleData] = React.useState([0, 0, 0]);
   // Define the order for each role
   const roleOrders = {
-    admin: ["allvehicles","businessgroup", "company", "users"],
-    businessgroup: [ "allvehicles","company", "branches", "technician"],
-    company: [ "allvehicles", "branches","technician", "driver"],
+    SUPER_ADMIN: ["allvehicles","businessgroup", "company", "users"],
+    BUSINESS_GROUP: [ "allvehicles","company", "branches", "technician"],
+    COMPANY: [ "allvehicles", "branches","technician", "driver"],
   };
 
   // Get the order for the current role or use the default order
-  const order = roleOrders[role] || roleOrders.admin;
+  const order = roleOrders[role] || roleOrders.SUPER_ADMIN;
 
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const getCount = (key) => {
-    const count = userData?.filter((item) => {
-      if (item.role) {
-        return item.role === key;
-      } else {
-        return item.Designation === key;
-      }
-    })?.length;
-    return count || 0;
-  };
+  const [businessUserCount, setBusinessUserCount] = useState(0);
+  const [companyCount, setCompanyCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [branchCount, setBranchCount] = useState(0);
+  const [technicianCount, setTechnicianCount] = useState(0);
+  const [driverCount, setDriverCount] = useState(0);
 
   useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data,totalCount } = await getGroups();
+        setBusinessUserCount(totalCount);
+        
+        const { data: companies } = await getCompany();
+        const { totalCount: companyCount } = companies.data;
+        setCompanyCount(companyCount);
 
+        const { count: userCount } = await getUser();
+        setUserCount(userCount);
+
+        const { data : branch  } = await getAllBranch();
+        const { totalCount: branchCount } = branch;
+        setBranchCount(branchCount);
+
+        const { count : technicianCount  } = await getTechnicians();
+       setTechnicianCount(technicianCount)
+
+
+        const {data : drivers , totalLength  : driverCount } = await getDrivers();
+        setDriverCount(driverCount)
+
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+
+  useEffect(() => {
     const parseVehicleData = usageData?.vehicle
       ? [usageData.vehicle.running || 0, usageData.vehicle.idle || 0, usageData.vehicle.stopped || 0]
       : [0, 0, 0];
@@ -56,7 +92,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalBusinessUser')}</h6>
-                        <h3>{usageData?.groups?.buisnesses || 0}</h3>
+                        <h3>{businessUserCount}</h3>
                       </div>
                       <div className="icon-box bg-primary-light">
                         {SVGICON.BusinessGroup}
@@ -147,7 +183,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalCompanies')}</h6>
-                        <h3>{usageData?.groups?.companies || 0}</h3>
+                        <h3>{companyCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
                         <HiOutlineBuildingOffice2
@@ -176,7 +212,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalUsers')}</h6>
-                        <h3>{usageData?.groups?.users || 0}</h3>
+                        <h3>{userCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-ligh">
                         {SVGICON.Employe}
@@ -195,7 +231,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalBranches')}</h6>
-                        <h3>{getCount("branch")}</h3>
+                        <h3>{branchCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
                         <FaRegBuilding
@@ -224,7 +260,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalTechnician')}</h6>
-                        <h3>{getCount("Technician")}</h3>
+                        <h3>{technicianCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
                         <FaTools
@@ -253,7 +289,7 @@ const CardWidget = ({usageData}) => {
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
                         <h6>{t('totalDriver')}</h6>
-                        <h3>{getCount("Driver")}</h3>
+                        <h3>{driverCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
                         <GrUserPolice

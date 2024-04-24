@@ -421,7 +421,7 @@ export const english = {
       "total":"Total",
       "activeUsers": "Active Users",
 
-      "totalBusinessUser": "Total Business User",
+      "totalBusinessUser": "Total Business Group",
       "allVehicles": "All Vehicles",
       "running": "Running",
       "idle": "Idle",
