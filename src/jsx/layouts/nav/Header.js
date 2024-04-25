@@ -347,7 +347,7 @@ const Header = ({ onNote }) => {
                 <Dropdown className="header-profile2">
                   <Dropdown.Toggle className="nav-link i-false" as="div">
                     <div className="header-info2 d-flex align-items-center">
-                      <div className="header-media">
+                      <div className="header-media mr-2">
                         <img src={logo ? logo : IMAGES.Tab1} alt="logo" />
                       </div>
                       <div className="header-info">

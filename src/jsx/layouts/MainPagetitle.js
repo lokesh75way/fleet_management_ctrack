@@ -1,10 +1,11 @@
-import React, { Children, useState } from "react";
+import React, { Children, useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import { Offcanvas } from "react-bootstrap";
 
 import { SVGICON } from "../constant/theme";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const options = [
   { value: "salesmate", label: "Salesmate" },
@@ -81,7 +82,7 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
               </Link>
             </li>
             <li className="breadcrumb-item active">
-              <Link to={"#"}>{pageTitle}</Link>
+              <Link to={"#"}>/ {pageTitle}</Link>
             </li>
           </ol>
         </div>
