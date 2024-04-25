@@ -3,12 +3,14 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { arabic } from './lang/Arabic';
 import { english } from './lang/English';
+import {spanish } from './lang/Spanish';
 
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {
   en: english,
-  ar: arabic
+  ar: arabic,
+  es : spanish
 };
 
 i18n

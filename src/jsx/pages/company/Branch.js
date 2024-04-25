@@ -82,11 +82,11 @@ const Branch = () => {
     branches: 0,
   });
   const [companyDropdown, setCompanyDropdown] = useState({
-    label: "All Companies",
+    label:t('allCompanies'),
     value: "All Companies",
   });
   const [branchDropdown, setBranchDropdown] = useState({
-    label: "All Branches",
+    label:  t('selectParentBranch'),
     value: "All Branches",
   });
   const [companies, setCompanies] = useState([]);

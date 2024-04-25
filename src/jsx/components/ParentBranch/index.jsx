@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllBranch } from '../../../services/api/BranchServices';
 import Select from "react-select";
 import usePagination from '../../../hooks/usePagination';
+import { t } from 'i18next';
 
 const ParentBranchDropdown = ({
     onChange,
@@ -67,7 +68,7 @@ const ParentBranchDropdown = ({
             styles={customStyles}
             name={name}
             ref={inputRef}
-            placeholder="Select Parent Branch"
+            placeholder={t('selectParentBranch')}
             isDisabled={isDisabled}
             isClearable
             onMenuScrollToBottom={handleMenuScroll}

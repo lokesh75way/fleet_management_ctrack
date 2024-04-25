@@ -2,6 +2,7 @@ export const english = {
     translation: {
       "businessGroup":"Business Group",
       "addBusinessGroup": "+ Add Business Group",
+      "allBusinessGroup" : "All Business Group",
       "previous": "Previous",
       "next": "Next",
       "edit": "Edit",
@@ -60,6 +61,7 @@ export const english = {
 
       "company": "Company",
       "companies": "Companies",
+      "allCompanies": "All Companies",
       "companyName": "Company Name",
       "branches": "Branches",
       "zipCode": "Zip Code",
@@ -81,6 +83,7 @@ export const english = {
 
       "branchName": "Branch Name",
       "parentBranch": "Parent Branch",
+      "selectParentBranch":"Select Parent Branch",
       "childBranches": "Child Branches",
       "addBranch":"Add Branch",
     
@@ -421,7 +424,7 @@ export const english = {
       "total":"Total",
       "activeUsers": "Active Users",
 
-      "totalBusinessUser": "Total Business User",
+      "totalBusinessUser": "Total Business Group",
       "allVehicles": "All Vehicles",
       "running": "Running",
       "idle": "Idle",
@@ -654,7 +657,7 @@ export const english = {
       "drivingExperience": "Driving Experience",
       "location": "Location",
       "status": "Status",
-      "action": "Action"
+      "action": "Action",
     
 
 
