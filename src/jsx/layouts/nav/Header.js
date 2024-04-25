@@ -315,7 +315,7 @@ const Header = ({ onNote }) => {
                     }
                   }}
                   >
-                    Arabic
+                    عربي
                   </Link>
                   <Link
                     className="dropdown-item"
@@ -335,7 +335,7 @@ const Header = ({ onNote }) => {
                     ref.current.classList.remove("show");
                   }}
                   >
-                    Spanish
+                    español
                   </Link>
                 </Dropdown.Menu>
               </Dropdown>
