@@ -63,7 +63,8 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     "Feature Templates": "/groups",
     "Driver" : '/driver',
     "Technician" : '/technician/details',
-    Dashboard : "/dashboard"
+    Dashboard : "/dashboard",
+    Expense : "/settings/expense",
   };
 
   return (

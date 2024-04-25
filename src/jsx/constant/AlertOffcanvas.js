@@ -39,7 +39,7 @@ const AlertOffcanvas = forwardRef(
     },
     ref
   ) => {
-    console.log("edit data inside modal", editData);
+    // console.log("edit data inside modal", editData);
     const [addEmploye, setAddEmploye] = useState(false);
     const [tempVehicle, setTempVehicle] = useState("");
     const [tempValue, setTempValue] = useState("");
@@ -62,7 +62,7 @@ const AlertOffcanvas = forwardRef(
 
     useEffect(() => {
       if (userDetails.user.role === "COMPANY") {
-        setCompanyId(userDetails?.user.companyId);
+        setCompanyId(userDetails?.user.companyId[0]?._id);
       }
     }, []);
 
@@ -97,7 +97,7 @@ const AlertOffcanvas = forwardRef(
       const vl = getValues(e.target.name);
       setValue(e.target.name, e.target.checked);
     };
-
+    
     return (
       <>
         <Offcanvas
@@ -131,7 +131,8 @@ const AlertOffcanvas = forwardRef(
                         render={({ field: { onChange, value, name, ref } }) => (
                           <BranchDropdown
                             onChange={(newValue) => {
-                              setValue("branch", newValue.value);
+                              const newArray = newValue.map((temp)=> temp.value)
+                              setValue("branch", newArray);
                             }}
                             value={value}
                             customStyles={customStyles}
@@ -297,8 +298,8 @@ const AlertOffcanvas = forwardRef(
                             name={name}
                             styles={customStyles}
                             value={
-                              objectOptions.filter(
-                                (l) => l.value == getValues("alertType")
+                              alertTypeOptions.filter(
+                                (l) => l.value === getValues("alertType")
                               )?.[0]
                             }
                           />
@@ -368,7 +369,7 @@ const AlertOffcanvas = forwardRef(
                           </label>
                         </div>
                       </div>
-                      {!getValues("value") && (
+                      {!getValues("BOTH") && (
                         <Error errorName={errors.value} />
                       )}
                     </div>
@@ -384,7 +385,7 @@ const AlertOffcanvas = forwardRef(
                             className="form-check-input"
                             value="EVERYDAY"
                             checked={
-                              (getValues("value") ?? tempValidDays) ===
+                              (getValues("validDays") ?? tempValidDays) ===
                               "EVERYDAY"
                             }
                             onChange={handleValidDays}
@@ -402,7 +403,7 @@ const AlertOffcanvas = forwardRef(
                             className="form-check-input"
                             value="CUSTOM"
                             checked={
-                              (getValues("value") ?? tempValidDays) === "CUSTOM"
+                              (getValues("validDays") ?? tempValidDays) === "CUSTOM"
                             }
                             onChange={handleValidDays}
                           />
@@ -515,7 +516,7 @@ const AlertOffcanvas = forwardRef(
                           name={name}
                           styles={customStyles}
                           value={
-                            objectOptions.filter(
+                            severityOptions.filter(
                               (l) => l.value == getValues("severity")
                             )?.[0]
                           }

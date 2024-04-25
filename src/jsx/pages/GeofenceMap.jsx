@@ -115,7 +115,7 @@ const GeofenceDetail = () => {
   };
 
   const Geofence = JSON.parse(localStorage.getItem("geofenceData"));
-  const GeoData = Geofence.filter((item) => item.id == id);
+  const GeoData = Geofence?.filter((item) => item.id == id);
   const [filteredGeoData, setFilteredGeoData] = useState(GeoData);
   const { t } = useTranslation();
   return (
@@ -172,9 +172,9 @@ const GeofenceDetail = () => {
                   label="Name"
                   register={register}
                   name="name"
-                  defaultValue={
-                    filteredGeoData[0] ? filteredGeoData[0].name : ""
-                  }
+                  // defaultValue={
+                  //   filteredGeoData[0] ? filteredGeoData[0].name : ""
+                  // }
                 />
                 <Error errorName={errors.name} />
               </div>
@@ -252,9 +252,9 @@ const GeofenceDetail = () => {
                     const temp = Math.max(0, e.target.value);
                     e.target.value = temp < 1 ? "" : temp;
                   }}
-                  defaultValue={
-                    filteredGeoData[0] ? filteredGeoData[0].contactNumber : ""
-                  }
+                  // defaultValue={
+                  //   filteredGeoData[0] ? filteredGeoData[0].contactNumber : ""
+                  // }
                 />
                 <Error errorName={errors.contactNumber} />
               </div>
@@ -268,9 +268,9 @@ const GeofenceDetail = () => {
                   {...register("address")}
                   label="Address"
                   name="address"
-                  defaultValue={
-                    filteredGeoData[0] ? filteredGeoData[0].address : ""
-                  }
+                  // defaultValue={
+                  //   filteredGeoData[0] ? filteredGeoData[0].address : ""
+                  // }
                 />
               </div>
 
@@ -308,9 +308,9 @@ const GeofenceDetail = () => {
                   {...register("description")}
                   name="description"
                   label="Description"
-                  defaultValue={
-                    filteredGeoData[0] ? filteredGeoData[0].description : ""
-                  }
+                  // defaultValue={
+                  //   filteredGeoData[0] ? filteredGeoData[0].description : ""
+                  // }
                 />
               </div>
               {!getValues("location") && <Error errorName={errors.location} />}

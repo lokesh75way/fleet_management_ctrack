@@ -35,7 +35,7 @@ const SettingExpense = ({
   const [selectedOption3, setSelectedOption3] = useState(null);
   const [tempValue, setTempValue] = useState();
   const [dValues, setDvalues] = useState([]);
-
+  const [bill, setBill] = useState(null)
   const nav = useNavigate();
   const location = useLocation();
   const handleChange = (e) => {
@@ -70,6 +70,7 @@ const SettingExpense = ({
       setValue("amount", dValues?.amount);
       setValue("referenceNumber", dValues?.referenceNumber);
       setValue("odometer", dValues?.odometer);
+      setValue("description", dValues?.description);
       setValue("workHour", dValues?.workHour);
       const  fromDate = new Date(dValues?.fromDate)
       setValue('fromDate', fromDate)
@@ -77,6 +78,9 @@ const SettingExpense = ({
       setValue('toDate', toDate)
       const  expenseDate = new Date(dValues?.expenseDate)
       setValue('expenseDate', expenseDate)
+      setValue("bill", dValues?.bill);
+      setValue('category', dValues?.category)
+      setBill(dValues?.bill)
     }
   }, [dValues, id]);
   return (
@@ -85,7 +89,7 @@ const SettingExpense = ({
         <div className="row" style={{ width: "70%", margin: "auto" }}>
           <div className="col-xl-6 mb-3">
             <label className="form-label">
-              {t("branchId")}
+              {t("branch")}
               <span className="text-danger">*</span>
             </label>
             <Controller
@@ -116,7 +120,7 @@ const SettingExpense = ({
                   type="radio"
                   className="form-check-input"
                   value="VARIABLE"
-                  checked={selectedOption === "VARIABLE"}
+                  checked={ (getValues('category') ?? selectedOption ) === "VARIABLE"}
                   onChange={handleChange}
                 />
                 <label
@@ -131,7 +135,7 @@ const SettingExpense = ({
                   type="radio"
                   className="form-check-input"
                   value="FIX"
-                  checked={selectedOption === "FIX"}
+                  checked={ (getValues('category') ?? selectedOption ) === "FIX"}
                   onChange={handleChange}
                 />
                 <label
@@ -145,7 +149,8 @@ const SettingExpense = ({
             {!getValues("category") && <Error errorName={errors.category} />}
           </div>
 
-          <div className="col-xl-6 mb-3">
+     { selectedOption === "VARIABLE" &&
+         <div className="col-xl-6 mb-3">
             <label className="form-label">{t("considerJob")}</label>
             <div
               className={`${
@@ -162,8 +167,8 @@ const SettingExpense = ({
               />
             </div>
           </div>
-
-          {
+}
+          {isCheckCJ &&
             <>
               <div className="col-xl-6 mb-3">
                 <label className="form-label">{t("jobAllocation")}</label>
@@ -212,7 +217,7 @@ const SettingExpense = ({
                   </div>
                 </div>
               </div>
-              {
+              {selectedOption2 === "completed" &&
                 <>
                   <div className="col-xl-6 mb-3">
                     <label className="form-label">{t("completedTill")}</label>
@@ -291,7 +296,11 @@ const SettingExpense = ({
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  // value={value}
+                  value={
+                    TypeOptions.filter(
+                      (l) => l.value == getValues("type")
+                    )?.[0]
+                  }
                   // defaultValue={TypeOptions[0]}
                 />
               )}
@@ -299,14 +308,7 @@ const SettingExpense = ({
             {!getValues("type") && <Error errorName={errors.type} />}
           </div>
 
-          <>
-            <div
-              className={`${
-                selectedOption !== "FIX"
-                  ? "col-xl-6 mb-3 pe-none"
-                  : "col-xl-6 mb-3"
-              }`}
-            >
+            <div className={`col-xl-6 mb-3`}>
               <label className="form-label">
                 {t("fromDate")} <span className="text-danger">*</span>
               </label>
@@ -329,12 +331,9 @@ const SettingExpense = ({
               />
               {!getValues("fromDate") && <Error errorName={errors.fromDate} />}
             </div>
+
             <div
-              className={`${
-                selectedOption !== "FIX"
-                  ? "col-xl-6 mb-3 pe-none"
-                  : "col-xl-6 mb-3"
-              }`}
+              className={`col-xl-6 mb-3`}
             >
               <label className="form-label">
                 {t("toDate")} <span className="text-danger">*</span>
@@ -355,14 +354,9 @@ const SettingExpense = ({
               />
               {!getValues("toDate") && <Error errorName={errors.toDate} />}
             </div>
-          </>
-
-          <div
-            className={`${
-              selectedOption !== "FIX"
-                ? "col-xl-6 mb-3 pe-none"
-                : "col-xl-6 mb-3"
-            }`}
+      
+        <div
+            className={` col-xl-6 mb-3 `}
           >
             <label className="form-label">
               {t("expenseDate")} <span className="text-danger">*</span>
@@ -452,6 +446,7 @@ const SettingExpense = ({
                     className="form-control customDateHeight"
                     onChange={(newValue) => setWorkHour(newValue)}
                     value={value}
+                    name={name}
                   />
                 )}
               />
@@ -470,6 +465,7 @@ const SettingExpense = ({
               getValue={getValues}
               setLoading={setLoading}
               loading={loading}
+              link={bill}
             />
             {loading && <small>Uploading...</small>}
           </div>
