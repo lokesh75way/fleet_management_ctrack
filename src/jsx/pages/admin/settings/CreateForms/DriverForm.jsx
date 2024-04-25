@@ -41,16 +41,6 @@ const DriverForm = () => {
     handleSubmit,
     reset,
   } = useForm({
-    defaultValues: {
-      documents: [
-        {
-          documentType: {label : "DRIVING_LICENSE", value : "DRIVING_LICENSE"},
-          file: "",
-          expireDate: new Date(),
-          issueDate: new Date(),
-        },
-      ],
-    },
     resolver: yupResolver(
       activeIndex === 0
         ? driverProfileSchema
@@ -70,7 +60,7 @@ const DriverForm = () => {
   //     navigate("/driver");
   //   }
   // }
-  // // console.log(errors, 'erro0rs-:', getValues())
+  console.log(errors, 'erro0rs-:', getValues())
   // useEffect(() => {
   //   if (driverId) getDriver(driverId);
   // }, [driverId]);
