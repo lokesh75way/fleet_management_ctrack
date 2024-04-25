@@ -116,6 +116,7 @@ const UnassinedVehicle = () => {
                           <th>{t("vehicleType")}</th>
                           <th>{t("IMEINumber")}</th>
                           <th>{t("registrationNumber")}</th>
+                          <th>{t("status")}</th>
                           {(can("vehicle", "modify") ||
                             can("vehicle", "delete")) && <th>{t("action")}</th>}
                         </tr>

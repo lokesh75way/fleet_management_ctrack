@@ -11,6 +11,13 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
 
   const startIndex = (currentPage - 1) * 10 + 1;
 
+  const getVehicleStatus = (status)=>{
+    if(status === true){
+      return "ASSIGNED"
+    }
+    return "UNASSIGNED"
+  }
+
   return tableData?.map((item, index) => (
   
     <tr key={item.id}>
@@ -36,10 +43,18 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
       <td>
         <span>{item.Vehicle_No}</span>
       </td>
+      <td>
+      <span
+              className={`badge light border-0 ${
+                item?.isVehicleAssigned ? "badge-success" : "badge-danger"
+              } d-inline-block text-center`}
+              style={{ width: "7rem" }}
+            >{getVehicleStatus(item?.isVehicleAssigned)}</span>
+      </td>
 
       {editPermission && <td>
         <span className="d-flex justify-content-center">
-          {editPermission && <span
+          {editPermission && (item?.isVehicleAssigned === false) && <span
             className="cursor-pointer"
             onClick={() => editDrawerOpen(item)}
           >

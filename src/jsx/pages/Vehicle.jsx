@@ -61,7 +61,6 @@ const Vehicle = () => {
   // delete function
   const onConfirmDelete = (id) => {
     deleteVehicles(id);
-    getVehicleData(id);
     setDeleteId(id);
   };
   // Edit function

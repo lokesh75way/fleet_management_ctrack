@@ -56,8 +56,7 @@ const Document = ({
     if (id) {
       const data = location.state[0];
       setDvalues(data);
-
-      setValue()
+      setValue('documents', data.documents);
     }
   }, [id]);
 
@@ -65,9 +64,9 @@ const Document = ({
   dValues && dValues.documents
     ? dValues?.documents
     : fields;
-  console.log(dValues && dValues.documents?.length > 0
-    ? dValues?.documents[0]?.documentType
-    : driverDocumentOptions[1].value, "here:-")
+  // console.log(dValues && dValues.documents?.length > 0
+  //   ? dValues?.documents[0]?.documentType
+  //   : driverDocumentOptions[1].value, "here:-")
     
 
   return (
