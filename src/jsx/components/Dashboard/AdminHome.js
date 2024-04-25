@@ -67,6 +67,7 @@ import {getDashboardTasks, getFleetStatus, getFleetUsage} from "../../../service
 
 import {useTranslation} from 'react-i18next'
 import Loader from "../Loader";
+import CustomSVG from "../CustomSvg/CustomSvg";
 
 const speed = {
   data: [
@@ -313,59 +314,22 @@ const Home = () => {
                     completeLabel={t("total")}
                   />
                   <ul className="project-list">
-                    <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#3AC977" />
-                      </svg>{" "}
+                    <li> 
+                      <CustomSVG fill="#3AC977" />{" "}
                       {t("complete")}
                     </li>
 
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#FF9F00" />
-                      </svg>{" "}
+                       <CustomSVG fill="#FF9F00" />{" "}
                       {t("progress")}
                     </li>
 
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          width="10"
-                          height="10"
-                          rx="3"
-                          fill="var(--primary)"
-                        />
-                      </svg>{" "}
+                      <CustomSVG fill="var(--primary)" />{" "}
                       {t("yetToStart")}
                     </li>
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#FF5E5E" />
-                      </svg>{" "}
+                      <CustomSVG fill="#FF5E5E" />{" "}
                       {t("cancelled")}
                     </li>
                   </ul>
@@ -509,27 +473,11 @@ const Home = () => {
                 <div>
                   <ul className="project-list p-3">
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#49BE25" />
-                      </svg>{" "}
+                      <CustomSVG fill="#49BE25" />{" "}
                       {t('webUser')}
                     </li>
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#5179CF" />
-                      </svg>{" "}
+                      <CustomSVG fill="#5179CF" />{" "}
                       {t('mobileUser')}
                     </li>
                   </ul>
@@ -693,27 +641,11 @@ const Home = () => {
                 <div>
                   <ul className="project-list p-3">
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#F58505" />
-                      </svg>{" "}
+                      <CustomSVG fill="#F58505" />{" "}
                       {t('installation')}
                     </li>
                     <li>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect width="10" height="10" rx="3" fill="#1EF6EA" />
-                      </svg>{" "}
+                    <CustomSVG fill="#1EF6EA" />{" "}
                       {t('maintenance')}
                     </li>
                   </ul>
