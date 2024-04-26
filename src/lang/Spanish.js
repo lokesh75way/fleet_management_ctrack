@@ -74,7 +74,7 @@ export const spanish = {
 
     branchName: "Nombre de la Sucursal",
     parentBranch: "Sucursal Principal",
-    selectParentBranch:"Seleccionar Sucursal Principal",
+    selectParentBranch: "Seleccionar Sucursal Principal",
     childBranches: "Sucursales Hijas",
     addBranch: "Agregar Sucursal",
 
@@ -626,5 +626,20 @@ export const spanish = {
     status: "Estado",
     action: "Acción",
 
+    personalInformation: "Información personal",
+    enterEmailAndPassword: "Ingrese su dirección de correo electrónico y su contraseña.",
+    login: "Iniciar sesión",
+    rememberMe: "Recuérdame",
+    signInWith: "Iniciar sesión con",
+    createAccount: "Crear una cuenta",
+    forgotPassword: "¿Olvidaste tu contraseña?",
+    copyrightBy: "Derechos de autor por",
+    "75way": "75way",
+    allRightReserved: "Todos los derechos reservados.",
+    signUp: "Regístrate",
+    enterYourPersonalDetail: "Ingrese sus detalles personales a continuación:",
+    iAgreeToThe: "Acepto los",
+    termsOfService: "Términos de servicio",
+    privacyPolicy: "Política de privacidad",
   },
 };

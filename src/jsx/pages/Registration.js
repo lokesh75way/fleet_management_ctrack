@@ -17,6 +17,7 @@ import { clsx } from "clsx";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import SvgIcons from "../components/Dashboard/SvgIcons";
 import { SVGICON } from "../constant/theme";
+import { t } from "i18next";
 
 function Register(props) {
   const [heartActive, setHeartActive] = useState(true);
@@ -151,12 +152,12 @@ function Register(props) {
                                         className="dz-form py-2"
                                         onSubmit={onSignUp}
                                       >
-                                        <h3 className="form-title">Sign Up</h3>
+                                        <h3 className="form-title">{t('signUp')}</h3>
                                         <div className="dz-separator-outer m-b5">
                                           <div className="dz-separator bg-primary style-liner"></div>
                                         </div>
                                         <p>
-                                          Enter your personal details below:{" "}
+                                        {t('enterYourPersonalDetail')}{" "}
                                         </p>
                                         <div className="form-group mt-3">
                                           <input
@@ -251,13 +252,13 @@ function Register(props) {
                                               htmlFor="check2"
                                               style={{ marginLeft: "2px" }}
                                             >
-                                              I agree to the{" "}
+                                              {t('iAgreeToThe')}{" "}
                                               <Link to={"#"}>
-                                                Terms of Service{" "}
+                                               {t ('termsOfService')}{" "}
                                               </Link>
                                               &amp;{" "}
                                               <Link to={"#"}>
-                                                Privacy Policy
+                                              {t ('privacyPolicy')}
                                               </Link>
                                             </label>
                                           </span>
@@ -274,7 +275,7 @@ function Register(props) {
                                             type="submit"
                                             className="btn btn-primary float-end w-100"
                                           >
-                                            Submit
+                                           { t('submit')}
                                           </button>
                                         </div>
                                       </form>
@@ -287,7 +288,7 @@ function Register(props) {
                                   <div className="col-lg-12 text-center">
                                     <span>
                                       {" "}
-                                      © Copyright by
+                                      © { t('copyrightBy')}
                                       <span
                                         className={`heart ${
                                           heartActive ? "" : "heart-blast"
@@ -302,9 +303,9 @@ function Register(props) {
                                         target="_blank"
                                       >
                                         {" "}
-                                        75way{" "}
+                                        { t('75way')}{" "}
                                       </a>{" "}
-                                      All rights reserved.
+                                      { t('allRightReserved')}
                                     </span>
                                   </div>
                                 </div>

@@ -18,6 +18,7 @@ import login_logo from "../../images/login_logo.png";
 import { ThemeContext } from "../../context/ThemeContext";
 import "../../scss/pages/_login.scss";
 import { clsx } from "clsx";
+import { t } from "i18next";
 
 function Login(props) {
   const [heartActive, setHeartActive] = useState(true);
@@ -127,14 +128,13 @@ function Login(props) {
                                         onSubmit={handleSubmit(onLogin)}
                                       >
                                         <h3 className="form-title m-t0">
-                                          Personal Information
+                                          {t('personalInformation')}
                                         </h3>
                                         <div className="dz-separator-outer m-b5">
                                           <div className="dz-separator bg-primary style-liner"></div>
                                         </div>
                                         <p>
-                                          Enter your e-mail address and your
-                                          password.{" "}
+                                          {t('enterEmailAndPassword')}{" "}
                                         </p>
                                         <div className="form-group mb-3">
                                           <input
@@ -197,7 +197,7 @@ function Login(props) {
                                             type="submit"
                                             className="btn btn-primary dz-xs-flex m-r5"
                                           >
-                                            login
+                                            {t('login')}
                                           </button>
                                           <span className="form-check d-inline-block ms-2">
                                             <input
@@ -213,13 +213,13 @@ function Login(props) {
                                                 paddingLeft: isRtl ? "5px" : 0,
                                               }}
                                             >
-                                              Remember me
+                                             {t('rememberMe')}
                                             </label>
                                           </span>
                                         </div>
                                         <div className="dz-social">
                                           <h5 className="form-title fs-20">
-                                            Sign In With
+                                          {t('signInWith')}
                                           </h5>
                                           <ul className="dz-social-icon dz-border dz-social-icon-lg text-white">
                                             <li>
@@ -260,7 +260,7 @@ function Login(props) {
                                           to="/register"
                                           className="btn btn-primary button-md btn-block"
                                         >
-                                          Create an account
+                                         {t('createAccount')}
                                         </NavLink>
 
                                         <div className="mt-2">
@@ -269,7 +269,7 @@ function Login(props) {
                                             style={{ fontSize: "small" }}
                                           >
                                             {" "}
-                                            Forgot Password?
+                                            {t('forgotPassword')}
                                           </Link>
                                         </div>
                                       </div>
@@ -282,7 +282,7 @@ function Login(props) {
                                   <div className="col-lg-12 text-center">
                                     <span>
                                       {" "}
-                                      © Copyright by{" "}
+                                      © {t('copyrightBy')}{" "}
                                       <span
                                         className={`heart ${
                                           heartActive ? "" : "heart-blast"
@@ -297,9 +297,9 @@ function Login(props) {
                                         target="_blank"
                                       >
                                         {" "}
-                                        75way{" "}
+                                        {t('75way')}{" "}
                                       </a>{" "}
-                                      All rights reserved.
+                                      {t('allRightReserved')}
                                     </span>
                                   </div>
                                 </div>

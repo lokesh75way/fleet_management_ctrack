@@ -14,7 +14,9 @@ const Leave = ({
   getValues,
 }) => {
  
-  
+  console.log('====================================');
+  console.log(errors);
+  console.log('====================================');
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
