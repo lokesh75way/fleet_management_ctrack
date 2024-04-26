@@ -17,11 +17,6 @@ export const vehicleGeneralSchema = yup
       .integer()
       .required("Sim Number is required")
       .typeError("Sim Number must be a number"),
-    secondrySimNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Secondary Sim Number must be a number"),
     deviceAccuracyTolerance: yup
       .number()
       .positive()
@@ -31,7 +26,6 @@ export const vehicleGeneralSchema = yup
       .typeError("Device Accuracy Tolerance must be a number"),
       serverAddress: yup.string().url('Server address must be a valid URL').required(),
       distanceCounter: yup.string().required('Distance counter is required'),
-      unitOfDistance: yup.string().required('Unit of distance is required'),
       
   })
   .required();
@@ -364,38 +358,32 @@ export const driverDocumentSchema = yup
     ),
   })
   .required();
-export const subUserAccountSchema = yup
+  export const subUserAccountSchema = yup
   .object({
     isEdit: yup.boolean(),
     userName: yup.string().required("User Name is required "),
     featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
-      .test("isEdit", "Password is required", function (value) {
-        const { isEdit } = this.parent;
-        if (isEdit) {
-          return true;
-        } else {
-          return value && value.length >= 8;
-        }
+      .when('isEdit', {
+        is: false,
+        then: yup.string().required("Password is required").min(8),
       }),
     confirmPassword: yup
       .string()
-      .test("isEdit", "Password is required", function (value) {
-        const { isEdit } = this.parent;
-        if (isEdit) {
-          return true;
-        } else {
-          return value && value.length >= 8;
-        }
+      .when('isEdit', {
+        is: false,
+        then: yup.string().required("Confirm Password is required").min(8),
       }),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
+    unitOfDistance: yup.string().required('Unit of distance is required'),
   })
   .required();
+
   export const alertSchema = yup.object({
     branch: yup.array()
     .required('Select at least one option'), 

@@ -36,6 +36,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     resolver: yupResolver(subUserAccountSchema),
   });
 
+  console.log(errors, "erroe:-")
+
   const onSubmit = async (data) => {
     console.log(data, "this is data");
     if (data.businessUser) {

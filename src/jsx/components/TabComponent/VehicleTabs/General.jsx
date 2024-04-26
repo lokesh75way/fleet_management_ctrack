@@ -46,7 +46,7 @@ const General = ({
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
   const { checkRole, checkUserName } = useStorage();
-  const [tempValue, setTempValue] = useState();
+  
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -87,7 +87,7 @@ const General = ({
       setValue("deviceType", formData?.[0].deviceType);
       setValue("serverAddress", formData?.[0].serverAddress);
       setValue("distanceCounter", formData?.[0].distanceCounter);
-      setValue("unitOfDistance", formData?.[0].unitOfDistance);
+      
       setValue(
         "deviceAccuracyTolerance",
         formData?.[0].deviceAccuracyTolerance
@@ -229,7 +229,6 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
                   setValue("deviceType", newValue.value);
                 }}
                 options={deviceTypeOptions}
@@ -307,7 +306,7 @@ const General = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("secondarySimNumber")} <span className="text-danger">*</span>
+            {t("secondarySimNumber")} 
           </label>
           <CustomInput
             type="number"
@@ -329,7 +328,6 @@ const General = ({
               <Select
                 onChange={(newValue) => {
                   setValue("distanceCounter", newValue.value);
-                  setTempValue("frgefrg");
                 }}
                 options={distanceCounterOptions}
                 ref={ref}
@@ -347,7 +345,7 @@ const General = ({
             <Error errorName={errors.distanceCounter} />
           )}
         </div>
-        <div className="col-xl-6 mb-3">
+        {/* <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("unitOfDistance")}
             <span className="text-danger">*</span>
@@ -375,7 +373,7 @@ const General = ({
           {!getValues("unitOfDistance") && (
             <Error errorName={errors.unitOfDistance} />
           )}
-        </div>
+        </div> */}
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("speedDetection")}
