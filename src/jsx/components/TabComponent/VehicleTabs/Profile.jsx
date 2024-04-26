@@ -427,7 +427,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               </>
             )}
           </div>
-            {/* <Error errorName={errors.distance} /> */}
+            <Error errorName={errors.distanceBaseFuelConsumption} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('durationBasedFuelConsumption')} </label> <span className="text-danger">*</span>
@@ -495,7 +495,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               </>
             )}
           </div>
-            {/* <Error errorName={errors.duration} /> */}
+            <Error errorName={errors.durationBaseFuelConsumptionDurationQuanitty} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">{t('fuelIdlingConsumption')}</label>

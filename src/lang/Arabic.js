@@ -583,5 +583,22 @@ export const arabic = {
       "status": "الحالة",
       "action": "الإجراء",
 
+
+      "personalInformation": "معلومات شخصية",
+  "enterEmailAndPassword": "أدخل عنوان بريدك الإلكتروني وكلمة المرور الخاصة بك.",
+  "login": "تسجيل الدخول",
+  "rememberMe": "تذكرني",
+  "signInWith": "تسجيل الدخول باستخدام",
+  "createAccount": "إنشاء حساب",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "copyrightBy": "حقوق النشر محفوظة لـ",
+  "75way": "75way",
+  "allRightReserved": "جميع الحقوق محفوظة.",
+  "signUp": "سجل",
+  "enterYourPersonalDetail": "أدخل تفاصيلك الشخصية أدناه:",
+  "iAgreeToThe": "أوافق على",
+  "termsOfService": "شروط الخدمة",
+  "privacyPolicy": "سياسة الخصوصية"
+
   }
 }

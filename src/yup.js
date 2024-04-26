@@ -75,6 +75,8 @@ export const vehicleProfileSchema = yup
 
     vehicleCategory: yup.string().required('Vehicle category is required'),
     vinNumber: yup.number().typeError('VIN number must be a number').required(),
+    durationBaseFuelConsumptionDurationQuanitty : yup.number().typeError('This field is required').required(),
+    distanceBaseFuelConsumption : yup.number().typeError('This field is required').required(),
     sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
   })
   .required();
@@ -463,6 +465,7 @@ export const technicianGeneralSchema = yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
+      gender : yup.string().required('This field is required'),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
@@ -482,8 +485,8 @@ export const technicianAddressSchema = yup
           .number()
           .positive("Zip Code must be a positive number")
           .integer("Zip Code must be an integer")
-          .nullable(true)
-          .transform((_, val) => (val ? Number(val) : null)),
+          .transform((_, val) => (val ? Number(val) : null))
+          .required("Please select zipcode "),
         country: yup.string().required("Please select a Country "),
         city: yup.string().required("Please enter a City "),
         street1: yup.string().required("Please enter street1 address "),
@@ -491,16 +494,25 @@ export const technicianAddressSchema = yup
       .required(),
   })
   .required();
-export const technicianLeaveSchema = yup
-  .object({
-    leave: yup
-      .array(
-        yup.object({
-          // leaveType: yup.string().required("Select type of leave "),
-          days: yup.number().required("Enter total number of leaves "),
-        })
-      )
-      .required(),
+export const technicianLeaveSchema = yup.object().shape({
+  noOfDaysCL: yup
+  .number()
+  .typeError("No of Days must be a number")
+  .positive("No of Days must be a positive number")
+  .integer("No of Days must be an integer")
+  .required("No of Days for Casual Leave is required"),
+noOfDays: yup
+  .number()
+  .typeError("No of Days must be a number")
+  .positive("No of Days must be a positive number")
+  .integer("No of Days must be an integer")
+  .required("No of Days for Sick Leave is required"),
+noOfDaysPL: yup
+  .number()
+  .typeError("No of Days must be a number")
+  .positive("No of Days must be a positive number")
+  .integer("No of Days must be an integer")
+  .required("No of Days for Privilege Leave is required"),
   })
   .required();
   

@@ -35,7 +35,7 @@ const Address = ({
             name="address.street1"
             placeholder=""
           />
-          <Error errorName={errors["address.street1"]} />
+         { !getValues('address.street1') && <Error errorName={errors.address?.street1} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -61,7 +61,7 @@ const Address = ({
             name="address.city"
             placeholder=""
           />
-          <Error errorName={errors["address.city"]} />
+          <Error errorName={errors.address?.city} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
@@ -80,7 +80,7 @@ const Address = ({
             }}
             placeholder=""
           />
-          <Error errorName={errors["address.zipCode"]} />
+          <Error errorName={errors.address?.zipCode} />
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
@@ -97,7 +97,7 @@ const Address = ({
             defaultValue={{name: getValues('address.country') }}
           />
           {!getValues("address.country") && (
-            <Error errorName={errors["address.country"]} />
+            <Error errorName={errors.address?.country} />
           )}
         </div>
 

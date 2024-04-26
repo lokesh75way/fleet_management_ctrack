@@ -658,10 +658,22 @@ export const english = {
       "location": "Location",
       "status": "Status",
       "action": "Action",
-    
 
-
-    
+      "personalInformation":"Personal Information",
+      "enterEmailAndPassword": "Enter your e-mail address and your password.",
+      "login" : 'login',
+      "rememberMe":"Remember me",
+      "signInWith":"Sign In With",  
+      "createAccount":" Create an account",
+      "forgotPassword":"Forgot Password?",
+      "copyrightBy":"Copyright by",
+      "75way":"75way",
+      "allRightReserved":"All rights reserved.",
+      "signUp" : "Sign Up",
+      "enterYourPersonalDetail":"Enter your personal details below:",
+      "iAgreeToThe":"I agree to the",
+      "termsOfService":"Terms of Service",
+      "privacyPolicy":"Privacy Policy"
 
 
 
