@@ -61,10 +61,8 @@ const Vehicle = () => {
   // delete function
   const onConfirmDelete = (id) => {
     deleteVehicles(id);
-    // getVehicleData(id);
     const updatedData = tableData.filter((item) => item._id !== id);
     setTableData(updatedData);
-    // setDeleteId(id);
   };
   // Edit function
   const editDrawerOpen = (id) => {
