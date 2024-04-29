@@ -51,7 +51,7 @@ const BusinessTable = ({
           </td>
           <td>
             <Link
-              to={`/company/${item._id}`}
+              to={`/company/${item.businessGroupId?._id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {item.companyCount}
