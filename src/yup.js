@@ -29,10 +29,12 @@ export const vehicleGeneralSchema = yup
       .min(0)
       .max(100)
       .typeError("Device Accuracy Tolerance must be a number"),
-      serverAddress: yup.string().url('Server address must be a valid URL').required(),
-      distanceCounter: yup.string().required('Distance counter is required'),
-      unitOfDistance: yup.string().required('Unit of distance is required'),
-      
+    serverAddress: yup
+      .string()
+      .url("Server address must be a valid URL")
+      .required(),
+    distanceCounter: yup.string().required("Distance counter is required"),
+    unitOfDistance: yup.string().required("Unit of distance is required"),
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -47,18 +49,31 @@ export const vehicleProfileSchema = yup
     registrationNumber: yup
       .string()
       .min(4, "Registration Number must be of 4 digit or more"),
-      passengerSeat: yup
+    passengerSeat: yup
       .number()
       .positive()
       .integer()
       .typeError("Passenger seats must be a number"),
-    distanceCostQuantity: yup.number()
-    .transform((value, originalValue) => originalValue === "" ? null : value)
-    .nullable().positive().integer(),
-    durationCostQuantity: yup.number()
-    .transform((value, originalValue) => originalValue === "" ? null : value)
-    .nullable().positive().integer(),
-    gpsWarranty: yup.number().typeError("Weight Capacity must be a number").required("GPS Warranty is required "),
+    distanceCostQuantity: yup
+      .number()
+      .transform((value, originalValue) =>
+        originalValue === "" ? null : value
+      )
+      .nullable()
+      .positive()
+      .integer(),
+    durationCostQuantity: yup
+      .number()
+      .transform((value, originalValue) =>
+        originalValue === "" ? null : value
+      )
+      .nullable()
+      .positive()
+      .integer(),
+    gpsWarranty: yup
+      .number()
+      .typeError("Weight Capacity must be a number")
+      .required("GPS Warranty is required "),
     weightCapacity: yup
       .number()
       .positive()
@@ -71,13 +86,20 @@ export const vehicleProfileSchema = yup
       .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
-
-
-    vehicleCategory: yup.string().required('Vehicle category is required'),
-    vinNumber: yup.number().typeError('VIN number must be a number').required(),
-    durationBaseFuelConsumptionDurationQuanitty : yup.number().typeError('This field is required').required(),
-    distanceBaseFuelConsumption : yup.number().typeError('This field is required').required(),
-    sleepModeDuration: yup.number().typeError('Sleep mode duration must be a number').required(),
+    vehicleCategory: yup.string().required("Vehicle category is required"),
+    vinNumber: yup.number().typeError("VIN number must be a number").required(),
+    durationBaseFuelConsumptionDurationQuanitty: yup
+      .number()
+      .typeError("This field is required")
+      .required(),
+    distanceBaseFuelConsumption: yup
+      .number()
+      .typeError("This field is required")
+      .required(),
+    sleepModeDuration: yup
+      .number()
+      .typeError("Sleep mode duration must be a number")
+      .required(),
   })
   .required();
 
@@ -86,7 +108,7 @@ export const vehicleDocumentSchema = yup
     documents: yup.array().of(
       yup.object().shape({
         documentType: yup.string().required("This field is required"),
-        file: yup.string()
+        file: yup.string(),
       })
     ),
   })
@@ -114,72 +136,79 @@ export const resetPassword = yup.object().shape({
     .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
 });
 
-export const companyAccountSchema = yup
-  .object({
-    // branch: yup.string().required(),
-    businessGroupId: yup.string().required("Please select an option"),
-    companyName: yup.string().required("Please enter a Company Name"),
-    userName: yup.string().required("Please enter a User Name"),
-    country: yup.string().required("Please select a Country"),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
-    email: yup.string().email().required("Email is required "),
-    zipCode: yup
-      .number()
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    helpDeskEmail: yup
-      .string()
-      .email()
-      .required("Help Desk Email is required "),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+export const companyAccountSchema = yup.object({
+  // branch: yup.string().required(),
+  businessGroupId: yup.string().required("Please select an option"),
+  companyName: yup.string().required("Please enter a Company Name"),
+  logo: yup
+    .mixed()
+    .test("fileType", "Only JPG or PNG files are allowed", (value) => {
+      return true;
+    }),
+  tradeLicenseNumber: yup
+    .string()
+    .required("Please enter a Trade License Number"),
+  officeNumber: yup.string().required("Please enter an Office Number"),
+  country: yup.string().required("Please select a Country"),
+  state: yup.string().required("Please select a State"),
+  email: yup.string().required("Please enter email"),
+  city: yup.string().required("Please enter a City"),
+  dateFormat: yup.string().required("Please select a Date Format"),
+  timeFormat: yup.string().required("Please select a Time Format"),
+  timezone: yup.string().required("Please select a Timezone"),
+  userName: yup.string().required("Please enter a Username"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(20, "Password must be at most 20 characters"),
+  // Add validation for user details within formData array
+  userInfo: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required("Please enter a Name"),
+      designation: yup.string().required("Please enter a Designation"),
+      mobileNumber: yup
+        .string()
+        .required("Please enter a Mobile Number")
+        .matches(
+          /^[0-9]{5,15}$/,
+          "Phone number must be between 5 and 15 digits"
+        ),
+      email: yup.string().email().required("Email is required"),
+    })
+  ),
+});
 
-    mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits")
-      .required("Mobile Number is required"),
-
-    helpDeskTelephoneNumber: yup
-      .string()
-      .required("Help Desk Telephone Number is required")
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
-
-    logo: yup
-      .mixed()
-      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
-      }),
-  })
-  .required();
-
-export const branchAccountSchema = yup
-  .object({
-    branchName: yup.string().required(),
-    companyId: yup.string().required("Company Name is required "),
-    businessGroupId: yup.string().required("Business Group Name is required "),
-    country: yup.string().required("Please select a Country"),
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
-
-    newPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
-  })
-  .required();
+export const branchAccountSchema = yup.object({
+  branchName: yup.string().required(),
+  companyId: yup.string().required("Company Name is required "),
+  businessGroupId: yup.string().required("Business Group Name is required "),
+  tradeLicenseNumber: yup
+    .string()
+    .required("Please enter a Trade License Number"),
+    officeNumber: yup.string().required("Please enter an Office Number"),
+  country: yup.string().required("Please select a Country"),
+  state: yup.string().required("Please select a State"),
+  email: yup.string().required("Please enter email"),
+  city: yup.string().required("Please enter a City"),
+  dateFormat: yup.string().required("Please select a Date Format"),
+  timeFormat: yup.string().required("Please select a Time Format"),
+  timezone: yup.string().required("Please select a Timezone"),
+  // Add validation for user details within formData array
+  userInfo: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required("Please enter a Name"),
+      designation: yup.string().required("Please enter a Designation"),
+      mobileNumber: yup
+        .string()
+        .required("Please enter a Mobile Number")
+        .matches(
+          /^[0-9]{5,15}$/,
+          "Phone number must be between 5 and 15 digits"
+        ),
+      email: yup.string().email().required("Email is required"),
+    })
+  ),
+});
 export const adminProfileAccountSchema = yup
   .object({
     userName: yup.string().required("Please enter a User Name"),
@@ -217,52 +246,42 @@ export const adminProfileAccountSchema = yup
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
   })
   .required();
-export const businessGroupAccountSchema = yup
-  .object({
-    // branch: yup.string().required(),
-    groupName: yup.string().required("Please enter a Business Group Name"),
-    userName: yup.string().required("Please enter a User Name"),
-    country: yup.string().required("Please select a Country"),
-    city: yup.string().required("Please enter a City "),
-    street1: yup.string().required("Please enter street1 address "),
-    zipCode: yup
-      .number()
-      .positive("Zip Code must be a positive number")
-      .integer("Zip Code must be an integer")
-      .nullable(true)
-      .transform((_, val) => (val ? Number(val) : null)),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
-    helpDeskEmail: yup
-      .string()
-      .email()
-      .required("Help Desk Email is required "),
-    email: yup.string().email().required("Email is required "),
 
-    mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
-    helpDeskTelephoneNumber: yup
-      .string()
-      .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
-    logo: yup
-      .mixed()
-      .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        // console.log(value);
-        // if (!value[0]) return true;
-        if (typeof value === "string") {
-          return true;
-        }
-
-        // // if(typeof value === 'string') return true;
-        // const extension = value[0].name.split(".").pop().toLowerCase();
-        // return extension === "jpg" || extension === "png";
-        return true
-      }),
-  })
-  .required();
+export const businessGroupAccountSchema = yup.object({
+  // Add validation rules for each field
+  groupName: yup.string().required("Please enter a Business Group Name"),
+  tradeLicenseNumber: yup
+    .string()
+    .required("Please enter a Trade License Number"),
+  officeNo: yup.string().required("Please enter an Office Number"),
+  country: yup.string().required("Please select a Country"),
+  state: yup.string().required("Please select a State"),
+  email: yup.string().required("Please enter email"),
+  city: yup.string().required("Please enter a City"),
+  dateFormat: yup.string().required("Please select a Date Format"),
+  timeFormat: yup.string().required("Please select a Time Format"),
+  timezone: yup.string().required("Please select a Timezone"),
+  userName: yup.string().required("Please enter a Username"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(20, "Password must be at most 20 characters"),
+  // Add validation for user details within formData array
+  userInfo: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required("Please enter a Name"),
+      designation: yup.string().required("Please enter a Designation"),
+      mobileNumber: yup
+        .string()
+        .required("Please enter a Mobile Number")
+        .matches(
+          /^[0-9]{5,15}$/,
+          "Phone number must be between 5 and 15 digits"
+        ),
+      email: yup.string().email().required("Email is required"),
+    })
+  ),
+});
 
 export const businessGroupSettingSchema = yup
   .object({
@@ -272,7 +291,7 @@ export const businessGroupSettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        return true;
       }),
   })
   .required();
@@ -285,7 +304,7 @@ export const companySettingSchema = yup
     file: yup
       .mixed()
       .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-        return true
+        return true;
       }),
   })
   .required();
@@ -359,7 +378,7 @@ export const driverDocumentSchema = yup
     documents: yup.array().of(
       yup.object().shape({
         documentType: yup.string().required("This field is required"),
-        file: yup.string()
+        file: yup.string(),
       })
     ),
   })
@@ -396,17 +415,18 @@ export const subUserAccountSchema = yup
     country: yup.string().required("Please select a Country"),
   })
   .required();
-  export const alertSchema = yup.object({
-    branch: yup.array()
-    .required('Select at least one option'), 
-    basedOn: yup.string().required('Choose an option'),
-    object: yup.string().required('Select an option'),
-    alertName: yup.string().required('Alert Name is required'),
-    alertType: yup.string().required('Select an Alert Type'),
-    value: yup.string().required('Choose an Alert Value'),
-    validDays: yup.string().required('Choose Valid day options'),
-    severity: yup.string().required('Choose Severity options'),
-  }).required();
+export const alertSchema = yup
+  .object({
+    branch: yup.array().required("Select at least one option"),
+    basedOn: yup.string().required("Choose an option"),
+    object: yup.string().required("Select an option"),
+    alertName: yup.string().required("Alert Name is required"),
+    alertType: yup.string().required("Select an Alert Type"),
+    value: yup.string().required("Choose an Alert Value"),
+    validDays: yup.string().required("Choose Valid day options"),
+    severity: yup.string().required("Choose Severity options"),
+  })
+  .required();
 export const expenseSchema = yup
   .object({
     branch: yup.string().required("Select a Branch "),
@@ -418,7 +438,7 @@ export const expenseSchema = yup
       .typeError("Amount must be a number"),
     fromDate: yup.date(),
     toDate: yup.date(),
-    expenseDate: yup.date().required('Expense date is required'),
+    expenseDate: yup.date().required("Expense date is required"),
     referenceNumber: yup
       .number()
       .required("Reference Number a required ")
@@ -427,7 +447,10 @@ export const expenseSchema = yup
       .number()
       .typeError("Odometer Number must be a number")
       .optional(),
-    workHour : yup.string().typeError("WorkHour Number must be valid").optional(),
+    workHour: yup
+      .string()
+      .typeError("WorkHour Number must be valid")
+      .optional(),
     //  userName: yup.string().required("User Name is required "),
   })
   .required();
@@ -452,7 +475,7 @@ export const geofenceMapSchema = yup
     contactNumber: yup
       .string()
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
-      location: yup.array().required('Geofence location required')  
+    location: yup.array().required("Geofence location required"),
   })
   .required();
 export const technicianGeneralSchema = yup
@@ -465,7 +488,7 @@ export const technicianGeneralSchema = yup
       .number()
       .typeError("Technician Number must be a number")
       .required("Technician Number is required "),
-      gender : yup.string().required('This field is required'),
+    gender: yup.string().required("This field is required"),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
@@ -494,28 +517,30 @@ export const technicianAddressSchema = yup
       .required(),
   })
   .required();
-export const technicianLeaveSchema = yup.object().shape({
-  noOfDaysCL: yup
-  .number()
-  .typeError("No of Days must be a number")
-  .positive("No of Days must be a positive number")
-  .integer("No of Days must be an integer")
-  .required("No of Days for Casual Leave is required"),
-noOfDays: yup
-  .number()
-  .typeError("No of Days must be a number")
-  .positive("No of Days must be a positive number")
-  .integer("No of Days must be an integer")
-  .required("No of Days for Sick Leave is required"),
-noOfDaysPL: yup
-  .number()
-  .typeError("No of Days must be a number")
-  .positive("No of Days must be a positive number")
-  .integer("No of Days must be an integer")
-  .required("No of Days for Privilege Leave is required"),
+export const technicianLeaveSchema = yup
+  .object()
+  .shape({
+    noOfDaysCL: yup
+      .number()
+      .typeError("No of Days must be a number")
+      .positive("No of Days must be a positive number")
+      .integer("No of Days must be an integer")
+      .required("No of Days for Casual Leave is required"),
+    noOfDays: yup
+      .number()
+      .typeError("No of Days must be a number")
+      .positive("No of Days must be a positive number")
+      .integer("No of Days must be an integer")
+      .required("No of Days for Sick Leave is required"),
+    noOfDaysPL: yup
+      .number()
+      .typeError("No of Days must be a number")
+      .positive("No of Days must be a positive number")
+      .integer("No of Days must be an integer")
+      .required("No of Days for Privilege Leave is required"),
   })
   .required();
-  
+
 export const classifyTripsSchema = yup
   .object({
     startTime: yup.string().required("Trip start Location is required "),

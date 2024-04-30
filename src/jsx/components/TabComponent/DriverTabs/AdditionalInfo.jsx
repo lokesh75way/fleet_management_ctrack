@@ -9,6 +9,7 @@ import Error from "../../Error/Error";
 import { useParams,useLocation } from "react-router-dom";
 import '../../../../scss/pages/_driver-tracking.scss';
 import {useTranslation} from 'react-i18next'
+import dayjs from "dayjs";
 
 const AdditionalInfo = ({
   setValue,
@@ -73,6 +74,29 @@ const AdditionalInfo = ({
   minDate.setFullYear(minDate.getFullYear() - 100); 
   const maxDate = new Date();
   // console.log(dValues, "checkbox", date, getValues('dateOfBirth'))
+
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+
+  const calculateAge = (dateOfBirth) => {
+    if (!dateOfBirth) return null; 
+
+    const today = dayjs();
+    const birthDate = dayjs(dateOfBirth);
+    const age = today.diff(birthDate, 'year');
+
+    return age;
+  }
+
+    const handleDateOfBirthChange = (date) => {
+      setDateOfBirth(date);
+      const age = calculateAge(date);
+      setValue("age", age); 
+    };
+
+      // Custom validation rule to check if date A is less than date B
+  const dateBeforeValidator = (a, b) => {
+    return dayjs(a).isBefore(dayjs(b));
+  };
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -84,16 +108,12 @@ const AdditionalInfo = ({
             render={({ value, name }) => (
               <DatePicker
               selected={getValues("dateOfBirth")? new Date(getValues("dateOfBirth")) : new Date()}
-                // selected={date.dateOfBirth || new Date()}
                 minDate={minDate}
                 maxDate={maxDate}
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
-                  // setDate({
-                  //   ...date,
-                  //   dateOfBirth: newValue,
-                  // });
                   setValue("dateOfBirth", newValue);
+                  handleDateOfBirthChange(newValue)
                 }}
                 showYearDropdown
                 scrollableYearDropdown={true}
@@ -114,7 +134,8 @@ const AdditionalInfo = ({
             label="Age"
             name="age"
             placeholder=""
-            // defaultValue={filteredUserData[0]?.age || " "}
+            value={getValues("age")} 
+            disabled={true}
           />
           <Error errorName={errors.age} />
         </div>
@@ -129,6 +150,7 @@ const AdditionalInfo = ({
                 className="form-control customDateHeight"
                 onChange={(newValue) => {
                   setValue("dateOfJoining", newValue)}}
+                  maxDate={getValues("dateOfLeaving")}
               />
             )}
           />
@@ -145,6 +167,7 @@ const AdditionalInfo = ({
                 onChange={(newValue) => {
                   
                   setValue("dateOfLeaving", newValue)}}
+                  minDate={getValues("dateOfJoining")}
               />
             )}
           />
@@ -255,10 +278,10 @@ const AdditionalInfo = ({
                     className="form-control customDateHeight"
                     onChange={(newValue) =>
                       {
-                        
                         setValue("licenseIssueDate", newValue)
                       }
                     }
+                    maxDate={getValues("licenseExpiryDate")}
                   />
                 )}
               />
@@ -276,6 +299,7 @@ const AdditionalInfo = ({
                     onChange={(newValue) =>{
                       setValue("licenseExpiryDate", newValue)
                     }}
+                    minDate={getValues("licenseIssueDate")}
                   />
                 )}
               />

@@ -8,6 +8,7 @@ import CustomInput from "../../Input/CustomInput";
 import "../../../../scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 const Address = ({
   register,
@@ -20,6 +21,7 @@ const Address = ({
   defaultCountry,
 }) => {
   const { t } = useTranslation();
+  const {id} = useParams();
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -94,7 +96,7 @@ const Address = ({
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
-            defaultValue={{name: getValues('address.country') }}
+            defaultValue={id && {name: getValues('address.country') }}
           />
           {!getValues("address.country") && (
             <Error errorName={errors.address?.country} />

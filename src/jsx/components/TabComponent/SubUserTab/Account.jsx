@@ -21,6 +21,7 @@ import BranchDropdown from "../../BranchDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import VehicleDropdown from "../../VehicleDropdown";
 
 const Account = ({
   handleNext,
@@ -275,28 +276,47 @@ const Account = ({
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("branch")}</label>
           <Controller
-            name="Branch"
+            name="branchIds"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
-              key={companyId}
-              companyId={companyId}
+              <BranchDropdown
               onChange={(newValue) => {
-                setValue("Branch", newValue.value);
-                setValue("branchIds", newValue.value);
-              }
-              }
+                const newArray = newValue.map((temp)=> temp.value)
+                setValue("branchIds", newArray);
+              }}
               value={value}
               customStyles={customStyles}
               ref={ref}
-              isDisabled={!companyId}
+              companyId={companyId}
               name={name}
             />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">{t("vehicle")}</label>
+          <Controller
+            name="vehicleIds"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <VehicleDropdown
+              onChange={(newValue) => {
+                const newArray = newValue.map((temp)=> temp.value)
+                setValue("vehicleIds", newArray);
+              }}
+              value={value}
+              customStyles={customStyles}
+              ref={ref}
+              name={name}
+            />
+            )}
+          />
+          {!getValues("Branch") && <Error errorName={errors.parent} />}
+        </div>
+
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("email")} <span className="text-danger">*</span>

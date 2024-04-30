@@ -49,7 +49,7 @@ const BranchDropdown = ({
       styles={customStyles}
       name={name}
       ref={ref}
-      isDisabled={isDisabled || !!companyId}
+      isDisabled={isDisabled}
       isMulti
     />
   );

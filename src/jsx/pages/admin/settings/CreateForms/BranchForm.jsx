@@ -20,8 +20,8 @@ import { editCompany } from "../../../../../services/api/CompanyServices";
 const BranchForm = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t("newBranch"), t("settings"), t("changePassword")];
-  const component = [MyAccount, UserSetting, ManagePassword];
+  const tabHeading = [t("newBranch"), t("changePassword")];
+  const component = [MyAccount, ManagePassword];
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -38,8 +38,16 @@ const BranchForm = () => {
     control,
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      userInfo: [{
+        name:'',
+        designation : '', 
+        mobileNumber :null,
+        email:'',
+      }],
+    },
     resolver: yupResolver(
-      activeIndex === 0 ? branchAccountSchema : companySettingSchema
+       branchAccountSchema 
     ),
   });
   

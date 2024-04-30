@@ -49,7 +49,7 @@ const FileUploader = ({
   };
 
   return (
-    <div>
+    <div className="d-flex">
       <div>
         <input
           type="file"
@@ -64,7 +64,15 @@ const FileUploader = ({
           accept="image/*"
         />
       </div>
-      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={fileLink}>here</a> </small>}
+      {fileLink && 
+     ( 
+      <>
+     <small >Preview - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={fileLink}>here</a> </small> 
+       <img height={70} width={70} src={fileLink} alt="logo"/>
+      </>
+       
+       )
+      }
     </div>
   );
 };

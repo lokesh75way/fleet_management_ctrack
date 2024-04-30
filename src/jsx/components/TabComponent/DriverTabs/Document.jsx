@@ -204,7 +204,7 @@ const Document = ({
                     <Error errorName={errors?.documents?.[index]?.issueDate} />
                   )}
                 </div>
-                <div className="col-xl-3 d-flex flex-column  mb-2">
+                <div className="col-xl-3 d-flex flex-column mb-2">
                   <label className="form-label">{t("expiryDate")}</label>
                   <Controller
                     name={`documents.${index}.expireDate`}

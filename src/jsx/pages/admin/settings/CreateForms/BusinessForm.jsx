@@ -30,15 +30,15 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   const { t } = useTranslation();
 
   const [activeIndex, setActiveIndex] = useState(0);
-  let tabHeading = [t("newBusinessGroup"), t("settings"), t("changePassword")];
-  let component = [MyAccount, UserSetting, ManagePassword];
+  let tabHeading = [t("newBusinessGroup"), t("changePassword")];
+  let component = [MyAccount, ManagePassword];
   const navigate = useNavigate();
 
   const { id } = useParams();
 
   if (!id) {
-    tabHeading = [t("newBusinessGroup"), t("settings")];
-    component = [MyAccount, UserSetting];
+    tabHeading = [t("newBusinessGroup")];
+    component = [MyAccount];
   }
 
   const totalTabs = tabHeading.length;
@@ -52,26 +52,31 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     reset,
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      userInfo: [{
+        name:'',
+        designation : '', 
+        mobileNumber :null,
+        email:'',
+      }],
+    },
     resolver: yupResolver(
-      activeIndex === 1
-        ? businessGroupSettingSchema
-        : businessGroupAccountSchema
+    businessGroupAccountSchema
     ),
   });
 
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2 : 1)) {
+    // console.log("inside submt")
+    if (activeIndex === totalTabs - (id ? 2:1)) {
       try {
         if (id) {
-          delete data["oldPassword"];
-          delete data["newPassword"];
-          delete data["retypePassword"];
-          if (data.logo.length === 0) {
-            delete data.logo;
-          }
-          if (data.file.length === 0) {
-            delete data.file;
-          }
+          console.log("inside submt")
+          // delete data["oldPassword"];
+          // delete data["newPassword"];
+          // delete data["retypePassword"];
+          // if (data.logo.length === 0) {
+          //   delete data.logo;
+          // }
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
           navigate("/business");
@@ -94,7 +99,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         console.log(error);
         notifyError("Some error occured !!");
       }
-    } else if (activeIndex === 2) {
+    } else if (activeIndex === 1) {
       try {
         const passwordData = {
           password: data.newPassword,

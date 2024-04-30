@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { storageCapacityOptions } from "../VehicleTabs/Options";
+import {
+  dateFormatOptions,
+  storageCapacityOptions,
+  timeFormatOptions,
+} from "../VehicleTabs/Options";
 import FileUploader from "../../../../components/FileUploader";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import TimezoneSelect from "react-timezone-select";
+import { IMAGES, SVGICON } from "../../../constant/theme";
+import CredentialsInput from "../../CredentialsInput";
+import { get } from "react-scroll/modules/mixins/scroller";
+import FormField from "../../FormField";
+
 const MyAccount = ({
   data,
   setValue,
@@ -21,6 +31,10 @@ const MyAccount = ({
   errors,
   control,
 }) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "userInfo",
+  });
   const [loading, setLoading] = useState(false);
   const [defaultCountry, setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
@@ -31,10 +45,15 @@ const MyAccount = ({
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const [logo, setLogo] = useState(null)
+  const [logo, setLogo] = useState(null);
   const [dValues, setDvalues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedTimezone, setSelectedTimezone] = useState(
+    dValues?.businessGroupId?.timezone ||
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
   const { id } = useParams();
+  // const [formData, setFormData] = useState([{}]); // State to store form data
 
   const customStyles = {
     control: (base) => ({
@@ -46,9 +65,10 @@ const MyAccount = ({
     if (id) {
       const data = location.state[0];
       setDvalues(data);
+     
     }
   }, [id]);
-
+console.log(dValues,"item")
   useEffect(() => {
     if (dValues && id) {
       setValue("groupName", dValues.businessGroupId?.groupName);
@@ -65,26 +85,45 @@ const MyAccount = ({
         dValues.businessGroupId?.helpDeskTelephoneNumber
       );
       setValue("street1", dValues.businessGroupId?.street1);
-      setValue('logo', dValues?.businessGroupId?.logo)
+      setValue("tradeLicenseNumber", dValues.businessGroupId?.tradeLicenseNumber);
+      setValue("officeNo", dValues.businessGroupId?.tradeLicenseNumber);
+      setValue("logo", dValues?.businessGroupId?.logo);
       setLogo(dValues?.businessGroupId?.logo);
       setValue("street2", dValues.businessGroupId?.street2);
       setValue("capacity", dValues.businessGroupId?.capacity);
       setValue("contactPerson", dValues.businessGroupId?.contactPerson);
       setValue("faxNumber", dValues?.businessGroupId?.faxNumber);
       setValue("zipCode", dValues.businessGroupId?.zipCode);
-      setValue("city", dValues.businessGroupId?.city);
+      setValue("city", dValues.city);
       setDefaultCountry({ name: dValues.country });
       setValue("country", dValues.country);
       setSelectStateName({ name: dValues.state || "" });
       setValue("state", dValues.state || "");
+      setValue("dateFormat", dValues.businessGroupId?.dateFormat);
+      setValue("timeFormat", dValues.businessGroupId?.timeFormat);
+      setValue("timezone",dValues?.businessGroupId?.timezone)
+      setValue('userInfo', dValues?.userInfo)
     } else {
       setValue("capacity", storageCapacityOptions[1].value);
     }
   }, [dValues, id]);
+
+  const handleAddForm = () => {
+    append({
+      name: "",
+      designation: "",
+      mobileNumber: null,
+      email: "",
+    });
+  };
+
+  console.log(errors, "erros:-", getValues());
+
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3 ">
+      <div className="row" style={{ width: "85%", margin: "auto" }}>
+      
+        <div className="col-xl-4 mb-3 ">
           <label className="form-label">
             {t("businessGroupName")} <span className="text-danger">*</span>
           </label>
@@ -98,22 +137,51 @@ const MyAccount = ({
           />
           <Error errorName={errors.userName} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-4 mb-3 ">
           <label className="form-label">
-            {t("username")} <span className="text-danger">*</span>
+            {t("tradeLicenseNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
-            label="userName"
-            name="userName"
+            label="tradeLicenseNumber"
+            name="tradeLicenseNumber"
             placeholder=""
-            defaultValue={getValues("userName")}
-            disabled={id ? true : false}
+            defaultValue={getValues("tradeLicenseNumber")}
           />
-          <Error errorName={errors.userName2} />
+          <Error errorName={errors.userName} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-4 mb-3">
+          <label className="form-label">{t("uploadLogo")}</label>
+          <FileUploader
+            setValue={setValue}
+            register={register}
+            label="Business Group Logo"
+            name="logo"
+            getValue={getValues}
+            setLoading={setLoading}
+            loading={loading}
+            link={logo}
+          />
+          {loading && <small>Uploading...</small>}
+
+          <Error errorName={errors.logo} />
+        </div>
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">
+            {t("officeNo")} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="officeNo"
+            name="officeNo"
+            placeholder=""
+            defaultValue={getValues("officeNo")}
+          />
+          <Error errorName={errors.officeNo} />
+        </div>
+        <div className="col-xl-4 mb-3 ">
           <label className="form-label">
             {t("email")}
             <span className="text-danger">*</span>
@@ -121,113 +189,17 @@ const MyAccount = ({
           <CustomInput
             type="email"
             register={register}
+            label="Email"
             name="email"
-            label="email"
             placeholder=""
-            defaultValue={getValues("email")}
+            defaultValue={
+              getValues('email')
+            }
             disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
         </div>
-        {!id && (
-          <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t("password")} <span className="text-danger">*</span>
-          </label>
-          <div className="position-relative">
-            <CustomInput
-              type={showPassword ? "text" : "password"}
-              register={register}
-              label="Password"
-              name="password"
-              placeholder=""
-            />
-            <span
-              className="showPasswordIcon"
-              onClick={() => {
-                setShowPassword(!showPassword);
-              }}
-            >
-              {showPassword ? <LuEyeOff /> : <LuEye />}
-            </span>
-          </div>
-          <Error errorName={errors.password} />
-        </div>
-        )}
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t("helpDeskEmail")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="email"
-            register={register}
-            name="helpDeskEmail"
-            label="Help Desk Email"
-            placeholder=""
-            defaultValue={getValues("helpDeskEmail")}
-          />
-          <Error errorName={errors.helpDeskEmail} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t("helpDeskTelephoneNumber")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            className="form-control"
-            label="Help Desk Telephone Number"
-            name="helpDeskTelephoneNumber"
-            placeholder=""
-            min="0"
-            onInput={(e) => {
-              const temp = Math.max(0, e.target.value);
-              e.target.value = temp < 1 ? "" : temp;
-            }}
-            defaultValue={getValues("helpDeskTelephoneNumber")}
-          />
-          <Error errorName={errors.helpDeskTelephoneNumber} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-            {t("mobileNumber")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            name="mobileNumber"
-            label="Mobile Number"
-            placeholder=""
-            min="0"
-            onInput={(e) => {
-              const temp = Math.max(0, e.target.value);
-              e.target.value = temp < 1 ? "" : temp;
-            }}
-            defaultValue={getValues("mobileNumber")}
-          />
-          <Error errorName={errors.mobileNumber} />
-        </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t("whatsappContactNumber")}</label>
-          <CustomInput
-            type="number"
-            register={register}
-            className="form-control"
-            label="Whatsapp Contact Number"
-            name="whatsappContactNumber"
-            placeholder=""
-            min="0"
-            onInput={(e) => {
-              const temp = Math.max(0, e.target.value);
-              e.target.value = temp < 1 ? "" : temp;
-            }}
-            defaultValue={getValues("whatsappContactNumber")}
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-4 mb-3">
           <label className="form-label">
             {t("country")}
             <span className="text-danger">*</span>
@@ -248,7 +220,7 @@ const MyAccount = ({
         </div>
         <div
           className={`${
-            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
+            isStateDisabled ? "col-xl-4 mb-3 pe-none" : "col-xl-4 mb-3"
           }`}
         >
           <label className="form-label">{t("state")}</label>
@@ -266,7 +238,7 @@ const MyAccount = ({
             />
           </div>
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-4 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("city")}
             <span className="text-danger">*</span>
@@ -281,121 +253,104 @@ const MyAccount = ({
           />
           <Error errorName={errors.city} />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("zipCode")}
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            label="Zip Code"
-            name="zipCode"
-            placeholder=""
-            min="0"
-            onInput={(e) => {
-              const temp = Math.max(0, e.target.value);
-              e.target.value = temp < 1 ? "" : temp;
-            }}
-            defaultValue={getValues("zipCode")}
-          />
-          <Error errorName={errors.zipCode} />
-        </div>
-
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t("storageCapacity")}</label>
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("dateFormat")}</label>
           <Controller
-            name="capacity"
+            name="dateFormat"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("capacity", newValue.value)}
-                options={storageCapacityOptions}
+                onChange={(newValue) => setValue("dateFormat", newValue?.value)}
+                options={dateFormatOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{ label: value, value }}
-                // def={storageCapacityOptions[0]}
+                value={{ value, label: value }}
               />
             )}
           />
-
-          <p style={{ fontStyle: "italic" }}>
-            {t("forMoreThan120DaysPlease")}
-            <a href="#" class="link-primary">
-              {t("contact")}
-            </a>{" "}
-            {t("yourAccountManager")}
-          </p>
+          <Error errorName={errors.dateFormat} />
         </div>
 
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("street1")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Street1"
-            name="street1"
-            placeholder=""
-            defaultValue={getValues("street1")}
-          />
-          <Error errorName={errors.street1} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("street2")}
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Street2"
-            name="street2"
-            placeholder=""
-            defaultValue={getValues("street2")}
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("timeFormat")}</label>
+          <Controller
+            name="timeFormat"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("timeFormat", newValue.value)}
+                options={timeFormatOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={timeFormatOptions[0]}
+              />
+            )}
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t("contactPerson")}</label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Contact Person"
-            name="contactPerson"
-            placeholder=""
-            defaultValue={getValues("contactPerson")}
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("timeZone")} </label>
+          <Controller
+            name="timezone"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <TimezoneSelect
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
+                }}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={selectedTimezone}
+              />
+            )}
           />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("faxNumber")}
-          </label>
-          <CustomInput
-            type="number"
-            register={register}
-            label="Fax Number"
-            name="faxNumber"
-            placeholder=""
-            defaultValue={getValues("faxNumber")}
-          />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">{t("uploadLogo")}</label>
-          <FileUploader
-            setValue={setValue}
-            register={register}
-            label="Business Group Logo"
-            name="logo"
-            getValue={getValues}
-            setLoading={setLoading}
-            loading={loading}
-            link={logo}
-          />
-          {loading && <small>Uploading...</small>}
+       {/* <div className="col-xl-4 mb-3 ">
+                <img key={logo} height={100} width={100} src={logo ? logo : IMAGES.Tab1} alt="logo"/>
+        </div> */}
 
-          <Error errorName={errors.logo} />
+        <CredentialsInput
+          heading="Business Admin Login"
+          register={register}
+          errors={errors}
+          id={id}
+          getValues={getValues}
+        />
+
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "start",
+            margin: "2rem 0",
+          }}
+        >
+          <Button
+            type="button"
+            onClick={handleAddForm}
+            style={{ width: "10%" }}
+          >
+            {" "}
+            ADD
+          </Button>
         </div>
+        {fields.map((field, index) => (
+          <FormField
+            key={field.id}
+            field={field}
+            index={index}
+            register={register}
+            getValues={getValues}
+            errors={errors}
+            fields={fields}
+            remove={remove}
+            id={id}
+          />
+        ))}
       </div>
       <div
         style={{
@@ -413,7 +368,7 @@ const MyAccount = ({
         >
           {" "}
           {/* {t('Next')} */}
-          Next
+          submit
         </Button>
       </div>
     </div>
