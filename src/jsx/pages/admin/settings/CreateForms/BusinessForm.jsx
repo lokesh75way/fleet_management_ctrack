@@ -66,23 +66,16 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
   });
 
   const onSubmit = async (data) => {
-    // console.log("inside submt")
     if (activeIndex === totalTabs - (id ? 2:1)) {
       try {
         if (id) {
-          console.log("inside submt")
-          // delete data["oldPassword"];
-          // delete data["newPassword"];
-          // delete data["retypePassword"];
-          // if (data.logo.length === 0) {
-          //   delete data.logo;
-          // }
+      
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
           navigate("/business");
           return;
         } else {
-          // console.log(data)
+       
           if (data.logo && data.logo.length === 0) {
             delete data.logo;
           }

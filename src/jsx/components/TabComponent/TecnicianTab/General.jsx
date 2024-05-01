@@ -36,21 +36,7 @@ const General = ({
   minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
   const maxDate = new Date();
 
-  // console.log(date, "thisisdate")
-  console.log(
-    getValues("dateOfBirth"),
-    "birthdate",
-    new Date(getValues("dateOfBirth")),
-    date
-  );
-  // useEffect(() => {
-  //   if(getValues('dateOfBirth')&&getValues('dateOfJoin'))
-  //   setDate(prevState => ({
-  //     ...prevState,
-  //     dateOfBirth: new Date(getValues('dateOfBirth')),
-  //     dateOfJoin: new Date(getValues('dateOfJoin'))
-  //   }));`
-  // }, [id]);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>

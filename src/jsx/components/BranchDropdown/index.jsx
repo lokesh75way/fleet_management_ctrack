@@ -13,7 +13,6 @@ const BranchDropdown = ({
   ref,
   isMulti = true,
 }) => {
-    console.log(companyId, "calue")
   const [dropDownOptions, setdropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
   const { page } = usePagination();

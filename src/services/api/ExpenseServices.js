@@ -4,7 +4,6 @@ initAxios();
 
 export const getExpenses = async (pageNo=1) => {
   const { data } = await axios.get(`/expenses?page=${pageNo}&limit=${10}`);
-  console.log(data.data.data, "ko:-")
   return { data: data.data.data, totalLength: data.data.totalCount };
 };
 

@@ -70,7 +70,6 @@ const Company = () => {
         setDropdownDisable(true);
         const businessId = userDetails?.user?.businessGroupId[0]?._id;
         responseData = await getCompany(page, businessId);
-        // console.log({ responseData });
       }
       const { data, success, totalCount } = responseData;
       const permissions = JSON.parse(localStorage.getItem("permission"));
@@ -91,7 +90,6 @@ const Company = () => {
   },[id])
 
   const handleChangeBusinessGroup = (selectedOption) => {
-    console.log("this is the selected options", selectedOption);
     setFilter(selectedOption);
     setPage(1);
     fetchAllCompany(1, selectedOption.value);
@@ -132,7 +130,6 @@ const Company = () => {
   };
   const editDrawerOpen = (_id) => {
     const data = tableData.filter((item) => item._id === _id);
-    console.log(data);
     navigate(`edit/${_id}`, { state: { formData: data } });
   };
   const { can, setUserPermission } = usePermissions();

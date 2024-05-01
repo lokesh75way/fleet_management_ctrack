@@ -19,7 +19,6 @@ const VehicleDropdown = ({
     useEffect(() => {
         const fetchVehicles = async () => {
             const response = await getVehicles(page, branchids ? branchids : undefined);
-            console.log(response.data,"dsis");
             const vehicleOptions = response.data.map((item) => ({
                 label: item?.vehicleName,
                 value: item?._id,

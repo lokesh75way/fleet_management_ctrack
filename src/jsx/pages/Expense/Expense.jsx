@@ -69,7 +69,6 @@ const Expense = (ref) => {
   const getAllExpenses = async()=>{
     try {
       const {data, success, totalLength} = await getExpenses(page);
-      // console.log(data,"expense")
       setTableData(data);
       setCount(totalLength)
     } catch (error) {
@@ -80,7 +79,6 @@ const Expense = (ref) => {
     getAllExpenses();
   },[])
 
-  console.log(errors, "ds:-", getValues())
 
 
   const onConfirmDelete = async (id) => {

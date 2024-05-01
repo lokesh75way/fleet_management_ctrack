@@ -30,7 +30,6 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
     label: item.email,
     value: item.id,
   }));
-  console.log("In profile",data)
   
   return (
     <div className="p-4">
@@ -52,7 +51,6 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <label className="form-label">Country<span className="text-danger">*</span></label>
           <CountrySelect
             onChange={(e) => {
-              console.log(e)
               setCountryid(e.id);
               setValue("country", e.id);
             }}

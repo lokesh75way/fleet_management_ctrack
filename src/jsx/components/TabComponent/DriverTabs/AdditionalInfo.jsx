@@ -54,7 +54,7 @@ const AdditionalInfo = ({
 
   useEffect(() => {
     if (dValues && id) {
-      console.log("this:-", dValues)
+      
       setValue("age", dValues.age);
       setValue("drivingExperience", dValues?.drivingExperience);
       setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
@@ -73,7 +73,6 @@ const AdditionalInfo = ({
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100); 
   const maxDate = new Date();
-  // console.log(dValues, "checkbox", date, getValues('dateOfBirth'))
 
   const [dateOfBirth, setDateOfBirth] = useState(null);
 

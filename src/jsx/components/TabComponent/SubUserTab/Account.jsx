@@ -62,8 +62,6 @@ const Account = ({
     }),
   };
   async function onGroupChange(groupId) {
-    console.log("groupId", groupId);
-    console.log("allCompanies", allCompanies);
     const companies = allCompanies
       .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
       .map((item) => ({
@@ -191,13 +189,11 @@ const Account = ({
       setValue("parentCompany", userDetails?.user.companyId[0]?._id);
       setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
-      console.log("parentCompany", userDetails?.user.businessGroupId[0]?._id);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
       // setValue("businessGroupId", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId?._id);
       setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
-      console.log(userDetails.user.businessGroupId[0]._id, "dsggsgs");
       setBusinessDisabled(true);
     }
   }, []);

@@ -5,13 +5,11 @@ import { getCompany } from "../../../services/api/CompanyServices";
 export const businessGroupOptions = async (inputValue) => {
     try {
       const businessGroupResponse = await getGroups();
-      console.log("businessGroupResponse",businessGroupResponse)
       const businessGroupData = businessGroupResponse.data;
       const response = businessGroupData.map((item) => ({
         label: item?.businessGroupId?.groupName,
         value: item?.businessGroupId?._id,
       }))
-      console.log("response",response)
       return response;
     } catch (error) {
       console.error("Error fetching business group options:", error);

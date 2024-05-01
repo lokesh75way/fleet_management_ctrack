@@ -23,7 +23,6 @@ const CompanyOffcanvas = forwardRef(({ Title, handleSubmit, editData, setEditDat
     const nav = useNavigate();
     const handleChange = (e)=>{
         const {name,value} = e.target;
-        console.log(e.target.value)
         setEditData({...editData, [name]:value })
     }
     return (

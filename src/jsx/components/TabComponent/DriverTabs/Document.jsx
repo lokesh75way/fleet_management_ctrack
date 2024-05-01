@@ -64,10 +64,7 @@ const Document = ({
   dValues && dValues.documents
     ? dValues?.documents
     : fields;
-  // console.log(dValues && dValues.documents?.length > 0
-  //   ? dValues?.documents[0]?.documentType
-  //   : driverDocumentOptions[1].value, "here:-")
-    
+ 
 
   return (
     <div className="p-4">

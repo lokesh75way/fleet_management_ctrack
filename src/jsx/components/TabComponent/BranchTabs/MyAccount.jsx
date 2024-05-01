@@ -89,10 +89,8 @@ const MyAccount = ({
       setValue("companyId", userDetails?.user.companyId[0]?._id)
       setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
-      console.log("companyId", userDetails?.user.businessGroupId[0]?._id)
     }
     if(userDetails.user.role === 'BUSINESS_GROUP'){
-      console.log(userDetails, 'grp')
       setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
@@ -122,7 +120,6 @@ const MyAccount = ({
         label: item.companyId?.companyName,
         value: item.companyId?._id,
       }));
-      console.log("RES:-> ", response);
       return response;
     } catch (error) {
       console.error("Error fetching company options:", error);
@@ -186,7 +183,6 @@ const MyAccount = ({
       email: "",
     });
   };
-  console.log(errors, "erros:-", getValues());
 
   return (
     <div className="p-4">

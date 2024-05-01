@@ -51,8 +51,7 @@ const IcoListingFilter = () =>{
         );
         setFiltered(filtered);
     }, [activeGenre]);
-    //console.log(filtered);
-    //console.log('filtered');
+  
     return(
         <>
             <div className="row">

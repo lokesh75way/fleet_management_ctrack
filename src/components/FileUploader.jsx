@@ -41,7 +41,6 @@ const FileUploader = ({
         notifySuccess(message);
       }
     } catch (error) {
-      console.log("[FILE_UPLOAD_ERROR]", error);
       notifyError("file is not uploaded");
     } finally {
       setLoading(false);

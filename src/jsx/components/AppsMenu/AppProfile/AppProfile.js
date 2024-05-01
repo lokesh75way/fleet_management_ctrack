@@ -282,7 +282,6 @@ const AppProfile = () => {
   const userName = checkUserName();
   const allData = JSON.parse(localStorage.getItem('userJsonData'))
   const editData = allData.find((data)=> data.userName === userName)
-  console.log(editData)
   
   const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
     defaultValues :{
@@ -292,7 +291,6 @@ const AppProfile = () => {
   })
 
   const onSubmit = (data)=>{
-      console.log(data)
       // localStorage.setItem('adminData',data)
   }
   

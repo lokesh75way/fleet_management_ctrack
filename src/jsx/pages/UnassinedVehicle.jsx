@@ -61,7 +61,6 @@ const UnassinedVehicle = () => {
   };
   // Edit function
   const editDrawerOpen = (data) => {
-    console.log('data', data)
     // tableData.map((table) => table.id === id && setEditData(table));
 
     // const data = tableData.filter((item) => item._id === id);

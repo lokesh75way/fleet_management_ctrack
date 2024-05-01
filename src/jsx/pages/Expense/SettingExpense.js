@@ -317,7 +317,6 @@ const SettingExpense = ({
                 control={control}
                 render={({ value, name }) => {
                   // const value = dValues?.fromDate;
-                  console.log({ value });
                   return (
                     <DatePicker
                       selected={getValues('fromDate') || new Date()}

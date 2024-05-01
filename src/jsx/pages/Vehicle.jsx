@@ -45,7 +45,6 @@ const Vehicle = () => {
   async function getVehicleData(page) {
     try {
       const { data, totalLength } = await getVehicles(page);
-      console.log(data);
       setCount(totalLength);
       setTableData(data);
       // setCount(totalCount);

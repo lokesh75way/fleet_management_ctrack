@@ -69,7 +69,6 @@ const UpdateDriverForm = () => {
         notifyError("Some error occured !!");
       }
     }
-    console.log("data from drivers", data);
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
   return (

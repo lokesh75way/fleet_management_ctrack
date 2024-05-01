@@ -25,7 +25,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { formData } = location.state || {};
-  console.log(formData, "datahgf:-")
   const {
     register,
     formState: { errors },
@@ -38,7 +37,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data, "this is data");
     if (data.businessUser) {
       data.businessGroupId = data.businessUser;
     }
@@ -55,7 +53,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
         // data.parent = userName;
         // data.type = "STAFF";
         const response = await updateUser(id,data);
-        console.log("this is response", response);
         if (response.error) {
           notifyError(response.error);
         } else {
@@ -73,7 +70,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
         data.parent = userName;
         data.type = "STAFF";
         const response = await createUser(data);
-        console.log("this is response", response);
         if (response.error) {
           notifyError(response.error);
         } else {

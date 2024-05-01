@@ -80,24 +80,15 @@ const MyAccount = ({
 
   useEffect(() => {
     if (checkRole() !== "SUPER_ADMIN") {
-      console.log("super admin");
       setIsBuisnessGroupDisabled(true);
     }
     if (userDetails?.user?.role === "BUSINESS_GROUP") {
-      console.log(
-        userDetails?.user.businessGroupId[0]?._id,
-        "sbhsjksbfkjsfabfkjasf"
-      );
       setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
     }
   }, []);
 
   const { id } = useParams();
-  //   let newData = [];
-  // if(id){
-  //   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
-  //    newData = formData[0].companyId
-  // }
+
   useEffect(() => {
     if (formData && id) {
       setValue(
@@ -148,7 +139,6 @@ const MyAccount = ({
       setValue("timeFormat", timeFormatOptions[0]?.value);
     }
   }, [formData, id]);
-  console.log(formData?.[0], "id clicked");
   const handleAddForm = () => {
     append({
       name: "",
@@ -157,7 +147,6 @@ const MyAccount = ({
       email: "",
     });
   };
-  console.log(errors, "erros:-", getValues());
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
@@ -173,7 +162,6 @@ const MyAccount = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
                 onChange={(newValue) => {
-                  console.log(newValue);
                   setBussinessGpLable(newValue.value);
                   setValue("businessGroupId", newValue.value);
                 }}
@@ -268,7 +256,6 @@ const MyAccount = ({
           </label>
           <CountrySelect
             onChange={(e) => {
-              console.log(e);
               setSelectStateName({ name: "" });
               setCountryid(e.id);
               setValue("country", e.name);

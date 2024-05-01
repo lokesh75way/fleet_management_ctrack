@@ -56,7 +56,6 @@ const CompanyDropdown = ({
             setPage(prevPage => prevPage + 1);
         }
     };
-    // console.log(dropdownOptions,selectedOption,"drop")
     return (
         <Select
             options={dropdownOptions}

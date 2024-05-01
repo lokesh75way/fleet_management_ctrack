@@ -19,14 +19,12 @@ const getVehicles = async (page, branchIds) => {
   }
 
   const { data } = await axios.get(url);
-  console.log(data);
   return { data: data.data.data, totalLength: data.data.totalCount };
 };
 
 
 const getUnassignedVehicles = async (page) => {
   const {data} = await axios.get(`/vehicles/unassigned?page=${page}&limit=${10}`);
-  console.log(data)
   return {data :data.data.data , totalLength : data.data.totalCount};
 };
 
@@ -40,13 +38,11 @@ const updateVehicles = async (body,id) => {
 
 const getVehiclesByCompany = async (search = "") => {
   const {data} = await axios.get(`/vehicles/list?search=${search}`, );
-  console.log(data)
   return { data :data.data };
 };
 
 const getVehiclesTraking = async (id, status) => {
   const {data} = await axios.get(`/vehicles/tracking?${id}&status=${status}`, );
-  console.log(data)
   return { data :data.data };
 };
 

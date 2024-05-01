@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 const notifySuccess = (message) =>{
-  console.log(message)
   toast.success(message, {
     position: "top-center",
     autoClose: 3000,

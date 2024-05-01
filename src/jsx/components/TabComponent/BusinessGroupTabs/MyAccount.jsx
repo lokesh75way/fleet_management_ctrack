@@ -68,7 +68,6 @@ const MyAccount = ({
      
     }
   }, [id]);
-console.log(dValues,"item")
   useEffect(() => {
     if (dValues && id) {
       setValue("groupName", dValues.businessGroupId?.groupName);
@@ -123,7 +122,6 @@ console.log(dValues,"item")
     });
   };
 
-  console.log(errors, "erros:-", getValues());
 
   return (
     <div className="p-4">

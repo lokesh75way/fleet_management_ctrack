@@ -77,7 +77,6 @@ const Driver = (ref) => {
         e.preventDefault();
         const updateTable = tableData.map((table)=>{
             if(table.id === editData.id) {
-                console.log(table.id)   
                 return {...table, ...editData };
             }
             return table;

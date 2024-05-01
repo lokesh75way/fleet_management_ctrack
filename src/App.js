@@ -91,7 +91,6 @@ function App(props) {
     if(!location.pathname.includes('resetpassword')){
       checkAutoLogin(dispatch, navigate);
     }
-    console.log(location.pathname, "pathname")
   }, []);
 
   if (props.isAuthenticated) {

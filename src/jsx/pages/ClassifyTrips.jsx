@@ -55,10 +55,8 @@ const ClassifyTrip = (ref) => {
     // classifyTrips.current.showModal();
   };
   const filterData = (data) => {
-    console.log("filtergotresponse",data);
     setTableData(data)
   };
-console.log('td',tableData)
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
 
@@ -123,7 +121,6 @@ console.log('td',tableData)
           </Nav>
           <Tab.Content className="pt-4">
             {tabHeading.map((data, i) => {
-              console.log("m",data)
               const Component = component[i];
               return (
                 

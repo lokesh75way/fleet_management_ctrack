@@ -44,7 +44,6 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
   }
 
   const {t} = useTranslation();
-  console.log(formData,"sd:-")
 
   useEffect(()=>{
     if(formData && id){

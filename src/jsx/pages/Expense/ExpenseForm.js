@@ -30,7 +30,6 @@ const ExpenseForm = () => {
     
   });
   const navigate = useNavigate();
-  console.log(errors, "ds:-", getValues());
 
   const onSubmit = async (data) => {
     if (id) {

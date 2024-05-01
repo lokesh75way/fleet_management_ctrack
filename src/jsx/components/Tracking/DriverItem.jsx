@@ -9,7 +9,6 @@ const DriverItem = (props) => {
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
-    console.log(props.drivers, "props.drivers");
   useEffect(() => {
     const data = Object.entries(props.drivers).map((data) => {
       const childNode = data[1].map((data) => {

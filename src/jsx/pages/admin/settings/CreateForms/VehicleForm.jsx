@@ -69,7 +69,6 @@ const VehicleForm = () => {
     ),
   });
 
-  console.log(errors, "errors", getValues())
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {

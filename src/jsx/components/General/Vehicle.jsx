@@ -37,9 +37,7 @@ const Vehicle = () => {
       setData(document.querySelectorAll("#employee-tbl_wrapper tbody tr"));
 	}, [test]);
 
-    useEffect(()=>{
-        console.log("enter herer")
-    },[])
+  
 
    activePag.current === 0 && chageData(0, sort);
    let paggination = Array(Math.ceil(data.length / sort))
@@ -65,7 +63,6 @@ const Vehicle = () => {
     }
 
     const handleSubmit=(e)=>{
-        console.log("I am here")
         e.preventDefault();
         if(editData.id === 0){
             editData.id = editData.simNumber-1

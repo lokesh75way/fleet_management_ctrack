@@ -123,7 +123,7 @@ const CompanyForm = () => {
         notifyError("Password is not changes!");
       }
     }
-    // console.log(activeIndex);
+  
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 

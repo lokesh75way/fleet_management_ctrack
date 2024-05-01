@@ -5,8 +5,6 @@ import Error from './Error/Error';
 
 const RadioButtonCustomComponent = ({selectedOption,handleChange,getValues,errors,Title,options,required,name}) => {
 
-    console.log('errors',errors);
-    console.log('these are options',options);
 const { t } = useTranslation();
   return (
     <div className="col-xl-6 mb-3">

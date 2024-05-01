@@ -50,23 +50,9 @@ const DriverForm = () => {
     ),
   });
 
-  // async function getDriver(driverId) {
-  //   try {
-  //     const data = await getDriverById(driverId);
-  //     setEditData(data);
-  //     reset(data);
-  //   } catch (error) {
-  //     notifyError("Some error occured !!");
-  //     navigate("/driver");
-  //   }
-  // }
-  console.log(errors, 'erro0rs-:', getValues())
-  // useEffect(() => {
-  //   if (driverId) getDriver(driverId);
-  // }, [driverId]);
+
 
   const onSubmitHanlder = async (data) => {
-    console.log(data,"editdata")
     try {
       if (activeIndex === totalTabs - 1) {
         const issueDate = new Date(data.documents[0].issueDate);
