@@ -598,7 +598,9 @@ export const arabic = {
   "enterYourPersonalDetail": "أدخل تفاصيلك الشخصية أدناه:",
   "iAgreeToThe": "أوافق على",
   "termsOfService": "شروط الخدمة",
-  "privacyPolicy": "سياسة الخصوصية"
+  "privacyPolicy": "سياسة الخصوصية",
 
+  "tradeLicenseNumber" : "رقم الرخصة التجارية",
+  "officeNo" : "رقم المكتب"
   }
 }

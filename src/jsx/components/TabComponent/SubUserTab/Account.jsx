@@ -52,6 +52,7 @@ const Account = ({
   const [isEdit, setIsEdit] = useState(false);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
+  const [branchId, setBranchId] = useState([])
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
@@ -146,7 +147,6 @@ const Account = ({
   const role = checkRole();
   const { id } = useParams();
   // const User = JSON.parse(localStorage.getItem("userJsonData"));
-
   const loggedinemail = localStorage.getItem("loginDetails-name");
   let defaultCompanyOptions;
 
@@ -206,7 +206,8 @@ const Account = ({
     if(formData && id){
       setValue("businessUser",formData?.[0]?.businessGroupId)
       setValue("companyId",formData?.[0]?.companyId)
-      setValue("branchIds",formData?.[0]?.branchIds[0]?._id)
+      setValue("branchIds",formData?.[0]?.branchIds)
+      setValue("vehicleIds",formData?.[0]?.vehicleIds)
       setValue("email",formData?.[0]?.email)
       setValue("userName",formData?.[0]?.userName)
       setValue("mobileNumber",formData?.[0]?.mobileNumber)
@@ -253,13 +254,13 @@ const Account = ({
           <label className="form-label">{t("company")}</label>
 
           <Controller
-            name="parentCompany"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <CompanyDropdown
                 onChange={async (newValue) => {
-                  setValue("parentCompany", newValue.value);
+                  setValue("companyId", newValue.value);
                   setCompanyId(newValue.value);
                 }}
                 key={groupId}
@@ -284,12 +285,14 @@ const Account = ({
               onChange={(newValue) => {
                 const newArray = newValue.map((temp)=> temp.value)
                 setValue("branchIds", newArray);
+                setBranchId(newArray)
               }}
               value={value}
               customStyles={customStyles}
               ref={ref}
               companyId={companyId}
               name={name}
+              isDisabled={companyId  ? false  : true}
             />
             )}
           />
@@ -308,6 +311,7 @@ const Account = ({
                 setValue("vehicleIds", newArray);
               }}
               value={value}
+              branchids={branchId}
               customStyles={customStyles}
               ref={ref}
               name={name}

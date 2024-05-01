@@ -10,9 +10,8 @@ const CredentialsInput = ({ heading, register, errors, id, getValues }) => {
 
   return (
     <div className="row">
-        <div className="heading mb-3 mt-3 fs-22">
-            {heading}
-        </div>
+
+        <h3 className="mt-4 mb-4">{heading}</h3>
     
     <div className="col-xl-4 mb-3">
       <label className="form-label">

@@ -209,7 +209,7 @@ const Company = () => {
                           <th className="text-center">{t("location")}</th>
                           <th className="text-center">{t("email")}</th>
                           <th className="text-center">{t("branches")}</th>
-                          <th className="text-center">{t("zipCode")}</th>
+                
                           {(can("company", "edit") ||
                             can("company", "delete")) && (
                             <th className="d-flex justify-content-center">

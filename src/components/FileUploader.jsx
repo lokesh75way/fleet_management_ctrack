@@ -67,8 +67,9 @@ const FileUploader = ({
       {fileLink && 
      ( 
       <>
-     <small >Preview - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={fileLink}>here</a> </small> 
-       <img height={70} width={70} src={fileLink} alt="logo"/>
+     <a style={{textDecoration : '1px solid underline', color : "#0d99ff", marginLeft:'8px'}} target="_blank" href={fileLink}>
+       <img height={75} width={75} src={fileLink} alt="logo"/>
+     </a>
       </>
        
        )

@@ -86,7 +86,7 @@ console.log(dValues,"item")
       );
       setValue("street1", dValues.businessGroupId?.street1);
       setValue("tradeLicenseNumber", dValues.businessGroupId?.tradeLicenseNumber);
-      setValue("officeNo", dValues.businessGroupId?.tradeLicenseNumber);
+      setValue("officeNumber", dValues.businessGroupId?.officeNumber);
       setValue("logo", dValues?.businessGroupId?.logo);
       setLogo(dValues?.businessGroupId?.logo);
       setValue("street2", dValues.businessGroupId?.street2);
@@ -102,9 +102,15 @@ console.log(dValues,"item")
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
       setValue("timezone",dValues?.businessGroupId?.timezone)
+      const timeZone =  dValues?.businessGroupId?.timezone
+      if(timeZone){
+        setSelectedTimezone(timeZone)
+      }
       setValue('userInfo', dValues?.userInfo)
     } else {
       setValue("capacity", storageCapacityOptions[1].value);
+      setValue('dateFormat',dateFormatOptions[0]?.value);
+      setValue('timeFormat',timeFormatOptions[0]?.value)
     }
   }, [dValues, id]);
 
@@ -139,7 +145,7 @@ console.log(dValues,"item")
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
-            {t("tradeLicenseNumber")} <span className="text-danger">*</span>
+            {t("tradeLicenseNumber")} 
           </label>
           <CustomInput
             type="text"
@@ -149,7 +155,7 @@ console.log(dValues,"item")
             placeholder=""
             defaultValue={getValues("tradeLicenseNumber")}
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.tradeLicenseNumber} />
         </div>
         <div className="col-xl-4 mb-3">
           <label className="form-label">{t("uploadLogo")}</label>
@@ -169,17 +175,17 @@ console.log(dValues,"item")
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
-            {t("officeNo")} <span className="text-danger">*</span>
+            {t("officeNo")} 
           </label>
           <CustomInput
             type="text"
             register={register}
-            label="officeNo"
-            name="officeNo"
+            label="officeNumber"
+            name="officeNumber"
             placeholder=""
-            defaultValue={getValues("officeNo")}
+            defaultValue={getValues("officeNumber")}
           />
-          <Error errorName={errors.officeNo} />
+          <Error errorName={errors.officeNumber} />
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
@@ -254,6 +260,26 @@ console.log(dValues,"item")
           <Error errorName={errors.city} />
         </div>
         <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("timeZone")} </label>
+          <Controller
+            name="timezone"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <TimezoneSelect
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone);
+                }}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={selectedTimezone}
+              />
+            )}
+          />
+        </div>
+        
+        <div className="col-xl-4 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
             name="dateFormat"
@@ -290,31 +316,13 @@ console.log(dValues,"item")
             )}
           />
         </div>
-        <div className="col-xl-4 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
+      
        {/* <div className="col-xl-4 mb-3 ">
                 <img key={logo} height={100} width={100} src={logo ? logo : IMAGES.Tab1} alt="logo"/>
         </div> */}
 
         <CredentialsInput
-          heading="Business Admin Login"
+          heading="Business Login Details"
           register={register}
           errors={errors}
           id={id}
@@ -325,10 +333,11 @@ console.log(dValues,"item")
           style={{
             width: "100%",
             display: "flex",
-            justifyContent: "start",
+            justifyContent : 'space-between',
             margin: "2rem 0",
           }}
         >
+          <h3>Contact Details</h3>
           <Button
             type="button"
             onClick={handleAddForm}
@@ -367,8 +376,8 @@ console.log(dValues,"item")
           style={{ width: "10%" }}
         >
           {" "}
-          {/* {t('Next')} */}
-          submit
+          {t("submit")}        
+          
         </Button>
       </div>
     </div>

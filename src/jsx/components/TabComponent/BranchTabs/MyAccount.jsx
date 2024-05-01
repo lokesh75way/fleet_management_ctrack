@@ -138,7 +138,7 @@ const MyAccount = ({
     }
   }, [id]);
 
-  console.log(dValues);
+  console.log(dValues, "data");
 
   useEffect(() => {
     if (dValues && id) {
@@ -162,6 +162,17 @@ const MyAccount = ({
       setSelectStateName({ name: dValues.state || '' })
       setValue("state", dValues.state)
       setValue("userInfo", dValues.userInfo)
+      setValue("dateFormat", dValues?.dateFormat);
+      setValue("timeFormat", dValues?.timeFormat);
+      setValue("timezone",dValues?.timezone)
+      setValue("email",dValues?.email)
+      const timeZone =  dValues?.timezone
+      if(timeZone){
+        setSelectedTimezone(timeZone)
+      }
+    }else{
+      setValue('dateFormat',dateFormatOptions[0]?.value);
+      setValue('timeFormat',timeFormatOptions[0]?.value)
     }
   }, [dValues, id]);
 
@@ -286,7 +297,7 @@ const MyAccount = ({
 
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
-        <div className="col-xl-4 mb-3">
+        {/* <div className="col-xl-4 mb-3">
           <label className="form-label">{t("parentBranch")}</label>
           <Controller
             name="parent"
@@ -313,7 +324,7 @@ const MyAccount = ({
           {!getValues("parentBranch") && (
             <Error errorName={errors.parentBranch} />
           )}
-        </div>
+        </div> */}
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
             {t("branchName")} <span className="text-danger">*</span>
@@ -331,7 +342,7 @@ const MyAccount = ({
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
-            {t("tradeLicenseNumber")} <span className="text-danger">*</span>
+            {t("tradeLicenseNumber")} 
           </label>
           <CustomInput
             type="text"
@@ -341,11 +352,11 @@ const MyAccount = ({
             placeholder=""
             defaultValue={getValues("tradeLicenseNumber")}
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.tradeLicenseNumber} />
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
-            {t("officeNo")} <span className="text-danger">*</span>
+            {t("officeNo")} 
           </label>
           <CustomInput
             type="text"
@@ -431,7 +442,25 @@ const MyAccount = ({
           />
           <Error errorName={errors.city} />
         </div>
-
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("timeZone")} </label>
+          <Controller
+            name="timezone"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <TimezoneSelect
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
+                }}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={selectedTimezone}
+              />
+            )}
+          />
+        </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -469,34 +498,17 @@ const MyAccount = ({
             )}
           />
         </div>
-        <div className="col-xl-4 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
+       
 
         <div
           style={{
             width: "100%",
             display: "flex",
-            justifyContent: "start",
+            justifyContent: "space-between",
             margin: "2rem 0",
           }}
         >
+          <h3>Contact Details</h3>
           <Button
             type="button"
             onClick={handleAddForm}
@@ -534,8 +546,8 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {/* {t("submit")} */}
-          Next
+          {t("submit")}
+
         </Button>
       </div>
     </div>

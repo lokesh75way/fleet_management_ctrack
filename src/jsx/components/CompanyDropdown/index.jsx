@@ -13,6 +13,7 @@ const CompanyDropdown = ({
     ref,
     isDisabled
 }) => {
+    console.log(groupId, "groupId")
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const { page, setPage } = usePagination();

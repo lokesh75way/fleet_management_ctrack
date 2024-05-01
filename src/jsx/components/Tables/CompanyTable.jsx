@@ -53,9 +53,9 @@ const CompanyTable = ({
               {item?.branchIds?.length}
             </Link>
           </td>
-          <td className="text-center">
+          {/* <td className="text-center">
             <span>{item?.companyId?.zipCode ? item?.companyId?.zipCode : <span className='ps-4'>-</span> }</span>
-          </td>
+          </td> */}
           {(editPermission || deletePermission) && <td>
             <span className="d-flex justify-content-center">
               {editPermission && <span

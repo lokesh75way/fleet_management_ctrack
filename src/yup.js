@@ -146,16 +146,15 @@ export const companyAccountSchema = yup.object({
       return true;
     }),
   tradeLicenseNumber: yup
-    .string()
-    .required("Please enter a Trade License Number"),
-  officeNumber: yup.string().required("Please enter an Office Number"),
+    .string(),
+  officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
-  state: yup.string().required("Please select a State"),
+  state: yup.string(),
   email: yup.string().required("Please enter email"),
   city: yup.string().required("Please enter a City"),
   dateFormat: yup.string().required("Please select a Date Format"),
   timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string().required("Please select a Timezone"),
+  timezone: yup.string(),
   userName: yup.string().required("Please enter a Username"),
   password: yup
     .string()
@@ -182,17 +181,15 @@ export const branchAccountSchema = yup.object({
   branchName: yup.string().required(),
   companyId: yup.string().required("Company Name is required "),
   businessGroupId: yup.string().required("Business Group Name is required "),
-  tradeLicenseNumber: yup
-    .string()
-    .required("Please enter a Trade License Number"),
-    officeNumber: yup.string().required("Please enter an Office Number"),
+  tradeLicenseNumber: yup.string(),
+  officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
-  state: yup.string().required("Please select a State"),
+  state: yup.string(),
   email: yup.string().required("Please enter email"),
   city: yup.string().required("Please enter a City"),
   dateFormat: yup.string().required("Please select a Date Format"),
   timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string().required("Please select a Timezone"),
+  timezone: yup.string(),
   // Add validation for user details within formData array
   userInfo: yup.array().of(
     yup.object().shape({
@@ -252,15 +249,15 @@ export const businessGroupAccountSchema = yup.object({
   groupName: yup.string().required("Please enter a Business Group Name"),
   tradeLicenseNumber: yup
     .string()
-    .required("Please enter a Trade License Number"),
-  officeNo: yup.string().required("Please enter an Office Number"),
+    ,
+    officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
-  state: yup.string().required("Please select a State"),
+  state: yup.string(),
   email: yup.string().required("Please enter email"),
   city: yup.string().required("Please enter a City"),
   dateFormat: yup.string().required("Please select a Date Format"),
   timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string().required("Please select a Timezone"),
+  timezone: yup.string(),
   userName: yup.string().required("Please enter a Username"),
   password: yup
     .string()
@@ -390,7 +387,7 @@ export const subUserAccountSchema = yup
     featureTemplateId: yup.string().required("Feature Template is required "),
     password: yup
       .string()
-      .test("isEdit", "Password is required", function (value) {
+      .test("password", "Password is required", function (value) {
         const { isEdit } = this.parent;
         if (isEdit) {
           return true;
@@ -400,7 +397,7 @@ export const subUserAccountSchema = yup
       }),
     confirmPassword: yup
       .string()
-      .test("isEdit", "Password is required", function (value) {
+      .test("confirmPassword", "Password is required", function (value) {
         const { isEdit } = this.parent;
         if (isEdit) {
           return true;
@@ -413,8 +410,18 @@ export const subUserAccountSchema = yup
       .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
     email: yup.string().email().required("Email is required "),
     country: yup.string().required("Please select a Country"),
-  })
-  .required();
+  });
+export const subUserEditAccountSchema = yup
+  .object({
+    isEdit: yup.boolean(),
+    userName: yup.string().required("User Name is required "),
+    featureTemplateId: yup.string().required("Feature Template is required "),
+    mobileNumber: yup
+      .string()
+      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+    email: yup.string().email().required("Email is required "),
+    country: yup.string().required("Please select a Country"),
+  });
 export const alertSchema = yup
   .object({
     branch: yup.array().required("Select at least one option"),

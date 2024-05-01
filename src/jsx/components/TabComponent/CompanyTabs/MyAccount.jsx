@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller, useForm,useFieldArray } from "react-hook-form";
+import { Controller, useForm, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
@@ -10,8 +10,12 @@ import useStorage from "../../../../hooks/useStorage";
 import AsyncSelect from "react-select/async";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
-import {useTranslation} from 'react-i18next'
-import { dateFormatOptions, storageCapacityOptions, timeFormatOptions } from "../VehicleTabs/Options";
+import { useTranslation } from "react-i18next";
+import {
+  dateFormatOptions,
+  storageCapacityOptions,
+  timeFormatOptions,
+} from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
 import FileUploader from "../../../../components/FileUploader";
@@ -28,14 +32,14 @@ const MyAccount = ({
   handleSubmit,
   errors,
   control,
-  formData
+  formData,
 }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
   const [loading, setLoading] = useState(false);
-  const [defaultCountry,setDefaultCountry] = useState();
+  const [defaultCountry, setDefaultCountry] = useState();
   const [selectStateName, setSelectStateName] = useState({
     name: "",
   });
@@ -45,14 +49,14 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const [bussinessGpLable, setBussinessGpLable] = useState(null)
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [bussinessGpLable, setBussinessGpLable] = useState(null);
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [selectedTimezone, setSelectedTimezone] = useState(
     formData?.[0]?.businessGroupId?.timezone ||
       Intl.DateTimeFormat().resolvedOptions().timeZone
   );
-  const [logo, setLogo] = useState(null)
+  const [logo, setLogo] = useState(null);
   const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
@@ -62,12 +66,10 @@ const MyAccount = ({
     }),
   };
 
-  
-  useEffect(()=>{
+  useEffect(() => {
     // getBusinessGroup()
-    businessGroupOptions()
-  },[])
-
+    businessGroupOptions();
+  }, []);
 
   const companyOptions = DummyData.filter(
     (item) => item.role === "company"
@@ -76,74 +78,86 @@ const MyAccount = ({
     value: item.country,
   }));
 
-
   useEffect(() => {
-    if(checkRole() !== "SUPER_ADMIN"){
-      console.log("super admin")
-      setIsBuisnessGroupDisabled(true)
+    if (checkRole() !== "SUPER_ADMIN") {
+      console.log("super admin");
+      setIsBuisnessGroupDisabled(true);
     }
-    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
-      console.log(userDetails?.user.businessGroupId[0]?._id,"sbhsjksbfkjsfabfkjasf")
+    if (userDetails?.user?.role === "BUSINESS_GROUP") {
+      console.log(
+        userDetails?.user.businessGroupId[0]?._id,
+        "sbhsjksbfkjsfabfkjasf"
+      );
       setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
     }
-},[])
+  }, []);
 
   const { id } = useParams();
-//   let newData = [];
-// if(id){
-//   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
-//    newData = formData[0].companyId
-// }
-useEffect(()=>{
-  if(formData && id){
-    setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
-    setValue("companyName",formData[0].companyId?.companyName)
-    setValue("userName", formData[0].userName)
-    setValue("email",formData[0].email)
-    setValue("tradeLicenseNumber",formData[0].companyId?.tradeLicenseNumber)
-    setValue("officeNumber",formData[0].companyId?.officeNumber)
-    setValue("mobileNumber",formData[0].mobileNumber)
-    setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
-    setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
-    setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
-    setValue("street1",formData[0].companyId?.street1)
-    setValue("street2",formData[0].companyId?.street2)
-    setValue("contactPerson",formData[0].companyId?.contactPerson)
-    setValue("faxNumber",formData[0].companyId?.faxNumber)
-    setValue("zipCode",formData[0].companyId?.zipCode)
-    setValue("city",formData[0].city)
-    setValue("storageCapacity",formData[0].companyId.storageCapacity)
-    setValue("country",formData[0].country)
-    setValue("state",formData[0].state || '' )
-    setDefaultCountry({ name:formData[0].country })
-    setSelectStateName({name : formData[0].state || ''})
-    setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
-    setLogo(formData?.[0].companyId?.logo)
-    setValue(
-      "dateFormat",
-      formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value
-    );
-    setValue(
-      "timeFormat",
-      formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
-    );
-    setValue('timezone', formData?.[0].companyId?.timezone)
-    setValue('userInfo', formData?.[0]?.userInfo)
-  }else{
-    setValue("storageCapacity",storageCapacityOptions[1].value)
-    
-  }
-},[formData,id])
-console.log(formData?.[0], "id clicked")
-const handleAddForm = () => {
-  append({
-    name: "",
-    designation: "",
-    mobileNumber: null,
-    email: "",
-  });
-};
-console.log(errors, "erros:-", getValues());
+  //   let newData = [];
+  // if(id){
+  //   console.log("jhdfgkwhebflwibefeklwjfewfwe", formData, formData[0].companyId)
+  //    newData = formData[0].companyId
+  // }
+  useEffect(() => {
+    if (formData && id) {
+      setValue(
+        "businessGroupId",
+        formData?.[0].companyId?.businessGroupId?._id
+      );
+      setValue("companyName", formData[0].companyId?.companyName);
+      setValue("userName", formData[0].userName);
+      setValue("email", formData[0].email);
+      setValue("tradeLicenseNumber", formData[0].companyId?.tradeLicenseNumber);
+      setValue("officeNumber", formData[0].companyId?.officeNumber);
+      setValue("mobileNumber", formData[0].mobileNumber);
+      setValue("helpDeskEmail", formData[0].companyId?.helpDeskEmail);
+      setValue(
+        "whatsappContactNumber",
+        formData[0].companyId?.whatsappContactNumber
+      );
+      setValue(
+        "helpDeskTelephoneNumber",
+        formData[0].companyId?.helpDeskTelephoneNumber
+      );
+      setValue("street1", formData[0].companyId?.street1);
+      setValue("street2", formData[0].companyId?.street2);
+      setValue("contactPerson", formData[0].companyId?.contactPerson);
+      setValue("faxNumber", formData[0].companyId?.faxNumber);
+      setValue("zipCode", formData[0].companyId?.zipCode);
+      setValue("city", formData[0].city);
+      setValue("storageCapacity", formData[0].companyId.storageCapacity);
+      setValue("country", formData[0].country);
+      setValue("state", formData[0].state || "");
+      setDefaultCountry({ name: formData[0].country });
+      setSelectStateName({ name: formData[0].state || "" });
+      setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName);
+      setLogo(formData?.[0].companyId?.logo);
+      setValue(
+        "dateFormat",
+        formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value
+      );
+      setValue(
+        "timeFormat",
+        formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
+      );
+      setValue("timezone", formData?.[0].companyId?.timezone);
+      setValue("userInfo", formData?.[0]?.userInfo);
+    } else {
+      setValue("storageCapacity", storageCapacityOptions[1].value);
+      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("timeFormat", timeFormatOptions[0]?.value);
+    }
+  }, [formData, id]);
+  console.log(formData?.[0], "id clicked");
+  const handleAddForm = () => {
+    append({
+      name: "",
+      designation: "",
+      mobileNumber: null,
+      email: "",
+    });
+  };
+  console.log(errors, "erros:-", getValues());
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
@@ -152,27 +166,29 @@ console.log(errors, "erros:-", getValues());
             {t("businessGroup")}
             <span className="text-danger">*</span>
           </label>
-            <Controller
-              name="businessGroupId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <GroupDropdown
-                  onChange={(newValue) => {
-                    console.log(newValue)
-                    setBussinessGpLable(newValue.value)
-                    setValue("businessGroupId", newValue.value);
-                  }}
-                    value={value}
-                    ref={ref}
-                    isDisabled={isBuisnessGroupDisabled}
-                    name={name}
-                    customStyles={customStyles}
-                  />
-              )}
-            />
-          {!getValues("businessGroupId") && <Error errorName={errors.businessGroupId} />}
-        </div> 
+          <Controller
+            name="businessGroupId"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <GroupDropdown
+                onChange={(newValue) => {
+                  console.log(newValue);
+                  setBussinessGpLable(newValue.value);
+                  setValue("businessGroupId", newValue.value);
+                }}
+                value={value}
+                ref={ref}
+                isDisabled={isBuisnessGroupDisabled}
+                name={name}
+                customStyles={customStyles}
+              />
+            )}
+          />
+          {!getValues("businessGroupId") && (
+            <Error errorName={errors.businessGroupId} />
+          )}
+        </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">
             {t("companyName")} <span className="text-danger">*</span>
@@ -183,13 +199,13 @@ console.log(errors, "erros:-", getValues());
             required
             label="Company Name"
             name="companyName"
-            defaultValue={getValues('companyName')}
+            defaultValue={getValues("companyName")}
             placeholder=""
           />
           <Error errorName={errors.companyName} />
         </div>
-      
-          <div className="col-xl-4 mb-3">
+
+        <div className="col-xl-4 mb-3">
           <label className="form-label">{t("uploadLogo")}</label>
           <FileUploader
             setValue={setValue}
@@ -205,10 +221,8 @@ console.log(errors, "erros:-", getValues());
 
           <Error errorName={errors.logo} />
         </div>
-         <div className="col-xl-4 mb-3 ">
-          <label className="form-label">
-            {t("tradeLicenseNumber")} <span className="text-danger">*</span>
-          </label>
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -217,12 +231,10 @@ console.log(errors, "erros:-", getValues());
             placeholder=""
             defaultValue={getValues("tradeLicenseNumber")}
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.tradeLicenseNumber} />
         </div>
         <div className="col-xl-4 mb-3 ">
-          <label className="form-label">
-            {t("officeNo")} <span className="text-danger">*</span>
-          </label>
+          <label className="form-label">{t("officeNo")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -244,9 +256,7 @@ console.log(errors, "erros:-", getValues());
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={
-              getValues('email')
-            }
+            defaultValue={getValues("email")}
             disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
@@ -303,9 +313,28 @@ console.log(errors, "erros:-", getValues());
             label="City"
             name="city"
             placeholder=""
-            defaultValue={getValues('city')}
+            defaultValue={getValues("city")}
           />
           <Error errorName={errors.city} />
+        </div>
+        <div className="col-xl-4 mb-3 ">
+          <label className="form-label">{t("timeZone")} </label>
+          <Controller
+            name="timezone"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <TimezoneSelect
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
+                }}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={selectedTimezone}
+              />
+            )}
+          />
         </div>
         <div className="col-xl-4 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
@@ -344,27 +373,9 @@ console.log(errors, "erros:-", getValues());
             )}
           />
         </div>
-        <div className="col-xl-4 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
+        
         <CredentialsInput
-          heading="Company Admin Login"
+          heading="Company Login Details"
           register={register}
           errors={errors}
           id={id}
@@ -375,10 +386,11 @@ console.log(errors, "erros:-", getValues());
           style={{
             width: "100%",
             display: "flex",
-            justifyContent: "start",
+            justifyContent: "space-between",
             margin: "2rem 0",
           }}
         >
+          <h3>Contact Details</h3>
           <Button
             type="button"
             onClick={handleAddForm}
@@ -401,7 +413,6 @@ console.log(errors, "erros:-", getValues());
             id={id}
           />
         ))}
-
       </div>
       <div
         style={{
@@ -416,7 +427,7 @@ console.log(errors, "erros:-", getValues());
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {"Next"}
+         {t("submit")}
         </Button>
       </div>
     </div>

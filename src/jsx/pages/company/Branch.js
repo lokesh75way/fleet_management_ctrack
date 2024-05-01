@@ -236,7 +236,7 @@ const Branch = () => {
                           />
                         )}
                       />
-                      <Controller
+                      {/* <Controller
                         name="parent"
                         control={control}
                         rules={{ required: true }}
@@ -255,7 +255,7 @@ const Branch = () => {
                             
                           />
                         )}
-                      />
+                      /> */}
                       {can("branch", "add") && (
                         <Link
                           to={"/branch/create"}
@@ -281,7 +281,7 @@ const Branch = () => {
                         <tr>
                           <th>{t("id")}</th>
                           <th>{t("branchName")}</th>
-                          <th>{t("parentBranch")}</th>
+                          {/* <th>{t("parentBranch")}</th> */}
                           <th>{t("companyName")}</th>
                           <th>{t("businessGroup")}</th>
                           {/* <th>{t('mobileNumber')}</th> */}

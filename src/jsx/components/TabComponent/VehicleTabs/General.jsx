@@ -88,6 +88,7 @@ const General = ({
       setValue("serverAddress", formData?.[0].serverAddress);
       setValue("distanceCounter", formData?.[0].distanceCounter);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
+      setValue("speedDetection", formData?.[0].speedDetection);
       setValue(
         "deviceAccuracyTolerance",
         formData?.[0].deviceAccuracyTolerance
@@ -329,7 +330,6 @@ const General = ({
               <Select
                 onChange={(newValue) => {
                   setValue("distanceCounter", newValue.value);
-                  setTempValue("frgefrg");
                 }}
                 options={distanceCounterOptions}
                 ref={ref}
@@ -393,6 +393,10 @@ const General = ({
                 name={name}
                 styles={customStyles}
                 defaultValue={speedDetectionOptions[0]}
+                value={{
+                  label: getValues("speedDetection"),
+                  value: getValues("speedDetection"),
+                }}
               />
             )}
           />

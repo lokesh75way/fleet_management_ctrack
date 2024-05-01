@@ -35,9 +35,9 @@ const SubCompanyTable = ({onConfirmDelete,params,currentPage, itemsPerPage, temp
             <td>
               <span className="text-primary">{item.branchName}</span>
             </td>
-            <td>
+            {/* <td>
               <span >{item.parentBranchId?.branchName ? item.parentBranchId?.branchName :<span className='ps-4'>-</span> }</span>
-            </td>
+            </td> */}
             <td>
               <span >{item.companyId?.companyName ? item.companyId?.companyName : <span className='ps-4'>-</span> }</span>
             </td>
