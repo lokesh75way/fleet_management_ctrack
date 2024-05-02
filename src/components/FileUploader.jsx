@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fileUpload } from "../services/api/BusinessGroup";
 import { notifyError, notifySuccess } from "../utils/toast";
+import { FaTimes } from "react-icons/fa"; // Import the cross icon
 
 const FileUploader = ({
   register,
@@ -15,6 +16,7 @@ const FileUploader = ({
 
   const upload_Preset = "our_cloudinary_upload_preset";
   const [fileLink, setFileLink] = useState(null);
+
   useEffect(() => {
     if (link) {
       setFileLink(link);
@@ -41,41 +43,47 @@ const FileUploader = ({
         notifySuccess(message);
       }
     } catch (error) {
-      notifyError("file is not uploaded");
+      notifyError("File is not uploaded");
     } finally {
       setLoading(false);
     }
   };
 
+  const removeFile = () => {
+    setFileLink(null);
+    setValue(name, null);
+  };
+
   return (
-    <div className="d-flex">
-      <div>
+    <div className="file-uploader-container">
+      <div className="file-upload-box">
+        {fileLink ? (
+         <div className="uploaded-image-container">
+         <img src={fileLink} alt="Uploaded file" className="uploaded-image" />
+         <button className="remove-button" onClick={removeFile}>
+           <FaTimes />
+         </button>
+       </div>
+        ) : (
+          <label htmlFor={`file-input-${name}`} className="file-upload-label">
+            <span>Upload Logo</span>
+          </label>
+        )}
         <input
+          id={`file-input-${name}`}
           type="file"
           {...register(`${name}`)}
           name={name}
           label={label}
-          style={{ height: "46px" }}
-          className="form-control"
+          className="file-input"
           onChange={fileUploader}
           defaultValue={defaultValue}
           disabled={loading}
           accept="image/*"
         />
       </div>
-      {fileLink && 
-     ( 
-      <>
-     <a style={{textDecoration : '1px solid underline', color : "#0d99ff", marginLeft:'8px'}} target="_blank" href={fileLink}>
-       <img height={75} width={75} src={fileLink} alt="logo"/>
-     </a>
-      </>
-       
-       )
-      }
     </div>
   );
 };
 
 export default FileUploader;
-

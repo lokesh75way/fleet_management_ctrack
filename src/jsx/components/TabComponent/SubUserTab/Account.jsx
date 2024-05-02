@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
@@ -23,6 +23,8 @@ import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
 import VehicleDropdown from "../../VehicleDropdown";
 import { unitOfDistanceOptions } from "../VehicleTabs/Options";
+import UserLocation from "../../UserLocation";
+import LocationSelector from "../../LocationSelector";
 
 const Account = ({
   handleNext,
@@ -54,6 +56,7 @@ const Account = ({
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
   const [branchId, setBranchId] = useState([])
+  const [locationData, setLocationData] = useState(null);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
@@ -73,7 +76,7 @@ const Account = ({
     setValue("parentCompany", "");
     setBranchOptions([]);
   }
-
+console.log("errors",errors);
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter((item) => item?.companyId?._id == companyId)
@@ -197,7 +200,7 @@ const Account = ({
       setBusinessDisabled(true);
     }
   }, []);
-
+  
   useEffect(()=>{
     if(formData && id){
       setValue("businessUser",formData?.[0]?.businessGroupId)
@@ -216,15 +219,18 @@ const Account = ({
     }
   },[formData,id])
 
+  const handleLocationData = useCallback((data) => {
+    setLocationData(data);
+  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3">
+      <div className="row" style={{ width: "85%", margin: "auto" }}>
+      <UserLocation onLocationData={handleLocationData} />
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <Controller
             name="businessUser"
@@ -247,7 +253,7 @@ const Account = ({
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("company")}</label>
 
           <Controller
@@ -271,7 +277,7 @@ const Account = ({
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("branch")}</label>
           <Controller
             name="branchIds"
@@ -295,7 +301,7 @@ const Account = ({
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("vehicle")}</label>
           <Controller
             name="vehicleIds"
@@ -318,7 +324,7 @@ const Account = ({
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
 
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("email")} <span className="text-danger">*</span>
           </label>
@@ -333,7 +339,7 @@ const Account = ({
           />
           <Error errorName={errors.email} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("username")} <span className="text-danger">*</span>
           </label>
@@ -349,7 +355,7 @@ const Account = ({
           />
           <Error errorName={errors.userName} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("mobileNumber")} <span className="text-danger">*</span>
           </label>
@@ -370,51 +376,20 @@ const Account = ({
           />
           <Error errorName={errors.mobileNumber} />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            {t("country")}
-            <span className="text-danger">*</span>
-          </label>
-          <CountrySelect
-            onChange={(e) => {
-              setSelectStateName({ name: "" });
-              setCountryid(e.id);
-              setValue("country", e.name);
-              setIsStateDisabled(false);
-            }}
-            containerClassName="bg-white"
-            inputClassName="border border-white customSelectHeight"
-            placeHolder="Select Country"
-            // value={getValues("country")}
-            defaultValue={defaultCountry}
-          />
-          {!getValues("country") && <Error errorName={errors.country} />}
-        </div>
-        <div
-          className={`${
-            isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"
-          }`}
-        >
-          <label className="form-label">{t("state")}</label>
-          <div style={{ background: "white" }}>
-            <StateSelect
-              countryid={countryid}
-              onChange={(e) => {
-                setstateid(e.id);
-                setValue("state", e.name);
-              }}
-              containerClassName="bg-white"
-              inputClassName="border border-white customSelectHeight"
-              placeHolder="Select State"
-              defaultValue={selectStateName}
-            />
-          </div>
-          {!getValues("state") && <Error errorName={errors.state} />}
-        </div>
-        {!id && (
-          
+  
+              <LocationSelector
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          getValues={getValues}
+          locationData={locationData}
+          dValues={formData?.[0]}
+          id={id}
+          showCity={false}
+        />
+        {!id && (        
           <>
-            <div className="col-xl-6 mb-3 ">
+            <div className="col-xl-3 mb-3 ">
               <label className="form-label">
                 {t("password")} <span className="text-danger">*</span>
               </label>
@@ -440,7 +415,7 @@ const Account = ({
               </div>
               <Error errorName={errors.password} />
             </div>
-            <div className="col-xl-6 mb-3 ">
+            <div className="col-xl-3 mb-3 ">
               <label className="form-label">
                 {t("confirmPassword")} <span className="text-danger">*</span>
               </label>
@@ -470,7 +445,7 @@ const Account = ({
             </div>{" "}
           </>
         )}
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("featureTemplate")} <span className="text-danger">*</span>
           </label>
@@ -499,7 +474,7 @@ const Account = ({
             <Error errorName={errors.featureTemplateId} />
           )}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("unitOfDistance")}
             <span className="text-danger">*</span>
