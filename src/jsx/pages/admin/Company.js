@@ -82,13 +82,22 @@ const Company = () => {
     }
   };
   useEffect(() => {
-    fetchAllCompany(page);
-  }, [page]);
-  useEffect(()=>{
     if(id){
-      fetchAllCompany(1,id)
+      fetchAllCompany(page,id);
+      // setValue('companyOptions', id)
+    }else{
+      fetchAllCompany(page);
     }
-  },[id])
+  }, [page,id]);
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     if(id){
+  //       fetchAllCompany(1,id);
+  //     }
+  //   }, 1000); 
+  //   return () => clearTimeout(timeout); 
+  // }, [id]);
 
   const handleChangeBusinessGroup = (selectedOption) => {
     console.log("this is the selected options", selectedOption);
@@ -135,6 +144,15 @@ const Company = () => {
     console.log(data);
     navigate(`edit/${_id}`, { state: { formData: data } });
   };
+
+  const handleClearFilter = () => {
+    fetchAllCompany(page);
+    setValue("companyOptions", "");
+    setFilter({
+      label: t('allBusinessGroup'),
+      value: "All Business Group",
+    });
+  };
   const { can, setUserPermission } = usePermissions();
   return (
     <>
@@ -152,6 +170,19 @@ const Company = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("companies")}</h4>
                     <div className="d-flex align-items-center">
+                    <Link
+                        className="btn  btn-xxs"
+                        data-bs-toggle="offcanvas"
+                        onClick={handleClearFilter}
+                        to={"/company"}
+                        style={{
+                          background: "gray",
+                          border: "gray",
+                          color: "white",
+                        }}
+                      >
+                        Clear
+                      </Link>
                       <Controller
                         name="parent"
                         control={control}
@@ -170,12 +201,7 @@ const Company = () => {
                             styles={customStyles}
                             options={businessGroupOptions}
                             isDisabled={dropdownDisable}
-                            value={[
-                              {
-                                value: selectFilter.value,
-                                label: t('allBusinessGroup'),
-                              },
-                            ]}
+                            value={value ? value : selectFilter}
                           />
                         
                         )}

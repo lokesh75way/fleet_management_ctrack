@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate  } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ const Branch = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const params = useParams();
+  const {id} = useParams();
 
   const [selectFilter, setFilter] = useState({
     value: "All Companies",
@@ -135,8 +135,12 @@ const Branch = () => {
     }
   };
   useEffect(() => {
-    fetchAllBranch(page);
-  }, [page]);
+    if(id){
+      fetchAllBranch(page,id);
+    }else{
+      fetchAllBranch(page);
+    }
+  }, [page,id]);
 
   const filteredBranches = branches.filter(
     (branch) =>
@@ -208,6 +212,7 @@ const Branch = () => {
                         className="btn  btn-xxs"
                         data-bs-toggle="offcanvas"
                         onClick={handleClearFilter}
+                        to={"/branch"}
                         style={{
                           background: "gray",
                           border: "gray",
