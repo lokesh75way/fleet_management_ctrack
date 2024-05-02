@@ -47,7 +47,7 @@ const CompanyTable = ({
           </td>
           <td className="text-center">
             <Link
-              to={`/branch/cid/${item?.companyId?.id}`}
+              to={`/branch/cid/${item?.companyId?._id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {item?.branchIds?.length}

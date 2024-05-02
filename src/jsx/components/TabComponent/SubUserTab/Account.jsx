@@ -22,6 +22,7 @@ import CompanyDropdown from "../../CompanyDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
 import VehicleDropdown from "../../VehicleDropdown";
+import { unitOfDistanceOptions } from "../VehicleTabs/Options";
 
 const Account = ({
   handleNext,
@@ -185,7 +186,6 @@ const Account = ({
       setValue("businessUser", userDetails?.user.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
-
       setValue("parentCompany", userDetails?.user.companyId[0]?._id);
       setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
@@ -212,6 +212,7 @@ const Account = ({
       setValue("state",formData[0].state || '' )
       setSelectStateName({name : formData[0].state || ''})    
       setValue("featureTemplateId",formData?.[0]?.featureTemplateId)
+      setValue("unitOfDistance", formData?.[0].unitOfDistance);
     }
   },[formData,id])
 
@@ -498,7 +499,35 @@ const Account = ({
             <Error errorName={errors.featureTemplateId} />
           )}
         </div>
-        <div className="col-xl-6 mb-3 "></div>
+        <div className="col-xl-6 mb-3">
+          <label htmlFor="exampleFormControlInput6" className="form-label">
+            {t("unitOfDistance")}
+            <span className="text-danger">*</span>
+          </label>
+          <Controller
+            name="unitOfDistance"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => {
+                  setValue("unitOfDistance", newValue.value);
+                  setTempValue(newValue.value);
+                }}
+                options={unitOfDistanceOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{
+                  label: getValues("unitOfDistance"),
+                  value: getValues("unitOfDistance"),
+                }}
+              />
+            )}
+          />
+          {!getValues("unitOfDistance") && (
+            <Error errorName={errors.unitOfDistance} />
+          )}
+        </div>
       </div>
       <div
         style={{

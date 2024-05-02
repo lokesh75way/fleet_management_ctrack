@@ -17,11 +17,6 @@ export const vehicleGeneralSchema = yup
       .integer()
       .required("Sim Number is required")
       .typeError("Sim Number must be a number"),
-    secondrySimNumber: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Secondary Sim Number must be a number"),
     deviceAccuracyTolerance: yup
       .number()
       .positive()
@@ -29,12 +24,9 @@ export const vehicleGeneralSchema = yup
       .min(0)
       .max(100)
       .typeError("Device Accuracy Tolerance must be a number"),
-    serverAddress: yup
-      .string()
-      .url("Server address must be a valid URL")
-      .required(),
-    distanceCounter: yup.string().required("Distance counter is required"),
-    unitOfDistance: yup.string().required("Unit of distance is required"),
+      serverAddress: yup.string().url('Server address must be a valid URL').required(),
+      distanceCounter: yup.string().required('Distance counter is required'),
+      
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -380,7 +372,7 @@ export const driverDocumentSchema = yup
     ),
   })
   .required();
-export const subUserAccountSchema = yup
+  export const subUserAccountSchema = yup
   .object({
     isEdit: yup.boolean(),
     userName: yup.string().required("User Name is required "),

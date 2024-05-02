@@ -36,6 +36,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     resolver: yupResolver( id ? subUserEditAccountSchema: subUserAccountSchema),
   });
 
+  console.log(errors, "erroe:-")
+
   const onSubmit = async (data) => {
     if (data.businessUser) {
       data.businessGroupId = data.businessUser;

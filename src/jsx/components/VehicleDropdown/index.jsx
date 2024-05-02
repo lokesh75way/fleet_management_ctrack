@@ -12,7 +12,6 @@ const VehicleDropdown = ({
     isDisabled,
     name
 }) => {
-    console.log(branchids, "i got branch Id")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const { page } = usePagination();
