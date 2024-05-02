@@ -35,7 +35,6 @@ const Driver = () => {
   async function getDriversData(page) {
     try {
       const { data, totalLength } = await getDrivers(page);
-      // console.log(data, totalCount, "ji");
       setTableData(data);
       setCount(totalLength);
     } catch (error) {
@@ -73,7 +72,6 @@ const Driver = () => {
     // navigate(`/driver/edit/${item._id}`);
     setEditData(item);
     const filteredData = tableData.filter((data) => data._id === item._id);
-    // console.log("filtered", filteredData, item);
     navigate(`/driver/edit/${item._id}`, { state: filteredData });
   };
 

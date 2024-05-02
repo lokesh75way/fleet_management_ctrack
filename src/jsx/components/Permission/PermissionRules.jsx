@@ -146,7 +146,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
           name: editData.name,
           permission: editData.permission,
         });
-        console.log(editData);
     }
   }, []);
 
@@ -172,8 +171,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         });
 
         setData(newData);
-        console.log(newData, "4");
-        // console.log({ newData });
+     
       } catch (error) {
         console.error("Error fetching template data:", error);
       }
@@ -194,21 +192,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         setNewGroupData(filteredData);
         
         setEditGroupName(filteredData.name);
-        console.log(moduleData,"modeule")
-        // const updatedData = moduleData.data.map((module) => {
-        //   const permission = filteredData.permission.find(
-        //     (perm) => perm.moduleId === module._id
-        //   );
-        //   if (permission) {
-        //     module.permission = {
-        //       add: permission?.add,
-        //       view: permission?.view,
-        //       modify: permission?.modify,
-        //       delete: permission?.delete,
-        //     };
-        //   }
-        //   return module;
-        // });
+      
                 const updatedData = moduleData.data.map((module) => {
 // Find the permission for the current module or submodule
           const permission = filteredData.permission.find(
@@ -263,9 +247,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   };
 
   const groupNames = groupsDataState.map((e) => e.name);
-  // console.log("this is group data state ", groupNames);
-
-  // console.log(editData.name);
+ 
 
   const handleSave = async () => {
     if (!newGroupData.name) {
@@ -334,8 +316,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         ? TemplateServices.udpateTemplate
         : TemplateServices.createTemplate;
       await method(tempGroupData);
-      // console.log("this is the temoGrioyp data name", tempGroupData);
-      // setGroupsDataState((prevState) => [...prevState, tempGroupData]);
+      
       setSubModuleIndexArray([]);
 
       console.log("Data saved successfully");
@@ -350,7 +331,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     fetchTemplates();
   }, []);
 
-  // console.log("is error : ", isError);
+
 
   let isDisabled = false;
 
@@ -507,7 +488,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                     if (!moduleData) return null; // Check if moduleData is undefined
 
                     if (moduleData.subModules.length > 0) isDisabled = true;
-                    // console.log("yeee aaa gaya module dataa", moduleData);
 
                     return (
                       <React.Fragment key={index}>

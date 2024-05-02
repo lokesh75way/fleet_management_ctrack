@@ -27,7 +27,6 @@ const Document = ({
     control,
     name: "documents",
   });
-console.log(errors)
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -48,7 +47,6 @@ console.log(errors)
     formData && formData[0] && formData[0].documents
       ? formData[0]?.documents
       : fields;
-  // console.log(formFields)
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>

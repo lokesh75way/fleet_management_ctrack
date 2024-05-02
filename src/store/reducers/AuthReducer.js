@@ -76,7 +76,6 @@ export function AuthReducer(state = initialState, action) {
         };
     }
     if (action.type === SET_PERMISSION) {
-        console.log("permissions", action.payload)
         return {
             ...state,
             permission: action.payload,

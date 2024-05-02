@@ -21,6 +21,7 @@ import BranchDropdown from "../../BranchDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import VehicleDropdown from "../../VehicleDropdown";
 import { unitOfDistanceOptions } from "../VehicleTabs/Options";
 
 const Account = ({
@@ -52,6 +53,7 @@ const Account = ({
   const [isEdit, setIsEdit] = useState(false);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
+  const [branchId, setBranchId] = useState([])
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
@@ -61,8 +63,6 @@ const Account = ({
     }),
   };
   async function onGroupChange(groupId) {
-    console.log("groupId", groupId);
-    console.log("allCompanies", allCompanies);
     const companies = allCompanies
       .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
       .map((item) => ({
@@ -146,7 +146,6 @@ const Account = ({
   const role = checkRole();
   const { id } = useParams();
   // const User = JSON.parse(localStorage.getItem("userJsonData"));
-
   const loggedinemail = localStorage.getItem("loginDetails-name");
   let defaultCompanyOptions;
 
@@ -190,13 +189,11 @@ const Account = ({
       setValue("parentCompany", userDetails?.user.companyId[0]?._id);
       setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
-      console.log("parentCompany", userDetails?.user.businessGroupId[0]?._id);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
       // setValue("businessGroupId", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId?._id);
       setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
-      console.log(userDetails.user.businessGroupId[0]._id, "dsggsgs");
       setBusinessDisabled(true);
     }
   }, []);
@@ -204,9 +201,9 @@ const Account = ({
   useEffect(()=>{
     if(formData && id){
       setValue("businessUser",formData?.[0]?.businessGroupId)
-      setValue("parentCompany",formData?.[0]?.companyId)
-      console.log(getValues('companyId'),formData?.[0]?.companyId )
-      setValue("Branch",formData?.[0]?.branchIds[0])
+      setValue("companyId",formData?.[0]?.companyId)
+      setValue("branchIds",formData?.[0]?.branchIds)
+      setValue("vehicleIds",formData?.[0]?.vehicleIds)
       setValue("email",formData?.[0]?.email)
       setValue("userName",formData?.[0]?.userName)
       setValue("mobileNumber",formData?.[0]?.mobileNumber)
@@ -254,13 +251,13 @@ const Account = ({
           <label className="form-label">{t("company")}</label>
 
           <Controller
-            name="parentCompany"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <CompanyDropdown
                 onChange={async (newValue) => {
-                  setValue("parentCompany", newValue.value);
+                  setValue("companyId", newValue.value);
                   setCompanyId(newValue.value);
                 }}
                 key={groupId}
@@ -277,28 +274,50 @@ const Account = ({
         <div className="col-xl-6 mb-3">
           <label className="form-label">{t("branch")}</label>
           <Controller
-            name="Branch"
+            name="branchIds"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
-              key={companyId}
-              companyId={companyId}
+              <BranchDropdown
               onChange={(newValue) => {
-                setValue("Branch", newValue.value);
-                setValue("branchIds", newValue.value);
-              }
-              }
+                const newArray = newValue.map((temp)=> temp.value)
+                setValue("branchIds", newArray);
+                setBranchId(newArray)
+              }}
               value={value}
               customStyles={customStyles}
               ref={ref}
-              isDisabled={!companyId}
+              companyId={companyId}
+              name={name}
+              isDisabled={companyId  ? false  : true}
+            />
+            )}
+          />
+          {!getValues("Branch") && <Error errorName={errors.parent} />}
+        </div>
+        <div className="col-xl-6 mb-3">
+          <label className="form-label">{t("vehicle")}</label>
+          <Controller
+            name="vehicleIds"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <VehicleDropdown
+              onChange={(newValue) => {
+                const newArray = newValue.map((temp)=> temp.value)
+                setValue("vehicleIds", newArray);
+              }}
+              value={value}
+              branchids={branchId}
+              customStyles={customStyles}
+              ref={ref}
               name={name}
             />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
+
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("email")} <span className="text-danger">*</span>

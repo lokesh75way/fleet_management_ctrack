@@ -93,7 +93,6 @@ const AlertOffcanvas = forwardRef(
       setValue("validDays", e.target.value);
     };
     const handleActionChange = (e) => {
-      console.log({ e });
       const vl = getValues(e.target.name);
       setValue(e.target.name, e.target.checked);
     };

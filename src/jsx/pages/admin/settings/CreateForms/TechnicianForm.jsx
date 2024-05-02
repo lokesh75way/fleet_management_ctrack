@@ -49,12 +49,10 @@ const TechnicianForm = () => {
     ),
   });
   const { id: techId } = useParams();
-  console.log(errors, "error:-", getValues())
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
         if (techId) {
-          console.log(data)
           await updateTechnician(data, techId);
           notifySuccess("Technincian updated!");
           navigate("/technician/details");

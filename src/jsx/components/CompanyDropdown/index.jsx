@@ -13,6 +13,7 @@ const CompanyDropdown = ({
     ref,
     isDisabled
 }) => {
+    console.log(groupId, "groupId")
     const [dropdownOptions, setdropdownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     const { page, setPage } = usePagination();
@@ -55,7 +56,6 @@ const CompanyDropdown = ({
             setPage(prevPage => prevPage + 1);
         }
     };
-    // console.log(dropdownOptions,selectedOption,"drop")
     return (
         <Select
             options={dropdownOptions}

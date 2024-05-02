@@ -87,6 +87,8 @@ const General = ({
       setValue("deviceType", formData?.[0].deviceType);
       setValue("serverAddress", formData?.[0].serverAddress);
       setValue("distanceCounter", formData?.[0].distanceCounter);
+      setValue("unitOfDistance", formData?.[0].unitOfDistance);
+      setValue("speedDetection", formData?.[0].speedDetection);
       
       setValue(
         "deviceAccuracyTolerance",
@@ -391,6 +393,10 @@ const General = ({
                 name={name}
                 styles={customStyles}
                 defaultValue={speedDetectionOptions[0]}
+                value={{
+                  label: getValues("speedDetection"),
+                  value: getValues("speedDetection"),
+                }}
               />
             )}
           />

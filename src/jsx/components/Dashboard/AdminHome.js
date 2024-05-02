@@ -188,7 +188,6 @@ const Home = () => {
       setStatusData([statusApiData.cancelled, statusApiData.yetToStart, statusApiData.complete, statusApiData.progress]);
       setApplicationUsage([usageApiData.applicationUsage.mobile, usageApiData.applicationUsage.web]);
       setTasksData(tasksApiData);
-      console.log("task", tasksApiData.series);
       setIsLoading(false);
     };
     fetchData();

@@ -673,8 +673,10 @@ export const english = {
       "enterYourPersonalDetail":"Enter your personal details below:",
       "iAgreeToThe":"I agree to the",
       "termsOfService":"Terms of Service",
-      "privacyPolicy":"Privacy Policy"
+      "privacyPolicy":"Privacy Policy",
 
+      "tradeLicenseNumber" : "Trade License Number",
+      "officeNo" : "Office Number"
 
 
   

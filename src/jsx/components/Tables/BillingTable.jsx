@@ -4,7 +4,6 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 
 const BillingTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  console.log(tableData);
   return (
     <>
       {tableData?.map((item, index) => (

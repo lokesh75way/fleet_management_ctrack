@@ -6,13 +6,14 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { subUserAccountSchema } from "../../../yup";
+import { subUserAccountSchema, subUserEditAccountSchema } from "../../../yup";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import useStorage from "../../../hooks/useStorage";
 import { useTranslation } from "react-i18next";
 import { createUser, updateUser } from "../../../services/api/UserServices";
 
 const SubUserForm = ({ Title, editData, setEditData }) => {
+  const { id } = useParams();
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const { checkRole, checkUserName } = useStorage();
@@ -24,7 +25,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { formData } = location.state || {};
-  console.log(formData, "datahgf:-")
   const {
     register,
     formState: { errors },
@@ -33,13 +33,12 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     control,
     handleSubmit,
   } = useForm({
-    resolver: yupResolver(subUserAccountSchema),
+    resolver: yupResolver( id ? subUserEditAccountSchema: subUserAccountSchema),
   });
 
   console.log(errors, "erroe:-")
 
   const onSubmit = async (data) => {
-    console.log(data, "this is data");
     if (data.businessUser) {
       data.businessGroupId = data.businessUser;
     }
@@ -56,7 +55,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
         // data.parent = userName;
         // data.type = "STAFF";
         const response = await updateUser(id,data);
-        console.log("this is response", response);
         if (response.error) {
           notifyError(response.error);
         } else {
@@ -74,7 +72,6 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
         data.parent = userName;
         data.type = "STAFF";
         const response = await createUser(data);
-        console.log("this is response", response);
         if (response.error) {
           notifyError(response.error);
         } else {
@@ -87,7 +84,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       }
     }
   };
-  const { id } = useParams();
+ 
   return (
     <>
       <MainPagetitle

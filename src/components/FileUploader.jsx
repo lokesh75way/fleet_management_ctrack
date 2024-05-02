@@ -41,7 +41,6 @@ const FileUploader = ({
         notifySuccess(message);
       }
     } catch (error) {
-      console.log("[FILE_UPLOAD_ERROR]", error);
       notifyError("file is not uploaded");
     } finally {
       setLoading(false);
@@ -49,7 +48,7 @@ const FileUploader = ({
   };
 
   return (
-    <div>
+    <div className="d-flex">
       <div>
         <input
           type="file"
@@ -64,7 +63,16 @@ const FileUploader = ({
           accept="image/*"
         />
       </div>
-      {fileLink && <small className="">File uploaded - <a style={{textDecoration : '1px solid underline', color : "#0d99ff"}} target="_blank" href={fileLink}>here</a> </small>}
+      {fileLink && 
+     ( 
+      <>
+     <a style={{textDecoration : '1px solid underline', color : "#0d99ff", marginLeft:'8px'}} target="_blank" href={fileLink}>
+       <img height={75} width={75} src={fileLink} alt="logo"/>
+     </a>
+      </>
+       
+       )
+      }
     </div>
   );
 };

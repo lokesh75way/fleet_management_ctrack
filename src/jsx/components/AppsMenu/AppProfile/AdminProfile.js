@@ -37,17 +37,13 @@ const navigate = useNavigate();
   } = useForm({
     resolver: yupResolver(adminProfileAccountSchema),
   });
-  console.log(editData)
 
   const onSubmit = (data) => {
-    console.log(editData.id)
-    console.log("data on editing profile, ", data);
     const val = JSON.parse(localStorage.getItem("userJsonData"));
 
     const indexToUpdate = val.findIndex((item) => item.id == editData.id);
     if (indexToUpdate !== -1) {
       val[indexToUpdate] = { ...data, id : editData.id, email : editData.email, role : "admin", whatsappContactNumber: editData.whatsappContactNumber };
-      console.log(val)
       localStorage.setItem("userJsonData", JSON.stringify(val));
       notifySuccess("Profile Updated!");
       navigate("/");

@@ -5,12 +5,12 @@ import usePagination from "../../../hooks/usePagination";
 import { usePermissions } from "../../../context/PermissionContext";
 
 const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
-  const [dropDownOptions, setdropDownOptions] = useState([]);
+  const [allOptions, setAllOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
   const [loading, setLoading] = useState(false);
   const { page, setPage } = usePagination();
   const [initialDataFetched, setInitialDataFetched] = useState(false);
-  const {userDetails} = usePermissions();
+  const { userDetails } = usePermissions();
 
   useEffect(() => {
     if (!initialDataFetched) {
@@ -19,7 +19,7 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
     } else {
       fetchNextPageData();
     }
-  }, [page,value]);
+  }, [page]);
 
   const fetchInitialData = async () => {
     setLoading(true);
@@ -30,25 +30,20 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
     }));
 
     let updatedOptions = [...newOptions];
-    let selectedOption = null; 
 
-    
     if (userDetails && (userDetails.user.role === "BUSINESS_GROUP" || userDetails.user.role === "COMPANY")) {
       const userGroup = userDetails.user.businessGroupId[0];
       const userGroupOption = {
         label: userGroup.groupName,
         value: userGroup._id,
       };
-      updatedOptions.unshift(userGroupOption); 
-      selectedOption = userGroupOption; 
+      updatedOptions.unshift(userGroupOption);
     }
 
-    setSelectedOption(selectedOption); 
-    setdropDownOptions(updatedOptions);
+    setAllOptions(updatedOptions);
     setLoading(false);
   };
 
-  
   const fetchNextPageData = async () => {
     setLoading(true);
     const response = await getGroups(page);
@@ -56,17 +51,17 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
       label: item?.businessGroupId?.groupName,
       value: item?.businessGroupId?._id,
     }));
-    setdropDownOptions((prevOptions) => [...prevOptions, ...newOptions]);
+    setAllOptions((prevOptions) => [...prevOptions, ...newOptions]);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (userDetails && (userDetails.user.role !== "BUSINESS_GROUP" && userDetails.user.role !== "COMPANY") ) {
-      const selected = dropDownOptions.find((option) => option.value === value);
+    if (userDetails && (userDetails.user.role !== "BUSINESS_GROUP" && userDetails.user.role !== "COMPANY")) {
+      const selected = allOptions.find((option) => option.value === value);
       setSelectedOption(selected);
     }
-  }, [value, dropDownOptions, userDetails]);
-  
+  }, [value, allOptions, userDetails]);
+
   const handleMenuScroll = async (event) => {
     const bottom =
       event.target.scrollHeight - event.target.scrollTop ===
@@ -75,10 +70,10 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
       setPage((prevPage) => prevPage + 1);
     }
   };
-// console.log(dropDownOptions,selectedOption,"drop")
+
   return (
     <Select
-      options={dropDownOptions}
+      options={allOptions}
       value={selectedOption}
       onChange={(newValue) => onChange(newValue)}
       styles={customStyles}

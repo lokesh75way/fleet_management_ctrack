@@ -31,9 +31,7 @@ const ClassifyTripForm = () => {
 
   const { id } = useParams();
   const { t } = useTranslation();
-  console.log(errors)
   const onSubmit = async (data) => {
-    console.log(data)
     if (id) {
       try {
         await updateTrip(id,data);

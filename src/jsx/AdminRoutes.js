@@ -209,7 +209,6 @@ const AdminRoutes = () => {
         <Route element={<AdminLayout />}>
           {allroutes.map((data, i) => {
             if (!can(data.module, data.operation || 'view')) {
-              // console.log(data.module, data.url, 'create')
                return <Route
                 key={i}
                 exact

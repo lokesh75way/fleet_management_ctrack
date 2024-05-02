@@ -45,7 +45,6 @@ const Trip = ({
   }, [id]);
 
   useEffect(() => {
-    console.log(dValues,"mn")
     if (dValues && id) {
     //   setValue("startTime", dValues?.startTime);
       setValue("startLocation", dValues?.startLocation);

@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import Select from "react-select";
 import { getDrivers } from '../../../services/api/driverService';
 import { getVehicles } from '../../../services/api/VehicleService';
+import usePagination from '../../../hooks/usePagination';
 const VehicleDropdown = ({
     onChange,
     value,
     customStyles,
+    branchids,
     ref,
     isDisabled,
     name
 }) => {
-    // console.log(value, "this is isDisabled")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
+    const { page } = usePagination();
     useEffect(() => {
         const fetchVehicles = async () => {
-            const response = await getVehicles();
-            console.log(response.data,"dsis");
+            const response = await getVehicles(page, branchids ? branchids : undefined);
             const vehicleOptions = response.data.map((item) => ({
                 label: item?.vehicleName,
                 value: item?._id,
@@ -26,11 +27,17 @@ const VehicleDropdown = ({
         };
         fetchVehicles();
     }
-    , []);
+    , [page,branchids]);
     useEffect(() => {
-        const selected = dropDownOptions.find((option) => option.value === value);
-        setSelectedOption(selected);
-    }, [value, dropDownOptions]);
+        if (value && Array.isArray(value)) {
+          const selected = dropDownOptions.filter((option) =>
+            value.some((val) => val === option.value)
+          );
+          setSelectedOption(selected);
+        } else {
+          setSelectedOption(value);
+        }
+      }, [value, dropDownOptions,branchids]);
 
     return (
             <Select
@@ -40,6 +47,7 @@ const VehicleDropdown = ({
                 styles={customStyles}
                 ref={ref}
                 name={name}
+                isMulti
                 />
     );
 }

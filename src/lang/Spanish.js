@@ -641,5 +641,9 @@ export const spanish = {
     iAgreeToThe: "Acepto los",
     termsOfService: "Términos de servicio",
     privacyPolicy: "Política de privacidad",
+
+    tradeLicenseNumber : "Número de licencia comercial",
+      officeNo : "Número de oficina"
+
   },
 };

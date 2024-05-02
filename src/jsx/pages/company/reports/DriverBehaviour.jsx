@@ -52,7 +52,6 @@ const DriverBehaviour = (ref) => {
   const [businessFilter, setBusinessFilter] = useState("All Groups");
   const [companyFilter, setFilterCompany] = useState("All Companies");
 
-  // console.log("company is ", businessFilter, companyFilter, date);
 
   const [tableData, setTableData] = useState(DriverData);
   const [editData, setEditData] = useState({

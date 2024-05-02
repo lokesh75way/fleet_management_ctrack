@@ -18,7 +18,6 @@ const TechnicianDropdown = ({
   useEffect(() => {
     const fetchTechnicians = async () => {
       const { technicians } = await getTechnicians(page);
-      console.log({ technicians });
       const options = technicians.map((item) => ({
         value: item?._id,
         label: `${item?.firstName ?? ""} ${item?.lastName ?? ""}`,

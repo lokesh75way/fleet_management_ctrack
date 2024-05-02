@@ -44,7 +44,6 @@ const MenusBlog = () => {
     //   obj.key == ind ? { ...obj, checked: !obj } : obj
     // );
     // setData(newState);
-    // console.log(newState);
   }
 
   return (

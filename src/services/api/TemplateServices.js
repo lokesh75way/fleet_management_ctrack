@@ -6,7 +6,6 @@ initAxios()
 
 export const getTemplates = async (page) => {
   try {
-    console.log("page is here ", page)
     let url = "/feature-template";
     if (page !== undefined) {
     url += `?page=${page}&limit=${10}`;
@@ -38,7 +37,6 @@ const TemplateServices = {
   createTemplate: async (body) => {
 
     try {
-      console.log(body)
       const response = await axios.post("/feature-template", body);
       return response.data; // Directly return the data array
     } catch (error) {

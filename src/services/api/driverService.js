@@ -3,12 +3,10 @@ import initAxios from "./Axios";
 initAxios();
 
 export const createDriver = async (body) => {
-  console.log("body", body)
   return axios.post("/drivers", body);
 };
 
 export const updateDriver = async (id, body) => {
-  console.log("this is the id", body)
   return axios.put(`/drivers/${id}`, body);
 };
 

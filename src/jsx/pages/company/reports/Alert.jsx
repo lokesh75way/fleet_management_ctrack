@@ -52,7 +52,7 @@ const Alert = (ref) => {
   const [businessFilter, setBusinessFilter] = useState("All Groups");
   const [companyFilter, setFilterCompany] = useState("All Companies");
 
-  // console.log("company is ", businessFilter, companyFilter, date);
+  
   const [tableData, setTableData] = useState(AlertData);
   const [editData, setEditData] = useState({
     id: 0,

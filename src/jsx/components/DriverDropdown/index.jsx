@@ -9,19 +9,16 @@ const DriverDropdown = ({
     isDisabled,
     name
 }) => {
-    // console.log(value, "this is isDisabled")
     const [dropDownOptions, setdropDownOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState(value);
     useEffect(() => {
         const fetchDrivers = async () => {
             const response = await getDrivers();
-            console.log(response.data,"dsis");
             const driverOptions = response.data.map((item) => ({
                 label: item?.firstName,
                 value: item?._id,
             }));
-            // console.log(response.data, "this is groud data")
-            // console.log(driverOptions, "this is group options")
+   
             setdropDownOptions(driverOptions);
         };
         fetchDrivers();

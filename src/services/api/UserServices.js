@@ -28,7 +28,6 @@ export const deleteUser = async (id) => {
 export const createUser = async (data) => {
   try {
     const response = await axios.post("/users", data)
-    console.log("response", response)
     return response?.data?.data
   }catch(error){
     console.log(error)

@@ -46,7 +46,9 @@ import Paginate from "../components/Pagination/Paginate";
   const [tableData, setTableData] = useState([] );
 
   const onConfirmDelete = async (id) => {
-     await deleteUser(id);
+    await deleteUser(id);
+    const data = tableData.filter((item) => item._id === id);
+    setTableData(data)
   };
 
   const editDrawerOpen = (_id) => {

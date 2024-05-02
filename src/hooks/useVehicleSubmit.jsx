@@ -18,8 +18,6 @@ const {
 
   const onSubmit = async(data) =>{
     try{
-      console.log(data)
-      console.log("Entering")
       setAddVehicle(data)
     }
     catch(err){

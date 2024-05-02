@@ -28,8 +28,8 @@ const CompanyForm = () => {
   const { saveData } = useStorage();
   const navigate = useNavigate();
 
-  let tabHeading = [t("newCompany"), t("settings"), t("changePassword")];
-  let component = [MyAccount, UserSetting, ManagePassword];
+  let tabHeading = [t("newCompany"), t("changePassword")];
+  let component = [MyAccount, ManagePassword];
   const { id } = useParams();
   const location = useLocation();
   const { formData } = location.state || {};
@@ -37,8 +37,8 @@ const CompanyForm = () => {
   // ManagePassword , t('changePassword')
 
   if (!id) {
-    tabHeading = [t("newBusinessGroup"), t("settings")];
-    component = [MyAccount, UserSetting];
+    tabHeading = [t("newBusinessGroup")];
+    component = [MyAccount];
   }
 
   const totalTabs = tabHeading.length;
@@ -51,26 +51,32 @@ const CompanyForm = () => {
     control,
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      userInfo: [{
+        name:'',
+        designation : '', 
+        mobileNumber :null,
+        email:'',
+      }],
+    },
     resolver: yupResolver(
       activeIndex === 1
-        ? companySettingSchema
-        : activeIndex === 2
         ? companyPasswordSchema
         : companyAccountSchema
     ),
   });
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2 : 1)) {
+    if (activeIndex === totalTabs - (id ? 2 :1)) {
       try {
         if (id) {
           try {
             // data.businessGroupId = getValues("businessId");
-            if (data.logo.length === 0) {
-              delete data.logo;
-            }
-            if (data.file.length === 0) {
-              delete data.file;
-            }
+            // if (data.logo.length === 0) {
+            //   delete data.logo;
+            // }
+            // if (data.file.length === 0) {
+            //   delete data.file;
+            // }
             await editCompany(data);
             notifySuccess("Company Updated Successfully");
             navigate("/company");
@@ -117,7 +123,7 @@ const CompanyForm = () => {
         notifyError("Password is not changes!");
       }
     }
-    // console.log(activeIndex);
+  
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 

@@ -13,7 +13,6 @@ const BranchDropdown = ({
   ref,
   isMulti = true,
 }) => {
-    console.log(value, "calue")
   const [dropDownOptions, setdropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
   const { page } = usePagination();
@@ -30,7 +29,7 @@ const BranchDropdown = ({
       setdropDownOptions(groupOptions);
     };
     fetchBusinessGroups();
-  }, []);
+  }, [page,companyId]);
   useEffect(() => {
     if (value && Array.isArray(value)) {
       const selected = dropDownOptions.filter((option) =>
@@ -49,7 +48,7 @@ const BranchDropdown = ({
       styles={customStyles}
       name={name}
       ref={ref}
-      isDisabled={isDisabled || !!companyId}
+      isDisabled={isDisabled}
       isMulti
     />
   );

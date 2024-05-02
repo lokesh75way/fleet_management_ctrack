@@ -58,7 +58,6 @@ const Profile = ({
   const loggedInUser = localStorage.getItem("loginDetails-name");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
-  // console.log(errors, 'erro0rs-:', getValues())
 
   useEffect(() => {
     if (id) {
@@ -69,7 +68,6 @@ const Profile = ({
 
   useEffect(() => {
     if (dValues && id) {
-      // console.log("this:-", dValues)
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
       setValue("businessGroupId", dValues.businessGroupId?._id);
       setValue("companyName", dValues.companyId?.companyName);
@@ -106,12 +104,10 @@ const Profile = ({
       setValue("companyId", userDetails?.user.companyId)
       setCompanyId(userDetails?.user.companyId);
       setCompanyDisabled(true);
-      console.log("companyId", userDetails?.user.businessGroupId)
     }
     if(userDetails.user.role === 'BUSINESS_GROUP'){
       setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      console.log(userDetails?.user.businessGroupId[0]?._id, "hii")
       setBusinessDisabled(true);
     }
 },[])

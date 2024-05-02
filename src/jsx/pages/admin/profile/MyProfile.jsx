@@ -25,7 +25,6 @@ const MyProfile = () => {
       console.log(data)
       return;
     }
-    console.log(data)
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   }
   

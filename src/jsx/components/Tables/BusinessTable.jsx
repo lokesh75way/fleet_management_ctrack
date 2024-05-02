@@ -41,7 +41,7 @@ const BusinessTable = ({
           </td>
 
           <td>
-            <span>{item.mobileNumber}</span>
+            <span>{item.userInfo[0]?.mobileNumber}</span>
           </td>
           <td>
             <span>{item.email}</span>

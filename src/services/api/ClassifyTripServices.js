@@ -3,7 +3,6 @@ import initAxios from "./Axios";
 initAxios();
 
 export const getTrips = async (pageNo = 1, status, driverId, startDate, endDate) => {
-  console.log("driverIdhi", driverId, startDate, endDate)
   let url = `/trips?page=${pageNo}&limit=10`;
   if (driverId && startDate && endDate) {
     url += `&driverId=${driverId}&start=${startDate}&end=${endDate}`;

@@ -32,7 +32,6 @@ const UiAccordion = () => {
     },
   ];
   
-  // console.log(defaultAccordion);
   const sidebarData = [
     {title: 'Default Accordion', to:'accordion-one', select:''},
     {title: 'Accordion Bordered', to:'accordion-two', select:''},

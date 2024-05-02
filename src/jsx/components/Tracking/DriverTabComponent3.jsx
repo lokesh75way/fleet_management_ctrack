@@ -32,7 +32,6 @@ useEffect(() => {
 
   const handleSubmit = () => {
     const selectedObject = checked.map((data) => JSON.parse(data));
-    console.log(selectedObject);
     handleToggleCardPositionHandler();
   };
 
