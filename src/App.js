@@ -28,6 +28,7 @@ import { GiLabCoat } from "react-icons/gi";
 import useStorage from "./hooks/useStorage";
 import { usePermissions } from "./context/PermissionContext";
 import UserRoutes from "./jsx/UserRoutes";
+import UserLocation from "./jsx/components/UserLocation";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
@@ -23,6 +23,8 @@ import { use } from "i18next";
 import FormField from "../../FormField";
 import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
 import TimezoneSelect from "react-timezone-select";
+import UserLocation from "../../UserLocation";
+import LocationSelector from "../../LocationSelector";
 
 const MyAccount = ({
   setValue,
@@ -73,7 +75,7 @@ const MyAccount = ({
   // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry, setDefaultCountry] = useState();
-
+  const [locationData, setLocationData] = useState(null);
   const [selectedTimezone, setSelectedTimezone] = useState(
     dValues?.businessGroupId?.timezone ||
       Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -149,7 +151,6 @@ const MyAccount = ({
       setValue("parentBranchId", dValues.parentBranchId?._id);
       setValue("parent", dValues.parentBranchId?._id);
       setValue("branchName", dValues.branchName);
-      setValue("city", dValues.city);
       setValue("country", dValues.country);
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
@@ -169,7 +170,7 @@ const MyAccount = ({
       }
     }else{
       setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[0]?.value)
+      setValue('timeFormat',timeFormatOptions[1]?.value)
     }
   }, [dValues, id]);
 
@@ -183,11 +184,14 @@ const MyAccount = ({
       email: "",
     });
   };
-
+  const handleLocationData = useCallback((data) => {
+    setLocationData(data);
+  }, []);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-        <div className="col-xl-4 mb-3">
+      <UserLocation onLocationData={handleLocationData} />
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <span className="text-danger">*</span>
           {/* {
@@ -241,7 +245,7 @@ const MyAccount = ({
             <Error errorName={errors.businessGroupId} />
           )}
         </div>
-        <div className="col-xl-4 mb-3">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("company")}
             <span className="text-danger">*</span>
@@ -293,7 +297,7 @@ const MyAccount = ({
 
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
-        {/* <div className="col-xl-4 mb-3">
+        {/* <div className="col-xl-3 mb-3">
           <label className="form-label">{t("parentBranch")}</label>
           <Controller
             name="parent"
@@ -321,7 +325,7 @@ const MyAccount = ({
             <Error errorName={errors.parentBranch} />
           )}
         </div> */}
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("branchName")} <span className="text-danger">*</span>
           </label>
@@ -336,7 +340,7 @@ const MyAccount = ({
           />
           <Error errorName={errors.branchName} />
         </div>
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("tradeLicenseNumber")} 
           </label>
@@ -350,7 +354,7 @@ const MyAccount = ({
           />
           <Error errorName={errors.tradeLicenseNumber} />
         </div>
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("officeNo")} 
           </label>
@@ -364,7 +368,7 @@ const MyAccount = ({
           />
           <Error errorName={errors.officeNo} />
         </div>
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("email")}
             <span className="text-danger">*</span>
@@ -382,63 +386,17 @@ const MyAccount = ({
           />
           <Error errorName={errors.email} />
         </div>
-        <div className="col-xl-4 mb-3">
-          <label className="form-label">
-            {t("country")}
-            <span className="text-danger">*</span>
-          </label>
-          <CountrySelect
-            onChange={(e) => {
-              setSelectStateName({ name: "" });
-              setCountryid(e.id);
-              setValue("country", e.name);
-              setIsStateDisabled(false);
-            }}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
-            defaultValue={defaultCountry}
-          // defaultValue={{ id: 1, name: filteredCompanyData[0] ? filteredCompanyD0ata[0].country : "" }}
-          />
-          {!getValues("country") && <Error errorName={errors.country} />}
-        </div>
-        <div
-          className={`${isStateDisabled ? "col-xl-4 mb-3 pe-none" : "col-xl-4 mb-3"
-            }`}
-        >
-          <label className="form-label">{t("state")}</label>
-          <div style={{ background: "white" }}>
-            <StateSelect
-              countryid={countryid}
-              onChange={(e) => {
-                setstateid(e.id);
-                setValue("state", e.name);
-              }}
-              containerClassName="bg-white"
-              inputClassName="border border-white"
-              placeHolder="Select State"
-              // defaultValue={selectStateName}
-              defaultValue={ selectStateName}
-            />
-          </div>
-          {!getValues("state") && <Error errorName={errors.state} />}
-        </div>
-        <div className="col-xl-4 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("city")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="City"
-            name="city"
-            placeholder=""
-            defaultValue={getValues("city")}
-          />
-          <Error errorName={errors.city} />
-        </div>
-        <div className="col-xl-4 mb-3 ">
+        <LocationSelector
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          getValues={getValues}
+          locationData={locationData}
+          dValues={dValues}
+          id={id}
+          showCity={true}
+        />
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeZone")} </label>
           <Controller
             name="timezone"
@@ -457,7 +415,7 @@ const MyAccount = ({
             )}
           />
         </div>
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
             name="dateFormat"
@@ -476,7 +434,7 @@ const MyAccount = ({
           <Error errorName={errors.dateFormat} />
         </div>
 
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller
             name="timeFormat"
@@ -489,7 +447,7 @@ const MyAccount = ({
                 name={name}
                 styles={customStyles}
                 value={{ value, label: value }}
-                defaultValue={timeFormatOptions[0]}
+                defaultValue={timeFormatOptions[1]}
               />
             )}
           />

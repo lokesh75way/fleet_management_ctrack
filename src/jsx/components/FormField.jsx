@@ -24,7 +24,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
           </div>
         )}
       </div>
-      <div className="col-xl-4 mb-3">
+      <div className="col-xl-3 mb-3">
         <label className="form-label">
           {t("name")} <span className="text-danger">*</span>
         </label>
@@ -38,7 +38,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
         />
         <Error errorName={errors.userInfo?.[index]?.name} />
       </div>
-      <div className="col-xl-4 mb-3">
+      <div className="col-xl-3 mb-3">
         <label className="form-label">
           {t("Designation")} <span className="text-danger">*</span>
         </label>
@@ -52,7 +52,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
         />
         <Error errorName={errors.userInfo?.[index]?.designation} />
       </div>
-      <div className="col-xl-4 mb-3">
+      <div className="col-xl-3 mb-3">
         <label className="form-label">
           {t("mobileNumber")}
           <span className="text-danger">*</span>
@@ -72,7 +72,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
         />
         <Error errorName={errors.userInfo?.[index]?.mobileNumber} />
       </div>
-      <div className="col-xl-4 mb-3">
+      <div className="col-xl-3 mb-3">
         <label className="form-label">
           {t("email")}
           <span className="text-danger">*</span>

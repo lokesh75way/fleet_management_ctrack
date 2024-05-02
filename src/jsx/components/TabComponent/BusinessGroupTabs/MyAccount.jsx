@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useFieldArray } from "react-hook-form";
@@ -20,6 +20,8 @@ import { IMAGES, SVGICON } from "../../../constant/theme";
 import CredentialsInput from "../../CredentialsInput";
 import { get } from "react-scroll/modules/mixins/scroller";
 import FormField from "../../FormField";
+import UserLocation from "../../UserLocation";
+import LocationSelector from "../../LocationSelector";
 
 const MyAccount = ({
   data,
@@ -46,6 +48,7 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [logo, setLogo] = useState(null);
+  const [locationData, setLocationData] = useState(null);
   const [dValues, setDvalues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [selectedTimezone, setSelectedTimezone] = useState(
@@ -65,7 +68,6 @@ const MyAccount = ({
     if (id) {
       const data = location.state[0];
       setDvalues(data);
-     
     }
   }, [id]);
   useEffect(() => {
@@ -84,7 +86,10 @@ const MyAccount = ({
         dValues.businessGroupId?.helpDeskTelephoneNumber
       );
       setValue("street1", dValues.businessGroupId?.street1);
-      setValue("tradeLicenseNumber", dValues.businessGroupId?.tradeLicenseNumber);
+      setValue(
+        "tradeLicenseNumber",
+        dValues.businessGroupId?.tradeLicenseNumber
+      );
       setValue("officeNumber", dValues.businessGroupId?.officeNumber);
       setValue("logo", dValues?.businessGroupId?.logo);
       setLogo(dValues?.businessGroupId?.logo);
@@ -93,23 +98,18 @@ const MyAccount = ({
       setValue("contactPerson", dValues.businessGroupId?.contactPerson);
       setValue("faxNumber", dValues?.businessGroupId?.faxNumber);
       setValue("zipCode", dValues.businessGroupId?.zipCode);
-      setValue("city", dValues.city);
-      setDefaultCountry({ name: dValues.country });
-      setValue("country", dValues.country);
-      setSelectStateName({ name: dValues.state || "" });
-      setValue("state", dValues.state || "");
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
-      setValue("timezone",dValues?.businessGroupId?.timezone)
-      const timeZone =  dValues?.businessGroupId?.timezone
-      if(timeZone){
-        setSelectedTimezone(timeZone)
+      setValue("timezone", dValues?.businessGroupId?.timezone);
+      const timeZone = dValues?.businessGroupId?.timezone;
+      if (timeZone) {
+        setSelectedTimezone(timeZone);
       }
-      setValue('userInfo', dValues?.userInfo)
+      setValue("userInfo", dValues?.userInfo);
     } else {
       setValue("capacity", storageCapacityOptions[1].value);
-      setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[0]?.value)
+      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [dValues, id]);
 
@@ -122,12 +122,16 @@ const MyAccount = ({
     });
   };
 
-
+  const handleLocationData = useCallback((data) => {
+    setLocationData(data);
+  }, []);
+  console.log(locationData, "datalcoation");
+  console.log(errors, "errro:- ", dValues);
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "85%", margin: "auto" }}>
-      
-        <div className="col-xl-4 mb-3 ">
+      <div className="row" style={{ width: "85%" }}>
+        <UserLocation onLocationData={handleLocationData} />
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("businessGroupName")} <span className="text-danger">*</span>
           </label>
@@ -141,10 +145,8 @@ const MyAccount = ({
           />
           <Error errorName={errors.userName} />
         </div>
-        <div className="col-xl-4 mb-3 ">
-          <label className="form-label">
-            {t("tradeLicenseNumber")} 
-          </label>
+        <div className="col-xl-3 mb-3 z-1">
+          <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -155,8 +157,26 @@ const MyAccount = ({
           />
           <Error errorName={errors.tradeLicenseNumber} />
         </div>
-        <div className="col-xl-4 mb-3">
-          <label className="form-label">{t("uploadLogo")}</label>
+
+        <div className="col-xl-3 mb-3 z-1">
+          <label className="form-label">{t("officeNo")}</label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="officeNumber"
+            name="officeNumber"
+            defaultValue={getValues("officeNumber")}
+          />
+          <Error errorName={errors.officeNumber} />
+        </div>
+
+        <span
+          className="absolute"
+          style={{     position: 'absolute',
+            top: '23%',
+            right: '-42%',
+            overflow: 'hidden'}}
+        >
           <FileUploader
             setValue={setValue}
             register={register}
@@ -170,22 +190,8 @@ const MyAccount = ({
           {loading && <small>Uploading...</small>}
 
           <Error errorName={errors.logo} />
-        </div>
-        <div className="col-xl-4 mb-3 ">
-          <label className="form-label">
-            {t("officeNo")} 
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="officeNumber"
-            name="officeNumber"
-            placeholder=""
-            defaultValue={getValues("officeNumber")}
-          />
-          <Error errorName={errors.officeNumber} />
-        </div>
-        <div className="col-xl-4 mb-3 ">
+        </span>
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("email")}
             <span className="text-danger">*</span>
@@ -196,68 +202,24 @@ const MyAccount = ({
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={
-              getValues('email')
-            }
+            defaultValue={getValues("email")}
             disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
         </div>
-        <div className="col-xl-4 mb-3">
-          <label className="form-label">
-            {t("country")}
-            <span className="text-danger">*</span>
-          </label>
-          <CountrySelect
-            onChange={(e) => {
-              setSelectStateName({ name: "" });
-              setCountryid(e.id);
-              setValue("country", e.name);
-              setIsStateDisabled(false);
-            }}
-            containerClassName="bg-white"
-            inputClassName="border border-white customSelectHeight"
-            placeHolder="Select Country"
-            defaultValue={defaultCountry}
-          />
-          {!getValues("country") && <Error errorName={errors.country} />}
-        </div>
-        <div
-          className={`${
-            isStateDisabled ? "col-xl-4 mb-3 pe-none" : "col-xl-4 mb-3"
-          }`}
-        >
-          <label className="form-label">{t("state")}</label>
-          <div style={{ background: "white" }}>
-            <StateSelect
-              countryid={isStateDisabled ? 0 : countryid}
-              onChange={(e) => {
-                setstateid(e.id);
-                setValue("state", e.name);
-              }}
-              containerClassName="bg-white"
-              inputClassName="border border-white customSelectHeight"
-              placeHolder="Select State"
-              defaultValue={selectStateName}
-            />
-          </div>
-        </div>
-        <div className="col-xl-4 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("city")}
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="City"
-            name="city"
-            placeholder=""
-            defaultValue={getValues("city")}
-          />
-          <Error errorName={errors.city} />
-        </div>
-        <div className="col-xl-4 mb-3 ">
+
+        <LocationSelector
+          register={register}
+          setValue={setValue}
+          errors={errors}
+          getValues={getValues}
+          locationData={locationData}
+          dValues={dValues}
+          id={id}
+          showCity={true}
+        />
+
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeZone")} </label>
           <Controller
             name="timezone"
@@ -266,7 +228,7 @@ const MyAccount = ({
               <TimezoneSelect
                 onChange={(timeZone) => {
                   setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone);
+                  setValue("timezone", timeZone.value);
                 }}
                 ref={ref}
                 name={name}
@@ -276,8 +238,8 @@ const MyAccount = ({
             )}
           />
         </div>
-        
-        <div className="col-xl-4 mb-3 ">
+
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
             name="dateFormat"
@@ -296,7 +258,7 @@ const MyAccount = ({
           <Error errorName={errors.dateFormat} />
         </div>
 
-        <div className="col-xl-4 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller
             name="timeFormat"
@@ -309,13 +271,13 @@ const MyAccount = ({
                 name={name}
                 styles={customStyles}
                 value={{ value, label: value }}
-                defaultValue={timeFormatOptions[0]}
+                defaultValue={timeFormatOptions[1]}
               />
             )}
           />
         </div>
-      
-       {/* <div className="col-xl-4 mb-3 ">
+
+        {/* <div className="col-xl-3 mb-3 ">
                 <img key={logo} height={100} width={100} src={logo ? logo : IMAGES.Tab1} alt="logo"/>
         </div> */}
 
@@ -331,7 +293,7 @@ const MyAccount = ({
           style={{
             width: "100%",
             display: "flex",
-            justifyContent : 'space-between',
+            justifyContent: "space-between",
             margin: "2rem 0",
           }}
         >
@@ -374,8 +336,7 @@ const MyAccount = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("submit")}        
-          
+          {t("submit")}
         </Button>
       </div>
     </div>

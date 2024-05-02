@@ -12,6 +12,7 @@ import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
 import usePagination from "../../../hooks/usePagination";
 import { Loader } from "rsuite";
 import Paginate from "../../components/Pagination/Paginate";
+import UserLocation from "../../components/UserLocation";
 
 const BusinessUser = () => {
   const [isLoading, setIsLoading] = useState();

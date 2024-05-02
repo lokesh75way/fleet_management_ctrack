@@ -13,7 +13,7 @@ const CredentialsInput = ({ heading, register, errors, id, getValues }) => {
 
         <h3 className="mt-4 mb-4">{heading}</h3>
     
-    <div className="col-xl-4 mb-3">
+    <div className="col-xl-3 mb-3">
       <label className="form-label">
         {t('userName')} <span className="text-danger">*</span>
       </label>
@@ -29,7 +29,7 @@ const CredentialsInput = ({ heading, register, errors, id, getValues }) => {
       <Error errorName={errors.userName} />
       </div>
      
-        { !id && (<div className="col-xl-4 mb-3 ">
+        { !id && (<div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("password")} <span className="text-danger">*</span>
           </label>

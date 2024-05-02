@@ -57691,3 +57691,9 @@ html[dir="rtl"]
 #filter_reports .react-datepicker-wrapper{
   width: 100%;
 }
+
+
+form {
+  background-image: url('./../images/Group\ 1707478497.svg');
+  background-size: contain;
+}

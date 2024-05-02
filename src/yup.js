@@ -242,10 +242,10 @@ export const businessGroupAccountSchema = yup.object({
   tradeLicenseNumber: yup
     .string()
     ,
-    officeNumber: yup.string(),
+  officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
   state: yup.string(),
-  email: yup.string().required("Please enter email"),
+  email: yup.string().email("Valid email required"),
   city: yup.string().required("Please enter a City"),
   dateFormat: yup.string().required("Please select a Date Format"),
   timeFormat: yup.string().required("Please select a Time Format"),
