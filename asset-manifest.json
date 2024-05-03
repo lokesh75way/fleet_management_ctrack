@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/fleet_management_ctrack/static/css/main.cdd3aaea.css",
-    "main.js": "/fleet_management_ctrack/static/js/main.00d3ffb0.js",
+    "main.css": "/fleet_management_ctrack/static/css/main.9c7e1dc1.css",
+    "main.js": "/fleet_management_ctrack/static/js/main.7c9ff3b4.js",
     "static/css/1900.8e6fc531.chunk.css": "/fleet_management_ctrack/static/css/1900.8e6fc531.chunk.css",
     "static/js/1900.adb62cfb.chunk.js": "/fleet_management_ctrack/static/js/1900.adb62cfb.chunk.js",
     "static/css/9680.8e6fc531.chunk.css": "/fleet_management_ctrack/static/css/9680.8e6fc531.chunk.css",
@@ -268,8 +268,8 @@
     "static/media/united-arab-emirates.svg": "/fleet_management_ctrack/static/media/united-arab-emirates.a790db14e801d017de91c7a67c49a0d2.svg",
     "index.html": "/fleet_management_ctrack/index.html",
     "static/media/england.svg": "/fleet_management_ctrack/static/media/england.2fc90f00163fc7f083be186003b9b1ba.svg",
-    "main.cdd3aaea.css.map": "/fleet_management_ctrack/static/css/main.cdd3aaea.css.map",
-    "main.00d3ffb0.js.map": "/fleet_management_ctrack/static/js/main.00d3ffb0.js.map",
+    "main.9c7e1dc1.css.map": "/fleet_management_ctrack/static/css/main.9c7e1dc1.css.map",
+    "main.7c9ff3b4.js.map": "/fleet_management_ctrack/static/js/main.7c9ff3b4.js.map",
     "1900.8e6fc531.chunk.css.map": "/fleet_management_ctrack/static/css/1900.8e6fc531.chunk.css.map",
     "1900.adb62cfb.chunk.js.map": "/fleet_management_ctrack/static/js/1900.adb62cfb.chunk.js.map",
     "9680.8e6fc531.chunk.css.map": "/fleet_management_ctrack/static/css/9680.8e6fc531.chunk.css.map",
@@ -453,7 +453,7 @@
     "1585.8713fb90.chunk.js.map": "/fleet_management_ctrack/static/js/1585.8713fb90.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.cdd3aaea.css",
-    "static/js/main.00d3ffb0.js"
+    "static/css/main.9c7e1dc1.css",
+    "static/js/main.7c9ff3b4.js"
   ]
 }
