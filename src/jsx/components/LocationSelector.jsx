@@ -48,6 +48,10 @@ const LocationSelector = ({
         label: locationData?.location?.principalSubdivision || "",
       });
       setValue("state", locationData?.location?.principalSubdivision || "");
+      const selectedCountryId = isoToCountryId(locationData?.country?.isoAlpha3);
+      GetState(selectedCountryId).then((result) => {
+        setStateList(result);
+      });
     }
   }, [locationData, id, dValues]);
 
@@ -100,7 +104,7 @@ const LocationSelector = ({
     return state.name;
   };
 
-console.log({selectedCountry}, {selectedState})
+// console.log({selectedCountry}, {selectedState})
   const countryOptions = countriesList.map((country) => ({
     value: country.iso3,
     label: country.name,
