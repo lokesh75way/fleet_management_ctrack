@@ -8,7 +8,6 @@ const LocationSelector = ({ register, setValue, errors,getValues,locationData,dV
   const [selectedState, setSelectedState] = useState(null);
   const [countryid, setCountryid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-   console.log(dValues, "hi" ,getValues('city'))
   useEffect(() => {
     if (dValues && id){
         setValue("city", dValues.city);
@@ -24,7 +23,6 @@ const LocationSelector = ({ register, setValue, errors,getValues,locationData,dV
           name: locationData?.location?.principalSubdivision,
         });
         setValue("state", locationData?.location?.principalSubdivision || "");
-        setValue("city", locationData?.location?.city || "");
     }
   }, [locationData,id,dValues]);
 
@@ -32,7 +30,6 @@ const LocationSelector = ({ register, setValue, errors,getValues,locationData,dV
     setSelectedState({ name: "" });
     setCountryid(e.id);
     setValue("country", e.name);
-    setValue('city', '')
     setIsStateDisabled(false);
   };
 
