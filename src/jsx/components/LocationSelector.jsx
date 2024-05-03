@@ -21,7 +21,13 @@ const LocationSelector = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [countriesList, setCountriesList] = useState([]);
   const [stateList, setStateList] = useState([]);
-
+  
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      padding: ".25rem 0 ",
+    }),
+  };
   useEffect(() => {
     GetCountries().then((result) => {
       setCountriesList(result);
@@ -137,6 +143,7 @@ const LocationSelector = ({
             options={countryOptions}
             key={selectedCountry}
             value={selectedCountry}
+            styles={customStyles}
             onChange={handleCountryChange}
           />
         }
@@ -148,6 +155,7 @@ const LocationSelector = ({
           options={stateOptions}
           key={selectedState}
           value={selectedState}
+          styles={customStyles}
           onChange={handleStateChange}
         />
         {!selectedState && <Error errorName={errors.state} />}
