@@ -186,8 +186,6 @@ const MyAccount = ({
             loading={loading}
             link={logo}
           />
-          {loading && <small>Uploading...</small>}
-
           <Error errorName={errors.logo} />
         </span>
         <div className="col-xl-3 mb-3 ">

@@ -1,81 +1,167 @@
 import React, { useEffect, useState } from "react";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import { GetCountries, GetState } from "react-country-state-city/dist/cjs";
 import Error from "./Error/Error";
 import CustomInput from "./Input/CustomInput";
+import Select from "react-select";
 
-const LocationSelector = ({ register, setValue, errors,getValues,locationData,dValues,id, showCity }) => {
+const LocationSelector = ({
+  register,
+  setValue,
+  errors,
+  getValues,
+  locationData,
+  dValues,
+  id,
+  showCity,
+}) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  const [countryid, setCountryid] = useState(0);
+  const [countryId, setCountryId] = useState(0);
+  const [stateId, setStateId] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
+  const [countriesList, setCountriesList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+
   useEffect(() => {
-    if (dValues && id){
-        setValue("city", dValues.city);
-        setSelectedCountry({ name: dValues.country });
-        setValue("country", dValues.country);
-        setSelectedState({ name: dValues.state || "" });
-        setValue("state", dValues.state || "");
-    }
-    else if(locationData){
-        setSelectedCountry({ name: locationData?.country?.name || '' });
-        setValue("country", locationData?.country?.name);
-        setSelectedState({
-          name: locationData?.location?.principalSubdivision,
-        });
-        setValue("state", locationData?.location?.principalSubdivision || "");
-    }
-  }, [locationData,id,dValues]);
+    GetCountries().then((result) => {
+      setCountriesList(result);
+    });
+  }, []);
 
-  const handleCountryChange = (e) => {
-    setSelectedState({ name: "" });
-    setCountryid(e.id);
-    setValue("country", e.name);
-    setIsStateDisabled(false);
+  useEffect(() => {
+    if (dValues && id) {
+      setValue("city", dValues.city);
+      setValue("country", dValues.country);
+      setSelectedState({
+        value: dValues.state,
+        label: dValues.state || "",
+      });
+      setValue("state", dValues.state || "");
+    } else if (locationData) {
+      setValue("country", locationData?.country?.isoAlpha3);
+      setSelectedCountry({
+        value : locationData?.country?.isoAlpha3,
+        label: locationData?.country?.isoName
+      })
+      setSelectedState({
+        value: locationData?.location?.principalSubdivision,
+        label: locationData?.location?.principalSubdivision || "",
+      });
+      setValue("state", locationData?.location?.principalSubdivision || "");
+    }
+  }, [locationData, id, dValues]);
+
+  const isoToCountryId = (isoCode) => {
+    const country = countriesList.find(country => country.iso3 === isoCode);
+    return country ? country.id : null;
+  };
+  
+  const handleCountryChange = async (selectedOption) => {
+    const selectedIsoCode = selectedOption.value;
+    setCountryId(selectedIsoCode);
+  
+    const selectedCountryId = isoToCountryId(selectedIsoCode);
+  
+    const selectedCountry = countriesList.find(
+      (country) => country.iso3 === selectedIsoCode
+    );
+  
+    setValue("country", selectedIsoCode);
+    setSelectedCountry({value : selectedIsoCode, label : selectedCountry.name});
+    setStateList([]);
+    setStateId(0);
+  
+    const result = await GetState(selectedCountryId);
+    setStateList(result);
   };
 
-  const handleStateChange = (e) => {
-    console.log(e, "sdg:-")
-    setValue("state", e.name);
+  const handleStateChange = (selectedOption) => {
+    const selectedStateId = selectedOption.value;
+    const selectedState = stateList.find(
+      (state) => state.name === selectedStateId
+    );
+    if (
+      selectedCountry?.label === "United Arab Emirates" &&
+      selectedState?.name.endsWith(" Emirate")
+    ) {
+      selectedState.name = selectedState.name.replace(" Emirate", "");
+    }
+    setValue("state", selectedState.name);
+    setSelectedState({value : selectedState.name, label : selectedState.name});
   };
 
+  const getStateName = (state) => {
+    if (
+      selectedCountry?.label === "United Arab Emirates" &&
+      state.name.endsWith(" Emirate")
+    ) {
+      return state.name.replace(" Emirate", "");
+    }
+    return state.name;
+  };
 
+console.log({selectedCountry}, {selectedState})
+  const countryOptions = countriesList.map((country) => ({
+    value: country.iso3,
+    label: country.name,
+  }));
+
+  const stateOptions = stateList.map((state) => ({
+    value: state.name,
+    label: getStateName(state),
+  }));
+
+  useEffect(() => {
+    const option = countryOptions.find(
+      (option) => option.value == dValues?.country
+    );
+    setSelectedCountry(option);
+  }, [countryOptions.length]);
+
+  useEffect(() => {
+    const option = stateOptions.find((option) => option.value == dValues?.state);
+    setSelectedState(option);
+  }, [stateOptions.length]);
+
+  // console.log({ stateOptions, selectedState });
   return (
     <>
       <div className="col-xl-3 mb-3">
         <label className="form-label">Country</label>
-        <CountrySelect
-          onChange={handleCountryChange}
-          containerClassName="bg-white"
-          inputClassName="border border-white customSelectHeight"
-          placeHolder="Select Country"
-          defaultValue={selectedCountry}
-        />
+        {
+          <Select
+            options={countryOptions}
+            key={selectedCountry}
+            value={selectedCountry}
+            onChange={handleCountryChange}
+          />
+        }
         {!selectedCountry && <Error errorName={errors.country} />}
       </div>
       <div className="col-xl-3 mb-3">
         <label className="form-label">State</label>
-        <StateSelect
-          countryid={isStateDisabled ? 0 : countryid}
+        <Select
+          options={stateOptions}
+          key={selectedState}
+          value={selectedState}
           onChange={handleStateChange}
-          containerClassName="bg-white"
-          inputClassName="border border-white customSelectHeight"
-          placeHolder="Select State"
-          defaultValue={selectedState}
         />
         {!selectedState && <Error errorName={errors.state} />}
       </div>
-      { showCity && <div className="col-xl-3 mb-3">
-        <label className="form-label">City</label>
-        <CustomInput
-          type="text"
-          register={register}
-          label="City"
-          name="city"
-          placeholder=""
-          defaultValue={getValues('city')}
-        />
-        <Error errorName={errors.city} />
-      </div>}
+      {showCity && (
+        <div className="col-xl-3 mb-3">
+          <label className="form-label">City</label>
+          <CustomInput
+            type="text"
+            register={register}
+            label="City"
+            name="city"
+            placeholder=""
+            defaultValue={getValues("city")}
+          />
+          <Error errorName={errors.city} />
+        </div>
+      )}
     </>
   );
 };
