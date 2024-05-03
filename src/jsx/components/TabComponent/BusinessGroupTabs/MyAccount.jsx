@@ -125,8 +125,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
-  console.log(locationData, "datalcoation");
-  console.log(errors, "errro:- ", dValues);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -187,8 +186,6 @@ const MyAccount = ({
             loading={loading}
             link={logo}
           />
-          {loading && <small>Uploading...</small>}
-
           <Error errorName={errors.logo} />
         </span>
         <div className="col-xl-3 mb-3 ">

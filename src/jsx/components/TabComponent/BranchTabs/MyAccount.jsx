@@ -146,7 +146,7 @@ const MyAccount = ({
       setValue("companyName", dValues.companyId?.companyName);
       setValue("companyId", dValues.companyId?._id);
       setValue("tradeLicenseNumber", dValues?.tradeLicenseNumber);
-      setValue("officeNumber", dValues?.tradeLicenseNumber);
+      setValue("officeNumber", dValues?.officeNumber);
       setValue("parentBranch", dValues.parentBranchId?.branchName);
       setValue("parentBranchId", dValues.parentBranchId?._id);
       setValue("parent", dValues.parentBranchId?._id);

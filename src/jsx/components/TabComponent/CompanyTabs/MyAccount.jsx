@@ -56,7 +56,7 @@ const MyAccount = ({
   const [showPassword, setShowPassword] = useState(false);
   const [locationData, setLocationData] = useState(null);
   const [selectedTimezone, setSelectedTimezone] = useState(
-    formData?.[0]?.businessGroupId?.timezone ||
+    formData?.[0].companyId?.timezone ||
       Intl.DateTimeFormat().resolvedOptions().timeZone
   );
   const [logo, setLogo] = useState(null);
@@ -134,6 +134,10 @@ const MyAccount = ({
         formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
       );
       setValue("timezone", formData?.[0].companyId?.timezone);
+      const timeZone = formData?.[0].companyId?.timezone;
+      if (timeZone) {
+        setSelectedTimezone(timeZone);
+      }
       setValue("userInfo", formData?.[0]?.userInfo);
     } else {
       setValue("storageCapacity", storageCapacityOptions[1].value);
