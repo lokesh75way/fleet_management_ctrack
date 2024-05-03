@@ -111,8 +111,8 @@ const General = ({
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3 ">
+      <div className="row" style={{ width: "85%", margin: "auto" }}>
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("businessGroup")} <span className="text-danger">*</span>
           </label>
@@ -140,7 +140,7 @@ const General = ({
             <Error errorName={errors.businessGroupId} />
           )}
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("company")} <span className="text-danger">*</span>
           </label>
@@ -167,7 +167,7 @@ const General = ({
           {!getValues("company") && <Error errorName={errors.companyId} />}
         </div>
 
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("branch")}</label>
           <Controller
             name="branchId"
@@ -205,7 +205,7 @@ const General = ({
             )}
           />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("vehicleName")} <span className="text-danger">*</span>
           </label>
@@ -220,7 +220,7 @@ const General = ({
           />
           <Error errorName={errors.vehicleName} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("deviceType")} <span className="text-danger">*</span>
           </label>
@@ -246,7 +246,7 @@ const General = ({
           />
           {!getValues("deviceType") && <Error errorName={errors.deviceType} />}
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("IMEINumber")} <span className="text-danger">*</span>
           </label>
@@ -261,7 +261,7 @@ const General = ({
           />
           <Error errorName={errors.imeiNumber} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("copyFrom")} </label>
           <Controller
             name="copyFrom"
@@ -279,7 +279,7 @@ const General = ({
           />
           <Error errorName={errors.copyFrom} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("serverAddress")}
             <span className="text-danger">*</span>
@@ -293,7 +293,7 @@ const General = ({
           />
           <Error errorName={errors.serverAddress} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             {t("simNumber")} <span className="text-danger">*</span>
           </label>
@@ -306,7 +306,7 @@ const General = ({
           />
           <Error errorName={errors.simNumber} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             {t("secondarySimNumber")} 
           </label>
@@ -318,7 +318,7 @@ const General = ({
           />
           <Error errorName={errors.secondrySimNumber} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("distanceCounter")}
             <span className="text-danger">*</span>
@@ -347,7 +347,7 @@ const General = ({
             <Error errorName={errors.distanceCounter} />
           )}
         </div>
-        {/* <div className="col-xl-6 mb-3">
+        {/* <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("unitOfDistance")}
             <span className="text-danger">*</span>
@@ -376,7 +376,7 @@ const General = ({
             <Error errorName={errors.unitOfDistance} />
           )}
         </div> */}
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput6" className="form-label">
             {t("speedDetection")}
           </label>
@@ -402,7 +402,7 @@ const General = ({
           />
           <Error errorName={errors.speedDetection} />
         </div>
-        <div className="col-xl-6 mb-3">
+        <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             {t("deviceAccuracyTolerance")}{" "}
             <span className="text-danger">*</span>

@@ -691,6 +691,11 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 button,
 select {

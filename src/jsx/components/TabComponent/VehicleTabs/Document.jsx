@@ -115,32 +115,7 @@ const Document = ({
                     />
                   )}
                 </div>
-                <div className="col-xl-3 mb-2">
-                  <label className="form-label">
-                    {t("uploadFile")}
-                    <span className="text-danger">*</span>
-                  </label>
-                  <FileUploader
-                    getValue={getValues}
-                    link={
-                      formData &&
-                      formData.length > 0 &&
-                      formData[0].documents &&
-                      formData[0].documents[index]?.file
-                        ? formData[0].documents[index]?.file
-                        : false
-                    }
-                    register={register}
-                    name={`documents.${index}.file`}
-                    label="Select File"
-                    defaultValue=""
-                    setValue={setValue}
-                    setLoading={setLoading}
-                    loading={loading}
-                  />
-
-                  <Error errorName={errors?.documents?.[index]?.file ? "File is required" : '' } />
-                </div>
+                
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
                   <label className="form-label">{t("issueDate")}</label>
                   <Controller
@@ -223,6 +198,32 @@ const Document = ({
                   {!getValues(`documents.${index}.expireDate`) && (
                     <Error errorName={errors?.documents?.[index]?.expireDate} />
                   )}
+                </div>
+                <div className="col-xl-3 mb-2">
+                  <label className="form-label">
+                    {t("uploadFile")}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <FileUploader
+                    getValue={getValues}
+                    link={
+                      formData &&
+                      formData.length > 0 &&
+                      formData[0].documents &&
+                      formData[0].documents[index]?.file
+                        ? formData[0].documents[index]?.file
+                        : false
+                    }
+                    register={register}
+                    name={`documents.${index}.file`}
+                    label="Select File"
+                    defaultValue=""
+                    setValue={setValue}
+                    setLoading={setLoading}
+                    loading={loading}
+                  />
+
+                  <Error errorName={errors?.documents?.[index]?.file ? "File is required" : '' } />
                 </div>
               </div>
             </>
