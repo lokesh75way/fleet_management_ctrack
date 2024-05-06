@@ -38,17 +38,21 @@ const LocationSelector = ({
     if (dValues && id) {
       setValue("city", dValues.city);
       setValue("country", dValues.country);
-      setSelectedState({
-        value: dValues.state,
-        label: dValues.state || "",
-      });
+      const option = countryOptions.find(
+        (option) => option.value == dValues?.country
+      );
+      setSelectedCountry(option)
       setValue("state", dValues.state || "");
-    } else if (locationData) {
-      setValue("country", locationData?.country?.isoAlpha3);
+      setSelectedState({
+        value : dValues.state,
+        label: dValues.state || ''
+      })
+    } else {
       setSelectedCountry({
         value : locationData?.country?.isoAlpha3,
         label: locationData?.country?.isoName
       })
+      setValue("country", locationData?.country?.isoAlpha3);
       setSelectedState({
         value: locationData?.location?.principalSubdivision,
         label: locationData?.location?.principalSubdivision || "",
@@ -121,19 +125,8 @@ const LocationSelector = ({
     label: getStateName(state),
   }));
 
-  useEffect(() => {
-    const option = countryOptions.find(
-      (option) => option.value == dValues?.country
-    );
-    setSelectedCountry(option);
-  }, [countryOptions.length]);
 
-  useEffect(() => {
-    const option = stateOptions.find((option) => option.value == dValues?.state);
-    setSelectedState(option);
-  }, [stateOptions.length]);
 
-  // console.log({ stateOptions, selectedState });
   return (
     <>
       <div className="col-xl-3 mb-3">
