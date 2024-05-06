@@ -15,13 +15,14 @@ import {
 } from "../VehicleTabs/Options";
 import FileUploader from "../../../../components/FileUploader";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import TimezoneSelect from "react-timezone-select";
+import TimezoneSelect, { allTimezones } from "react-timezone-select";
 import { IMAGES, SVGICON } from "../../../constant/theme";
 import CredentialsInput from "../../CredentialsInput";
 import { get } from "react-scroll/modules/mixins/scroller";
 import FormField from "../../FormField";
 import UserLocation from "../../UserLocation";
 import LocationSelector from "../../LocationSelector";
+import TimeZoneSelector from "../../TimeZoneSelector";
 
 const MyAccount = ({
   data,
@@ -51,10 +52,10 @@ const MyAccount = ({
   const [locationData, setLocationData] = useState(null);
   const [dValues, setDvalues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    dValues?.businessGroupId?.timezone ||
-      Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
+  // const [selectedTimezone, setSelectedTimezone] = useState(
+  //   dValues?.businessGroupId?.timezone ||
+  //     Intl.DateTimeFormat().resolvedOptions().timeZone
+  // );
   const { id } = useParams();
   // const [formData, setFormData] = useState([{}]); // State to store form data
 
@@ -101,10 +102,6 @@ const MyAccount = ({
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
       setValue("timezone", dValues?.businessGroupId?.timezone);
-      const timeZone = dValues?.businessGroupId?.timezone;
-      if (timeZone) {
-        setSelectedTimezone(timeZone);
-      }
       setValue("userInfo", dValues?.userInfo);
     } else {
       setValue("capacity", storageCapacityOptions[1].value);
@@ -125,7 +122,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
-
+// console.log({allTimezones})
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -142,7 +139,7 @@ const MyAccount = ({
             placeholder=""
             defaultValue={getValues("groupName")}
           />
-          <Error errorName={errors.userName} />
+          <Error errorName={errors.groupName} />
         </div>
         <div className="col-xl-3 mb-3 z-1">
           <label className="form-label">{t("tradeLicenseNumber")}</label>
@@ -214,27 +211,8 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
+          Comptype={'businessGroupId'}
         />
-
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
 
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
