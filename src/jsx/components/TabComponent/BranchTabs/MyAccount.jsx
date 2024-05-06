@@ -54,6 +54,7 @@ const MyAccount = ({
 
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
+  const [selectedTimezone, setSelectedTimezone] = useState(null);
 
 
   
@@ -179,6 +180,10 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
+  const handleTimezoneChange = (selectedOption) => {
+    setSelectedTimezone(selectedOption);
+    setValue('timezone', selectedOption.value)
+  };
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
@@ -387,7 +392,9 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
-          Comptype={''}
+          value={dValues?.timezone}
+          selectedTimezone={selectedTimezone}
+          onChange={handleTimezoneChange}
         />
 
         <div className="col-xl-3 mb-3 ">

@@ -52,10 +52,8 @@ const MyAccount = ({
   const [locationData, setLocationData] = useState(null);
   const [dValues, setDvalues] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  // const [selectedTimezone, setSelectedTimezone] = useState(
-  //   dValues?.businessGroupId?.timezone ||
-  //     Intl.DateTimeFormat().resolvedOptions().timeZone
-  // );
+  const [selectedTimezone, setSelectedTimezone] = useState(null);
+
   const { id } = useParams();
   // const [formData, setFormData] = useState([{}]); // State to store form data
 
@@ -122,7 +120,12 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
-// console.log({allTimezones})
+
+  const handleTimezoneChange = (selectedOption) => {
+    setSelectedTimezone(selectedOption);
+    setValue('timezone', selectedOption.value)
+  };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -211,9 +214,10 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
-          Comptype={'businessGroupId'}
+          value={dValues?.businessGroupId?.timezone}
+          selectedTimezone={selectedTimezone}
+          onChange={handleTimezoneChange}
         />
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller

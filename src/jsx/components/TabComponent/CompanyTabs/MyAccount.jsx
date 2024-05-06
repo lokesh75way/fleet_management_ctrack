@@ -55,6 +55,7 @@ const MyAccount = ({
   const [showPassword, setShowPassword] = useState(false);
   const [locationData, setLocationData] = useState(null);
   const [logo, setLogo] = useState(null);
+  const [selectedTimezone, setSelectedTimezone] = useState(null);
   const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
@@ -147,6 +148,12 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
+
+  const handleTimezoneChange = (selectedOption) => {
+    setSelectedTimezone(selectedOption);
+    setValue('timezone', selectedOption.value)
+  };
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -266,7 +273,9 @@ const MyAccount = ({
           dValues={formData?.[0]}
           id={id}
           showCity={true}
-          Comptype={'companyId'}
+          value={formData[0]?.companyId?.timezone}
+          selectedTimezone={selectedTimezone}
+          onChange={handleTimezoneChange}
         />
      
         <div className="col-xl-3 mb-3 ">
