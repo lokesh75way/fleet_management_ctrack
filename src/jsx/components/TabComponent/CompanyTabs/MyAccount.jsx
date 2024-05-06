@@ -23,7 +23,6 @@ import GroupDropdown from "../../GroupDropdown";
 import { LuEye, LuEyeOff } from "react-icons/lu";
 import CredentialsInput from "../../CredentialsInput";
 import FormField from "../../FormField";
-import TimezoneSelect from "react-timezone-select";
 import LocationSelector from "../../LocationSelector";
 import UserLocation from "../../UserLocation";
 const MyAccount = ({
@@ -55,10 +54,6 @@ const MyAccount = ({
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [locationData, setLocationData] = useState(null);
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    formData?.[0].companyId?.timezone ||
-      Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
   const [logo, setLogo] = useState(null);
   const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
@@ -133,11 +128,7 @@ const MyAccount = ({
         "timeFormat",
         formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
       );
-      setValue("timezone", formData?.[0].companyId?.timezone);
-      const timeZone = formData?.[0].companyId?.timezone;
-      if (timeZone) {
-        setSelectedTimezone(timeZone);
-      }
+
       setValue("userInfo", formData?.[0]?.userInfo);
     } else {
       setValue("storageCapacity", storageCapacityOptions[1].value);
@@ -187,7 +178,7 @@ const MyAccount = ({
             <Error errorName={errors.businessGroupId} />
           )}
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3 z-1">
           <label className="form-label">
             {t("companyName")} <span className="text-danger">*</span>
           </label>
@@ -266,7 +257,7 @@ const MyAccount = ({
           <Error errorName={errors.email} />
         </div>
 
-            <LocationSelector
+          <LocationSelector
           register={register}
           setValue={setValue}
           errors={errors}
@@ -275,26 +266,9 @@ const MyAccount = ({
           dValues={formData?.[0]}
           id={id}
           showCity={true}
+          Comptype={'companyId'}
         />
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
+     
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller

@@ -22,7 +22,6 @@ import { getUser } from "../../../../services/api/UserServices";
 import { use } from "i18next";
 import FormField from "../../FormField";
 import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
-import TimezoneSelect from "react-timezone-select";
 import UserLocation from "../../UserLocation";
 import LocationSelector from "../../LocationSelector";
 
@@ -76,10 +75,7 @@ const MyAccount = ({
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry, setDefaultCountry] = useState();
   const [locationData, setLocationData] = useState(null);
-  const [selectedTimezone, setSelectedTimezone] = useState(
-    dValues?.businessGroupId?.timezone ||
-      Intl.DateTimeFormat().resolvedOptions().timeZone
-  );
+
 
   useEffect(() => {
     if(userDetails.user.role === 'COMPANY'){
@@ -162,12 +158,8 @@ const MyAccount = ({
       setValue("userInfo", dValues.userInfo)
       setValue("dateFormat", dValues?.dateFormat);
       setValue("timeFormat", dValues?.timeFormat);
-      setValue("timezone",dValues?.timezone)
       setValue("email",dValues?.email)
-      const timeZone =  dValues?.timezone
-      if(timeZone){
-        setSelectedTimezone(timeZone)
-      }
+     
     }else{
       setValue('dateFormat',dateFormatOptions[0]?.value);
       setValue('timeFormat',timeFormatOptions[1]?.value)
@@ -395,26 +387,9 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
+          Comptype={''}
         />
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t("timeZone")} </label>
-          <Controller
-            name="timezone"
-            control={control}
-            render={({ field: { onChange, value, name, ref } }) => (
-              <TimezoneSelect
-                onChange={(timeZone) => {
-                  setSelectedTimezone(timeZone);
-                  setValue("timezone", timeZone.value);
-                }}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                value={selectedTimezone}
-              />
-            )}
-          />
-        </div>
+
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller

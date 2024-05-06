@@ -56,34 +56,35 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader-container">
-      <div className="file-upload-box">
-        {fileLink ? (
-         <div className="uploaded-image-container">
-         <img src={fileLink} alt="Uploaded file" className="uploaded-image" />
-         <button className="remove-button" onClick={removeFile}>
-           <FaTimes />
-         </button>
-       </div>
-        ) : (
-          <label htmlFor={`file-input-${name}`} className="file-upload-label">
-            <span>Upload Logo</span>
-          </label>
-        )}
-        <input
-          id={`file-input-${name}`}
-          type="file"
-          {...register(`${name}`)}
-          name={name}
-          label={label}
-          className="file-input"
-          onChange={fileUploader}
-          defaultValue={defaultValue}
-          disabled={loading}
-          accept="image/*"
-        />
-      </div>
+    <div className="file-upload-box">
+      {loading ? (
+        <div className="loader">Loading...</div>
+      ) : fileLink ? (
+        <div className="uploaded-image-container">
+          <img src={fileLink} alt="Uploaded file" className="uploaded-image" />
+          <button className="remove-button" onClick={removeFile}>
+            <FaTimes />
+          </button>
+        </div>
+      ) : (
+        <label htmlFor={`file-input-${name}`} className="file-upload-label">
+          <span>Upload Logo</span>
+        </label>
+      )}
+      <input
+        id={`file-input-${name}`}
+        type="file"
+        {...register(`${name}`)}
+        name={name}
+        label={label}
+        className="file-input"
+        onChange={fileUploader}
+        defaultValue={defaultValue}
+        disabled={loading}
+        accept="image/*"
+      />
     </div>
-  );
+  </div>
+);
 };
-
 export default FileUploader;

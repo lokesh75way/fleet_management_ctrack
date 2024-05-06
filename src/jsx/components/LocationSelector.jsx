@@ -3,6 +3,7 @@ import { GetCountries, GetState } from "react-country-state-city/dist/cjs";
 import Error from "./Error/Error";
 import CustomInput from "./Input/CustomInput";
 import Select from "react-select";
+import TimeZoneSelector from "./TimeZoneSelector";
 
 const LocationSelector = ({
   register,
@@ -13,7 +14,9 @@ const LocationSelector = ({
   dValues,
   id,
   showCity,
+  Comptype
 }) => {
+
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [countryId, setCountryId] = useState(0);
@@ -21,7 +24,7 @@ const LocationSelector = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [countriesList, setCountriesList] = useState([]);
   const [stateList, setStateList] = useState([]);
-  
+  const[countryCode, setCountryCode] = useState('IND')
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -53,6 +56,7 @@ const LocationSelector = ({
         label: locationData?.country?.isoName
       })
       setValue("country", locationData?.country?.isoAlpha3);
+      setCountryCode(locationData?.country?.isoAlpha2)
       setSelectedState({
         value: locationData?.location?.principalSubdivision,
         label: locationData?.location?.principalSubdivision || "",
@@ -79,12 +83,16 @@ const LocationSelector = ({
     const selectedCountry = countriesList.find(
       (country) => country.iso3 === selectedIsoCode
     );
+    setCountryCode(selectedCountry.iso2)
   
     setValue("country", selectedIsoCode);
     setSelectedCountry({value : selectedIsoCode, label : selectedCountry.name});
     setStateList([]);
     setStateId(0);
-  
+    setSelectedState({
+      value:'',
+      label : ''
+    })
     const result = await GetState(selectedCountryId);
     setStateList(result);
   };
@@ -125,7 +133,7 @@ const LocationSelector = ({
     label: getStateName(state),
   }));
 
-
+console.log({dValues})
 
   return (
     <>
@@ -167,6 +175,14 @@ const LocationSelector = ({
           <Error errorName={errors.city} />
         </div>
       )}
+     { showCity &&  <TimeZoneSelector
+        setValue={setValue}
+        id={id}
+        dValues={dValues}
+        countryCode={countryCode}
+        customStyle={customStyles}
+        Comptype={Comptype}
+        />}
     </>
   );
 };
