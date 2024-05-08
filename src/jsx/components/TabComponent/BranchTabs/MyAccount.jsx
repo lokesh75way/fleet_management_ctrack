@@ -21,7 +21,7 @@ import useStorage from "../../../../hooks/useStorage";
 import { getUser } from "../../../../services/api/UserServices";
 import { use } from "i18next";
 import FormField from "../../FormField";
-import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
+import { currencyOptions, dateFormatOptions, timeFormatOptions, weekStartDayOptions } from "../VehicleTabs/Options";
 import UserLocation from "../../UserLocation";
 import LocationSelector from "../../LocationSelector";
 
@@ -158,11 +158,15 @@ const MyAccount = ({
       setValue("userInfo", dValues.userInfo)
       setValue("dateFormat", dValues?.dateFormat);
       setValue("timeFormat", dValues?.timeFormat);
-      setValue("email",dValues?.email)
-     
+      setValue("email",dValues?.email);
+      setValue("workStartDay", dValues?.workStartDay);
+      setValue("currency", dValues?.currency);
+      
     }else{
       setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[1]?.value)
+      setValue('timeFormat',timeFormatOptions[1]?.value);
+      setValue("workStartDay", weekStartDayOptions[1]?.value);
+      setValue("currency", currencyOptions[1]?.value);
     }
   }, [dValues, id]);
 
@@ -423,6 +427,44 @@ const MyAccount = ({
                 styles={customStyles}
                 value={{ value, label: value }}
                 defaultValue={timeFormatOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("workStartDay")}</label>
+          <Controller
+            name="workStartDay"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("workStartDay", newValue.value)}
+                options={weekStartDayOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={weekStartDayOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("currency")}</label>
+          <Controller
+            name="currency"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("currency", newValue.value)}
+                options={currencyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={currencyOptions[1]}
               />
             )}
           />

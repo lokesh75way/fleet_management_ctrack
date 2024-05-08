@@ -12,9 +12,11 @@ import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
+  currencyOptions,
   dateFormatOptions,
   storageCapacityOptions,
   timeFormatOptions,
+  weekStartDayOptions,
 } from "../VehicleTabs/Options";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
@@ -130,10 +132,14 @@ const MyAccount = ({
       );
 
       setValue("userInfo", formData?.[0]?.userInfo);
+      setValue("workStartDay", formData?.companyId?.workStartDay);
+      setValue("currency", formData?.companyId?.currency);
     } else {
       setValue("storageCapacity", storageCapacityOptions[1].value);
       setValue("dateFormat", dateFormatOptions[0]?.value);
       setValue("timeFormat", timeFormatOptions[1]?.value);
+      setValue("workStartDay", weekStartDayOptions[1]?.value);
+      setValue("currency", currencyOptions[1]?.value);
     }
   }, [formData, id]);
   const handleAddForm = () => {
@@ -302,6 +308,44 @@ const MyAccount = ({
                 styles={customStyles}
                 value={{ value, label: value }}
                 defaultValue={timeFormatOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("workStartDay")}</label>
+          <Controller
+            name="workStartDay"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("workStartDay", newValue.value)}
+                options={weekStartDayOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={weekStartDayOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("currency")}</label>
+          <Controller
+            name="currency"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("currency", newValue.value)}
+                options={currencyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={currencyOptions[1]}
               />
             )}
           />

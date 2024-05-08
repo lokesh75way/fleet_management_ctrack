@@ -9,9 +9,11 @@ import "../../../../scss/pages/_driver-tracking.scss";
 import { useLocation, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
+  currencyOptions,
   dateFormatOptions,
   storageCapacityOptions,
   timeFormatOptions,
+  weekStartDayOptions,
 } from "../VehicleTabs/Options";
 import FileUploader from "../../../../components/FileUploader";
 import { LuEye, LuEyeOff } from "react-icons/lu";
@@ -102,11 +104,15 @@ const MyAccount = ({
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
       setValue("timezone", dValues?.businessGroupId?.timezone);
+      setValue("workStartDay", dValues?.businessGroupId?.workStartDay);
+      setValue("currency", dValues?.businessGroupId?.currency);
       setValue("userInfo", dValues?.userInfo);
     } else {
       setValue("capacity", storageCapacityOptions[1].value);
       setValue("dateFormat", dateFormatOptions[0]?.value);
       setValue("timeFormat", timeFormatOptions[1]?.value);
+      setValue("workStartDay", weekStartDayOptions[1]?.value);
+      setValue("currency", currencyOptions[1]?.value);
     }
   }, [dValues, id]);
 
@@ -247,6 +253,44 @@ const MyAccount = ({
                 styles={customStyles}
                 value={{ value, label: value }}
                 defaultValue={timeFormatOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("workStartDay")}</label>
+          <Controller
+            name="workStartDay"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("workStartDay", newValue.value)}
+                options={weekStartDayOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={weekStartDayOptions[1]}
+              />
+            )}
+          />
+        </div>
+
+        <div className="col-xl-3 mb-3 ">
+          <label className="form-label">{t("currency")}</label>
+          <Controller
+            name="currency"
+            control={control}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <Select
+                onChange={(newValue) => setValue("currency", newValue.value)}
+                options={currencyOptions}
+                ref={ref}
+                name={name}
+                styles={customStyles}
+                value={{ value, label: value }}
+                defaultValue={currencyOptions[1]}
               />
             )}
           />
