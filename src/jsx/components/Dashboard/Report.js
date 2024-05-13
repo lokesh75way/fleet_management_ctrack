@@ -10,6 +10,7 @@ import {
 } from "../../../utils/helper";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import FilterOffcanvas from "../../constant/FilterOffcanvas";
+import { useTranslation } from "react-i18next";
 
 const reportData = [
   {
@@ -414,12 +415,13 @@ const Report = () => {
     settest(i);
   };
   const filter = useRef();
+  const { t } = useTranslation();
   return (
     <>
       <MainPagetitle
-        mainTitle="Reports"
-        pageTitle="Generated Report"
-        parentTitle="Home"
+        mainTitle={t("reports")}
+        pageTitle={t("generatedReport")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -428,13 +430,13 @@ const Report = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects manage-client">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Generated Report</h4>
+                    <h4 className="heading mb-0">{t("generatedReport")}</h4>
                     <div className="d-flex">
                       <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> Export Report
+                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}
@@ -442,7 +444,7 @@ const Report = () => {
                         data-bs-toggle="offcanvas"
                         onClick={() => filter.current.showModal()}
                       >
-                        + Filter
+                        + {t("filter")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -456,15 +458,15 @@ const Report = () => {
                     >
                       <thead>
                         <tr>
-                          <th>Invoice #</th>
-                          <th>Customer</th>
-                          <th>Date</th>
-                          <th>Due Date</th>
-                          <th>Amount</th>
-                          <th>Discount</th>
-                          <th>Amount Open</th>
-                          <th>Adjustment</th>
-                          <th>Status</th>
+                          <th>{t("invoice")} #</th>
+                          <th>{t("customer")}</th>
+                          <th>{t("date")}</th>
+                          <th>{t("dueDate")}</th>
+                          <th>{t("amount")}</th>
+                          <th>{t("discount")}</th>
+                          <th>{t("amountOpen")}</th>
+                          <th>{t("adjustment")}</th>
+                          <th>{t("status")}</th>
                         </tr>
                       </thead>
                       <tbody>

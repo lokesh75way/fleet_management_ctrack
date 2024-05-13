@@ -253,7 +253,7 @@ const Profile = ({
             register={register}
             label="First Name"
             name="firstName"
-            placeholder="first name"
+            placeholder={t('firstName')}
             defaultValue={''}
           />
           <Error errorName={errors.firstName} />
@@ -267,7 +267,7 @@ const Profile = ({
             register={register}
             label="Last Name"
             name="lastName"
-            placeholder="last name"
+            placeholder={t('lastName')}
             defaultValue={''}
           />
           <Error errorName={errors.lastName} />

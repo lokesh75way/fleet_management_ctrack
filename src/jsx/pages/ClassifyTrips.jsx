@@ -13,11 +13,13 @@ import { createTrip, getTrips } from "../../services/api/ClassifyTripServices";
 import { notifySuccess } from "../../utils/toast";
 import ActiveTab from './ActiveTab'
 import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanvas";
+import { useTranslation } from "react-i18next";
 
 
 const ClassifyTrip = (ref) => {
  
-  const tabHeading = ["Active Trips", "Planned Trips", "Completed Trips"];
+  const { t } = useTranslation();
+  const tabHeading = [t("activeTrips"), t("plannedTrips"), t("completedTrips")];
   const component = [ActiveTab,ActiveTab,ActiveTab];
 
   const [tableData, setTableData] = useState([]);
@@ -77,9 +79,9 @@ const ClassifyTrip = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Classify Trip"
-        pageTitle={"Classify Trip"}
-        parentTitle={"Settings"}
+        mainTitle={t("classifyTrip")}
+        pageTitle={t("classifyTrip")}
+        parentTitle={t("settings")}
       />
       <div className="m-2 p-2 classify_trip-container">
         <FormProvider>
@@ -107,7 +109,7 @@ const ClassifyTrip = (ref) => {
                 data-bs-toggle="offcanvas"
                 onClick={() => classifyTripsFilter.current.showModal()}
               >
-                + Filter
+                + {t("filter")}
               </Link>{" "}
               <Link
                 to={"/settings/classifyTrips/create"}
@@ -115,7 +117,7 @@ const ClassifyTrip = (ref) => {
                 data-bs-toggle="offcanvas"
                 // onClick={() => classifyTrips.current.showModal()}
               >
-                + Add Trips
+                + {t("addTrips")}
               </Link>{" "}
             </div>
           </Nav>

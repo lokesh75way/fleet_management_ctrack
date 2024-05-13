@@ -471,6 +471,7 @@ export const spanish = {
     userGroup: "Grupo de Usuario",
 
     alert: "Alerta",
+    "alertId":"ID de alerta",
     alerts: "Alertas",
     alertName: "Nombre de la Alerta",
     alertType: "Tipo de Alerta",
@@ -643,7 +644,58 @@ export const spanish = {
     privacyPolicy: "Política de privacidad",
 
     tradeLicenseNumber : "Número de licencia comercial",
-      officeNo : "Número de oficina"
+      officeNo : "Número de oficina",
+      timezone: "zona horaria",
+      designation: "Designación",
+      "update": "Actualizar",
+
+      "trip": "viaje",
+      "tripId": "ID de viaje",
+      "startTime": "Hora de inicio",
+      "startLocation": "Ubicación de inicio",
+      "reachTime": "Tiempo de alcance",
+      "reachLocation": "Llegar a la ubicación",
+      "distance": "Distancia",
+      "fuelConsumption": "El consumo de combustible",
+      "driver": "Conductora",
+      "tripStatus": "Estado del viaje",
+      "activeTrips": "Viajes activos",
+      "plannedTrips": "Viajes planificados",
+      "completedTrips": "Viajes completados",
+      "classifyTrip": "Clasificar viaje",
+      "addTrips": "Agregar viajes",
+
+      "fuel": "combustible",
+      "fuelConsumed": "Combustible consumido",
+      "mileage": "Kilometraje",
+      "drain": "Drenar",
+      "date": "Fecha",
+      "maxStoppages": "Paros máximos",
+
+      "tripClassification": "Clasificación de viaje",
+      "employeeName	": "Nombre del Empleado",
+      "activeTrips": "Viaje activo",
+      "plannedTrips": "Viajes planificados",
+      "completedTrips": "Viajes completados",
+      "totalTrips": "Viajes totales",
+      "totalDuration": "Duración total",
+      "totalDistance": "Distancia total",
+
+      "deviceDistributionAcrossProject": "Distribución de dispositivos en todo el proyecto",
+      "businessLoginDetails": "Detalles de inicio de sesión empresarial",
+      "contactDetails": "Detalles de contacto",
+      "companyLoginDetails": "Detalles de inicio de sesión de la empresa",
+
+      "generatedReport": "Informe generado",
+      "adjustment": "	Ajustamiento",
+      "amountOpen	": "Cantidad abierta",
+      "discount": "Descuento",
+      "amount": "Cantidad",
+      "dueDate": "Fecha de vencimiento",
+      "date": "Fecha",
+      "customer": "Cliente",
+      "invoice": "Factura",
+
 
   },
 };

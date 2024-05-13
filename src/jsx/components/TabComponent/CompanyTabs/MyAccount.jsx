@@ -308,7 +308,7 @@ const MyAccount = ({
         </div>
         
         <CredentialsInput
-          heading="Company Login Details"
+          heading={t("companyLoginDetails")}
           register={register}
           errors={errors}
           id={id}
@@ -323,7 +323,7 @@ const MyAccount = ({
             margin: "2rem 0",
           }}
         >
-          <h3>Contact Details</h3>
+          <h3>{t("contactDetails")}</h3>
           <Button
             type="button"
             onClick={handleAddForm}

@@ -497,6 +497,7 @@ export const english = {
       "userGroup": "User Group",
 
       "alert":"Alert",
+      "alertId":"Alert ID",
       "alerts": "Alerts",
       "alertName": "Alert Name",
       "alertType": "Alert Type",
@@ -676,9 +677,57 @@ export const english = {
       "privacyPolicy":"Privacy Policy",
 
       "tradeLicenseNumber" : "Trade License Number",
-      "officeNo" : "Office Number"
+      "officeNo" : "Office Number",
+      "timezone": "Timezone",
+      "designation": "Designation",
+      "update": "Update",
 
+      "trip": "",
+      "tripId": "Trip ID",
+      "startTime": "Start Time",
+      "startLocation": "Start Location",
+      "reachTime": "Reach Time",
+      "reachLocation": "Reach Location",
+      "distance": "Distance",
+      "fuelConsumption": "Fuel Consumption",
+      "driver": "Driver",
+      "tripStatus": "Trip Status",
+      "activeTrips": "Active Trips",
+      "plannedTrips": "Planned Trips",
+      "completedTrips": "Completed Trips",
+      "classifyTrip": "Classify Trip",
+      "addTrips": "Add Trips",
 
+      "fuel": "Fuel",
+      "fuelConsumed": "Fuel Consumed",
+      "mileage": "Mileage",
+      "drain": "Drain",
+      "date": "Date",
+      "maxStoppages": "Max Stoppages",
+
+      "tripClassification": "Trip Classification",
+      "employeeName	": "Employee Name",
+      "activeTrips": "Active Trips",
+      "plannedTrips": "Planned Trips",
+      "completedTrips": "Completed Trips",
+      "totalTrips": "Total Trips",
+      "totalDuration": "Total Duration",
+      "totalDistance": "Total Distance",
+
+      "deviceDistributionAcrossProject": "Device Distribution Across Project",
+      "businessLoginDetails": "Business Login Details",
+      "contactDetails": "Contact Details",
+      "companyLoginDetails": "Company Login Details",
+
+      "generatedReport": "Generated Report",
+      "adjustment": "	Adjustment",
+      "amountOpen	": "Amount Open",
+      "discount": "Discount",
+      "amount": "Amount",
+      "dueDate": "Due Date",
+      "date": "Date",
+      "customer": "Customer",
+      "invoice": "Invoice",
   
     }
   }

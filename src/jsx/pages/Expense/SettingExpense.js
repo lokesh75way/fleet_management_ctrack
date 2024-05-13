@@ -497,14 +497,14 @@ const SettingExpense = ({
             }}
             className="btn btn-primary me-1"
           >
-            {id ? "Update" : "Submit"}
+            {id ? "Update" : t("submit")}
           </button>
           <Link
             to={"#"}
             onClick={() => setAddEmploye(false)}
             className="btn btn-danger light ms-1"
           >
-            Cancel
+            {t("cancel")}
           </Link>
         </div>
       </div>

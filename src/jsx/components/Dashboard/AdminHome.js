@@ -373,7 +373,7 @@ const Home = () => {
                 <div className="d-flex justify-content-between">
                   <h4 className="text-black text-md p-3">
                     {/* {t("deviceVsProject")} */}
-                    Device Distribution Across Project
+                    {t("deviceDistributionAcrossProject")}
                   </h4>
                   <div
                     onClick={(e) => {

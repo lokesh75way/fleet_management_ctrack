@@ -40,7 +40,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
       </div>
       <div className="col-xl-3 mb-3">
         <label className="form-label">
-          {t("Designation")} <span className="text-danger">*</span>
+          {t("designation")} <span className="text-danger">*</span>
         </label>
         <CustomInput
           type="text"

@@ -10,6 +10,7 @@ import "../../../scss/pages/_driver-tracking.scss";
 import Error from "../../components/Error/Error";
 import CustomInput from "../../components/Input/CustomInput";
 import DriverDropdown from "../../components/DriverDropdown";
+import { useTranslation } from "react-i18next";
 
 const Trip = ({
   Title,
@@ -24,6 +25,7 @@ const Trip = ({
   control,
   clearErrors,
 }) => {
+  const { t } = useTranslation();
   const [addEmploye, setAddEmploye] = useState(false);
   const [tempValue, setTempValue] = useState();
   const [dValues, setDvalues] = useState([]);
@@ -68,7 +70,7 @@ const Trip = ({
         <div className="row" style={{ width: "70%", margin: "auto" }}>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Start Time <span className="text-danger">*</span>
+            {t("startTime")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="startTime"
@@ -85,7 +87,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Start Location <span className="text-danger">*</span>
+              {t("startLocation")} <span className="text-danger">*</span>
             </label>
             <CustomInput
               type="text"
@@ -99,7 +101,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Reach Time <span className="text-danger">*</span>
+            {t("reachTime")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="reachTime"
@@ -117,7 +119,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Reach Location <span className="text-danger">*</span>
+            {t("reachLocation")} <span className="text-danger">*</span>
             </label>
             <CustomInput
               type="text"
@@ -130,7 +132,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Distance
+            {t("distance")}
             </label>
             <CustomInput
               type="number"
@@ -142,7 +144,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Fuel Consumption
+            {t("fuelConsumption")}
             </label>
             <CustomInput
               type="number"
@@ -154,7 +156,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-              Driver <span className="text-danger">*</span>
+            {t("driver")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="driver"
@@ -209,7 +211,7 @@ const Trip = ({
                       />
                     </div> */}
           <div className="col-xl-6 mb-3">
-            <label className="form-label">Trip Status</label>
+            <label className="form-label">{t("tripStatus")}</label>
             <Controller
               name="tripStatus"
               control={control}
