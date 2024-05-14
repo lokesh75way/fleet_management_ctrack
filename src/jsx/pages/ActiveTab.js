@@ -110,15 +110,15 @@ const ActiveTab = ({ tableData1, tabType }) => {
                   >
                     <thead>
                       <tr>
-                        <th>Trip ID</th>
-                        <th>Start Time</th>
-                        <th>Start Location</th>
-                        <th>Reach Time</th>
-                        <th>Reach Location</th>
-                        <th>Distance</th>
-                        <th>Fuel Consumption</th>
-                        <th>Driver</th>
-                        <th>Action</th>
+                        <th>{t("tripId")}</th>
+                        <th>{t("startTime")}</th>
+                        <th>{t("startLocation")}</th>
+                        <th>{t("reachTime")}</th>
+                        <th>{t("reachLocation")}</th>
+                        <th>{t("distance")}</th>
+                        <th>{t("fuelConsumption")}</th>
+                        <th>{t("driver")}</th>
+                        <th>{t("action")}</th>
                       </tr>
                     </thead>
                     <tbody>

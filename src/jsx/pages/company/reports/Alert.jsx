@@ -7,6 +7,7 @@ import { AlertData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import AlertTable from "../../../components/Tables/AlertTable";
 import { filterAlerts } from "../../../../utils/helper";
+import { useTranslation } from "react-i18next";
 
 const tableData = [
   {emplid: '1001', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
@@ -45,6 +46,7 @@ const csvlink = {
 
 
 const Alert = (ref) => {
+  const { t } = useTranslation();
   const [date, setDate] = useState({
     startDate: new Date(0),
     endDate: new Date(0),
@@ -132,9 +134,9 @@ const Alert = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Alert"
-        pageTitle={"Alert"}
-        parentTitle={"Reports"}
+        mainTitle={t("alert")}
+        pageTitle={t("alert")}
+        parentTitle={t("reports")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -143,13 +145,13 @@ const Alert = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Alert</h4>
+                    <h4 className="heading mb-0">{t("alert")}</h4>
                     <div className="d-flex">
                     <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> Export Report
+                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}
@@ -157,7 +159,7 @@ const Alert = (ref) => {
                         data-bs-toggle="offcanvas"
                         onClick={() => filter.current.showModal()}
                       >
-                        + Filter
+                        + {t("filter")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -171,13 +173,13 @@ const Alert = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Alert ID</th>
-                          <th>Alert Name</th>
-                          <th>Alert Type</th>
-                          <th>Created At </th>
-                          <th>Notification</th>
-                          <th>Reason</th>
-                          <th>Action</th>
+                          <th>{t("alertId")}</th>
+                          <th>{t("alertName")}</th>
+                          <th>{t("alertType")}</th>
+                          <th>{t("createdDate")}</th>
+                          <th>{t("notification")}</th>
+                          <th>{t("reason")}</th>
+                          <th>{t("action")}</th>
                         </tr>
                       </thead>
                       <tbody>

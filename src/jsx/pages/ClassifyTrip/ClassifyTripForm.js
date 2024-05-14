@@ -58,9 +58,9 @@ const ClassifyTripForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle={t("Trip")}
+        mainTitle={t("trip")}
         pageTitle={id ? t("edit") : t("create")}
-        parentTitle={t("ClassifyTrips")}
+        parentTitle={t("classifyTrip")}
       />
       <div className="m-2 p-2">
         <FormProvider>

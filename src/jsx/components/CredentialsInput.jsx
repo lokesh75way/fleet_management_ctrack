@@ -15,7 +15,7 @@ const CredentialsInput = ({ heading, register, errors, id, getValues }) => {
     
     <div className="col-xl-3 mb-3">
       <label className="form-label">
-        {t('userName')} <span className="text-danger">*</span>
+        {t('username')} <span className="text-danger">*</span>
       </label>
       <CustomInput
         type="text"

@@ -437,7 +437,7 @@ const MyAccount = ({
             margin: "2rem 0",
           }}
         >
-          <h3>Contact Details</h3>
+          <h3>{t("contactDetails")}</h3>
           <Button
             type="button"
             onClick={handleAddForm}

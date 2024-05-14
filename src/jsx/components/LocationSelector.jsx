@@ -4,6 +4,7 @@ import Error from "./Error/Error";
 import CustomInput from "./Input/CustomInput";
 import Select from "react-select";
 import TimeZoneSelector from "./TimeZoneSelector";
+import { useTranslation } from "react-i18next";
 
 const LocationSelector = ({
   register,
@@ -16,7 +17,7 @@ const LocationSelector = ({
   showCity,
   Comptype
 }) => {
-
+  const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [countryId, setCountryId] = useState(0);
@@ -138,7 +139,7 @@ console.log({dValues})
   return (
     <>
       <div className="col-xl-3 mb-3">
-        <label className="form-label">Country</label>
+        <label className="form-label">{t("country")}</label>
         {
           <Select
             options={countryOptions}
@@ -151,7 +152,8 @@ console.log({dValues})
         {!selectedCountry && <Error errorName={errors.country} />}
       </div>
       <div className="col-xl-3 mb-3">
-        <label className="form-label">State</label>
+        {/* <label className="form-label"> State</label> */}
+        <label className="form-label">{t("state")}</label>
         <Select
           options={stateOptions}
           key={selectedState}
@@ -163,7 +165,7 @@ console.log({dValues})
       </div>
       {showCity && (
         <div className="col-xl-3 mb-3">
-          <label className="form-label">City</label>
+          <label className="form-label">{t("city")}</label>
           <CustomInput
             type="text"
             register={register}

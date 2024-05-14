@@ -8,6 +8,7 @@ import { tripData } from "../../../components/Tables/Tables";
 import ClassificationReport from "../../../components/Tables/ClassificationReport";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import { CSVLink } from "react-csv";
+import { useTranslation } from "react-i18next";
 
 const tableData = [
   {
@@ -164,6 +165,7 @@ const csvlink = {
 };
 
 const TripClassification = (ref) => {
+  const { t } = useTranslation();
   const [date, setDate] = useState({
     startDate: new Date(0),
     endDate: new Date(0),
@@ -251,9 +253,9 @@ const TripClassification = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Trip Classification"
-        pageTitle={"Trip Classification"}
-        parentTitle={"Reports"}
+        mainTitle={t("tripClassification")}
+        pageTitle={t("tripClassification")}
+        parentTitle={t("reports")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -262,13 +264,13 @@ const TripClassification = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Trip Classification</h4>
+                    <h4 className="heading mb-0">{t("tripClassification")}</h4>
                     <div className="d-flex">
                       <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> Export Report
+                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}
@@ -276,7 +278,7 @@ const TripClassification = (ref) => {
                         data-bs-toggle="offcanvas"
                         onClick={() => filter.current.showModal()}
                       >
-                        + Filter
+                        + {t("filter")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -290,14 +292,14 @@ const TripClassification = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Employee ID</th>
-                          <th>Employee Name</th>
-                          <th>Active Trips</th>
-                          <th>Planned Trips</th>
-                          <th>Completed Trips</th>
-                          <th>Total Trips</th>
-                          <th>Total Duration</th>
-                          <th>Total Distance</th>
+                          <th>{t("employeeId")}</th>
+                          <th>{t("employeeName")}</th>
+                          <th>{t("activeTrips")}</th>
+                          <th>{t("plannedTrips")}</th>
+                          <th>{t("completedTrips")}</th>
+                          <th>{t("totalTrips")}</th>
+                          <th>{t("totalDuration")}</th>
+                          <th>{t("totalDistance")}</th>
                         </tr>
                       </thead>
                       <tbody>

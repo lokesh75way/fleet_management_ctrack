@@ -7,6 +7,7 @@ import { FuelData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import { filterAlerts } from "../../../../utils/helper";
 import FuelTable from "../../../components/Tables/FuelTable";
+import { useTranslation } from "react-i18next";
 
 const tableData = [
   {emplid: '1001', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
@@ -44,6 +45,7 @@ const csvlink = {
 }
 
 const Fuel = (ref) => {
+  const { t } = useTranslation();
   const [date, setDate] = useState({
     startDate: new Date(0),
     endDate: new Date(0),
@@ -133,9 +135,9 @@ const Fuel = (ref) => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Fuel"
-        pageTitle={"Fuel"}
-        parentTitle={"Reports"}
+        mainTitle={t("fuel")}
+        pageTitle={t("fuel")}
+        parentTitle={t("Reports")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -144,13 +146,13 @@ const Fuel = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">Fuel</h4>
+                    <h4 className="heading mb-0">{t("fuel")}</h4>
                     <div className="d-flex">
                     <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> Export Report
+                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}
@@ -158,7 +160,7 @@ const Fuel = (ref) => {
                         data-bs-toggle="offcanvas"
                         onClick={() => filter.current.showModal()}
                       >
-                        + Filter
+                        + {t("filter")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -172,14 +174,14 @@ const Fuel = (ref) => {
                     >
                       <thead>
                         <tr>
-                          <th>Employee ID</th>
-                          <th>Vehicle Name</th>
-                          <th>Fuel Consumed</th>
-                          <th>Mileage</th>
-                          <th>Drain</th>
-                          <th>Date</th>
-                          <th>Max Stoppages</th>
-                          <th>Distance</th>
+                          <th>{t("employeeId")}</th>
+                          <th>{t("vehicleName")}</th>
+                          <th>{t("fuelConsumed")}</th>
+                          <th>{t("mileage")}</th>
+                          <th>{t("drain")}</th>
+                          <th>{t("date")}</th>
+                          <th>{t("maxStoppages")}</th>
+                          <th>{t("distance")}</th>
                         </tr>
                       </thead>
                       <tbody>

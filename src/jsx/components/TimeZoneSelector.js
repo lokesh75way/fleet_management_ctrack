@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ct from 'countries-and-timezones';
 import Select from 'react-select';
+import { useTranslation } from "react-i18next";
 
 const TimeZoneSelector = ({ countryCode,customStyle,setValue,id,dValues,Comptype }) => {
   console.log(dValues, "compnay timexzone")
+  const { t } = useTranslation();
   const [timezones, setTimezones] = useState([]);
   const [selectedTimezone, setSelectedTimezone] = useState(null);
   useEffect(() => {
@@ -60,7 +62,7 @@ const TimeZoneSelector = ({ countryCode,customStyle,setValue,id,dValues,Comptype
 
   return (
     <div className="col-xl-3">
-      <label htmlFor="timezone">Timezone:</label>
+      <label htmlFor="timezone">{t("timezone")}:</label>
       <Select
         id="timezone"
         value={selectedTimezone}
