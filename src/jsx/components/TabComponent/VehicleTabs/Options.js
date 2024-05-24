@@ -29,6 +29,16 @@ export const deviceTypeOptions = [
   { value: "2G Camera Howen 5635", label: "2G Camera Howen 5635" },
   { value: "2G Camera Howen 5636", label: "2G Camera Howen 5636" },
 ];
+export const tollCategoryOptions = [
+  { value: "Tolling Disabled", label: "Tolling Disabled" },
+];
+export const tarrifTypeOptions = [
+  { value: "Regular with e-tag", label: "Regular with e-tag" },
+];
+export const rucLicenseOptions = [
+  { value: "Not Assigned", label: "Not Assigned" },
+  { value: "Assigned", label: "Assigned" },
+];
 export const copyFromOptions = [{ value: "Test", label: "Test" }];
 export const distanceCounterOptions = [
   { value: "GPS", label: "GPS" },
