@@ -11,6 +11,11 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
+import Information from "../../../../components/TabComponent/VehicleTabs/Information"
+import Licensing from "../../../../components/TabComponent/VehicleTabs/Licensing"
+import Servicing from "../../../../components/TabComponent/VehicleTabs/Servicing"
+import Statuses from "../../../../components/TabComponent/VehicleTabs/Statuses"
+import MessageForwarding from "../../../../components/TabComponent/VehicleTabs/MessageForwarding"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -32,8 +37,8 @@ const VehicleForm = () => {
   const { saveData } = useStorage();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t("general"), t("profile"), t("document")];
-  const component = [General, Profile, Document];
+  const tabHeading = [t("general"), t("profile"), t("document"), t("information"), t("licensing"), t("servicing"), t("statuses"), t("messageforwarding")];
+  const component = [General, Profile, Document,Information,Licensing,Servicing, Statuses, MessageForwarding];
   const totalTabs = tabHeading.length;
 
   const { id } = useParams();
