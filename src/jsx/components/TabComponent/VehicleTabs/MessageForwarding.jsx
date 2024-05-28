@@ -25,10 +25,7 @@ import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
 import CustomCheckbox from "./CustomCheckbox";
-
-
-
-
+import "../../../../scss/pages/_driver-tracking.scss";
 
 const General = ({
   register,
@@ -47,7 +44,7 @@ const General = ({
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
   const { checkRole, checkUserName } = useStorage();
-  
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -58,7 +55,7 @@ const General = ({
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   // const newData = userData?.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState([]);
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
 
   const role = checkRole();
 
@@ -75,7 +72,7 @@ const General = ({
 
       setValue("vehicleName", formData?.[0].vehicleName);
       setValue("plateNumber", formData?.[0].plateNumber);
-      setValue("branchId", formData[0]?.branchId?._id)
+      setValue("branchId", formData[0]?.branchId?._id);
       // setValue(
       //   "branch",
       //   formData?.[0]?.branchId.map((branch) => branch._id)
@@ -90,197 +87,370 @@ const General = ({
       setValue("distanceCounter", formData?.[0].distanceCounter);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
       setValue("speedDetection", formData?.[0].speedDetection);
-      
+
       setValue(
         "deviceAccuracyTolerance",
         formData?.[0].deviceAccuracyTolerance
       );
-
-      
     }
   }, [formData, id]);
 
   useEffect(() => {
-    if(checkRole() !== "SUPER_ADMIN"){
-      setIsBuisnessGroupDisabled(true)
+    if (checkRole() !== "SUPER_ADMIN") {
+      setIsBuisnessGroupDisabled(true);
     }
-    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
+    if (userDetails?.user?.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
     }
-},[])
-
+  }, []);
 
   return (
     <div className="p-4 relative">
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="row justify-content-between" style={{ width: "100%" }}>
-        
-        {/* Contacts Section */}
-        <div className="col-xl-4 mb-3">
-          <h5>{t("Contacts")}</h5>
-          <div className="d-flex mb-2 gap-2">
-          <Button type="button">{t('Add')}</Button>
-          <Button type="button">{t('Delete')}</Button>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="row justify-content-between" style={{ width: "100%" }}>
+          {/* Contacts Section */}
+          <div className="col-xl-4 mb-3">
+            <h5>{t("Contacts")}</h5>
+            <div className="d-flex mb-2 gap-2">
+              <Button type="button">{t("Add")}</Button>
+              <Button type="button">{t("Delete")}</Button>
+            </div>
+            <div>
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>{t("Contact")}</th>
+                  </tr>
+                </thead>
+                <tbody className="contact-table-container">
+  <tr>
+    <td className="top-align">
+      <CustomInput
+        type="text"
+        register={register}
+        name="contact"
+        defaultValue={getValues("contact")}
+        className="custom-input" /* Apply the custom-input class here */
+      />
+      <Error errorName={errors.contact} />
+    </td>
+  </tr>
+  <tr className="table-data-height">
+    <td className="top-align">
+      <h4>Arshad Text 1</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 2</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 3</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 4</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 5</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 6</h4>
+    </td>
+  </tr>
+  <tr>
+    <td className="top-align">
+      <h4>Arshad Text 7</h4>
+    </td>
+  </tr>
+</tbody>
+
+              </table>
+            </div>
           </div>
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>{t("Contact")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <CustomInput
-                    type="text"
-                    register={register}
-                    name="contact"
-                    defaultValue={getValues("contact")}
-                  />
-                  <Error errorName={errors.contact} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+          {/* Schedule Section */}
+          <div className="col-xl-4 mb-3">
+            <h5>{t("Schedule")}</h5>
+            <div className="mb-3">
+              <label className="form-label">{t("Day")}</label>
+              <CustomInput
+                type="text"
+                register={register}
+                name="scheduleDay"
+                defaultValue={getValues("scheduleDay")}
+              />
+              <Error errorName={errors.scheduleDay} />
+            </div>
+            <div className="row">
+              <div className="col-md-6 mb-3">
+                <label className="form-label">{t("From")}</label>
+                <CustomInput
+                  type="time"
+                  register={register}
+                  name="scheduleFrom"
+                  defaultValue={getValues("scheduleFrom")}
+                />
+                <Error errorName={errors.scheduleFrom} />
+              </div>
+              <div className="col-md-6 mb-3">
+                <label className="form-label">{t("To")}</label>
+                <CustomInput
+                  type="time"
+                  register={register}
+                  name="scheduleTo"
+                  defaultValue={getValues("scheduleTo")}
+                />
+                <Error errorName={errors.scheduleTo} />
+              </div>
+            </div>
+
+            <div className="d-flex mb-2 gap-2">
+              <Button type="button">{t("Add")}</Button>
+              <Button type="button">{t("Delete")}</Button>
+            </div>
+            <table className="table table-bordered top-align">
+              <thead>
+                <tr>
+                  <th>{t("Day")}</th>
+                  <th>{t("From")}</th>
+                  <th>{t("To")}</th>
+                  <th>{t("SMS")}</th>
+                  <th>{t("Email")}</th>
+                </tr>
+              </thead>
+              <tbody className="schedule-table-container">
+                <tr>
+                  <td className="top-align">
+                    <CustomInput
+                      type="text"
+                      register={register}
+                      name="scheduleTableDay"
+                      defaultValue={getValues("scheduleTableDay")}
+                    />
+                    <Error errorName={errors.scheduleTableDay} />
+                  </td>
+                  <td className="top-align">
+                    <CustomInput
+                      type="time"
+                      register={register}
+                      name="scheduleTableFrom"
+                      defaultValue={getValues("scheduleTableFrom")}
+                    />
+                    <Error errorName={errors.scheduleTableFrom} />
+                  </td>
+                  <td className="top-align">
+                    <CustomInput
+                      type="time"
+                      register={register}
+                      name="scheduleTableTo"
+                      defaultValue={getValues("scheduleTableTo")}
+                    />
+                    <Error errorName={errors.scheduleTableTo} />
+                  </td>
+                  <td className="top-align">
+                    <CustomInput
+                      type="text"
+                      register={register}
+                      name="scheduleTableSMS"
+                    />
+                    <Error errorName={errors.scheduleTableSMS} />
+                  </td>
+                  <td className="top-align">
+                    <CustomInput
+                      type="text"
+                      register={register}
+                      name="scheduleTableEmail"
+                    />
+                    <Error errorName={errors.scheduleTableEmail} />
+                  </td>
+                </tr>
+                <tr>
+                  <td><h4>30</h4></td>
+                  <td><h4>08:30 AM</h4></td>
+                  <td><h4>10:05 PM</h4></td>
+                  <td><h4>Demo</h4></td>
+                  <td><h4>Email</h4></td>
+                </tr>
+                <tr>
+                  <td><h4>30</h4></td>
+                  <td><h4>08:30 AM</h4></td>
+                  <td><h4>10:05 PM</h4></td>
+                  <td><h4>Demo</h4></td>
+                  <td><h4>Email</h4></td>
+                </tr>
+                <tr>
+                  <td><h4>30</h4></td>
+                  <td><h4>08:30 AM</h4></td>
+                  <td><h4>10:05 PM</h4></td>
+                  <td><h4>Demo</h4></td>
+                  <td><h4>Email</h4></td>
+                </tr>
+                <tr>
+                  <td><h4>30</h4></td>
+                  <td><h4>08:30 AM</h4></td>
+                  <td><h4>10:05 PM</h4></td>
+                  <td><h4>Demo</h4></td>
+                  <td><h4>Email</h4></td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+
+          {/* Events Section */}
+          <div className="col-xl-3 mb-3">
+            <h5>{t("Events")}</h5>
+            <div
+              className="events-container"
+              style={{ maxHeight: "400px", overflowY: "scroll" }}
+            >
+              <CustomCheckbox
+                register={register}
+                name="statusText"
+                label={t("Status Text")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="rollover"
+                label={t("Rollover")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="noGoArea"
+                label={t("NoGo Area")}
+              />
+              <CustomCheckbox register={register} name="NIL" label={t("NIL")} />
+              <CustomCheckbox
+                register={register}
+                name="highGForce"
+                label={t("High G-force")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="incident"
+                label={t("Incident")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="inWaypoint"
+                label={t("In Waypoint")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="outWaypoint"
+                label={t("Out Waypoint")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="panic"
+                label={t("Panic")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="input1"
+                label={t("Input1")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="areaAlarm"
+                label={t("Area Alarm")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="ignitionOff"
+                label={t("Ignition Off")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="driving"
+                label={t("Driving")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="illegalMovement"
+                label={t("Illegal Movement")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="severeGForce"
+                label={t("Severe G-force")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="GSMJam"
+                label={t("GSM Jam")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="startup"
+                label={t("Start Up")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="excessiveIdling"
+                label={t("Excessive Idling")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="boxTamper"
+                label={t("Box Tamper")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="speedViolation"
+                label={t("Speed Violation")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="input2"
+                label={t("Input2")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="harshBraking"
+                label={t("Harsh Braking")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="harshCornering"
+                label={t("Harsh Cornering")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="harshAcceleration"
+                label={t("Harsh Acceleration")}
+              />
+              <CustomCheckbox
+                register={register}
+                name="batteryTamper"
+                label={t("Battery Tamper")}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Schedule Section */}
-        <div className="col-xl-4 mb-3">
-          <h5>{t("Schedule")}</h5>
-          <div className="mb-3">
-            <label className="form-label">{t("Day")}</label>
-            <CustomInput
-              type="text"
-              register={register}
-              name="scheduleDay"
-              defaultValue={getValues("scheduleDay")}
-            />
-            <Error errorName={errors.scheduleDay} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">{t("From")}</label>
-            <CustomInput
-              type="time"
-              register={register}
-              name="scheduleFrom"
-              defaultValue={getValues("scheduleFrom")}
-            />
-            <Error errorName={errors.scheduleFrom} />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">{t("To")}</label>
-            <CustomInput
-              type="time"
-              register={register}
-              name="scheduleTo"
-              defaultValue={getValues("scheduleTo")}
-            />
-            <Error errorName={errors.scheduleTo} />
-          </div>
-          <div className="d-flex mb-2 gap-2">
-          <Button type="button">{t('Add')}</Button>
-          <Button type="button">{t('Delete')}</Button>
-          </div>
-          <table className="table table-bordered">
-            <thead>
-              <tr>
-                <th>{t("Day")}</th>
-                <th>{t("From")}</th>
-                <th>{t("To")}</th>
-                <th>{t("SMS")}</th>
-                <th>{t("Email")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <CustomInput
-                    type="text"
-                    register={register}
-                    name="scheduleTableDay"
-                    defaultValue={getValues("scheduleTableDay")}
-                  />
-                  <Error errorName={errors.scheduleTableDay} />
-                </td>
-                <td>
-                  <CustomInput
-                    type="time"
-                    register={register}
-                    name="scheduleTableFrom"
-                    defaultValue={getValues("scheduleTableFrom")}
-                  />
-                  <Error errorName={errors.scheduleTableFrom} />
-                </td>
-                <td>
-                  <CustomInput
-                    type="time"
-                    register={register}
-                    name="scheduleTableTo"
-                    defaultValue={getValues("scheduleTableTo")}
-                  />
-                  <Error errorName={errors.scheduleTableTo} />
-                </td>
-                <td>
-                  <CustomInput
-                    type="checkbox"
-                    register={register}
-                    name="scheduleTableSMS"
-                  />
-                  <Error errorName={errors.scheduleTableSMS} />
-                </td>
-                <td>
-                  <CustomInput
-                    type="checkbox"
-                    register={register}
-                    name="scheduleTableEmail"
-                  />
-                  <Error errorName={errors.scheduleTableEmail} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            margin: "2rem 0",
+          }}
+        >
+          <Button type="submit" style={{ width: "10%" }}>
+            {t("Submit")}
+          </Button>
         </div>
-
-        {/* Events Section */}
-        <div className="col-xl-3 mb-3">
-          <h5>{t("Events")}</h5>
-          <div className="events-container" style={{ maxHeight: "400px", overflowY: "scroll" }}>
-            <CustomCheckbox register={register} name="statusText" label={t("Status Text")} />
-            <CustomCheckbox register={register} name="rollover" label={t("Rollover")} />
-            <CustomCheckbox register={register} name="noGoArea" label={t("NoGo Area")} />
-            <CustomCheckbox register={register} name="NIL" label={t("NIL")} />
-            <CustomCheckbox register={register} name="highGForce" label={t("High G-force")} />
-            <CustomCheckbox register={register} name="incident" label={t("Incident")} />
-            <CustomCheckbox register={register} name="inWaypoint" label={t("In Waypoint")} />
-            <CustomCheckbox register={register} name="outWaypoint" label={t("Out Waypoint")} />
-            <CustomCheckbox register={register} name="panic" label={t("Panic")} />
-            <CustomCheckbox register={register} name="input1" label={t("Input1")} />
-            <CustomCheckbox register={register} name="areaAlarm" label={t("Area Alarm")} />
-            <CustomCheckbox register={register} name="ignitionOff" label={t("Ignition Off")} />
-            <CustomCheckbox register={register} name="driving" label={t("Driving")} />
-            <CustomCheckbox register={register} name="illegalMovement" label={t("Illegal Movement")} />
-            <CustomCheckbox register={register} name="severeGForce" label={t("Severe G-force")} />
-            <CustomCheckbox register={register} name="GSMJam" label={t("GSM Jam")} />
-            <CustomCheckbox register={register} name="startup" label={t("Start Up")} />
-            <CustomCheckbox register={register} name="excessiveIdling" label={t("Excessive Idling")} />
-            <CustomCheckbox register={register} name="boxTamper" label={t("Box Tamper")} />
-            <CustomCheckbox register={register} name="speedViolation" label={t("Speed Violation")} />
-            <CustomCheckbox register={register} name="input2" label={t("Input2")} />
-            <CustomCheckbox register={register} name="harshBraking" label={t("Harsh Braking")} />
-            <CustomCheckbox register={register} name="harshCornering" label={t("Harsh Cornering")} />
-            <CustomCheckbox register={register} name="harshAcceleration" label={t("Harsh Acceleration")} />
-            <CustomCheckbox register={register} name="batteryTamper" label={t("Battery Tamper")} />
-          </div>
-        </div>
-      </div>
-
-      <div style={{ width: "100%", display: "flex", justifyContent: "center", margin: "2rem 0" }}>
-        <Button type="submit" style={{ width: "10%" }}>
-          {t('Submit')}
-        </Button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
   );
 };
 

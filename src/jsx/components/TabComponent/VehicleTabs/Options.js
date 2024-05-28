@@ -39,6 +39,17 @@ export const rucLicenseOptions = [
   { value: "Not Assigned", label: "Not Assigned" },
   { value: "Assigned", label: "Assigned" },
 ];
+export const skillSetOptions = [
+  { value: "Not Assigned", label: "Not Assigned" },
+  { value: "Assigned", label: "Assigned" },
+];
+export const profileOwningOptions = [
+  { value: "Custom", label: "Custom" },
+  
+];
+export const costCenterOptions = [
+  { value: "Owning Cost Center", label: "Owning Cost Center" },
+];
 export const copyFromOptions = [{ value: "Test", label: "Test" }];
 export const distanceCounterOptions = [
   { value: "GPS", label: "GPS" },

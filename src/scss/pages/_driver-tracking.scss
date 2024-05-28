@@ -444,3 +444,37 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .remove-button:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
+.contact-table-container {
+  height: 500px; /* Adjust the height as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+}
+.schedule-table-container {
+  height: 325px; /* Adjust the height as needed */
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: white;
+}
+.top-align {
+  vertical-align: top !important;
+}
+.table-data-height{
+  padding: 0 !important;
+  margin: 0 !important;
+  padding-left: 9px !important;
+}
+/* Add this to your CSS file or within a style tag in your component */
+.contact-table-container td {
+  padding: 5px !important; /* Adjust the padding as needed */
+  margin: 0; /* Ensure there's no margin */
+  vertical-align: top; /* Align content to the top */
+}
+
+.contact-table-container h4 {
+  margin: 5px 0; /* Adjust the margin as needed */
+}
+
+.contact-table-container .custom-input {
+  margin: 5px 0; /* Adjust the margin as needed */
+}

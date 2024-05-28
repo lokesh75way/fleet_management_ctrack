@@ -37,8 +37,28 @@ const VehicleForm = () => {
   const { saveData } = useStorage();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t("general"), t("profile"), t("document"), t("information"), t("licensing"), t("servicing"), t("statuses"), t("messageforwarding")];
-  const component = [General, Profile, Document,Information,Licensing,Servicing, Statuses, MessageForwarding];
+  const tabHeading = [
+    t("information"), 
+    t("licensing"), 
+    t("servicing"), 
+    t("statuses"), 
+    t("general"), 
+    t("profile"), 
+    t("document"), 
+    t("messageforwarding")
+  ];
+  
+  const component = [
+    Information, 
+    Licensing, 
+    Servicing, 
+    Statuses, 
+    General, 
+    Profile, 
+    Document, 
+    MessageForwarding
+  ];
+  
   const totalTabs = tabHeading.length;
 
   const { id } = useParams();
