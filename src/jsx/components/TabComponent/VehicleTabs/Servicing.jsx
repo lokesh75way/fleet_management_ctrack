@@ -60,57 +60,32 @@ const Servicing = ({
 
   const { t } = useTranslation();
 
-  // const[formData,setFormData] = useState([])
-  useEffect(() => {
-    if (formData && id) {
-      setValue("businessGroupId", formData?.[0]?.businessGroupId);
-      setGroupId(formData?.[0]?.businessGroupId);
-      setValue("companyId", formData?.[0]?.companyId);
-      setCompanyId(formData?.[0]?.companyId);
-      setValue("imeiNumber", formData?.[0].imeiNumber);
+  const [selectedOption, setSelectedOption] = useState('ODO');
 
-      setValue("vehicleName", formData?.[0].vehicleName);
-      setValue("plateNumber", formData?.[0].plateNumber);
-      setValue("branchId", formData[0]?.branchId?._id)
-      // setValue(
-      //   "branch",
-      //   formData?.[0]?.branchId.map((branch) => branch._id)
-      // );
-      setValue("simNumber", formData?.[0].simNumber);
-      setValue("secondrySimNumber", formData?.[0].secondrySimNumber);
-      setValue("IMEINumber", formData?.[0].IMEINumber);
-      setValue("registrationNumber", formData?.[0].registrationNumber);
-      setValue("weightCapacity", formData?.[0].weightCapacity);
-      setValue("deviceType", formData?.[0].deviceType);
-      setValue("serverAddress", formData?.[0].serverAddress);
-      setValue("distanceCounter", formData?.[0].distanceCounter);
-      setValue("unitOfDistance", formData?.[0].unitOfDistance);
-      setValue("speedDetection", formData?.[0].speedDetection);
-      
-      setValue(
-        "deviceAccuracyTolerance",
-        formData?.[0].deviceAccuracyTolerance
-      );
-
-      
-    }
-  }, [formData, id]);
-
-  useEffect(() => {
-    if(checkRole() !== "SUPER_ADMIN"){
-      setIsBuisnessGroupDisabled(true)
-    }
-    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-    }
-},[])
-
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+  };
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-        <h4 className="mb-4"> Usage based vehicle servicing reminder</h4>
-        <div className="col-xl-3 mb-3 ">
+        <h4 className="mb-4">Usage based vehicle servicing reminder</h4>
+        <div className="form-check mb-4 mx-4">
+          <input
+            type="radio"
+            name="serviceOption"
+            id="odoOption"
+            value="ODO"
+            checked={selectedOption === 'ODO'}
+            onChange={() => handleOptionChange('ODO')}
+            className="form-check-input"
+          />
+          <label className="form-check-label" htmlFor="odoOption">
+            Based On ODO
+          </label>
+        </div>
+
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("currentODO (km)")} <span className="text-danger">*</span>
           </label>
@@ -118,14 +93,14 @@ const Servicing = ({
             type="number"
             required
             register={register}
-            label="Current ODO"
             name="currentODO"
             placeholder=""
             defaultValue={getValues("currentODO")}
+            disabled={selectedOption !== 'ODO'}
           />
           <Error errorName={errors.currentODO} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("lastServiceODO (km)")} <span className="text-danger">*</span>
           </label>
@@ -133,29 +108,14 @@ const Servicing = ({
             type="number"
             required
             register={register}
-            label="Current ODO"
             name="lastServiceODO"
             placeholder=""
             defaultValue={getValues("lastServiceODO")}
+            disabled={selectedOption !== 'ODO'}
           />
           <Error errorName={errors.lastServiceODO} />
         </div>
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            required
-            register={register}
-            label="Current ODO"
-            name="lastServiceODO"
-            placeholder=""
-            defaultValue={getValues("lastServiceODO")}
-          />
-          <Error errorName={errors.lastServiceODO} />
-        </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
           </label>
@@ -163,121 +123,151 @@ const Servicing = ({
             type="number"
             required
             register={register}
-            label="nextServiceDueIn"
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
+            disabled={selectedOption !== 'ODO'}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (BeforeNextService) (km)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Reminder Start"
+            name="nextServiceDueIn"
+            placeholder=""
+            defaultValue={getValues("nextServiceDueIn")}
+            disabled={selectedOption !== 'ODO'}
+          />
+          <Error errorName={errors.nextServiceDueIn} />
+        </div>
+        <div className="col-xl-3 mb-3">
+          <label className="form-label">
+            {t("reminderStart (km)")} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="number"
+            required
+            register={register}
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
+            disabled={selectedOption !== 'ODO'}
           />
           <Error errorName={errors.reminderStart} />
         </div>
-        <h4 className="my-4">Based on operating hours</h4>
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("currentODO (km)")} <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            required
-            register={register}
-            label="Current ODO"
-            name="currentODO"
-            placeholder=""
-            defaultValue={getValues("currentODO")}
+
+        <div className="form-check mb-4 mx-4">
+          <input
+            type="radio"
+            name="serviceOption"
+            id="hoursOption"
+            value="Hours"
+            checked={selectedOption === 'Hours'}
+            onChange={() => handleOptionChange('Hours')}
+            className="form-check-input"
           />
-          <Error errorName={errors.currentODO} />
+          <label className="form-check-label" htmlFor="hoursOption">
+            Based on operating hours
+          </label>
         </div>
-        <div className="col-xl-3 mb-3 ">
+
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
+            {t("currentRunningHours (Hours)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Current ODO"
-            name="lastServiceODO"
+            name="currentRunningHours"
             placeholder=""
-            defaultValue={getValues("lastServiceODO")}
+            defaultValue={getValues("currentRunningHours")}
+            disabled={selectedOption !== 'Hours'}
           />
-          <Error errorName={errors.lastServiceODO} />
+          <Error errorName={errors.currentRunningHours} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
+            {t("hoursAtLastService (Hours)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Current ODO"
-            name="lastServiceODO"
+            name="hoursAtLastService"
             placeholder=""
-            defaultValue={getValues("lastServiceODO")}
+            defaultValue={getValues("hoursAtLastService")}
+            disabled={selectedOption !== 'Hours'}
           />
-          <Error errorName={errors.lastServiceODO} />
+          <Error errorName={errors.hoursAtLastService} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval (Hours)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="nextServiceDueIn"
+            name="ServiceInterval"
+            placeholder=""
+            defaultValue={getValues("ServiceInterval")}
+            disabled={selectedOption !== 'Hours'}
+          />
+          <Error errorName={errors.ServiceInterval} />
+        </div>
+        <div className="col-xl-3 mb-3">
+          <label className="form-label">
+            {t("nextServiceDueIn (Hours)")} <span className="text-danger">*</span>
+          </label>
+          <CustomInput
+            type="number"
+            required
+            register={register}
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
+            disabled={selectedOption !== 'ODO'}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (BeforeNextService) (km)")} <span className="text-danger">*</span>
+            {t("reminderStart (Hours)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Reminder Start"
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
+            disabled={selectedOption !== 'Hours'}
           />
           <Error errorName={errors.reminderStart} />
         </div>
-        <h4 className="my-4"> Time based vehicle servicing reminder</h4>
-        <div className="col-xl-3 mb-3 ">
+
+        <h4 className="my-4">Time based vehicle servicing reminder</h4>
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("currentODO (km)")} <span className="text-danger">*</span>
+            {t("LastSrviceDate (Weeks)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Current ODO"
-            name="currentODO"
+            name="LastSrviceDate"
             placeholder=""
-            defaultValue={getValues("currentODO")}
+            defaultValue={getValues("LastSrviceDate")}
           />
           <Error errorName={errors.currentODO} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("lastServiceODO (km)")} <span className="text-danger">*</span>
           </label>
@@ -285,29 +275,13 @@ const Servicing = ({
             type="number"
             required
             register={register}
-            label="Current ODO"
             name="lastServiceODO"
             placeholder=""
             defaultValue={getValues("lastServiceODO")}
           />
           <Error errorName={errors.lastServiceODO} />
         </div>
-        <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="number"
-            required
-            register={register}
-            label="Current ODO"
-            name="lastServiceODO"
-            placeholder=""
-            defaultValue={getValues("lastServiceODO")}
-          />
-          <Error errorName={errors.lastServiceODO} />
-        </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
           </label>
@@ -315,22 +289,20 @@ const Servicing = ({
             type="number"
             required
             register={register}
-            label="nextServiceDueIn"
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (BeforeNextService) (km)")} <span className="text-danger">*</span>
+            {t("reminderStart (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            label="Reminder Start"
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
@@ -352,8 +324,7 @@ const Servicing = ({
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t('next')} 
+          {t("next")}
         </Button>
       </div>
     </div>

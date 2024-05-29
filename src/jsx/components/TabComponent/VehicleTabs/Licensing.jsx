@@ -95,6 +95,7 @@ const Licensing = ({
           </div>
           
           {/* License Reminder */}
+          <h4 className="mb-4">License Reminder</h4>
           <div className="col-xl-6 mb-3">
             <label className="form-label">
               {t("Last renewal date")} <span className="text-danger">*</span>
@@ -149,6 +150,7 @@ const Licensing = ({
           </div>
 
           {/* Roadworthy Reminder */}
+          <h4 className="mb-4">Roadworthy Reminder</h4>
           <div className="col-xl-6 mb-3">
             <label className="form-label">
               {t("Last renewal date")} <span className="text-danger">*</span>
@@ -202,54 +204,11 @@ const Licensing = ({
             <Error errorName={errors.roadworthyReminderStart} />
           </div>
           
-          <div className="col-xl-12 mb-3">
-              <label className="form-label">
-                {t("Required license for vehicle")}
-              </label>
-              <div className="table-responsive">
-                <table className="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>{t("Category")}</th>
-                      <th>{t("Description")}</th>
-                      <th>{t("Inherited Category")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {requiredLicenses.map((license, index) => (
-                      <tr key={index}>
-                        <td>
-                          <CustomInput
-                            type="text"
-                            register={register}
-                            name={`requiredLicenses[${index}].category`}
-                            defaultValue={license.category}
-                          />
-                        </td>
-                        <td>
-                          <CustomInput
-                            type="text"
-                            register={register}
-                            name={`requiredLicenses[${index}].description`}
-                            defaultValue={license.description}
-                          />
-                        </td>
-                        <td>
-                          <CustomInput
-                            type="text"
-                            register={register}
-                            name={`requiredLicenses[${index}].inheritedCategory`}
-                            defaultValue={license.inheritedCategory}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          
         </div>
         <div className="row" style={{ width: "50%" }}>
+          <div className="d-flex justify-content-between align-items-center">
+
           <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t("Assigned Ruc License")} <span className="text-danger">*</span>
@@ -276,6 +235,17 @@ const Licensing = ({
           />
           {!getValues("AssignedRucLicense") && <Error errorName={errors.AssignedRucLicense} />}
         </div>
+          <div className="col-xl-6 mt-3">
+          <button
+            type="button"
+            className="btn btn-danger ms-2"
+            onClick={() => setValue("AssignedRucLicense", '')}
+          >
+            Terminate
+          </button>
+          </div>
+          </div>
+
           <div className="col-xl-6 mb-3">
             <label className="form-label">
               {t("Date Of Purchase")} <span className="text-danger">*</span>
