@@ -8,6 +8,7 @@ import Error from "../../Error/Error";
 import "../../../../scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";
+import CustomInput from "../../Input/CustomInput";
 
 const Document = ({
   setValue,
@@ -199,6 +200,27 @@ const Document = ({
                     <Error errorName={errors?.documents?.[index]?.expireDate} />
                   )}
                 </div>
+                <div className="col-xl-3 d-flex flex-column mb-2 ">
+                  <label className="form-label">
+                    {t("Reminder(Before Days)")}
+                  </label>
+                  <Controller
+                    name={`documents.${index}.reminder`}
+                    control={control}
+                    render={() => (
+                      <CustomInput
+                        type="number"
+                        required
+                        register={register}
+                        name="reminder"
+                        defaultValue={getValues(`documents.${index}.reminder`)}
+                      />
+                    )}
+                  />
+                  {!getValues(`documents.${index}.issueDate`) && (
+                    <Error errorName={errors?.documents?.[index]?.issueDate} />
+                  )}
+                </div>
                 <div className="col-xl-3 mb-2">
                   <label className="form-label">
                     {t("uploadFile")}
@@ -223,7 +245,11 @@ const Document = ({
                     loading={loading}
                   />
 
-                  <Error errorName={errors?.documents?.[index]?.file ? "File is required" : '' } />
+                  <Error
+                    errorName={
+                      errors.documents?.[index]?.file ? "File is required" : ""
+                    }
+                  />
                 </div>
               </div>
             </>

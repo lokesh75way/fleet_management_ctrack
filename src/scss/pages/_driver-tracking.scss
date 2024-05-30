@@ -444,3 +444,68 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .remove-button:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
+.contact-table-container {
+  height: 500px; /* Adjust the height as needed */
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: white;
+}
+.schedule-table-container {
+  height: 325px; /* Adjust the height as needed */
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: white;
+}
+.top-align {
+  vertical-align: top !important;
+}
+.table-data-height{
+  padding: 0 !important;
+  margin: 0 !important;
+  padding-left: 9px !important;
+}
+/* Add this to your CSS file or within a style tag in your component */
+.contact-table-container td {
+  padding: 5px !important; /* Adjust the padding as needed */
+  margin: 0; /* Ensure there's no margin */
+  vertical-align: top; /* Align content to the top */
+}
+
+.contact-table-container h4 {
+  margin: 5px 0; /* Adjust the margin as needed */
+}
+
+.contact-table-container .custom-input {
+  margin: 5px 0; /* Adjust the margin as needed */
+}
+.border-container {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.heading-container {
+  top: -12px; /* Adjust based on your needs */
+  left: 16px; /* Align with padding */
+  background: #f5f5f5;
+  padding: 0 10px;
+  width: auto;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: absolute;
+  background-color:  #f5f5f5;
+}
+.checkbox-height{
+  margin-top: 4.5rem !important;
+}
+.custom-margin-checkbox{
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
