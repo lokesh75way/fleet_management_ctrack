@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CustomCheckbox = ({ register, name, label }) => {
+const CustomCheckbox = ({ register, name, label, checked, onChange,heading }) => {
   return (
     <div className="form-check">
       <input
@@ -8,7 +8,10 @@ const CustomCheckbox = ({ register, name, label }) => {
         type="checkbox"
         {...register(name)}
         id={name}
+        checked={checked}
+        onChange={onChange}
       />
+      
       <label className="form-check-label" htmlFor={name}>
         {label}
       </label>

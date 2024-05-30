@@ -26,6 +26,7 @@ import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import CustomCheckbox from "./CustomCheckbox";
 
 
 const Licensing = ({
@@ -48,6 +49,16 @@ const Licensing = ({
     { licenseNumber: '', purchaseDate: '', vehicleType: '',licenseType: '' },
     { licenseNumber: '', purchaseDate: '', vehicleType: '',licenseType: '' }
   ];
+  const [isLicenseReminderEnabled, setIsLicenseReminderEnabled] = useState(false);
+  const [isRoadworthyReminderEnabled, setIsRoadworthyReminderEnabled] = useState(false);
+
+  const handleLicenseCheckboxChange = (event) => {
+    setIsLicenseReminderEnabled(event.target.checked);
+  };
+
+  const handleRoadworthyCheckboxChange = (event) => {
+    setIsRoadworthyReminderEnabled(event.target.checked);
+  };
   
   const customStyles = {
     control: (base) => ({
@@ -65,148 +76,177 @@ const Licensing = ({
     <div className="p-4 relative">
       <div className="d-flex justify-content-between" style={{ width: "100%" }}>
         <div className="row" style={{ width: "50%" }}>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("License number")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="text"
-              required
-              register={register}
-              name="licenseNumber"
-              placeholder=""
-              defaultValue={getValues("licenseNumber")}
-            />
-            <Error errorName={errors.licenseNumber} />
+        <div className="border border-1 p-3 row rounded">
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("License number")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="text"
+                required
+                register={register}
+                name="licenseNumber"
+                placeholder=""
+                defaultValue={getValues("licenseNumber")}
+              />
+              <Error errorName={errors.licenseNumber} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Roadworthy number")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="text"
+                required
+                register={register}
+                name="roadworthyNumber"
+                placeholder=""
+                defaultValue={getValues("roadworthyNumber")}
+              />
+              <Error errorName={errors.roadworthyNumber} />
+            </div>
           </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Roadworthy number")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="text"
-              required
-              register={register}
-              name="roadworthyNumber"
-              placeholder=""
-              defaultValue={getValues("roadworthyNumber")}
-            />
-            <Error errorName={errors.roadworthyNumber} />
-          </div>
-          
-          {/* License Reminder */}
-          <h4 className="mb-4">License Reminder</h4>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Last renewal date")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="date"
-              required
-              register={register}
-              name="licenseLastRenewalDate"
-              defaultValue={getValues("licenseLastRenewalDate")}
-            />
-            <Error errorName={errors.licenseLastRenewalDate} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Period (months)")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="number"
-              required
-              register={register}
-              name="licensePeriod"
-              defaultValue={getValues("licensePeriod")}
-            />
-            <Error errorName={errors.licensePeriod} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Next renewal due on")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="date"
-              required
-              register={register}
-              name="licenseNextRenewalDue"
-              defaultValue={getValues("licenseNextRenewalDue")}
-            />
-            <Error errorName={errors.licenseNextRenewalDue} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="number"
-              required
-              register={register}
-              name="licenseReminderStart"
-              defaultValue={getValues("licenseReminderStart")}
-            />
-            <Error errorName={errors.licenseReminderStart} />
+         {/* License Reminder */}
+         <div className="border-container position-relative p-3 mt-5 row">
+            <div className="heading-container d-flex align-items-center position-absolute">
+              <CustomCheckbox
+                register={register}
+                name="licenseReminder"
+                label="License Reminder"
+                checked={isLicenseReminderEnabled}
+                onChange={handleLicenseCheckboxChange}
+              />
+            </div>
+            <div className="col-xl-6 mb-3 mt-2">
+              <label className="form-label">
+                {t("Last renewal date")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="date"
+                required
+                register={register}
+                name="licenseLastRenewalDate"
+                defaultValue={getValues("licenseLastRenewalDate")}
+                disabled={!isLicenseReminderEnabled}
+              />
+              <Error errorName={errors.licenseLastRenewalDate} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Period (months)")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="number"
+                required
+                register={register}
+                name="licensePeriod"
+                defaultValue={getValues("licensePeriod")}
+                disabled={!isLicenseReminderEnabled}
+              />
+              <Error errorName={errors.licensePeriod} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Next renewal due on")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="date"
+                required
+                register={register}
+                name="licenseNextRenewalDue"
+                defaultValue={getValues("licenseNextRenewalDue")}
+                disabled={!isLicenseReminderEnabled}
+              />
+              <Error errorName={errors.licenseNextRenewalDue} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="number"
+                required
+                register={register}
+                name="licenseReminderStart"
+                defaultValue={getValues("licenseReminderStart")}
+                disabled={!isLicenseReminderEnabled}
+              />
+              <Error errorName={errors.licenseReminderStart} />
+            </div>
           </div>
 
-          {/* Roadworthy Reminder */}
-          <h4 className="mb-4">Roadworthy Reminder</h4>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Last renewal date")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="date"
-              required
-              register={register}
-              name="roadworthyLastRenewalDate"
-              defaultValue={getValues("roadworthyLastRenewalDate")}
-            />
-            <Error errorName={errors.roadworthyLastRenewalDate} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Period (months)")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="number"
-              required
-              register={register}
-              name="roadworthyPeriod"
-              defaultValue={getValues("roadworthyPeriod")}
-            />
-            <Error errorName={errors.roadworthyPeriod} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Next renewal due on")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="date"
-              required
-              register={register}
-              name="roadworthyNextRenewalDue"
-              defaultValue={getValues("roadworthyNextRenewalDue")}
-            />
-            <Error errorName={errors.roadworthyNextRenewalDue} />
-          </div>
-          <div className="col-xl-6 mb-3">
-            <label className="form-label">
-              {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
-            </label>
-            <CustomInput
-              type="number"
-              required
-              register={register}
-              name="roadworthyReminderStart"
-              defaultValue={getValues("roadworthyReminderStart")}
-            />
-            <Error errorName={errors.roadworthyReminderStart} />
+            {/* Roadworthy Reminder */}
+            <div className="border-container position-relative p-3 mt-5 row">
+            <div className="heading-container d-flex align-items-center position-absolute">
+              <CustomCheckbox
+                register={register}
+                name="roadworthyReminder"
+                label="Roadworthy Reminder"
+                checked={isRoadworthyReminderEnabled}
+                onChange={handleRoadworthyCheckboxChange}
+              />
+            </div>
+            <div className="col-xl-6 mb-3 mt-2">
+              <label className="form-label">
+                {t("Last renewal date")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="date"
+                required
+                register={register}
+                name="roadworthyLastRenewalDate"
+                defaultValue={getValues("roadworthyLastRenewalDate")}
+                disabled={!isRoadworthyReminderEnabled}
+              />
+              <Error errorName={errors.roadworthyLastRenewalDate} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Period (months)")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="number"
+                required
+                register={register}
+                name="roadworthyPeriod"
+                defaultValue={getValues("roadworthyPeriod")}
+                disabled={!isRoadworthyReminderEnabled}
+              />
+              <Error errorName={errors.roadworthyPeriod} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Next renewal due on")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="date"
+                required
+                register={register}
+                name="roadworthyNextRenewalDue"
+                defaultValue={getValues("roadworthyNextRenewalDue")}
+                disabled={!isRoadworthyReminderEnabled}
+              />
+              <Error errorName={errors.roadworthyNextRenewalDue} />
+            </div>
+            <div className="col-xl-6 mb-3">
+              <label className="form-label">
+                {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
+              </label>
+              <CustomInput
+                type="number"
+                required
+                register={register}
+                name="roadworthyReminderStart"
+                defaultValue={getValues("roadworthyReminderStart")}
+                disabled={!isRoadworthyReminderEnabled}
+              />
+              <Error errorName={errors.roadworthyReminderStart} />
+            </div>
           </div>
           
           
         </div>
-        <div className="row" style={{ width: "50%" }}>
+        {/* <div className="row" style={{ width: "50%" }}>
           <div className="d-flex justify-content-between align-items-center">
 
           <div className="col-xl-6 mb-3 ">
@@ -415,7 +455,7 @@ const Licensing = ({
                 </table>
               </div>
             </div>
-        </div>
+        </div> */}
 
        
         

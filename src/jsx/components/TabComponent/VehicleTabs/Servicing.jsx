@@ -24,6 +24,7 @@ import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
+import CustomCheckbox from "./CustomCheckbox";
 
 
 const Servicing = ({
@@ -61,16 +62,37 @@ const Servicing = ({
   const { t } = useTranslation();
 
   const [selectedOption, setSelectedOption] = useState('ODO');
-
+  const [isUsageReminderEnabled, setIsUsageReminderEnabled] = useState(false);
+  const [isTimeReminderEnabled, setIsTimeReminderEnabled] = useState(false);
   const handleOptionChange = (option) => {
     setSelectedOption(option);
+  };
+
+
+  const handleUsageCheckboxChange = (event) => {
+    setIsUsageReminderEnabled(event.target.checked);
+  };
+
+  const handleTimeCheckboxChange = (event) => {
+    setIsTimeReminderEnabled(event.target.checked);
   };
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-        <h4 className="mb-4">Usage based vehicle servicing reminder</h4>
-        <div className="form-check mb-4 mx-4">
+        {/* Usage based vehicle servicing reminder */}
+      <div className="border-container position-relative p-3 mt-5 row">
+        <div className="heading-container d-flex align-items-center position-absolute">
+          <CustomCheckbox
+            register={register}
+            name="usageReminder"
+            label="Usage based vehicle servicing reminder"
+            checked={isUsageReminderEnabled}
+            onChange={handleUsageCheckboxChange}
+          />
+        </div>
+        <div className="border-container position-relative p-4 mt-5 row">
+        <div className="heading-container d-flex align-items-center position-absolute">
           <input
             type="radio"
             name="serviceOption"
@@ -79,8 +101,9 @@ const Servicing = ({
             checked={selectedOption === 'ODO'}
             onChange={() => handleOptionChange('ODO')}
             className="form-check-input"
+            disabled={!isUsageReminderEnabled}
           />
-          <label className="form-check-label" htmlFor="odoOption">
+          <label className="form-check-label mt-2" htmlFor="odoOption">
             Based On ODO
           </label>
         </div>
@@ -96,7 +119,7 @@ const Servicing = ({
             name="currentODO"
             placeholder=""
             defaultValue={getValues("currentODO")}
-            disabled={selectedOption !== 'ODO'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'ODO'}
           />
           <Error errorName={errors.currentODO} />
         </div>
@@ -111,24 +134,24 @@ const Servicing = ({
             name="lastServiceODO"
             placeholder=""
             defaultValue={getValues("lastServiceODO")}
-            disabled={selectedOption !== 'ODO'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'ODO'}
           />
           <Error errorName={errors.lastServiceODO} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            name="nextServiceDueIn"
+            name="ServiceInterval"
             placeholder=""
-            defaultValue={getValues("nextServiceDueIn")}
-            disabled={selectedOption !== 'ODO'}
+            defaultValue={getValues("ServiceInterval")}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'ODO'}
           />
-          <Error errorName={errors.nextServiceDueIn} />
+          <Error errorName={errors.ServiceInterval} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
@@ -141,13 +164,13 @@ const Servicing = ({
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
-            disabled={selectedOption !== 'ODO'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'ODO'}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (km)")} <span className="text-danger">*</span>
+            {t("reminderStart (before next service) (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -156,12 +179,16 @@ const Servicing = ({
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
-            disabled={selectedOption !== 'ODO'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'ODO'}
           />
           <Error errorName={errors.reminderStart} />
         </div>
+        </div>
 
-        <div className="form-check mb-4 mx-4">
+
+        <div className="border-container position-relative p-4 mt-5 row">
+        <div className="heading-container d-flex align-items-center position-absolute">
+
           <input
             type="radio"
             name="serviceOption"
@@ -170,6 +197,7 @@ const Servicing = ({
             checked={selectedOption === 'Hours'}
             onChange={() => handleOptionChange('Hours')}
             className="form-check-input"
+            disabled={!isUsageReminderEnabled}
           />
           <label className="form-check-label" htmlFor="hoursOption">
             Based on operating hours
@@ -187,7 +215,7 @@ const Servicing = ({
             name="currentRunningHours"
             placeholder=""
             defaultValue={getValues("currentRunningHours")}
-            disabled={selectedOption !== 'Hours'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'Hours'}
           />
           <Error errorName={errors.currentRunningHours} />
         </div>
@@ -202,7 +230,7 @@ const Servicing = ({
             name="hoursAtLastService"
             placeholder=""
             defaultValue={getValues("hoursAtLastService")}
-            disabled={selectedOption !== 'Hours'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'Hours'}
           />
           <Error errorName={errors.hoursAtLastService} />
         </div>
@@ -217,7 +245,7 @@ const Servicing = ({
             name="ServiceInterval"
             placeholder=""
             defaultValue={getValues("ServiceInterval")}
-            disabled={selectedOption !== 'Hours'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'Hours'}
           />
           <Error errorName={errors.ServiceInterval} />
         </div>
@@ -232,13 +260,13 @@ const Servicing = ({
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
-            disabled={selectedOption !== 'ODO'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'Hours'}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (Hours)")} <span className="text-danger">*</span>
+            {t("reminderStart (before next service) (Hours)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -247,13 +275,25 @@ const Servicing = ({
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
-            disabled={selectedOption !== 'Hours'}
+            disabled={!isUsageReminderEnabled || selectedOption !== 'Hours'}
           />
           <Error errorName={errors.reminderStart} />
         </div>
+      </div>
+      </div>
 
-        <h4 className="my-4">Time based vehicle servicing reminder</h4>
-        <div className="col-xl-3 mb-3">
+      {/* Time based vehicle servicing reminder */}
+      <div className="border-container position-relative p-3 mt-5 row">
+        <div className="heading-container d-flex align-items-center position-absolute">
+          <CustomCheckbox
+            register={register}
+            name="timeReminder"
+            label="Time based vehicle servicing reminder"
+            checked={isTimeReminderEnabled}
+            onChange={handleTimeCheckboxChange}
+          />
+        </div>
+        <div className="col-xl-3 mb-3 mt-2">
           <label className="form-label">
             {t("LastSrviceDate (Weeks)")} <span className="text-danger">*</span>
           </label>
@@ -264,22 +304,24 @@ const Servicing = ({
             name="LastSrviceDate"
             placeholder=""
             defaultValue={getValues("LastSrviceDate")}
+            disabled={!isTimeReminderEnabled}
           />
-          <Error errorName={errors.currentODO} />
+          <Error errorName={errors.LastSrviceDate} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
+            {t("serviceInterval (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
             required
             register={register}
-            name="lastServiceODO"
+            name="serviceInterval"
             placeholder=""
-            defaultValue={getValues("lastServiceODO")}
+            defaultValue={getValues("serviceInterval")}
+            disabled={!isTimeReminderEnabled}
           />
-          <Error errorName={errors.lastServiceODO} />
+          <Error errorName={errors.serviceInterval} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
@@ -292,12 +334,13 @@ const Servicing = ({
             name="nextServiceDueIn"
             placeholder=""
             defaultValue={getValues("nextServiceDueIn")}
+            disabled={!isTimeReminderEnabled}
           />
           <Error errorName={errors.nextServiceDueIn} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (km)")} <span className="text-danger">*</span>
+            {t("reminderStart  (km)")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -306,10 +349,11 @@ const Servicing = ({
             name="reminderStart"
             placeholder=""
             defaultValue={getValues("reminderStart")}
+            disabled={!isTimeReminderEnabled}
           />
           <Error errorName={errors.reminderStart} />
         </div>
-
+</div>
       </div>
       <div
         style={{

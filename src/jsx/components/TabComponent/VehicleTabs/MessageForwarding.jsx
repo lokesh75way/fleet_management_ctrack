@@ -110,7 +110,10 @@ const General = ({
         <div className="row justify-content-between" style={{ width: "100%" }}>
           {/* Contacts Section */}
           <div className="col-xl-4 mb-3">
+          <div className="border-container position-relative p-3 row">
+                <div className="heading-container d-flex align-items-center position-absolute">
             <h5>{t("Contacts")}</h5>
+            </div>
             <div className="d-flex mb-2 gap-2">
               <Button type="button">{t("Add")}</Button>
               <Button type="button">{t("Delete")}</Button>
@@ -123,62 +126,65 @@ const General = ({
                   </tr>
                 </thead>
                 <tbody className="contact-table-container">
-  <tr>
-    <td className="top-align">
-      <CustomInput
-        type="text"
-        register={register}
-        name="contact"
-        defaultValue={getValues("contact")}
-        className="custom-input" /* Apply the custom-input class here */
-      />
-      <Error errorName={errors.contact} />
-    </td>
-  </tr>
-  <tr className="table-data-height">
-    <td className="top-align">
-      <h4>Arshad Text 1</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 2</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 3</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 4</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 5</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 6</h4>
-    </td>
-  </tr>
-  <tr>
-    <td className="top-align">
-      <h4>Arshad Text 7</h4>
-    </td>
-  </tr>
-</tbody>
-
+                  <tr>
+                    <td className="top-align">
+                      <CustomInput
+                        type="text"
+                        register={register}
+                        name="contact"
+                        defaultValue={getValues("contact")}
+                        className="custom-input" /* Apply the custom-input class here */
+                      />
+                      <Error errorName={errors.contact} />
+                    </td>
+                  </tr>
+                  <tr className="table-data-height">
+                    <td className="top-align">
+                      <h4>Arshad Text 1</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 2</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 3</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 4</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 5</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 6</h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="top-align">
+                      <h4>Arshad Text 7</h4>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
+            </div>
             </div>
           </div>
 
           {/* Schedule Section */}
           <div className="col-xl-4 mb-3">
+          <div className="border-container position-relative p-3 row">
+                <div className="heading-container d-flex align-items-center position-absolute">
             <h5>{t("Schedule")}</h5>
+            </div>
             <div className="mb-3">
               <label className="form-label">{t("Day")}</label>
               <CustomInput
@@ -216,6 +222,7 @@ const General = ({
               <Button type="button">{t("Add")}</Button>
               <Button type="button">{t("Delete")}</Button>
             </div>
+            <div className="overflow-auto">
             <table className="table table-bordered top-align">
               <thead>
                 <tr>
@@ -273,41 +280,85 @@ const General = ({
                   </td>
                 </tr>
                 <tr>
-                  <td><h4>30</h4></td>
-                  <td><h4>08:30 AM</h4></td>
-                  <td><h4>10:05 PM</h4></td>
-                  <td><h4>Demo</h4></td>
-                  <td><h4>Email</h4></td>
+                  <td>
+                    <h4>30</h4>
+                  </td>
+                  <td>
+                    <h4>08:30 AM</h4>
+                  </td>
+                  <td>
+                    <h4>10:05 PM</h4>
+                  </td>
+                  <td>
+                    <h4>Demo</h4>
+                  </td>
+                  <td>
+                    <h4>Email</h4>
+                  </td>
                 </tr>
                 <tr>
-                  <td><h4>30</h4></td>
-                  <td><h4>08:30 AM</h4></td>
-                  <td><h4>10:05 PM</h4></td>
-                  <td><h4>Demo</h4></td>
-                  <td><h4>Email</h4></td>
+                  <td>
+                    <h4>30</h4>
+                  </td>
+                  <td>
+                    <h4>08:30 AM</h4>
+                  </td>
+                  <td>
+                    <h4>10:05 PM</h4>
+                  </td>
+                  <td>
+                    <h4>Demo</h4>
+                  </td>
+                  <td>
+                    <h4>Email</h4>
+                  </td>
                 </tr>
                 <tr>
-                  <td><h4>30</h4></td>
-                  <td><h4>08:30 AM</h4></td>
-                  <td><h4>10:05 PM</h4></td>
-                  <td><h4>Demo</h4></td>
-                  <td><h4>Email</h4></td>
+                  <td>
+                    <h4>30</h4>
+                  </td>
+                  <td>
+                    <h4>08:30 AM</h4>
+                  </td>
+                  <td>
+                    <h4>10:05 PM</h4>
+                  </td>
+                  <td>
+                    <h4>Demo</h4>
+                  </td>
+                  <td>
+                    <h4>Email</h4>
+                  </td>
                 </tr>
                 <tr>
-                  <td><h4>30</h4></td>
-                  <td><h4>08:30 AM</h4></td>
-                  <td><h4>10:05 PM</h4></td>
-                  <td><h4>Demo</h4></td>
-                  <td><h4>Email</h4></td>
+                  <td>
+                    <h4>30</h4>
+                  </td>
+                  <td>
+                    <h4>08:30 AM</h4>
+                  </td>
+                  <td>
+                    <h4>10:05 PM</h4>
+                  </td>
+                  <td>
+                    <h4>Demo</h4>
+                  </td>
+                  <td>
+                    <h4>Email</h4>
+                  </td>
                 </tr>
-                
               </tbody>
             </table>
+            </div>
+          </div>
           </div>
 
           {/* Events Section */}
           <div className="col-xl-3 mb-3">
+          <div className="border-container position-relative p-3 row">
+                <div className="heading-container d-flex align-items-center position-absolute">
             <h5>{t("Events")}</h5>
+            </div>
             <div
               className="events-container"
               style={{ maxHeight: "400px", overflowY: "scroll" }}
@@ -434,6 +485,7 @@ const General = ({
                 label={t("Battery Tamper")}
               />
             </div>
+          </div>
           </div>
         </div>
 
