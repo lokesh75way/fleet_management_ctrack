@@ -43,7 +43,7 @@ const VehicleForm = () => {
     t("servicing"), 
     t("statuses"), 
     t("general"), 
-    t("profile"), 
+    // t("profile"), 
     t("document"), 
     t("messageforwarding")
   ];
@@ -54,7 +54,7 @@ const VehicleForm = () => {
     Servicing, 
     Statuses, 
     General, 
-    Profile, 
+    // Profile, 
     Document, 
     MessageForwarding
   ];
@@ -72,6 +72,7 @@ const VehicleForm = () => {
     getValues,
     control,
     handleSubmit,
+    watch,
   } = useForm({
       defaultValues: {
         documents: [{
@@ -187,6 +188,7 @@ const VehicleForm = () => {
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
                           formData={formData}
+                          watch={watch}
                         />
                       </Tab.Pane>
                     );

@@ -654,5 +654,13 @@ export const arabic = {
       "customer": "عميل",
       "invoice": "فاتورة",
 
+
+      "information" : "معلومة",
+      "licensing": "ترخيص",
+      "servicing": "خدمة",
+      "statuses": "الحالات",
+      "messageforwarding": "إعادة توجيه الرسائل"
+
+
   }
 }

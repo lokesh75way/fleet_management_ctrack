@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
@@ -360,7 +360,7 @@ const General = ({
             <h5>{t("Events")}</h5>
             </div>
             <div
-              className="events-container"
+              className="events-container p-3"
               style={{ maxHeight: "400px", overflowY: "scroll" }}
             >
               <CustomCheckbox

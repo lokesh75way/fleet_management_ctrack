@@ -9,7 +9,6 @@ const CustomCheckbox = ({ register, name, label, checked, onChange,heading }) =>
         {...register(name)}
         id={name}
         checked={checked}
-        onChange={onChange}
       />
       
       <label className="form-check-label" htmlFor={name}>
