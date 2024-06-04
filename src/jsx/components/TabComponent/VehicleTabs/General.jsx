@@ -111,7 +111,7 @@ const General = ({
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "85%", margin: "auto" }}>
+      <div className="row" style={{ width: "85%" }}>
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("businessGroup")} <span className="text-danger">*</span>

@@ -72,6 +72,7 @@ const VehicleForm = () => {
     getValues,
     control,
     handleSubmit,
+    watch,
   } = useForm({
       defaultValues: {
         documents: [{
@@ -187,6 +188,7 @@ const VehicleForm = () => {
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
                           formData={formData}
+                          watch={watch}
                         />
                       </Tab.Pane>
                     );

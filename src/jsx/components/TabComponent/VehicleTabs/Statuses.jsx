@@ -35,49 +35,31 @@ const General = ({
   handleSubmit,
   onSubmit,
   formData,
+  watch
 }) => {
-  const [isIllegalMovementChecked, setIsIllegalMovementChecked] =
-    useState(false);
 
-  const [isExcessiveChecked, setIsExcessiveChecked] = useState(false);
-  const [isCriticalSpeedAlertEnabled, setIsCriticalSpeedAlertEnabled] =
-    useState(false);
   const [speedAlertUnit, setSpeedAlertUnit] = useState("km/h"); // Default unit is km/h
   const [selectedSensorOption, setSelectedSensorOption] = useState("");
 
-  const handleIllegalMovementChange = (event) => {
-    setIsIllegalMovementChecked(event.target.checked);
-  };
+  const isIllegalMovementChecked = watch("illegalMovement")
+  const isExcessiveChecked = watch("excessiveIdling")
+  const isCriticalSpeedAlertEnabled = watch("criticalSpeedAlert")
 
   const handleSensorOptionChange = (event) => {
     setSelectedSensorOption(event.target.value);
-  };
-
-  const handleExcessiveChange = () => {
-    setIsExcessiveChecked(!isExcessiveChecked);
-  };
-
-  const handleCriticalSpeedAlertChange = () => {
-    setIsCriticalSpeedAlertEnabled(!isCriticalSpeedAlertEnabled);
   };
 
   const handleSpeedAlertUnitChange = (event) => {
     setSpeedAlertUnit(event.target.value);
   };
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
+
   const { id } = useParams();
 
   const { t } = useTranslation();
 
   return (
     <div className="p-4 relative">
-      <form onSubmit={handleSubmit(onSubmit)}>
         <div
           className="d-flex justify-content-between"
           style={{ width: "100%" }}
@@ -85,7 +67,7 @@ const General = ({
           <div className="row" style={{ width: "50%" }}>
             {/* Alarms Section */}
             <div className="col-xl-12 mb-3">
-              <div className="border-container position-relative p-3 row">
+              <div className="border-container position-relative p-4 row">
                 <div className="heading-container d-flex align-items-center position-absolute">
                   <h5>{t("Alarms")}</h5>
                 </div>
@@ -121,7 +103,6 @@ const General = ({
                       register={register}
                       name="illegalMovement"
                       label={t("Illegal Movement")}
-                      onChange={handleIllegalMovementChange}
                     />
                   </div>
                   <div className="mt-3">
@@ -162,7 +143,7 @@ const General = ({
                     </div>
 
                     {/* Input for Activate after (seconds) */}
-                    <div className="mb-3">
+                    <div className="mb-3 w-25">
                       <label className="form-label">
                         {t("Activate after (seconds)")}
                       </label>
@@ -177,7 +158,7 @@ const General = ({
                     </div>
 
                     {/* New input for Radius (meters) */}
-                    <div className="mb-3">
+                    <div className="mb-3 w-25">
                       <label className="form-label">
                         {t("Radius (meters)")}
                       </label>
@@ -263,7 +244,6 @@ const General = ({
                       register={register}
                       name="excessiveIdling"
                       label={t("Excessive Idling")}
-                      onChange={handleExcessiveChange}
                     />
                   </div>
                   {/* Input for Activate after (seconds) */}
@@ -324,7 +304,6 @@ const General = ({
                   register={register}
                   name="criticalSpeedAlert"
                   label={t("Critical Speed Alert")}
-                  onChange={handleCriticalSpeedAlertChange}
                 />
                 <div className="mb-3">
                   <div className="d-flex gap-5">
@@ -337,6 +316,7 @@ const General = ({
                         className="form-check-input"
                         checked={speedAlertUnit === "km/h"}
                         onChange={handleSpeedAlertUnitChange}
+                       
                       />
                       <label
                         className="form-check-label"
@@ -372,6 +352,7 @@ const General = ({
                       register={register}
                       name="criticalSpeedLimit"
                       defaultValue={getValues("criticalSpeedLimit")}
+                      disabled={!isCriticalSpeedAlertEnabled}
                     />
                     <Error errorName={errors.criticalSpeedLimit} />
                   </div>
@@ -509,7 +490,6 @@ const General = ({
             {t("Submit")}
           </Button>
         </div>
-      </form>
     </div>
   );
 };

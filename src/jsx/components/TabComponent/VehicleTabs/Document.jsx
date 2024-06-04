@@ -50,7 +50,7 @@ const Document = ({
       : fields;
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
+      <div className="row" style={{ width: "100%"}}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
           <Button
             onClick={() => {
@@ -76,12 +76,11 @@ const Document = ({
           return (
             <>
               <div key={item.id} className="row mb-4 ">
-                <div className="col-xl-3 mb-2">
+                <div className="col-xl-2 mb-2">
                   <label className="form-label">
                     {t("selectDocument")}
                     <span className="text-danger">*</span>
                   </label>
-
                   <Controller
                     name={`documents.${index}.documentType`}
                     control={control}
@@ -117,7 +116,7 @@ const Document = ({
                   )}
                 </div>
                 
-                <div className="col-xl-3 d-flex flex-column mb-2 ">
+                <div className="col-xl-2 d-flex flex-column mb-2 ">
                   <label className="form-label">{t("issueDate")}</label>
                   <Controller
                     name={`documents.${index}.issueDate`}
@@ -158,7 +157,7 @@ const Document = ({
                     <Error errorName={errors?.documents?.[index]?.issueDate} />
                   )}
                 </div>
-                <div className="col-xl-3 d-flex flex-column  mb-2">
+                <div className="col-xl-2 d-flex flex-column  mb-2">
                   <label className="form-label">{t("expiryDate")}</label>
                   <Controller
                     name={`documents.${index}.expireDate`}
@@ -200,7 +199,7 @@ const Document = ({
                     <Error errorName={errors?.documents?.[index]?.expireDate} />
                   )}
                 </div>
-                <div className="col-xl-3 d-flex flex-column mb-2 ">
+                <div className="col-xl-2 d-flex flex-column mb-2 ">
                   <label className="form-label">
                     {t("Reminder(Before Days)")}
                   </label>
@@ -221,10 +220,9 @@ const Document = ({
                     <Error errorName={errors?.documents?.[index]?.issueDate} />
                   )}
                 </div>
-                <div className="col-xl-3 mb-2">
+                <div className="col-xl-2 mb-2">
                   <label className="form-label">
                     {t("uploadFile")}
-                    <span className="text-danger">*</span>
                   </label>
                   <FileUploader
                     getValue={getValues}
@@ -251,6 +249,7 @@ const Document = ({
                     }
                   />
                 </div>
+                
               </div>
             </>
           );

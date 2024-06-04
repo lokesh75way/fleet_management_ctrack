@@ -36,6 +36,7 @@ const Servicing = ({
   handleSubmit,
   onSubmit,
   formData,
+  watch,
 }) => {
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
@@ -62,33 +63,24 @@ const Servicing = ({
   const { t } = useTranslation();
 
   const [selectedOption, setSelectedOption] = useState('ODO');
-  const [isUsageReminderEnabled, setIsUsageReminderEnabled] = useState(false);
-  const [isTimeReminderEnabled, setIsTimeReminderEnabled] = useState(false);
   const handleOptionChange = (option) => {
     setSelectedOption(option);
   };
+const isUsageReminderEnabled = watch('usageReminder')
+const isTimeReminderEnabled = watch('timeReminder')
 
-
-  const handleUsageCheckboxChange = (event) => {
-    setIsUsageReminderEnabled(event.target.checked);
-  };
-
-  const handleTimeCheckboxChange = (event) => {
-    setIsTimeReminderEnabled(event.target.checked);
-  };
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "85%", margin: "auto" }}>
+      <div className="row" style={{ width: "75%"}}>
         {/* Usage based vehicle servicing reminder */}
-      <div className="border-container position-relative p-3 mt-5 row">
+      <div className="border-container position-relative p-3 row">
         <div className="heading-container d-flex align-items-center position-absolute">
           <CustomCheckbox
             register={register}
             name="usageReminder"
-            label="Usage based vehicle servicing reminder"
+            label={t("Usagebasedvehicleservicingreminder")}
             checked={isUsageReminderEnabled}
-            onChange={handleUsageCheckboxChange}
           />
         </div>
         <div className="border-container position-relative p-4 mt-5 row">
@@ -104,13 +96,13 @@ const Servicing = ({
             disabled={!isUsageReminderEnabled}
           />
           <label className="form-check-label mt-2" htmlFor="odoOption">
-            Based On ODO
+            {t("BasedOnODO")}
           </label>
         </div>
 
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("currentODO (km)")} <span className="text-danger">*</span>
+            {t("currentODO(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -125,7 +117,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("lastServiceODO (km)")} <span className="text-danger">*</span>
+            {t("lastServiceODO(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -140,7 +132,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("ServiceInterval (km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -155,7 +147,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -170,7 +162,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (before next service) (km)")} <span className="text-danger">*</span>
+            {t("reminderStart(before next service)(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -199,14 +191,14 @@ const Servicing = ({
             className="form-check-input"
             disabled={!isUsageReminderEnabled}
           />
-          <label className="form-check-label" htmlFor="hoursOption">
-            Based on operating hours
+          <label className="form-check-label mt-2" htmlFor="hoursOption">
+           {t("Basedonoperatinghours")}
           </label>
         </div>
 
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("currentRunningHours (Hours)")} <span className="text-danger">*</span>
+            {t("currentRunningHours(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -221,7 +213,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("hoursAtLastService (Hours)")} <span className="text-danger">*</span>
+            {t("hoursAtLastService(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -236,7 +228,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("ServiceInterval (Hours)")} <span className="text-danger">*</span>
+            {t("ServiceInterval (Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -251,7 +243,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn (Hours)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -266,7 +258,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart (before next service) (Hours)")} <span className="text-danger">*</span>
+            {t("reminderStart(before next service)(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -290,12 +282,12 @@ const Servicing = ({
             name="timeReminder"
             label="Time based vehicle servicing reminder"
             checked={isTimeReminderEnabled}
-            onChange={handleTimeCheckboxChange}
+            // onChange={handleTimeCheckboxChange}
           />
         </div>
         <div className="col-xl-3 mb-3 mt-2">
           <label className="form-label">
-            {t("LastSrviceDate (Weeks)")} <span className="text-danger">*</span>
+            {t("LastServiceDate(Weeks)")} 
           </label>
           <CustomInput
             type="number"
@@ -310,7 +302,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("serviceInterval (km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -325,7 +317,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn (km)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -340,7 +332,7 @@ const Servicing = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart  (km)")} <span className="text-danger">*</span>
+            {t("reminderStart(km)")} 
           </label>
           <CustomInput
             type="number"
