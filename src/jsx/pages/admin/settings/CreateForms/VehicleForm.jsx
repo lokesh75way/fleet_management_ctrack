@@ -43,7 +43,7 @@ const VehicleForm = () => {
     t("servicing"), 
     t("statuses"), 
     t("general"), 
-    // t("profile"), 
+    t("profile"), 
     t("document"), 
     t("messageforwarding")
   ];
@@ -54,7 +54,7 @@ const VehicleForm = () => {
     Servicing, 
     Statuses, 
     General, 
-    // Profile, 
+    Profile, 
     Document, 
     MessageForwarding
   ];

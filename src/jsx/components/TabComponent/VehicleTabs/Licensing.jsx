@@ -23,7 +23,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
           <div className="border border-1 p-3 row rounded">
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("License number")} <span className="text-danger">*</span>
+                {t("License number")} 
               </label>
               <CustomInput
                 type="text"
@@ -37,7 +37,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Roadworthy number")} <span className="text-danger">*</span>
+                {t("Roadworthy number")} 
               </label>
               <CustomInput
                 type="text"
@@ -63,7 +63,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3 mt-2">
               <label className="form-label">
-                {t("Last renewal date")} <span className="text-danger">*</span>
+                {t("Last renewal date")} 
               </label>
               <CustomInput
                 type="date"
@@ -78,7 +78,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Period (months)")} <span className="text-danger">*</span>
+                {t("Period (months)")} 
               </label>
               <CustomInput
                 type="number"
@@ -92,7 +92,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Next renewal due on")} <span className="text-danger">*</span>
+                {t("Next renewal due on")} 
               </label>
               <CustomInput
                 type="date"
@@ -106,7 +106,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
+                {t("Reminder starts (weeks before expiry)")} 
               </label>
               <CustomInput
                 type="number"
@@ -132,7 +132,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3 mt-2">
               <label className="form-label">
-                {t("Last renewal date")} <span className="text-danger">*</span>
+                {t("Last renewal date")} 
               </label>
               <CustomInput
                 type="date"
@@ -146,7 +146,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Period (months)")} <span className="text-danger">*</span>
+                {t("Period (months)")} 
               </label>
               <CustomInput
                 type="number"
@@ -160,7 +160,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Next renewal due on")} <span className="text-danger">*</span>
+                {t("Next renewal due on")} 
               </label>
               <CustomInput
                 type="date"
@@ -174,7 +174,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")} <span className="text-danger">*</span>
+                {t("Reminder starts (weeks before expiry)")} 
               </label>
               <CustomInput
                 type="number"

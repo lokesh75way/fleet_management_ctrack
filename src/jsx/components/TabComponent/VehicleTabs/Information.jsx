@@ -79,7 +79,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("Number")} <span className="text-danger">*</span>
+                    {t("Number")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -94,7 +94,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("unitId")} <span className="text-danger">*</span>
+                    {t("unitId")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -157,7 +157,7 @@ const Information = ({
                           onChange={handleOptionChange}
                         />
                       </div>
-                      <h5 className="my-4" style={{ marginLeft: "25px" }}>
+                      <h5 className="my-4" style={{ marginLeft: "20px" }}>
                         {t("Use In Reports")}
                       </h5>
                       <div className="form-check custom-checkbox">
@@ -179,7 +179,7 @@ const Information = ({
               <div className="row">
                 <div className="col-xl-12 mb-3 ">
                   <label className="form-label">
-                    {t("description")} <span className="text-danger">*</span>
+                    {t("description")} 
                   </label>
                   <CustomInput
                     type="textarea"
@@ -194,7 +194,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("make")} <span className="text-danger">*</span>
+                    {t("make")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -209,7 +209,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("year")} <span className="text-danger">*</span>
+                    {t("year")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -224,7 +224,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("model")} <span className="text-danger">*</span>
+                    {t("model")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -239,7 +239,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("color")} <span className="text-danger">*</span>
+                    {t("color")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -254,7 +254,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("vinNumber")} <span className="text-danger">*</span>
+                    {t("vinNumber")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -269,7 +269,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("engineNumber")} <span className="text-danger">*</span>
+                    {t("engineNumber")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -284,7 +284,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("group")} <span className="text-danger">*</span>
+                    {t("group")} 
                   </label>
                   <Controller
                     name="group"
@@ -310,7 +310,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("description")} <span className="text-danger">*</span>
+                    {t("description")} 
                   </label>
                   <CustomInput
                     type="textarea"
@@ -325,7 +325,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("tollCategory")} <span className="text-danger">*</span>
+                    {t("tollCategory")} 
                   </label>
                   <Controller
                     name="tollCategory"
@@ -353,7 +353,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">
-                    {t("tarrifType")} <span className="text-danger">*</span>
+                    {t("tarrifType")} 
                   </label>
                   <Controller
                     name="tarrifType"
@@ -384,7 +384,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("licenseNumber")} <span className="text-danger">*</span>
+                    {t("licenseNumber")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -402,7 +402,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("licenseExpire")} <span className="text-danger">*</span>
+                    {t("licenseExpire")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -420,7 +420,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("roadWorthy")} <span className="text-danger">*</span>
+                    {t("roadWorthy")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -439,7 +439,7 @@ const Information = ({
                     className="form-label"
                   >
                     {t("roadWorthyExpire")}{" "}
-                    <span className="text-danger">*</span>
+                    
                   </label>
                   <CustomInput
                     type="number"
@@ -457,7 +457,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput4"
                     className="form-label"
                   >
-                    {t("odo")} <span className="text-danger">*</span>
+                    {t("odo")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -474,7 +474,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput4"
                     className="form-label"
                   >
-                    {t("nextService")} <span className="text-danger">*</span>
+                    {t("nextService")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -487,7 +487,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("hours")} <span className="text-danger">*</span>
+                    {t("hours")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -500,7 +500,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("nextService")} <span className="text-danger">*</span>
+                    {t("nextService")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -513,7 +513,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("currentStatus")} <span className="text-danger">*</span>
+                    {t("currentStatus")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -526,7 +526,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("speed")} <span className="text-danger">*</span>
+                    {t("speed")} 
                   </label>
                   <CustomInput
                     type="number"
@@ -540,7 +540,7 @@ const Information = ({
 
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("currentDriver")} <span className="text-danger">*</span>
+                    {t("currentDriver")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -553,7 +553,7 @@ const Information = ({
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("heading")} <span className="text-danger">*</span>
+                    {t("heading")} 
                   </label>
                   <CustomInput
                     type="text"
@@ -568,7 +568,7 @@ const Information = ({
                 <div className="col-md-12 mb-3">
                   <label className="form-label">
                     {t("currentLocation")}{" "}
-                    <span className="text-danger">*</span>
+                    
                   </label>
                   <CustomInput
                     type="text"
@@ -583,7 +583,7 @@ const Information = ({
               <div className="d-flex flex-column">
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("skillSet")} <span className="text-danger">*</span>
+                    {t("skillSet")} 
                   </label>
                   <Controller
                     name="skillSet"
@@ -612,7 +612,7 @@ const Information = ({
 
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
-                    {t("profile")} <span className="text-danger">*</span>
+                    {t("profile")} 
                   </label>
                   <Controller
                     name="profile"
@@ -642,7 +642,7 @@ const Information = ({
                 <div className="col-xl-6 mb-3">
                   <label className="form-label">
                     {t("owningCostCenter")}{" "}
-                    <span className="text-danger">*</span>
+                    
                   </label>
                   <Controller
                     name="owningCostCenter"

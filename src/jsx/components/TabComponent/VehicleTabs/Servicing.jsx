@@ -102,7 +102,7 @@ const isTimeReminderEnabled = watch('timeReminder')
 
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("currentODO(km)")} <span className="text-danger">*</span>
+            {t("currentODO(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -117,7 +117,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("lastServiceODO(km)")} <span className="text-danger">*</span>
+            {t("lastServiceODO(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -132,7 +132,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("ServiceInterval(km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -147,7 +147,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn(km)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -162,7 +162,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart(before next service)(km)")} <span className="text-danger">*</span>
+            {t("reminderStart(before next service)(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -198,7 +198,7 @@ const isTimeReminderEnabled = watch('timeReminder')
 
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("currentRunningHours(Hours)")} <span className="text-danger">*</span>
+            {t("currentRunningHours(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -213,7 +213,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("hoursAtLastService(Hours)")} <span className="text-danger">*</span>
+            {t("hoursAtLastService(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -228,7 +228,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("ServiceInterval (Hours)")} <span className="text-danger">*</span>
+            {t("ServiceInterval (Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -243,7 +243,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn(Hours)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -258,7 +258,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart(before next service)(Hours)")} <span className="text-danger">*</span>
+            {t("reminderStart(before next service)(Hours)")} 
           </label>
           <CustomInput
             type="number"
@@ -287,7 +287,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3 mt-2">
           <label className="form-label">
-            {t("LastServiceDate(Weeks)")} <span className="text-danger">*</span>
+            {t("LastServiceDate(Weeks)")} 
           </label>
           <CustomInput
             type="number"
@@ -302,7 +302,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("ServiceInterval(km)")} <span className="text-danger">*</span>
+            {t("ServiceInterval(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -317,7 +317,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("nextServiceDueIn(km)")} <span className="text-danger">*</span>
+            {t("nextServiceDueIn(km)")} 
           </label>
           <CustomInput
             type="number"
@@ -332,7 +332,7 @@ const isTimeReminderEnabled = watch('timeReminder')
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
-            {t("reminderStart(km)")} <span className="text-danger">*</span>
+            {t("reminderStart(km)")} 
           </label>
           <CustomInput
             type="number"
