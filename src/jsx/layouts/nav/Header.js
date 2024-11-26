@@ -6,13 +6,10 @@ import LogoutPage from "./Logout";
 import { HiOutlineLanguage } from "react-icons/hi2";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import Logoutbtn from "./Logoutbtn";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import useStorage from "../../../hooks/useStorage";
 
-
 const NotificationBlog = ({ classChange }) => {
-
-
   return (
     <>
       <li>
@@ -47,10 +44,8 @@ const NotificationBlog = ({ classChange }) => {
 };
 
 const Header = ({ onNote }) => {
-
-  
-  const {i18n} = useTranslation();
-  const {checkUser, checkUserName, checkRole} = useStorage();
+  const { i18n } = useTranslation();
+  const { checkUser, checkUserName, checkRole } = useStorage();
   const loginDetailsEmail = checkUser();
   const loginDetailsName = checkUserName();
   const role = checkRole();
@@ -60,25 +55,26 @@ const Header = ({ onNote }) => {
       setheaderFix(window.scrollY > 50);
     });
   }, []);
-  const data = JSON.parse(localStorage.getItem('userDetails'))
+  const data = JSON.parse(localStorage.getItem("userDetails"));
   const logo = data?.user?.logo;
   // const logo = 'https://res.cloudinary.com/ddxpchjay/image/upload/v1712236924/katz7loerwuacnstdsna.png';
 
-  const ref=useRef()
-  const removeShow=(e)=>{
-    console.log("event",e)
-    if(e.target.classList.includes("show")){
-      e.target.classList.remove("show")
+  const ref = useRef();
+  const removeShow = (e) => {
+    console.log("event", e);
+    if (e.target.classList.includes("show")) {
+      e.target.classList.remove("show");
     }
-  }
-  const {t} = useTranslation();
+  };
+  const { t } = useTranslation();
 
-  const { lang, setLang, setIsRtl,direction ,changeDirectionLayout} = useContext(ThemeContext);
+  const { lang, setLang, setIsRtl, direction, changeDirectionLayout } =
+    useContext(ThemeContext);
   return (
     <div className={`header ${headerFix ? "is-fixed" : ""}`}>
       <div className="header-content">
         <nav className="navbar navbar-expand">
-          <div className="collapse navbar-collapse justify-content-between" >
+          <div className="collapse navbar-collapse justify-content-between">
             <div className="header-left">
               {/* <div className="input-group search-area">
                 <span className="input-group-text rounded-0">
@@ -285,7 +281,7 @@ const Header = ({ onNote }) => {
                     See all notifications <i className="ti-arrow-right" />
                   </Link>
                 </Dropdown.Menu> */}
-              {/* </Dropdown> */} 
+              {/* </Dropdown> */}
               {/* <Dropdown as="li" className="nav-item dropdown notification_dropdown ">
 								<Dropdown.Toggle variant="" as="a" className="nav-link  i-false c-pointer" onClick={() => onNote()}>
 									<svg width="20" height="22" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,32 +304,44 @@ const Header = ({ onNote }) => {
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => {i18n.changeLanguage("ar"); setLang('ar'); setIsRtl(true);
-                    changeDirectionLayout({ value: "rtl", label: "RTL" });
-                    if (ref.current && ref.current.classList.contains("show")) {
-                      ref.current.classList.remove("show");
-                    }
-                  }}
+                    onClick={() => {
+                      i18n.changeLanguage("ar");
+                      setLang("ar");
+                      setIsRtl(true);
+                      changeDirectionLayout({ value: "rtl", label: "RTL" });
+                      if (
+                        ref.current &&
+                        ref.current.classList.contains("show")
+                      ) {
+                        ref.current.classList.remove("show");
+                      }
+                    }}
                   >
                     عربي
                   </Link>
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => {i18n.changeLanguage("en"); setLang('en'); setIsRtl(false);
-                    changeDirectionLayout({ value: "ltr", label: "LTR" });
-                    ref.current.classList.remove("show");
-                  }}
+                    onClick={() => {
+                      i18n.changeLanguage("en");
+                      setLang("en");
+                      setIsRtl(false);
+                      changeDirectionLayout({ value: "ltr", label: "LTR" });
+                      ref.current.classList.remove("show");
+                    }}
                   >
                     English
                   </Link>
                   <Link
                     className="dropdown-item"
                     to="#"
-                    onClick={() => {i18n.changeLanguage("es"); setLang('es'); setIsRtl(false);
-                    changeDirectionLayout({ value: "ltr", label: "LTR" });
-                    ref.current.classList.remove("show");
-                  }}
+                    onClick={() => {
+                      i18n.changeLanguage("es");
+                      setLang("es");
+                      setIsRtl(false);
+                      changeDirectionLayout({ value: "ltr", label: "LTR" });
+                      ref.current.classList.remove("show");
+                    }}
                   >
                     español
                   </Link>
@@ -351,7 +359,9 @@ const Header = ({ onNote }) => {
                         <img src={logo ? logo : IMAGES.Tab1} alt="logo" />
                       </div>
                       <div className="header-info">
-                        <h6>{loginDetailsName} ({role})</h6>
+                        <h6>
+                          {loginDetailsName} ({role})
+                        </h6>
                         <p>{loginDetailsEmail}</p>
                       </div>
                     </div>
@@ -367,7 +377,6 @@ const Header = ({ onNote }) => {
                           />
                           <div className="mx-2">
                             <h6>User 1</h6>
-
                           </div>
                         </div>
                       </div>
@@ -376,7 +385,8 @@ const Header = ({ onNote }) => {
                           to={"/app-profile"}
                           className="dropdown-item ai-icon mr-1"
                         >
-                          {SVGICON.User} <span className="ms-2">{t('myProfile')}</span>
+                          {SVGICON.User}{" "}
+                          <span className="ms-2">{t("myProfile")}</span>
                         </Link>
 
                         <Link
@@ -384,7 +394,7 @@ const Header = ({ onNote }) => {
                           className="dropdown-item ai-icon "
                         >
                           {SVGICON.Password}{" "}
-                          <span className="ms-2">{t('changePassword')}</span>
+                          <span className="ms-2">{t("changePassword")}</span>
                         </Link>
                       </div>
                       <div className="card-footer px-0 py-2">

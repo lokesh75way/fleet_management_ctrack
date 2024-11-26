@@ -1,10 +1,10 @@
-import Select from 'react-select';
+import Select from "react-select";
 
 const CustomSelect = (props) => {
   const options = [
-    { value: 'today', label: 'Today' },
-    { value: 'yesterday', label: 'Yesterday' },
-    { value: 'tomorrow', label: 'Tomorrow' },
+    { value: "today", label: "Today" },
+    { value: "yesterday", label: "Yesterday" },
+    { value: "tomorrow", label: "Tomorrow" },
   ];
 
   return (
@@ -14,28 +14,26 @@ const CustomSelect = (props) => {
       styles={{
         control: (provided) => ({
           ...provided,
-          width: '10rem',
-          fontSize: '12px',
-          marginRight: '0.2rem',
-          borderRadius: '8px',
-          border: '1px solid #ccc',
-          backgroundColor: 'white',
-          textDecoration : 'none',
+          width: "10rem",
+          fontSize: "12px",
+          marginRight: "0.2rem",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          backgroundColor: "white",
+          textDecoration: "none",
         }),
-          indicatorSeparator : (provided)=>({
-            ...provided,
-            display : 'none'
-          }),
+        indicatorSeparator: (provided) => ({
+          ...provided,
+          display: "none",
+        }),
         option: (provided) => ({
-            ...provided,
-            fontSize: '12px', // Set the font size for options
-            fontWeight : 500,
-
-          }),
-          singleValue: (provided) => ({
-            ...provided,
-         
-          }),
+          ...provided,
+          fontSize: "12px", // Set the font size for options
+          fontWeight: 500,
+        }),
+        singleValue: (provided) => ({
+          ...provided,
+        }),
       }}
     />
   );

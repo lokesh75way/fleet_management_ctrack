@@ -25,22 +25,22 @@ const ManagePassword = ({
               Old Password<span className="text-danger">*</span>
             </label>
             <div className="position-relative">
-            <CustomInput
-              type={showOldPassword ? "text" : "password"}
-              register={register}
-              name="oldPassword"
-              label="Old Password"
-              placeholder=""
-              defaultValue={getValues("oldPassword")}
-            />
-            <span
-              className="showPasswordIcon"
-              onClick={() => {
-                setOldShowPassword(!showOldPassword);
-              }}
-            >
-              {showOldPassword ? <LuEyeOff /> : <LuEye />}
-            </span>
+              <CustomInput
+                type={showOldPassword ? "text" : "password"}
+                register={register}
+                name="oldPassword"
+                label="Old Password"
+                placeholder=""
+                defaultValue={getValues("oldPassword")}
+              />
+              <span
+                className="showPasswordIcon"
+                onClick={() => {
+                  setOldShowPassword(!showOldPassword);
+                }}
+              >
+                {showOldPassword ? <LuEyeOff /> : <LuEye />}
+              </span>
             </div>
             <Error errorName={errors.oldPassword} />
           </div>
@@ -72,22 +72,22 @@ const ManagePassword = ({
             <label className="form-label">
               Retype Password<span className="text-danger">*</span>
             </label>
-            <div  className="position-relative">
-            <CustomInput
-              type={showConfirmPassword ? "text" : "password"}
-              register={register}
-              label="Retype Password"
-              name="confirmPassword"
-              placeholder=""
-            />
-            <span
-              className="showPasswordIcon"
-              onClick={() => {
-                setConfirmShowPassword(!showConfirmPassword);
-              }}
-            >
-              {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
-            </span>
+            <div className="position-relative">
+              <CustomInput
+                type={showConfirmPassword ? "text" : "password"}
+                register={register}
+                label="Retype Password"
+                name="confirmPassword"
+                placeholder=""
+              />
+              <span
+                className="showPasswordIcon"
+                onClick={() => {
+                  setConfirmShowPassword(!showConfirmPassword);
+                }}
+              >
+                {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
+              </span>
             </div>
             <Error errorName={errors.retypePassword} />
           </div>

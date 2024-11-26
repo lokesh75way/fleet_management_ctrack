@@ -33,7 +33,6 @@ const GeofenceDetail = () => {
   const [companyDisabled, setCompanyDisabled] = useState(false);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
 
-
   const customStyles = {
     control: (base) => ({
       ...base,

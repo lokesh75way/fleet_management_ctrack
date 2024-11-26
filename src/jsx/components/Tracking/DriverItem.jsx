@@ -4,7 +4,6 @@ import CheckboxTree from "react-checkbox-tree";
 import "../../../scss/pages/_driver-tracking.scss";
 import { Button } from "react-bootstrap";
 
-
 const DriverItem = (props) => {
   const [checked, setChecked] = useState([]);
   const [expanded, setExpanded] = useState([]);
@@ -27,48 +26,48 @@ const DriverItem = (props) => {
   };
   const handleSubmit = () => {
     const selectedObject = checked.map((data) => JSON.parse(data));
-    console.log(selectedObject, "selctedObject")
+    console.log(selectedObject, "selctedObject");
     props.handleToggleCardPositionHandler();
   };
   return (
     <>
-    <div className="checkboxTree">
-      <CheckboxTree
-        nodes={nodes}
-        checked={checked}
-        expanded={expanded}
-        onCheck={handleCheck}
-        onExpand={handleExpand}
-        showNodeIcon={false}
-        icons={{
-          expandOpen: <i class="fa-solid fa-minus"></i>,
-          expandClose: <i class="fa-solid fa-plus"></i>,
-          uncheck: (
-            <i
-              class="fa-regular fa-square"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-          check: (
-            <i
-              class="fa-solid fa-square-check"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-          halfCheck: (
-            <i
-              class="fa-regular fa-square-minus"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-        }}
-      />
+      <div className="checkboxTree">
+        <CheckboxTree
+          nodes={nodes}
+          checked={checked}
+          expanded={expanded}
+          onCheck={handleCheck}
+          onExpand={handleExpand}
+          showNodeIcon={false}
+          icons={{
+            expandOpen: <i class="fa-solid fa-minus"></i>,
+            expandClose: <i class="fa-solid fa-plus"></i>,
+            uncheck: (
+              <i
+                class="fa-regular fa-square"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+            check: (
+              <i
+                class="fa-solid fa-square-check"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+            halfCheck: (
+              <i
+                class="fa-regular fa-square-minus"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+          }}
+        />
       </div>
       <div className="text-center  pt-2 ">
         <Button

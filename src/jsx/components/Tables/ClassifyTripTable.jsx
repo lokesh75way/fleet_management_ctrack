@@ -11,11 +11,11 @@ const ClassifyTripTable = ({
   onConfirmDelete,
   editDrawerOpen,
   active,
-  currentPage, itemsPerPage,
+  currentPage,
+  itemsPerPage,
 }) => {
-  
   const formatDate = (dateTimeString) => {
-    return dayjs(dateTimeString).format('YYYY-MM-DD HH:MM')
+    return dayjs(dateTimeString).format("YYYY-MM-DD HH:MM");
   };
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
 

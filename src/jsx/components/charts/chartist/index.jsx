@@ -27,7 +27,7 @@ function ChartChartist() {
         <Col xl={6} lg={6}>
           <Card>
             <Card.Header>
-				<h4 className="card-title">Area</h4>
+              <h4 className="card-title">Area</h4>
             </Card.Header>
             <Card.Body>
               <AreaChart />
@@ -49,7 +49,7 @@ function ChartChartist() {
         <Col xl={6} lg={6}>
           <Card>
             <Card.Header>
-               <h4 className="card-title">Donut</h4>
+              <h4 className="card-title">Donut</h4>
             </Card.Header>
             <Card.Body>
               <DonutChart />

@@ -1,15 +1,14 @@
-import React, {  useReducer } from "react";
+import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Button, Modal } from "react-bootstrap";
 
-
-import LightGallery from 'lightgallery/react';
+import LightGallery from "lightgallery/react";
 // import styles
-import 'lightgallery/css/lightgallery.css';
-import 'lightgallery/css/lg-zoom.css';
-import 'lightgallery/css/lg-thumbnail.css';
-import lgThumbnail from 'lightgallery/plugins/thumbnail';
-import lgZoom from 'lightgallery/plugins/zoom';
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
 
 /// Image
 import profile01 from "../../../../images/profile/1.jpg";
@@ -20,37 +19,40 @@ import PageTitle from "../../../layouts/PageTitle";
 import { IMAGES } from "../../../constant/theme";
 
 const galleryBlog = [
-	{image: IMAGES.Profile3}, {image: IMAGES.Profile4},
-	{image: IMAGES.Profile2}, {image: IMAGES.Profile4},
-	{image: IMAGES.Profile3}, {image: IMAGES.Profile2},
+  { image: IMAGES.Profile3 },
+  { image: IMAGES.Profile4 },
+  { image: IMAGES.Profile2 },
+  { image: IMAGES.Profile4 },
+  { image: IMAGES.Profile3 },
+  { image: IMAGES.Profile2 },
 ];
 
 const mediaBlog = [
-	{image: IMAGES.Profile5},
-	{image: IMAGES.Profile6},
-	{image: IMAGES.Profile7},
+  { image: IMAGES.Profile5 },
+  { image: IMAGES.Profile6 },
+  { image: IMAGES.Profile7 },
 ];
 
 const initialState = false;
-const reducer = (state, action) =>{
-	switch (action.type){
-		case 'sendMessageOpen':
-			return { ...state, sendMessage: true }
-		case 'sendMessageClose':			
-			return { ...state, sendMessage: false }		
-			
-		default:
-        return state	
-	}	
-}
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "sendMessageOpen":
+      return { ...state, sendMessage: true };
+    case "sendMessageClose":
+      return { ...state, sendMessage: false };
+
+    default:
+      return state;
+  }
+};
 
 const PostDetails = () => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const onInit = () => {
-      //console.log('lightGallery has been initialized');
+    //console.log('lightGallery has been initialized');
   };
-		
+
   return (
     <>
       <div>
@@ -162,81 +164,166 @@ const PostDetails = () => {
                         <div className="text-center">
                           <div className="row">
                             <div className="col">
-                              <h3 className="m-b-0">150</h3><span>Follower</span>
+                              <h3 className="m-b-0">150</h3>
+                              <span>Follower</span>
                             </div>
                             <div className="col">
-                              <h3 className="m-b-0">140</h3> <span>Place Stay</span>
+                              <h3 className="m-b-0">140</h3>{" "}
+                              <span>Place Stay</span>
                             </div>
                             <div className="col">
                               <h3 className="m-b-0">45</h3> <span>Reviews</span>
                             </div>
                           </div>
                           <div className="mt-4">
-                            <Link	to="/post-details"	className="btn btn-primary mb-1 me-1" onClick={() => dispatch({type:'followOpen'})}>Follow</Link>     
-                            <Link to={"#"} className="btn btn-primary mb-1 ms-1" onClick={() => dispatch({type:'sendMessageOpen'})}>Send Message</Link>
+                            <Link
+                              to="/post-details"
+                              className="btn btn-primary mb-1 me-1"
+                              onClick={() => dispatch({ type: "followOpen" })}
+                            >
+                              Follow
+                            </Link>
+                            <Link
+                              to={"#"}
+                              className="btn btn-primary mb-1 ms-1"
+                              onClick={() =>
+                                dispatch({ type: "sendMessageOpen" })
+                              }
+                            >
+                              Send Message
+                            </Link>
                           </div>
                         </div>
                         {/* send Modal */}
-                        <Modal className="modal fade" show={state.sendMessage} centered onHide={() => dispatch({type:'sendMessageClose'})}>
+                        <Modal
+                          className="modal fade"
+                          show={state.sendMessage}
+                          centered
+                          onHide={() => dispatch({ type: "sendMessageClose" })}
+                        >
                           <div className="modal-content">
                             <div className="modal-header">
                               <h5 className="modal-title">Send Message</h5>
-                              <Button variant="" type="button" className="close" data-dismiss="modal" onClick={() => dispatch({type:'sendMessageClose'})}>
+                              <Button
+                                variant=""
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                onClick={() =>
+                                  dispatch({ type: "sendMessageClose" })
+                                }
+                              >
                                 <span>×</span>
                               </Button>
                             </div>
                             <div className="modal-body">
-                              <form className="comment-form" onSubmit={(e) => { e.preventDefault();  dispatch({type:'sendMessageClose'}); }}>
+                              <form
+                                className="comment-form"
+                                onSubmit={(e) => {
+                                  e.preventDefault();
+                                  dispatch({ type: "sendMessageClose" });
+                                }}
+                              >
                                 <div className="row">
                                   <div className="col-lg-6">
                                     <div className="form-group mb-3">
-                                    <label htmlFor="author" className="text-black font-w600">  Name <span className="required">*</span> </label>
-                                    <input type="text" className="form-control" defaultValue="Author" name="Author" placeholder="Author" />
+                                      <label
+                                        htmlFor="author"
+                                        className="text-black font-w600"
+                                      >
+                                        {" "}
+                                        Name <span className="required">
+                                          *
+                                        </span>{" "}
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue="Author"
+                                        name="Author"
+                                        placeholder="Author"
+                                      />
                                     </div>
                                   </div>
-                                <div className="col-lg-6">
-                                  <div className="form-group mb-3">
-                                    <label htmlFor="email" className="text-black font-w600"> Email <span className="required">*</span></label>
-                                    <input type="text" className="form-control" defaultValue="Email" placeholder="Email" name="Email"/>
+                                  <div className="col-lg-6">
+                                    <div className="form-group mb-3">
+                                      <label
+                                        htmlFor="email"
+                                        className="text-black font-w600"
+                                      >
+                                        {" "}
+                                        Email{" "}
+                                        <span className="required">*</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        defaultValue="Email"
+                                        placeholder="Email"
+                                        name="Email"
+                                      />
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="col-lg-12">
-                                  <div className="form-group mb-3">
-                                    <label htmlFor="comment" className="text-black font-w600">Comment</label>
-                                    <textarea rows={8} className="form-control" name="comment" placeholder="Comment" defaultValue={""}/>
+                                  <div className="col-lg-12">
+                                    <div className="form-group mb-3">
+                                      <label
+                                        htmlFor="comment"
+                                        className="text-black font-w600"
+                                      >
+                                        Comment
+                                      </label>
+                                      <textarea
+                                        rows={8}
+                                        className="form-control"
+                                        name="comment"
+                                        placeholder="Comment"
+                                        defaultValue={""}
+                                      />
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="col-lg-12">
-                                  <div className="form-group mb-3">
-                                     <input type="submit" value="Post Comment" className="submit btn btn-primary" name="submit"/>
+                                  <div className="col-lg-12">
+                                    <div className="form-group mb-3">
+                                      <input
+                                        type="submit"
+                                        value="Post Comment"
+                                        className="submit btn btn-primary"
+                                        name="submit"
+                                      />
+                                    </div>
                                   </div>
-                                </div>
                                 </div>
                               </form>
                             </div>
                           </div>
-                        </Modal>	
+                        </Modal>
                       </div>
                     </div>
                   </div>
-                </div>	
+                </div>
                 <div className="col-lg-12">
                   <div className="card">
                     <div className="card-header border-0 pb-0">
                       <h5 className="text-primary">Today Highlights</h5>
-                    </div>	
-                    <div className="card-body pt-3"	>	
+                    </div>
+                    <div className="card-body pt-3">
                       <div className="profile-blog ">
-                        <img  src={profile01}  alt="profile" className="img-fluid  mb-4 w-100" />
-                        <Link to="/post-details"> <h4>Darwin Creative Agency Theme</h4> </Link>
+                        <img
+                          src={profile01}
+                          alt="profile"
+                          className="img-fluid  mb-4 w-100"
+                        />
+                        <Link to="/post-details">
+                          {" "}
+                          <h4>Darwin Creative Agency Theme</h4>{" "}
+                        </Link>
                         <p className="mb-0">
-                          A small river named Duden flows by their place and supplies
-                          it with the necessary regelialia. It is a paradisematic
-                          country, in which roasted parts of sentences fly into your
-                          mouth.
+                          A small river named Duden flows by their place and
+                          supplies it with the necessary regelialia. It is a
+                          paradisematic country, in which roasted parts of
+                          sentences fly into your mouth.
                         </p>
                       </div>
-                    </div>	
+                    </div>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -245,46 +332,66 @@ const PostDetails = () => {
                       <h5 className="text-primary ">Interest</h5>
                     </div>
                     <div className="card-body pt-3">
-                      <div className="profile-interest ">  
-                          <LightGallery
-                            onInit={onInit}
-                            speed={500}
-                            plugins={[lgThumbnail, lgZoom]}
-                            elementClassNames="row sp4"
-                          >
-                            
-                            {galleryBlog.map((item,index)=>(
-                              <div data-src={item.image} className="col-lg-4 col-xl-4 col-sm-4 col-6 int-col mb-1" key={index}>
-                                <img className="px-1 py-1 img-fluid rounded" src={item.image} style={{width:"100%"}} alt="gallery"/>
-                              </div>
-                            ))}
-                          </LightGallery>	                          
+                      <div className="profile-interest ">
+                        <LightGallery
+                          onInit={onInit}
+                          speed={500}
+                          plugins={[lgThumbnail, lgZoom]}
+                          elementClassNames="row sp4"
+                        >
+                          {galleryBlog.map((item, index) => (
+                            <div
+                              data-src={item.image}
+                              className="col-lg-4 col-xl-4 col-sm-4 col-6 int-col mb-1"
+                              key={index}
+                            >
+                              <img
+                                className="px-1 py-1 img-fluid rounded"
+                                src={item.image}
+                                style={{ width: "100%" }}
+                                alt="gallery"
+                              />
+                            </div>
+                          ))}
+                        </LightGallery>
                       </div>
-                    </div>	
+                    </div>
                   </div>
-                </div>	
+                </div>
                 <div className="col-lg-12">
                   <div className="card">
                     <div className="card-header border-0 pb-0">
                       <h5 className="text-primary">Our Latest News</h5>
-                    </div>	
+                    </div>
                     <div className="card-body pt-3">
-                        <div className="profile-news">
-                          {mediaBlog.map((item, index)=>(
-                            <div className="media pt-3 pb-3" key={index}>
-                              <img src={item.image} alt="" className="me-3 rounded" width="75" />
-                              <div className="media-body">
-                                <h5 className="m-b-5"><Link to="/post-details" className="text-black">Collection of textile samples</Link></h5>
-                                <p className="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
-                              </div>
+                      <div className="profile-news">
+                        {mediaBlog.map((item, index) => (
+                          <div className="media pt-3 pb-3" key={index}>
+                            <img
+                              src={item.image}
+                              alt=""
+                              className="me-3 rounded"
+                              width="75"
+                            />
+                            <div className="media-body">
+                              <h5 className="m-b-5">
+                                <Link to="/post-details" className="text-black">
+                                  Collection of textile samples
+                                </Link>
+                              </h5>
+                              <p className="mb-0">
+                                I shared this on my fb wall a few months back,
+                                and I thought.
+                              </p>
                             </div>
-                          ))}	
-                        </div>
-                    </div>	
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>	
-              </div>	
-            </div>	
+                </div>
+              </div>
+            </div>
             <div className="col-xl-8">
               <div className="card">
                 <div className="card-body">
@@ -304,32 +411,39 @@ const PostDetails = () => {
                       </li>
                     </ul>
 
-                    <img src={profile08} alt="" className="img-fluid mb-3 w-100 rounded" />
+                    <img
+                      src={profile08}
+                      alt=""
+                      className="img-fluid mb-3 w-100 rounded"
+                    />
                     <p>
                       A wonderful serenity has take possession of my entire soul
-                      like these sweet morning of spare which enjoy whole heart.A
-                      wonderful serenity has take possession of my entire soul
-                      like these sweet morning of spare which enjoy whole heart.
+                      like these sweet morning of spare which enjoy whole
+                      heart.A wonderful serenity has take possession of my
+                      entire soul like these sweet morning of spare which enjoy
+                      whole heart.
                     </p>
                     <p>
-                      A collection of textile samples lay spread out on the table
-                      - Samsa was a travelling salesman - and above it there hung
-                      a picture that he had recently cut out of an illustrated
-                      magazine and housed in a nice, gilded frame.
+                      A collection of textile samples lay spread out on the
+                      table - Samsa was a travelling salesman - and above it
+                      there hung a picture that he had recently cut out of an
+                      illustrated magazine and housed in a nice, gilded frame.
                     </p>
                     <blockquote>
                       Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Has been the industry's standard text
-                      ever since the 1500s, when an unknown printer took a galley
-                      of type and scrambled it to make a type specimencenturies.
+                      typesetting industry. Has been the industry's standard
+                      text ever since the 1500s, when an unknown printer took a
+                      galley of type and scrambled it to make a type
+                      specimencenturies.
                     </blockquote>
                     <p>
-                      A wonderful serenity has taken possession of my entire soul,
-                      like these sweet mornings of spring which I enjoy with my
-                      whole heart. I am alone, and feel the charm of existence was
-                      created for the bliss of souls like mine.I am so happy, my
-                      dear friend, so absorbed in the exquisite sense of mere
-                      tranquil existence, that I neglect my talents.
+                      A wonderful serenity has taken possession of my entire
+                      soul, like these sweet mornings of spring which I enjoy
+                      with my whole heart. I am alone, and feel the charm of
+                      existence was created for the bliss of souls like mine.I
+                      am so happy, my dear friend, so absorbed in the exquisite
+                      sense of mere tranquil existence, that I neglect my
+                      talents.
                     </p>
                     <div className="profile-skills mt-5 mb-5">
                       <h4 className="text-primary mb-2">Skills</h4>

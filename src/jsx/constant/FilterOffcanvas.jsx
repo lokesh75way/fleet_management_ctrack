@@ -48,7 +48,7 @@ const FilterOffcanvas = forwardRef(
 
     const role = localStorage.getItem("role");
     const loginId = localStorage.getItem("loginDetails-name");
-   
+
     const dateRangeText = startDate.toLocaleDateString();
     const [selectCompanyFilter, SetSelectCompanyFilter] = useState({
       value: "All Companies",
@@ -72,15 +72,15 @@ const FilterOffcanvas = forwardRef(
           value: loginId,
           label: loginId,
         });
-        setBusinessHandler(loginId)
+        setBusinessHandler(loginId);
       }
 
-      if(role === 'company'){
+      if (role === "company") {
         SetSelectCompanyFilter({
-          value: loginId , 
-          label : loginId
-        })
-        setCompanyHandler(loginId)
+          value: loginId,
+          label: loginId,
+        });
+        setCompanyHandler(loginId);
       }
 
       const dates = findHighestAndLowestDates(data);
@@ -99,17 +99,15 @@ const FilterOffcanvas = forwardRef(
       setDatehandler({
         startDate: startDate,
         endDate: endDate,
-
       });
 
-      if (role === 'admin') {
+      if (role === "admin") {
         setBusinessHandler(selectGroupFilter.label);
       }
 
-      if(role === 'admin' || role === 'businessgroup'){
+      if (role === "admin" || role === "businessgroup") {
         setCompanyHandler(selectCompanyFilter.label);
       }
-
     };
 
     return (
@@ -175,7 +173,7 @@ const FilterOffcanvas = forwardRef(
                               });
                             }}
                             name={name}
-                            isDisabled={role === 'company'}
+                            isDisabled={role === "company"}
                             menuPosition={"fixed"}
                             options={companyOptions}
                             value={selectCompanyFilter}

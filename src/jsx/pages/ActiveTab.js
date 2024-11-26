@@ -15,13 +15,13 @@ import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../components/Pagination/Paginate";
 const ActiveTab = ({ tableData1, tabType }) => {
-  console.log("tabledata1",tableData1)
+  console.log("tabledata1", tableData1);
   const [tableData, setTableData] = useState(tableData1);
   const [status, setStatus] = useState("");
 
-  useEffect(()=>{
+  useEffect(() => {
     setTableData(tableData1);
-  },[tableData1])
+  }, [tableData1]);
   const {
     register,
     setValue,
@@ -47,14 +47,14 @@ const ActiveTab = ({ tableData1, tabType }) => {
   const navigate = useNavigate();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
-    const itemsPerPage=10;
+  const itemsPerPage = 10;
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
     let status = "";
@@ -71,7 +71,7 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const getAllTrips = async (status) => {
     try {
-      const { data, success, totalLength } = await getTrips(page, status); 
+      const { data, success, totalLength } = await getTrips(page, status);
       setTableData(data);
       setCount(totalLength);
     } catch (error) {
@@ -81,7 +81,9 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const onConfirmDelete = async (id) => {
     await deleteTrip(id);
-    setTableData(prevTableData => prevTableData.filter(trip => trip._id !== id));
+    setTableData((prevTableData) =>
+      prevTableData.filter((trip) => trip._id !== id)
+    );
     notifySuccess("Trip Deleted");
   };
 
@@ -129,7 +131,7 @@ const ActiveTab = ({ tableData1, tabType }) => {
                         onConfirmDelete={onConfirmDelete}
                         editDrawerOpen={editDrawerOpen}
                         setEditData={setEditData}
-                        currentPage={page} 
+                        currentPage={page}
                         itemsPerPage={itemsPerPage}
                       />
                     </tbody>
@@ -144,11 +146,11 @@ const ActiveTab = ({ tableData1, tabType }) => {
                       className="dataTables_paginate paging_simple_numbers"
                       id="example2_paginate"
                     >
-                       <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                      <Paginate
+                        totalCount={totalCount}
+                        itemsPerPage={itemsPerPage}
+                        handlePageClick={handlePageClick}
+                      />
                     </div>
                   </div>
                 </div>

@@ -286,9 +286,9 @@ const TechnicianOffcanvas = forwardRef(
                       <label className="form-label">{t("description")}</label>
                       <div className="mb-3 ">
                         <Controller
-                          name="description" 
+                          name="description"
                           control={control}
-                          defaultValue="" 
+                          defaultValue=""
                           render={({ field }) => (
                             <textarea
                               className="form-txtarea form-control"

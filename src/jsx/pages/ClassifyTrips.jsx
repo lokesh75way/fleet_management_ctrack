@@ -11,16 +11,14 @@ import { Nav, Tab } from "react-bootstrap";
 import { filterClassifyTable } from "../../utils/helper";
 import { createTrip, getTrips } from "../../services/api/ClassifyTripServices";
 import { notifySuccess } from "../../utils/toast";
-import ActiveTab from './ActiveTab'
+import ActiveTab from "./ActiveTab";
 import ClassifyTripsFilterOffcanvas from "../constant/ClassifyTripsFilterOffcanvas";
 import { useTranslation } from "react-i18next";
 
-
 const ClassifyTrip = (ref) => {
- 
   const { t } = useTranslation();
   const tabHeading = [t("activeTrips"), t("plannedTrips"), t("completedTrips")];
-  const component = [ActiveTab,ActiveTab,ActiveTab];
+  const component = [ActiveTab, ActiveTab, ActiveTab];
 
   const [tableData, setTableData] = useState([]);
   const {
@@ -57,23 +55,20 @@ const ClassifyTrip = (ref) => {
     // classifyTrips.current.showModal();
   };
   const filterData = (data) => {
-    setTableData(data)
+    setTableData(data);
   };
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
 
-
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     try {
       await createTrip(data);
       notifySuccess("New Trip Created!");
       navigate("/settings/classifyTrips");
     } catch (error) {
-      console.log("Error", error)
+      console.log("Error", error);
     }
   };
-
-
 
   const [activeIndex, setActiveIndex] = useState(0);
   return (
@@ -85,76 +80,74 @@ const ClassifyTrip = (ref) => {
       />
       <div className="m-2 p-2 classify_trip-container">
         <FormProvider>
-        <form onSubmit={handleSubmit(onSubmit)}>
-        <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
-          <Nav as="ul" className="nav-tabs classify-trips">
-            <div>
-              {tabHeading.map((data, i) => (
-                <Nav.Item as="li" key={i}>
-                  <Nav.Link
-                    style={{ padding: ".5rem 2rem" }}
-                    eventKey={data.toLowerCase()}
-                    active={i === activeIndex}
-                    onClick={() => setActiveIndex(i)}
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
+              <Nav as="ul" className="nav-tabs classify-trips">
+                <div>
+                  {tabHeading.map((data, i) => (
+                    <Nav.Item as="li" key={i}>
+                      <Nav.Link
+                        style={{ padding: ".5rem 2rem" }}
+                        eventKey={data.toLowerCase()}
+                        active={i === activeIndex}
+                        onClick={() => setActiveIndex(i)}
+                      >
+                        {data}
+                      </Nav.Link>
+                    </Nav.Item>
+                  ))}
+                </div>
+                <div className="">
+                  <Link
+                    to={"#"}
+                    className="btn btn-primary btn-sm ms-1"
+                    data-bs-toggle="offcanvas"
+                    onClick={() => classifyTripsFilter.current.showModal()}
                   >
-                    {data}
-                  </Nav.Link>
-                </Nav.Item>
-              ))}
-            </div>
-            <div className="">
-              <Link
-                to={"#"}
-                className="btn btn-primary btn-sm ms-1"
-                data-bs-toggle="offcanvas"
-                onClick={() => classifyTripsFilter.current.showModal()}
-              >
-                + {t("filter")}
-              </Link>{" "}
-              <Link
-                to={"/settings/classifyTrips/create"}
-                className="btn btn-primary btn-sm ms-1"
-                data-bs-toggle="offcanvas"
-                // onClick={() => classifyTrips.current.showModal()}
-              >
-                + {t("addTrips")}
-              </Link>{" "}
-            </div>
-          </Nav>
-          <Tab.Content className="pt-4">
-            {tabHeading.map((data, i) => {
-              const Component = component[i];
-              return (
-                
-                <Tab.Pane
-                  eventKey={data.toLowerCase()}
-                  key={i}
-                  active={i === activeIndex}
-                >
-                  <Component
-                    tableData1={tableData}
-                    data={tabHeading}
-                    control={control}
-                    setValue={setValue}
-                    register={register}
-                    getValues={getValues}
-                    errors={errors}
-                    handleSubmit={handleSubmit}
-                    onSubmit={onSubmit}
-                    tabType={data} 
-                    
-                  />
-                </Tab.Pane>
-              );
-            })}
-          </Tab.Content>
-        </Tab.Container>
-        <ClassifyTripsFilterOffcanvas
-          ref={classifyTripsFilter}
-          Title={"Add Filter"}
-          filterData={filterData}
-        />
-        </form>
+                    + {t("filter")}
+                  </Link>{" "}
+                  <Link
+                    to={"/settings/classifyTrips/create"}
+                    className="btn btn-primary btn-sm ms-1"
+                    data-bs-toggle="offcanvas"
+                    // onClick={() => classifyTrips.current.showModal()}
+                  >
+                    + {t("addTrips")}
+                  </Link>{" "}
+                </div>
+              </Nav>
+              <Tab.Content className="pt-4">
+                {tabHeading.map((data, i) => {
+                  const Component = component[i];
+                  return (
+                    <Tab.Pane
+                      eventKey={data.toLowerCase()}
+                      key={i}
+                      active={i === activeIndex}
+                    >
+                      <Component
+                        tableData1={tableData}
+                        data={tabHeading}
+                        control={control}
+                        setValue={setValue}
+                        register={register}
+                        getValues={getValues}
+                        errors={errors}
+                        handleSubmit={handleSubmit}
+                        onSubmit={onSubmit}
+                        tabType={data}
+                      />
+                    </Tab.Pane>
+                  );
+                })}
+              </Tab.Content>
+            </Tab.Container>
+            <ClassifyTripsFilterOffcanvas
+              ref={classifyTripsFilter}
+              Title={"Add Filter"}
+              filterData={filterData}
+            />
+          </form>
         </FormProvider>
       </div>
     </>
@@ -162,4 +155,3 @@ const ClassifyTrip = (ref) => {
 };
 
 export default ClassifyTrip;
-

@@ -8,18 +8,20 @@ const CompanyItem = (props) => {
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
 
-
   useEffect(() => {
     const data = props?.companyVehicle.map((data) => {
       const childNode = data?.vehicles?.map((subItem) => {
         return { label: subItem?.vehicleName, value: subItem?._id };
       });
 
-      return { value: data?._id, label: data?.companyName, children: childNode };
+      return {
+        value: data?._id,
+        label: data?.companyName,
+        children: childNode,
+      };
     });
     setNodes([...data]);
   }, [props.companyVehicle]);
-
 
   // useEffect(() => {
   //   const data = Object.entries(props.vehicles).map((data) => {
@@ -34,13 +36,15 @@ const CompanyItem = (props) => {
 
   useEffect(() => {
     let vehicleIds = [];
-    const data = nodes?.map((ele) => ele.children?.map((vehicle) => vehicleIds.push(vehicle.value) ));
+    const data = nodes?.map((ele) =>
+      ele.children?.map((vehicle) => vehicleIds.push(vehicle.value))
+    );
     handleCheck(vehicleIds);
-  }, [nodes])
-  
+  }, [nodes]);
+
   const handleCheck = (checked) => {
     setChecked(checked);
-    props.setVehicleIds(checked)
+    props.setVehicleIds(checked);
   };
   const handleExpand = (expanded) => {
     setExpanded(expanded);
@@ -51,46 +55,46 @@ const CompanyItem = (props) => {
     // console.log(selectedObject)
     props.handleToggleCardPositionHandler();
   };
-  
+
   return (
     <>
-    <div className="checkboxTree">
-      <CheckboxTree
-        nodes={nodes}
-        checked={checked}
-        expanded={expanded}
-        onCheck={handleCheck}
-        onExpand={handleExpand}
-        showNodeIcon={false}
-        icons={{
-          expandOpen: <i class="fa-solid fa-minus"></i>,
-          expandClose: <i class="fa-solid fa-plus"></i>,
-          uncheck: (
-            <i
-              class="fa-regular fa-square"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-          check: (
-            <i
-              class="fa-solid fa-square-check"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-          halfCheck: (
-            <i
-              class="fa-regular fa-square-minus"
-              style={{
-                fontSize: "16px",
-              }}
-            ></i>
-          ),
-        }}
-      />
+      <div className="checkboxTree">
+        <CheckboxTree
+          nodes={nodes}
+          checked={checked}
+          expanded={expanded}
+          onCheck={handleCheck}
+          onExpand={handleExpand}
+          showNodeIcon={false}
+          icons={{
+            expandOpen: <i class="fa-solid fa-minus"></i>,
+            expandClose: <i class="fa-solid fa-plus"></i>,
+            uncheck: (
+              <i
+                class="fa-regular fa-square"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+            check: (
+              <i
+                class="fa-solid fa-square-check"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+            halfCheck: (
+              <i
+                class="fa-regular fa-square-minus"
+                style={{
+                  fontSize: "16px",
+                }}
+              ></i>
+            ),
+          }}
+        />
       </div>
       <div className="text-center  pt-2 ">
         <Button
@@ -99,21 +103,10 @@ const CompanyItem = (props) => {
           type="submit"
           onClick={handleSubmit}
         >
-          Save Selection 
+          Save Selection
         </Button>
       </div>
     </>
   );
 };
 export default CompanyItem;
-
-
-
-
-
-
-
-
-
-
-

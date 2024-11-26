@@ -144,11 +144,10 @@ const Driver = () => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                        
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

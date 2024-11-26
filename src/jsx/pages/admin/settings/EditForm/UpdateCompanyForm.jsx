@@ -11,7 +11,7 @@
 // import { notifySuccess } from "../../../../../utils/toast";
 
 // const UpdateCompanyForm = () => {
-  
+
 //   const [activeIndex, setActiveIndex] = useState(0);
 //   const tabHeading = ["My Account", "User Setting"];
 //   const component = [MyAccount, UserSetting];

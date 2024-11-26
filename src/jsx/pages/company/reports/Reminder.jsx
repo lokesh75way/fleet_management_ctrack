@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Reminder = () => {
-  return (
-    <h1>Reminder</h1>
-  )
-}
+  return <h1>Reminder</h1>;
+};
 
-export default Reminder
+export default Reminder;

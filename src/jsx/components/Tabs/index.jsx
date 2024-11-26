@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import TabCard from './TabCard';
+import React, { useState } from "react";
+import TabCard from "./TabCard";
 
 function Tabs(props) {
   const { tabs = [] } = props;

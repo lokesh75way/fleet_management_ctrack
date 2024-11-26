@@ -24,9 +24,11 @@ export const vehicleGeneralSchema = yup
       .min(0)
       .max(100)
       .typeError("Device Accuracy Tolerance must be a number"),
-      serverAddress: yup.string().url('Server address must be a valid URL').required(),
-      distanceCounter: yup.string().required('Distance counter is required'),
-      
+    serverAddress: yup
+      .string()
+      .url("Server address must be a valid URL")
+      .required(),
+    distanceCounter: yup.string().required("Distance counter is required"),
   })
   .required();
 export const vehicleProfileSchema = yup
@@ -137,8 +139,7 @@ export const companyAccountSchema = yup.object({
     .test("fileType", "Only JPG or PNG files are allowed", (value) => {
       return true;
     }),
-  tradeLicenseNumber: yup
-    .string(),
+  tradeLicenseNumber: yup.string(),
   officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
   state: yup.string(),
@@ -239,9 +240,7 @@ export const adminProfileAccountSchema = yup
 export const businessGroupAccountSchema = yup.object({
   // Add validation rules for each field
   groupName: yup.string().required("Please enter a Business Group Name"),
-  tradeLicenseNumber: yup
-    .string()
-    ,
+  tradeLicenseNumber: yup.string(),
   officeNumber: yup.string(),
   country: yup.string().required("Please select a Country"),
   state: yup.string(),
@@ -372,48 +371,46 @@ export const driverDocumentSchema = yup
     ),
   })
   .required();
-  export const subUserAccountSchema = yup
-  .object({
-    isEdit: yup.boolean(),
-    userName: yup.string().required("User Name is required "),
-    featureTemplateId: yup.string().required("Feature Template is required "),
-    password: yup
-      .string()
-      .test("password", "Password is required", function (value) {
-        const { isEdit } = this.parent;
-        if (isEdit) {
-          return true;
-        } else {
-          return value && value.length >= 8;
-        }
-      }),
-    confirmPassword: yup
-      .string()
-      .test("confirmPassword", "Password is required", function (value) {
-        const { isEdit } = this.parent;
-        if (isEdit) {
-          return true;
-        } else {
-          return value && value.length >= 8;
-        }
-      }),
-    mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
-    email: yup.string().email().required("Email is required "),
-    country: yup.string().required("Please select a Country"),
-  });
-export const subUserEditAccountSchema = yup
-  .object({
-    isEdit: yup.boolean(),
-    userName: yup.string().required("User Name is required "),
-    featureTemplateId: yup.string().required("Feature Template is required "),
-    mobileNumber: yup
-      .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
-    email: yup.string().email().required("Email is required "),
-    country: yup.string().required("Please select a Country"),
-  });
+export const subUserAccountSchema = yup.object({
+  isEdit: yup.boolean(),
+  userName: yup.string().required("User Name is required "),
+  featureTemplateId: yup.string().required("Feature Template is required "),
+  password: yup
+    .string()
+    .test("password", "Password is required", function (value) {
+      const { isEdit } = this.parent;
+      if (isEdit) {
+        return true;
+      } else {
+        return value && value.length >= 8;
+      }
+    }),
+  confirmPassword: yup
+    .string()
+    .test("confirmPassword", "Password is required", function (value) {
+      const { isEdit } = this.parent;
+      if (isEdit) {
+        return true;
+      } else {
+        return value && value.length >= 8;
+      }
+    }),
+  mobileNumber: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+  email: yup.string().email().required("Email is required "),
+  country: yup.string().required("Please select a Country"),
+});
+export const subUserEditAccountSchema = yup.object({
+  isEdit: yup.boolean(),
+  userName: yup.string().required("User Name is required "),
+  featureTemplateId: yup.string().required("Feature Template is required "),
+  mobileNumber: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Phone number must be between 5 and 15 digits"),
+  email: yup.string().email().required("Email is required "),
+  country: yup.string().required("Please select a Country"),
+});
 export const alertSchema = yup
   .object({
     branch: yup.array().required("Select at least one option"),

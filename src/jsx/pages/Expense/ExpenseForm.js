@@ -8,7 +8,10 @@ import SettingExpense from "./SettingExpense";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { createExpense, updateExpense } from "../../../services/api/ExpenseServices";
+import {
+  createExpense,
+  updateExpense,
+} from "../../../services/api/ExpenseServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 
 const ExpenseForm = () => {
@@ -27,7 +30,6 @@ const ExpenseForm = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(expenseSchema), // Use the expense schema for form validation
-    
   });
   const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ const ExpenseForm = () => {
         // if(data.file.length === 0){
         //   delete data.file;
         // }
-        await updateExpense(id,data);
+        await updateExpense(id, data);
         notifySuccess("Expense Updated!");
         navigate("/settings/expense");
       } catch (e) {

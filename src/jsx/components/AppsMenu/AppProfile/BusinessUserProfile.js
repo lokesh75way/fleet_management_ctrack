@@ -1,15 +1,20 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
-import {Button, Nav, Tab } from "react-bootstrap";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
+import { Button, Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../layouts/MainPagetitle";
 import MyAccount from "../../../components/TabComponent/BusinessGroupTabs/MyAccount";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { adminProfileAccountSchema } from '../../../../yup' ;
-import useStorage from '../../../../hooks/useStorage'
+import { adminProfileAccountSchema } from "../../../../yup";
+import useStorage from "../../../../hooks/useStorage";
 
 const AdminProfile = () => {
-  const {checkUserName} = useStorage()
+  const { checkUserName } = useStorage();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Profile"];
   const component = [MyAccount];
@@ -17,16 +22,24 @@ const AdminProfile = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const userName = checkUserName();
-  const allData = JSON.parse(localStorage.getItem('userJsonData'))
-  const editData = allData.find((data)=> data.userName === userName)
+  const allData = JSON.parse(localStorage.getItem("userJsonData"));
+  const editData = allData.find((data) => data.userName === userName);
 
-  const {register, formState:{errors}, setValue, getValues, control, reset, handleSubmit} = useForm({
-    resolver: yupResolver(adminProfileAccountSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    reset,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(adminProfileAccountSchema),
+  });
 
-  const onSubmit = (data)=>{
-      // localStorage.setItem('adminData',data)
-  }
+  const onSubmit = (data) => {
+    // localStorage.setItem('adminData',data)
+  };
 
   return (
     <>

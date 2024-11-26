@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Address = () => {
   return (
-   <>
-   <h1>Address</h1>
-   </>
-  )
-}
+    <>
+      <h1>Address</h1>
+    </>
+  );
+};
 
-export default Address
+export default Address;

@@ -15,7 +15,7 @@ import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { driverProfileSchema, driverInfoSchema } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import '../../../../../scss/pages/_driver-tracking.scss'
+import "../../../../../scss/pages/_driver-tracking.scss";
 
 const UpdateDriverForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,9 +31,7 @@ const UpdateDriverForm = () => {
     getValues,
     control,
     handleSubmit,
-  } = useForm({
-  
-  });
+  } = useForm({});
 
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {

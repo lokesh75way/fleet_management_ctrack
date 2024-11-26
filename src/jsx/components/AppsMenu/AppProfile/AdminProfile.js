@@ -22,7 +22,7 @@ const AdminProfile = () => {
   const component = [MyAccount];
   const totalTabs = tabHeading.length;
   const [isEdit, setIsEdit] = useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const editData = allData.find((data) => data.role === "admin");
 
@@ -43,7 +43,13 @@ const navigate = useNavigate();
 
     const indexToUpdate = val.findIndex((item) => item.id == editData.id);
     if (indexToUpdate !== -1) {
-      val[indexToUpdate] = { ...data, id : editData.id, email : editData.email, role : "admin", whatsappContactNumber: editData.whatsappContactNumber };
+      val[indexToUpdate] = {
+        ...data,
+        id: editData.id,
+        email: editData.email,
+        role: "admin",
+        whatsappContactNumber: editData.whatsappContactNumber,
+      };
       localStorage.setItem("userJsonData", JSON.stringify(val));
       notifySuccess("Profile Updated!");
       navigate("/");

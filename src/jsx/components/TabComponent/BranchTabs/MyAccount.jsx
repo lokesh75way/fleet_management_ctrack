@@ -47,18 +47,14 @@ const MyAccount = ({
   const [stateid, setstateid] = useState(0);
   const [tempValue, setTempValue] = useState();
 
-
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
-
 
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
-
-  
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-    const customStyles = {
+  const customStyles = {
     control: (base) => ({
       ...base,
       padding: ".25rem 0 ", // Adjust the height as needed
@@ -76,24 +72,23 @@ const MyAccount = ({
   const [defaultCountry, setDefaultCountry] = useState();
   const [locationData, setLocationData] = useState(null);
 
-
   useEffect(() => {
-    if(userDetails.user.role === 'COMPANY'){
-      let bus
+    if (userDetails.user.role === "COMPANY") {
+      let bus;
       setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
-      
-      setValue("companyId", userDetails?.user.companyId[0]?._id)
+
+      setValue("companyId", userDetails?.user.companyId[0]?._id);
       setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
     }
-    if(userDetails.user.role === 'BUSINESS_GROUP'){
+    if (userDetails.user.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
     }
-},[])
+  }, []);
 
   const businessGroupOptions = async (inputValue) => {
     try {
@@ -102,8 +97,8 @@ const MyAccount = ({
       const response = businessGroupData.map((item) => ({
         label: item.businessGroupId.groupName,
         value: item.businessGroupId._id,
-      }))
-      return response;  
+      }));
+      return response;
     } catch (error) {
       console.error("Error fetching business group options:", error);
       return []; // Return empty array in case of an error
@@ -151,18 +146,17 @@ const MyAccount = ({
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
       setValue("street2", dValues.street2);
-      setDefaultCountry({ name: dValues.country })
-      setValue("country", dValues.country)
-      setSelectStateName({ name: dValues.state || '' })
-      setValue("state", dValues.state)
-      setValue("userInfo", dValues.userInfo)
+      setDefaultCountry({ name: dValues.country });
+      setValue("country", dValues.country);
+      setSelectStateName({ name: dValues.state || "" });
+      setValue("state", dValues.state);
+      setValue("userInfo", dValues.userInfo);
       setValue("dateFormat", dValues?.dateFormat);
       setValue("timeFormat", dValues?.timeFormat);
-      setValue("email",dValues?.email)
-     
-    }else{
-      setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[1]?.value)
+      setValue("email", dValues?.email);
+    } else {
+      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [dValues, id]);
 
@@ -182,7 +176,7 @@ const MyAccount = ({
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-      <UserLocation onLocationData={handleLocationData} />
+        <UserLocation onLocationData={handleLocationData} />
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <span className="text-danger">*</span>
@@ -208,7 +202,6 @@ const MyAccount = ({
                   isDisabled={businessDisabled}
                   name={name}
                 />
-
               )}
             />
           ) : (
@@ -219,7 +212,6 @@ const MyAccount = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <GroupDropdown
                   onChange={async (newValue) => {
-               
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
@@ -248,7 +240,7 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <CompanyDropdown 
+                <CompanyDropdown
                   key={groupId}
                   groupId={groupId}
                   onChange={(newValue) => {
@@ -333,9 +325,7 @@ const MyAccount = ({
           <Error errorName={errors.branchName} />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("tradeLicenseNumber")} 
-          </label>
+          <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -347,9 +337,7 @@ const MyAccount = ({
           <Error errorName={errors.tradeLicenseNumber} />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("officeNo")} 
-          </label>
+          <label className="form-label">{t("officeNo")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -371,9 +359,7 @@ const MyAccount = ({
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={
-              getValues('email')
-            }
+            defaultValue={getValues("email")}
             disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
@@ -387,7 +373,7 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
-          Comptype={''}
+          Comptype={""}
         />
 
         <div className="col-xl-3 mb-3 ">
@@ -427,7 +413,6 @@ const MyAccount = ({
             )}
           />
         </div>
-       
 
         <div
           style={{
@@ -476,7 +461,6 @@ const MyAccount = ({
         >
           {" "}
           {t("submit")}
-
         </Button>
       </div>
     </div>

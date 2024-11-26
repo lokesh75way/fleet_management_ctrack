@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
 import WorldMap from "react-svg-worldmap";
-import { createRoot } from 'react-dom/client';
-import { MapContainer, TileLayer, GeoJSON, Marker, Popup, Tooltip } from 'react-leaflet';
-import { useTranslation } from 'react-i18next'
+import { createRoot } from "react-dom/client";
+import {
+  MapContainer,
+  TileLayer,
+  GeoJSON,
+  Marker,
+  Popup,
+  Tooltip,
+} from "react-leaflet";
+import { useTranslation } from "react-i18next";
 // import EditControlFC from './EditControl';
-
 
 import { IMAGES } from "../../../constant/theme";
 
@@ -79,10 +85,10 @@ const ActiveUserMap = ({ usageData }) => {
   const [centerLon, setCenterLon] = React.useState(55.2869);
   const ShowMapContainer = ({ data }) => {
     const [geojson, setGeojson] = React.useState({
-      type: 'FeatureCollection',
+      type: "FeatureCollection",
       features: [],
     });
-  }
+  };
 
   useEffect(() => {
     const listStateOfUAE = usageData?.activeUsers?.map((item) => {
@@ -90,18 +96,22 @@ const ActiveUserMap = ({ usageData }) => {
         title: item.title,
         image: IMAGES[item.country],
         barvalue: item.value + "%",
-      }
+      };
     });
     const mapMarkers = usageData?.activeUsers?.map((item) => {
       return {
         lat: item.lat,
         lon: item.lon,
-        name: item.title
-      }
+        name: item.title,
+      };
     });
     setMarkers(mapMarkers);
-    setCenterLat(markers.reduce((total, marker) => total + marker.lat, 0) / markers.length)
-    setCenterLon(markers.reduce((total, marker) => total + marker.lon, 0) / markers.length)
+    setCenterLat(
+      markers.reduce((total, marker) => total + marker.lat, 0) / markers.length
+    );
+    setCenterLon(
+      markers.reduce((total, marker) => total + marker.lon, 0) / markers.length
+    );
     setListState(listStateOfUAE);
   }, [usageData]);
   const { t } = useTranslation();
@@ -109,15 +119,19 @@ const ActiveUserMap = ({ usageData }) => {
     <>
       <div className="card overflow-hidden">
         <div className="card-header border-0" style={{ paddingBottom: 0 }}>
-          <h4 className="heading mb-0">{t('activeUsers')}</h4>
+          <h4 className="heading mb-0">{t("activeUsers")}</h4>
         </div>
         <div className="card-body pe-0">
           <div className="row">
             <div className="col-xl-8 active-map-main">
               {/* <div id="world-map" className="active-map text-center"> */}
-              <div style={{ display: 'flex', height: '35vh' }}>
+              <div style={{ display: "flex", height: "35vh" }}>
                 <div style={{ width: "100%" }}>
-                  <MapContainer center={[centerLat, centerLon ]} zoom={4} zoomControl={false}>
+                  <MapContainer
+                    center={[centerLat, centerLon]}
+                    zoom={4}
+                    zoomControl={false}
+                  >
                     <TileLayer
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                       url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"

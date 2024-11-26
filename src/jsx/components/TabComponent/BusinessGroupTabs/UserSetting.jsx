@@ -4,7 +4,10 @@ import CustomInput from "../../Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from "react-timezone-select";
-import { currencyOptions, distanceCounterOptions } from "../VehicleTabs/Options";
+import {
+  currencyOptions,
+  distanceCounterOptions,
+} from "../VehicleTabs/Options";
 import { dayOptions } from "../VehicleTabs/Options";
 import { statusOptions } from "../VehicleTabs/Options";
 import { languageOptions } from "../VehicleTabs/Options";
@@ -31,12 +34,13 @@ const UserSetting = ({
   control,
   register,
 }) => {
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const [dValues, setDvalues] = useState({});
-  const [logo, setLogo] = useState(null)
+  const [logo, setLogo] = useState(null);
   const [selectedTimezone, setSelectedTimezone] = useState(
-    dValues?.businessGroupId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone
+    dValues?.businessGroupId?.timezone ||
+      Intl.DateTimeFormat().resolvedOptions().timeZone
   );
   const location = useLocation();
   const customStyles = {
@@ -56,28 +60,27 @@ const UserSetting = ({
     if (dValues && id) {
       setValue("dateFormat", dValues.businessGroupId?.dateFormat);
       setValue("timeFormat", dValues.businessGroupId?.timeFormat);
-      setValue("unitOfDistance", dValues.businessGroupId?.unitOfDistance)
+      setValue("unitOfDistance", dValues.businessGroupId?.unitOfDistance);
       setValue("workStartDay", dValues.businessGroupId?.workStartDay);
       setValue("language", dValues.businessGroupId?.language);
       setValue("status", dValues.businessGroupId?.status);
       setValue("currency", dValues.businessGroupId?.currency);
-      setValue("timezone",dValues?.businessGroupId?.timezone)
-      const timeZone =  dValues?.businessGroupId?.timezone
-      if(timeZone){
-        setSelectedTimezone(timeZone)
+      setValue("timezone", dValues?.businessGroupId?.timezone);
+      const timeZone = dValues?.businessGroupId?.timezone;
+      if (timeZone) {
+        setSelectedTimezone(timeZone);
       }
-      setValue("unitOfFuel",dValues.businessGroupId?.unitOfFuel)
+      setValue("unitOfFuel", dValues.businessGroupId?.unitOfFuel);
       setLogo(dValues?.businessGroupId?.file);
-    }
-    else{
-      setValue('unitOfDistance',unitOfDistanceOptions[0]?.value)
-      setValue('unitOfFuel',unitOfFuelOptions[0]?.value)
-      setValue('language', languageOptions[0]?.value );
-      setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[0]?.value)
-      setValue('status',statusOptions[0]?.value);
-      setValue('currency',currencyOptions[0]?.value)
-      setValue('workStartDay', weekStartDayOptions[0]?.value)
+    } else {
+      setValue("unitOfDistance", unitOfDistanceOptions[0]?.value);
+      setValue("unitOfFuel", unitOfFuelOptions[0]?.value);
+      setValue("language", languageOptions[0]?.value);
+      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("timeFormat", timeFormatOptions[0]?.value);
+      setValue("status", statusOptions[0]?.value);
+      setValue("currency", currencyOptions[0]?.value);
+      setValue("workStartDay", weekStartDayOptions[0]?.value);
     }
   }, [dValues, id]);
 
@@ -115,7 +118,7 @@ const UserSetting = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{value , label : value}}
+                value={{ value, label: value }}
                 defaultValue={timeFormatOptions[0]}
               />
             )}
@@ -136,8 +139,7 @@ const UserSetting = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{value, label : value}}
-             
+                value={{ value, label: value }}
               />
             )}
           />
@@ -155,7 +157,7 @@ const UserSetting = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{value , label :value}}
+                value={{ value, label: value }}
                 defaultValue={unitOfFuelOptions[0]}
               />
             )}
@@ -196,7 +198,7 @@ const UserSetting = ({
           />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{("Work Start Day")}</label>
+          <label className="form-label">{"Work Start Day"}</label>
           <Controller
             name="workStartDay"
             control={control}
@@ -226,7 +228,7 @@ const UserSetting = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{value, label : value}}
+                value={{ value, label: value }}
                 defaultValue={currencyOptions[0]}
               />
             )}
@@ -240,9 +242,9 @@ const UserSetting = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
-                onChange={ (timeZone) =>{
-                  setSelectedTimezone(timeZone)
-                  setValue("timezone", timeZone.value)
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
                 }}
                 ref={ref}
                 name={name}

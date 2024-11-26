@@ -128,14 +128,12 @@ function Login(props) {
                                         onSubmit={handleSubmit(onLogin)}
                                       >
                                         <h3 className="form-title m-t0">
-                                          {t('personalInformation')}
+                                          {t("personalInformation")}
                                         </h3>
                                         <div className="dz-separator-outer m-b5">
                                           <div className="dz-separator bg-primary style-liner"></div>
                                         </div>
-                                        <p>
-                                          {t('enterEmailAndPassword')}{" "}
-                                        </p>
+                                        <p>{t("enterEmailAndPassword")} </p>
                                         <div className="form-group mb-3">
                                           <input
                                             type="email"
@@ -197,7 +195,7 @@ function Login(props) {
                                             type="submit"
                                             className="btn btn-primary dz-xs-flex m-r5"
                                           >
-                                            {t('login')}
+                                            {t("login")}
                                           </button>
                                           <span className="form-check d-inline-block ms-2">
                                             <input
@@ -213,13 +211,13 @@ function Login(props) {
                                                 paddingLeft: isRtl ? "5px" : 0,
                                               }}
                                             >
-                                             {t('rememberMe')}
+                                              {t("rememberMe")}
                                             </label>
                                           </span>
                                         </div>
                                         <div className="dz-social">
                                           <h5 className="form-title fs-20">
-                                          {t('signInWith')}
+                                            {t("signInWith")}
                                           </h5>
                                           <ul className="dz-social-icon dz-border dz-social-icon-lg text-white">
                                             <li>
@@ -260,7 +258,7 @@ function Login(props) {
                                           to="/register"
                                           className="btn btn-primary button-md btn-block"
                                         >
-                                         {t('createAccount')}
+                                          {t("createAccount")}
                                         </NavLink>
 
                                         <div className="mt-2">
@@ -269,7 +267,7 @@ function Login(props) {
                                             style={{ fontSize: "small" }}
                                           >
                                             {" "}
-                                            {t('forgotPassword')}
+                                            {t("forgotPassword")}
                                           </Link>
                                         </div>
                                       </div>
@@ -282,7 +280,7 @@ function Login(props) {
                                   <div className="col-lg-12 text-center">
                                     <span>
                                       {" "}
-                                      © {t('copyrightBy')}{" "}
+                                      © {t("copyrightBy")}{" "}
                                       <span
                                         className={`heart ${
                                           heartActive ? "" : "heart-blast"
@@ -297,9 +295,9 @@ function Login(props) {
                                         target="_blank"
                                       >
                                         {" "}
-                                        {t('75way')}{" "}
+                                        {t("75way")}{" "}
                                       </a>{" "}
-                                      {t('allRightReserved')}
+                                      {t("allRightReserved")}
                                     </span>
                                   </div>
                                 </div>

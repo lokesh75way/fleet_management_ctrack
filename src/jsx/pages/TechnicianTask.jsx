@@ -21,11 +21,10 @@ import dayjs from "dayjs";
 import { ICON } from "../constant/theme";
 import Paginate from "../components/Pagination/Paginate";
 
-
 const TechnicianTask = (ref) => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
- 
+
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
@@ -75,7 +74,9 @@ const TechnicianTask = (ref) => {
   const onSubmit = async (data) => {
     try {
       if (data.plannedReportingDate) {
-        const formattedDate = dayjs(data.plannedReportingDate).format('YYYY-MM-DD');
+        const formattedDate = dayjs(data.plannedReportingDate).format(
+          "YYYY-MM-DD"
+        );
         data.plannedReportingDate = formattedDate;
       }
       if (data._id && data._id !== 0) {
@@ -87,7 +88,7 @@ const TechnicianTask = (ref) => {
         notifySuccess("Task Created Successfully !!");
         technicianTask.current.closeModal();
       }
-      fetchAllTasks()
+      fetchAllTasks();
     } catch (error) {
       const validationErr = error.response?.data?.data?.errors;
       if (validationErr && validationErr.length > 0) {
@@ -101,7 +102,6 @@ const TechnicianTask = (ref) => {
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
-
 
   const technicianTask = useRef();
   return (
@@ -174,12 +174,12 @@ const TechnicianTask = (ref) => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                            isRtl={isRtl}
-                          />
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                          isRtl={isRtl}
+                        />
                       </div>
                     </div>
                   </div>

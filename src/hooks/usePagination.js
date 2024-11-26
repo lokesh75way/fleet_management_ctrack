@@ -8,7 +8,7 @@ const usePagination = (initialPage = 1, initialPageSize = 10) => {
   const setCount = (count) => {
     setTotalCount(count);
   };
-  
+
   const nextPage = () => {
     if (page * pageSize < totalCount) {
       setPage(page + 1);
@@ -35,7 +35,7 @@ const usePagination = (initialPage = 1, initialPageSize = 10) => {
     prevPage,
     goToPage,
     setCount,
-    setPage
+    setPage,
   };
 };
 

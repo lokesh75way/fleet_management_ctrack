@@ -147,7 +147,6 @@ export const SubCompanyMenuList = [
     ),
     url: "/reports",
     content: [
-     
       {
         title: "Activity",
         to: "/reports/activity",

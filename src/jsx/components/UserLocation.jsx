@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function UserLocation({ onLocationData }) {
   const [latitude, setLatitude] = useState(null);
@@ -13,11 +13,13 @@ function UserLocation({ onLocationData }) {
         throw new Error("API key is missing.");
       }
 
-      const response = await axios.get(`https://api.bigdatacloud.net/data/ip-geolocation?key=${API_KEY}`);
+      const response = await axios.get(
+        `https://api.bigdatacloud.net/data/ip-geolocation?key=${API_KEY}`
+      );
 
       setLatitude(response.data.location.latitude);
       setLongitude(response.data.location.longitude);
-        const locationData = response.data;
+      const locationData = response.data;
       onLocationData(locationData);
       setError(null); // Reset error if location is successfully obtained
     } catch (error) {
@@ -29,11 +31,7 @@ function UserLocation({ onLocationData }) {
     getLocation();
   }, []);
 
-  return (
-    <div>
-      {error && <p>{error}</p>}
-    </div>
-  );
+  return <div>{error && <p>{error}</p>}</div>;
 }
 
 export default UserLocation;

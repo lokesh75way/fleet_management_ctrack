@@ -1,14 +1,14 @@
-import React from 'react';
-import ProjectOverviewChart from './ProjectOverviewChart';
+import React from "react";
+import ProjectOverviewChart from "./ProjectOverviewChart";
 
 const ProjectOverviewTab = () => {
-    return (
-        <>
-            <div className="overflow-hidden">                
-                <ProjectOverviewChart />
-            </div>   
-        </>
-    );
+  return (
+    <>
+      <div className="overflow-hidden">
+        <ProjectOverviewChart />
+      </div>
+    </>
+  );
 };
 
 export default ProjectOverviewTab;

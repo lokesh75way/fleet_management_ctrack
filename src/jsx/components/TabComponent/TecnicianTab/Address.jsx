@@ -21,7 +21,7 @@ const Address = ({
   defaultCountry,
 }) => {
   const { t } = useTranslation();
-  const {id} = useParams();
+  const { id } = useParams();
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -37,7 +37,9 @@ const Address = ({
             name="address.street1"
             placeholder=""
           />
-         { !getValues('address.street1') && <Error errorName={errors.address?.street1} />}
+          {!getValues("address.street1") && (
+            <Error errorName={errors.address?.street1} />
+          )}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -96,7 +98,7 @@ const Address = ({
             containerClassName="bg-white"
             inputClassName="border border-white customSelectHeight"
             placeHolder="Select Country"
-            defaultValue={id && {name: getValues('address.country') }}
+            defaultValue={id && { name: getValues("address.country") }}
           />
           {!getValues("address.country") && (
             <Error errorName={errors.address?.country} />

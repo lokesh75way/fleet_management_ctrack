@@ -9,7 +9,7 @@ const getVehicles = async (page, branchIds) => {
   if (branchIds) {
     if (Array.isArray(branchIds)) {
       // If branchIds is an array, append each branchId to the URL
-      branchIds.forEach(id => {
+      branchIds.forEach((id) => {
         url += `&branchIds=${id}`;
       });
     } else {
@@ -22,28 +22,37 @@ const getVehicles = async (page, branchIds) => {
   return { data: data.data.data, totalLength: data.data.totalCount };
 };
 
-
 const getUnassignedVehicles = async (page) => {
-  const {data} = await axios.get(`/vehicles/unassigned?page=${page}&limit=${10}`);
-  return {data :data.data.data , totalLength : data.data.totalCount};
+  const { data } = await axios.get(
+    `/vehicles/unassigned?page=${page}&limit=${10}`
+  );
+  return { data: data.data.data, totalLength: data.data.totalCount };
 };
 
 const deleteVehicles = async (body) => {
   console.log(body);
   return axios.delete(`/vehicles/${body}`);
 };
-const updateVehicles = async (body,id) => {
-  return axios.patch(`/vehicles/${id}`,body);
+const updateVehicles = async (body, id) => {
+  return axios.patch(`/vehicles/${id}`, body);
 };
 
 const getVehiclesByCompany = async (search = "") => {
-  const {data} = await axios.get(`/vehicles/list?search=${search}`, );
-  return { data :data.data };
+  const { data } = await axios.get(`/vehicles/list?search=${search}`);
+  return { data: data.data };
 };
 
 const getVehiclesTraking = async (id, status) => {
-  const {data} = await axios.get(`/vehicles/tracking?${id}&status=${status}`, );
-  return { data :data.data };
+  const { data } = await axios.get(`/vehicles/tracking?${id}&status=${status}`);
+  return { data: data.data };
 };
 
-export { createVehicles, getVehicles, deleteVehicles, updateVehicles, getVehiclesByCompany, getVehiclesTraking, getUnassignedVehicles };
+export {
+  createVehicles,
+  getVehicles,
+  deleteVehicles,
+  updateVehicles,
+  getVehiclesByCompany,
+  getVehiclesTraking,
+  getUnassignedVehicles,
+};

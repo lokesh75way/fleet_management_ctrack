@@ -7,7 +7,8 @@ const TechnicianTaskTable = ({
   tableData,
   onConfirmDelete,
   editDrawerOpen,
-  currentPage, itemsPerPage
+  currentPage,
+  itemsPerPage,
 }) => {
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (

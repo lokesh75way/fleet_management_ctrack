@@ -20,7 +20,6 @@ const Technician = () => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
 
-
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
@@ -54,9 +53,9 @@ const Technician = () => {
     navigate(`/technician/edit/${item}`);
   };
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -119,8 +118,8 @@ const Technician = () => {
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           tableData={tableData}
-                          currentPage={page} 
-                          itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -134,11 +133,11 @@ const Technician = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

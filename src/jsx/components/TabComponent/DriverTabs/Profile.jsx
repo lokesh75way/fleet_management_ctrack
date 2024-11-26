@@ -4,9 +4,9 @@ import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
-import { useParams,useNavigate,useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import {
   branchOptions,
   companyOptions,
@@ -29,7 +29,7 @@ const Profile = ({
   errors,
   reset,
   control,
-  formData
+  formData,
 }) => {
   const [selectStateName, setSelectStateName] = useState({
     name: "",
@@ -50,14 +50,13 @@ const Profile = ({
       padding: ".25rem 0 ",
     }),
   };
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const role = localStorage.getItem("role");
   const loggedInUser = localStorage.getItem("loginDetails-name");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-
 
   useEffect(() => {
     if (id) {
@@ -85,39 +84,39 @@ const Profile = ({
       setValue("street2", dValues.street2);
       setValue("contact1", dValues.contact1);
       setValue("contact2", dValues.contact2);
-      setDefaultCountry({ name: dValues.country })
-      setValue("country", dValues.country)
-      setSelectStateName({ name: dValues.state || '' })
-      setValue("state", dValues.state)
+      setDefaultCountry({ name: dValues.country });
+      setValue("country", dValues.country);
+      setSelectStateName({ name: dValues.state || "" });
+      setValue("state", dValues.state);
     }
   }, [dValues, id]);
 
-  const [bussinessGpLable, setBussinessGpLable] = useState(null)
+  const [bussinessGpLable, setBussinessGpLable] = useState(null);
 
   useEffect(() => {
-    if(userDetails.user.role === 'COMPANY'){
-      let bus
+    if (userDetails.user.role === "COMPANY") {
+      let bus;
       setValue("businessGroupId", userDetails?.user.businessGroupId);
       setGroupId(userDetails?.user.businessGroupId);
       setBusinessDisabled(true);
-      
-      setValue("companyId", userDetails?.user.companyId)
+
+      setValue("companyId", userDetails?.user.companyId);
       setCompanyId(userDetails?.user.companyId);
       setCompanyDisabled(true);
     }
-    if(userDetails.user.role === 'BUSINESS_GROUP'){
+    if (userDetails.user.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
     }
-},[])
+  }, []);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t('businessGroup')} <span className="text-danger">*</span>
+            {t("businessGroup")} <span className="text-danger">*</span>
           </label>
           {id ? (
             <Controller
@@ -126,21 +125,21 @@ const Profile = ({
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => {
                 return (
-                <GroupDropdown
-                  onChange={ (newValue) => {
-                     setValue("businessGroupId", newValue.value);
-                     setValue("businessGroupName", newValue.value);
-                    setGroupId(newValue.value);
-                    setCompanyId(null);
-                  }}
-                  value={value}
-                  customStyles={customStyles}
-                  ref={ref}
-                  isDisabled={businessDisabled}
-                  name={name}
-                />
-
-              )}}
+                  <GroupDropdown
+                    onChange={(newValue) => {
+                      setValue("businessGroupId", newValue.value);
+                      setValue("businessGroupName", newValue.value);
+                      setGroupId(newValue.value);
+                      setCompanyId(null);
+                    }}
+                    value={value}
+                    customStyles={customStyles}
+                    ref={ref}
+                    isDisabled={businessDisabled}
+                    name={name}
+                  />
+                );
+              }}
             />
           ) : (
             <Controller
@@ -149,9 +148,9 @@ const Profile = ({
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <GroupDropdown
-                  onChange={ (newValue) => {
-                     setValue("businessGroupId", newValue.value);
-                     setValue("businessGroupName", newValue.value);
+                  onChange={(newValue) => {
+                    setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
                   }}
                   value={value}
@@ -169,7 +168,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('company')} <span className="text-danger">*</span>
+            {t("company")} <span className="text-danger">*</span>
           </label>
           {id ? (
             <Controller
@@ -177,7 +176,7 @@ const Profile = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <CompanyDropdown 
+                <CompanyDropdown
                   key={groupId}
                   groupId={groupId}
                   onChange={(newValue) => {
@@ -218,67 +217,64 @@ const Profile = ({
           {!getValues("companyId") && <Error errorName={errors.companyId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">
-          {t('branch')}
-          </label>
+          <label className="form-label">{t("branch")}</label>
           <Controller
             name="branchId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <ParentBranchDropdown
-              key={companyId}
-              companyId={companyId}
-              onChange={(newValue) => {
-                setValue("branchId", newValue.value);
-                setValue("branchName", newValue.value);
-              }
-              }
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              isDisabled={false}
-              name={name}
-            />
+                key={companyId}
+                companyId={companyId}
+                onChange={(newValue) => {
+                  setValue("branchId", newValue.value);
+                  setValue("branchName", newValue.value);
+                }}
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                isDisabled={false}
+                name={name}
+              />
             )}
           />
           {!getValues("branchId") && <Error errorName={errors.branchId} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('firstName')}<span className="text-danger">*</span>
+            {t("firstName")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
             label="First Name"
             name="firstName"
-            placeholder={t('firstName')}
-            defaultValue={''}
+            placeholder={t("firstName")}
+            defaultValue={""}
           />
           <Error errorName={errors.firstName} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-          {t('lastName')} <span className="text-danger">*</span>
+            {t("lastName")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
             register={register}
             label="Last Name"
             name="lastName"
-            placeholder={t('lastName')}
-            defaultValue={''}
+            placeholder={t("lastName")}
+            defaultValue={""}
           />
           <Error errorName={errors.lastName} />
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('employeeNumber')} <span className="text-danger">*</span>
+            {t("employeeNumber")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
-          
             register={register}
             label="Employee Number"
             name="employeeNumber"
@@ -289,7 +285,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label className="form-label">
-          {t('country')} <span className="text-danger">*</span>
+            {t("country")} <span className="text-danger">*</span>
           </label>
           <CountrySelect
             onChange={(e) => {
@@ -301,14 +297,14 @@ const Profile = ({
             containerClassName="bg-white"
             inputClassName="border border-white"
             placeHolder="Select Country"
-             defaultValue={defaultCountry}
+            defaultValue={defaultCountry}
           />
           {!getValues("country") && <Error errorName={errors.country} />}
         </div>
-        <div className={`${isStateDisabled ? 'col-xl-6 mb-3 pe-none':'col-xl-6 mb-3'}`}>
-          <label className="form-label">
-          {t('state')}
-          </label>
+        <div
+          className={`${isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+        >
+          <label className="form-label">{t("state")}</label>
           <div style={{ background: "white" }}>
             <StateSelect
               countryid={isStateDisabled ? 0 : countryid}
@@ -325,7 +321,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('city')} <span className="text-danger">*</span>
+            {t("city")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -339,7 +335,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('zipCode')}
+            {t("zipCode")}
           </label>
           <CustomInput
             type="number"
@@ -358,7 +354,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street1')} <span className="text-danger">*</span>
+            {t("street1")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"
@@ -372,7 +368,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('street2')}
+            {t("street2")}
           </label>
           <CustomInput
             type="text"
@@ -385,7 +381,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('contactNumber1')} <span className="text-danger">*</span>
+            {t("contactNumber1")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -404,7 +400,7 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-          {t('contactNumber2')} <span className="text-danger">*</span>
+            {t("contactNumber2")} <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="number"
@@ -436,7 +432,7 @@ const Profile = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('next')}
+          {t("next")}
         </Button>
       </div>
     </div>

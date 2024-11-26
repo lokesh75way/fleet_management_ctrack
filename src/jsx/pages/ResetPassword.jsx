@@ -26,7 +26,7 @@ const ResetPassword = () => {
   });
 
   const nav = useNavigate();
-  const onSubmit = async ({newPassword}) => {
+  const onSubmit = async ({ newPassword }) => {
     const token = window.location.pathname.split("/")[2];
     const data = {
       password: newPassword,
@@ -34,10 +34,10 @@ const ResetPassword = () => {
     };
     console.log(data);
     const response = await PasswordServices.resetPassword(data);
-    if(response?.data?.success){
+    if (response?.data?.success) {
       notifySuccess("Password Reset Successfully");
       nav("/login");
-    }else{
+    } else {
       notifySuccess("Password Reset Failed");
     }
     // nav("/login");

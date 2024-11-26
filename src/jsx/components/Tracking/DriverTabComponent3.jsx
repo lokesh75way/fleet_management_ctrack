@@ -10,12 +10,11 @@ const GeoFenceItem = ({ geoFences, handleToggleCardPositionHandler }) => {
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
 
-
-useEffect(() => {
+  useEffect(() => {
     const data = Object.entries(geoFences).map(([company, fences]) => {
-      const childNodes = fences.map(fence => ({
+      const childNodes = fences.map((fence) => ({
         label: fence.name,
-        value: fence.id
+        value: fence.id,
       }));
       return { value: company, label: company, children: childNodes };
     });

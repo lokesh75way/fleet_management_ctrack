@@ -25,9 +25,7 @@ const BillingTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
             <span>{item.email}</span>
           </td>
           <td>
-            <span >
-              {item.billAmount}
-            </span>
+            <span>{item.billAmount}</span>
           </td>
 
           <td>

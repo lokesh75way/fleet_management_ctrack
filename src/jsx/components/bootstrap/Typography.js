@@ -1,12 +1,16 @@
 import React, { Fragment } from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import PageTitle from "../../layouts/PageTitle";
 import { Row, Col, Card } from "react-bootstrap";
 
 const UiTypography = () => {
   return (
     <Fragment>
-      <PageTitle activeMenu="Typography" pageContent="ui-typography" motherMenu="Bootstrap"/>
+      <PageTitle
+        activeMenu="Typography"
+        pageContent="ui-typography"
+        motherMenu="Bootstrap"
+      />
       <div className="container-fluid">
         <Row>
           <Col xs={12}>
@@ -15,7 +19,9 @@ const UiTypography = () => {
                 <Row className="justify-content-between">
                   <Col xl={4} xxl={6} className="mb-3">
                     <div className="mb-4">
-                      <h4 className="card-title card-intro-title">Typography</h4>
+                      <h4 className="card-title card-intro-title">
+                        Typography
+                      </h4>
                       <h6>
                         Use tags <code>h1 to h6</code> for get desire heading.
                       </h6>
@@ -42,12 +48,12 @@ const UiTypography = () => {
                     <div className="card-content">
                       <p className="text-justify">
                         Ambitioni dedisse scripsisse iudicaretur. Cras mattis
-                        iudicium purus sit amet fermentum. Donec sed odio operae,
-                        eu vulputate felis rhoncus. Praeterea iter est quasdam res
-                        quas ex communi. At nos hinc posthac, sitientis piros
-                        Afros. Petierunt uti sibi concilium totius Galliae in diem
-                        certam indicere. Cras mattis iudicium purus sit amet
-                        fermentum.
+                        iudicium purus sit amet fermentum. Donec sed odio
+                        operae, eu vulputate felis rhoncus. Praeterea iter est
+                        quasdam res quas ex communi. At nos hinc posthac,
+                        sitientis piros Afros. Petierunt uti sibi concilium
+                        totius Galliae in diem certam indicere. Cras mattis
+                        iudicium purus sit amet fermentum.
                       </p>
                     </div>
                   </Col>
@@ -84,19 +90,25 @@ const UiTypography = () => {
                       </h4>
                       <p>
                         Use tags{" "}
-                        <code>text-sm-start, text-md-start, text-lg-start, text-xl-start</code>{" "}
+                        <code>
+                          text-sm-start, text-md-start, text-lg-start,
+                          text-xl-start
+                        </code>{" "}
                         for get desire text.
                       </p>
                     </div>
                     <div className="card-content">
                       <p className="text-sm-start">
-                        Left aligned text on viewports sized SM (small) or wider.
+                        Left aligned text on viewports sized SM (small) or
+                        wider.
                       </p>
                       <p className="text-md-start">
-                        Left aligned text on viewports sized MD (medium) or wider.
+                        Left aligned text on viewports sized MD (medium) or
+                        wider.
                       </p>
                       <p className="text-lg-start">
-                        Left aligned text on viewports sized LG (large) or wider.
+                        Left aligned text on viewports sized LG (large) or
+                        wider.
                       </p>
                       <p className="text-xl-start">
                         Left aligned text on viewports sized XL (extra-large) or
@@ -110,9 +122,8 @@ const UiTypography = () => {
                         Font weight and italics
                       </h4>
                       <p>
-                        Use tags{" "}
-                        <code> fw-normal, fw-italic</code> for
-                        get desire text.
+                        Use tags <code> fw-normal, fw-italic</code> for get
+                        desire text.
                       </p>
                     </div>
                     <div className="card-content">
@@ -127,7 +138,9 @@ const UiTypography = () => {
                   </Col>
                   <Col lg={4}>
                     <div className="mb-4">
-                      <h4 className="card-title card-intro-title">Text colors</h4>
+                      <h4 className="card-title card-intro-title">
+                        Text colors
+                      </h4>
                       <p>Use tags below class for get desire text.</p>
                     </div>
                     <div className="card-content">
@@ -183,7 +196,9 @@ const UiTypography = () => {
                   </Col>
                   <Col lg={4}>
                     <div className="mb-4">
-                      <h4 className="card-title card-intro-title">Blockquotes</h4>
+                      <h4 className="card-title card-intro-title">
+                        Blockquotes
+                      </h4>
                       <p>
                         Use <code>blockquote</code> for get desire address.
                       </p>
@@ -214,7 +229,8 @@ const UiTypography = () => {
                         Ol Listing
                       </h4>
                       <p>
-                        Use tags <code>ol {">"} li</code> for get desire ol list.
+                        Use tags <code>ol {">"} li</code> for get desire ol
+                        list.
                       </p>
                     </div>
                     <ol className="order-list ">
@@ -229,7 +245,8 @@ const UiTypography = () => {
                         Ul Listing
                       </h4>
                       <p>
-                        Use tags <code>ul {">"} li</code> for get desire ol list.
+                        Use tags <code>ul {">"} li</code> for get desire ol
+                        list.
                       </p>
                     </div>
                     <ul className="unorder-list">
@@ -244,7 +261,8 @@ const UiTypography = () => {
                         Description Text
                       </h4>
                       <p>
-                        Use tags <code>dl {">"} dt</code> for get desire ol list.
+                        Use tags <code>dl {">"} dt</code> for get desire ol
+                        list.
                       </p>
                     </div>
                     <dl>
@@ -264,8 +282,8 @@ const UiTypography = () => {
                         Fancy Listing 1
                       </h4>
                       <p>
-                        Use class <code>list-icons</code> to ul for get desire ol
-                        list.
+                        Use class <code>list-icons</code> to ul for get desire
+                        ol list.
                       </p>
                     </div>
                     <ul className="list-icons">
@@ -295,8 +313,8 @@ const UiTypography = () => {
                         Fancy Listing with href
                       </h4>
                       <p>
-                        Use class <code>list-icons</code> to ul for get desire ol
-                        list.
+                        Use class <code>list-icons</code> to ul for get desire
+                        ol list.
                       </p>
                     </div>
                     <ul className="list-icons">
@@ -332,8 +350,8 @@ const UiTypography = () => {
                         Fancy Listing with href
                       </h4>
                       <p>
-                        Use class <code>list-icons</code> to ul for get desire ol
-                        list.
+                        Use class <code>list-icons</code> to ul for get desire
+                        ol list.
                       </p>
                     </div>
                     <ul className="list-icons">

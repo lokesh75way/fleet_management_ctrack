@@ -38,7 +38,7 @@ const Account = ({
   formData,
 }) => {
   const [selectStateName, setSelectStateName] = useState("");
-  const [defaultCountry,setDefaultCountry] = useState();
+  const [defaultCountry, setDefaultCountry] = useState();
   const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
@@ -55,7 +55,7 @@ const Account = ({
   const [isEdit, setIsEdit] = useState(false);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
-  const [branchId, setBranchId] = useState([])
+  const [branchId, setBranchId] = useState([]);
   const [locationData, setLocationData] = useState(null);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
@@ -76,7 +76,7 @@ const Account = ({
     setValue("parentCompany", "");
     setBranchOptions([]);
   }
-console.log("errors",errors);
+  console.log("errors", errors);
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter((item) => item?.companyId?._id == companyId)
@@ -168,7 +168,6 @@ console.log("errors",errors);
     }));
   }
 
-
   const [filteredUserData, setFilteredUserData] = useState([]);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
@@ -180,7 +179,6 @@ console.log("errors",errors);
   const [parentValue, setParentValue] = useState();
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
-
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
   useEffect(() => {
@@ -200,24 +198,24 @@ console.log("errors",errors);
       setBusinessDisabled(true);
     }
   }, []);
-  
-  useEffect(()=>{
-    if(formData && id){
-      setValue("businessUser",formData?.[0]?.businessGroupId)
-      setValue("companyId",formData?.[0]?.companyId)
-      setValue("branchIds",formData?.[0]?.branchIds)
-      setValue("vehicleIds",formData?.[0]?.vehicleIds)
-      setValue("email",formData?.[0]?.email)
-      setValue("userName",formData?.[0]?.userName)
-      setValue("mobileNumber",formData?.[0]?.mobileNumber)
-      setValue("country",formData[0].country)
-      setDefaultCountry({ name:formData[0].country })
-      setValue("state",formData[0].state || '' )
-      setSelectStateName({name : formData[0].state || ''})    
-      setValue("featureTemplateId",formData?.[0]?.featureTemplateId)
+
+  useEffect(() => {
+    if (formData && id) {
+      setValue("businessUser", formData?.[0]?.businessGroupId);
+      setValue("companyId", formData?.[0]?.companyId);
+      setValue("branchIds", formData?.[0]?.branchIds);
+      setValue("vehicleIds", formData?.[0]?.vehicleIds);
+      setValue("email", formData?.[0]?.email);
+      setValue("userName", formData?.[0]?.userName);
+      setValue("mobileNumber", formData?.[0]?.mobileNumber);
+      setValue("country", formData[0].country);
+      setDefaultCountry({ name: formData[0].country });
+      setValue("state", formData[0].state || "");
+      setSelectStateName({ name: formData[0].state || "" });
+      setValue("featureTemplateId", formData?.[0]?.featureTemplateId);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
     }
-  },[formData,id])
+  }, [formData, id]);
 
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
@@ -229,7 +227,7 @@ console.log("errors",errors);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-      <UserLocation onLocationData={handleLocationData} />
+        <UserLocation onLocationData={handleLocationData} />
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <Controller
@@ -285,18 +283,18 @@ console.log("errors",errors);
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdown
-              onChange={(newValue) => {
-                const newArray = newValue.map((temp)=> temp.value)
-                setValue("branchIds", newArray);
-                setBranchId(newArray)
-              }}
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              companyId={companyId}
-              name={name}
-              isDisabled={companyId  ? false  : true}
-            />
+                onChange={(newValue) => {
+                  const newArray = newValue.map((temp) => temp.value);
+                  setValue("branchIds", newArray);
+                  setBranchId(newArray);
+                }}
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                companyId={companyId}
+                name={name}
+                isDisabled={companyId ? false : true}
+              />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -309,16 +307,16 @@ console.log("errors",errors);
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <VehicleDropdown
-              onChange={(newValue) => {
-                const newArray = newValue.map((temp)=> temp.value)
-                setValue("vehicleIds", newArray);
-              }}
-              value={value}
-              branchids={branchId}
-              customStyles={customStyles}
-              ref={ref}
-              name={name}
-            />
+                onChange={(newValue) => {
+                  const newArray = newValue.map((temp) => temp.value);
+                  setValue("vehicleIds", newArray);
+                }}
+                value={value}
+                branchids={branchId}
+                customStyles={customStyles}
+                ref={ref}
+                name={name}
+              />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -376,8 +374,8 @@ console.log("errors",errors);
           />
           <Error errorName={errors.mobileNumber} />
         </div>
-  
-              <LocationSelector
+
+        <LocationSelector
           register={register}
           setValue={setValue}
           errors={errors}
@@ -387,7 +385,7 @@ console.log("errors",errors);
           id={id}
           showCity={false}
         />
-        {!id && (        
+        {!id && (
           <>
             <div className="col-xl-3 mb-3 ">
               <label className="form-label">

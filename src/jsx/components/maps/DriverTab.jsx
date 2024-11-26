@@ -7,13 +7,20 @@ import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import CompanyItem from "../Tracking/CompanyItem";
 import { getVehicles, statusData } from "../../../utils/helper";
 
-
 import GeoFenceItem from "../Tracking/DriverTabComponent3";
 import DriverItem from "../Tracking/DriverItem";
 import { notifyError } from "../../../utils/toast";
 import { getVehiclesByCompany } from "../../../services/api/VehicleService";
 
-const DriverTab = ({ tabData, handleToggleCardPosition, isOutside, setVehicleIds, getVehiclesByIds, setVehicleStatus, vehicleCounts }) => {
+const DriverTab = ({
+  tabData,
+  handleToggleCardPosition,
+  isOutside,
+  setVehicleIds,
+  getVehiclesByIds,
+  setVehicleStatus,
+  vehicleCounts,
+}) => {
   const componentData = {
     name: "Company1",
     drivers: [
@@ -95,23 +102,22 @@ const DriverTab = ({ tabData, handleToggleCardPosition, isOutside, setVehicleIds
 
 const DriverTabComponent1 = (props) => {
   const { setVehicleStatus, vehicleCounts } = props;
-  
+
   const { running, idle, stopped, inactive, nodata, total } = vehicleCounts;
   const [selectValue, setSelectValue] = useState("All");
   const [vehicles, setVehicles] = useState([]);
 
   const [companyVehicle, setCompanyVehicle] = useState([]);
 
-  const getVehiclesList = async(search) =>{
-    try{
+  const getVehiclesList = async (search) => {
+    try {
       const data = await getVehiclesByCompany(search);
-      await setCompanyVehicle(data?.data ?? [])
+      await setCompanyVehicle(data?.data ?? []);
       return;
-    }catch(e){
-      notifyError("Some Error occured")
+    } catch (e) {
+      notifyError("Some Error occured");
     }
-  }
-
+  };
 
   useEffect(() => {
     getVehiclesList();
@@ -119,15 +125,16 @@ const DriverTabComponent1 = (props) => {
     // setVehicles(data);
   }, [selectValue]);
 
-  const items = JSON.parse(localStorage?.getItem("userJsonData")) ? JSON.parse(localStorage?.getItem("userJsonData")) 
-    .filter((item) => item.designation === "vehicle")
-    .map((data) => ({
-      id: data.id,
-      name: data.vehicleName,
-    })): [];
+  const items = JSON.parse(localStorage?.getItem("userJsonData"))
+    ? JSON.parse(localStorage?.getItem("userJsonData"))
+        .filter((item) => item.designation === "vehicle")
+        .map((data) => ({
+          id: data.id,
+          name: data.vehicleName,
+        }))
+    : [];
 
   const handleSearch = (item) => {
-
     const vehicleData = getVehicles(selectValue);
 
     const filteredData = Object.entries(vehicleData).filter((vehicle) => {
@@ -153,7 +160,10 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
-          onClick={() => {setSelectValue("Running"); setVehicleStatus("RUNNING"); } }
+          onClick={() => {
+            setSelectValue("Running");
+            setVehicleStatus("RUNNING");
+          }}
         >
           <p>{running}</p>
           <span>Running</span>
@@ -163,7 +173,10 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 idle ${
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("Idle"); setVehicleStatus("IDLE"); }}
+          onClick={() => {
+            setSelectValue("Idle");
+            setVehicleStatus("IDLE");
+          }}
         >
           <p>{idle}</p>
           <span>Idle</span>
@@ -173,7 +186,10 @@ const DriverTabComponent1 = (props) => {
           className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("Stopped"); setVehicleStatus("STOP"); }}
+          onClick={() => {
+            setSelectValue("Stopped");
+            setVehicleStatus("STOP");
+          }}
         >
           <p>{stopped}</p>
           <span>Stopped</span>
@@ -183,7 +199,10 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 inActive ${
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("Inactive"); setVehicleStatus("INACTIVE"); }}
+          onClick={() => {
+            setSelectValue("Inactive");
+            setVehicleStatus("INACTIVE");
+          }}
         >
           <p>{inactive}</p>
           <span>InActive</span>
@@ -193,7 +212,10 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 noData ${
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("NoData"); setVehicleStatus("NODATA"); }}
+          onClick={() => {
+            setSelectValue("NoData");
+            setVehicleStatus("NODATA");
+          }}
         >
           <p>{nodata}</p>
           <span>NoData</span>
@@ -202,7 +224,10 @@ const DriverTabComponent1 = (props) => {
           className={`light fs-9 total ${
             selectValue === "All" && "vehicle_tracking-active"
           }`}
-          onClick={() => { setSelectValue("All"); setVehicleStatus(""); }}
+          onClick={() => {
+            setSelectValue("All");
+            setVehicleStatus("");
+          }}
         >
           <p>{total}</p>
           <span>Total</span>
@@ -247,7 +272,9 @@ const DriverTabComponent2 = (props) => {
   const [selectDriver, setSelectDriver] = useState([]);
   const [filterApplied, setFilterApplied] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  const jsonData = JSON.parse(localStorage.getItem("userJsonData")) ? JSON.parse(localStorage.getItem("userJsonData")): [];
+  const jsonData = JSON.parse(localStorage.getItem("userJsonData"))
+    ? JSON.parse(localStorage.getItem("userJsonData"))
+    : [];
   const [companyDrivers, setCompanyDrivers] = useState([]);
   const [company, setCompany] = useState(
     jsonData.filter((item) => item.role === "company")
@@ -264,31 +291,35 @@ const DriverTabComponent2 = (props) => {
 
   useEffect(() => {
     const newCompanyDrivers = company.reduce((acc, company) => {
-      const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
+      const companyDrivers = jsonData.filter(
+        (item) =>
+          item.designation === "Driver" &&
+          item.parentCompany === company.userName
+      );
 
       if (companyDrivers.length > 0) {
         acc[company.userName] = companyDrivers;
       }
       return acc;
-    }, {}); 
+    }, {});
     setCompanyDrivers(newCompanyDrivers);
   }, [company]);
 
   useEffect(() => {
+    const companyDrivers = company.reduce((acc, company) => {
+      const drivers = jsonData.filter(
+        (item) =>
+          item.designation === "Driver" &&
+          item.parentCompany === company.userName &&
+          (selectValue != "All" ? item.activityStatus === selectValue : true)
+      );
 
-  const companyDrivers = company.reduce((acc, company) => {
-    const drivers = jsonData.filter((item) => 
-      item.designation === "Driver" && 
-      item.parentCompany === company.userName &&
-      (selectValue != "All" ? item.activityStatus === selectValue: true)
-    );
-
-    if (drivers.length > 0) {
-      acc[company.userName] = drivers;
-    }
-    return acc;
-  }, {});
-  setCompanyDrivers(companyDrivers);
+      if (drivers.length > 0) {
+        acc[company.userName] = drivers;
+      }
+      return acc;
+    }, {});
+    setCompanyDrivers(companyDrivers);
   }, [selectValue]);
 
   const total = drivers.length;
@@ -296,32 +327,37 @@ const DriverTabComponent2 = (props) => {
   const handleOnSelect = (item) => {
     const selectedCompanyId = item.id;
 
-  const companyDriversData = company.reduce((acc, company) => {
-    const driversForCompany = jsonData.filter((driver) =>
-      driver.designation === "Driver" &&
-      driver.parentCompany === company.userName &&
-      driver.id === selectedCompanyId
-    );
+    const companyDriversData = company.reduce((acc, company) => {
+      const driversForCompany = jsonData.filter(
+        (driver) =>
+          driver.designation === "Driver" &&
+          driver.parentCompany === company.userName &&
+          driver.id === selectedCompanyId
+      );
 
-    if (driversForCompany.length > 0) {
-      acc[company.userName] = driversForCompany;
-    }
-    return acc;
-  }, {});
+      if (driversForCompany.length > 0) {
+        acc[company.userName] = driversForCompany;
+      }
+      return acc;
+    }, {});
 
-  setCompanyDrivers(companyDriversData);
+    setCompanyDrivers(companyDriversData);
   };
 
   const handleOnSearch = (string, results) => {
-    if(string === ""){
+    if (string === "") {
       const newCompanyDrivers = company.reduce((acc, company) => {
-        const companyDrivers = jsonData.filter((item) => item.designation === "Driver" && item.parentCompany === company.userName);
+        const companyDrivers = jsonData.filter(
+          (item) =>
+            item.designation === "Driver" &&
+            item.parentCompany === company.userName
+        );
 
         if (companyDrivers.length > 0) {
           acc[company.userName] = companyDrivers;
         }
         return acc;
-      }, {}); 
+      }, {});
       setCompanyDrivers(newCompanyDrivers);
     }
   };
@@ -333,10 +369,8 @@ const DriverTabComponent2 = (props) => {
       checkboxArray[index] = [];
       setSelectedDrivers(checkboxArray);
     }
-
   };
   const handleSelect = (ind) => {
-
     setSelectAll((prev) => {
       const newArr = [...prev];
       newArr[ind] = !newArr[ind];
@@ -360,7 +394,7 @@ const DriverTabComponent2 = (props) => {
 
     setSelectedDrivers(updatedDrivers);
   };
-  
+
   const items = jsonData
     .filter((item) => item.designation === "Driver")
     .map((item) => {
@@ -425,24 +459,25 @@ const DriverTabComponent2 = (props) => {
       </div>
       {
         <DriverItem
-        key={companyDrivers}
+          key={companyDrivers}
           drivers={companyDrivers}
           handleToggleCardPositionHandler={props.handleToggleCardPosition}
         />
-        }
+      }
     </>
   );
 };
 
 const DriverTabComponent3 = (props) => {
-  const geoData = JSON.parse(localStorage.getItem("geofenceData")) ? JSON.parse(localStorage.getItem("geofenceData")) : [];
+  const geoData = JSON.parse(localStorage.getItem("geofenceData"))
+    ? JSON.parse(localStorage.getItem("geofenceData"))
+    : [];
   const [tableData, setTableData] = useState(geoData);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Function to handle search
   const handleSearch = (query) => {
-
     const fenceData = geoData.filter((item) => item.id === query.id);
     setTableData(fenceData);
   };

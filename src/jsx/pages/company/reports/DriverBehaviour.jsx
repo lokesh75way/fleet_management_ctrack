@@ -5,44 +5,161 @@ import MainPagetitle from "../../../layouts/MainPagetitle";
 import { DriverData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import DriverTable from "../../../components/Tables/DriverTable";
-import {
-  filterAlerts,
-} from "../../../../utils/helper";
+import { filterAlerts } from "../../../../utils/helper";
 
 const tableData = [
-  {emplid: '1001', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
-  {emplid: '1002', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
-  {emplid: '1003', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
-  {emplid: '1004', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},    
-  {emplid: '1005', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
-  {emplid: '1006', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
-  {emplid: '1007', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
-  {emplid: '1008', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
-  {emplid: '1009', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
-  {emplid: '1010', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},   
-  {emplid: '1011', contact:'+12 123 456 7890', title:'Ankites Risher', email: 'abc@gmail.com', gender:'Male', location:'Brazil', status:'Active'},    
-  {emplid: '1012', contact:'+12 123 456 7890', title:'Ricky Antony', email: 'ra@gmail.com', gender:'Female', location:'India', status:'Active'},    
-  {emplid: '1013', contact:'+12 123 456 7890', title:'Elijah James', email: 'stuy@gmail.com', gender:'Female', location:'Dubai', status:'Active'},    
-  {emplid: '1014', contact:'+12 123 456 7890', title:'Ricky M', email: 'pqr@gmail.com', gender:'Male', location:'France', status:'Active'},    
-  {emplid: '1015', contact:'+12 123 456 7890', title:'Honey Risher', email: 'xyz@gmail.com', gender:'Male', location:'USA', status:'Active'},    
+  {
+    emplid: "1001",
+    contact: "+12 123 456 7890",
+    title: "Ricky Antony",
+    email: "ra@gmail.com",
+    gender: "Female",
+    location: "India",
+    status: "Active",
+  },
+  {
+    emplid: "1002",
+    contact: "+12 123 456 7890",
+    title: "Ankites Risher",
+    email: "abc@gmail.com",
+    gender: "Male",
+    location: "Brazil",
+    status: "Active",
+  },
+  {
+    emplid: "1003",
+    contact: "+12 123 456 7890",
+    title: "Ricky M",
+    email: "pqr@gmail.com",
+    gender: "Male",
+    location: "France",
+    status: "Active",
+  },
+  {
+    emplid: "1004",
+    contact: "+12 123 456 7890",
+    title: "Elijah James",
+    email: "stuy@gmail.com",
+    gender: "Female",
+    location: "Dubai",
+    status: "Active",
+  },
+  {
+    emplid: "1005",
+    contact: "+12 123 456 7890",
+    title: "Honey Risher",
+    email: "xyz@gmail.com",
+    gender: "Male",
+    location: "USA",
+    status: "Active",
+  },
+  {
+    emplid: "1006",
+    contact: "+12 123 456 7890",
+    title: "Honey Risher",
+    email: "xyz@gmail.com",
+    gender: "Male",
+    location: "USA",
+    status: "Active",
+  },
+  {
+    emplid: "1007",
+    contact: "+12 123 456 7890",
+    title: "Ankites Risher",
+    email: "abc@gmail.com",
+    gender: "Male",
+    location: "Brazil",
+    status: "Active",
+  },
+  {
+    emplid: "1008",
+    contact: "+12 123 456 7890",
+    title: "Ricky M",
+    email: "pqr@gmail.com",
+    gender: "Male",
+    location: "France",
+    status: "Active",
+  },
+  {
+    emplid: "1009",
+    contact: "+12 123 456 7890",
+    title: "Ricky Antony",
+    email: "ra@gmail.com",
+    gender: "Female",
+    location: "India",
+    status: "Active",
+  },
+  {
+    emplid: "1010",
+    contact: "+12 123 456 7890",
+    title: "Elijah James",
+    email: "stuy@gmail.com",
+    gender: "Female",
+    location: "Dubai",
+    status: "Active",
+  },
+  {
+    emplid: "1011",
+    contact: "+12 123 456 7890",
+    title: "Ankites Risher",
+    email: "abc@gmail.com",
+    gender: "Male",
+    location: "Brazil",
+    status: "Active",
+  },
+  {
+    emplid: "1012",
+    contact: "+12 123 456 7890",
+    title: "Ricky Antony",
+    email: "ra@gmail.com",
+    gender: "Female",
+    location: "India",
+    status: "Active",
+  },
+  {
+    emplid: "1013",
+    contact: "+12 123 456 7890",
+    title: "Elijah James",
+    email: "stuy@gmail.com",
+    gender: "Female",
+    location: "Dubai",
+    status: "Active",
+  },
+  {
+    emplid: "1014",
+    contact: "+12 123 456 7890",
+    title: "Ricky M",
+    email: "pqr@gmail.com",
+    gender: "Male",
+    location: "France",
+    status: "Active",
+  },
+  {
+    emplid: "1015",
+    contact: "+12 123 456 7890",
+    title: "Honey Risher",
+    email: "xyz@gmail.com",
+    gender: "Male",
+    location: "USA",
+    status: "Active",
+  },
 ];
 
 const headersTitle = [
-  {label:'Employee ID', key:'emplid'}, 
-  {label:'Employee Name', key:'title'}, 
-  {label:'Email Address', key:'email'}, 
-  {label:'Contact Number', key:'contact'}, 
-  {label:'Gender', key:'gender'}, 
-  {label:'Location', key:'location'}, 
-  {label:'Status', key:'status'}, 
-]
-
+  { label: "Employee ID", key: "emplid" },
+  { label: "Employee Name", key: "title" },
+  { label: "Email Address", key: "email" },
+  { label: "Contact Number", key: "contact" },
+  { label: "Gender", key: "gender" },
+  { label: "Location", key: "location" },
+  { label: "Status", key: "status" },
+];
 
 const csvlink = {
-  headers : headersTitle,
-  data : tableData,
-  filename: "Driver Behaviour Rep.csv"
-}
+  headers: headersTitle,
+  data: tableData,
+  filename: "Driver Behaviour Rep.csv",
+};
 
 const DriverBehaviour = (ref) => {
   const [date, setDate] = useState({
@@ -51,7 +168,6 @@ const DriverBehaviour = (ref) => {
   });
   const [businessFilter, setBusinessFilter] = useState("All Groups");
   const [companyFilter, setFilterCompany] = useState("All Companies");
-
 
   const [tableData, setTableData] = useState(DriverData);
   const [editData, setEditData] = useState({

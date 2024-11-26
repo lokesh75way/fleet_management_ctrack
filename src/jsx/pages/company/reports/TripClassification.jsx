@@ -270,7 +270,8 @@ const TripClassification = (ref) => {
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
+                        <i className="fa-solid fa-file-excel" />{" "}
+                        {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}

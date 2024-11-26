@@ -59,13 +59,13 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     User: "/user",
     Company: "/company",
     "Business Group": "/business",
-    "Branch" : "/branch",
-    "Sub User" : "/user",
+    Branch: "/branch",
+    "Sub User": "/user",
     "Feature Templates": "/groups",
-    "Driver" : '/driver',
-    "Technician" : '/technician/details',
-    Dashboard : "/dashboard",
-    Expense : "/settings/expense",
+    Driver: "/driver",
+    Technician: "/technician/details",
+    Dashboard: "/dashboard",
+    Expense: "/settings/expense",
   };
 
   return (

@@ -53,29 +53,27 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      userInfo: [{
-        name:'',
-        designation : '', 
-        mobileNumber :null,
-        email:'',
-      }],
+      userInfo: [
+        {
+          name: "",
+          designation: "",
+          mobileNumber: null,
+          email: "",
+        },
+      ],
     },
-    resolver: yupResolver(
-    businessGroupAccountSchema
-    ),
+    resolver: yupResolver(businessGroupAccountSchema),
   });
 
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2:1)) {
+    if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
-      
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
           navigate("/business");
           return;
         } else {
-       
           if (data.logo && data.logo.length === 0) {
             delete data.logo;
           }

@@ -111,7 +111,7 @@ const Home = () => {
     showMaintenance,
     showOverSpeed,
     showStayInZone,
-    showFleetUsage
+    showFleetUsage,
   } = useContext(ThemeContext);
 
   const customStyles = {

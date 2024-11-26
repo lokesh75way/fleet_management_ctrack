@@ -38,8 +38,8 @@ const UserSetting = ({
   const [selectedTimezone, setSelectedTimezone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
-  const [loading , setLoading] = useState(false)
-  const [logo, setLogo] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [logo, setLogo] = useState(null);
 
   const customStyles = {
     control: (base) => ({
@@ -64,7 +64,10 @@ const UserSetting = ({
       "unitOfFuel",
       formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value
     );
-    setSelectedTimezone(formData?.[0].companyId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone);
+    setSelectedTimezone(
+      formData?.[0].companyId?.timezone ||
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
     setValue(
       "language",
       formData?.[0].companyId?.language || languageOptions[0].value
@@ -81,8 +84,8 @@ const UserSetting = ({
       "currency",
       formData?.[0].companyId?.currency || currencyOptions[0].value
     );
-    setLogo(formData?.[0].companyId?.file)
-  },[]);
+    setLogo(formData?.[0].companyId?.file);
+  }, []);
 
   return (
     <div className="p-4">
@@ -263,11 +266,10 @@ const UserSetting = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
                 // onChange={(newValue) => setValue("unitOfFuel", newValue.value)}
-                onChange={(timeZone)=> {
-                  setSelectedTimezone(timeZone)
-                  setValue("timezone", timeZone.value)
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
                 }}
-                  
                 ref={ref}
                 name={name}
                 styles={customStyles}

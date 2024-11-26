@@ -8,12 +8,19 @@ import { useTranslation } from "react-i18next";
 
 import CustomCheckbox from "./CustomCheckbox";
 
-
-const Licensing = ({ register, setValue, getValues, errors, control, handleSubmit, onSubmit,watch }) => {
+const Licensing = ({
+  register,
+  setValue,
+  getValues,
+  errors,
+  control,
+  handleSubmit,
+  onSubmit,
+  watch,
+}) => {
   const { t } = useTranslation();
-  
 
-  const isLicenseReminderDisabled = watch("licenseReminder",false)
+  const isLicenseReminderDisabled = watch("licenseReminder", false);
   const isRoadworthyReminderEnabled = watch("roadworthyReminder", false);
 
   return (
@@ -22,9 +29,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
         <div className="row" style={{ width: "50%" }}>
           <div className="border border-1 p-3 row rounded">
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("License number")} 
-              </label>
+              <label className="form-label">{t("License number")}</label>
               <CustomInput
                 type="text"
                 required
@@ -36,9 +41,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
               <Error errorName={errors.licenseNumber} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("Roadworthy number")} 
-              </label>
+              <label className="form-label">{t("Roadworthy number")}</label>
               <CustomInput
                 type="text"
                 required
@@ -58,13 +61,11 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
                 register={register}
                 name="licenseReminder"
                 label="License Reminder"
-                checked={getValues('licenseReminder')}
+                checked={getValues("licenseReminder")}
               />
             </div>
             <div className="col-xl-6 mb-3 mt-2">
-              <label className="form-label">
-                {t("Last renewal date")} 
-              </label>
+              <label className="form-label">{t("Last renewal date")}</label>
               <CustomInput
                 type="date"
                 required
@@ -77,9 +78,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
               <Error errorName={errors.licenseLastRenewalDate} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("Period (months)")} 
-              </label>
+              <label className="form-label">{t("Period (months)")}</label>
               <CustomInput
                 type="number"
                 required
@@ -91,9 +90,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
               <Error errorName={errors.licensePeriod} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("Next renewal due on")} 
-              </label>
+              <label className="form-label">{t("Next renewal due on")}</label>
               <CustomInput
                 type="date"
                 required
@@ -106,7 +103,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")} 
+                {t("Reminder starts (weeks before expiry)")}
               </label>
               <CustomInput
                 type="number"
@@ -124,16 +121,13 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
           <div className="border-container position-relative p-3 mt-5 row">
             <div className="heading-container d-flex align-items-center position-absolute">
               <CustomCheckbox
-              
                 register={register}
                 name="roadworthyReminder"
                 label="Roadworthy Reminder"
               />
             </div>
             <div className="col-xl-6 mb-3 mt-2">
-              <label className="form-label">
-                {t("Last renewal date")} 
-              </label>
+              <label className="form-label">{t("Last renewal date")}</label>
               <CustomInput
                 type="date"
                 required
@@ -145,9 +139,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
               <Error errorName={errors.roadworthyLastRenewalDate} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("Period (months)")} 
-              </label>
+              <label className="form-label">{t("Period (months)")}</label>
               <CustomInput
                 type="number"
                 required
@@ -159,9 +151,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
               <Error errorName={errors.roadworthyPeriod} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">
-                {t("Next renewal due on")} 
-              </label>
+              <label className="form-label">{t("Next renewal due on")}</label>
               <CustomInput
                 type="date"
                 required
@@ -174,7 +164,7 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")} 
+                {t("Reminder starts (weeks before expiry)")}
               </label>
               <CustomInput
                 type="number"
@@ -190,9 +180,20 @@ const Licensing = ({ register, setValue, getValues, errors, control, handleSubmi
         </div>
       </div>
 
-      <div style={{ width: "100%", display: "flex", justifyContent: "center", margin: "2rem 0" }}>
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}>
-          {t('next')}
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          margin: "2rem 0",
+        }}
+      >
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
+          {t("next")}
         </Button>
       </div>
     </div>

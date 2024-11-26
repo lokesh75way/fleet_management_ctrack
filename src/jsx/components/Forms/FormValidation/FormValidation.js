@@ -285,7 +285,8 @@ const FormValidation = () => {
                                 name="val-terms"
                                 value="1"
                               />
-                              <span className="css-control-indicator"></span> Agree to terms and conditions
+                              <span className="css-control-indicator"></span>{" "}
+                              Agree to terms and conditions
                             </label>
                           </div>
                         </div>
@@ -340,9 +341,9 @@ const FormValidation = () => {
                         >
                           <label className="text-label">Username</label>
                           <div className="input-group">
-                              <span className="input-group-text">
-                                <i className="fa fa-user" />{" "}
-                              </span>
+                            <span className="input-group-text">
+                              <i className="fa fa-user" />{" "}
+                            </span>
                             <input
                               type="text"
                               className="form-control"
@@ -379,12 +380,11 @@ const FormValidation = () => {
                         >
                           <label className="text-label">Password *</label>
                           <div className="input-group transparent-append mb-2">
-                            
-                              <span className="input-group-text">
-                                {" "}
-                                <i className="fa fa-lock" />{" "}
-                              </span>
-                            
+                            <span className="input-group-text">
+                              {" "}
+                              <i className="fa fa-lock" />{" "}
+                            </span>
+
                             <input
                               type={`${showPassword ? "text" : "password"}`}
                               className="form-control"
@@ -400,10 +400,12 @@ const FormValidation = () => {
                               className="input-group-text "
                               onClick={() => setShowPassword(!showPassword)}
                             >
-
-                                {" "}
-                                  {showPassword === false ? (<i className="fa fa-eye-slash" />) : (<i className="fa fa-eye" />)}
-                              
+                              {" "}
+                              {showPassword === false ? (
+                                <i className="fa fa-eye-slash" />
+                              ) : (
+                                <i className="fa fa-eye" />
+                              )}
                             </div>
                             <div
                               id="val-username1-error"
@@ -438,9 +440,7 @@ const FormValidation = () => {
                         >
                           Submit
                         </button>
-                        <button  className="btn btn-danger light">
-                          Cancel
-                        </button>
+                        <button className="btn btn-danger light">Cancel</button>
                       </form>
                     )}
                   </Formik>

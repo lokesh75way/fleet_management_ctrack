@@ -138,7 +138,7 @@ const Toastr = () => {
         motherMenu="Plugins"
         pageContent="Toastr"
       />
-		<ToastContainer />
+      <ToastContainer />
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
@@ -161,7 +161,6 @@ const Toastr = () => {
                   className="btn btn-dark mb-2  me-2"
                   id="toastr-success-bottom-right"
                 >
-                  
                   Bottom Right
                 </button>{" "}
                 <button
@@ -170,7 +169,7 @@ const Toastr = () => {
                   className="btn btn-dark mb-2  me-2"
                   id="toastr-success-bottom-left"
                 >
-                Bottom Left
+                  Bottom Left
                 </button>{" "}
                 <button
                   onClick={notifyTopLeft}
@@ -178,7 +177,7 @@ const Toastr = () => {
                   className="btn btn-dark mb-2  me-2"
                   id="toastr-success-top-left"
                 >
-                Top Left
+                  Top Left
                 </button>{" "}
                 <button
                   onClick={notifyTopFullWidth}
@@ -194,7 +193,6 @@ const Toastr = () => {
                   className="btn btn-dark mb-2  me-2"
                   id="toastr-success-bottom-full-width"
                 >
-                  
                   Bottom Full Width
                 </button>{" "}
                 <button
@@ -204,7 +202,7 @@ const Toastr = () => {
                   id="toastr-success-top-center"
                 >
                   Top Center
-                </button>{' '}
+                </button>{" "}
                 <button
                   onClick={notifyBottomCenter}
                   type="button"
@@ -212,7 +210,7 @@ const Toastr = () => {
                   id="toastr-success-bottom-center"
                 >
                   Bottom Center
-                </button>{' '}
+                </button>{" "}
                 <button
                   onClick={notifyInfo}
                   type="button"
@@ -220,7 +218,7 @@ const Toastr = () => {
                   id="toastr-info-top-right"
                 >
                   Info
-                </button>{' '}
+                </button>{" "}
                 <button
                   onClick={notifyWarning}
                   type="button"
@@ -228,7 +226,7 @@ const Toastr = () => {
                   id="toastr-warning-top-right"
                 >
                   Warning
-                </button>{' '}
+                </button>{" "}
                 <button
                   onClick={notifyError}
                   type="button"
@@ -236,7 +234,7 @@ const Toastr = () => {
                   id="toastr-danger-top-right"
                 >
                   Error
-                </button>{' '}
+                </button>{" "}
               </div>
             </div>
           </div>

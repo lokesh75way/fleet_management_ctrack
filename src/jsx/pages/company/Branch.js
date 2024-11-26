@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useParams, useNavigate  } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ const Branch = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const {id} = useParams();
+  const { id } = useParams();
 
   const [selectFilter, setFilter] = useState({
     value: "All Companies",
@@ -82,11 +82,11 @@ const Branch = () => {
     branches: 0,
   });
   const [companyDropdown, setCompanyDropdown] = useState({
-    label:t('allCompanies'),
+    label: t("allCompanies"),
     value: "All Companies",
   });
   const [branchDropdown, setBranchDropdown] = useState({
-    label:  t('selectParentBranch'),
+    label: t("selectParentBranch"),
     value: "All Branches",
   });
   const [companies, setCompanies] = useState([]);
@@ -96,15 +96,15 @@ const Branch = () => {
   const defaultValues = getSelectValues();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
-  
-  const itemsPerPage=10;
+
+  const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const fetchAllBranch = async (page, CompanyId, branchId) => {
     try {
@@ -135,12 +135,12 @@ const Branch = () => {
     }
   };
   useEffect(() => {
-    if(id){
-      fetchAllBranch(page,id);
-    }else{
+    if (id) {
+      fetchAllBranch(page, id);
+    } else {
       fetchAllBranch(page);
     }
-  }, [page,id]);
+  }, [page, id]);
 
   const filteredBranches = branches.filter(
     (branch) =>
@@ -153,7 +153,6 @@ const Branch = () => {
   }));
 
   const handleCompanyChange = (selectedOption) => {
-
     setSelectedCompany(selectedOption);
     setFilter(selectedOption);
     setCompanyId(selectedOption.value);
@@ -233,11 +232,11 @@ const Branch = () => {
                               handleCompanyChange(newValue);
                             }}
                             key={companyId}
-                            value={value? value : companyDropdown}
+                            value={value ? value : companyDropdown}
                             customStyles={customStyles}
                             name={name}
                             ref={ref}
-                            isDisabled={role === 'COMPANY' ? true : false}
+                            isDisabled={role === "COMPANY" ? true : false}
                           />
                         )}
                       />
@@ -304,8 +303,8 @@ const Branch = () => {
                           tempValue2={tempValue2}
                           editData={editData}
                           tableData={tableData}
-                          currentPage={page} 
-                        itemsPerPage={itemsPerPage}
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
@@ -323,10 +322,10 @@ const Branch = () => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

@@ -27,7 +27,6 @@ const BusinessUser = () => {
   const startIndex = (page - 1) * itemsPerPage;
   const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
-
   async function getGroupData() {
     try {
       const permissions = JSON.parse(localStorage.getItem("permission"));

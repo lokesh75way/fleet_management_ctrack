@@ -423,7 +423,7 @@ const ThemeContextProvider = (props) => {
         setOverSpeed,
         showStayInZone,
         setStayInZone,
-        isRtl,  
+        isRtl,
         setIsRtl,
       }}
     >

@@ -44,8 +44,8 @@ const TechnicianForm = () => {
       activeIndex === 0
         ? technicianGeneralSchema
         : activeIndex === 1
-        ? technicianAddressSchema
-        : technicianLeaveSchema
+          ? technicianAddressSchema
+          : technicianLeaveSchema
     ),
   });
   const { id: techId } = useParams();
@@ -78,10 +78,10 @@ const TechnicianForm = () => {
     try {
       const data = await getTechnicianById(id);
       setEditData(data);
-      console.log(data, "techdata")
-      setValue('noOfDaysCL',data.leave[0].days)
-      setValue('noOfDays',data.leave[1].days)
-      setValue('noOfDaysPL',data.leave[2].days)
+      console.log(data, "techdata");
+      setValue("noOfDaysCL", data.leave[0].days);
+      setValue("noOfDays", data.leave[1].days);
+      setValue("noOfDaysPL", data.leave[2].days);
       reset(data);
     } catch (error) {
       notifyError("Some error occured !!");
@@ -91,9 +91,8 @@ const TechnicianForm = () => {
 
   useEffect(() => {
     if (techId) {
-     getTechnician(techId)
-     
-    };
+      getTechnician(techId);
+    }
   }, [techId]);
   return (
     <>

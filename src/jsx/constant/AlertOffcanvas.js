@@ -96,7 +96,7 @@ const AlertOffcanvas = forwardRef(
       const vl = getValues(e.target.name);
       setValue(e.target.name, e.target.checked);
     };
-    
+
     return (
       <>
         <Offcanvas
@@ -130,7 +130,9 @@ const AlertOffcanvas = forwardRef(
                         render={({ field: { onChange, value, name, ref } }) => (
                           <BranchDropdown
                             onChange={(newValue) => {
-                              const newArray = newValue.map((temp)=> temp.value)
+                              const newArray = newValue.map(
+                                (temp) => temp.value
+                              );
                               setValue("branch", newArray);
                             }}
                             value={value}
@@ -368,9 +370,7 @@ const AlertOffcanvas = forwardRef(
                           </label>
                         </div>
                       </div>
-                      {!getValues("BOTH") && (
-                        <Error errorName={errors.value} />
-                      )}
+                      {!getValues("BOTH") && <Error errorName={errors.value} />}
                     </div>
                     <div className="col-xl-6 mb-3">
                       <label className="form-label">{t("validDays")}</label>
@@ -402,7 +402,8 @@ const AlertOffcanvas = forwardRef(
                             className="form-check-input"
                             value="CUSTOM"
                             checked={
-                              (getValues("validDays") ?? tempValidDays) === "CUSTOM"
+                              (getValues("validDays") ?? tempValidDays) ===
+                              "CUSTOM"
                             }
                             onChange={handleValidDays}
                           />

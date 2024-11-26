@@ -4,7 +4,7 @@ import axios from "axios";
 //   return axios.get("/companies");
 // };
 
-export const getCompany = async (page, groupId , limit = 10) => {
+export const getCompany = async (page, groupId, limit = 10) => {
   let url = "/companies";
   let params = [];
   if (page) {
@@ -15,7 +15,7 @@ export const getCompany = async (page, groupId , limit = 10) => {
     params.push(`businessGroupId=${groupId}`);
   }
   if (params.length > 0) {
-    url += '?' + params.join('&');
+    url += "?" + params.join("&");
   }
   return await axios.get(url);
 };

@@ -45,12 +45,10 @@ const DriverForm = () => {
       activeIndex === 0
         ? driverProfileSchema
         : activeIndex === 1
-        ? driverInfoSchema
-        : driverDocumentSchema
+          ? driverInfoSchema
+          : driverDocumentSchema
     ),
   });
-
-
 
   const onSubmitHanlder = async (data) => {
     try {
@@ -60,18 +58,28 @@ const DriverForm = () => {
 
         // Check if issueDate and expireDate are valid dates
         if (isNaN(issueDate.getTime()) || isNaN(expireDate.getTime())) {
-            throw new Error("Invalid date format");
+          throw new Error("Invalid date format");
         }
 
         // Convert issueDate and expireDate to ISO strings
         const formattedIssueDate = issueDate.toISOString();
         const formattedExpireDate = expireDate.toISOString();
         if (driverId) {
-          await updateDriver(driverId, { ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          await updateDriver(driverId, {
+            ...data,
+            documents: [
+              { ...data.documents[0], expireDate: formattedExpireDate },
+            ],
+          });
           notifySuccess("Driver Updated!");
           navigate("/driver");
         } else {
-          await createDriver({ ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          await createDriver({
+            ...data,
+            documents: [
+              { ...data.documents[0], expireDate: formattedExpireDate },
+            ],
+          });
           notifySuccess(t("newDriverCreated"));
           navigate("/driver");
         }

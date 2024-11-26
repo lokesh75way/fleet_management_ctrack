@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const EcoDriving = () => {
   return (
     <>
-    <h1>Eco Driving</h1>
+      <h1>Eco Driving</h1>
     </>
-  )
-}
+  );
+};
 
-export default EcoDriving
+export default EcoDriving;

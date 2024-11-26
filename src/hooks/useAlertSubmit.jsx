@@ -1,7 +1,7 @@
-import {useEffect, useState, useContext} from 'react'
+import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 const useAlertSubmit = () => {
-const {
+  const {
     register,
     handleSubmit,
     setValue,
@@ -11,8 +11,6 @@ const {
     formState: { errors },
   } = useForm();
 
-
-    
   return {
     register,
     handleSubmit,
@@ -20,7 +18,7 @@ const {
     setValue,
     getValues,
     formState: { errors },
-    }
-}
+  };
+};
 
 export default useAlertSubmit;

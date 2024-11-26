@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const OBD = () => {
-  return (
-    <h1>OBD</h1>
-  )
-}
+  return <h1>OBD</h1>;
+};
 
-export default OBD
+export default OBD;

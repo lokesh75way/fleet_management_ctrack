@@ -11,7 +11,7 @@ class LineChart1 extends Component {
       datasets: [
         {
           label: "Distance",
-          data: [95, 20, 12 , 24 , 24 , 12],
+          data: [95, 20, 12, 24, 24, 12],
           borderColor: "rgba(44, 44, 44, ,1)",
           borderWidth: this.props.borderWidth ? this.props.borderWidth : "2",
           //pointBackgroundColor: "rgba(64, 24, 157, 1)",
@@ -28,7 +28,6 @@ class LineChart1 extends Component {
         },
       },
       scales: {
-      
         y: {
           min: 0,
           max: 100,
@@ -41,13 +40,13 @@ class LineChart1 extends Component {
           },
           title: {
             display: true,
-            text: 'Distance', // Label for the y-axis
-            color: 'rgba(255, 255, 255, 0.7)', // Text color
+            text: "Distance", // Label for the y-axis
+            color: "rgba(255, 255, 255, 0.7)", // Text color
             font: {
               size: 12, // Font size
-              weight: 'bold' // Font weight
-            }
-          }
+              weight: "bold", // Font weight
+            },
+          },
         },
 
         x: {
@@ -59,13 +58,13 @@ class LineChart1 extends Component {
           },
           title: {
             display: true,
-            text: 'Duration', // Label for the x-axis
-            color: 'rgba(255, 255, 255, 0.7)', // Text color
+            text: "Duration", // Label for the x-axis
+            color: "rgba(255, 255, 255, 0.7)", // Text color
             font: {
               size: 12, // Font size
-              weight: 'bold' // Font weight
-            }
-          }
+              weight: "bold", // Font weight
+            },
+          },
         },
       },
     };
@@ -73,7 +72,6 @@ class LineChart1 extends Component {
       <>
         <Line
           data={data}
-
           options={options}
           height={this.props.height ? this.props.height : 150}
         />

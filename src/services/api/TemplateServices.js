@@ -1,22 +1,21 @@
 import requests from "./Axios";
 import axios from "axios";
 import initAxios from "./Axios";
-initAxios()
-
+initAxios();
 
 export const getTemplates = async (page) => {
   try {
     let url = "/feature-template";
     if (page !== undefined) {
-    url += `?page=${page}&limit=${10}`;
-  }
+      url += `?page=${page}&limit=${10}`;
+    }
     const response = await axios.get(url);
-      return response.data;
-  } catch(error){
+    return response.data;
+  } catch (error) {
     console.error("Error fetching templates:", error);
-    return { error: "Couldn't fetch User" }
+    return { error: "Couldn't fetch User" };
   }
-}
+};
 
 const TemplateServices = {
   getTemplates: async (body) => {
@@ -28,14 +27,12 @@ const TemplateServices = {
       throw error; // Re-throwing the error for the caller to handle
     }
   },
-  
-//   getStaffById: async (id, body) => {
-//     return requests.post(`/admin/${id}`, body);
-//   },
 
+  //   getStaffById: async (id, body) => {
+  //     return requests.post(`/admin/${id}`, body);
+  //   },
 
   createTemplate: async (body) => {
-
     try {
       const response = await axios.post("/feature-template", body);
       return response.data; // Directly return the data array
@@ -72,7 +69,7 @@ const TemplateServices = {
       console.error("Error fetching modules:", error);
       throw error; // Re-throwing the error for the caller to handle
     }
-  }
+  },
 };
 
 export default TemplateServices;

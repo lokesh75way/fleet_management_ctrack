@@ -5,7 +5,6 @@ import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 //const geoUrl = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 
 const WorldMap = () => {
-	
   return (
     <ComposableMap>
       <Geographies geography="./features.json">
@@ -16,8 +15,6 @@ const WorldMap = () => {
         }
       </Geographies>
     </ComposableMap>
-	
-	
   );
 };
 

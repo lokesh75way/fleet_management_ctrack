@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import MainPagetitle from "../layouts/MainPagetitle";
 import GroupTable from "../components/Tables/GroupTable";
 import { useNavigate } from "react-router-dom";
-import TemplateServices, { getTemplates } from "../../services/api/TemplateServices";
+import TemplateServices, {
+  getTemplates,
+} from "../../services/api/TemplateServices";
 import { clsx } from "clsx";
 import { useTranslation } from "react-i18next";
 import usePagination from "../../hooks/usePagination";
@@ -13,23 +15,22 @@ import { ICON } from "../constant/theme";
 import Paginate from "../components/Pagination/Paginate";
 
 const CreateGroups = () => {
-    const { isRtl } = useContext(ThemeContext);
+  const { isRtl } = useContext(ThemeContext);
 
-  
   const { t } = useTranslation();
   // const templateData = JSON.parse(localStorage.getItem("templateData")) || []
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
-    const fetchData = async (page) => {
-        try {
-          const templateData =  await getTemplates(page);
-          console.log("Received template data:",templateData);
-          setCount(templateData.data.totalCount)
-          setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
-        } catch (error) {
-          console.error("Error fetching template data:", error);
-        }
-      };
+  const fetchData = async (page) => {
+    try {
+      const templateData = await getTemplates(page);
+      console.log("Received template data:", templateData);
+      setCount(templateData.data.totalCount);
+      setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
+    } catch (error) {
+      console.error("Error fetching template data:", error);
+    }
+  };
   useEffect(() => {
     fetchData(page);
   }, [page]);
@@ -39,12 +40,10 @@ const CreateGroups = () => {
 
   const navigate = useNavigate();
 
-
   // useEffect(()=>{
   //     const data = getAllModules();
   //     setGroupsDataState(data)
   // },[])
-
 
   const onConfirmDelete = async (index, id) => {
     const newdata = groupsDataState.filter((e, i) => {
@@ -63,10 +62,10 @@ const CreateGroups = () => {
     navigate("permission", { state: JSON.stringify(props) });
   };
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -118,8 +117,8 @@ const CreateGroups = () => {
                           setIsEditTrue={setIsEditTrue}
                           tableData={groupsDataState}
                           onConfirmDelete={onConfirmDelete}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage}
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -133,11 +132,11 @@ const CreateGroups = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />  
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

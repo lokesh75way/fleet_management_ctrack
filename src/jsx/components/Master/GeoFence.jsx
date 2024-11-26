@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const GeoFence = () => {
   return (
- <>
- <h1>GeoFence</h1>
- </>
-  )
-}
+    <>
+      <h1>GeoFence</h1>
+    </>
+  );
+};
 
-export default GeoFence
+export default GeoFence;

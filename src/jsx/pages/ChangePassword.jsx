@@ -5,7 +5,7 @@ import logo from "../../images/logo/logo-full.png";
 import LogoWhite from "../../images/logo/logofull-white.png";
 import { ThemeContext } from "../../context/ThemeContext";
 import { useForm } from "react-hook-form";
-import CustomInput from '../components/Input/CustomInput'
+import CustomInput from "../components/Input/CustomInput";
 import PasswordServices from "../../services/api/PasswordServices";
 
 const ChangePassword = () => {
@@ -13,15 +13,21 @@ const ChangePassword = () => {
   const [showOldPassword, setOldShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
-  const {register, control, formState:{errors},handleSubmit} = useForm()
+  const {
+    register,
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
   const nav = useNavigate();
 
-  const onSubmit = ({newPassword, oldPassword, confirmPassword}) => {
+  const onSubmit = ({ newPassword, oldPassword, confirmPassword }) => {
     const password = {
-      password: oldPassword, newPassword: newPassword
-    }
-    PasswordServices.changePassword(password)
-      console.log(oldPassword,newPassword)
+      password: oldPassword,
+      newPassword: newPassword,
+    };
+    PasswordServices.changePassword(password);
+    console.log(oldPassword, newPassword);
     nav("/dashboard");
   };
   return (
@@ -44,28 +50,28 @@ const ChangePassword = () => {
                         </Link>
                       </div>
                       <h4 className="text-center mb-4">Change Password</h4>
-                      <form onSubmit={ handleSubmit(onSubmit)}>
+                      <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-3">
                           <label>
                             <strong>Old Password</strong>
                           </label>
                           <div className="position-relative">
-                          <CustomInput
-                            type={showOldPassword ? "text" : "password"}
-                            register={register}
-                            name="oldPassword"
-                            label="Old Password"
-                            className="form-control"
-                            defaultValue=""
-                          />
-                          <span
-                            className="showPasswordIcon"
-                            onClick={() => {
-                              setOldShowPassword(!showOldPassword);
-                            }}
-                          >
-                            {showOldPassword ? <LuEyeOff /> : <LuEye />}
-                          </span>
+                            <CustomInput
+                              type={showOldPassword ? "text" : "password"}
+                              register={register}
+                              name="oldPassword"
+                              label="Old Password"
+                              className="form-control"
+                              defaultValue=""
+                            />
+                            <span
+                              className="showPasswordIcon"
+                              onClick={() => {
+                                setOldShowPassword(!showOldPassword);
+                              }}
+                            >
+                              {showOldPassword ? <LuEyeOff /> : <LuEye />}
+                            </span>
                           </div>
                         </div>
                         <div className="mb-3 position-relative">
@@ -73,22 +79,22 @@ const ChangePassword = () => {
                             <strong>New Password</strong>
                           </label>
                           <div className="position-relative">
-                          <CustomInput
-                            type={showNewPassword ? "text" : "password"}
-                            className="form-control"
-                            register={register}
-                            name="newPassword"
-                            label="New Password"
-                            defaultValue=""
-                          />
-                          <span
-                            className="showPasswordIcon"
-                            onClick={() => {
-                              setNewShowPassword(!showNewPassword);
-                            }}
-                          >
-                            {showNewPassword ? <LuEyeOff /> : <LuEye />}
-                          </span>
+                            <CustomInput
+                              type={showNewPassword ? "text" : "password"}
+                              className="form-control"
+                              register={register}
+                              name="newPassword"
+                              label="New Password"
+                              defaultValue=""
+                            />
+                            <span
+                              className="showPasswordIcon"
+                              onClick={() => {
+                                setNewShowPassword(!showNewPassword);
+                              }}
+                            >
+                              {showNewPassword ? <LuEyeOff /> : <LuEye />}
+                            </span>
                           </div>
                         </div>
                         <div className="mb-3 position-relative">
@@ -96,22 +102,22 @@ const ChangePassword = () => {
                             <strong>Confirm Password</strong>
                           </label>
                           <div className="position-relative">
-                          <CustomInput
-                            type={showConfirmPassword ? "text" : "password"}
-                            className="form-control"
-                            register={register}
-                            name="confirmPassword"
-                            label="Confirm Password"
-                            defaultValue=""
-                          />
-                          <span
-                            className="showPasswordIcon"
-                            onClick={() => {
-                              setConfirmShowPassword(!showConfirmPassword);
-                            }}
-                          >
-                            {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
-                          </span>
+                            <CustomInput
+                              type={showConfirmPassword ? "text" : "password"}
+                              className="form-control"
+                              register={register}
+                              name="confirmPassword"
+                              label="Confirm Password"
+                              defaultValue=""
+                            />
+                            <span
+                              className="showPasswordIcon"
+                              onClick={() => {
+                                setConfirmShowPassword(!showConfirmPassword);
+                              }}
+                            >
+                              {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
+                            </span>
                           </div>
                         </div>
                         <div className="text-center">

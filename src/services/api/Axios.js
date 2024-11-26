@@ -7,7 +7,7 @@ function initAxios() {
     const token = state.auth.auth.token;
     config.baseURL = process.env.REACT_APP_BACKEND_API;
     // config.baseURL = "https://75way.com/api/fleet/";
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
   });
 }

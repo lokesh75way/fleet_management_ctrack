@@ -104,10 +104,7 @@ function Register(props) {
                           className={`img-fluid w-100 object-fit-cover overflow-hidden ${imageLogin}`}
                           alt="Login Logo"
                         ></img>
-                        <div
-                        
-                          className="sm-mt-4 button_left_arrow"
-                          >
+                        <div className="sm-mt-4 button_left_arrow">
                           <NavLink to="/login">{SVGICON.ArrowLeft}</NavLink>
                         </div>
                       </div>
@@ -152,13 +149,13 @@ function Register(props) {
                                         className="dz-form py-2"
                                         onSubmit={onSignUp}
                                       >
-                                        <h3 className="form-title">{t('signUp')}</h3>
+                                        <h3 className="form-title">
+                                          {t("signUp")}
+                                        </h3>
                                         <div className="dz-separator-outer m-b5">
                                           <div className="dz-separator bg-primary style-liner"></div>
                                         </div>
-                                        <p>
-                                        {t('enterYourPersonalDetail')}{" "}
-                                        </p>
+                                        <p>{t("enterYourPersonalDetail")} </p>
                                         <div className="form-group mt-3">
                                           <input
                                             name="dzName"
@@ -252,13 +249,13 @@ function Register(props) {
                                               htmlFor="check2"
                                               style={{ marginLeft: "2px" }}
                                             >
-                                              {t('iAgreeToThe')}{" "}
+                                              {t("iAgreeToThe")}{" "}
                                               <Link to={"#"}>
-                                               {t ('termsOfService')}{" "}
+                                                {t("termsOfService")}{" "}
                                               </Link>
                                               &amp;{" "}
                                               <Link to={"#"}>
-                                              {t ('privacyPolicy')}
+                                                {t("privacyPolicy")}
                                               </Link>
                                             </label>
                                           </span>
@@ -275,7 +272,7 @@ function Register(props) {
                                             type="submit"
                                             className="btn btn-primary float-end w-100"
                                           >
-                                           { t('submit')}
+                                            {t("submit")}
                                           </button>
                                         </div>
                                       </form>
@@ -288,7 +285,7 @@ function Register(props) {
                                   <div className="col-lg-12 text-center">
                                     <span>
                                       {" "}
-                                      © { t('copyrightBy')}
+                                      © {t("copyrightBy")}
                                       <span
                                         className={`heart ${
                                           heartActive ? "" : "heart-blast"
@@ -303,9 +300,9 @@ function Register(props) {
                                         target="_blank"
                                       >
                                         {" "}
-                                        { t('75way')}{" "}
+                                        {t("75way")}{" "}
                                       </a>{" "}
-                                      { t('allRightReserved')}
+                                      {t("allRightReserved")}
                                     </span>
                                   </div>
                                 </div>

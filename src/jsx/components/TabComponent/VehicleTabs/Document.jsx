@@ -50,7 +50,7 @@ const Document = ({
       : fields;
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "100%"}}>
+      <div className="row" style={{ width: "100%" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
           <Button
             onClick={() => {
@@ -115,7 +115,7 @@ const Document = ({
                     />
                   )}
                 </div>
-                
+
                 <div className="col-xl-2 d-flex flex-column mb-2 ">
                   <label className="form-label">{t("issueDate")}</label>
                   <Controller
@@ -221,9 +221,7 @@ const Document = ({
                   )}
                 </div>
                 <div className="col-xl-2 mb-2">
-                  <label className="form-label">
-                    {t("uploadFile")}
-                  </label>
+                  <label className="form-label">{t("uploadFile")}</label>
                   <FileUploader
                     getValue={getValues}
                     link={
@@ -249,7 +247,6 @@ const Document = ({
                     }
                   />
                 </div>
-                
               </div>
             </>
           );

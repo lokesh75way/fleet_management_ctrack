@@ -9,14 +9,13 @@ import { usePermissions } from "../../../context/PermissionContext";
 const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
   // const { getData } = useStorage();
   // const filteredItems = getData(tableData);
-  const {can} = usePermissions()
-  const editPermission = can('vehicle','modify')
-  const deletePermission = can('vehicle','delete')
-  if(tableData.length ===0){
+  const { can } = usePermissions();
+  const editPermission = can("vehicle", "modify");
+  const deletePermission = can("vehicle", "delete");
+  if (tableData.length === 0) {
     return;
   }
   return tableData?.map((item, index) => (
-  
     <tr key={item.id}>
       <td>
         <div className="products">
@@ -31,7 +30,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <span className="text-primary">{item?.branchId?.branchName}</span>
       </td>
-      
+
       <td>
         <span>{item.simNumber}</span>
       </td>
@@ -47,23 +46,29 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       {/* <td>
                 <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
             </td> */}
-      {(deletePermission || editPermission) && <td>
-        <span className="d-flex justify-content-center">
-          {editPermission && <span
-            className="cursor-pointer"
-            onClick={() => editDrawerOpen(item._id)}
-          >
-            <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-          </span>}
-          {deletePermission && <DeleteModal
-            className="cursor-pointer "
-            onConfirmDelete={onConfirmDelete}
-            id={item._id}
-          >
-            <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-          </DeleteModal>}
-        </span>
-      </td>}
+      {(deletePermission || editPermission) && (
+        <td>
+          <span className="d-flex justify-content-center">
+            {editPermission && (
+              <span
+                className="cursor-pointer"
+                onClick={() => editDrawerOpen(item._id)}
+              >
+                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+              </span>
+            )}
+            {deletePermission && (
+              <DeleteModal
+                className="cursor-pointer "
+                onConfirmDelete={onConfirmDelete}
+                id={item._id}
+              >
+                <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
+              </DeleteModal>
+            )}
+          </span>
+        </td>
+      )}
     </tr>
   ));
 };

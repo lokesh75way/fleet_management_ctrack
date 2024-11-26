@@ -11,11 +11,11 @@ import MainPagetitle from "../../../../layouts/MainPagetitle";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import Information from "../../../../components/TabComponent/VehicleTabs/Information"
-import Licensing from "../../../../components/TabComponent/VehicleTabs/Licensing"
-import Servicing from "../../../../components/TabComponent/VehicleTabs/Servicing"
-import Statuses from "../../../../components/TabComponent/VehicleTabs/Statuses"
-import MessageForwarding from "../../../../components/TabComponent/VehicleTabs/MessageForwarding"
+import Information from "../../../../components/TabComponent/VehicleTabs/Information";
+import Licensing from "../../../../components/TabComponent/VehicleTabs/Licensing";
+import Servicing from "../../../../components/TabComponent/VehicleTabs/Servicing";
+import Statuses from "../../../../components/TabComponent/VehicleTabs/Statuses";
+import MessageForwarding from "../../../../components/TabComponent/VehicleTabs/MessageForwarding";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -38,27 +38,27 @@ const VehicleForm = () => {
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = [
-    t("information"), 
-    t("licensing"), 
-    t("servicing"), 
-    t("statuses"), 
-    t("general"), 
-    t("profile"), 
-    t("document"), 
-    t("messageforwarding")
+    t("information"),
+    t("licensing"),
+    t("servicing"),
+    t("statuses"),
+    t("general"),
+    t("profile"),
+    t("document"),
+    t("messageforwarding"),
   ];
-  
+
   const component = [
-    Information, 
-    Licensing, 
-    Servicing, 
-    Statuses, 
-    General, 
-    Profile, 
-    Document, 
-    MessageForwarding
+    Information,
+    Licensing,
+    Servicing,
+    Statuses,
+    General,
+    Profile,
+    Document,
+    MessageForwarding,
   ];
-  
+
   const totalTabs = tabHeading.length;
 
   const { id } = useParams();
@@ -74,27 +74,28 @@ const VehicleForm = () => {
     handleSubmit,
     watch,
   } = useForm({
-      defaultValues: {
-        documents: [{
-          documentType: {label : 'INSURANCE' , value : 'INSURANCE'},
-          file: '',
-          expireDate:  new Date(),
-          issueDate:  new Date(),
-        }],
-        vehicleName: vehicle?.Vehicle_Name,
-        imeiNumber: vehicle?.imeiNumber,
-        plateNumber: vehicle?.Vehicle_No,
-        registrationNumber: vehicle?.Vehicle_No,
-      },
+    defaultValues: {
+      documents: [
+        {
+          documentType: { label: "INSURANCE", value: "INSURANCE" },
+          file: "",
+          expireDate: new Date(),
+          issueDate: new Date(),
+        },
+      ],
+      vehicleName: vehicle?.Vehicle_Name,
+      imeiNumber: vehicle?.imeiNumber,
+      plateNumber: vehicle?.Vehicle_No,
+      registrationNumber: vehicle?.Vehicle_No,
+    },
     resolver: yupResolver(
       activeIndex === 0
         ? vehicleGeneralSchema
         : activeIndex === 1
-        ? vehicleProfileSchema
-        : vehicleDocumentSchema
+          ? vehicleProfileSchema
+          : vehicleDocumentSchema
     ),
   });
-
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
@@ -106,7 +107,8 @@ const VehicleForm = () => {
               const element = data[key];
               if (data[key] === undefined || data[key] === "") {
                 delete data[key];
-              }}
+              }
+            }
             await updateVehicles(data);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");

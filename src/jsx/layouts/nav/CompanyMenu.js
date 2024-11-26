@@ -27,8 +27,20 @@ export const CompanyMenuList = [
   },
   {
     title: "Branch",
-    iconStyle: <FaRegBuilding style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
-    to:"/branch",
+    iconStyle: (
+      <FaRegBuilding
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
+    to: "/branch",
   },
   { title: "User", iconStyle: SVGICON.Employe, to: "/user" },
   {
@@ -46,7 +58,7 @@ export const CompanyMenuList = [
         }}
       />
     ),
-    url : '/technician',
+    url: "/technician",
     content: [
       {
         title: "Technician Details",
@@ -109,15 +121,27 @@ export const CompanyMenuList = [
     ),
     to: "/vehicle-tracking",
   },
- 
+
   {
     title: "Feature Template",
-    iconStyle: <PiWarningOctagonDuotone style={{ width:"20px",height:"20px",stroke:"#888888", color:"#888888",strokeWidth:'1',clipRule:"evenodd", fillRule:"evenodd"}}/>,
+    iconStyle: (
+      <PiWarningOctagonDuotone
+        style={{
+          width: "20px",
+          height: "20px",
+          stroke: "#888888",
+          color: "#888888",
+          strokeWidth: "1",
+          clipRule: "evenodd",
+          fillRule: "evenodd",
+        }}
+      />
+    ),
     to: "/groups",
   },
   {
     title: "Settings",
-    url : "/settings",
+    url: "/settings",
     iconStyle: SVGICON.SettingMenu,
     content: [
       {
@@ -155,7 +179,7 @@ export const CompanyMenuList = [
         }}
       />
     ),
-    url : '/reports',
+    url: "/reports",
     content: [
       {
         title: "Activity",
@@ -169,7 +193,7 @@ export const CompanyMenuList = [
         title: "Fuel",
         to: "/reports/fuel",
       },
-      
+
       {
         title: "Trip Classification",
         to: "/reports/trip-classification",
@@ -197,5 +221,4 @@ export const CompanyMenuList = [
       },
     ],
   },
-
-]
+];

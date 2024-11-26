@@ -15,7 +15,7 @@ const LocationSelector = ({
   dValues,
   id,
   showCity,
-  Comptype
+  Comptype,
 }) => {
   const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -25,7 +25,7 @@ const LocationSelector = ({
   const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [countriesList, setCountriesList] = useState([]);
   const [stateList, setStateList] = useState([]);
-  const[countryCode, setCountryCode] = useState('IND')
+  const [countryCode, setCountryCode] = useState("IND");
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -45,25 +45,27 @@ const LocationSelector = ({
       const option = countryOptions.find(
         (option) => option.value == dValues?.country
       );
-      setSelectedCountry(option)
+      setSelectedCountry(option);
       setValue("state", dValues.state || "");
       setSelectedState({
-        value : dValues.state,
-        label: dValues.state || ''
-      })
+        value: dValues.state,
+        label: dValues.state || "",
+      });
     } else {
       setSelectedCountry({
-        value : locationData?.country?.isoAlpha3,
-        label: locationData?.country?.isoName
-      })
+        value: locationData?.country?.isoAlpha3,
+        label: locationData?.country?.isoName,
+      });
       setValue("country", locationData?.country?.isoAlpha3);
-      setCountryCode(locationData?.country?.isoAlpha2)
+      setCountryCode(locationData?.country?.isoAlpha2);
       setSelectedState({
         value: locationData?.location?.principalSubdivision,
         label: locationData?.location?.principalSubdivision || "",
       });
       setValue("state", locationData?.location?.principalSubdivision || "");
-      const selectedCountryId = isoToCountryId(locationData?.country?.isoAlpha3);
+      const selectedCountryId = isoToCountryId(
+        locationData?.country?.isoAlpha3
+      );
       GetState(selectedCountryId).then((result) => {
         setStateList(result);
       });
@@ -71,29 +73,29 @@ const LocationSelector = ({
   }, [locationData, id, dValues]);
 
   const isoToCountryId = (isoCode) => {
-    const country = countriesList.find(country => country.iso3 === isoCode);
+    const country = countriesList.find((country) => country.iso3 === isoCode);
     return country ? country.id : null;
   };
-  
+
   const handleCountryChange = async (selectedOption) => {
     const selectedIsoCode = selectedOption.value;
     setCountryId(selectedIsoCode);
-  
+
     const selectedCountryId = isoToCountryId(selectedIsoCode);
-  
+
     const selectedCountry = countriesList.find(
       (country) => country.iso3 === selectedIsoCode
     );
-    setCountryCode(selectedCountry.iso2)
-  
+    setCountryCode(selectedCountry.iso2);
+
     setValue("country", selectedIsoCode);
-    setSelectedCountry({value : selectedIsoCode, label : selectedCountry.name});
+    setSelectedCountry({ value: selectedIsoCode, label: selectedCountry.name });
     setStateList([]);
     setStateId(0);
     setSelectedState({
-      value:'',
-      label : ''
-    })
+      value: "",
+      label: "",
+    });
     const result = await GetState(selectedCountryId);
     setStateList(result);
   };
@@ -110,7 +112,7 @@ const LocationSelector = ({
       selectedState.name = selectedState.name.replace(" Emirate", "");
     }
     setValue("state", selectedState.name);
-    setSelectedState({value : selectedState.name, label : selectedState.name});
+    setSelectedState({ value: selectedState.name, label: selectedState.name });
   };
 
   const getStateName = (state) => {
@@ -123,7 +125,7 @@ const LocationSelector = ({
     return state.name;
   };
 
-// console.log({selectedCountry}, {selectedState})
+  // console.log({selectedCountry}, {selectedState})
   const countryOptions = countriesList.map((country) => ({
     value: country.iso3,
     label: country.name,
@@ -134,7 +136,7 @@ const LocationSelector = ({
     label: getStateName(state),
   }));
 
-console.log({dValues})
+  console.log({ dValues });
 
   return (
     <>
@@ -177,14 +179,16 @@ console.log({dValues})
           <Error errorName={errors.city} />
         </div>
       )}
-     { showCity &&  <TimeZoneSelector
-        setValue={setValue}
-        id={id}
-        dValues={dValues}
-        countryCode={countryCode}
-        customStyle={customStyles}
-        Comptype={Comptype}
-        />}
+      {showCity && (
+        <TimeZoneSelector
+          setValue={setValue}
+          id={id}
+          dValues={dValues}
+          countryCode={countryCode}
+          customStyle={customStyles}
+          Comptype={Comptype}
+        />
+      )}
     </>
   );
 };

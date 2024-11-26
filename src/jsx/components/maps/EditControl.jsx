@@ -1,4 +1,4 @@
-import L from 'react-leaflet-draw'
+import L from "react-leaflet-draw";
 import React, { useEffect, useRef, useState } from "react";
 import { FeatureGroup, Circle, Polygon, Polyline, Marker } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";

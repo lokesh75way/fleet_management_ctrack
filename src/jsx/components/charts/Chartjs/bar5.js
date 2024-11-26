@@ -3,7 +3,14 @@ import { Bar } from "react-chartjs-2";
 
 class BarChart5 extends Component {
   render() {
-    const { labels, data, backgroundColor, hoverBackgroundColor, barThickness,indexAxis } = this.props;
+    const {
+      labels,
+      data,
+      backgroundColor,
+      hoverBackgroundColor,
+      barThickness,
+      indexAxis,
+    } = this.props;
 
     const chartData = {
       defaultFontFamily: "Poppins",
@@ -16,7 +23,7 @@ class BarChart5 extends Component {
           borderWidth: "0",
           backgroundColor: backgroundColor,
           hoverBackgroundColor: hoverBackgroundColor,
-          barThickness: barThickness
+          barThickness: barThickness,
         },
       ],
     };
@@ -31,13 +38,13 @@ class BarChart5 extends Component {
             beginAtZero: true,
           },
           grid: {
-            color: "rgba(255, 255, 255, 0.1)"
-          }
+            color: "rgba(255, 255, 255, 0.1)",
+          },
         },
         y: {
           grid: {
-            color: "rgba(255, 255, 255, 0.1)"
-          }
+            color: "rgba(255, 255, 255, 0.1)",
+          },
         },
       },
     };
@@ -56,4 +63,3 @@ class BarChart5 extends Component {
 }
 
 export default BarChart5;
-

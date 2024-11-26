@@ -3,9 +3,9 @@ import ReactPaginate from "react-paginate";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 const Paginate = ({ totalCount, itemsPerPage, handlePageClick }) => {
-  const {isRtl} = useContext(ThemeContext);
-  const arrowLeft = (<i className="fa-solid fa-angle-left"></i>);
-  const arrowRight = (<i className="fa-solid fa-angle-right"></i>)
+  const { isRtl } = useContext(ThemeContext);
+  const arrowLeft = <i className="fa-solid fa-angle-left"></i>;
+  const arrowRight = <i className="fa-solid fa-angle-right"></i>;
 
   const pageCount = Math.ceil(totalCount / itemsPerPage);
   return (

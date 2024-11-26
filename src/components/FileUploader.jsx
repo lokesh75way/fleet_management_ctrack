@@ -11,22 +11,21 @@ const FileUploader = ({
   setValue,
   setLoading,
   loading,
-  link = false
+  link = false,
 }) => {
-
   const upload_Preset = "our_cloudinary_upload_preset";
   const [fileLink, setFileLink] = useState(null);
 
   useEffect(() => {
     if (link) {
       setFileLink(link);
-      setValue(name, link)
+      setValue(name, link);
     }
   }, [link]);
 
   const fileUploader = async (e) => {
     try {
-      setFileLink('')
+      setFileLink("");
       e.preventDefault();
       setLoading(true);
       const acceptedFiles = e.target.files;
@@ -56,35 +55,39 @@ const FileUploader = ({
 
   return (
     <div className="file-uploader-container">
-    <div className="file-upload-box">
-      {loading ? (
-        <div className="loader">Loading...</div>
-      ) : fileLink ? (
-        <div className="uploaded-image-container">
-          <img src={fileLink} alt="Uploaded file" className="uploaded-image" />
-          <button className="remove-button" onClick={removeFile}>
-            <FaTimes />
-          </button>
-        </div>
-      ) : (
-        <label htmlFor={`file-input-${name}`} className="file-upload-label">
-          <span>Upload Logo</span>
-        </label>
-      )}
-      <input
-        id={`file-input-${name}`}
-        type="file"
-        {...register(`${name}`)}
-        name={name}
-        label={label}
-        className="file-input"
-        onChange={fileUploader}
-        defaultValue={defaultValue}
-        disabled={loading}
-        accept="image/*"
-      />
+      <div className="file-upload-box">
+        {loading ? (
+          <div className="loader">Loading...</div>
+        ) : fileLink ? (
+          <div className="uploaded-image-container">
+            <img
+              src={fileLink}
+              alt="Uploaded file"
+              className="uploaded-image"
+            />
+            <button className="remove-button" onClick={removeFile}>
+              <FaTimes />
+            </button>
+          </div>
+        ) : (
+          <label htmlFor={`file-input-${name}`} className="file-upload-label">
+            <span>Upload Logo</span>
+          </label>
+        )}
+        <input
+          id={`file-input-${name}`}
+          type="file"
+          {...register(`${name}`)}
+          name={name}
+          label={label}
+          className="file-input"
+          onChange={fileUploader}
+          defaultValue={defaultValue}
+          disabled={loading}
+          accept="image/*"
+        />
+      </div>
     </div>
-  </div>
-);
+  );
 };
 export default FileUploader;

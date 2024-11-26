@@ -10,52 +10,50 @@ const CredentialsInput = ({ heading, register, errors, id, getValues }) => {
 
   return (
     <div className="row">
+      <h3 className="mt-4 mb-4">{heading}</h3>
 
-        <h3 className="mt-4 mb-4">{heading}</h3>
-    
-    <div className="col-xl-3 mb-3">
-      <label className="form-label">
-        {t('username')} <span className="text-danger">*</span>
-      </label>
-      <CustomInput
-        type="text"
-        register={register}
-        label="userName"
-        name="userName"
-        placeholder=""
-        defaultValue={getValues("userName")}
-        disabled={id ? true : false}
+      <div className="col-xl-3 mb-3">
+        <label className="form-label">
+          {t("username")} <span className="text-danger">*</span>
+        </label>
+        <CustomInput
+          type="text"
+          register={register}
+          label="userName"
+          name="userName"
+          placeholder=""
+          defaultValue={getValues("userName")}
+          disabled={id ? true : false}
         />
-      <Error errorName={errors.userName} />
+        <Error errorName={errors.userName} />
       </div>
-     
-        { !id && (<div className="col-xl-3 mb-3 ">
+
+      {!id && (
+        <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("password")} <span className="text-danger">*</span>
           </label>
-        <div className="position-relative">
-          <CustomInput
-            type={showPassword ? "text" : "password"}
-            register={register}
-            label="Password"
-            name="password"
-            placeholder=""
+          <div className="position-relative">
+            <CustomInput
+              type={showPassword ? "text" : "password"}
+              register={register}
+              label="Password"
+              name="password"
+              placeholder=""
             />
-          <span
-            className="showPasswordIcon"
-            onClick={() => {
+            <span
+              className="showPasswordIcon"
+              onClick={() => {
                 setShowPassword(!showPassword);
-            }}
+              }}
             >
-            {showPassword ? <LuEyeOff /> : <LuEye />}
-          </span>
+              {showPassword ? <LuEyeOff /> : <LuEye />}
+            </span>
+          </div>
+          {!id && <Error errorName={errors.password} />}
         </div>
-      {!id && <Error errorName={errors.password} />}
-      </div>
-      
       )}
     </div>
-    
   );
 };
 

@@ -1,6 +1,5 @@
 import TemplateServices from "../../../services/api/TemplateServices";
 
-
 // useEffect(() => {
 //   const fetchData = async () => {
 //     try {

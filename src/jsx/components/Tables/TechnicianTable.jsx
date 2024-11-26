@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { MdDelete } from 'react-icons/md';
-import { FaEdit } from 'react-icons/fa';
-import DeleteModal from '../Modal/DeleteModal';
-import { IMAGES,SVGICON} from '../../constant/theme'; 
-import {useParams} from 'react-router-dom'
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import DeleteModal from "../Modal/DeleteModal";
+import { IMAGES, SVGICON } from "../../constant/theme";
+import { useParams } from "react-router-dom";
 
-
-const TechnicianTable = ({tableData,currentPage, itemsPerPage, editDrawerOpen, onConfirmDelete}) => {
-
+const TechnicianTable = ({
+  tableData,
+  currentPage,
+  itemsPerPage,
+  editDrawerOpen,
+  onConfirmDelete,
+}) => {
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>

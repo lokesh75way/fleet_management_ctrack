@@ -25,10 +25,6 @@ import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../GroupDropdown";
 import ParentBranchDropdown from "../../ParentBranch";
 
-
-
-
-
 const General = ({
   register,
   setValue,
@@ -46,7 +42,7 @@ const General = ({
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
   const { checkRole, checkUserName } = useStorage();
-  
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -57,7 +53,7 @@ const General = ({
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   // const newData = userData?.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState([]);
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
 
   const role = checkRole();
 
@@ -74,7 +70,7 @@ const General = ({
 
       setValue("vehicleName", formData?.[0].vehicleName);
       setValue("plateNumber", formData?.[0].plateNumber);
-      setValue("branchId", formData[0]?.branchId?._id)
+      setValue("branchId", formData[0]?.branchId?._id);
       // setValue(
       //   "branch",
       //   formData?.[0]?.branchId.map((branch) => branch._id)
@@ -89,25 +85,22 @@ const General = ({
       setValue("distanceCounter", formData?.[0].distanceCounter);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
       setValue("speedDetection", formData?.[0].speedDetection);
-      
+
       setValue(
         "deviceAccuracyTolerance",
         formData?.[0].deviceAccuracyTolerance
       );
-
-      
     }
   }, [formData, id]);
 
   useEffect(() => {
-    if(checkRole() !== "SUPER_ADMIN"){
-      setIsBuisnessGroupDisabled(true)
+    if (checkRole() !== "SUPER_ADMIN") {
+      setIsBuisnessGroupDisabled(true);
     }
-    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
+    if (userDetails?.user?.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
     }
-},[])
-
+  }, []);
 
   return (
     <div className="p-4">
@@ -121,10 +114,10 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-                onChange={ (newValue) => {
-                   setValue("businessGroupId", newValue.value);
-                   setValue("businessId", newValue.value);
-                   setValue("businessGroupName", newValue.label);
+                onChange={(newValue) => {
+                  setValue("businessGroupId", newValue.value);
+                  setValue("businessId", newValue.value);
+                  setValue("businessGroupName", newValue.label);
                   setGroupId(newValue.value);
                   setCompanyId(null);
                 }}
@@ -180,8 +173,7 @@ const General = ({
                   // setValue("parentBranchId", newValue.value);
                   setValue("branch", newValue.value);
                   setValue("branchId", newValue.value);
-                }
-                }
+                }}
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
@@ -308,7 +300,7 @@ const General = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("secondarySimNumber")} 
+            {t("secondarySimNumber")}
           </label>
           <CustomInput
             type="number"
@@ -431,7 +423,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('next')} 
+          {t("next")}
         </Button>
       </div>
     </div>

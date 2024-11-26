@@ -20,71 +20,71 @@ import PermissionDenied from "./pages/PermissionDenied";
 import { usePermissions } from "../context/PermissionContext";
 import { GiConsoleController } from "react-icons/gi";
 
-const TripClassification = React.lazy(() =>
-  import("./pages/company/reports/TripClassification")
+const TripClassification = React.lazy(
+  () => import("./pages/company/reports/TripClassification")
 );
 const Elock = React.lazy(() => import("./pages/company/reports/Elock"));
-const HardwareMaintenance = React.lazy(() =>
-  import("./pages/company/reports/HardwareMaintenance")
+const HardwareMaintenance = React.lazy(
+  () => import("./pages/company/reports/HardwareMaintenance")
 );
 const Logs = React.lazy(() => import("./pages/company/reports/Logs"));
-const Customized = React.lazy(() =>
-  import("./pages/company/reports/Customized")
+const Customized = React.lazy(
+  () => import("./pages/company/reports/Customized")
 );
 const OBD = React.lazy(() => import("./pages/company/reports/OBD"));
 const Billing = React.lazy(() => import("./pages/company/reports/Billing"));
 const RPM = React.lazy(() => import("./pages/company/reports/RPM"));
-const Temperature = React.lazy(() =>
-  import("./pages/company/reports/Temperature")
+const Temperature = React.lazy(
+  () => import("./pages/company/reports/Temperature")
 );
-const DriverBehaviour = React.lazy(() =>
-  import("./pages/company/reports/DriverBehaviour")
+const DriverBehaviour = React.lazy(
+  () => import("./pages/company/reports/DriverBehaviour")
 );
-const ActivityReport = React.lazy(() =>
-  import("./pages/company/reports/Activity")
+const ActivityReport = React.lazy(
+  () => import("./pages/company/reports/Activity")
 );
-const GeofenceAddress = React.lazy(() =>
-  import("./pages/company/reports/GeofenceAddress")
+const GeofenceAddress = React.lazy(
+  () => import("./pages/company/reports/GeofenceAddress")
 );
 const Sensor = React.lazy(() => import("./pages/company/reports/Sensor"));
 const AlertReport = React.lazy(() => import("./pages/company/reports/Alert"));
 const Reminder = React.lazy(() => import("./pages/company/reports/Reminder"));
-const ExpenseReport = React.lazy(() =>
-  import("./pages/company/reports/Expense")
+const ExpenseReport = React.lazy(
+  () => import("./pages/company/reports/Expense")
 );
 const FuelReport = React.lazy(() => import("./pages/company/reports/Fuel"));
 
-const Performance = React.lazy(() =>
-  import("./components/Dashboard/Performance")
+const Performance = React.lazy(
+  () => import("./components/Dashboard/Performance")
 );
 const Projects = React.lazy(() => import("./components/Dashboard/Projects"));
-const TaskSummary = React.lazy(() =>
-  import("./components/Dashboard/TaskSummary")
+const TaskSummary = React.lazy(
+  () => import("./components/Dashboard/TaskSummary")
 );
-const ManageClient = React.lazy(() =>
-  import("./components/Dashboard/ManageClient")
+const ManageClient = React.lazy(
+  () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
 const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
 const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
-const CompanyTracking = React.lazy(() =>
-  import("./pages/admin/tracking/CompanyTracking")
+const CompanyTracking = React.lazy(
+  () => import("./pages/admin/tracking/CompanyTracking")
 );
-const VehicleForm = React.lazy(() =>
-  import("./pages/admin/settings/CreateForms/VehicleForm")
+const VehicleForm = React.lazy(
+  () => import("./pages/admin/settings/CreateForms/VehicleForm")
 );
-const DriverForm = React.lazy(() =>
-  import("./pages/admin/settings/CreateForms/DriverForm")
+const DriverForm = React.lazy(
+  () => import("./pages/admin/settings/CreateForms/DriverForm")
 );
-const TechnicianForm = React.lazy(() =>
-  import("./pages/admin/settings/CreateForms/TechnicianForm")
+const TechnicianForm = React.lazy(
+  () => import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
-const CompanyForm = React.lazy(() =>
-  import("./pages/admin/settings/CreateForms/CompanyForm")
+const CompanyForm = React.lazy(
+  () => import("./pages/admin/settings/CreateForms/CompanyForm")
 );
-const BusinessForm = React.lazy(() =>
-  import("./pages/admin/settings/CreateForms/BusinessForm")
+const BusinessForm = React.lazy(
+  () => import("./pages/admin/settings/CreateForms/BusinessForm")
 );
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
@@ -96,11 +96,11 @@ const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
-const MyProfile = React.lazy(() =>
-  import("./pages/businessUser/profile/MyProfile")
+const MyProfile = React.lazy(
+  () => import("./pages/businessUser/profile/MyProfile")
 );
-const BusinessUserProfile = React.lazy(() =>
-  import("./components/AppsMenu/AppProfile/BusinessUserProfile")
+const BusinessUserProfile = React.lazy(
+  () => import("./components/AppsMenu/AppProfile/BusinessUserProfile")
 );
 const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 
@@ -231,7 +231,7 @@ const BusinessGroupRoutes = () => {
       url: "user/edit/:id",
       component: <SubUserForm />,
     },
-    
+
     { module: "subUser", url: "user", component: <SubUser /> },
 
     { module: "business", url: "business-group", component: <BusinessUser /> },

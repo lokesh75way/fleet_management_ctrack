@@ -4,10 +4,7 @@ import MainPagetitle from "../../layouts/MainPagetitle";
 import { CSVLink } from "react-csv";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import {
-  filterAlerts,
-  findHighestAndLowestDates,
-} from "../../../utils/helper";
+import { filterAlerts, findHighestAndLowestDates } from "../../../utils/helper";
 import { companyOptions } from "../TabComponent/VehicleTabs/Options";
 import FilterOffcanvas from "../../constant/FilterOffcanvas";
 import { useTranslation } from "react-i18next";
@@ -436,7 +433,8 @@ const Report = () => {
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
+                        <i className="fa-solid fa-file-excel" />{" "}
+                        {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}

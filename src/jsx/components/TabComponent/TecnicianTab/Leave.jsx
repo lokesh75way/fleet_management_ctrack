@@ -13,7 +13,6 @@ const Leave = ({
   errors,
   getValues,
 }) => {
- 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -36,14 +35,15 @@ const Leave = ({
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             No of Days
-
           </label>
           <CustomInput
             type="text"
             register={register}
             label="No Of Days"
             name="noOfDaysCL"
-            onChange={(e)=> {setValue("leave[0].days",e.target.value)}}
+            onChange={(e) => {
+              setValue("leave[0].days", e.target.value);
+            }}
           />
           <Error errorName={errors.noOfDaysCL} />
         </div>
@@ -73,7 +73,7 @@ const Leave = ({
             label="No Of DaysSL"
             name="noOfDays"
             placeholder=""
-            onChange={(e)=> setValue("leave[1].days",e.target.value)}
+            onChange={(e) => setValue("leave[1].days", e.target.value)}
           />
           <Error errorName={errors.noOfDays} />
         </div>
@@ -90,7 +90,6 @@ const Leave = ({
             placeholder=""
             defaultValue="Privilege Leave"
             disabled
-            
           />
           <Error errorName={errors.privilegeLeave} />
         </div>
@@ -103,7 +102,9 @@ const Leave = ({
             register={register}
             label="No Of Days"
             name="noOfDaysPL"
-            onChange={(e)=>{setValue("leave[2].days",e.target.value)}}
+            onChange={(e) => {
+              setValue("leave[2].days", e.target.value);
+            }}
           />
           <Error errorName={errors.noOfDaysPL} />
         </div>

@@ -122,7 +122,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
-// console.log({allTimezones})
+  // console.log({allTimezones})
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -168,10 +168,12 @@ const MyAccount = ({
 
         <span
           className="absolute"
-          style={{     position: 'absolute',
-            top: '23%',
-            right: '-42%',
-            overflow: 'hidden'}}
+          style={{
+            position: "absolute",
+            top: "23%",
+            right: "-42%",
+            overflow: "hidden",
+          }}
         >
           <FileUploader
             setValue={setValue}
@@ -211,7 +213,7 @@ const MyAccount = ({
           dValues={dValues}
           id={id}
           showCity={true}
-          Comptype={'businessGroupId'}
+          Comptype={"businessGroupId"}
         />
 
         <div className="col-xl-3 mb-3 ">

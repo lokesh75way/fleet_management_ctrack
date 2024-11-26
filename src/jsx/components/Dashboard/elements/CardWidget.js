@@ -7,7 +7,7 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { FaRegBuilding, FaTools } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getUser } from "../../../../services/api/UserServices";
@@ -16,16 +16,16 @@ import { getTechnicians } from "../../../../services/api/TechnicianService";
 import { checkAutoLogin } from "../../../../services/AuthService";
 import { getDrivers } from "../../../../services/api/driverService";
 
-const CardWidget = ({usageData}) => {
+const CardWidget = ({ usageData }) => {
   const { t } = useTranslation();
   const loggedUser = JSON.parse(localStorage.getItem("userDetails"));
   const role = loggedUser?.user?.role;
   const [vehicleData, setVehicleData] = React.useState([0, 0, 0]);
   // Define the order for each role
   const roleOrders = {
-    SUPER_ADMIN: ["allvehicles","businessgroup", "company", "users"],
-    BUSINESS_GROUP: [ "allvehicles","company", "branches", "technician"],
-    COMPANY: [ "allvehicles", "branches","technician", "driver"],
+    SUPER_ADMIN: ["allvehicles", "businessgroup", "company", "users"],
+    BUSINESS_GROUP: ["allvehicles", "company", "branches", "technician"],
+    COMPANY: ["allvehicles", "branches", "technician", "driver"],
   };
 
   // Get the order for the current role or use the default order
@@ -41,9 +41,9 @@ const CardWidget = ({usageData}) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data,totalCount } = await getGroups();
+        const { data, totalCount } = await getGroups();
         setBusinessUserCount(totalCount);
-        
+
         const { data: companies } = await getCompany();
         const { totalCount: companyCount } = companies.data;
         setCompanyCount(companyCount);
@@ -51,18 +51,15 @@ const CardWidget = ({usageData}) => {
         const { count: userCount } = await getUser();
         setUserCount(userCount);
 
-        const { data : branch  } = await getAllBranch();
+        const { data: branch } = await getAllBranch();
         const { totalCount: branchCount } = branch;
         setBranchCount(branchCount);
 
-        const { count : technicianCount  } = await getTechnicians();
-       setTechnicianCount(technicianCount)
+        const { count: technicianCount } = await getTechnicians();
+        setTechnicianCount(technicianCount);
 
-
-        const {data : drivers , totalLength  : driverCount } = await getDrivers();
-        setDriverCount(driverCount)
-
-
+        const { data: drivers, totalLength: driverCount } = await getDrivers();
+        setDriverCount(driverCount);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -71,12 +68,15 @@ const CardWidget = ({usageData}) => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     const parseVehicleData = usageData?.vehicle
-      ? [usageData.vehicle.running || 0, usageData.vehicle.idle || 0, usageData.vehicle.stopped || 0]
+      ? [
+          usageData.vehicle.running || 0,
+          usageData.vehicle.idle || 0,
+          usageData.vehicle.stopped || 0,
+        ]
       : [0, 0, 0];
-    console.log("parseVehicleData", parseVehicleData);  
+    console.log("parseVehicleData", parseVehicleData);
     setVehicleData(parseVehicleData);
   }, [usageData?.vehicle?.running]);
 
@@ -91,7 +91,7 @@ const CardWidget = ({usageData}) => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalBusinessUser')}</h6>
+                        <h6>{t("totalBusinessUser")}</h6>
                         <h3>{businessUserCount}</h3>
                       </div>
                       <div className="icon-box bg-primary-light">
@@ -110,18 +110,18 @@ const CardWidget = ({usageData}) => {
                 <div className="card same-card">
                   <div className="card-body d-flex justify-content-center align-items-center  py-2">
                     <AllProjectDonutChart
-                    key={vehicleData}
+                      key={vehicleData}
                       colors={["#3AC977", "var(--primary)", "var(--secondary)"]}
                       labels={["Running", "Idle", "Stopped"]}
                       width={160}
                       data={vehicleData}
-                      completeLabel={t('total')}
+                      completeLabel={t("total")}
                     />
                     <ul className="project-list">
                       {" "}
                       <li>
                         {" "}
-                        <h6>{t('allVehicles')}</h6>{" "}
+                        <h6>{t("allVehicles")}</h6>{" "}
                       </li>
                       <li>
                         <svg
@@ -133,7 +133,7 @@ const CardWidget = ({usageData}) => {
                         >
                           <rect width="10" height="10" rx="3" fill="#3AC977" />
                         </svg>{" "}
-                        {t('running')}
+                        {t("running")}
                       </li>
                       <li>
                         <svg
@@ -150,7 +150,7 @@ const CardWidget = ({usageData}) => {
                             fill="var(--primary)"
                           />
                         </svg>{" "}
-                        {t('idle')}
+                        {t("idle")}
                       </li>
                       <li>
                         <svg
@@ -167,7 +167,7 @@ const CardWidget = ({usageData}) => {
                             fill="var(--secondary)"
                           />
                         </svg>{" "}
-                        {t('stopped')}
+                        {t("stopped")}
                       </li>
                     </ul>
                   </div>
@@ -182,7 +182,7 @@ const CardWidget = ({usageData}) => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalCompanies')}</h6>
+                        <h6>{t("totalCompanies")}</h6>
                         <h3>{companyCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -208,10 +208,10 @@ const CardWidget = ({usageData}) => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0 z-0" >
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalUsers')}</h6>
+                        <h6>{t("totalUsers")}</h6>
                         <h3>{userCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-ligh">
@@ -230,7 +230,7 @@ const CardWidget = ({usageData}) => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalBranches')}</h6>
+                        <h6>{t("totalBranches")}</h6>
                         <h3>{branchCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -259,7 +259,7 @@ const CardWidget = ({usageData}) => {
                   <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalTechnician')}</h6>
+                        <h6>{t("totalTechnician")}</h6>
                         <h3>{technicianCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">
@@ -285,10 +285,10 @@ const CardWidget = ({usageData}) => {
             return (
               <div key={index} className="col-xl-3 col-sm-6">
                 <div className="card chart-grd same-card">
-                  <div className="card-body depostit-card p-0 z-0" >
+                  <div className="card-body depostit-card p-0 z-0">
                     <div className="depostit-card-media d-flex justify-content-between pb-0">
                       <div>
-                        <h6>{t('totalDriver')}</h6>
+                        <h6>{t("totalDriver")}</h6>
                         <h3>{driverCount}</h3>
                       </div>
                       <div className="icon-box bg-danger-light">

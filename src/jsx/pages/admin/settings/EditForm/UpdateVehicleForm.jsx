@@ -43,30 +43,31 @@ const UpdateVehicleForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      documents: [{
-        documentType: 'INSURANCE',
-        file: '',
-        expireDate:  new Date(),
-        issueDate:  new Date(),
-      }],
+      documents: [
+        {
+          documentType: "INSURANCE",
+          file: "",
+          expireDate: new Date(),
+          issueDate: new Date(),
+        },
+      ],
     },
     resolver: yupResolver(
       activeIndex === 0
         ? vehicleGeneralSchema
         : activeIndex === 1
-        ? vehicleProfileSchema
-        : vehicleDocumentSchema
+          ? vehicleProfileSchema
+          : vehicleDocumentSchema
     ),
   });
 
-
-  useEffect(()=>{
-    if(id){
-      formData[0].documents.map((docs,index)=>{
-        setValue(`documents.${index}.documentType`,docs.documentType);
-      })
+  useEffect(() => {
+    if (id) {
+      formData[0].documents.map((docs, index) => {
+        setValue(`documents.${index}.documentType`, docs.documentType);
+      });
     }
-  },[])
+  }, []);
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
@@ -80,7 +81,7 @@ const UpdateVehicleForm = () => {
                 delete data[key];
               }
             }
-            console.log(data)
+            console.log(data);
             await updateVehicles(data, id);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");

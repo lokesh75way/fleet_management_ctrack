@@ -31,7 +31,6 @@ const headers = [
 ];
 
 const Geofence = (ref) => {
- 
   const navigate = useNavigate();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
@@ -50,14 +49,14 @@ const Geofence = (ref) => {
     location: "",
   });
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const getData = async () => {
     try {
@@ -76,14 +75,13 @@ const Geofence = (ref) => {
   const onConfirmDelete = async (id) => {
     try {
       const data = await deleteGeofenceData(id);
-      if(data.success){
+      if (data.success) {
         notifySuccess(data.message);
       }
       getData(page);
     } catch (error) {
-      notifyError(error)
+      notifyError(error);
     }
-  
   };
   const editDrawerOpen = (item) => {
     navigate(`/settings/geofence/map/edit/${item}`);
@@ -145,8 +143,8 @@ const Geofence = (ref) => {
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -161,10 +159,10 @@ const Geofence = (ref) => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

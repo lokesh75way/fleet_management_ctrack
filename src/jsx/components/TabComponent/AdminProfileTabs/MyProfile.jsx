@@ -6,14 +6,25 @@ import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from '../../../../users.json'
+import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 
-const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, errors, control, isEdit, setIsEdit }) => {
-  const {checkRole, checkUser} = useStorage()
+const MyProfile = ({
+  data,
+  setValue,
+  getValues,
+  register,
+  onSubmit,
+  handleSubmit,
+  errors,
+  control,
+  isEdit,
+  setIsEdit,
+}) => {
+  const { checkRole, checkUser } = useStorage();
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const [tempValue,setTempValue] = useState();
+  const [tempValue, setTempValue] = useState();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -21,21 +32,27 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
     }),
   };
 
-  const businessUserOptions = DummyData.filter((item) => item.role === "businessgroup").map((item) => ({
+  const businessUserOptions = DummyData.filter(
+    (item) => item.role === "businessgroup"
+  ).map((item) => ({
     label: item.email,
     value: item.id,
   }));
 
-  const companyOptions = DummyData.filter((item) => item.role === "company").map((item) => ({
+  const companyOptions = DummyData.filter(
+    (item) => item.role === "company"
+  ).map((item) => ({
     label: item.email,
     value: item.id,
   }));
-  
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">User Name<span className="text-danger">*</span></label>
+          <label className="form-label">
+            User Name<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
@@ -45,10 +62,12 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             // disabled={!isEdit}
             defaultValue={data?.userName || " "}
           />
-           <Error errorName={errors.userName} />
+          <Error errorName={errors.userName} />
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">Country<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Country<span className="text-danger">*</span>
+          </label>
           <CountrySelect
             onChange={(e) => {
               setCountryid(e.id);
@@ -58,13 +77,15 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             inputClassName="border border-white"
             placeHolder="Select Country"
           />
-         { !getValues('country') && <Error errorName={errors.country} />}
+          {!getValues("country") && <Error errorName={errors.country} />}
         </div>
         <div className="col-xl-6 mb-3">
-          <label className="form-label">State<span className="text-danger">*</span></label>
+          <label className="form-label">
+            State<span className="text-danger">*</span>
+          </label>
           <div style={{ background: "white" }}>
             <StateSelect
-            autocomplate="off"
+              autocomplate="off"
               countryid={countryid}
               onChange={(e) => {
                 setstateid(e.id);
@@ -76,10 +97,12 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
               placeHolder="Select State"
             />
           </div>
-          {!getValues('state') && <Error errorName={errors.state} />}
+          {!getValues("state") && <Error errorName={errors.state} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -91,7 +114,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <Error errorName={errors.email} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Email<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Email<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="email"
             register={register}
@@ -103,7 +128,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <Error errorName={errors.helpDeskEmail} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Help Desk Telephone Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Help Desk Telephone Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -116,7 +143,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           <Error errorName={errors.helpDeskTelephoneNumber} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">Mobile Number<span className="text-danger">*</span></label>
+          <label className="form-label">
+            Mobile Number<span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="number"
             register={register}
@@ -125,7 +154,9 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             label="Mobile Number"
             // disabled={!isEdit}
           />
-          {!getValues("mobileNumber") && <Error errorName={errors.mobileNumber} />}
+          {!getValues("mobileNumber") && (
+            <Error errorName={errors.mobileNumber} />
+          )}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">Whatsapp Contact Number</label>
@@ -136,7 +167,7 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
             label="Whatsapp Contact Number"
             defaultValue={data?.whatsappContactNumber || " "}
             name="whatsappContactNumber"
-            // disabled={!isEdit} 
+            // disabled={!isEdit}
           />
         </div>
         <div className="col-xl-6 mb-3">
@@ -203,7 +234,12 @@ const MyProfile = ({ data,setValue,getValues, register, onSubmit, handleSubmit, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" disabled={!isEdit} onClick={handleSubmit(onSubmit)}  style={{ width: "10%" }}>
+        <Button
+          type="submit"
+          disabled={!isEdit}
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
           {" "}
           Submit
         </Button>

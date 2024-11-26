@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const ObjectGroup = () => {
   return (
     <>
-    <h1>ObjectGroup</h1>
+      <h1>ObjectGroup</h1>
     </>
-    
-  )
-}
+  );
+};
 
-export default ObjectGroup
+export default ObjectGroup;

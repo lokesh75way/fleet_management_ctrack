@@ -1,7 +1,7 @@
-import {useEffect, useState, useContext} from 'react'
+import { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 const useDriverSubmit = () => {
-const {
+  const {
     register,
     handleSubmit,
     setValue,
@@ -11,8 +11,6 @@ const {
     formState: { errors },
   } = useForm();
 
-
-    
   return {
     register,
     handleSubmit,
@@ -21,7 +19,7 @@ const {
     getValues,
     control,
     formState: { errors },
-    }
-}
+  };
+};
 
-export default useDriverSubmit
+export default useDriverSubmit;

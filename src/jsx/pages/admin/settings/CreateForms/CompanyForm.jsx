@@ -52,21 +52,21 @@ const CompanyForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      userInfo: [{
-        name:'',
-        designation : '', 
-        mobileNumber :null,
-        email:'',
-      }],
+      userInfo: [
+        {
+          name: "",
+          designation: "",
+          mobileNumber: null,
+          email: "",
+        },
+      ],
     },
     resolver: yupResolver(
-      activeIndex === 1
-        ? companyPasswordSchema
-        : companyAccountSchema
+      activeIndex === 1 ? companyPasswordSchema : companyAccountSchema
     ),
   });
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2 :1)) {
+    if (activeIndex === totalTabs - (id ? 2 : 1)) {
       try {
         if (id) {
           try {
@@ -123,7 +123,7 @@ const CompanyForm = () => {
         notifyError("Password is not changes!");
       }
     }
-  
+
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
 

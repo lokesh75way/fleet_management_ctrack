@@ -39,18 +39,18 @@ const BranchForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      userInfo: [{
-        name:'',
-        designation : '', 
-        mobileNumber :null,
-        email:'',
-      }],
+      userInfo: [
+        {
+          name: "",
+          designation: "",
+          mobileNumber: null,
+          email: "",
+        },
+      ],
     },
-    resolver: yupResolver(
-       branchAccountSchema 
-    ),
+    resolver: yupResolver(branchAccountSchema),
   });
-  
+
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
@@ -74,7 +74,7 @@ const BranchForm = () => {
             navigate("/branch");
             return;
           } catch (e) {
-            console.log(e)
+            console.log(e);
             notifyError("Some error occured !!");
           }
           return;
@@ -96,7 +96,7 @@ const BranchForm = () => {
           }
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         notifyError("Some error occured !!");
       }
     }

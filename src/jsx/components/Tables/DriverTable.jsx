@@ -3,7 +3,13 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 
-const DriverTable = ({ tableData,currentPage, itemsPerPage, onConfirmDelete, editDrawerOpen }) => {
+const DriverTable = ({
+  tableData,
+  currentPage,
+  itemsPerPage,
+  onConfirmDelete,
+  editDrawerOpen,
+}) => {
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
 
   return (

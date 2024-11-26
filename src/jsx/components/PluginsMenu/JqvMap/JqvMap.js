@@ -1,15 +1,13 @@
 import React from "react";
 
-
-import MapChart from './MapChart';
-import WorldMap from './WorldMap';
-
+import MapChart from "./MapChart";
+import WorldMap from "./WorldMap";
 
 import PageTitle from "../../../layouts/PageTitle";
 
 const JqvMap = () => {
-	//const [selected, onSelect] = useState(null);
-	
+  //const [selected, onSelect] = useState(null);
+
   return (
     <div className="h-80">
       <PageTitle activeMenu="JqvMap" pageContent="JqvMap" motherMenu="Map" />
@@ -20,11 +18,10 @@ const JqvMap = () => {
               <div className="card-header">
                 <h4 className="card-title">World Map</h4>
               </div>
-              <div className="card-body mb-2" style={{ height: "100%" }}>            
-                  <div id="world-map" style={{ height: "100%" }}>
-                    
-                    <WorldMap />
-                  </div>
+              <div className="card-body mb-2" style={{ height: "100%" }}>
+                <div id="world-map" style={{ height: "100%" }}>
+                  <WorldMap />
+                </div>
               </div>
             </div>
           </div>
@@ -34,7 +31,7 @@ const JqvMap = () => {
                 <h4 className="card-title">USA</h4>
               </div>
               <div className="card-body mb-2" style={{ height: "100%" }}>
-                <div id="usa" style={{ height: "100%" }}>				  
+                <div id="usa" style={{ height: "100%" }}>
                   <MapChart />
                 </div>
               </div>

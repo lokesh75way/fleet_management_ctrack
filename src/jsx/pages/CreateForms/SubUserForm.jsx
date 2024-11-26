@@ -33,10 +33,10 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     control,
     handleSubmit,
   } = useForm({
-    resolver: yupResolver( id ? subUserEditAccountSchema: subUserAccountSchema),
+    resolver: yupResolver(id ? subUserEditAccountSchema : subUserAccountSchema),
   });
 
-  console.log(errors, "erroe:-")
+  console.log(errors, "erroe:-");
 
   const onSubmit = async (data) => {
     if (data.businessUser) {
@@ -49,12 +49,12 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       console.log(data.Branch);
       data.branchId = data.Branch;
     }
-    if(id){
+    if (id) {
       try {
         // data.role = "USER";
         // data.parent = userName;
         // data.type = "STAFF";
-        const response = await updateUser(id,data);
+        const response = await updateUser(id, data);
         if (response.error) {
           notifyError(response.error);
         } else {
@@ -65,8 +65,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       } catch (error) {
         notifyError("Something Went Wrong");
       }
-    }
-    else{
+    } else {
       try {
         data.role = "USER";
         data.parent = userName;
@@ -84,7 +83,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
       }
     }
   };
- 
+
   return (
     <>
       <MainPagetitle
@@ -129,7 +128,7 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
                           errors={errors}
                           onSubmit={onSubmit}
                           handleSubmit={handleSubmit}
-                          formData = {formData}
+                          formData={formData}
                         />
                       </Tab.Pane>
                     );

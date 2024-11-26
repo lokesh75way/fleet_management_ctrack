@@ -23,7 +23,6 @@ const BusinessTable = ({
   const deletePermission = can("business", "delete");
   const { isRtl } = useContext(ThemeContext);
 
-
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>

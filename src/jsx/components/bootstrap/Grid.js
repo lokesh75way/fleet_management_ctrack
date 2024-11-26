@@ -122,10 +122,10 @@ const UiGrid = () => {
               <Card.Body>
                 <p>
                   Using a single set of grid classes, you can create a default
-                  grid system that starts out stacked on mobile devices and tablet
-                  devices (the extra small to small range) before becoming
-                  horizontal on desktop (medium) devices. Place grid columns in
-                  any
+                  grid system that starts out stacked on mobile devices and
+                  tablet devices (the extra small to small range) before
+                  becoming horizontal on desktop (medium) devices. Place grid
+                  columns in any
                 </p>
                 <Row>
                   <Col lg={12}>

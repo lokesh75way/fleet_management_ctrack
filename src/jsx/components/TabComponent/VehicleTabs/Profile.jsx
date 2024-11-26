@@ -8,7 +8,7 @@ import Error from "../../Error/Error";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import '../../../../scss/pages/_driver-tracking.scss'
+import "../../../../scss/pages/_driver-tracking.scss";
 import {
   options,
   permitOptions,
@@ -18,10 +18,18 @@ import {
   durationCostSelectOptions,
 } from "./Options";
 import CustomInput from "../../Input/CustomInput";
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
-
-const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, getValues,formData}) => {
+const Profile = ({
+  register,
+  setValue,
+  errors,
+  handleSubmit,
+  onSubmit,
+  control,
+  getValues,
+  formData,
+}) => {
   const id = useParams();
   const [selectedOption, setSelectedOption] = useState(null);
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
@@ -35,18 +43,18 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
   const customStyles = {
     control: (base) => ({
       ...base,
-      padding: ".25rem 0 ", 
+      padding: ".25rem 0 ",
     }),
   };
-  const handleChange = (e)=>{
-    setSelectedOption(e.target.value)
-    setValue('fuelSensor', e.target.value)
-  }
+  const handleChange = (e) => {
+    setSelectedOption(e.target.value);
+    setValue("fuelSensor", e.target.value);
+  };
 
-  const {t} = useTranslation();
+  const { t } = useTranslation();
 
-  useEffect(()=>{
-    if(formData && id){
+  useEffect(() => {
+    if (formData && id) {
       // setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
       // setValue("companyName",formData[0].companyId?.companyName)
       // setValue("userName", formData[0].userName)
@@ -67,78 +75,112 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       // setDefaultCountry({ name:formData[0].country })
       // setSelectStateName({name : formData[0].state || ''})
       // setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
-      
-      setValue("plateNumber",formData[0].plateNumber || '' )
-      setValue("vehicleCategory",formData[0].vehicleCategory || '' )
-      setValue("dvirTemplate",formData[0].dvirTemplate || '' )
-      setValue("purchaseAmount",formData[0].purchaseAmount || '' )
-      setValue("manufacturerDate",formData[0].manufacturerDate || '' )
-      setValue("purchaseDate",formData[0].purchaseDate || '' )
-      setValue("weightCapacity",formData[0].weightCapacity || '' )
-      setValue("gpsInstallationDate",formData[0].gpsInstallationDate || '' )
-      setValue("gpsWarranty", formData[0].gpsWarranty || '' )
-      setValue("companyAverage",formData[0].companyAverage || '' )
-      setValue("permit",formData[0].permit || '' )
-      setValue("installationDate",formData[0].installationDate || '' )
-      setValue("registrationNumber",formData[0].registrationNumber || '' )
-      setValue("fuelType",formData[0].fuelType || '' )
-      const distanceBaseFuelConsumption = formData?.[0]?.distanceBaseFuelConsumption
-      setValue("distanceBasedDistanceQuantity", formData[0].distanceBasedDistanceQuantity || '' )
-      if(distanceBaseFuelConsumption){
-        setValue("distanceBaseFuelConsumption",formData[0].distanceBaseFuelConsumption || '' )
-        setValue("distanceBaseFuelConsumptionUnit",formData[0].distanceBaseFuelConsumptionUnit || '' )
-        setIsCheckedDBFC(true)
+
+      setValue("plateNumber", formData[0].plateNumber || "");
+      setValue("vehicleCategory", formData[0].vehicleCategory || "");
+      setValue("dvirTemplate", formData[0].dvirTemplate || "");
+      setValue("purchaseAmount", formData[0].purchaseAmount || "");
+      setValue("manufacturerDate", formData[0].manufacturerDate || "");
+      setValue("purchaseDate", formData[0].purchaseDate || "");
+      setValue("weightCapacity", formData[0].weightCapacity || "");
+      setValue("gpsInstallationDate", formData[0].gpsInstallationDate || "");
+      setValue("gpsWarranty", formData[0].gpsWarranty || "");
+      setValue("companyAverage", formData[0].companyAverage || "");
+      setValue("permit", formData[0].permit || "");
+      setValue("installationDate", formData[0].installationDate || "");
+      setValue("registrationNumber", formData[0].registrationNumber || "");
+      setValue("fuelType", formData[0].fuelType || "");
+      const distanceBaseFuelConsumption =
+        formData?.[0]?.distanceBaseFuelConsumption;
+      setValue(
+        "distanceBasedDistanceQuantity",
+        formData[0].distanceBasedDistanceQuantity || ""
+      );
+      if (distanceBaseFuelConsumption) {
+        setValue(
+          "distanceBaseFuelConsumption",
+          formData[0].distanceBaseFuelConsumption || ""
+        );
+        setValue(
+          "distanceBaseFuelConsumptionUnit",
+          formData[0].distanceBaseFuelConsumptionUnit || ""
+        );
+        setIsCheckedDBFC(true);
       }
-      setValue("durationBaseFuelConsumptionDurationQuanitty",formData[0].durationBaseFuelConsumptionDurationQuanitty || '')
-      setValue("durationBaseFuelConsumptionDurationUnit",formData[0].durationBaseFuelConsumptionDurationUnit || '' )
-      const durationBaseDistanceQuantity = formData?.[0]?.durationBaseDistanceQuantity
-      if(durationBaseDistanceQuantity){
-        setValue("durationBaseDistanceQuantity",formData[0].durationBaseDistanceQuantity || '' )
-        setValue("durationBaseFuelConsumptionUnit",formData[0].durationBaseFuelConsumptionUnit || '' )
-        setIsCheckedDBFC2(true)
+      setValue(
+        "durationBaseFuelConsumptionDurationQuanitty",
+        formData[0].durationBaseFuelConsumptionDurationQuanitty || ""
+      );
+      setValue(
+        "durationBaseFuelConsumptionDurationUnit",
+        formData[0].durationBaseFuelConsumptionDurationUnit || ""
+      );
+      const durationBaseDistanceQuantity =
+        formData?.[0]?.durationBaseDistanceQuantity;
+      if (durationBaseDistanceQuantity) {
+        setValue(
+          "durationBaseDistanceQuantity",
+          formData[0].durationBaseDistanceQuantity || ""
+        );
+        setValue(
+          "durationBaseFuelConsumptionUnit",
+          formData[0].durationBaseFuelConsumptionUnit || ""
+        );
+        setIsCheckedDBFC2(true);
       }
-      setValue("fuelIdlingConsumption",formData[0].fuelIdlingConsumption || '' )
-      setValue("fuelIdlingConsumptionUnit",formData[0].fuelIdlingConsumptionUnit || '' )
-      setValue("consumptionTolerancePercent",formData[0].consumptionTolerancePercent || '' )
-      setValue("vinNumber",formData[0].vinNumber || '' )
-      setValue("engineNumber",formData[0].engineNumber || '' )
-      setValue("odometer",formData[0].odometer || '' )
-      setValue("LBSDetectionRadius", formData[0].LBSDetectionRadius || '' )
-      setValue("engineHour",formData[0].engineHour || '' )
-      setValue("passengerSeat",formData[0].passengerSeat || '' )
-      const distanceCostQuantity = formData?.[0]?.distanceCostQuantity
-      if(distanceCostQuantity){
-        setValue("distanceCostQuantity",distanceCostQuantity)
-        setIsCheckedCBO(true)
+      setValue(
+        "fuelIdlingConsumption",
+        formData[0].fuelIdlingConsumption || ""
+      );
+      setValue(
+        "fuelIdlingConsumptionUnit",
+        formData[0].fuelIdlingConsumptionUnit || ""
+      );
+      setValue(
+        "consumptionTolerancePercent",
+        formData[0].consumptionTolerancePercent || ""
+      );
+      setValue("vinNumber", formData[0].vinNumber || "");
+      setValue("engineNumber", formData[0].engineNumber || "");
+      setValue("odometer", formData[0].odometer || "");
+      setValue("LBSDetectionRadius", formData[0].LBSDetectionRadius || "");
+      setValue("engineHour", formData[0].engineHour || "");
+      setValue("passengerSeat", formData[0].passengerSeat || "");
+      const distanceCostQuantity = formData?.[0]?.distanceCostQuantity;
+      if (distanceCostQuantity) {
+        setValue("distanceCostQuantity", distanceCostQuantity);
+        setIsCheckedCBO(true);
       }
-      const durationCostQuantity = formData?.[0]?.durationCostQuantity
-      if(durationCostQuantity){
-        setValue("durationCostQuantity",durationCostQuantity)
-        setValue("durationUnit",formData[0].durationUnit || '' )
-        setIsCheckedCBO2(true)
+      const durationCostQuantity = formData?.[0]?.durationCostQuantity;
+      if (durationCostQuantity) {
+        setValue("durationCostQuantity", durationCostQuantity);
+        setValue("durationUnit", formData[0].durationUnit || "");
+        setIsCheckedCBO2(true);
       }
-      setValue("rfidTimeoutDuration",formData[0].rfidTimeoutDuration || '' )
-      setValue("sleepModeDuration",formData[0].sleepModeDuration || '' )
-      setValue("minimumWorkingHour",formData[0].minimumWorkingHour || '' )
-      const weightSensor = formData?.[0]?.weightSensor
-      if(weightSensor){
-        setValue("weightSensor",weightSensor)
-        setIsCheckedWC(weightSensor)
+      setValue("rfidTimeoutDuration", formData[0].rfidTimeoutDuration || "");
+      setValue("sleepModeDuration", formData[0].sleepModeDuration || "");
+      setValue("minimumWorkingHour", formData[0].minimumWorkingHour || "");
+      const weightSensor = formData?.[0]?.weightSensor;
+      if (weightSensor) {
+        setValue("weightSensor", weightSensor);
+        setIsCheckedWC(weightSensor);
       }
-      setValue("fuelSensor",formData[0].fuelSensor || '' )
-      setValue("noOfTanks",formData[0].noOfTanks || '' )
-      const gSensor = formData?.[0]?.gSensor
-      if(gSensor){
-        setIsCheckedGS(gSensor)
+      setValue("fuelSensor", formData[0].fuelSensor || "");
+      setValue("noOfTanks", formData[0].noOfTanks || "");
+      const gSensor = formData?.[0]?.gSensor;
+      if (gSensor) {
+        setIsCheckedGS(gSensor);
       }
-      setValue("axisX",formData[0].axisX || '' )
-      setValue("axisY",formData[0].axisY || '' )
-      setValue("axisZ",formData[0].axisZ || '' )
-      setValue("duration",formData[0].duration || '' )
-      setValue("underweightTolerance",formData[0].underweightTolerance || '' )
-      setValue("overweightTolerance",formData[0].overweightTolerance || '' )
-      setValue("loadingUnloadingTolerance",formData[0].loadingUnloadingTolerance || '' )
-      
+      setValue("axisX", formData[0].axisX || "");
+      setValue("axisY", formData[0].axisY || "");
+      setValue("axisZ", formData[0].axisZ || "");
+      setValue("duration", formData[0].duration || "");
+      setValue("underweightTolerance", formData[0].underweightTolerance || "");
+      setValue("overweightTolerance", formData[0].overweightTolerance || "");
+      setValue(
+        "loadingUnloadingTolerance",
+        formData[0].loadingUnloadingTolerance || ""
+      );
 
       // setValue("plateNumber",FormData.plateNumber || '' )
       // setValue("vehicleCategory",FormData.vehicleCategory || '' )
@@ -157,13 +199,12 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
       // setValue("underweightTolerance",FormData.underweightTolerance || '' )
       // setValue("overweightTolerance",FormData.overweightTolerance || '' )
       // setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
-      
     }
-  },[formData,id])
+  }, [formData, id]);
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "80%"}}>
+      <div className="row" style={{ width: "80%" }}>
         {/* <div className="col-xl-3 mb-3">
           <label className="form-label">{t('plateNumber')}</label>
           <CustomInput
@@ -176,42 +217,45 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.plateNumber} />
         </div> */}
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t('vehicleCategory')}</label> 
+          <label className="form-label">{t("vehicleCategory")}</label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
                 name="optradioCustom1"
-                onChange={() => {setValue("vehicleCategory", "MOVABLE")
-                setTempValue('vechicleCategory')
-              }}
-              checked={getValues("vehicleCategory") === "MOVABLE"}
+                onChange={() => {
+                  setValue("vehicleCategory", "MOVABLE");
+                  setTempValue("vechicleCategory");
+                }}
+                checked={getValues("vehicleCategory") === "MOVABLE"}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('movable')}
+                {t("movable")}
               </label>
             </div>
             <div className="form-check custom-checkbox form-check-inline">
               <input
                 type="radio"
                 className="form-check-input"
-                onChange={() => {setValue("vehicleCategory", "IMMOVABLE")
-                setTempValue('vehicleCategory')
-              }}
+                onChange={() => {
+                  setValue("vehicleCategory", "IMMOVABLE");
+                  setTempValue("vehicleCategory");
+                }}
                 name="optradioCustom1"
                 checked={getValues("vehicleCategory") === "IMMOVABLE"}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
-              {t('immovable')}
+                {t("immovable")}
               </label>
-
             </div>
           </div>
-             {!getValues("vehicleCategory") && <Error errorName={errors.vehicleCategory} />}
+          {!getValues("vehicleCategory") && (
+            <Error errorName={errors.vehicleCategory} />
+          )}
         </div>
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t('DVIRTemplate')}</label>
+          <label className="form-label">{t("DVIRTemplate")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -222,7 +266,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.dvirTemplate} />
         </div>
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t('purchaseAmount')}</label>
+          <label className="form-label">{t("purchaseAmount")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -233,13 +277,17 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           <Error errorName={errors.purchaseAmount} />
         </div>
         <div className="col-xl-3 mb-3 d-flex flex-column">
-          <label className="form-label">{t('manufactureDate')}</label>
+          <label className="form-label">{t("manufactureDate")}</label>
           <Controller
             name="manufacturerDate"
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("manufacturerDate")? new Date(getValues("manufacturerDate")) : new Date()}
+                selected={
+                  getValues("manufacturerDate")
+                    ? new Date(getValues("manufacturerDate"))
+                    : new Date()
+                }
                 className="form-control customDateHeight"
                 onChange={(newValue) => setValue("manufacturerDate", newValue)}
               />
@@ -302,7 +350,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
         </div> */}
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('companyAverage')}
+            {t("companyAverage")}
           </label>
           <CustomInput
             type="text"
@@ -313,61 +361,79 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t('permit')}</label>
+          <label className="form-label">{t("permit")}</label>
           <Controller
             name="permit"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, rules, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("permit", newValue.value)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.value);
+                  setValue("permit", newValue.value);
+                }}
                 options={permitOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 defaultValue={permitOptions[0]}
-                value={{label:getValues('permit'), value :getValues('permit')}}
+                value={{
+                  label: getValues("permit"),
+                  value: getValues("permit"),
+                }}
               />
             )}
           />
-          {!getValues('permit') && <Error errorName={errors.permit} />}
+          {!getValues("permit") && <Error errorName={errors.permit} />}
         </div>
         <div className="col-xl-3 mb-3 d-flex flex-column">
-          <label className="form-label">{t('installationDate')}</label>
+          <label className="form-label">{t("installationDate")}</label>
           <Controller
             name="installationDate"
             control={control}
             render={({ value, name }) => (
               <DatePicker
-                selected={getValues("installationDate")? new Date(getValues("installationDate")) : new Date()}
+                selected={
+                  getValues("installationDate")
+                    ? new Date(getValues("installationDate"))
+                    : new Date()
+                }
                 className="form-control customDateHeight"
                 onChange={(newValue) => setValue("installationDate", newValue)}
               />
             )}
           />
         </div>
-     
+
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t('fuelType')}</label>
+          <label className="form-label">{t("fuelType")}</label>
           <Controller
             name="fuelType"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => {setTempValue(newValue.value); setValue("fuelType", newValue.value)}}
+                onChange={(newValue) => {
+                  setTempValue(newValue.value);
+                  setValue("fuelType", newValue.value);
+                }}
                 options={fuelTypeOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 defaultValue={fuelTypeOptions[0]}
-                value={{label:getValues('fuelType'), value :getValues('fuelType')}}
+                value={{
+                  label: getValues("fuelType"),
+                  value: getValues("fuelType"),
+                }}
               />
             )}
           />
-          {!getValues('fuelType') && <Error errorName={errors.fuelType} />}
+          {!getValues("fuelType") && <Error errorName={errors.fuelType} />}
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('distanceBasedFuelConsumption')} </label>
+          <label className="form-label">
+            {t("distanceBasedFuelConsumption")}{" "}
+          </label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -383,14 +449,14 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               name="distanceBasedDistanceQuantity"
               placeholder=""
             />
-            <span>{t('kilometer')}</span>
+            <span>{t("kilometer")}</span>
             {isCheckedDBFC && (
               <>
                 <span style={{ paddingLeft: ".6rem" }}>/</span>
                 <CustomInput
                   type="number"
                   register={register}
-                  label = "Distance Quantity"
+                  label="Distance Quantity"
                   style={{ width: "6rem", margin: " 0 1rem" }}
                   name="distanceBaseFuelConsumption"
                   placeholder=""
@@ -400,24 +466,29 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                    onChange={(newValue) =>
-                      setValue("distanceBaseFuelConsumptionUnit", newValue.value)
-                    }
-                    options={distanceQuantitySelectOptions}
-                    ref={ref}
-                    name={name}
-                    styles={customStyles}
-                    defaultValue={distanceQuantitySelectOptions[0]}
+                      onChange={(newValue) =>
+                        setValue(
+                          "distanceBaseFuelConsumptionUnit",
+                          newValue.value
+                        )
+                      }
+                      options={distanceQuantitySelectOptions}
+                      ref={ref}
+                      name={name}
+                      styles={customStyles}
+                      defaultValue={distanceQuantitySelectOptions[0]}
                     />
-                    )}
+                  )}
                 />
               </>
             )}
           </div>
-            <Error errorName={errors.distanceBaseFuelConsumption} />
+          <Error errorName={errors.distanceBaseFuelConsumption} />
         </div>
         <div className="col-xl-6 mb-3 ">
-          <label className="form-label">{t('durationBasedFuelConsumption')} </label> 
+          <label className="form-label">
+            {t("durationBasedFuelConsumption")}{" "}
+          </label>
           <div className="d-flex align-items-center">
             <input
               type="checkbox"
@@ -439,21 +510,29 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
               control={control}
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
-                onChange={(newValue) =>
-                  setValue("durationBaseFuelConsumptionDurationUnit", newValue.value)
-                }
-                options={durationSelectOptions}
-                ref={ref}
-                name={name}
-                styles={customStyles}
-                defaultValue={durationSelectOptions[0]}
-                value={{label:getValues('durationBaseFuelConsumptionDurationUnit'), value :getValues('durationBaseFuelConsumptionDurationUnit')}}
+                  onChange={(newValue) =>
+                    setValue(
+                      "durationBaseFuelConsumptionDurationUnit",
+                      newValue.value
+                    )
+                  }
+                  options={durationSelectOptions}
+                  ref={ref}
+                  name={name}
+                  styles={customStyles}
+                  defaultValue={durationSelectOptions[0]}
+                  value={{
+                    label: getValues("durationBaseFuelConsumptionDurationUnit"),
+                    value: getValues("durationBaseFuelConsumptionDurationUnit"),
+                  }}
                 />
-                )}
+              )}
             />
             {isCheckedDBFC2 && (
               <>
-                <span style={{ paddingLeft: ".4rem", paddingRight : ".4rem" }}>/</span>
+                <span style={{ paddingLeft: ".4rem", paddingRight: ".4rem" }}>
+                  /
+                </span>
                 <CustomInput
                   type="number"
                   register={register}
@@ -467,31 +546,39 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
-                    onChange={(newValue) =>
-                      setValue("durationBaseFuelConsumptionUnit", newValue.value)
-                    }
-                    options={distanceQuantitySelectOptions}
-                    ref={ref}
-                    name={name}
-                    styles={customStyles}
-                    defaultValue={distanceQuantitySelectOptions[0]}
-                    value={{label:getValues('durationBaseFuelConsumptionUnit'), value :getValues('durationBaseFuelConsumptionUnit')}}
+                      onChange={(newValue) =>
+                        setValue(
+                          "durationBaseFuelConsumptionUnit",
+                          newValue.value
+                        )
+                      }
+                      options={distanceQuantitySelectOptions}
+                      ref={ref}
+                      name={name}
+                      styles={customStyles}
+                      defaultValue={distanceQuantitySelectOptions[0]}
+                      value={{
+                        label: getValues("durationBaseFuelConsumptionUnit"),
+                        value: getValues("durationBaseFuelConsumptionUnit"),
+                      }}
                     />
-                    )}
+                  )}
                 />
               </>
             )}
           </div>
-            <Error errorName={errors.durationBaseFuelConsumptionDurationQuanitty} />
+          <Error
+            errorName={errors.durationBaseFuelConsumptionDurationQuanitty}
+          />
         </div>
-     
+
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t('consumptionTolerance')}</label>
+          <label className="form-label">{t("consumptionTolerance")}</label>
           <div className="d-flex align-items-center">
             <CustomInput
               type="number"
               register={register}
-              style={{marginRight: ".5rem"}}
+              style={{ marginRight: ".5rem" }}
               name="consumptionTolerancePercent"
               placeholder=""
             />
@@ -501,7 +588,7 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
 
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
-          {t('vinNumber')} 
+            {t("vinNumber")}
           </label>
           <CustomInput
             type="text"
@@ -512,19 +599,6 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           />
           <Error errorName={errors.vinNumber} />
         </div>
-      
-       
-            
-     
-          
-        
-      
-  
-
-       
-
-       
-  
       </div>
       <div
         style={{
@@ -534,7 +608,14 @@ const Profile = ({ register, setValue, errors, handleSubmit, onSubmit, control, 
           margin: "2rem 0",
         }}
       >
-        <Button type="submit" onClick={handleSubmit(onSubmit)} style={{ width: "10%" }}> {t('next')}</Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit(onSubmit)}
+          style={{ width: "10%" }}
+        >
+          {" "}
+          {t("next")}
+        </Button>
       </div>
     </div>
   );

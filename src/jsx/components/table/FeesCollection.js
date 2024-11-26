@@ -1,5 +1,5 @@
-import React, {  useRef } from "react";
-import {  Badge } from "react-bootstrap";
+import React, { useRef } from "react";
+import { Badge } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 import data from "./tableData.js";
@@ -68,7 +68,6 @@ const FeesCollection = () => {
                     </tr>
                   ))}
                 </tbody>
-                
               </table>
               <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-2">
                 <div className="dataTables_info">
@@ -89,7 +88,10 @@ const FeesCollection = () => {
                       activePag.current > 0 && onClick(activePag.current - 1)
                     }
                   >
-                    <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-left"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                   <span>
                     {jobPagination.map((number, i) => (
@@ -113,7 +115,10 @@ const FeesCollection = () => {
                       onClick(activePag.current + 1)
                     }
                   >
-                    <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-right"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                 </div>
               </div>

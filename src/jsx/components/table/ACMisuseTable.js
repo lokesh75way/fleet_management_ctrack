@@ -44,11 +44,17 @@ const ACMisuseTable = () => {
                 role="grid"
                 aria-describedby="example_info"
               >
-                  {ACMisuseData.columns.map((d, i) => (
-                    <th style={{ padding: "0.25rem 0.9375rem", backgroundColor:'#F5F5F5' }} key={i}>
-                      {d}
-                    </th>
-                  ))}
+                {ACMisuseData.columns.map((d, i) => (
+                  <th
+                    style={{
+                      padding: "0.25rem 0.9375rem",
+                      backgroundColor: "#F5F5F5",
+                    }}
+                    key={i}
+                  >
+                    {d}
+                  </th>
+                ))}
                 <tbody>
                   {ACMisuseData.data.map((d, i) => (
                     <tr key={i}>

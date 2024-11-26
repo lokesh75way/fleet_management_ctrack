@@ -32,7 +32,7 @@ const Company = () => {
   const [tableData, setTableData] = useState([]);
   const [selectFilter, setFilter] = useState({
     value: "All Business Groups",
-    label: t('allBusinessGroup'),
+    label: t("allBusinessGroup"),
   });
   const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
@@ -61,11 +61,11 @@ const Company = () => {
     }),
   };
 
-  const fetchAllCompany = async (page,groupId) => {
+  const fetchAllCompany = async (page, groupId) => {
     try {
       let responseData;
       if (userDetails?.user?.role === "SUPER_ADMIN") {
-        responseData = await getCompany(page,groupId);
+        responseData = await getCompany(page, groupId);
       } else if (userDetails?.user?.role === "BUSINESS_GROUP") {
         setDropdownDisable(true);
         const businessId = userDetails?.user?.businessGroupId[0]?._id;
@@ -81,21 +81,21 @@ const Company = () => {
     }
   };
   useEffect(() => {
-    if(id){
-      fetchAllCompany(page,id);
+    if (id) {
+      fetchAllCompany(page, id);
       // setValue('companyOptions', id)
-    }else{
+    } else {
       fetchAllCompany(page);
     }
-  }, [page,id]);
+  }, [page, id]);
 
   // useEffect(() => {
   //   const timeout = setTimeout(() => {
   //     if(id){
   //       fetchAllCompany(1,id);
   //     }
-  //   }, 1000); 
-  //   return () => clearTimeout(timeout); 
+  //   }, 1000);
+  //   return () => clearTimeout(timeout);
   // }, [id]);
 
   const handleChangeBusinessGroup = (selectedOption) => {
@@ -146,7 +146,7 @@ const Company = () => {
     fetchAllCompany(page);
     setValue("companyOptions", "");
     setFilter({
-      label: t('allBusinessGroup'),
+      label: t("allBusinessGroup"),
       value: "All Business Group",
     });
   };
@@ -167,7 +167,7 @@ const Company = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("companies")}</h4>
                     <div className="d-flex align-items-center">
-                    <Link
+                      <Link
                         className="btn  btn-xxs"
                         data-bs-toggle="offcanvas"
                         onClick={handleClearFilter}
@@ -200,7 +200,6 @@ const Company = () => {
                             isDisabled={dropdownDisable}
                             value={value ? value : selectFilter}
                           />
-                        
                         )}
                       />
                       {can("company", "add") && (
@@ -232,7 +231,7 @@ const Company = () => {
                           <th className="text-center">{t("location")}</th>
                           <th className="text-center">{t("email")}</th>
                           <th className="text-center">{t("branches")}</th>
-                
+
                           {(can("company", "edit") ||
                             can("company", "delete")) && (
                             <th className="d-flex justify-content-center">

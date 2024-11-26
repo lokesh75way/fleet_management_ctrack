@@ -1,11 +1,10 @@
 import axios from "axios";
 
-
 const createAlert = async (body) => {
   const data = await axios.post("/alerts", body);
 
-  console.log('this is data',data);
-  return data.data.data
+  console.log("this is data", data);
+  return data.data.data;
 };
 
 const getAllAlert = async (page) => {
@@ -15,8 +14,12 @@ const getAllAlert = async (page) => {
   }
   const { data } = await axios.get(url);
 
-  console.log(' this is alert get data', data);
-  return { data: data.data.data, totalPage: data.data.totalPage, totalCount: data.data.totalCount };
+  console.log(" this is alert get data", data);
+  return {
+    data: data.data.data,
+    totalPage: data.data.totalPage,
+    totalCount: data.data.totalCount,
+  };
 };
 
 const deleteAlert = async (body) => {
@@ -31,5 +34,4 @@ const updateAlert = async (body) => {
   return axios.put(`/alerts/${body}`);
 };
 
-
-export { createAlert, getAllAlert, deleteAlert, updateAlert,getAlertById};
+export { createAlert, getAllAlert, deleteAlert, updateAlert, getAlertById };

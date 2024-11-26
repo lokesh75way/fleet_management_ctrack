@@ -7,7 +7,7 @@ export const companyOptions = [
   { value: "All Companies", label: "All Companies" },
 ];
 export const branchOptions = [
-  {value : 'All', label : 'All'},
+  { value: "All", label: "All" },
   { value: "branch1@example.com", label: "Branch1" },
   { value: "branch2@example.com", label: "Branch2" },
   { value: "branch3@example.com", label: "Branch3" },
@@ -43,10 +43,7 @@ export const skillSetOptions = [
   { value: "Not Assigned", label: "Not Assigned" },
   { value: "Assigned", label: "Assigned" },
 ];
-export const profileOwningOptions = [
-  { value: "Custom", label: "Custom" },
-  
-];
+export const profileOwningOptions = [{ value: "Custom", label: "Custom" }];
 export const costCenterOptions = [
   { value: "Owning Cost Center", label: "Owning Cost Center" },
 ];
@@ -193,7 +190,7 @@ export const statusOptions = [
   { value: "INACTIVE", label: "INACTIVE" },
 ];
 
-export const storageCapacityOptions = [ 
+export const storageCapacityOptions = [
   { value: "60 days", label: "60 days" },
   { value: "90 days", label: "90 days" },
   { value: "120 days", label: "120 days" },

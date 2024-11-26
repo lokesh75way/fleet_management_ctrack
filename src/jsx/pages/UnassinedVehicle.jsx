@@ -108,7 +108,7 @@ const UnassinedVehicle = () => {
                     >
                       <thead>
                         <tr>
-                          <th>{t('id')}</th>
+                          <th>{t("id")}</th>
                           <th>{t("vehicleName")}</th>
                           {/* <th>{t("vehicleNumber")}</th> */}
                           <th>{t("vehicleModel")}</th>

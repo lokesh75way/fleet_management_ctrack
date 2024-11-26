@@ -31,7 +31,11 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
 
     let updatedOptions = [...newOptions];
 
-    if (userDetails && (userDetails.user.role === "BUSINESS_GROUP" || userDetails.user.role === "COMPANY")) {
+    if (
+      userDetails &&
+      (userDetails.user.role === "BUSINESS_GROUP" ||
+        userDetails.user.role === "COMPANY")
+    ) {
       const userGroup = userDetails.user.businessGroupId[0];
       const userGroupOption = {
         label: userGroup.groupName,
@@ -56,7 +60,11 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
   };
 
   useEffect(() => {
-    if (userDetails && (userDetails.user.role !== "BUSINESS_GROUP" && userDetails.user.role !== "COMPANY")) {
+    if (
+      userDetails &&
+      userDetails.user.role !== "BUSINESS_GROUP" &&
+      userDetails.user.role !== "COMPANY"
+    ) {
       const selected = allOptions.find((option) => option.value === value);
       setSelectedOption(selected);
     }

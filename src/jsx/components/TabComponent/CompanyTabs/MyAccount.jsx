@@ -150,7 +150,7 @@ const MyAccount = ({
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
-      <UserLocation onLocationData={handleLocationData} />
+        <UserLocation onLocationData={handleLocationData} />
         <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("businessGroup")}
@@ -194,7 +194,6 @@ const MyAccount = ({
           <Error errorName={errors.companyName} />
         </div>
 
-       
         <div className="col-xl-3 mb-3 z-1">
           <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
@@ -209,10 +208,12 @@ const MyAccount = ({
         </div>
         <span
           className="absolute"
-          style={{     position: 'absolute',
-            top: '23%',
-            right: '-42%',
-            overflow: 'hidden'}}
+          style={{
+            position: "absolute",
+            top: "23%",
+            right: "-42%",
+            overflow: "hidden",
+          }}
         >
           <FileUploader
             setValue={setValue}
@@ -224,7 +225,6 @@ const MyAccount = ({
             loading={loading}
             link={logo}
           />
-          
 
           <Error errorName={errors.logo} />
         </span>
@@ -257,7 +257,7 @@ const MyAccount = ({
           <Error errorName={errors.email} />
         </div>
 
-          <LocationSelector
+        <LocationSelector
           register={register}
           setValue={setValue}
           errors={errors}
@@ -266,9 +266,9 @@ const MyAccount = ({
           dValues={formData?.[0]}
           id={id}
           showCity={true}
-          Comptype={'companyId'}
+          Comptype={"companyId"}
         />
-     
+
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -306,7 +306,7 @@ const MyAccount = ({
             )}
           />
         </div>
-        
+
         <CredentialsInput
           heading={t("companyLoginDetails")}
           register={register}
@@ -356,12 +356,12 @@ const MyAccount = ({
         }}
       >
         <Button
-        disabled={loading}
+          disabled={loading}
           type="submit"
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-         {t("submit")}
+          {t("submit")}
         </Button>
       </div>
     </div>

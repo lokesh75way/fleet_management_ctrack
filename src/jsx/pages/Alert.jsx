@@ -21,8 +21,6 @@ import { ICON } from "../constant/theme";
 import { ThemeContext } from "../../context/ThemeContext";
 import Paginate from "../components/Pagination/Paginate";
 
-
-
 const Alert = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -44,10 +42,10 @@ const Alert = () => {
     usePagination();
   const { isRtl } = useContext(ThemeContext);
   const [editData, setEditData] = useState();
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -67,17 +65,17 @@ const Alert = () => {
   }, [page]);
 
   const onSubmit = async (data) => {
-        try {
+    try {
       if (data._id && data._id !== 0) {
         // update data
         await updateAlert(data, data._id);
         notifySuccess("Task Updated Successfully !!");
-        fetchAllAlerts(page)
+        fetchAllAlerts(page);
         alert.current.closeModal();
       } else {
         await createAlert(data);
         notifySuccess("Task Added Successfully !!");
-        fetchAllAlerts(page)
+        fetchAllAlerts(page);
         alert.current.closeModal();
       }
     } catch (error) {
@@ -106,14 +104,13 @@ const Alert = () => {
 
   const alert = useRef();
 
-
   async function getAlertData() {
     try {
       // const permissions = JSON.parse(localStorage.getItem('permission'));
       // setUserPermission(permissions?.[0]?.permission);
       const { data, totalPage, totalCount } = await getAlerts();
       setTableData(data);
-      console.log('data came',data);
+      console.log("data came", data);
       // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
@@ -124,7 +121,7 @@ const Alert = () => {
 
   useEffect(() => {
     getAlertData();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -186,8 +183,8 @@ const Alert = () => {
                           onConfirmDelete={onConfirmDelete}
                           editDrawerOpen={editDrawerOpen}
                           setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
                         />
                       </tbody>
                     </table>
@@ -201,11 +198,11 @@ const Alert = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

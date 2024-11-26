@@ -4,12 +4,20 @@ import Error from "./Error/Error";
 import { SVGICON } from "../constant/theme";
 import { t } from "i18next";
 
+const FormField = ({
+  field,
+  fields,
+  index,
+  register,
+  getValues,
+  errors,
+  remove,
+  id,
+}) => {
+  const handleRemoveForm = (index) => {
+    remove(index);
+  };
 
-const FormField = ({ field, fields,index, register, getValues, errors,remove,id }) => {
-    const handleRemoveForm = (index) => {
-        remove(index)
-      };
-    
   return (
     <div key={field.id} className="row">
       <div className="d-flex align-items-center">
@@ -20,7 +28,7 @@ const FormField = ({ field, fields,index, register, getValues, errors,remove,id 
         )}
         {fields.length > 1 && (
           <div className="mr-5" onClick={() => handleRemoveForm(index)}>
-            {SVGICON.Delete} 
+            {SVGICON.Delete}
           </div>
         )}
       </div>

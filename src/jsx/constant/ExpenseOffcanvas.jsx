@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
@@ -14,7 +19,7 @@ import {
 } from "../components/TabComponent/VehicleTabs/Options";
 import CustomInput from "../components/Input/CustomInput";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 const ExpenseOffcanvas = forwardRef(
   (
@@ -56,18 +61,18 @@ const ExpenseOffcanvas = forwardRef(
       setSelectedOption2(e.target.value);
       setValue("jobAllocation", e.target.value);
     };
-    useEffect(()=>{
-      if(addEmploye === true){
-        clearErrors("branch")
-        clearErrors('category')
-        clearErrors('type')
-        clearErrors('amount')
-        clearErrors('referenceNumber')
-        setValue('amount','')
-        setValue('referenceNumber','')
-        setValue('description','')
+    useEffect(() => {
+      if (addEmploye === true) {
+        clearErrors("branch");
+        clearErrors("category");
+        clearErrors("type");
+        clearErrors("amount");
+        clearErrors("referenceNumber");
+        setValue("amount", "");
+        setValue("referenceNumber", "");
+        setValue("description", "");
       }
-    },[addEmploye])
+    }, [addEmploye]);
     const customStyles = {
       control: (base) => ({
         ...base,
@@ -75,7 +80,7 @@ const ExpenseOffcanvas = forwardRef(
       }),
     };
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     return (
       <>
         <Offcanvas
@@ -99,202 +104,237 @@ const ExpenseOffcanvas = forwardRef(
           <div className="offcanvas-body">
             <div className="container-fluid">
               <FormProvider>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                  <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">{t('branch')}<span className="text-danger">*</span></label>
-                    <Controller
-                      name="branch"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            {setTempValue(newValue.value);
-                            setValue("branch", newValue.value)}
-                          }
-                          options={branchOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={branchOptions[0]}
-                        />
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="row">
+                    <div className="col-xl-6 mb-3 ">
+                      <label className="form-label">
+                        {t("branch")}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <Controller
+                        name="branch"
+                        control={control}
+                        render={({ field: { onChange, value, name, ref } }) => (
+                          <Select
+                            onChange={(newValue) => {
+                              setTempValue(newValue.value);
+                              setValue("branch", newValue.value);
+                            }}
+                            options={branchOptions}
+                            ref={ref}
+                            name={name}
+                            styles={customStyles}
+                            defaultValue={branchOptions[0]}
+                          />
+                        )}
+                      />
+                      {!getValues("branch") && (
+                        <Error errorName={errors.branch} />
                       )}
-                    />
-                    { !getValues('branch') && <Error errorName={errors.branch} />}
-                  </div>
-                  <div className="col-xl-6 mb-3">
-                    <label className="form-label">{t('category')}<span className="text-danger">*</span></label>
-                    <div className="basic-form" style={{ marginTop: ".5rem" }}>
-                      <div className="form-check custom-checkbox form-check-inline">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          value="variable"
-                          checked={selectedOption === "variable"}
-                          onChange={handleChange}
-                        />
-                        <label
-                          className="form-check-label"
-                          style={{ marginBottom: "0" }}
-                        >
-                          {t('variable')}
-                        </label>
-                      </div>
-                      <div className="form-check custom-checkbox form-check-inline">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          value="fix"
-                          checked={selectedOption === "fix"}
-                          onChange={handleChange}
-                        />
-                        <label
-                          className="form-check-label"
-                          style={{ marginBottom: "0" }}
-                        >
-                          {t('fix')}
-                        </label>
-                      </div>
                     </div>
-                    { !getValues('category') && <Error errorName={errors.category} />}
-                  </div>
+                    <div className="col-xl-6 mb-3">
+                      <label className="form-label">
+                        {t("category")}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <div
+                        className="basic-form"
+                        style={{ marginTop: ".5rem" }}
+                      >
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="variable"
+                            checked={selectedOption === "variable"}
+                            onChange={handleChange}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("variable")}
+                          </label>
+                        </div>
+                        <div className="form-check custom-checkbox form-check-inline">
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            value="fix"
+                            checked={selectedOption === "fix"}
+                            onChange={handleChange}
+                          />
+                          <label
+                            className="form-check-label"
+                            style={{ marginBottom: "0" }}
+                          >
+                            {t("fix")}
+                          </label>
+                        </div>
+                      </div>
+                      {!getValues("category") && (
+                        <Error errorName={errors.category} />
+                      )}
+                    </div>
 
                     <div className="col-xl-6 mb-3">
-                      <label className="form-label">{t('considerJob')}</label>
-                      <div className={`${ selectedOption !== "variable" ?  "form-check custom-checkbox mb-3 pe-none" : "form-check custom-checkbox mb-3" }`} >
+                      <label className="form-label">{t("considerJob")}</label>
+                      <div
+                        className={`${selectedOption !== "variable" ? "form-check custom-checkbox mb-3 pe-none" : "form-check custom-checkbox mb-3"}`}
+                      >
                         <input
                           type="checkbox"
                           className="form-check-input"
                           id="customCheckBox1"
-                          onClick={()=>setIsCheckCJ(!isCheckCJ)}
+                          onClick={() => setIsCheckCJ(!isCheckCJ)}
                         />
                       </div>
                     </div>
-             
-                  {
-               
-                    <>
-                    <div className="col-xl-6 mb-3">
-                    <label className="form-label">{t('jobAllocation')}</label>
-                    <div className="basic-form" style={{ marginTop: ".5rem" }}>
-                      <div  className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          value="inProgress"
-                          checked={selectedOption2 === "inProgress"}
-                          onChange={handleChange2}
-                        />
-                        <label
-                          className="form-check-label"
-                          style={{ marginBottom: "0" }}
-                        >
-                          {t('inProgress')}
-                        </label>
-                      </div>
-                      <div className={`${ !isCheckCJ ?  "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}>
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          value="completed"
-                          checked={selectedOption2 === "completed"}
-                          onChange={handleChange2}
-                        />
-                        <label
-                          className="form-check-label"
-                          style={{ marginBottom: "0" }}
-                        >
-                          {t('completed')}
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  {
-                     <>
-                        <div className="col-xl-6 mb-3">
-                        <label className="form-label">
-                        {t('completedTill')}
-                        </label>
-                        <div className={`${ selectedOption2 !== 'completed' ?  "d-flex align-items-center pe-none" : "fd-flex align-items-center"}`}>
-                        <Controller
-                          name="startDate"
-                          control={control}
-                          render={({ value, name }) => (
-                            <DatePicker
-                              selected={getValues("startDate") || new Date()}
-                              className="form-control"
-                              onChange={(newValue) =>
-                                setValue("startDate", newValue)
-                              }
-                            />
-                          )}
-                        />
-                        <span className="mx-2" >{t('to')}</span>
-                        <Controller
-                          name="endDate"
-                          control={control}
-                          render={({ value, name }) => (
-                            <DatePicker
-                              selected={getValues("endDate") || new Date()}
-                              className="form-control"
-                              onChange={(newValue) =>
-                                setValue("endDate", newValue)
-                              }
-                            />
-                          )}
-                        />
-                        </div>
-                      </div>
-                    </>
 
-                  }
-                  <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">{t('job')}</label>
-                    <Controller
-                      name="job"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            setValue("job", newValue.value)
-                          }
-                          options={jobOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={jobOptions[0]}
-                        />
-                      )}
-                    />
-                  </div>
-                    </>
-                  }
-                  <div className="col-xl-6 mb-3 ">
-                    <label className="form-label">{t('type')}<span className="text-danger">*</span></label>
-                    <Controller
-                      name="type"
-                      control={control}
-                      render={({ field: { onChange, value, name, ref } }) => (
-                        <Select
-                          onChange={(newValue) =>
-                            {setTempValue(newValue.value);
-                            setValue("type", newValue.value)}
-                          }
-                          options={TypeOptions}
-                          ref={ref}
-                          name={name}
-                          styles={customStyles}
-                          defaultValue={TypeOptions[0]}
-                        />
-                      )}
-                    />
-                    { !getValues('type') && <Error errorName={errors.type} />}
-                  </div>
-            
+                    {
+                      <>
+                        <div className="col-xl-6 mb-3">
+                          <label className="form-label">
+                            {t("jobAllocation")}
+                          </label>
+                          <div
+                            className="basic-form"
+                            style={{ marginTop: ".5rem" }}
+                          >
+                            <div
+                              className={`${!isCheckCJ ? "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}
+                            >
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                value="inProgress"
+                                checked={selectedOption2 === "inProgress"}
+                                onChange={handleChange2}
+                              />
+                              <label
+                                className="form-check-label"
+                                style={{ marginBottom: "0" }}
+                              >
+                                {t("inProgress")}
+                              </label>
+                            </div>
+                            <div
+                              className={`${!isCheckCJ ? "form-check custom-checkbox form-check-inline pe-none" : "form-check custom-checkbox form-check-inline"}`}
+                            >
+                              <input
+                                type="radio"
+                                className="form-check-input"
+                                value="completed"
+                                checked={selectedOption2 === "completed"}
+                                onChange={handleChange2}
+                              />
+                              <label
+                                className="form-check-label"
+                                style={{ marginBottom: "0" }}
+                              >
+                                {t("completed")}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        {
+                          <>
+                            <div className="col-xl-6 mb-3">
+                              <label className="form-label">
+                                {t("completedTill")}
+                              </label>
+                              <div
+                                className={`${selectedOption2 !== "completed" ? "d-flex align-items-center pe-none" : "fd-flex align-items-center"}`}
+                              >
+                                <Controller
+                                  name="startDate"
+                                  control={control}
+                                  render={({ value, name }) => (
+                                    <DatePicker
+                                      selected={
+                                        getValues("startDate") || new Date()
+                                      }
+                                      className="form-control"
+                                      onChange={(newValue) =>
+                                        setValue("startDate", newValue)
+                                      }
+                                    />
+                                  )}
+                                />
+                                <span className="mx-2">{t("to")}</span>
+                                <Controller
+                                  name="endDate"
+                                  control={control}
+                                  render={({ value, name }) => (
+                                    <DatePicker
+                                      selected={
+                                        getValues("endDate") || new Date()
+                                      }
+                                      className="form-control"
+                                      onChange={(newValue) =>
+                                        setValue("endDate", newValue)
+                                      }
+                                    />
+                                  )}
+                                />
+                              </div>
+                            </div>
+                          </>
+                        }
+                        <div className="col-xl-6 mb-3 ">
+                          <label className="form-label">{t("job")}</label>
+                          <Controller
+                            name="job"
+                            control={control}
+                            render={({
+                              field: { onChange, value, name, ref },
+                            }) => (
+                              <Select
+                                onChange={(newValue) =>
+                                  setValue("job", newValue.value)
+                                }
+                                options={jobOptions}
+                                ref={ref}
+                                name={name}
+                                styles={customStyles}
+                                defaultValue={jobOptions[0]}
+                              />
+                            )}
+                          />
+                        </div>
+                      </>
+                    }
+                    <div className="col-xl-6 mb-3 ">
+                      <label className="form-label">
+                        {t("type")}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <Controller
+                        name="type"
+                        control={control}
+                        render={({ field: { onChange, value, name, ref } }) => (
+                          <Select
+                            onChange={(newValue) => {
+                              setTempValue(newValue.value);
+                              setValue("type", newValue.value);
+                            }}
+                            options={TypeOptions}
+                            ref={ref}
+                            name={name}
+                            styles={customStyles}
+                            defaultValue={TypeOptions[0]}
+                          />
+                        )}
+                      />
+                      {!getValues("type") && <Error errorName={errors.type} />}
+                    </div>
+
                     <>
-                      <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
+                      <div
+                        className={`${selectedOption !== "fix" ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+                      >
                         <label className="form-label">
-                        {t('fromDate')} <span className="text-danger">*</span>
+                          {t("fromDate")} <span className="text-danger">*</span>
                         </label>
                         <Controller
                           name="fromDate"
@@ -303,18 +343,22 @@ const ExpenseOffcanvas = forwardRef(
                             <DatePicker
                               selected={getValues("fromDate") || new Date()}
                               className="form-control"
-                              onChange={(newValue) =>
-                                {setTempValue(newValue);
-                                setValue("fromDate", newValue)}
-                              }
+                              onChange={(newValue) => {
+                                setTempValue(newValue);
+                                setValue("fromDate", newValue);
+                              }}
                             />
                           )}
                         />
-                        { !getValues('fromDate') && <Error errorName={errors.fromDate} />}
+                        {!getValues("fromDate") && (
+                          <Error errorName={errors.fromDate} />
+                        )}
                       </div>
-                      <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
+                      <div
+                        className={`${selectedOption !== "fix" ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+                      >
                         <label className="form-label">
-                        {t('toDate')} <span className="text-danger">*</span>
+                          {t("toDate")} <span className="text-danger">*</span>
                         </label>
                         <Controller
                           name="toDate"
@@ -323,22 +367,25 @@ const ExpenseOffcanvas = forwardRef(
                             <DatePicker
                               selected={getValues("toDate") || new Date()}
                               className="form-control"
-                              onChange={(newValue) =>
-                                {setTempValue(newValue);
-                                setValue("toDate", newValue)}
-                              }
+                              onChange={(newValue) => {
+                                setTempValue(newValue);
+                                setValue("toDate", newValue);
+                              }}
                             />
                           )}
                         />
-                        { !getValues('toDate') && <Error errorName={errors.toDate} />}
+                        {!getValues("toDate") && (
+                          <Error errorName={errors.toDate} />
+                        )}
                       </div>
                     </>
-             
 
-             
-                    <div className={`${ selectedOption !== 'fix' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
+                    <div
+                      className={`${selectedOption !== "fix" ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+                    >
                       <label className="form-label">
-                      {t('expenseDate')} <span className="text-danger">*</span>
+                        {t("expenseDate")}{" "}
+                        <span className="text-danger">*</span>
                       </label>
                       <Controller
                         name="expenseDate"
@@ -353,49 +400,54 @@ const ExpenseOffcanvas = forwardRef(
                           />
                         )}
                       />
-                      { !getValues('expenseDate') && <Error errorName={errors.expenseDate} />}
+                      {!getValues("expenseDate") && (
+                        <Error errorName={errors.expenseDate} />
+                      )}
                     </div>
-                 
-                  <div className="col-xl-6 mb-3">
-                    <label
-                      htmlFor="exampleFormControlInput3"
-                      className="form-label"
-                    >
-                      {t('amount')} <span className="text-danger">*</span>
-                    </label>
-                    <CustomInput
-                      type="number"
-                      register={register}
-                      label="Amount"
-                      name="amount"
-                      placeholder=""
-                    />
-                    <Error errorName={errors.amount} />
-                  </div>
-                  <div className="col-xl-6 mb-3">
-                    <label
-                      htmlFor="exampleFormControlInput3"
-                      className="form-label"
-                    >
-                      {t('referenceNumber')} <span className="text-danger">*</span>
-                    </label>
-                    <CustomInput
-                      type="number"
-                      register={register}
-                      label="Reference Number"
-                      name="referenceNumber"
-                      placeholder=""
-                    />
-                    <Error errorName={errors.referenceNumber} />
-                  </div>
-                 
+
+                    <div className="col-xl-6 mb-3">
+                      <label
+                        htmlFor="exampleFormControlInput3"
+                        className="form-label"
+                      >
+                        {t("amount")} <span className="text-danger">*</span>
+                      </label>
+                      <CustomInput
+                        type="number"
+                        register={register}
+                        label="Amount"
+                        name="amount"
+                        placeholder=""
+                      />
+                      <Error errorName={errors.amount} />
+                    </div>
+                    <div className="col-xl-6 mb-3">
+                      <label
+                        htmlFor="exampleFormControlInput3"
+                        className="form-label"
+                      >
+                        {t("referenceNumber")}{" "}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <CustomInput
+                        type="number"
+                        register={register}
+                        label="Reference Number"
+                        name="referenceNumber"
+                        placeholder=""
+                      />
+                      <Error errorName={errors.referenceNumber} />
+                    </div>
+
                     <>
-                      <div className={`${ selectedOption !== 'variable' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
+                      <div
+                        className={`${selectedOption !== "variable" ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+                      >
                         <label
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
                         >
-                          {t('odometer')}
+                          {t("odometer")}
                         </label>
                         <CustomInput
                           type="number"
@@ -405,12 +457,14 @@ const ExpenseOffcanvas = forwardRef(
                           placeholder=""
                         />
                       </div>
-                      <div className={`${ selectedOption !== 'variable' ?  "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}>
+                      <div
+                        className={`${selectedOption !== "variable" ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
+                      >
                         <label
                           htmlFor="exampleFormControlInput3"
                           className="form-label"
                         >
-                          {t('workHour')}
+                          {t("workHour")}
                         </label>
                         <CustomInput
                           type="time"
@@ -421,55 +475,57 @@ const ExpenseOffcanvas = forwardRef(
                         />
                       </div>
                     </>
-                  
-                  <div className="col-xl-6 mb-3">
-                    <label
-                      htmlFor="exampleFormControlInput3"
-                      className="form-label"
-                    >
-                      {t('billUpload')}
-                    </label>
-                    <CustomInput
-                      type="file"
-                      register={register}
-                      label="Bill Upload"
-                      name="billUpload"
-                      placeholder=""
-                    />
+
+                    <div className="col-xl-6 mb-3">
+                      <label
+                        htmlFor="exampleFormControlInput3"
+                        className="form-label"
+                      >
+                        {t("billUpload")}
+                      </label>
+                      <CustomInput
+                        type="file"
+                        register={register}
+                        label="Bill Upload"
+                        name="billUpload"
+                        placeholder=""
+                      />
+                    </div>
+                    <div className="col-xl-6 mb-3">
+                      <label
+                        htmlFor="exampleFormControlInput3"
+                        className="form-label"
+                      >
+                        {t("description")}
+                      </label>
+                      <CustomInput
+                        type="textarea"
+                        register={register}
+                        label="Description"
+                        name="description"
+                        placeholder=""
+                      />
+                    </div>
                   </div>
-                  <div className="col-xl-6 mb-3">
-                    <label
-                      htmlFor="exampleFormControlInput3"
-                      className="form-label"
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={() => {
+                        handleSubmit(onSubmit);
+                      }}
+                      className="btn btn-primary me-1"
                     >
-                      {t('description')}
-                    </label>
-                    <CustomInput
-                      type="textarea"
-                      register={register}
-                      label="Description"
-                      name="description"
-                      placeholder=""
-                    />
+                      {t("submit")}
+                    </button>
+                    <Link
+                      to={"#"}
+                      onClick={() => setAddEmploye(false)}
+                      className="btn btn-danger light ms-1"
+                    >
+                      {t("cancel")}
+                    </Link>
                   </div>
-                </div>
-                <div>
-                  <button
-                    type="submit"
-                    onClick={() => {handleSubmit(onSubmit)}}
-                    className="btn btn-primary me-1"
-                  >
-                    {t('submit')}
-                  </button>
-                  <Link
-                    to={"#"}
-                    onClick={() => setAddEmploye(false)}
-                    className="btn btn-danger light ms-1"
-                  >
-                    {t('cancel')}
-                  </Link>
-                </div>
-              </form>
+                </form>
               </FormProvider>
             </div>
           </div>
