@@ -20,9 +20,6 @@ const LocationSelector = ({
   const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  const [countryId, setCountryId] = useState(0);
-  const [stateId, setStateId] = useState(0);
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [countriesList, setCountriesList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [countryCode, setCountryCode] = useState("IND");
@@ -79,7 +76,6 @@ const LocationSelector = ({
 
   const handleCountryChange = async (selectedOption) => {
     const selectedIsoCode = selectedOption.value;
-    setCountryId(selectedIsoCode);
 
     const selectedCountryId = isoToCountryId(selectedIsoCode);
 
@@ -91,7 +87,6 @@ const LocationSelector = ({
     setValue("country", selectedIsoCode);
     setSelectedCountry({ value: selectedIsoCode, label: selectedCountry.name });
     setStateList([]);
-    setStateId(0);
     setSelectedState({
       value: "",
       label: "",
@@ -125,7 +120,6 @@ const LocationSelector = ({
     return state.name;
   };
 
-  // console.log({selectedCountry}, {selectedState})
   const countryOptions = countriesList.map((country) => ({
     value: country.iso3,
     label: country.name,
@@ -136,7 +130,6 @@ const LocationSelector = ({
     label: getStateName(state),
   }));
 
-  console.log({ dValues });
 
   return (
     <>

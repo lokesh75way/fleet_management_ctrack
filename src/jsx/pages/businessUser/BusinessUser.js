@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CSVLink } from "react-csv";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import BusinessTable from "../../components/Tables/BusinessTable";
 import { useTranslation } from "react-i18next";
-import { clsx } from "clsx";
-import { useContext } from "react";
-import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 import { deleteGroup, getGroups } from "../../../services/api/BusinessGroup";
 import usePagination from "../../../hooks/usePagination";
 import { Loader } from "rsuite";
 import Paginate from "../../components/Pagination/Paginate";
-import UserLocation from "../../components/UserLocation";
+import { notifyError } from "../../../utils/toast";
+import TableSkeleton from "../../../components/Skeleton/Table";
 
 const BusinessUser = () => {
-  const [isLoading, setIsLoading] = useState();
-  const [deleteId, setDeleteId] = useState();
-  const { isRtl } = useContext(ThemeContext);
+  const [isLoading] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { can, setUserPermission } = usePermissions();
@@ -25,10 +20,11 @@ const BusinessUser = () => {
   const { page, setCount, totalCount, goToPage } = usePagination();
   const itemsPerPage = 10;
   const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const [initialLoad, setInitialLoad] = useState(false);
 
   async function getGroupData() {
     try {
+      if (page == 1) setInitialLoad(true);
       const permissions = JSON.parse(localStorage.getItem("permission"));
       setUserPermission(permissions?.[0]?.permission);
       const { data, totalPage, totalCount } = await getGroups(page);
@@ -36,6 +32,8 @@ const BusinessUser = () => {
       setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
+    } finally {
+      setInitialLoad(false);
     }
   }
 
@@ -44,8 +42,15 @@ const BusinessUser = () => {
   }, [page]);
 
   const onConfirmDelete = async (id) => {
-    await deleteGroup(id);
-    await getGroupData();
+    try {
+      await deleteGroup(id);
+    } catch (error) {
+      const messge = error.response.data.message;
+      notifyError(messge ?? "Something went wrong!!");
+    }
+    try {
+      await getGroupData();
+    } catch (error) {}
   };
   const editDrawerOpen = (item) => {
     const filteredData = tableData.filter((data) => data._id === item);
@@ -71,7 +76,7 @@ const BusinessUser = () => {
             <div className="col-xl-12">
               <div className="card">
                 <div className="card-body p-0">
-                  <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+                  <div className="active-projects style-1 ItemsCheckboxSec shorting">
                     <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                       <h4 className="heading mb-0">{t("businessGroup")}</h4>
                       <div>
@@ -91,35 +96,41 @@ const BusinessUser = () => {
                       id="employee-tbl_wrapper"
                       className="dataTables_wrapper no-footer"
                     >
-                      <table
-                        id="empoloyees-tblwrapper"
-                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                      >
-                        <thead>
-                          <tr>
-                            <th>{t("id")}</th>
-                            <th>{t("businessGroup")}</th>
-                            <th>{t("mobileNumber")}</th>
-                            <th>{t("email")}</th>
-                            <th>{t("location")}</th>
-                            <th>{t("companyCount")}</th>
-                            {(can("business", "delete") ||
-                              can("business", "modify")) && (
-                              <th>{t("action")}</th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <BusinessTable
-                            key={tableData}
-                            currentPage={page}
-                            itemsPerPage={itemsPerPage}
-                            tableData={tableData}
-                            onConfirmDelete={onConfirmDelete}
-                            editDrawerOpen={editDrawerOpen}
-                          />
-                        </tbody>
-                      </table>
+                      <div className="table-responsive">
+                        {!tableData.length && initialLoad ? (
+                          <TableSkeleton />
+                        ) : (
+                          <table
+                            id="empoloyees-tblwrapper"
+                            className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                          >
+                            <thead>
+                              <tr>
+                                <th>{t("id")}</th>
+                                <th>{t("businessGroup")}</th>
+                                <th>{t("mobileNumber")}</th>
+                                <th>{t("email")}</th>
+                                <th>{t("location")}</th>
+                                <th>{t("companyCount")}</th>
+                                {(can("business", "delete") ||
+                                  can("business", "modify")) && (
+                                  <th>{t("action")}</th>
+                                )}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <BusinessTable
+                                key={tableData}
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                tableData={tableData}
+                                onConfirmDelete={onConfirmDelete}
+                                editDrawerOpen={editDrawerOpen}
+                              />
+                            </tbody>
+                          </table>
+                        )}
+                      </div>
                       <div className="d-sm-flex text-center justify-content-between align-items-center">
                         <div className="dataTables_info">
                           {t("showing")} {startIndex + 1} {t("to")}{" "}

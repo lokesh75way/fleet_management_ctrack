@@ -1,21 +1,15 @@
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-} from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BusinessGroupTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/BusinessGroupTabs/UserSetting";
 import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   businessGroupAccountSchema,
-  businessGroupSettingSchema,
+  companyPasswordSchema,
 } from "../../../../../yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
@@ -24,24 +18,24 @@ import {
   createGroup,
   updateGroup,
 } from "../../../../../services/api/BusinessGroup";
-import { storageCapacityOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
+import { getApiErrorMessage } from "../../../../../utils/helper";
 
-const BusinessForm = ({ Title, editData, setEditData }) => {
+const BusinessForm = () => {
   const { t } = useTranslation();
-
   const [activeIndex, setActiveIndex] = useState(0);
-  let tabHeading = [t("newBusinessGroup"), t("changePassword")];
+  const { id } = useParams();
+  let tabHeading = [
+    id ? t("editBusinessGroup") : t("newBusinessGroup"),
+    t("changePassword"),
+  ];
   let component = [MyAccount, ManagePassword];
   const navigate = useNavigate();
-
-  const { id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!id) {
     tabHeading = [t("newBusinessGroup")];
     component = [MyAccount];
   }
-
-  const totalTabs = tabHeading.length;
 
   const {
     register,
@@ -49,9 +43,10 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
     setValue,
     getValues,
     control,
-    reset,
     handleSubmit,
   } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
       userInfo: [
         {
@@ -62,33 +57,33 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         },
       ],
     },
-    resolver: yupResolver(businessGroupAccountSchema),
+    resolver: yupResolver(
+      activeIndex == 0 ? businessGroupAccountSchema : companyPasswordSchema
+    ),
   });
 
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2 : 1)) {
+    setIsSubmitting(true);
+    if (activeIndex === 0) {
       try {
+        if (data.logo == null || data.logo.length === 0) {
+          delete data.logo;
+        }
+        if (data.file && data.file.length === 0) {
+          delete data.file;
+        }
         if (id) {
           await updateGroup(data);
           notifySuccess("Business group has been updated!");
           navigate("/business");
           return;
         } else {
-          if (data.logo && data.logo.length === 0) {
-            delete data.logo;
-          }
-          if (data.file && data.file.length === 0) {
-            delete data.file;
-          }
           await createGroup(data);
           notifySuccess("Business group created");
         }
         navigate("/business");
-
-        return;
       } catch (error) {
-        console.log(error);
-        notifyError("Some error occured !!");
+        notifyError(getApiErrorMessage(error));
       }
     } else if (activeIndex === 1) {
       try {
@@ -102,10 +97,10 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
         notifySuccess("Password has been changed");
         navigate("/business");
       } catch (error) {
-        notifyError("Password is not changes!");
+        notifyError(getApiErrorMessage(error));
       }
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    setIsSubmitting(false);
   };
 
   return (
@@ -152,6 +147,7 @@ const BusinessForm = ({ Title, editData, setEditData }) => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
+                          isFormSubmitting={isSubmitting}
                         />
                       </Tab.Pane>
                     );

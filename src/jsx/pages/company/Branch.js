@@ -1,57 +1,27 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import MainPagetitle from "../../layouts/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
-import AsyncSelect from "react-select/async";
-import useStorage from "../../../hooks/useStorage";
 import { useTranslation } from "react-i18next";
-
-import { clsx } from "clsx";
-
-import { useContext } from "react";
-import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
 import {
   getAllBranch,
-  createBranch,
   deleteBranch,
 } from "../../../services/api/BranchServices";
 import { notifySuccess } from "../../../utils/toast";
 import usePagination from "../../../hooks/usePagination";
-import { getCompany } from "../../../services/api/CompanyServices";
 import CompanyDropdown from "../../components/CompanyDropdown";
-import BranchDropdown from "../../components/BranchDropdown";
-import { getSelectValues } from "../../../utils/helper";
-import ParentBranchDropdown from "../../components/ParentBranch";
-import ReactPaginate from "react-paginate";
-import { ICON } from "../../constant/theme";
 import Paginate from "../../components/Pagination/Paginate";
-
-// import { SubCompanyData } from '../../components/Tables/Tables';
+import TableSkeleton from "../../../components/Skeleton/Table";
 
 const Branch = () => {
-  const { isRtl } = useContext(ThemeContext);
-
   const { can, setUserPermission } = usePermissions();
-
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const [selectFilter, setFilter] = useState({
-    value: "All Companies",
-    label: "All Companies",
-  });
-  const [selectFilter2, setFilter2] = useState({
-    value: "All Branches",
-    label: "All Branches",
-  });
   const [tempValue, setTempValue] = useState("All Companies");
   const [tempValue2, setTempValue2] = useState("All Branches");
-  const [data, setData] = useState(
-    document.querySelectorAll("#employee-tbl_wrapper tbody tr")
-  );
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -63,10 +33,7 @@ const Branch = () => {
       menu: (provided) => ({ ...provided, zIndex: 9999 }),
     }),
   };
-  const loggedinUser = localStorage.getItem("loginDetails-name");
-  // const SubCompanyData = JSON.parse( localStorage.getItem('branchData'));
-  // const role = localStorage.getItem("role");
-  const { control, setValue, getValues, watch } = useForm();
+  const { control, setValue } = useForm();
   const userData = JSON.parse(localStorage.getItem("userDetails"));
   const role = userData?.user?.role;
   const [companyId, setCompanyId] = useState(null);
@@ -85,29 +52,19 @@ const Branch = () => {
     label: t("allCompanies"),
     value: "All Companies",
   });
-  const [branchDropdown, setBranchDropdown] = useState({
-    label: t("selectParentBranch"),
-    value: "All Branches",
-  });
-  const [companies, setCompanies] = useState([]);
   const [branches, setBranches] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [selectedBranch, setSelectedBranch] = useState(null);
-  const defaultValues = getSelectValues();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
-    usePagination();
-
+  const { page, goToPage, setCount, totalCount, setPage } = usePagination();
+  const [initialLoad, setInitialLoad] = useState(false);
   const itemsPerPage = 10;
-
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
-
   const fetchAllBranch = async (page, CompanyId, branchId) => {
     try {
+      if (page == 1) setInitialLoad(true);
       if (CompanyId) {
         const { data, success } = await getAllBranch(undefined, CompanyId);
         setTableData(data.data);
@@ -132,8 +89,11 @@ const Branch = () => {
       }
     } catch (error) {
       console.log("Error in fetching data", error);
+    } finally {
+      setInitialLoad(false);
     }
   };
+
   useEffect(() => {
     if (id) {
       fetchAllBranch(page, id);
@@ -154,7 +114,6 @@ const Branch = () => {
 
   const handleCompanyChange = (selectedOption) => {
     setSelectedCompany(selectedOption);
-    setFilter(selectedOption);
     setCompanyId(selectedOption.value);
     setPage(1);
     fetchAllBranch(1, selectedOption.value);
@@ -163,7 +122,6 @@ const Branch = () => {
   // Handler function for branch selection
   const handleBranchChange = (branchOption) => {
     setSelectedBranch(branchOption);
-    setFilter2(branchOption);
     setPage(1);
     fetchAllBranch(1, undefined, branchOption.value);
   };
@@ -186,10 +144,8 @@ const Branch = () => {
 
   const editDrawerOpen = (item) => {
     const filteredData = tableData?.filter((data) => data._id === item);
-    navigate(`edit/${item}`, { state: filteredData });
+    navigate(`/branch/edit/${item}`, { state: filteredData });
   };
-
-  // const d = JSON.parse(localStorage.getItem("userJsonData"));
 
   return (
     <>
@@ -203,7 +159,7 @@ const Branch = () => {
           <div className="col-xl-12">
             <div className="card">
               <div className="card-body p-0">
-                <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
+                <div className="active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("branches")}</h4>
                     <div className="d-flex align-items-center">
@@ -220,26 +176,45 @@ const Branch = () => {
                       >
                         Clear
                       </Link>
-                      <Controller
-                        name="company"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, value, name, ref } }) => (
-                          <CompanyDropdown
-                            onChange={async (newValue) => {
-                              setValue("company", newValue.value);
-                              setCompanyId(newValue.value);
-                              handleCompanyChange(newValue);
+                      {role !== "COMPANY" && (
+                        <>
+                          <Link
+                            className="btn  btn-xxs"
+                            data-bs-toggle="offcanvas"
+                            onClick={handleClearFilter}
+                            to={"/branch"}
+                            style={{
+                              background: "gray",
+                              border: "gray",
+                              color: "white",
                             }}
-                            key={companyId}
-                            value={value ? value : companyDropdown}
-                            customStyles={customStyles}
-                            name={name}
-                            ref={ref}
-                            isDisabled={role === "COMPANY" ? true : false}
+                          >
+                            Clear
+                          </Link>
+                          <Controller
+                            name="company"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({
+                              field: { onChange, value, name, ref },
+                            }) => (
+                              <CompanyDropdown
+                                onChange={async (newValue) => {
+                                  setValue("company", newValue.value);
+                                  setCompanyId(newValue.value);
+                                  handleCompanyChange(newValue);
+                                }}
+                                key={companyId}
+                                value={value ? value : companyDropdown}
+                                customStyles={customStyles}
+                                name={name}
+                                ref={ref}
+                                isDisabled={role === "COMPANY" ? true : false}
+                              />
+                            )}
                           />
-                        )}
-                      />
+                        </>
+                      )}
                       {/* <Controller
                         name="parent"
                         control={control}
@@ -277,40 +252,47 @@ const Branch = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("branchName")}</th>
-                          {/* <th>{t("parentBranch")}</th> */}
-                          <th>{t("companyName")}</th>
-                          <th>{t("businessGroup")}</th>
-                          {/* <th>{t('mobileNumber')}</th> */}
-                          <th>{t("location")}</th>
-                          <th>{t("childBranches")}</th>
-                          {(can("branch", "modify") ||
-                            can("branch", "delete")) && <th>{t("action")}</th>}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <SubCompanyTable
-                          key={tableData}
-                          tempValue={tempValue}
-                          // setDataLength={setDataLength}
-                          tempValue2={tempValue2}
-                          editData={editData}
-                          tableData={tableData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                        />
-                      </tbody>
-                    </table>
+                    <div className="table-responsive ">
+                      {!tableData.length && initialLoad ? (
+                        <TableSkeleton />
+                      ) : (
+                        <table
+                          id="empoloyees-tblwrapper"
+                          className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                        >
+                          <thead>
+                            <tr>
+                              <th>{t("id")}</th>
+                              <th>{t("branchName")}</th>
+                              {/* <th>{t("parentBranch")}</th> */}
+                              <th>{t("companyName")}</th>
+                              <th>{t("businessGroup")}</th>
+                              {/* <th>{t('mobileNumber')}</th> */}
+                              <th>{t("location")}</th>
+                              <th>{t("childBranches")}</th>
+                              {(can("branch", "modify") ||
+                                can("branch", "delete")) && (
+                                <th>{t("action")}</th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <SubCompanyTable
+                              key={tableData}
+                              tempValue={tempValue}
+                              tempValue2={tempValue2}
+                              editData={editData}
+                              tableData={tableData}
+                              currentPage={page}
+                              itemsPerPage={itemsPerPage}
+                              onConfirmDelete={onConfirmDelete}
+                              editDrawerOpen={editDrawerOpen}
+                              setEditData={setEditData}
+                            />
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

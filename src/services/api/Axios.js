@@ -8,6 +8,7 @@ function initAxios() {
     config.baseURL = process.env.REACT_APP_BACKEND_API;
     // config.baseURL = "https://75way.com/api/fleet/";
     config.headers.Authorization = `Bearer ${token}`;
+    config.headers["ngrok-skip-browser-warning"] = true;
     return config;
   });
 }

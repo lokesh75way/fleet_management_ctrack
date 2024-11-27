@@ -64,6 +64,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-draw": "^0.20.4",
     "react-linear-gradient-picker": "^3.0.1",
+    "react-loading-skeleton": "^3.5.0",
     "react-multiselect-dropdown-bootstrap": "^1.1.0",
     "react-nestable": "^2.0.0",
     "react-paginate": "^8.2.0",

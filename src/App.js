@@ -11,6 +11,7 @@ import {
 // action
 import { checkAutoLogin } from "./services/AuthService";
 import { isAuthenticated } from "./store/selectors/AuthSelectors";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import "./css/style.css";
 import BasicLayout from "./jsx/layouts/BasicLayout";

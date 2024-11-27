@@ -23,6 +23,7 @@ export const arabic = {
     home: "الصفحة الرئيسية",
 
     newBusinessGroup: "مجموعة الأعمال الجديدة",
+    editBusinessGroup: "تحرير مجموعة الأعمال",
     settings: "الإعدادات",
     changePassword: "تغيير كلمة المرور",
     edit: "تحرير",
@@ -73,6 +74,7 @@ export const arabic = {
     entries: "المدخلات",
 
     newCompany: "شركة جديدة",
+    editCompany: "تحرير الشركة",
     allCompanies: "جميع الشركات",
 
     branchName: "اسم الفرع",
@@ -88,6 +90,7 @@ export const arabic = {
     contact: "الاتصال",
     yourAccountManager: "مدير حسابك.",
     newBranch: "فرع جديد",
+    editBranch: "تحرير فرع",
     users: "المستخدمين",
     addUser: "إضافة مستخدم",
 

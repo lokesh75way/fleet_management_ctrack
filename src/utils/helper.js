@@ -157,3 +157,14 @@ export function filterClassifyTable(filter, data) {
 
   return filteredData;
 }
+
+export const getApiErrorMessage = (error) => {
+  let message = "Some error occured !!";
+  const response = error.response?.data;
+  if (response?.message === "Validation error!") {
+    message = response?.data?.errors?.[0]?.msg ?? "Validation error!";
+  } else if (response?.message) {
+    message = response.message;
+  }
+  return message;
+};

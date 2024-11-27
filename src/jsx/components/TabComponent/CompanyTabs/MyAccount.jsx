@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller, useForm, useFieldArray } from "react-hook-form";
+import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
-import AsyncSelect from "react-select/async";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -16,15 +12,14 @@ import {
   storageCapacityOptions,
   timeFormatOptions,
 } from "../VehicleTabs/Options";
-import { getGroups } from "../../../../services/api/BusinessGroup";
 import { businessGroupOptions } from "../../ReusableApi/Api";
 import FileUploader from "../../../../components/FileUploader";
 import GroupDropdown from "../../GroupDropdown";
-import { LuEye, LuEyeOff } from "react-icons/lu";
 import CredentialsInput from "../../CredentialsInput";
 import FormField from "../../FormField";
 import LocationSelector from "../../LocationSelector";
 import UserLocation from "../../UserLocation";
+
 const MyAccount = ({
   setValue,
   getValues,
@@ -34,28 +29,18 @@ const MyAccount = ({
   errors,
   control,
   formData,
+  isFormSubmitting,
 }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
   const [loading, setLoading] = useState(false);
-  const [defaultCountry, setDefaultCountry] = useState();
-  const [selectStateName, setSelectStateName] = useState({
-    name: "",
-  });
   const { t } = useTranslation();
-  const { checkRole, checkUserName } = useStorage();
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [tempValue, setTempValue] = useState();
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const [bussinessGpLable, setBussinessGpLable] = useState(null);
+  const { checkRole } = useStorage();
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [locationData, setLocationData] = useState(null);
   const [logo, setLogo] = useState(null);
-  const role = localStorage.getItem("role");
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
     control: (base) => ({
@@ -68,13 +53,6 @@ const MyAccount = ({
     // getBusinessGroup()
     businessGroupOptions();
   }, []);
-
-  const companyOptions = DummyData.filter(
-    (item) => item.role === "company"
-  ).map((item) => ({
-    label: item.country,
-    value: item.country,
-  }));
 
   useEffect(() => {
     if (checkRole() !== "SUPER_ADMIN") {
@@ -116,9 +94,6 @@ const MyAccount = ({
       setValue("storageCapacity", formData[0].companyId.storageCapacity);
       setValue("country", formData[0].country);
       setValue("state", formData[0].state || "");
-      setDefaultCountry({ name: formData[0].country });
-      setSelectStateName({ name: formData[0].state || "" });
-      setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName);
       setLogo(formData?.[0].companyId?.logo);
       setValue(
         "dateFormat",
@@ -147,6 +122,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -163,7 +139,6 @@ const MyAccount = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
                 onChange={(newValue) => {
-                  setBussinessGpLable(newValue.value);
                   setValue("businessGroupId", newValue.value);
                 }}
                 value={value}
@@ -356,7 +331,7 @@ const MyAccount = ({
         }}
       >
         <Button
-          disabled={loading}
+          disabled={loading || isFormSubmitting}
           type="submit"
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}

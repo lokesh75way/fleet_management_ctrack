@@ -36,10 +36,8 @@ const CustomInput = ({
         className="form-control"
         defaultValue={defaultValue}
         disabled={disabled}
-        onInput={onInput}
-        onChange={onChange}
         min={min}
-        autoComplete="off"
+        autoComplete="new-password"
       />
     </div>
   );

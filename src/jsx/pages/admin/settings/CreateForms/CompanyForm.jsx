@@ -4,12 +4,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../layouts/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/CompanyTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   companyAccountSchema,
   companyPasswordSchema,
-  companySettingSchema,
 } from "../../../../../yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
@@ -21,23 +19,24 @@ import {
   changePassword,
   editCompany,
 } from "../../../../../services/api/CompanyServices";
-import { dateFormatOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
+import { getApiErrorMessage } from "../../../../../utils/helper";
 
 const CompanyForm = () => {
   const { t } = useTranslation();
-  const { saveData } = useStorage();
   const navigate = useNavigate();
-
-  let tabHeading = [t("newCompany"), t("changePassword")];
-  let component = [MyAccount, ManagePassword];
   const { id } = useParams();
+  let tabHeading = [
+    id ? t("editCompany") : t("newCompany"),
+    t("changePassword"),
+  ];
+  let component = [MyAccount, ManagePassword];
   const location = useLocation();
   const { formData } = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
-  // ManagePassword , t('changePassword')
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!id) {
-    tabHeading = [t("newBusinessGroup")];
+    tabHeading = [t("newCompany")];
     component = [MyAccount];
   }
 
@@ -65,48 +64,30 @@ const CompanyForm = () => {
       activeIndex === 1 ? companyPasswordSchema : companyAccountSchema
     ),
   });
+
   const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - (id ? 2 : 1)) {
+    setIsSubmitting(true);
+    if (activeIndex === 0) {
       try {
+        if (data.logo == null || data.logo.length === 0) {
+          delete data.logo;
+        }
+        if (data.file && data.file.length === 0) {
+          delete data.file;
+        }
         if (id) {
-          try {
-            // data.businessGroupId = getValues("businessId");
-            // if (data.logo.length === 0) {
-            //   delete data.logo;
-            // }
-            // if (data.file.length === 0) {
-            //   delete data.file;
-            // }
-            await editCompany(data);
-            notifySuccess("Company Updated Successfully");
-            navigate("/company");
-            return;
-          } catch (e) {
-            console.log(e);
-            notifyError("Some error occured");
-          }
-          return;
+          await editCompany(data);
+          notifySuccess("Company Updated Successfully");
+          navigate("/company");
         } else {
-          try {
-            if (data.logo && data.logo.length === 0) {
-              delete data.logo;
-            }
-            if (data.file && data.file.length === 0) {
-              delete data.file;
-            }
-            data.businessGroupId = getValues("businessGroupId");
-            await addCompany(data);
-            notifySuccess("New Company Created");
-            navigate("/company");
-            return;
-          } catch (e) {
-            notifyError("Some error occured");
-          }
+          await addCompany(data);
+          notifySuccess("New Company Created");
+          navigate("/company");
         }
       } catch (error) {
-        notifyError("Some error occured !!");
+        notifyError(getApiErrorMessage(error));
       }
-    } else if (activeIndex === 2) {
+    } else if (activeIndex === 1) {
       try {
         const passwordData = {
           password: data.newPassword,
@@ -119,12 +100,10 @@ const CompanyForm = () => {
         notifySuccess("Password has been changed");
         navigate("/company");
       } catch (error) {
-        console.log(error);
-        notifyError("Password is not changes!");
+        notifyError(getApiErrorMessage(error));
       }
     }
-
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    setIsSubmitting(false);
   };
 
   return (
@@ -172,6 +151,7 @@ const CompanyForm = () => {
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
                           formData={formData}
+                          isFormSubmitting={isSubmitting}
                         />
                       </Tab.Pane>
                     );

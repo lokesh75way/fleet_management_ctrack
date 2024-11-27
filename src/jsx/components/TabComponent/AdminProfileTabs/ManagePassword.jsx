@@ -11,6 +11,7 @@ const ManagePassword = ({
   onSubmit,
   handleSubmit,
   errors,
+  isFormSubmitting,
 }) => {
   const [showOldPassword, setOldShowPassword] = useState(false);
   const [showNewPassword, setNewShowPassword] = useState(false);
@@ -89,7 +90,7 @@ const ManagePassword = ({
                 {showConfirmPassword ? <LuEyeOff /> : <LuEye />}
               </span>
             </div>
-            <Error errorName={errors.retypePassword} />
+            <Error errorName={errors.confirmPassword} />
           </div>
         </>
       </div>
@@ -103,6 +104,7 @@ const ManagePassword = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

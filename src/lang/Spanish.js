@@ -23,6 +23,7 @@ export const spanish = {
     home: "Inicio",
 
     newBusinessGroup: "Nuevo Grupo Empresarial",
+    editBusinessGroup: "Editar Grupo Empresarial",
     settings: "Configuración",
     changePassword: "Cambiar Contraseña",
     edit: "Editar",
@@ -71,6 +72,7 @@ export const spanish = {
     of: "de",
     entries: "entradas",
     newCompany: "Nueva Empresa",
+    editCompany: "Editar Empresa",
 
     branchName: "Nombre de la Sucursal",
     parentBranch: "Sucursal Principal",
@@ -84,6 +86,7 @@ export const spanish = {
     contact: "contacte",
     yourAccountManager: "a su gerente de cuenta.",
     newBranch: "Nueva Sucursal",
+    editBranch: "Editar rama",
 
     users: "Usuarios",
     addUser: "Agregar Usuario",

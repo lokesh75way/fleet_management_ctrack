@@ -1,29 +1,27 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller, useForm, useFieldArray } from "react-hook-form";
-import AsyncSelect from "react-select/async";
+import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
 import CustomInput from "../../Input/CustomInput";
-import DummyData from "../../../../users.json";
 import { useParams } from "react-router-dom";
-import { getSelectValues } from "../../../../utils/helper";
 import { useTranslation } from "react-i18next";
 import { getGroups } from "../../../../services/api/BusinessGroup";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { editBranch } from "../../../../services/api/BranchServices";
 import { useLocation } from "react-router-dom";
 import GroupDropdown from "../../GroupDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
-import ParentBranchDropdown from "../../ParentBranch";
-import useStorage from "../../../../hooks/useStorage";
-import { getUser } from "../../../../services/api/UserServices";
-import { use } from "i18next";
 import FormField from "../../FormField";
 import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
 import UserLocation from "../../UserLocation";
 import LocationSelector from "../../LocationSelector";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ",
+  }),
+};
 
 const MyAccount = ({
   setValue,
@@ -33,54 +31,28 @@ const MyAccount = ({
   handleSubmit,
   errors,
   control,
+  isFormSubmitting,
 }) => {
-  // const defaultValues = getSelectValues();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
-
-  const [selectStateName, setSelectStateName] = useState({
-    name: "",
-  });
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [tempValue, setTempValue] = useState();
-
   const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
-
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
-
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
-
   const { t } = useTranslation();
   const location = useLocation();
-
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
-
-  // const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
-  // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
   const [dValues, setDvalues] = useState([]);
-  const [defaultCountry, setDefaultCountry] = useState();
   const [locationData, setLocationData] = useState(null);
 
   useEffect(() => {
     if (userDetails.user.role === "COMPANY") {
-      let bus;
       setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
 
       setValue("companyId", userDetails?.user.companyId[0]?._id);
-      setCompanyId(userDetails?.user.companyId[0]?._id);
       setCompanyDisabled(true);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
@@ -128,8 +100,6 @@ const MyAccount = ({
     }
   }, [id]);
 
-  console.log(dValues, "data");
-
   useEffect(() => {
     if (dValues && id) {
       setValue("businessGroupName", dValues.businessGroupId?.groupName);
@@ -146,9 +116,7 @@ const MyAccount = ({
       setValue("zipCode", dValues.zipCode);
       setValue("street1", dValues.street1);
       setValue("street2", dValues.street2);
-      setDefaultCountry({ name: dValues.country });
       setValue("country", dValues.country);
-      setSelectStateName({ name: dValues.state || "" });
       setValue("state", dValues.state);
       setValue("userInfo", dValues.userInfo);
       setValue("dateFormat", dValues?.dateFormat);
@@ -159,8 +127,6 @@ const MyAccount = ({
       setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [dValues, id]);
-
-  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
 
   const handleAddForm = () => {
     append({
@@ -173,6 +139,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
@@ -194,7 +161,8 @@ const MyAccount = ({
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
-                    setCompanyId(null);
+                    setValue("companyName", "");
+                    setValue("companyId", "");
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -215,6 +183,8 @@ const MyAccount = ({
                     await setValue("businessGroupId", newValue.value);
                     await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
+                    setValue("companyName", "");
+                    setValue("companyId", "");
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -267,7 +237,6 @@ const MyAccount = ({
                   onChange={(newValue) => {
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.value);
-                    setCompanyId(newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -456,6 +425,7 @@ const MyAccount = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

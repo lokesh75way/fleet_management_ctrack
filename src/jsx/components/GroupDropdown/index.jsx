@@ -11,6 +11,7 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
   const { page, setPage } = usePagination();
   const [initialDataFetched, setInitialDataFetched] = useState(false);
   const { userDetails } = usePermissions();
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     if (!initialDataFetched) {
@@ -56,6 +57,7 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
       value: item?.businessGroupId?._id,
     }));
     setAllOptions((prevOptions) => [...prevOptions, ...newOptions]);
+    if (newOptions.length == 0) setIsComplete(true);
     setLoading(false);
   };
 
@@ -74,7 +76,7 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
     const bottom =
       event.target.scrollHeight - event.target.scrollTop ===
       event.target.clientHeight;
-    if (bottom && !loading) {
+    if (bottom && !loading && !isComplete) {
       setPage((prevPage) => prevPage + 1);
     }
   };
@@ -84,11 +86,15 @@ const GroupDropdown = ({ onChange, value, customStyles, isDisabled, name }) => {
       options={allOptions}
       value={selectedOption}
       onChange={(newValue) => onChange(newValue)}
-      styles={customStyles}
       name={name}
       isDisabled={isDisabled}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
+      menuPortalTarget={document.body}
+      styles={{
+        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+        ...customStyles,
+      }}
     />
   );
 };

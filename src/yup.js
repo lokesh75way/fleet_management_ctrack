@@ -1,4 +1,23 @@
 import * as yup from "yup";
+
+const EMAIL_REG =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const password = yup
+  .string()
+  .trim()
+  .matches(/(?=.*[0-9])/, { message: "Must contain atleast digit" })
+  .matches(/(^\S+$)/, { message: "Don't use white spaces" })
+  .matches(/(?=.*\W)/, { message: "Must contain atleast special character" })
+  .matches(/(?=.*[A-Z])/, {
+    message: "Must contain atleast one upper case letter",
+  })
+  .matches(/(?=.*[a-z])/, {
+    message: "Must contain atleast one lower case letter",
+  })
+  .min(8, "Atleast 8 character should be there")
+  .max(16, "Maximum 16 characters only allowed");
+
 export const vehicleGeneralSchema = yup
   .object({
     companyId: yup.string().required("Company name id required"),
@@ -120,82 +139,94 @@ export const loginValidation = yup.object().shape({
 });
 
 export const resetPassword = yup.object().shape({
-  newPassword: yup
-    .string()
-    .required("New Password is required")
-    .min(6, "New Password must be at least 6 characters"),
+  newPassword: password.required("New Password is required"),
   confirmPassword: yup
     .string()
-    .required("Confirm New Password is required")
-    .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+    .required("Confirm password")
+    .oneOf([yup.ref("newPassword")], "Passwords must match"),
 });
 
 export const companyAccountSchema = yup.object({
   // branch: yup.string().required(),
   businessGroupId: yup.string().required("Please select an option"),
-  companyName: yup.string().required("Please enter a Company Name"),
-  logo: yup
-    .mixed()
-    .test("fileType", "Only JPG or PNG files are allowed", (value) => {
-      return true;
-    }),
-  tradeLicenseNumber: yup.string(),
-  officeNumber: yup.string(),
-  country: yup.string().required("Please select a Country"),
-  state: yup.string(),
-  email: yup.string().required("Please enter email"),
-  city: yup.string().required("Please enter a City"),
-  dateFormat: yup.string().required("Please select a Date Format"),
-  timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string(),
-  userName: yup.string().required("Please enter a Username"),
-  password: yup
+  companyName: yup.string().trim().required("Please enter a Company Name"),
+  tradeLicenseNumber: yup.string().trim(),
+  officeNumber: yup.string().trim(),
+  country: yup.string().trim().required("Please select a Country"),
+  state: yup.string().trim(),
+  email: yup
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(20, "Password must be at most 20 characters"),
-  // Add validation for user details within formData array
+    .trim()
+    .email("Enter valid email")
+    .matches(EMAIL_REG, { message: "Enter valid email" })
+    .required("Please enter email"),
+  city: yup.string().trim().required("Please enter a City"),
+  dateFormat: yup.string().trim().required("Please select a Date Format"),
+  timeFormat: yup.string().trim().required("Please select a Time Format"),
+  timezone: yup.string().trim(),
+  userName: yup.string().trim().required("Please enter a Username"),
+  password: password.required("Password required"),
   userInfo: yup.array().of(
     yup.object().shape({
-      name: yup.string().required("Please enter a Name"),
-      designation: yup.string().required("Please enter a Designation"),
+      name: yup.string().trim().required("Please enter a Name"),
+      designation: yup.string().trim().required("Please enter a Designation"),
       mobileNumber: yup
         .string()
+        .trim()
         .required("Please enter a Mobile Number")
         .matches(
           /^[0-9]{5,15}$/,
           "Phone number must be between 5 and 15 digits"
         ),
-      email: yup.string().email().required("Email is required"),
+      email: yup
+        .string()
+        .trim()
+        .email("Enter valid email")
+        .matches(EMAIL_REG, { message: "Enter valid email" })
+        .required("Email is required"),
     })
   ),
 });
 
 export const branchAccountSchema = yup.object({
-  branchName: yup.string().required(),
-  companyId: yup.string().required("Company Name is required "),
-  businessGroupId: yup.string().required("Business Group Name is required "),
-  tradeLicenseNumber: yup.string(),
-  officeNumber: yup.string(),
-  country: yup.string().required("Please select a Country"),
-  state: yup.string(),
-  email: yup.string().required("Please enter email"),
-  city: yup.string().required("Please enter a City"),
-  dateFormat: yup.string().required("Please select a Date Format"),
-  timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string(),
-  // Add validation for user details within formData array
+  branchName: yup.string().trim().required(),
+  companyId: yup.string().trim().required("Company Name is required "),
+  businessGroupId: yup
+    .string()
+    .trim()
+    .required("Business Group Name is required "),
+  tradeLicenseNumber: yup.string().trim(),
+  officeNumber: yup.string().trim(),
+  country: yup.string().trim().required("Please select a Country"),
+  state: yup.string().trim(),
+  email: yup
+    .string()
+    .trim()
+    .email("Enter valid email")
+    .matches(EMAIL_REG, { message: "Enter valid email" })
+    .required("Please enter email"),
+  city: yup.string().trim().required("Please enter a City"),
+  dateFormat: yup.string().trim().required("Please select a Date Format"),
+  timeFormat: yup.string().trim().required("Please select a Time Format"),
+  timezone: yup.string().trim(),
   userInfo: yup.array().of(
     yup.object().shape({
-      name: yup.string().required("Please enter a Name"),
-      designation: yup.string().required("Please enter a Designation"),
+      name: yup.string().trim().required("Please enter a Name"),
+      designation: yup.string().trim().required("Please enter a Designation"),
       mobileNumber: yup
         .string()
+        .trim()
         .required("Please enter a Mobile Number")
         .matches(
           /^[0-9]{5,15}$/,
           "Phone number must be between 5 and 15 digits"
         ),
-      email: yup.string().email().required("Email is required"),
+      email: yup
+        .string()
+        .trim()
+        .email("Enter valid email")
+        .matches(EMAIL_REG, { message: "Enter valid email" })
+        .required("Email is required"),
     })
   ),
 });
@@ -212,22 +243,15 @@ export const adminProfileAccountSchema = yup
     city: yup.string().required("Please enter a City "),
     street1: yup.string().required("Please enter street1 address "),
     email: yup.string().email().required("Email is required "),
-    oldPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+    oldPassword: yup.string().trim().required("Please type old password"),
     helpDeskEmail: yup
       .string()
       .email()
       .required("Help Desk Email is required "),
-    newPassword: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+    newPassword: password.required(),
     retypePassword: yup
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20, "Password must be at most 20 characters"),
+      .oneOf([yup.ref("newPassword"), null], "Passwords must match"),
     mobileNumber: yup
       .string()
       .matches(/^[0-9]{5,15}$/, "Phone number must be between 5 and 15 digits"),
@@ -239,34 +263,42 @@ export const adminProfileAccountSchema = yup
 
 export const businessGroupAccountSchema = yup.object({
   // Add validation rules for each field
-  groupName: yup.string().required("Please enter a Business Group Name"),
-  tradeLicenseNumber: yup.string(),
-  officeNumber: yup.string(),
-  country: yup.string().required("Please select a Country"),
-  state: yup.string(),
-  email: yup.string().email("Valid email required"),
-  city: yup.string().required("Please enter a City"),
-  dateFormat: yup.string().required("Please select a Date Format"),
-  timeFormat: yup.string().required("Please select a Time Format"),
-  timezone: yup.string(),
-  userName: yup.string().required("Please enter a Username"),
-  password: yup
+  groupName: yup.string().trim().required("Please enter a Business Group Name"),
+  tradeLicenseNumber: yup.string().trim(),
+  officeNumber: yup.string().trim(),
+  country: yup.string().trim().required("Please select a Country"),
+  state: yup.string().trim(),
+  email: yup
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .max(20, "Password must be at most 20 characters"),
+    .trim()
+    .email("Valid email required")
+    .matches(EMAIL_REG, { message: "Enter valid email" })
+    .required("Enter valid email"),
+  city: yup.string().trim().required("Please enter a City"),
+  dateFormat: yup.string().trim().required("Please select a Date Format"),
+  timeFormat: yup.string().trim().required("Please select a Time Format"),
+  timezone: yup.string().trim(),
+  userName: yup.string().trim().required("Please enter a Username"),
+  password: password.required("Password is required"),
   // Add validation for user details within formData array
   userInfo: yup.array().of(
     yup.object().shape({
-      name: yup.string().required("Please enter a Name"),
-      designation: yup.string().required("Please enter a Designation"),
+      name: yup.string().trim().required("Please enter a Name"),
+      designation: yup.string().trim().required("Please enter a Designation"),
       mobileNumber: yup
         .string()
+        .trim()
         .required("Please enter a Mobile Number")
         .matches(
           /^[0-9]{5,15}$/,
           "Phone number must be between 5 and 15 digits"
         ),
-      email: yup.string().email().required("Email is required"),
+      email: yup
+        .string()
+        .trim()
+        .email("Enter valid email")
+        .matches(EMAIL_REG, { message: "Enter valid email" })
+        .required("Email is required"),
     })
   ),
 });
@@ -298,16 +330,14 @@ export const companySettingSchema = yup
   .required();
 
 export const companyPasswordSchema = yup.object({
-  oldPassword: yup.string().required("Old password is required"),
+  oldPassword: yup.string().trim().required("Old password is required"),
 
-  newPassword: yup
-    .string()
-    .required("New password is required")
-    .min(8, "Password must be at least 8 characters"),
+  newPassword: password.required("New password is required"),
 
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref("newPassword"), null], "Passwords must match")
+    .trim()
+    .oneOf([yup.ref("newPassword")], "Passwords must match")
     .required("Please confirm your password"),
 });
 

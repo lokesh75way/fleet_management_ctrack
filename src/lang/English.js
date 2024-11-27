@@ -23,6 +23,7 @@ export const english = {
     home: "Home",
 
     newBusinessGroup: "New Business Group",
+    editBusinessGroup: "Edit Business Group",
     settings: "Settings",
     changePassword: "Change Password",
     edit: "Edit",
@@ -73,7 +74,7 @@ export const english = {
     entries: "entries",
 
     newCompany: "New Company",
-
+    editCompany: "Edit Company",
     branchName: "Branch Name",
     parentBranch: "Parent Branch",
     selectParentBranch: "Select Parent Branch",
@@ -86,6 +87,7 @@ export const english = {
     contact: "contact",
     yourAccountManager: "your account manager.",
     newBranch: "New Branch",
+    editBranch: "Edit Branch",
 
     users: "Users",
     addUser: "Add User",

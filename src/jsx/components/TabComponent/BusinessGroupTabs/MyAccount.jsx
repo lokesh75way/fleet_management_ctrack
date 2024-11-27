@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import Error from "../../Error/Error";
@@ -14,15 +13,10 @@ import {
   timeFormatOptions,
 } from "../VehicleTabs/Options";
 import FileUploader from "../../../../components/FileUploader";
-import { LuEye, LuEyeOff } from "react-icons/lu";
-import TimezoneSelect, { allTimezones } from "react-timezone-select";
-import { IMAGES, SVGICON } from "../../../constant/theme";
 import CredentialsInput from "../../CredentialsInput";
-import { get } from "react-scroll/modules/mixins/scroller";
 import FormField from "../../FormField";
 import UserLocation from "../../UserLocation";
 import LocationSelector from "../../LocationSelector";
-import TimeZoneSelector from "../../TimeZoneSelector";
 
 const MyAccount = ({
   data,
@@ -33,44 +27,27 @@ const MyAccount = ({
   handleSubmit,
   errors,
   control,
+  isFormSubmitting,
 }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
   const [loading, setLoading] = useState(false);
-  const [defaultCountry, setDefaultCountry] = useState();
-  const [selectStateName, setSelectStateName] = useState({
-    name: "",
-  });
   const { t } = useTranslation();
   const location = useLocation();
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [logo, setLogo] = useState(null);
   const [locationData, setLocationData] = useState(null);
   const [dValues, setDvalues] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  // const [selectedTimezone, setSelectedTimezone] = useState(
-  //   dValues?.businessGroupId?.timezone ||
-  //     Intl.DateTimeFormat().resolvedOptions().timeZone
-  // );
   const { id } = useParams();
-  // const [formData, setFormData] = useState([{}]); // State to store form data
 
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ",
-    }),
-  };
   useEffect(() => {
     if (id) {
       const data = location.state[0];
       setDvalues(data);
     }
   }, [id]);
+
   useEffect(() => {
     if (dValues && id) {
       setValue("groupName", dValues.businessGroupId?.groupName);
@@ -122,7 +99,7 @@ const MyAccount = ({
   const handleLocationData = useCallback((data) => {
     setLocationData(data);
   }, []);
-  // console.log({allTimezones})
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -227,7 +204,12 @@ const MyAccount = ({
                 options={dateFormatOptions}
                 ref={ref}
                 name={name}
-                styles={customStyles}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    padding: ".25rem 0 ",
+                  }),
+                }}
                 value={{ value, label: value }}
               />
             )}
@@ -246,17 +228,18 @@ const MyAccount = ({
                 options={timeFormatOptions}
                 ref={ref}
                 name={name}
-                styles={customStyles}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    padding: ".25rem 0 ",
+                  }),
+                }}
                 value={{ value, label: value }}
                 defaultValue={timeFormatOptions[1]}
               />
             )}
           />
         </div>
-
-        {/* <div className="col-xl-3 mb-3 ">
-                <img key={logo} height={100} width={100} src={logo ? logo : IMAGES.Tab1} alt="logo"/>
-        </div> */}
 
         <CredentialsInput
           heading={t("businessLoginDetails")}
@@ -308,7 +291,7 @@ const MyAccount = ({
       >
         <Button
           type="submit"
-          disabled={loading}
+          disabled={loading || isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

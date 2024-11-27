@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../Modal/DeleteModal";
 import { Link } from "react-router-dom";
-import { IMAGES, SVGICON } from "../../constant/theme";
-import useStorage from "../../../hooks/useStorage";
-import { useContext } from "react";
-import { ThemeContext } from "../../../context/ThemeContext";
 import { usePermissions } from "../../../context/PermissionContext";
-import { getCompany } from "../../../services/api/CompanyServices";
 
 const BusinessTable = ({
   tableData,
@@ -18,10 +13,8 @@ const BusinessTable = ({
   editDrawerOpen,
 }) => {
   const { can } = usePermissions();
-  const [companyCount, setCompanyCount] = useState([]);
   const editPermission = can("business", "modify");
   const deletePermission = can("business", "delete");
-  const { isRtl } = useContext(ThemeContext);
 
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (

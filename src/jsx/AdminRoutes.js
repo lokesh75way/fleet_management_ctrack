@@ -10,7 +10,6 @@ import AdminHome from "./components/Dashboard/AdminHome";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
-import UserGroups from "./pages/businessUser/BusinessUser";
 import BusinessUser from "./pages/businessUser/BusinessUser";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
@@ -363,6 +362,7 @@ const AdminRoutes = () => {
     const permissions = JSON.parse(localStorage.getItem("permission"));
     setUserPermission(permissions?.[0]?.permission);
   }, []);
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
