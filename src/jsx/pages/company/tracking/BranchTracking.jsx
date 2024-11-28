@@ -1,5 +1,5 @@
 import React from "react";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import ShowMap from "../../../components/maps/ShowMap";
 
 const BranchTracking = () => {

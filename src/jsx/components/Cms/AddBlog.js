@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import CkEditorBlog from "../Forms/CkEditor/CkEditorBlog";
 
-import NoImage from "../../../images/no-image.jpg";
+import NoImage from "@/assets/images/no-image.jpg";
 import Select from "react-select";
 import { Collapse } from "react-bootstrap";
 import PageTitle from "../../layouts/PageTitle";

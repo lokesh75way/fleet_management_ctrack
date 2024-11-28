@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 /// Images
-import avatar1 from "../../../images/avatar/1.jpg";
-import avatar2 from "../../../images/avatar/2.jpg";
-import avatar3 from "../../../images/avatar/3.jpg";
-import avatar4 from "../../../images/avatar/4.jpg";
-import avatar5 from "../../../images/avatar/5.jpg";
+import avatar1 from "@/assets/images/avatar/1.jpg";
+import avatar2 from "@/assets/images/avatar/2.jpg";
+import avatar3 from "@/assets/images/avatar/3.jpg";
+import avatar4 from "@/assets/images/avatar/4.jpg";
+import avatar5 from "@/assets/images/avatar/5.jpg";
 import MsgBox from "./MsgBox";
 
 const Chat = ({ PerfectScrollbar, toggleChatBox, toggleTab }) => {

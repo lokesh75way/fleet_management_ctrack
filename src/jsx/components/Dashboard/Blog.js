@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { IMAGES } from "../../constant/theme";
 
 const cardBlog = [

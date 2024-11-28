@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
-import CompanyTable from "../../components/Tables/CompanyTable";
+import MainPagetitle from "../../../components/MainPagetitle";
+import CompanyTable from "../../../features/company/components/Table";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
@@ -11,9 +11,9 @@ import {
   getCompany,
 } from "../../../services/api/CompanyServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
-import { getGroups } from "../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import usePagination from "../../../hooks/usePagination";
-import Paginate from "../../components/Pagination/Paginate";
+import Paginate from "../../../components/Paginate";
 import { getApiErrorMessage } from "../../../utils/helper";
 import TableSkeleton from "../../../components/Skeleton/Table";
 
@@ -78,7 +78,7 @@ const Company = () => {
 
   async function getGroupData() {
     try {
-      const { data } = await getGroups();
+      const { data } = await getAllGroups();
       setBusinessGroupNames(data);
     } catch (error) {
       console.log("Error in fetching data", error);

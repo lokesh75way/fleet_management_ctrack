@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Modal } from "react-bootstrap";
 
-import pic15 from "./../../../images/contacts/15.jpg";
-import pic2 from "./../../../images/contacts/2.jpg";
-import pic3 from "./../../../images/contacts/3.jpg";
-import pic4 from "./../../../images/contacts/4.jpg";
-import pic5 from "./../../../images/contacts/5.jpg";
-import pic6 from "./../../../images/contacts/6.jpg";
-import pic17 from "./../../../images/contacts/17.jpg";
-import pic8 from "./../../../images/contacts/8.jpg";
-import pic9 from "./../../../images/contacts/9.jpg";
-import pic10 from "./../../../images/contacts/10.jpg";
-import pic18 from "./../../../images/contacts/18.jpg";
-import pic14 from "./../../../images/contacts/14.jpg";
+import pic15 from "./@/assets/images/contacts/15.jpg";
+import pic2 from "./@/assets/images/contacts/2.jpg";
+import pic3 from "./@/assets/images/contacts/3.jpg";
+import pic4 from "./@/assets/images/contacts/4.jpg";
+import pic5 from "./@/assets/images/contacts/5.jpg";
+import pic6 from "./@/assets/images/contacts/6.jpg";
+import pic17 from "./@/assets/images/contacts/17.jpg";
+import pic8 from "./@/assets/images/contacts/8.jpg";
+import pic9 from "./@/assets/images/contacts/9.jpg";
+import pic10 from "./@/assets/images/contacts/10.jpg";
+import pic18 from "./@/assets/images/contacts/18.jpg";
+import pic14 from "./@/assets/images/contacts/14.jpg";
 
 const cardBlog = [
   { image: pic15, title: "Jordana" },

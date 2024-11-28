@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 // import { ClassificationReports } from "../../../components/Tables/Tables"
 
 import { filterAlerts } from "../../../../utils/helper";

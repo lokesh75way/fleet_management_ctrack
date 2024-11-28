@@ -249,10 +249,10 @@ import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Button, Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import MyAccount from "../../../components/TabComponent/AdminProfileTabs/MyProfile";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { adminProfileAccountSchema } from "../../../../yup";
+import { adminProfileAccountSchema } from "../../../../utils/yup";
 import useStorage from "../../../../hooks/useStorage";
 
 const AppProfile = () => {

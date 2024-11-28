@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -11,14 +11,14 @@ import {
   dateFormatOptions,
   storageCapacityOptions,
   timeFormatOptions,
-} from "../VehicleTabs/Options";
+} from "@/constants/options";
 import { businessGroupOptions } from "../../ReusableApi/Api";
 import FileUploader from "../../../../components/FileUploader";
-import GroupDropdown from "../../GroupDropdown";
-import CredentialsInput from "../../CredentialsInput";
-import FormField from "../../FormField";
-import LocationSelector from "../../LocationSelector";
-import UserLocation from "../../UserLocation";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
+import CredentialsInput from "../../../../components/Input/CredentialsInput";
+import FormField from "../../../../components/Input/UserDetailsForm";
+import LocationSelector from "../../../../components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
 
 const MyAccount = ({
   setValue,
@@ -39,7 +39,7 @@ const MyAccount = ({
   const { t } = useTranslation();
   const { checkRole } = useStorage();
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
-  const [locationData, setLocationData] = useState(null);
+  const { location: locationData, error: locationError } = useUserLocation();
   const [logo, setLogo] = useState(null);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const customStyles = {
@@ -119,14 +119,11 @@ const MyAccount = ({
       email: "",
     });
   };
-  const handleLocationData = useCallback((data) => {
-    setLocationData(data);
-  }, []);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
-        <UserLocation onLocationData={handleLocationData} />
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("businessGroup")}
@@ -168,7 +165,6 @@ const MyAccount = ({
           />
           <Error errorName={errors.companyName} />
         </div>
-
         <div className="col-xl-3 mb-3 z-1">
           <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
@@ -231,7 +227,6 @@ const MyAccount = ({
           />
           <Error errorName={errors.email} />
         </div>
-
         <LocationSelector
           register={register}
           setValue={setValue}
@@ -243,7 +238,6 @@ const MyAccount = ({
           showCity={true}
           Comptype={"companyId"}
         />
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -262,7 +256,6 @@ const MyAccount = ({
           />
           <Error errorName={errors.dateFormat} />
         </div>
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller
@@ -281,7 +274,6 @@ const MyAccount = ({
             )}
           />
         </div>
-
         <CredentialsInput
           heading={t("companyLoginDetails")}
           register={register}
@@ -289,7 +281,6 @@ const MyAccount = ({
           id={id}
           getValues={getValues}
         />
-
         <div
           style={{
             width: "100%",

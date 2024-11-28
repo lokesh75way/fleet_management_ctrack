@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 /// images
-import avartar5 from "../../../../../images/avatar/5.png";
-import avartar1 from "../../../../../images/avatar/1.png";
-import { Link } from "react-router-dom";
+import avartar5 from "@/assets/images/avatar/5.png";
+import avartar1 from "@/assets/images/avatar/1.png";
 
 const Customers = () => {
   const drop = (

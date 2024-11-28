@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CompanyOffcanvas from "../../constant/CompanyOffcanvas";
 import { CompanyData } from "../../components/Tables/Tables";
-import CompanyTable from "../../components/Tables/CompanyTable";
+import CompanyTable from "../../../features/company/components/Table";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { clsx } from "clsx";

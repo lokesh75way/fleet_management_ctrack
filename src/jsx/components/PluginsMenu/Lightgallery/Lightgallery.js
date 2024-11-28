@@ -10,14 +10,14 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 import PageTitle from "../../../layouts/PageTitle";
 
-import big1 from "../../../../images/big/img1.jpg";
-import big2 from "../../../../images/big/img2.jpg";
-import big3 from "../../../../images/big/img3.jpg";
-import big4 from "../../../../images/big/img4.jpg";
-import big5 from "../../../../images/big/img5.jpg";
-import big6 from "../../../../images/big/img6.jpg";
-import big7 from "../../../../images/big/img7.jpg";
-import big8 from "../../../../images/big/img8.jpg";
+import big1 from "@/assets/images/big/img1.jpg";
+import big2 from "@/assets/images/big/img2.jpg";
+import big3 from "@/assets/images/big/img3.jpg";
+import big4 from "@/assets/images/big/img4.jpg";
+import big5 from "@/assets/images/big/img5.jpg";
+import big6 from "@/assets/images/big/img6.jpg";
+import big7 from "@/assets/images/big/img7.jpg";
+import big8 from "@/assets/images/big/img8.jpg";
 
 const lightGallery = [
   { large: big1, thumb: big1 },

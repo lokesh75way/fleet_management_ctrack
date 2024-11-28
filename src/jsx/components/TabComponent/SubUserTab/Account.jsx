@@ -2,29 +2,29 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import { useParams } from "react-router-dom";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import useStorage from "../../../../hooks/useStorage";
-import "../../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import DummyData from "../../../../users.json";
 import { getSelectValues } from "../../../../utils/helper";
 import { getTemplates } from "../../../../services/api/TemplateServices";
 import { useTranslation } from "react-i18next";
 import { notifyError } from "../../../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import BranchDropdown from "../../BranchDropdown";
 import CompanyDropdown from "../../CompanyDropdown";
-import GroupDropdown from "../../GroupDropdown";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
 import VehicleDropdown from "../../VehicleDropdown";
-import { unitOfDistanceOptions } from "../VehicleTabs/Options";
-import UserLocation from "../../UserLocation";
-import LocationSelector from "../../LocationSelector";
+import { unitOfDistanceOptions } from "../../../../constants/options";
+import LocationSelector from "../../../../components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
 
 const Account = ({
   handleNext,
@@ -56,7 +56,6 @@ const Account = ({
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
   const [branchId, setBranchId] = useState([]);
-  const [locationData, setLocationData] = useState(null);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
@@ -86,7 +85,7 @@ const Account = ({
 
   useEffect(() => {
     const fetchOptions = async () => {
-      const response = await getGroups();
+      const response = await getAllGroups();
       const companyResponse = await getCompany();
       const branchResponse = await getAllBranch();
       if (response.error) {
@@ -179,6 +178,7 @@ const Account = ({
   const [parentValue, setParentValue] = useState();
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
+  const { location: locationData, error: locationError } = useUserLocation();
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
   useEffect(() => {
@@ -217,17 +217,14 @@ const Account = ({
     }
   }, [formData, id]);
 
-  const handleLocationData = useCallback((data) => {
-    setLocationData(data);
-  }, []);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-        <UserLocation onLocationData={handleLocationData} />
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <Controller

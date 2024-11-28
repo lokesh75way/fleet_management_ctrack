@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // image
-import logo from "../../images/logo/logo-full.png";
-import LogoWhite from "../../images/logo/logofull-white.png";
+import logo from "@/assets/images/logo/logo-full.png";
+import LogoWhite from "@/assets/images/logo/logofull-white.png";
 import { ThemeContext } from "../../context/ThemeContext";
 
 const LockScreen = () => {

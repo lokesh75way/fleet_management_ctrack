@@ -11,9 +11,9 @@ import {
 } from "react-bootstrap";
 
 /// imge
-import avatar1 from "../../../images/avatar/1.jpg";
-import avatar2 from "../../../images/avatar/2.jpg";
-import avatar3 from "../../../images/avatar/3.jpg";
+import avatar1 from "@/assets/images/avatar/1.jpg";
+import avatar2 from "@/assets/images/avatar/2.jpg";
+import avatar3 from "@/assets/images/avatar/3.jpg";
 import { Link } from "react-router-dom";
 
 const BootstrapTable = () => {

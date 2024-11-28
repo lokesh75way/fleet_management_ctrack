@@ -13,7 +13,7 @@ import { checkAutoLogin } from "./services/AuthService";
 import { isAuthenticated } from "./store/selectors/AuthSelectors";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import "./css/style.css";
+import "@/assets/css/style.css";
 import BasicLayout from "./jsx/layouts/BasicLayout";
 import AdminRoutes from "./jsx/AdminRoutes";
 import CompanyRoutes from "./jsx/CompanyRoutes";
@@ -38,7 +38,6 @@ import { GiLabCoat } from "react-icons/gi";
 import useStorage from "./hooks/useStorage";
 import { usePermissions } from "./context/PermissionContext";
 import UserRoutes from "./jsx/UserRoutes";
-import UserLocation from "./jsx/components/UserLocation";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {

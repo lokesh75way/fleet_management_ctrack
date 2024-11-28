@@ -8,7 +8,7 @@ import { FaRegBuilding, FaTools } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 
 import { useTranslation } from "react-i18next";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getUser } from "../../../../services/api/UserServices";
 import { getAllBranch } from "../../../../services/api/BranchServices";
@@ -41,7 +41,7 @@ const CardWidget = ({ usageData }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data, totalCount } = await getGroups();
+        const { data, totalCount } = await getAllGroups();
         setBusinessUserCount(totalCount);
 
         const { data: companies } = await getCompany();

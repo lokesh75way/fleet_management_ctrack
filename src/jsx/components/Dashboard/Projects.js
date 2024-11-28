@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { IMAGES, SVGICON } from "../../constant/theme";
 import CountUp from "react-countup";
 import { Dropdown } from "react-bootstrap";

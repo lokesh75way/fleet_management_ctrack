@@ -1,5 +1,3 @@
-import useStorage from "../hooks/useStorage";
-
 export const getSelectValues = (id) => {
   const user = JSON.parse(localStorage.getItem("userDetails"));
   const role = user?.user?.role;

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import CoreEmployeTable from "./elements/CoreEmployeTable";
 import ProjectStatusBlog from "./elements/ProjectStatusBlog";
 import UpcomingBlog from "./elements/UpcomingBlog";

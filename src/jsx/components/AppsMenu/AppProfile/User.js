@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Tab, Nav } from "react-bootstrap";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import { SVGICON } from "../../../constant/theme";
 import GridTab from "./GridTab";
 import EmployeeOffcanvas from "../../../constant/EmployeeOffcanvas";

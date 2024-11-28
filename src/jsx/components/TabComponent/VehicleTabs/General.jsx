@@ -2,27 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import {
   deviceTypeOptions,
   copyFromOptions,
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
-} from "./Options";
+} from "../../../../constants/options";
 import AsyncSelect from "react-select/async";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getGroups } from "../../../../features/businessGroup/api";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 import { useTranslation } from "react-i18next";
 
 import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
-import GroupDropdown from "../../GroupDropdown";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
 
 const General = ({

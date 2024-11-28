@@ -5,7 +5,7 @@ import { Autoplay } from "swiper";
 
 import "swiper/css";
 
-import pic1 from "../../../images/popular-img/pic-1.jpg";
+import pic1 from "@/assets/images/popular-img/pic-1.jpg";
 const swiperData = [
   { image: pic1 },
   { image: pic1 },

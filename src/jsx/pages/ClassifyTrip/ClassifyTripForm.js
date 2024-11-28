@@ -3,14 +3,14 @@ import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Trip from "./Trip";
-import { classifyTripsSchema } from "../../../yup";
+import { classifyTripsSchema } from "../../../utils/yup";
 import {
   createTrip,
   updateTrip,
 } from "../../../services/api/ClassifyTripServices";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { useTranslation } from "react-i18next";
 
 const ClassifyTripForm = () => {

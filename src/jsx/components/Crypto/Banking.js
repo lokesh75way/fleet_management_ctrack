@@ -5,11 +5,11 @@ import loadable from "@loadable/component";
 import pMinDelay from "p-min-delay";
 
 //images
-import studio1 from "./../../../images/studio/1.jpg";
-import studio2 from "./../../../images/studio/2.jpg";
-import studio3 from "./../../../images/studio/3.jpg";
-import studio4 from "./../../../images/studio/4.jpg";
-import studio5 from "./../../../images/studio/5.jpg";
+import studio1 from "./@/assets/images/studio/1.jpg";
+import studio2 from "./@/assets/images/studio/2.jpg";
+import studio3 from "./@/assets/images/studio/3.jpg";
+import studio4 from "./@/assets/images/studio/4.jpg";
+import studio5 from "./@/assets/images/studio/5.jpg";
 
 const TargetDonutChart = loadable(() =>
   pMinDelay(import("./Banking/TargetDonutChart"), 1000)

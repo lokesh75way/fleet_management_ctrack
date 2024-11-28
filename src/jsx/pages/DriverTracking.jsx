@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import ShowMap from "../components/maps/ShowMap";
 import { ThemeContext } from "../../context/ThemeContext";
 import DriverTab from "../components/maps/DriverTab";
@@ -7,7 +7,7 @@ import { TbLocationFilled } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdFence } from "react-icons/md";
-import "../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
 import { getVehiclesTraking } from "../../services/api/VehicleService";

@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 import { Dropdown, Modal } from "react-bootstrap";
 
 //images
-import profile from "./../../../images/profile/pic1.jpg";
-import pic1 from "./../../../images/profile/small/pic1.jpg";
-import pic2 from "./../../../images/profile/small/pic2.jpg";
-import pic3 from "./../../../images/profile/small/pic3.jpg";
-import pic4 from "./../../../images/profile/small/pic4.jpg";
-import pic5 from "./../../../images/profile/small/pic5.jpg";
-import pic14 from "./../../../images/profile/14.jpg";
-import pic18 from "./../../../images/profile/18.jpg";
-import pic19 from "./../../../images/profile/19.jpg";
+import profile from "./@/assets/images/profile/pic1.jpg";
+import pic1 from "./@/assets/images/profile/small/pic1.jpg";
+import pic2 from "./@/assets/images/profile/small/pic2.jpg";
+import pic3 from "./@/assets/images/profile/small/pic3.jpg";
+import pic4 from "./@/assets/images/profile/small/pic4.jpg";
+import pic5 from "./@/assets/images/profile/small/pic5.jpg";
+import pic14 from "./@/assets/images/profile/14.jpg";
+import pic18 from "./@/assets/images/profile/18.jpg";
+import pic19 from "./@/assets/images/profile/19.jpg";
 
 const contactBlog = [
   { image: pic4, title: "Samanta William" },

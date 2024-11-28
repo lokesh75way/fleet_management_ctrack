@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import General from "../../../../components/TabComponent/TecnicianTab/General";
 import Address from "../../../../components/TabComponent/TecnicianTab/Address";
 import Leave from "../../../../components/TabComponent/TecnicianTab/Leave";
@@ -12,7 +12,7 @@ import {
   technicianGeneralSchema,
   technicianAddressSchema,
   technicianLeaveSchema,
-} from "../../../../../yup";
+} from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
 import {

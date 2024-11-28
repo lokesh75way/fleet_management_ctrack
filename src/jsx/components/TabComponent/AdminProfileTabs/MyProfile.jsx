@@ -4,8 +4,8 @@ import { CountrySelect, StateSelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import GroupTable from "../components/Tables/GroupTable";
 import { useNavigate } from "react-router-dom";
 import TemplateServices, {
@@ -12,7 +12,7 @@ import usePagination from "../../hooks/usePagination";
 import { ThemeContext } from "../../context/ThemeContext";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const CreateGroups = () => {
   const { isRtl } = useContext(ThemeContext);

@@ -17,9 +17,9 @@ import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
-import BusinessForm from "./pages/admin/settings/CreateForms/BusinessForm";
-import BusinessUser from "./pages/businessUser/BusinessUser";
-import Business from "./pages/businessUser/BusinessUser";
+import BusinessForm from "../features/businessGroup/pages/Create";
+import BusinessUser from "../features/businessGroup/pages/List";
+import Business from "../features/businessGroup/pages/List";
 import CompanyForm from "./pages/admin/settings/CreateForms/CompanyForm";
 import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
@@ -221,7 +221,7 @@ const Pickers = React.lazy(() => import("./components/Forms/Pickers/Pickers"));
 const FormValidation = React.lazy(
   () => import("./components/Forms/FormValidation/FormValidation")
 );
-const Error404 = React.lazy(() => import("./pages/Error404"));
+const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
 const Branch = React.lazy(() => import("./pages/company/Branch"));
 const BranchForm = React.lazy(

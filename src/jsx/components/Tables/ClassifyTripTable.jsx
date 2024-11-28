@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../../../components/Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import dayjs from "dayjs";

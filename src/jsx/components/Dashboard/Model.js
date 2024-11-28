@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../../css/Model.module.css";
+import styles from "@/assets/css/Model.module.css";
 
 const Model = ({ children, onClose }) => {
   const title = children.props.data.title;

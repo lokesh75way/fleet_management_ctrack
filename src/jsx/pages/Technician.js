@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import TechnicianTable from "../components/Tables/TechnicianTable";
 import { useTranslation } from "react-i18next";
 import { clsx } from "clsx";
@@ -14,7 +14,7 @@ import {
 import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const Technician = () => {
   const { t } = useTranslation();

@@ -2,7 +2,7 @@ import axios from "axios";
 import swal from "sweetalert";
 import { loginConfirmedAction, Logout } from "../store/actions/AuthActions";
 import { isAuthenticated } from "../store/selectors/AuthSelectors";
-import initAxios from "./api/Axios";
+import initAxios from "./api";
 import { useSearchParams } from "react-router-dom";
 initAxios();
 

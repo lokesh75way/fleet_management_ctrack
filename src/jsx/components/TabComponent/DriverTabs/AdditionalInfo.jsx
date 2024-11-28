@@ -3,11 +3,11 @@ import DatePicker from "react-datepicker";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Select from "react-select";
-import { licenseToDriveOptions } from "../VehicleTabs/Options";
-import CustomInput from "../../Input/CustomInput";
-import Error from "../../Error/Error";
+import { licenseToDriveOptions } from "@/constants/options";
+import CustomInput from "../../../../components/Input/CustomInput";
+import Error from "../../../../components/Error/Error";
 import { useParams, useLocation } from "react-router-dom";
-import "../../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 

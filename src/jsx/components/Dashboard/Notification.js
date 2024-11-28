@@ -1,13 +1,7 @@
 import React from "react";
 
-import { Dropdown, Nav, Tab } from "react-bootstrap";
-/// Scroll
-import { Link } from "react-router-dom";
-// images
-import avatar1 from "../../../images/avatar/1.jpg";
-import avatar2 from "../../../images/avatar/2.jpg";
-import avatar3 from "../../../images/avatar/3.jpg";
-import avatar4 from "../../../images/avatar/4.jpg";
+import { Dropdown } from "react-bootstrap";
+import avatar1 from "@/assets/images/avatar/1.jpg";
 
 const Notification = () => {
   return (

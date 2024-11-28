@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Collapse } from "react-bootstrap";
 
-import NoImage from "../../../images/no-image.jpg";
+import NoImage from "@/assets/images/no-image.jpg";
 import CkEditorBlog from "../Forms/CkEditor/CkEditorBlog";
 import PageTitle from "../../layouts/PageTitle";
 

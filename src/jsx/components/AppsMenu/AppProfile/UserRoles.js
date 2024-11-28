@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import JobManagementList from "./JobManagementList";
 import JobRejectionsList from "./JobRejectionsList";
 import { Offcanvas } from "react-bootstrap";

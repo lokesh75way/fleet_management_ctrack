@@ -1,8 +1,6 @@
 import React, { Fragment } from "react";
 // images
-import qrcode from "../../../../../images/qr.png";
-//import logo from "../../../../../images/logo/logo-color.png";
-// import logoText from "../../../../../images/logo/logo-text-color.png";
+import qrcode from "@/assets/images/qr.png";
 import PageTitle from "../../../../layouts/PageTitle";
 
 const Invoice = () => {

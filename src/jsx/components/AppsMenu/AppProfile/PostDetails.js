@@ -11,10 +11,9 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 
 /// Image
-import profile01 from "../../../../images/profile/1.jpg";
-
-import profile08 from "../../../../images/profile/8.jpg";
-import profile from "../../../../images/profile/profile.png";
+import profile01 from "@/assets/images/profile/1.jpg";
+import profile08 from "@/assets/images/profile/8.jpg";
+import profile from "@/assets/images/profile/profile.png";
 import PageTitle from "../../../layouts/PageTitle";
 import { IMAGES } from "../../../constant/theme";
 

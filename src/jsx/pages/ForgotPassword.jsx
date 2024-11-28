@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../images/logo/logo-full.png";
+import logo from "@/assets/images/logo/logo-full.png";
 import { useForm } from "react-hook-form";
-import { forgetpasswordSchema } from "../../yup";
+import { forgetpasswordSchema } from "../../utils/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CustomInput from "../components/Input/CustomInput";
+import CustomInput from "../../components/Input/CustomInput";
 import PasswordServices from "../../services/api/PasswordServices";
 import { notifyError, notifySuccess } from "../../utils/toast";
 

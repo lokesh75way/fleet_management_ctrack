@@ -3,12 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BranchTabs/MyAccount";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { branchAccountSchema } from "../../../../../yup";
+import { branchAccountSchema } from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
+import ManagePassword from "../../../../../components/Form/ChangePassword";
 import { useTranslation } from "react-i18next";
 import {
   createNewBranch,

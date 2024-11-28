@@ -10,13 +10,10 @@ import DatePicker from "react-datepicker";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider } from "react-hook-form";
 import Select from "react-select";
-import Error from "../components/Error/Error";
-import CustomInput from "../components/Input/CustomInput";
-import "../../scss/pages/_driver-tracking.scss";
-import {
-  taskCategoryOptions,
-  severityOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
+import Error from "../../components/Error/Error";
+import CustomInput from "../../components/Input/CustomInput";
+import "@/assets/scss/pages/_driver-tracking.scss";
+import { taskCategoryOptions, severityOptions } from "@/constants/options";
 import { useTranslation } from "react-i18next";
 import TechnicianDropdown from "../components/TechnicianDropdown";
 

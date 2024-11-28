@@ -3,14 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
 
 import { ICON, IMAGES } from "../../constant/theme";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import InviteCustomer from "../../constant/ModalList";
 import { ExpenseData } from "../../components/Tables/Tables";
 import ExpenseTable from "../../components/Tables/ExpenseTable";
 // import ExpenseOffcanvas from "../constant/ExpenseOffcanvas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { expenseSchema } from "../../../yup";
+import { expenseSchema } from "../../../utils/yup";
 
 import { useTranslation } from "react-i18next";
 import {
@@ -22,7 +22,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import clsx from "clsx";
 import { notifySuccess } from "../../../utils/toast";
 import ReactPaginate from "react-paginate";
-import Paginate from "../../components/Pagination/Paginate";
+import Paginate from "../../../components/Paginate";
 
 const Expense = (ref) => {
   const { t } = useTranslation();

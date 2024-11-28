@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { expenseSchema } from "./../../../yup";
+import { expenseSchema } from "../../../utils/yup";
 
 import SettingExpense from "./SettingExpense";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import {

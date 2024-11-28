@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
@@ -11,9 +11,9 @@ import {
   branchOptions,
   companyOptions,
   businessGroupOptions,
-} from "../VehicleTabs/Options";
-import CustomInput from "../../Input/CustomInput";
-import GroupDropdown from "../../GroupDropdown";
+} from "@/constants/options";
+import CustomInput from "../../../../components/Input/CustomInput";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import CompanyDropdown from "../../CompanyDropdown";
 import BranchDropdown from "../../BranchDropdown";
 import { getDriverById } from "../../../../services/api/driverService";

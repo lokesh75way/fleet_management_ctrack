@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { BiTargetLock } from "react-icons/bi";
 import { MdAddLocation } from "react-icons/md";
 import { IoMapSharp } from "react-icons/io5";

@@ -4,8 +4,8 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
-import CustomInput from "../../Input/CustomInput";
-import Error from "../../Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
+import Error from "../../../../components/Error/Error";
 
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";

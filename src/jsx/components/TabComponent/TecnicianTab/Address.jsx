@@ -3,9 +3,9 @@ import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
 import { CountrySelect } from "react-country-state-city/dist/cjs";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
-import "../../../../scss/pages/_driver-tracking.scss";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
+import "@/assets/scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";

@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, useForm } from "react-hook-form";
-import Error from "../components/Error/Error";
+import Error from "../../components/Error/Error";
 import {
   subCompanyOptions,
   dateFormatOptions,
@@ -18,7 +18,7 @@ import {
   vehicleGroupOptions,
   companyOptions,
   businessGroupOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
+} from "@/constants/options";
 import {
   FaBatteryFull,
   FaCircle,

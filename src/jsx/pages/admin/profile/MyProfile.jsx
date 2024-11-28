@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import MyAccount from "../../../components/TabComponent/CompanyTabs/MyAccount";
 import UserSetting from "../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from "../../../../yup";
+import {
+  companyAccountSchema,
+  companySettingSchema,
+} from "../../../../utils/yup";
 
 const MyProfile = () => {
   const [activeIndex, setActiveIndex] = useState(0);

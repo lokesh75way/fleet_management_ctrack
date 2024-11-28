@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import AlertOffcanvas from "../constant/AlertOffcanvas";
 import { AlertData } from "../components/Tables/Tables";
 import AlertTable from "../components/Tables/AlertTable";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { alertSchema } from "../../yup";
+import { alertSchema } from "../../utils/yup";
 import { useTranslation } from "react-i18next";
 import usePagination from "../../hooks/usePagination";
 import { notifyError, notifySuccess } from "../../utils/toast";
@@ -19,7 +19,7 @@ import {
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import { ThemeContext } from "../../context/ThemeContext";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const Alert = () => {
   const { t } = useTranslation();

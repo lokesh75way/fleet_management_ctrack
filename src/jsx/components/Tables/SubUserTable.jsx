@@ -1,7 +1,7 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../../../components/Modal/DeleteModal";
 import { IMAGES } from "../../constant/theme";
 import { usePermissions } from "../../../context/PermissionContext";
 

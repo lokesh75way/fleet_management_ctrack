@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import MapModes from "./MapModes";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { createRoot } from "react-dom/client";
 import {
   MapContainer,

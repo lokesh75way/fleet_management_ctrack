@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import { GeofenceData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import GeofenceTable from "../../../components/Tables/GeofenceTable";

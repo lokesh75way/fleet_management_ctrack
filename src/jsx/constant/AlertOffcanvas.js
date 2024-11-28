@@ -9,14 +9,14 @@ import { Offcanvas } from "react-bootstrap";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider } from "react-hook-form";
-import Error from "../components/Error/Error";
+import Error from "../../components/Error/Error";
 import {
   alertTypeOptions,
   objectOptions,
   severityOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
-import CustomInput from "../components/Input/CustomInput";
-import "../../scss/pages/_driver-tracking.scss";
+} from "@/constants/options";
+import CustomInput from "../../components/Input/CustomInput";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import DatePicker from "react-datepicker";
 import { useTranslation } from "react-i18next";
 import BranchDropdown from "../components/BranchDropdown";

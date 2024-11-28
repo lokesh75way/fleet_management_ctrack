@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 
 import { useTranslation } from "react-i18next";
 

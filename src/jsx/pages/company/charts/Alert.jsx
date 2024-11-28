@@ -1,5 +1,5 @@
 import React from "react";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import Tabs from "../../../components/Tabs";
 import { IoAlertSharp } from "react-icons/io5";
 import ChartComponent from "../../../components/company/charts/ChartComponent";

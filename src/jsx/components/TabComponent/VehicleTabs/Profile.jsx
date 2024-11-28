@@ -3,12 +3,12 @@ import Select from "react-select";
 import DatePicker from "react-datepicker";
 import { useForm, Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import "../../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import {
   options,
   permitOptions,
@@ -16,8 +16,8 @@ import {
   distanceQuantitySelectOptions,
   durationSelectOptions,
   durationCostSelectOptions,
-} from "./Options";
-import CustomInput from "../../Input/CustomInput";
+} from "../../../../constants/options";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { useTranslation } from "react-i18next";
 
 const Profile = ({

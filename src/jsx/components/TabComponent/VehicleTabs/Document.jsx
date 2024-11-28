@@ -4,11 +4,11 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
-import Error from "../../Error/Error";
-import "../../../../scss/pages/_driver-tracking.scss";
+import Error from "../../../../components/Error/Error";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 
 const Document = ({
   setValue,

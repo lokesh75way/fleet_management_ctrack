@@ -4,10 +4,10 @@ import CustomInput from "../../Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from "react-timezone-select";
-import { currencyOptions } from "../VehicleTabs/Options";
-import { dayOptions } from "../VehicleTabs/Options";
-import { statusOptions } from "../VehicleTabs/Options";
-import { languageOptions } from "../VehicleTabs/Options";
+import { currencyOptions } from "@/constants/options";
+import { dayOptions } from "@/constants/options";
+import { statusOptions } from "@/constants/options";
+import { languageOptions } from "@/constants/options";
 import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -20,7 +20,7 @@ import {
   preferredCurrencyUnitOptions,
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
-} from "../VehicleTabs/Options";
+} from "@/constants/options";
 import { getValue } from "@testing-library/user-event/dist/utils";
 import FileUploader from "../../../../components/FileUploader";
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import EmployeeOffcanvas from "../../constant/EmployeeOffcanvas";
 import { DriverData } from "../Tables/Tables";
 import DriverTable from "../Tables/DriverTable";

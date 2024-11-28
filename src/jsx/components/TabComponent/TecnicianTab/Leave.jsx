@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
 
 const Leave = ({
   handleNext,

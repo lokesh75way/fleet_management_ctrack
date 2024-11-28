@@ -1,10 +1,10 @@
 import { getAllBranch } from "../../../services/api/BranchServices";
-import { getGroups } from "../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../services/api/CompanyServices";
 
 export const businessGroupOptions = async (inputValue) => {
   try {
-    const businessGroupResponse = await getGroups();
+    const businessGroupResponse = await getAllGroups();
     const businessGroupData = businessGroupResponse.data;
     const response = businessGroupData.map((item) => ({
       label: item?.businessGroupId?.groupName,

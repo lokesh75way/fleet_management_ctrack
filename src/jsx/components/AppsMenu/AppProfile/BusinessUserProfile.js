@@ -7,10 +7,10 @@ import React, {
 import { Button, Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../layouts/MainPagetitle";
-import MyAccount from "../../../components/TabComponent/BusinessGroupTabs/MyAccount";
+import MainPagetitle from "../../../../components/MainPagetitle";
+import MyAccount from "../../../../features/businessGroup/components/Form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { adminProfileAccountSchema } from "../../../../yup";
+import { adminProfileAccountSchema } from "../../../../utils/yup";
 import useStorage from "../../../../hooks/useStorage";
 
 const AdminProfile = () => {

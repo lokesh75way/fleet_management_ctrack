@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import VehicleTable from "../components/Tables/VehicleTable";
 import { ThemeContext } from "../../context/ThemeContext";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import { clsx } from "clsx";
 import VehicleServices from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
@@ -11,7 +11,7 @@ import usePagination from "../../hooks/usePagination";
 import { useTranslation } from "react-i18next";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const Vehicle = () => {
   const { t } = useTranslation();

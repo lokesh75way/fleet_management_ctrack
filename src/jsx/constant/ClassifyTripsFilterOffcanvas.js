@@ -4,18 +4,15 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from "react";
-import "../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { Offcanvas } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import Error from "../components/Error/Error";
-import {
-  branchOptions,
-  subCompanyOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
+import Error from "../../components/Error/Error";
+import { branchOptions, subCompanyOptions } from "@/constants/options";
 import {
   FaBatteryFull,
   FaCircle,
@@ -23,10 +20,10 @@ import {
   FaSearch,
   FaWifi,
 } from "react-icons/fa";
-import CustomInput from "../components/Input/CustomInput";
+import CustomInput from "../../components/Input/CustomInput";
 import { findHighestAndLowestDates } from "../../utils/helper";
 import DriverDropdown from "../components/DriverDropdown";
-import { classifyTripsFilterCanvas } from "../../yup";
+import { classifyTripsFilterCanvas } from "../../utils/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getTrips } from "../../services/api/ClassifyTripServices";
 

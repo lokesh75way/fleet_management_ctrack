@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import DriverTable from "../components/Tables/DriverTable";
 import { clsx } from "clsx";
 
@@ -12,7 +12,7 @@ import { notifyError } from "../../utils/toast";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const Driver = () => {
   const { isRtl } = useContext(ThemeContext);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 import { ReactSearchAutocomplete } from "react-search-autocomplete";

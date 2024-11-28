@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
@@ -12,7 +12,7 @@ import {
   driverProfileSchema,
   driverInfoSchema,
   driverDocumentSchema,
-} from "../../../../../yup";
+} from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
 import {
@@ -20,7 +20,7 @@ import {
   getDriverById,
   updateDriver,
 } from "../../../../../services/api/driverService";
-import { driverDocumentOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
+import { driverDocumentOptions } from "@/constants/options";
 
 const DriverForm = () => {
   const { t } = useTranslation();

@@ -3,10 +3,13 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import Account from "../../components/TabComponent/SubUserTab/Account";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { subUserAccountSchema, subUserEditAccountSchema } from "../../../yup";
+import {
+  subUserAccountSchema,
+  subUserEditAccountSchema,
+} from "../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 import useStorage from "../../../hooks/useStorage";
 import { useTranslation } from "react-i18next";

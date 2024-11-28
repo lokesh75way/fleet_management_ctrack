@@ -16,7 +16,7 @@ import {
   ObjectOptions,
   TypeOptions,
   jobOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
+} from "@/constants/options";
 import CustomInput from "../components/Input/CustomInput";
 
 import { useTranslation } from "react-i18next";

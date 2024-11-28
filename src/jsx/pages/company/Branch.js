@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -12,7 +12,7 @@ import {
 import { notifySuccess } from "../../../utils/toast";
 import usePagination from "../../../hooks/usePagination";
 import CompanyDropdown from "../../components/CompanyDropdown";
-import Paginate from "../../components/Pagination/Paginate";
+import Paginate from "../../../components/Paginate";
 import TableSkeleton from "../../../components/Skeleton/Table";
 
 const Branch = () => {

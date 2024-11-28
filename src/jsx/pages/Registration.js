@@ -7,12 +7,12 @@ import {
 } from "../../store/actions/AuthActions";
 // image
 
-import logo from "../../images/logo/logo-full.png";
-import LogoWhite from "../../images/logo/logofull-white.png";
-import bg6 from "../../images/background/bg6.jpg";
-import login_logo from "../../images/login_logo.png";
+import logo from "@/assets/images/logo/logo-full.png";
+import LogoWhite from "@/assets/images/logo/logofull-white.png";
+import bg6 from "@/assets/images/background/bg6.jpg";
+import login_logo from "@/assets/images/login_logo.png";
 import { ThemeContext } from "../../context/ThemeContext";
-import "../../scss/pages/_login.scss";
+import "@/assets/scss/pages/_login.scss";
 import { clsx } from "clsx";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import SvgIcons from "../components/Dashboard/SvgIcons";

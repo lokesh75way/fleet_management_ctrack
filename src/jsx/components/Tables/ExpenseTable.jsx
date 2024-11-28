@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../../../components/Modal/DeleteModal";
 import dayjs from "dayjs";
 
 const ExpenseTable = ({

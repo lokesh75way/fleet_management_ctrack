@@ -12,8 +12,8 @@ import OrderForm from "./../Dashboard/OrderForm";
 import { LtcIcon, BtcIcon, XtzIcon, EthIcon } from "./../SvgIcon";
 
 //images
-import coin from "./../../../../images/coin.png";
-import metaverse from "./../../../../images/metaverse.png";
+import coin from "./../@/assets/images/coin.png";
+import metaverse from "./../@/assets/images/metaverse.png";
 
 const DashboardComboChart = loadable(() =>
   pMinDelay(import("./../Dashboard/DashboardComboChart"), 1000)

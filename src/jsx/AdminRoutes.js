@@ -10,11 +10,14 @@ import AdminHome from "./components/Dashboard/AdminHome";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
-import BusinessUser from "./pages/businessUser/BusinessUser";
+import BusinessUser from "../features/businessGroup/pages/List";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
 import { useEffect } from "react";
 import UnassinedVehicle from "./pages/UnassinedVehicle";
+import BusinessGroupRoutes from "@/features/businessGroup/pages";
+import CompanyRoutes from "@/features/company/pages";
+
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
 );
@@ -87,7 +90,7 @@ const CompanyForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/CompanyForm")
 );
 const BusinessForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/BusinessForm")
+  () => import("../features/businessGroup/pages/Create")
 );
 const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
 const SubUser = React.lazy(() => import("./pages/SubUser"));
@@ -104,11 +107,13 @@ const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
-const Error404 = React.lazy(() => import("./pages/Error404"));
+const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
 const Company = React.lazy(() => import("./pages/admin/Company"));
-const Business = React.lazy(() => import("./pages/businessUser/BusinessUser"));
+const Business = React.lazy(
+  () => import("../features/businessGroup/pages/List")
+);
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
 const Branch = React.lazy(() => import("./pages/company/Branch"));
@@ -241,20 +246,7 @@ const allroutes = [
     url: "technician/tasks",
     component: <TechnicianTask />,
   },
-  {
-    module: "company",
-    operation: "add",
-    url: "company/create",
-    component: <CompanyForm />,
-  },
-  {
-    module: "company",
-    operation: "modify",
-    url: "company/edit/:id",
-    component: <CompanyForm />,
-  },
-  { module: "company", url: "company/:id", component: <Company /> },
-  { module: "company", url: "company", component: <Company /> },
+
   {
     module: "company",
     url: "company-tracking",
@@ -278,25 +270,6 @@ const allroutes = [
   { module: "branch", url: "branch/cid/:id", component: <Branch /> },
   { module: "branch", url: "branch/bid/:id", component: <Branch /> },
 
-  {
-    module: "business",
-    operation: "add",
-    url: "business/create",
-    component: <BusinessForm />,
-  },
-  {
-    module: "business",
-    operation: "modify",
-    url: "business/edit/:id",
-    component: <BusinessForm />,
-  },
-  { module: "business", url: "business-group", component: <BusinessUser /> },
-  {
-    module: "business",
-    url: "business-group/:id",
-    component: <BusinessUser />,
-  },
-  { module: "business", url: "business", component: <Business /> },
   // groups
   { module: "groups", url: "groups", component: <CreateGroups /> },
   { module: "groups", url: "groups/permission/", component: <Permission /> },
@@ -387,6 +360,8 @@ const AdminRoutes = () => {
               />
             );
           })}
+          <Route path="/business/*" element={<BusinessGroupRoutes />} />
+          <Route path="/company/*" element={<CompanyRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

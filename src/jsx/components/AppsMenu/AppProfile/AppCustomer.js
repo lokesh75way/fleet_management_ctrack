@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import { IMAGES } from "../../../constant/theme";
 import EmployeeOffcanvas from "../../../constant/EmployeeOffcanvas";
 

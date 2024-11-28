@@ -1,5 +1,5 @@
 import React from "react";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import Tabs from "../../../components/Tabs";
 import { GiPathDistance, GiDuration } from "react-icons/gi";
 import { SiSpeedtest } from "react-icons/si";

@@ -7,7 +7,7 @@ import React, {
 import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
@@ -22,7 +22,7 @@ import {
   vehicleGeneralSchema,
   vehicleProfileSchema,
   vehicleDocumentSchema,
-} from "../../../../../yup";
+} from "../../../../../utils/yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import {

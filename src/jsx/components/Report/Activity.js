@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import prof14 from "./../../../images/profile/14.jpg";
-import prof15 from "./../../../images/profile/15.jpg";
-import prof16 from "./../../../images/profile/16.jpg";
-import prof17 from "./../../../images/profile/17.jpg";
-import prof18 from "./../../../images/profile/18.jpg";
-import prof19 from "./../../../images/profile/19.jpg";
-import prof21 from "./../../../images/profile/21.jpg";
-import prof22 from "./../../../images/profile/22.jpg";
-import prof23 from "./../../../images/profile/23.jpg";
-import prof24 from "./../../../images/profile/24.jpg";
-import prof25 from "./../../../images/profile/25.jpg";
+import prof14 from "./@/assets/images/profile/14.jpg";
+import prof15 from "./@/assets/images/profile/15.jpg";
+import prof16 from "./@/assets/images/profile/16.jpg";
+import prof17 from "./@/assets/images/profile/17.jpg";
+import prof18 from "./@/assets/images/profile/18.jpg";
+import prof19 from "./@/assets/images/profile/19.jpg";
+import prof21 from "./@/assets/images/profile/21.jpg";
+import prof22 from "./@/assets/images/profile/22.jpg";
+import prof23 from "./@/assets/images/profile/23.jpg";
+import prof24 from "./@/assets/images/profile/24.jpg";
+import prof25 from "./@/assets/images/profile/25.jpg";
 
 import { useTranslation } from "react-i18next";
 

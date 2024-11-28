@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import CheckboxTree from "react-checkbox-tree";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { Button } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 

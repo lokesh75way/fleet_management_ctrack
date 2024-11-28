@@ -1,5 +1,5 @@
 import React from "react";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import Tabs from "../../../components/Tabs";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { CiTimer } from "react-icons/ci";

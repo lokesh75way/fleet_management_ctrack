@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import { getUnassignedVehicles } from "../../services/api/VehicleService";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles } from "../../services/api/VehicleService";
 import usePagination from "../../hooks/usePagination";
 import { useTranslation } from "react-i18next";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 import UnassignedVehicleTable from "../components/Tables/UnassignedVehicleTable";
 
 const UnassinedVehicle = () => {

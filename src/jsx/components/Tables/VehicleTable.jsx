@@ -1,5 +1,5 @@
 import React from "react";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../../../components/Modal/DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaCar } from "react-icons/fa6";

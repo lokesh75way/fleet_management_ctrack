@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Map from "./Map";
-import CustomInput from "../components/Input/CustomInput";
+import CustomInput from "../../components/Input/CustomInput";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { geofenceMapSchema } from "../../yup";
-import {
-  categoryOptions,
-  toleranceOptions,
-} from "../components/TabComponent/VehicleTabs/Options";
+import { geofenceMapSchema } from "../../utils/yup";
+import { categoryOptions, toleranceOptions } from "@/constants/options";
 import { Button } from "react-bootstrap";
-import Error from "../components/Error/Error";
+import Error from "../../components/Error/Error";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import { useNavigate, useParams } from "react-router-dom";
 import {

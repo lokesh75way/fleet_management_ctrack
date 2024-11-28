@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { Link } from "react-router-dom";
 import { SVGICON } from "../../constant/theme";
 import TaskSummaryBlog from "./TaskSummaryBlog";

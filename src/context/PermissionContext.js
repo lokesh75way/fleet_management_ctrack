@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 const PermissionContext = createContext();
+
 export function usePermissions() {
   return useContext(PermissionContext);
 }
+
 export function PermissionProvider({ children }) {
   const [permissionsByModuleId, setPermissionsByModuleId] = useState({});
   const [permissionsByBasePath, setPermissionsByBasePath] = useState({});
@@ -29,10 +31,13 @@ export function PermissionProvider({ children }) {
     setPermissionsByModuleId(permissionsByModuleId);
     setPermissionsByBasePath(permissionsByBasePath);
   };
+
   useEffect(() => {
     transformPermissions(userPermission);
   }, [userPermission]);
+
   const role = userDetails?.user?.role;
+
   const can = (module, operation) => {
     const allowedRoles = ["BUSINESS_GROUP", "SUPER_ADMIN", "COMPANY"];
     if (module === "*" || allowedRoles.includes(role)) return true;
@@ -42,6 +47,7 @@ export function PermissionProvider({ children }) {
     }
     return false;
   };
+
   return (
     <PermissionContext.Provider value={{ can, setUserPermission, userDetails }}>
       {children}

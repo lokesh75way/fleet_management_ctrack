@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import { useNavigate } from "react-router-dom";
 import SubUserTable from "../components/Tables/SubUserTable";
 import { clsx } from "clsx";
@@ -14,7 +14,7 @@ import useStorage from "../../hooks/useStorage";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const SubUser = () => {
   const { t } = useTranslation();

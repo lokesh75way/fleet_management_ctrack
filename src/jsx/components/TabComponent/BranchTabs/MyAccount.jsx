@@ -2,19 +2,19 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { useLocation } from "react-router-dom";
-import GroupDropdown from "../../GroupDropdown";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import CompanyDropdown from "../../CompanyDropdown";
-import FormField from "../../FormField";
-import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
-import UserLocation from "../../UserLocation";
-import LocationSelector from "../../LocationSelector";
+import FormField from "../../../../components/Input/UserDetailsForm";
+import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
+import LocationSelector from "../../../../components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
 
 const customStyles = {
   control: (base) => ({
@@ -44,7 +44,7 @@ const MyAccount = ({
   const { t } = useTranslation();
   const location = useLocation();
   const [dValues, setDvalues] = useState([]);
-  const [locationData, setLocationData] = useState(null);
+  const { location: locationData, error: locationError } = useUserLocation();
 
   useEffect(() => {
     if (userDetails.user.role === "COMPANY") {
@@ -64,7 +64,7 @@ const MyAccount = ({
 
   const businessGroupOptions = async (inputValue) => {
     try {
-      const businessGroupResponse = await getGroups();
+      const businessGroupResponse = await getAllGroups();
       const businessGroupData = businessGroupResponse.data;
       const response = businessGroupData.map((item) => ({
         label: item.businessGroupId.groupName,
@@ -136,14 +136,11 @@ const MyAccount = ({
       email: "",
     });
   };
-  const handleLocationData = useCallback((data) => {
-    setLocationData(data);
-  }, []);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-        <UserLocation onLocationData={handleLocationData} />
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <span className="text-danger">*</span>
@@ -344,7 +341,6 @@ const MyAccount = ({
           showCity={true}
           Comptype={""}
         />
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -363,7 +359,6 @@ const MyAccount = ({
           />
           <Error errorName={errors.dateFormat} />
         </div>
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller
@@ -382,7 +377,6 @@ const MyAccount = ({
             )}
           />
         </div>
-
         <div
           style={{
             width: "100%",

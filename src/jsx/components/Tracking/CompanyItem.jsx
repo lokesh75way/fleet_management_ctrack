@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import CheckboxTree from "react-checkbox-tree";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { Button } from "react-bootstrap";
 const CompanyItem = (props) => {
   const [checked, setChecked] = useState([]);

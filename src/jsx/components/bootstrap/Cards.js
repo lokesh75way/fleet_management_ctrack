@@ -6,9 +6,9 @@ import { Link } from "react-scroll";
 import PageTitle from "../../layouts/PageTitle";
 
 /// Image
-import img1 from "../../../images/card/1.png";
-import img2 from "../../../images/card/2.png";
-import img3 from "../../../images/card/3.png";
+import img1 from "@/assets/images/card/1.png";
+import img2 from "@/assets/images/card/2.png";
+import img3 from "@/assets/images/card/3.png";
 /// Bootstrap
 import { Row, Card, Col, Button, Nav, Tab } from "react-bootstrap";
 

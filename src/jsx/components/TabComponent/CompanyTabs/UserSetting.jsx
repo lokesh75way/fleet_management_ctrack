@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from "react-timezone-select";
-import { currencyOptions } from "../VehicleTabs/Options";
-import { dayOptions } from "../VehicleTabs/Options";
-import { statusOptions } from "../VehicleTabs/Options";
-import { languageOptions } from "../VehicleTabs/Options";
+import { currencyOptions } from "@/constants/options";
+import { dayOptions } from "@/constants/options";
+import { statusOptions } from "@/constants/options";
+import { languageOptions } from "@/constants/options";
 import { useTranslation } from "react-i18next";
 
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import {
   timeFormatOptions,
   dateFormatOptions,
@@ -19,7 +19,7 @@ import {
   preferredCurrencyUnitOptions,
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
-} from "../VehicleTabs/Options";
+} from "@/constants/options";
 import { useParams } from "react-router-dom";
 import FileUploader from "../../../../components/FileUploader";
 

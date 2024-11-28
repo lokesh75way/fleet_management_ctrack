@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import { GeofenceData } from "../components/Tables/Tables";
@@ -17,7 +17,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },

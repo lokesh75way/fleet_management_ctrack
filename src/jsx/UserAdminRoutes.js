@@ -215,7 +215,7 @@ const Pickers = React.lazy(() => import("./components/Forms/Pickers/Pickers"));
 const FormValidation = React.lazy(
   () => import("./components/Forms/FormValidation/FormValidation")
 );
-const Error404 = React.lazy(() => import("./pages/Error404"));
+const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
 const Branch = React.lazy(() => import("./pages/company/Branch"));
 const BranchForm = React.lazy(

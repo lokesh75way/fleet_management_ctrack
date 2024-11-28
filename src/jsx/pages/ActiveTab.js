@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ClassifyTripTable from "../components/Tables/ClassifyTripTable";
-import { classifyTripsSchema } from "../../yup";
+import { classifyTripsSchema } from "../../utils/yup";
 import { deleteTrip, getTrips } from "../../services/api/ClassifyTripServices";
 import { notifySuccess } from "../../utils/toast";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
 const ActiveTab = ({ tableData1, tabType }) => {
   console.log("tabledata1", tableData1);
   const [tableData, setTableData] = useState(tableData1);

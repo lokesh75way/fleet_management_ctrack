@@ -1,5 +1,5 @@
 import axios from "axios";
-import initAxios from "./Axios";
+import initAxios from "../api";
 initAxios();
 
 export const createDriver = async (body) => {

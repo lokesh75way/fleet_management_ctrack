@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import { SVGICON } from "../../constant/theme";
 
 const svgBlogData = [

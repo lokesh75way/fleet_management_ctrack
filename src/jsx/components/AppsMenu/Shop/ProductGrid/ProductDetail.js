@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Modal, Nav, Tab } from "react-bootstrap";
 import { Link } from "react-router-dom";
 //
-import avater1 from "../../../../../images/avatar/1.jpg";
-import product1 from "../../../../../images/product/1.jpg";
-import product2 from "../../../../../images/product/2.jpg";
-import product3 from "../../../../../images/product/3.jpg";
-import product4 from "../../../../../images/product/4.jpg";
-import tab1 from "../../../../../images/tab/1.jpg";
-import tab2 from "../../../../../images/tab/2.jpg";
-import tab3 from "../../../../../images/tab/3.jpg";
-import tab4 from "../../../../../images/tab/4.jpg";
+import avater1 from "@/assets/images/avatar/1.jpg";
+import product1 from "@/assets/images/product/1.jpg";
+import product2 from "@/assets/images/product/2.jpg";
+import product3 from "@/assets/images/product/3.jpg";
+import product4 from "@/assets/images/product/4.jpg";
+import tab1 from "@/assets/images/tab/1.jpg";
+import tab2 from "@/assets/images/tab/2.jpg";
+import tab3 from "@/assets/images/tab/3.jpg";
+import tab4 from "@/assets/images/tab/4.jpg";
 import PageTitle from "../../../../layouts/PageTitle";
 
 const ProductDetail = () => {

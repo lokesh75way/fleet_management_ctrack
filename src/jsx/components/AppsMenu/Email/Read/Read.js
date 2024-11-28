@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-import profileImage from "../../../../../images/avatar/1.jpg";
+import profileImage from "@/assets/images/avatar/1.jpg";
 
 const Read = () => {
   return (

@@ -5,10 +5,10 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { tripStatusOptions } from "../../components/TabComponent/VehicleTabs/Options";
-import "../../../scss/pages/_driver-tracking.scss";
-import Error from "../../components/Error/Error";
-import CustomInput from "../../components/Input/CustomInput";
+import { tripStatusOptions } from "@/constants/options";
+import "@/assets/scss/pages/_driver-tracking.scss";
+import Error from "../../../components/Error/Error";
+import CustomInput from "../../../components/Input/CustomInput";
 import DriverDropdown from "../../components/DriverDropdown";
 import { useTranslation } from "react-i18next";
 

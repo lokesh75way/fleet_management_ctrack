@@ -5,11 +5,11 @@ import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import CustomInput from "../../components/Input/CustomInput";
+import CustomInput from "../../../components/Input/CustomInput";
 import ParentBranchDropdown from "../../components/ParentBranch";
-import Error from "../../components/Error/Error";
+import Error from "../../../components/Error/Error";
 import VehicleDropdown from "../../components/VehicleDropdown";
-import { TypeOptions } from "../../components/TabComponent/VehicleTabs/Options";
+import { TypeOptions } from "@/constants/options";
 import FileUploader from "../../../components/FileUploader";
 
 const SettingExpense = ({

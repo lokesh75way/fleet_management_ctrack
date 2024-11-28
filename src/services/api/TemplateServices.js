@@ -1,6 +1,6 @@
-import requests from "./Axios";
+import requests from "../api";
 import axios from "axios";
-import initAxios from "./Axios";
+import initAxios from "../api";
 initAxios();
 
 export const getTemplates = async (page) => {

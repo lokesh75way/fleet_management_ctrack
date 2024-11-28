@@ -5,13 +5,13 @@ import { Dropdown, Nav, Tab } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 // images
-import avatar1 from "../../images/avatar/1.jpg";
-import avatar2 from "../../images/avatar/2.jpg";
-import avatar3 from "../../images/avatar/3.jpg";
-import avatar4 from "../../images/avatar/4.jpg";
-import bg1 from "../../images/big/img1.jpg";
-import bg5 from "../../images/big/img5.jpg";
-import profile from "../../images/profile/profile.png";
+import avatar1 from "@/assets/images/avatar/1.jpg";
+import avatar2 from "@/assets/images/avatar/2.jpg";
+import avatar3 from "@/assets/images/avatar/3.jpg";
+import avatar4 from "@/assets/images/avatar/4.jpg";
+import bg1 from "@/assets/images/big/img1.jpg";
+import bg5 from "@/assets/images/big/img5.jpg";
+import profile from "@/assets/images/profile/profile.png";
 import DonutChart from "./WidgetBasic/DonutChart";
 import ActiveUser from "./WidgetBasic/ActiveUser";
 import AllSell1 from "./WidgetBasic/AllSell1";
