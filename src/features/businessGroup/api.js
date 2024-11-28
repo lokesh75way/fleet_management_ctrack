@@ -1,4 +1,4 @@
-import axios from "@/services/api";
+import { axiosInstance as axios } from "@/services/api";
 
 const createGroup = async (body) => {
   const data = await axios.post("/business-groups", body);

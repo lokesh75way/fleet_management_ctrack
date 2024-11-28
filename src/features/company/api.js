@@ -1,4 +1,4 @@
-import axios from "@/services/api";
+import { axiosInstance as axios } from "@/services/api";
 
 export const getAllCompanies = async (page, groupId, limit = 10) => {
   let url = "/companies";
