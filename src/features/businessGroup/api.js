@@ -10,7 +10,6 @@ const getAllGroups = async (page) => {
   if (page !== undefined) {
     url += `?page=${page}&limit=${10}`;
   }
-  console.log({ axios });
 
   const { data } = await axios.get(url);
   return {
@@ -24,8 +23,8 @@ const deleteGroup = async (body) => {
   return axios.delete(`/business-groups/${body}`);
 };
 
-const updateGroup = async (body) => {
-  return axios.patch("/business-groups", body);
+const updateGroup = async (body, id) => {
+  return axios.put(`/business-groups/${id}`, body);
 };
 
 const changePassword = async (body) => {

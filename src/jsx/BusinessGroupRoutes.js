@@ -81,7 +81,7 @@ const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
 const CompanyForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/CompanyForm")
+  () => import("../features/company/pages/Create")
 );
 const BusinessForm = React.lazy(
   () => import("../features/businessGroup/pages/Create")

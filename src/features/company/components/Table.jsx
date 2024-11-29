@@ -8,12 +8,10 @@ import { usePermissions } from "@/context/PermissionContext";
 
 const CompanyTable = ({
   tableData,
-  tempValue,
   currentPage,
   itemsPerPage,
   onConfirmDelete,
   editDrawerOpen,
-  setDataLength,
 }) => {
   const { can } = usePermissions();
   const editPermission = can("company", "modify");
@@ -73,7 +71,7 @@ const CompanyTable = ({
                     <DeleteModal
                       className="cursor-pointer "
                       onConfirmDelete={onConfirmDelete}
-                      id={item?._id}
+                      id={item?.companyId?._id}
                     >
                       <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
                     </DeleteModal>

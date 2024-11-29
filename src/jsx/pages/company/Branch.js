@@ -163,19 +163,6 @@ const Branch = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("branches")}</h4>
                     <div className="d-flex align-items-center">
-                      <Link
-                        className="btn  btn-xxs"
-                        data-bs-toggle="offcanvas"
-                        onClick={handleClearFilter}
-                        to={"/branch"}
-                        style={{
-                          background: "gray",
-                          border: "gray",
-                          color: "white",
-                        }}
-                      >
-                        Clear
-                      </Link>
                       {role !== "COMPANY" && (
                         <>
                           <Link

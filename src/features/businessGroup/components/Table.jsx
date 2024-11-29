@@ -67,7 +67,7 @@ const BusinessTable = ({
                   <DeleteModal
                     className="cursor-pointer "
                     onConfirmDelete={onConfirmDelete}
-                    id={item._id}
+                    id={item?.businessGroupId?._id}
                   >
                     <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
                   </DeleteModal>

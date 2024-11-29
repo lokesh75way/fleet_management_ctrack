@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import { getAllGroups } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
@@ -12,89 +13,93 @@ const GroupDropdownList = ({
   isDisabled,
   name,
 }) => {
-  const [allOptions, setAllOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
-  const [loading, setLoading] = useState(false);
   const { page, setPage } = usePagination();
-  const [initialDataFetched, setInitialDataFetched] = useState(false);
   const { userDetails } = usePermissions();
-  const [isComplete, setIsComplete] = useState(false);
+
+  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["groups"],
+      queryFn: ({ pageParam }) => {
+        setPage(pageParam);
+        return getAllGroups(pageParam);
+      },
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, pages) =>
+        lastPage.data?.length ? page + 1 : null,
+      enabled: userDetails.user.role === "SUPER_ADMIN",
+      staleTime: Infinity,
+    });
+
+  const { refetch } = useQuery({
+    queryKey: ["group", value],
+    queryFn: () => {
+      // TODO: get group by id: value
+      return { data: {} };
+    },
+    enabled: false,
+    staleTime: Infinity,
+  });
+
+  const options = useMemo(() => {
+    let flatData = [];
+    data?.pages.forEach((pageData) => {
+      pageData.data.forEach((group) => {
+        flatData.push({
+          label: group?.businessGroupId?.groupName,
+          value: group?.businessGroupId?._id,
+        });
+      });
+    });
+    return flatData;
+  }, [data]);
 
   useEffect(() => {
-    if (!initialDataFetched) {
-      fetchInitialData();
-      setInitialDataFetched(true);
-    } else {
-      fetchNextPageData();
-    }
-  }, [page]);
-
-  const fetchInitialData = async () => {
-    setLoading(true);
-    const response = await getAllGroups(page);
-    const newOptions = response.data.map((item) => ({
-      label: item?.businessGroupId?.groupName,
-      value: item?.businessGroupId?._id,
-    }));
-
-    let updatedOptions = [...newOptions];
-
-    if (
-      userDetails &&
-      (userDetails.user.role === "BUSINESS_GROUP" ||
-        userDetails.user.role === "COMPANY")
-    ) {
+    if (value) {
+      if (typeof value != "string") {
+        setSelectedOption(value);
+      } else {
+        let selected;
+        if (options.length) {
+          selected = options.find((option) => option.value === value);
+        }
+        if (selected) {
+          setSelectedOption(selected);
+        } else {
+          // TODO:
+          refetch().then(({ data }) => {
+            setSelectedOption({
+              label: data.data?.name,
+              value: data.data?.id,
+            });
+          });
+        }
+      }
+    } else if (userDetails.user.role !== "SUPER_ADMIN") {
       const userGroup = userDetails.user.businessGroupId[0];
-      const userGroupOption = {
+      setSelectedOption({
         label: userGroup.groupName,
         value: userGroup._id,
-      };
-      updatedOptions.unshift(userGroupOption);
+      });
     }
-
-    setAllOptions(updatedOptions);
-    setLoading(false);
-  };
-
-  const fetchNextPageData = async () => {
-    setLoading(true);
-    const response = await getAllGroups(page);
-    const newOptions = response.data.map((item) => ({
-      label: item?.businessGroupId?.groupName,
-      value: item?.businessGroupId?._id,
-    }));
-    setAllOptions((prevOptions) => [...prevOptions, ...newOptions]);
-    if (newOptions.length == 0) setIsComplete(true);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    if (
-      userDetails &&
-      userDetails.user.role !== "BUSINESS_GROUP" &&
-      userDetails.user.role !== "COMPANY"
-    ) {
-      const selected = allOptions.find((option) => option.value === value);
-      setSelectedOption(selected);
-    }
-  }, [value, allOptions, userDetails]);
+  }, [value, options, userDetails, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
       event.target.scrollHeight - event.target.scrollTop ===
       event.target.clientHeight;
-    if (bottom && !loading && !isComplete) {
-      setPage((prevPage) => prevPage + 1);
+    if (bottom && !isFetching && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
     }
   };
 
   return (
     <Select
-      options={allOptions}
+      options={options}
       value={selectedOption}
-      onChange={(newValue) => onChange(newValue)}
+      onChange={onChange}
       name={name}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || userDetails.user.role !== "SUPER_ADMIN"}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       menuPortalTarget={document.body}

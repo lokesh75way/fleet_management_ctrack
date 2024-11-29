@@ -1,26 +1,32 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../../../components/Error/Error";
-import CustomInput from "../../../../components/Input/CustomInput";
-import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+import Error from "@/components/Error/Error";
+import CustomInput from "@/components/Input/CustomInput";
 import {
   dateFormatOptions,
   storageCapacityOptions,
   timeFormatOptions,
 } from "@/constants/options";
-import { businessGroupOptions } from "../../ReusableApi/Api";
-import FileUploader from "../../../../components/FileUploader";
-import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import CredentialsInput from "../../../../components/Input/CredentialsInput";
-import FormField from "../../../../components/Input/UserDetailsForm";
-import LocationSelector from "../../../../components/Input/LocationSelector";
+import FileUploader from "@/components/FileUploader";
+import GroupDropdown from "@/features/businessGroup/components/DropDownList";
+import CredentialsInput from "@/components/Input/CredentialsInput";
+import FormField from "@/components/Input/UserDetailsForm";
+import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 
-const MyAccount = ({
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ", // Adjust the height as needed
+  }),
+};
+
+const CompanyForm = ({
   setValue,
   getValues,
   register,
@@ -37,32 +43,8 @@ const MyAccount = ({
   });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const { checkRole } = useStorage();
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
   const { location: locationData, error: locationError } = useUserLocation();
   const [logo, setLogo] = useState(null);
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
-
-  useEffect(() => {
-    // getBusinessGroup()
-    businessGroupOptions();
-  }, []);
-
-  useEffect(() => {
-    if (checkRole() !== "SUPER_ADMIN") {
-      setIsBuisnessGroupDisabled(true);
-    }
-    if (userDetails?.user?.role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
-    }
-  }, []);
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -111,6 +93,7 @@ const MyAccount = ({
       setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [formData, id]);
+
   const handleAddForm = () => {
     append({
       name: "",
@@ -140,7 +123,6 @@ const MyAccount = ({
                 }}
                 value={value}
                 ref={ref}
-                isDisabled={isBuisnessGroupDisabled}
                 name={name}
                 customStyles={customStyles}
               />
@@ -334,4 +316,4 @@ const MyAccount = ({
   );
 };
 
-export default MyAccount;
+export default CompanyForm;

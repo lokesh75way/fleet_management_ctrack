@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
 import { useTranslation } from "react-i18next";
 import {
   useQuery,
@@ -15,26 +14,37 @@ import CompanyTable from "../components/Table";
 import { usePermissions } from "@/context/PermissionContext";
 import { deleteCompany, getAllCompanies } from "../api";
 import { notifyError } from "@/utils/toast";
-import { getAllGroups } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
+import GroupDropdownList from "@/features/businessGroup/components/DropDownList";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    marginRight: "1rem",
+    marginLeft: "1rem",
+    width: "15rem",
+    height: "0.6rem",
+    menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
+    menu: (provided) => ({ ...provided, zIndex: 9999 }),
+  }),
+};
 
 const CompanyList = () => {
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  const [businessGroupNames, setBusinessGroupNames] = useState();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [selectFilter, setFilter] = useState({
-    value: "All Business Groups",
-    label: t("allBusinessGroup"),
-  });
-  const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
-  const [tempValue, setTempValue] = useState("All");
   const { groupId } = useParams();
-  const { page, goToPage, setCount, totalCount, setPage } = usePagination();
+  const [selectFilter, setFilter] = useState(
+    groupId ?? {
+      value: "All Business Groups",
+      label: t("allBusinessGroup"),
+    }
+  );
+  const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
   const { can, setUserPermission } = usePermissions();
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const queryClient = useQueryClient();
   const { control, setValue } = useForm();
   const isAdmin = useMemo(
@@ -53,7 +63,7 @@ const CompanyList = () => {
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
-    queryFn: () => fetchAllCompany,
+    queryFn: fetchAllCompany,
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
@@ -81,36 +91,6 @@ const CompanyList = () => {
     const permissions = JSON.parse(localStorage.getItem("permission"));
     setUserPermission(permissions?.[0]?.permission);
   }, []);
-
-  const handleChangeBusinessGroup = (selectedOption) => {
-    setFilter(selectedOption);
-    setPage(1);
-    fetchAllCompany(1, selectedOption.value);
-  };
-
-  async function getGroupData() {
-    try {
-      const { data } = await getAllGroups();
-      setBusinessGroupNames(data);
-    } catch (error) {
-      console.log("Error in fetching data", error);
-    }
-  }
-
-  useEffect(() => {
-    getGroupData();
-  }, []);
-
-  useEffect(() => {
-    if (businessGroupNames) {
-      setBusinessGroupOptions(
-        businessGroupNames.map((item) => ({
-          label: item.businessGroupId?.groupName,
-          value: item.businessGroupId?._id,
-        }))
-      );
-    }
-  }, [businessGroupNames]);
 
   const editDrawerOpen = (_id) => {
     // TODO: remove this and get data from api in the edit page
@@ -143,7 +123,7 @@ const CompanyList = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("companies")}</h4>
                     <div className="d-flex align-items-center">
-                      {!isAdmin && (
+                      {isAdmin && (
                         <>
                           <Link
                             className="btn  btn-xxs"
@@ -159,42 +139,21 @@ const CompanyList = () => {
                             Clear
                           </Link>
                           <Controller
-                            name="parent"
+                            name="companyOptions"
                             control={control}
                             rules={{ required: true }}
                             render={({
                               field: { onChange, value, name, ref },
                             }) => (
-                              <Select
+                              <GroupDropdownList
                                 onChange={(newValue) => {
-                                  setTempValue(newValue.label);
-                                  setValue("companyOptions", newValue.label);
-                                  handleChangeBusinessGroup(newValue);
+                                  navigate(`/company/gid/${newValue.value}`);
                                 }}
+                                value={selectFilter}
+                                customStyles={customStyles}
                                 ref={ref}
-                                menuPortalTarget={document.body}
-                                menuPosition={"fixed"}
+                                isDisabled={!isAdmin}
                                 name={name}
-                                styles={{
-                                  control: (base) => ({
-                                    ...base,
-                                    marginRight: "1rem",
-                                    marginLeft: "1rem",
-                                    width: "15rem",
-                                    height: "0.6rem",
-                                    menuPortal: (provided) => ({
-                                      ...provided,
-                                      zIndex: 9999,
-                                    }),
-                                    menu: (provided) => ({
-                                      ...provided,
-                                      zIndex: 9999,
-                                    }),
-                                  }),
-                                }}
-                                options={businessGroupOptions}
-                                isDisabled={isAdmin}
-                                value={value ? value : selectFilter}
                               />
                             )}
                           />
@@ -250,7 +209,6 @@ const CompanyList = () => {
                           <tbody>
                             <CompanyTable
                               tableData={data?.data ?? []}
-                              tempValue={tempValue}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
                               onConfirmDelete={mutate}

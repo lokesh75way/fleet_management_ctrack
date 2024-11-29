@@ -58,7 +58,7 @@ const UpdateVehicleForm = React.lazy(
   () => import("./pages/admin/settings/EditForm/UpdateVehicleForm")
 );
 const UpdateCompanyForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/CompanyForm")
+  () => import("../features/company/pages/Create")
 );
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -87,7 +87,7 @@ const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
 const CompanyForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/CompanyForm")
+  () => import("../features/company/pages/Create")
 );
 const BusinessForm = React.lazy(
   () => import("../features/businessGroup/pages/Create")

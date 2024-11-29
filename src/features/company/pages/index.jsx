@@ -3,22 +3,24 @@ import { Route, Routes, Navigate } from "react-router-dom";
 
 import { usePermissions } from "@/context/PermissionContext";
 import PermissionDenied from "@/components/PermissionDenied";
+import CompanyList from "./List";
+import CompanyForm from "./Create";
 
 const routes = [
-  //   {
-  //     module: "company",
-  //     operation: "add",
-  //     url: "/create",
-  //     component: <CompanyForm />,
-  //   },
-  //   {
-  //     module: "company",
-  //     operation: "modify",
-  //     url: "/edit/:id",
-  //     component: <CompanyForm />,
-  //   },
-  //   { module: "company", url: "/gid/:id", component: <Company /> },
-  //   { module: "company", url: "/", component: <Company /> },
+  {
+    module: "company",
+    operation: "add",
+    url: "/create",
+    component: <CompanyForm />,
+  },
+  {
+    module: "company",
+    operation: "modify",
+    url: "/edit/:id",
+    component: <CompanyForm />,
+  },
+  { module: "company", url: "/gid/:groupId", component: <CompanyList /> },
+  { module: "company", url: "/", component: <CompanyList /> },
 ];
 
 const CompanyPages = () => {

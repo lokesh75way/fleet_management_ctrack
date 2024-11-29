@@ -31,8 +31,8 @@ export const deleteCompany = async (_id) => {
   return axios.delete(`/companies/${_id}`);
 };
 
-export const editCompany = async (body) => {
-  return axios.patch("/companies", body);
+export const editCompany = async (id, body) => {
+  return axios.patch(`/companies/${id}`, body);
 };
 
 export const changePassword = async (body) => {

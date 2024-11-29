@@ -19,7 +19,7 @@ import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 import BusinessForm from "../features/businessGroup/pages/Create";
 import BusinessUser from "../features/businessGroup/pages/List";
-import CompanyForm from "./pages/admin/settings/CreateForms/CompanyForm";
+import CompanyForm from "../features/company/pages/Create";
 import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
 const Business = React.lazy(

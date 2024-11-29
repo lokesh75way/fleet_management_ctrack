@@ -13,6 +13,7 @@ import { businessGroupAccountSchema, companyPasswordSchema } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { changePassword, createGroup, updateGroup } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CreateBusiness = () => {
   const { t } = useTranslation();
@@ -24,7 +25,7 @@ const CreateBusiness = () => {
   ];
   let component = [CreateForm, ChangePassword];
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const queryClient = useQueryClient();
 
   if (!id) {
     tabHeading = [t("newBusinessGroup")];
@@ -52,50 +53,70 @@ const CreateBusiness = () => {
       ],
     },
     resolver: yupResolver(
-      activeIndex === 0 ? businessGroupAccountSchema : companyPasswordSchema
+      activeIndex === 0 ? businessGroupAccountSchema(id) : companyPasswordSchema
     ),
   });
 
-  const onSubmit = async (data) => {
-    setIsSubmitting(true);
-    if (activeIndex === 0) {
-      try {
-        if (data.logo == null || data.logo.length === 0) {
-          delete data.logo;
-        }
-        if (data.file && data.file.length === 0) {
-          delete data.file;
-        }
-        if (id) {
-          await updateGroup(data);
-          notifySuccess("Business group has been updated!");
-          navigate("/business");
-          return;
-        } else {
-          await createGroup(data);
-          notifySuccess("Business group created");
-        }
+  const onError = (err) => notifyError(getApiErrorMessage(err));
+
+  const { mutate: editGroupMutation, isPending: editPending } = useMutation({
+    mutationFn: updateGroup,
+    onSuccess: () => {
+      notifySuccess("Business group has been updated!");
+      queryClient.invalidateQueries(["groups"]);
+      navigate("/business");
+    },
+    onError,
+  });
+
+  const { mutate: createGroupMutation, isPending: createPending } = useMutation(
+    {
+      mutationFn: createGroup,
+      onSuccess: () => {
+        notifySuccess("Business group created");
+        queryClient.invalidateQueries(["groups"]);
         navigate("/business");
-      } catch (error) {
-        notifyError(getApiErrorMessage(error));
+      },
+      onError,
+    }
+  );
+
+  const { mutate: passwordMutation, isPending: passwordPending } = useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
+      notifySuccess("Password has been changed");
+      navigate("/business");
+    },
+    onError,
+  });
+
+  const onSubmit = async (data) => {
+    console.log("reached here");
+
+    if (activeIndex === 0) {
+      if (data.logo == null || data.logo.length === 0) {
+        delete data.logo;
+      }
+      if (data.file && data.file.length === 0) {
+        delete data.file;
+      }
+      if (id) {
+        editGroupMutation(data, id);
+      } else {
+        createGroupMutation(data);
       }
     } else if (activeIndex === 1) {
-      try {
-        const passwordData = {
-          password: data.newPassword,
-          oldPassword: data.oldPassword,
-          confirmPassword: data.confirmPassword,
-          _id: id,
-        };
-        await changePassword(passwordData);
-        notifySuccess("Password has been changed");
-        navigate("/business");
-      } catch (error) {
-        notifyError(getApiErrorMessage(error));
-      }
+      const passwordData = {
+        password: data.newPassword,
+        oldPassword: data.oldPassword,
+        confirmPassword: data.confirmPassword,
+        _id: id,
+      };
+      passwordMutation(passwordData);
     }
-    setIsSubmitting(false);
   };
+
+  console.log({ errors });
 
   return (
     <>
@@ -141,7 +162,9 @@ const CreateBusiness = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
-                          isFormSubmitting={isSubmitting}
+                          isFormSubmitting={
+                            createPending || editPending || passwordPending
+                          }
                         />
                       </Tab.Pane>
                     );
