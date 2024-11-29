@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
@@ -13,12 +14,13 @@ import {
   storageCapacityOptions,
   timeFormatOptions,
 } from "@/constants/options";
-
 import FileUploader from "@/components/FileUploader";
 import CredentialsInput from "@/components/Input/CredentialsInput";
 import UserDetailsForm from "@/components/Input/UserDetailsForm";
 import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
+import { getGroupById } from "../api";
+import { notifyError } from "@/utils/toast";
 
 const BusinessForm = ({
   setValue,
@@ -36,18 +38,33 @@ const BusinessForm = ({
   });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const location = useLocation();
   const [logo, setLogo] = useState(null);
   const [dValues, setDvalues] = useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
   const { location: locationData, error: locationError } = useUserLocation();
 
+  // TODO: show loading state in UI
+  const { data, isError } = useQuery({
+    queryKey: ["group", id],
+    queryFn: () => getGroupById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
   useEffect(() => {
-    if (id) {
-      const data = location.state[0];
+    if (isError && !!id) {
+      notifyError("Not able to fetch business group data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+
+  useEffect(() => {
+    if (id && data) {
+      // TODO: set directly to form instead of state
       setDvalues(data);
     }
-  }, [id]);
+  }, [data]);
 
   useEffect(() => {
     if (dValues && id) {

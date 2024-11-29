@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import MainPagetitle from "../../../components/MainPagetitle";
-import SubCompanyTable from "../../components/Tables/SubCompanyTable";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { usePermissions } from "../../../context/PermissionContext";
+
+import MainPagetitle from "@/components/MainPagetitle";
+import { usePermissions } from "@/context/PermissionContext";
+
+import SubCompanyTable from "../../../jsx/components/Tables/SubCompanyTable";
 import {
   getAllBranch,
   deleteBranch,
 } from "../../../services/api/BranchServices";
 import { notifySuccess } from "../../../utils/toast";
 import usePagination from "../../../hooks/usePagination";
-import CompanyDropdown from "../../components/CompanyDropdown";
+import CompanyDropdown from "../../../jsx/components/CompanyDropdown";
 import Paginate from "../../../components/Paginate";
 import TableSkeleton from "../../../components/Skeleton/Table";
 
-const Branch = () => {
+const BranchList = () => {
   const { can, setUserPermission } = usePermissions();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -314,4 +316,4 @@ const Branch = () => {
     </>
   );
 };
-export default Branch;
+export default BranchList;

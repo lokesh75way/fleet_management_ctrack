@@ -35,18 +35,12 @@ const CompanyList = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { groupId } = useParams();
-  const [selectFilter, setFilter] = useState(
-    groupId ?? {
-      value: "All Business Groups",
-      label: t("allBusinessGroup"),
-    }
-  );
   const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
   const { can, setUserPermission } = usePermissions();
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const queryClient = useQueryClient();
-  const { control, setValue } = useForm();
+  const { control } = useForm();
   const isAdmin = useMemo(
     () => userDetails.user.role === "SUPER_ADMIN",
     [userDetails]
@@ -92,19 +86,8 @@ const CompanyList = () => {
     setUserPermission(permissions?.[0]?.permission);
   }, []);
 
-  const editDrawerOpen = (_id) => {
-    // TODO: remove this and get data from api in the edit page
-    const formData = data?.data.filter((item) => item._id === _id);
-    navigate(`/company/edit/${_id}`, { state: { formData } });
-  };
-
   const handleClearFilter = () => {
-    fetchAllCompany(page);
-    setValue("companyOptions", "");
-    setFilter({
-      label: t("allBusinessGroup"),
-      value: "All Business Group",
-    });
+    navigate("/company");
   };
 
   return (
@@ -147,9 +130,14 @@ const CompanyList = () => {
                             }) => (
                               <GroupDropdownList
                                 onChange={(newValue) => {
-                                  navigate(`/company/gid/${newValue.value}`);
+                                  navigate(`/company/gid/${newValue?.value}`);
                                 }}
-                                value={selectFilter}
+                                value={
+                                  groupId ?? {
+                                    value: "All Business Groups",
+                                    label: t("allBusinessGroup"),
+                                  }
+                                }
                                 customStyles={customStyles}
                                 ref={ref}
                                 isDisabled={!isAdmin}
@@ -212,7 +200,6 @@ const CompanyList = () => {
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
                               onConfirmDelete={mutate}
-                              editDrawerOpen={editDrawerOpen}
                             />
                           </tbody>
                         </table>

@@ -21,6 +21,11 @@ export const getAllCompanies = async (page, groupId, limit = 10) => {
   };
 };
 
+export const getCompanyById = async (id) => {
+  const { data } = await axios.get(`/companies/${id}`);
+  return data.data;
+};
+
 export const addCompany = async (body) => {
   const data = await axios.post("/companies", body);
   return data.data.data;
@@ -32,7 +37,7 @@ export const deleteCompany = async (_id) => {
 };
 
 export const editCompany = async (id, body) => {
-  return axios.patch(`/companies/${id}`, body);
+  return axios.put(`/companies/${id}`, body);
 };
 
 export const changePassword = async (body) => {

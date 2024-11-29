@@ -65,12 +65,6 @@ const BusinessList = () => {
     setUserPermission(permissions?.[0]?.permission);
   }, []);
 
-  const editDrawerOpen = (item) => {
-    // TODO: remove passing data on state and get the data on the page
-    const filteredData = data?.data.filter((data) => data._id === item);
-    navigate(`/business/edit/${item}`, { state: filteredData });
-  };
-
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
@@ -136,7 +130,6 @@ const BusinessList = () => {
                               itemsPerPage={itemsPerPage}
                               tableData={data?.data ?? []}
                               onConfirmDelete={mutate}
-                              editDrawerOpen={editDrawerOpen}
                             />
                           </tbody>
                         </table>

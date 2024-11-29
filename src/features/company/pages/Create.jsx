@@ -3,7 +3,7 @@ import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -24,8 +24,6 @@ const CreateCompany = () => {
     t("changePassword"),
   ];
   let component = [CreateForm, ChangePassword];
-  const location = useLocation();
-  const { formData } = location.state || {};
   const [activeIndex, setActiveIndex] = useState(0);
   const queryClient = useQueryClient();
 
@@ -60,7 +58,7 @@ const CreateCompany = () => {
   const onError = (err) => notifyError(getApiErrorMessage(err));
 
   const { mutate: editCompanyMutation, isPending: editPending } = useMutation({
-    mutationFn: editCompany,
+    mutationFn: ({ data, id }) => editCompany(id, data),
     onSuccess: () => {
       notifySuccess("Company Updated Successfully");
       queryClient.invalidateQueries(["companies"]);
@@ -98,7 +96,7 @@ const CreateCompany = () => {
         delete data.file;
       }
       if (id) {
-        editCompanyMutation(data, id);
+        editCompanyMutation({ data, id });
       } else {
         createCompanyMutation(data);
       }
@@ -158,7 +156,6 @@ const CreateCompany = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
-                          formData={formData}
                           isFormSubmitting={
                             createPending || editPending || passwordPending
                           }
