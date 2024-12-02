@@ -132,6 +132,7 @@ const ClassifyTrip = (ref) => {
                         setValue={setValue}
                         register={register}
                         getValues={getValues}
+                        tableData
                         errors={errors}
                         handleSubmit={handleSubmit}
                         onSubmit={onSubmit}

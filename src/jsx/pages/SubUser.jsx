@@ -1,30 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import MainPagetitle from "../../components/MainPagetitle";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SubUserTable from "../components/Tables/SubUserTable";
-import { clsx } from "clsx";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getUser, deleteUser } from "../../services/api/UserServices";
-import { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
-import { notifyError, notifySuccess } from "../../utils/toast";
-import { usePermissions } from "../../context/PermissionContext";
-import useStorage from "../../hooks/useStorage";
-import usePagination from "../../hooks/usePagination";
-import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
+
+import TableSkeleton from "@/components/Skeleton/Table";
+import MainPagetitle from "../../components/MainPagetitle";
 import Paginate from "../../components/Paginate";
+import SubUserTable from "../components/Tables/SubUserTable";
+import { getUser, deleteUser } from "../../services/api/UserServices";
+import { usePermissions } from "../../context/PermissionContext";
+import usePagination from "../../hooks/usePagination";
 
 const SubUser = () => {
   const { t } = useTranslation();
 
   const { can, setUserPermission } = usePermissions();
-
-  //call get api from userservice
   const [isLoading, setIsLoading] = useState(true);
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
-    usePagination();
+  const { page, goToPage, setCount, totalCount } = usePagination();
 
   const fetchUser = async () => {
     setIsLoading(true);
@@ -61,7 +53,6 @@ const SubUser = () => {
   };
 
   const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
   return (
     <>
       <MainPagetitle mainTitle="User" pageTitle={"User"} parentTitle={"Home"} />
@@ -90,32 +81,38 @@ const SubUser = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("username")}</th>
-                          <th>{t("mobileNumber")}</th>
-                          <th>{t("email")}</th>
-                          <th>{t("location")}</th>
-                          {(can("subUser", "modify") ||
-                            can("subUser", "delete")) && <th>{t("action")}</th>}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <SubUserTable
-                          key={tableData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("username")}</th>
+                            <th>{t("mobileNumber")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("location")}</th>
+                            {(can("subUser", "modify") ||
+                              can("subUser", "delete")) && (
+                              <th>{t("action")}</th>
+                            )}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <SubUserTable
+                            key={tableData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

@@ -74,7 +74,6 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
           isoStartDate,
           isoEndDate
         );
-        console.log(response, "thisis");
         filterData(response);
       } else {
         console.error("Invalid startDate or endDate");

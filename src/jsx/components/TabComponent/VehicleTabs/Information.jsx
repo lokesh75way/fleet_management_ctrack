@@ -47,8 +47,10 @@ const Information = ({
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
 
   const handleOptionChange = (event) => {
+    console.log("event", event.target.value);
     setSelectedOption(event.target.value);
   };
+  console.log("res", register);
 
   const customStyles = {
     control: (base) => ({
@@ -145,31 +147,46 @@ const Information = ({
                   <div className="col-md-2 d-flex flex-column border rounded border-[#6e6e6e] custom-margin-checkbox gap-4">
                     <div className="basic-form mt-2">
                       <div className="form-check custom-checkbox">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="optradioCustom1"
-                          id="registrationNumberOption"
-                          value="registrationNumber"
-                          checked={selectedOption === "registrationNumber"}
-                          onChange={handleOptionChange}
+                        <Controller
+                          name="selectedInput"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              value="registrationNumber"
+                              checked={field.value === "registrationNumber"}
+                              onChange={(e) => {
+                                field.onChange(e.target.value);
+                                setSelectedOption(e.target.value);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                       <h5 className="my-4" style={{ marginLeft: "20px" }}>
                         {t("Use In Reports")}
                       </h5>
                       <div className="form-check custom-checkbox">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="optradioCustom1"
-                          id="fleetNumberOption"
-                          value="fleetNumber"
-                          checked={selectedOption === "fleetNumber"}
-                          onChange={handleOptionChange}
+                        <Controller
+                          name="selectedInput"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              value="fleetnumber"
+                              checked={field.value === "fleetnumber"}
+                              onChange={(e) => {
+                                field.onChange(e.target.value);
+                                setSelectedOption(e.target.value);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                     </div>
+                    <Error errorName={errors.selectedInput} />
                   </div>
                 </div>
               </div>

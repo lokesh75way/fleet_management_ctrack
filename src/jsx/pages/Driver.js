@@ -13,9 +13,11 @@ import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const Driver = () => {
   const { isRtl } = useContext(ThemeContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -34,11 +36,14 @@ const Driver = () => {
 
   async function getDriversData(page) {
     try {
+      setIsLoading(true);
       const { data, totalLength } = await getDrivers(page);
       setTableData(data);
       setCount(totalLength);
     } catch (error) {
       notifyError("Some error occured !!");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -105,34 +110,38 @@ const Driver = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("employeeName")}</th>
-                          <th>{t("age")}</th>
-                          <th>{t("contactNumber")}</th>
-                          <th>{t("drivingExperienceSince")}</th>
-                          <th>{t("city")}</th>
-                          <th>{t("status")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <DriverTable
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("employeeName")}</th>
+                            <th>{t("age")}</th>
+                            <th>{t("contactNumber")}</th>
+                            <th>{t("drivingExperienceSince")}</th>
+                            <th>{t("city")}</th>
+                            <th>{t("status")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <DriverTable
+                            editData={editData}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

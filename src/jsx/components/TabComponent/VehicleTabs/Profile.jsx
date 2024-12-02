@@ -217,7 +217,10 @@ const Profile = ({
           <Error errorName={errors.plateNumber} />
         </div> */}
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t("vehicleCategory")}</label>
+          <label className="form-label">
+            {t("vehicleCategory")}
+            <span className="text-danger">*</span>
+          </label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -255,7 +258,10 @@ const Profile = ({
           )}
         </div>
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t("DVIRTemplate")}</label>
+          <label className="form-label">
+            {t("DVIRTemplate")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
@@ -266,7 +272,10 @@ const Profile = ({
           <Error errorName={errors.dvirTemplate} />
         </div>
         <div className="col-xl-3 mb-3">
-          <label className="form-label">{t("purchaseAmount")}</label>
+          <label className="form-label">
+            {t("purchaseAmount")}
+            <span className="text-danger">*</span>
+          </label>
           <CustomInput
             type="text"
             register={register}
@@ -361,7 +370,10 @@ const Profile = ({
           />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t("permit")}</label>
+          <label className="form-label">
+            {t("permit")}
+            <span className="text-danger">*</span>
+          </label>
           <Controller
             name="permit"
             control={control}
@@ -406,7 +418,10 @@ const Profile = ({
         </div>
 
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">{t("fuelType")}</label>
+          <label className="form-label">
+            {t("fuelType")}
+            <span className="text-danger">*</span>
+          </label>
           <Controller
             name="fuelType"
             control={control}
@@ -432,7 +447,8 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t("distanceBasedFuelConsumption")}{" "}
+            {t("distanceBasedFuelConsumption")}
+            <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
             <input
@@ -487,7 +503,8 @@ const Profile = ({
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
-            {t("durationBasedFuelConsumption")}{" "}
+            {t("durationBasedFuelConsumption")}
+            <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
             <input
@@ -589,6 +606,7 @@ const Profile = ({
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("vinNumber")}
+            <span className="text-danger">*</span>
           </label>
           <CustomInput
             type="text"

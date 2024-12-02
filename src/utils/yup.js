@@ -1,6 +1,4 @@
 import * as yup from "yup";
-import "yup-phone";
-
 const EMAIL_REG =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -61,7 +59,7 @@ export const vehicleProfileSchema = yup
       .positive()
       .integer()
       .typeError("Purchase Amount must be a number"),
-    plateNumber: yup.string().required("Plate Number is required "),
+    // plateNumber: yup.string().required("Plate Number is required "),
     registrationNumber: yup
       .string()
       .min(4, "Registration Number must be of 4 digit or more"),
@@ -86,16 +84,16 @@ export const vehicleProfileSchema = yup
       .nullable()
       .positive()
       .integer(),
-    gpsWarranty: yup
-      .number()
-      .typeError("Weight Capacity must be a number")
-      .required("GPS Warranty is required "),
-    weightCapacity: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Weight Capacity must be a number")
-      .required("Weight Capacity is required "),
+    // gpsWarranty: yup
+    //   .number()
+    //   .typeError("Weight Capacity must be a number")
+    //   .required("GPS Warranty is required "),
+    // weightCapacity: yup
+    //   .number()
+    //   .positive()
+    //   .integer()
+    //   .typeError("Weight Capacity must be a number")
+    //   .required("Weight Capacity is required "),
     registrationNumber: yup
       .string()
       .typeError("Registration Number must be a string")
@@ -108,14 +106,30 @@ export const vehicleProfileSchema = yup
       .number()
       .typeError("This field is required")
       .required(),
-    distanceBaseFuelConsumption: yup
+    distanceBasedDistanceQuantity: yup
       .number()
       .typeError("This field is required")
       .required(),
-    sleepModeDuration: yup
-      .number()
-      .typeError("Sleep mode duration must be a number")
-      .required(),
+    // sleepModeDuration: yup
+    //   .number()
+    //   .typeError("Sleep mode duration must be a number")
+    //   .required(),
+  })
+  .required();
+
+export const vehicleInformationSchema = yup
+  .object({
+    selectedInput: yup.string().required("Please select an option"),
+    registrationNumber: yup.string().when("selectedInput", {
+      is: "registrationNumber",
+      then: () => yup.string().required("Registration Number is required"),
+      otherwise: () => yup.string().optional(),
+    }),
+    fleetnumber: yup.string().when("selectedInput", {
+      is: "fleetnumber",
+      then: () => yup.string().required("fleet Number is required"),
+      otherwise: () => yup.string().optional(),
+    }),
   })
   .required();
 

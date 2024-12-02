@@ -18,6 +18,7 @@ import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -32,12 +33,12 @@ const headers = [
 
 const Geofence = (ref) => {
   const navigate = useNavigate();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
-    usePagination();
+  const { page, goToPage, setCount, totalCount } = usePagination();
 
   const { isRtl } = useContext(ThemeContext);
 
   const [tableData, setTableData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [editData, setEditData] = useState({
     id: 0,
     status: "",
@@ -60,11 +61,14 @@ const Geofence = (ref) => {
 
   const getData = async () => {
     try {
+      setIsLoading(true);
       const { geofences, count } = await getGeofenceData(page);
       setCount(count);
       setTableData(geofences);
     } catch (error) {
       notifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,35 +123,39 @@ const Geofence = (ref) => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("geofenceID")}</th>
-                          <th>{t("geofenceName")}</th>
-                          <th>{t("geofenceType")}</th>
-                          <th>{t("contactNumber")}</th>
-                          <th>{t("address")}</th>
-                          <th>{t("description")}</th>
-                          <th>{t("geofenceAccess")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <GeofenceTable
-                          page={page}
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("geofenceID")}</th>
+                            <th>{t("geofenceName")}</th>
+                            <th>{t("geofenceType")}</th>
+                            <th>{t("contactNumber")}</th>
+                            <th>{t("address")}</th>
+                            <th>{t("description")}</th>
+                            <th>{t("geofenceAccess")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <GeofenceTable
+                            page={page}
+                            editData={editData}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

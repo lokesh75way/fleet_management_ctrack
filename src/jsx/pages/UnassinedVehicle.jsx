@@ -8,6 +8,7 @@ import usePagination from "../../hooks/usePagination";
 import { useTranslation } from "react-i18next";
 import Paginate from "../../components/Paginate";
 import UnassignedVehicleTable from "../components/Tables/UnassignedVehicleTable";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const UnassinedVehicle = () => {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ const UnassinedVehicle = () => {
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
   const [tableData, setTableData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [editData, setEditData] = useState({
     id: 0,
     vehicleName: "",
@@ -39,6 +41,7 @@ const UnassinedVehicle = () => {
 
   async function getVehicleData(page) {
     try {
+      setIsLoading(true);
       const { data, totalLength } = await getUnassignedVehicles(page);
       console.log(data);
       setCount(totalLength);
@@ -46,6 +49,8 @@ const UnassinedVehicle = () => {
       // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -102,34 +107,40 @@ const UnassinedVehicle = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("vehicleName")}</th>
-                          {/* <th>{t("vehicleNumber")}</th> */}
-                          <th>{t("vehicleModel")}</th>
-                          <th>{t("vehicleType")}</th>
-                          <th>{t("IMEINumber")}</th>
-                          <th>{t("registrationNumber")}</th>
-                          <th>{t("status")}</th>
-                          {(can("vehicle", "modify") ||
-                            can("vehicle", "delete")) && <th>{t("action")}</th>}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <UnassignedVehicleTable
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("vehicleName")}</th>
+                            {/* <th>{t("vehicleNumber")}</th> */}
+                            <th>{t("vehicleModel")}</th>
+                            <th>{t("vehicleType")}</th>
+                            <th>{t("IMEINumber")}</th>
+                            <th>{t("registrationNumber")}</th>
+                            <th>{t("status")}</th>
+                            {(can("vehicle", "modify") ||
+                              can("vehicle", "delete")) && (
+                              <th>{t("action")}</th>
+                            )}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <UnassignedVehicleTable
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

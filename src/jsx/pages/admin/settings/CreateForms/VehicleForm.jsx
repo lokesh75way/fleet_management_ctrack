@@ -22,6 +22,7 @@ import {
   vehicleGeneralSchema,
   vehicleProfileSchema,
   vehicleDocumentSchema,
+  vehicleInformationSchema,
 } from "../../../../../utils/yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
@@ -31,6 +32,7 @@ import {
 } from "../../../../../services/api/VehicleService";
 
 import { useTranslation } from "react-i18next";
+import * as yup from "yup";
 
 const VehicleForm = () => {
   const { t } = useTranslation();
@@ -39,24 +41,25 @@ const VehicleForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = [
     t("information"),
-    t("licensing"),
-    t("servicing"),
-    t("statuses"),
     t("general"),
+    t("licensing"),
+    // t("servicing"),
+    // t("statuses"),
+
     t("profile"),
     t("document"),
-    t("messageforwarding"),
+    // t("messageforwarding"),
   ];
 
   const component = [
     Information,
-    Licensing,
-    Servicing,
-    Statuses,
     General,
+    Licensing,
+    // Servicing,
+    // Statuses,
     Profile,
     Document,
-    MessageForwarding,
+    // MessageForwarding,
   ];
 
   const totalTabs = tabHeading.length;
@@ -87,15 +90,22 @@ const VehicleForm = () => {
       imeiNumber: vehicle?.imeiNumber,
       plateNumber: vehicle?.Vehicle_No,
       registrationNumber: vehicle?.Vehicle_No,
+      selectedInput: "registrationNumber",
     },
     resolver: yupResolver(
       activeIndex === 0
-        ? vehicleGeneralSchema
+        ? vehicleInformationSchema
         : activeIndex === 1
-          ? vehicleProfileSchema
-          : vehicleDocumentSchema
+          ? vehicleGeneralSchema
+          : activeIndex === 3
+            ? vehicleProfileSchema
+            : activeIndex === 2
+              ? yup.object()
+              : vehicleDocumentSchema
     ),
   });
+
+  console.log("first", errors);
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {

@@ -90,6 +90,7 @@ const DriverForm = () => {
       notifyError(t("someErrorOccurred"));
     }
   };
+  console.log("first", errors);
 
   return (
     <>

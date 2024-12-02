@@ -15,6 +15,7 @@ import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const Technician = () => {
   const { t } = useTranslation();
@@ -24,14 +25,18 @@ const Technician = () => {
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllTechnicians = async (page, businessGroupId) => {
     try {
+      setIsLoading(true);
       const { technicians, count } = await getTechnicians(page, 10);
       setTableData(technicians);
       setCount(count);
     } catch (error) {
       notifyError("Error in fetching data");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -98,31 +103,35 @@ const Technician = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("technicianId")}</th>
-                          <th>{t("technicianName")}</th>
-                          <th>{t("email")}</th>
-                          <th>{t("contactNumber")}</th>
-                          <th>{t("location")}</th>
-                          <th>{t("technicianNumber")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <TechnicianTable
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          tableData={tableData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("technicianId")}</th>
+                            <th>{t("technicianName")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("contactNumber")}</th>
+                            <th>{t("location")}</th>
+                            <th>{t("technicianNumber")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <TechnicianTable
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            tableData={tableData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

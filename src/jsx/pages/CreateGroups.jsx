@@ -13,22 +13,26 @@ import { ThemeContext } from "../../context/ThemeContext";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const CreateGroups = () => {
   const { isRtl } = useContext(ThemeContext);
-
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   // const templateData = JSON.parse(localStorage.getItem("templateData")) || []
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
   const fetchData = async (page) => {
     try {
+      setIsLoading(true);
       const templateData = await getTemplates(page);
       console.log("Received template data:", templateData);
       setCount(templateData.data.totalCount);
       setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
     } catch (error) {
       console.error("Error fetching template data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -100,28 +104,32 @@ const CreateGroups = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th className="text-center">{t("serialNumber")}</th>
-                          <th className="text-center">{t("templateName")}</th>
-                          <th className="text-center">{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <GroupTable
-                          isEditTrue={isEditTrue}
-                          setIsEditTrue={setIsEditTrue}
-                          tableData={groupsDataState}
-                          onConfirmDelete={onConfirmDelete}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!groupsDataState.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th className="text-center">{t("serialNumber")}</th>
+                            <th className="text-center">{t("templateName")}</th>
+                            <th className="text-center">{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <GroupTable
+                            isEditTrue={isEditTrue}
+                            setIsEditTrue={setIsEditTrue}
+                            tableData={groupsDataState}
+                            onConfirmDelete={onConfirmDelete}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

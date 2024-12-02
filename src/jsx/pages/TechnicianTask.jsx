@@ -20,6 +20,7 @@ import ReactPaginate from "react-paginate";
 import dayjs from "dayjs";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const TechnicianTask = (ref) => {
   const { t } = useTranslation();
@@ -29,14 +30,18 @@ const TechnicianTask = (ref) => {
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
   const [editData, setEditData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllTasks = async (page, businessGroupId) => {
     try {
+      setIsLoading(true);
       const { data, totalCount } = await getTasks(page, 10);
       setTableData(data);
       setCount(totalCount);
     } catch (error) {
       notifyError("Error in fetching data");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -138,32 +143,36 @@ const TechnicianTask = (ref) => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("taskName")}</th>
-                          <th>{t("taskCategory")}</th>
-                          <th>{t("technicianName")}</th>
-                          <th>{t("serviceLocation")}</th>
-                          <th>{t("reportingTime")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <TechnicianTaskTable
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("taskName")}</th>
+                            <th>{t("taskCategory")}</th>
+                            <th>{t("technicianName")}</th>
+                            <th>{t("serviceLocation")}</th>
+                            <th>{t("reportingTime")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <TechnicianTaskTable
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

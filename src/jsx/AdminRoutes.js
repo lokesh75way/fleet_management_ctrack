@@ -10,7 +10,6 @@ import AdminHome from "./components/Dashboard/AdminHome";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
-import BusinessUser from "../features/businessGroup/pages/List";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { usePermissions } from "../context/PermissionContext";
 import { useEffect } from "react";

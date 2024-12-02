@@ -1,13 +1,14 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import MainPagetitle from "../../components/MainPagetitle";
-import AlertOffcanvas from "../constant/AlertOffcanvas";
-import { AlertData } from "../components/Tables/Tables";
-import AlertTable from "../components/Tables/AlertTable";
+import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { alertSchema } from "../../utils/yup";
 import { useTranslation } from "react-i18next";
+
+import MainPagetitle from "../../components/MainPagetitle";
+import AlertOffcanvas from "../constant/AlertOffcanvas";
+import AlertTable from "../components/Tables/AlertTable";
+import { alertSchema } from "../../utils/yup";
+import Paginate from "../../components/Paginate";
 import usePagination from "../../hooks/usePagination";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import {
@@ -16,14 +17,10 @@ import {
   getAlerts,
   updateAlert,
 } from "../../services/api/AlertService";
-import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
-import { ThemeContext } from "../../context/ThemeContext";
-import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const Alert = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -38,26 +35,25 @@ const Alert = () => {
   });
 
   const [tableData, setTableData] = useState([]);
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
-    usePagination();
-  const { isRtl } = useContext(ThemeContext);
+  const { page, goToPage, setCount, totalCount } = usePagination();
   const [editData, setEditData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
-
   const fetchAllAlerts = async (page, businessGroupId) => {
     try {
+      setIsLoading(true);
       const { data, count } = await getAlerts(page, 10);
       setTableData(data);
       setCount(count);
     } catch (error) {
       notifyError("Error in fetching data");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -161,33 +157,37 @@ const Alert = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("alerts")}</th>
-                          <th>{t("alertName")}</th>
-                          <th>{t("alertType")}</th>
-                          <th>{t("createdDate")}</th>
-                          <th>{t("notification")}</th>
-                          <th>{t("reason")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <AlertTable
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("alerts")}</th>
+                            <th>{t("alertName")}</th>
+                            <th>{t("alertType")}</th>
+                            <th>{t("createdDate")}</th>
+                            <th>{t("notification")}</th>
+                            <th>{t("reason")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <AlertTable
+                            editData={editData}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
