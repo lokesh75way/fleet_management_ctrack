@@ -60,7 +60,7 @@ const CreateBusiness = () => {
   const onError = (err) => notifyError(getApiErrorMessage(err));
 
   const { mutate: editGroupMutation, isPending: editPending } = useMutation({
-    mutationFn: updateGroup,
+    mutationFn: ({ data, id }) => updateGroup(id, data),
     onSuccess: () => {
       notifySuccess("Business group has been updated!");
       queryClient.invalidateQueries(["groups"]);
@@ -91,8 +91,6 @@ const CreateBusiness = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log("reached here");
-
     if (activeIndex === 0) {
       if (data.logo == null || data.logo.length === 0) {
         delete data.logo;
@@ -101,7 +99,9 @@ const CreateBusiness = () => {
         delete data.file;
       }
       if (id) {
-        editGroupMutation(data, id);
+        console.log({ id });
+
+        editGroupMutation({ data, id });
       } else {
         createGroupMutation(data);
       }

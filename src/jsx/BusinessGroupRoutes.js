@@ -19,6 +19,7 @@ import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm
 import PermissionDenied from "./pages/PermissionDenied";
 import { usePermissions } from "../context/PermissionContext";
 import { GiConsoleController } from "react-icons/gi";
+import CompanyRoutes from "@/features/company/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -113,7 +114,7 @@ const Business = React.lazy(
 );
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
-const Branch = React.lazy(() => import("./pages/company/Branch"));
+const Branch = React.lazy(() => import("../features/branch/pages/List"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
 // import Permission from "./pages/Permission";
@@ -185,21 +186,6 @@ const BusinessGroupRoutes = () => {
       module: "vehicle",
       url: "vehicle-tracking/:id",
       component: <DriverTracking />,
-    },
-
-    { module: "company", url: "company", component: <Company /> },
-    { module: "company", url: "company/:id", component: <Company /> },
-    {
-      module: "company",
-      operation: "add",
-      url: "company/create",
-      component: <CompanyForm />,
-    },
-    {
-      module: "company",
-      operation: "modify",
-      url: "company/edit/:id",
-      component: <CompanyForm />,
     },
     {
       module: "company",
@@ -362,6 +348,7 @@ const BusinessGroupRoutes = () => {
               />
             );
           })}
+          <Route path="/company/*" element={<CompanyRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

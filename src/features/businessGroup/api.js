@@ -19,11 +19,16 @@ const getAllGroups = async (page) => {
   };
 };
 
+const getGroupById = async (id) => {
+  const { data } = await axios.get(`/business-groups/${id}`);
+  return data?.data;
+};
+
 const deleteGroup = async (body) => {
   return axios.delete(`/business-groups/${body}`);
 };
 
-const updateGroup = async (body, id) => {
+const updateGroup = async (id, body) => {
   return axios.put(`/business-groups/${id}`, body);
 };
 
@@ -44,4 +49,5 @@ export {
   updateGroup,
   changePassword,
   fileUpload,
+  getGroupById,
 };

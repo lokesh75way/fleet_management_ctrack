@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
@@ -13,11 +14,13 @@ import {
   timeFormatOptions,
 } from "@/constants/options";
 import FileUploader from "@/components/FileUploader";
-import GroupDropdown from "@/features/businessGroup/components/DropDownList";
+import GroupDropdownList from "@/features/businessGroup/components/DropDownList";
 import CredentialsInput from "@/components/Input/CredentialsInput";
 import FormField from "@/components/Input/UserDetailsForm";
 import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
+import { getCompanyById } from "../api";
+import { notifyError } from "@/utils/toast";
 
 const customStyles = {
   control: (base) => ({
@@ -34,7 +37,6 @@ const CompanyForm = ({
   handleSubmit,
   errors,
   control,
-  formData,
   isFormSubmitting,
 }) => {
   const { fields, append, remove } = useFieldArray({
@@ -46,50 +48,71 @@ const CompanyForm = ({
   const { location: locationData, error: locationError } = useUserLocation();
   const [logo, setLogo] = useState(null);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState();
+
+  // TODO: show loading state in UI
+  const { data, isError } = useQuery({
+    queryKey: ["company", id],
+    queryFn: () => getCompanyById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (isError && !!id) {
+      notifyError("Not able to fetch company data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+
+  useEffect(() => {
+    if (id && data) {
+      // TODO: set directly to form instead of state
+      setFormData(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (formData && id) {
-      setValue(
-        "businessGroupId",
-        formData?.[0].companyId?.businessGroupId?._id
-      );
-      setValue("companyName", formData[0].companyId?.companyName);
-      setValue("userName", formData[0].userName);
-      setValue("email", formData[0].email);
-      setValue("tradeLicenseNumber", formData[0].companyId?.tradeLicenseNumber);
-      setValue("officeNumber", formData[0].companyId?.officeNumber);
-      setValue("mobileNumber", formData[0].mobileNumber);
-      setValue("helpDeskEmail", formData[0].companyId?.helpDeskEmail);
+      setValue("businessGroupId", formData?.companyId?.businessGroupId?._id);
+      setValue("companyName", formData.companyId?.companyName);
+      setValue("userName", formData.userName);
+      setValue("email", formData.email);
+      setValue("tradeLicenseNumber", formData.companyId?.tradeLicenseNumber);
+      setValue("officeNumber", formData.companyId?.officeNumber);
+      setValue("mobileNumber", formData.mobileNumber);
+      setValue("helpDeskEmail", formData.companyId?.helpDeskEmail);
       setValue(
         "whatsappContactNumber",
-        formData[0].companyId?.whatsappContactNumber
+        formData.companyId?.whatsappContactNumber
       );
       setValue(
         "helpDeskTelephoneNumber",
-        formData[0].companyId?.helpDeskTelephoneNumber
+        formData.companyId?.helpDeskTelephoneNumber
       );
-      setValue("street1", formData[0].companyId?.street1);
-      setValue("street2", formData[0].companyId?.street2);
-      setValue("contactPerson", formData[0].companyId?.contactPerson);
-      setValue("faxNumber", formData[0].companyId?.faxNumber);
-      setValue("zipCode", formData[0].companyId?.zipCode);
-      setValue("storageCapacity", formData[0].companyId.storageCapacity);
-      setValue("country", formData[0].country);
-      setValue("state", formData[0].state || "");
-      setLogo(formData?.[0].companyId?.logo);
+      setValue("street1", formData.companyId?.street1);
+      setValue("street2", formData.companyId?.street2);
+      setValue("contactPerson", formData.companyId?.contactPerson);
+      setValue("faxNumber", formData.companyId?.faxNumber);
+      setValue("zipCode", formData.companyId?.zipCode);
+      setValue("storageCapacity", formData.companyId.storageCapacity);
+      setValue("country", formData.country);
+      setValue("state", formData.state || "");
+      setLogo(formData?.companyId?.logo);
       setValue(
         "dateFormat",
-        formData?.[0].companyId?.dateFormat || dateFormatOptions[0].value
+        formData?.companyId?.dateFormat || dateFormatOptions.value
       );
       setValue(
         "timeFormat",
-        formData?.[0].companyId?.timeFormat || timeFormatOptions[0].value
+        formData?.companyId?.timeFormat || timeFormatOptions.value
       );
 
-      setValue("userInfo", formData?.[0]?.userInfo);
+      setValue("userInfo", formData?.userInfo);
     } else {
       setValue("storageCapacity", storageCapacityOptions[1].value);
-      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("dateFormat", dateFormatOptions?.value);
       setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [formData, id]);
@@ -117,7 +140,7 @@ const CompanyForm = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <GroupDropdown
+              <GroupDropdownList
                 onChange={(newValue) => {
                   setValue("businessGroupId", newValue.value);
                 }}
@@ -191,7 +214,7 @@ const CompanyForm = ({
             placeholder=""
             defaultValue={getValues("officeNumber")}
           />
-          <Error errorName={errors.officeNo} />
+          <Error errorName={errors.officeNumber} />
         </div>
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">
@@ -215,7 +238,7 @@ const CompanyForm = ({
           errors={errors}
           getValues={getValues}
           locationData={locationData}
-          dValues={formData?.[0]}
+          dValues={formData}
           id={id}
           showCity={true}
           Comptype={"companyId"}

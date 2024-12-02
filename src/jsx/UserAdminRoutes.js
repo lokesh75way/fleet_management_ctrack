@@ -217,7 +217,7 @@ const FormValidation = React.lazy(
 );
 const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const CompanyLayout = React.lazy(() => import("./layouts/CompanyLayout"));
-const Branch = React.lazy(() => import("./pages/company/Branch"));
+const Branch = React.lazy(() => import("../features/branch/pages/List"));
 const BranchForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/BranchForm")
 );

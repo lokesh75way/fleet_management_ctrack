@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-import { getAllGroups } from "@/features/businessGroup/api";
+import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
 import { usePermissions } from "@/context/PermissionContext";
+import { useLocation } from "react-router-dom";
 
 const GroupDropdownList = ({
   onChange,
@@ -16,6 +17,7 @@ const GroupDropdownList = ({
   const [selectedOption, setSelectedOption] = useState(value);
   const { page, setPage } = usePagination();
   const { userDetails } = usePermissions();
+  const { pathname } = useLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
@@ -33,10 +35,7 @@ const GroupDropdownList = ({
 
   const { refetch } = useQuery({
     queryKey: ["group", value],
-    queryFn: () => {
-      // TODO: get group by id: value
-      return { data: {} };
-    },
+    queryFn: () => getGroupById(value),
     enabled: false,
     staleTime: Infinity,
   });
@@ -65,12 +64,12 @@ const GroupDropdownList = ({
         }
         if (selected) {
           setSelectedOption(selected);
+          onChange(selected);
         } else {
-          // TODO:
           refetch().then(({ data }) => {
             setSelectedOption({
-              label: data.data?.name,
-              value: data.data?.id,
+              label: data?.businessGroupId?.groupName,
+              value: data?.businessGroupId?._id,
             });
           });
         }
@@ -81,8 +80,12 @@ const GroupDropdownList = ({
         label: userGroup.groupName,
         value: userGroup._id,
       });
+      onChange({
+        label: userGroup.groupName,
+        value: userGroup._id,
+      });
     }
-  }, [value, options, userDetails, isFetching]);
+  }, [options, pathname, userDetails, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =

@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import UnassinedVehicle from "./pages/UnassinedVehicle";
 import BusinessGroupRoutes from "@/features/businessGroup/pages";
 import CompanyRoutes from "@/features/company/pages";
+import BranchRoutes from "@/features/branch/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -115,7 +116,7 @@ const Business = React.lazy(
 );
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
-const Branch = React.lazy(() => import("./pages/company/Branch"));
+const Branch = React.lazy(() => import("../features/branch/pages/List"));
 const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
@@ -252,23 +253,6 @@ const allroutes = [
     component: <CompanyTracking />,
   },
 
-  {
-    module: "branch",
-    operation: "add",
-    url: "branch/create",
-    component: <BranchForm />,
-  },
-  { module: "branch", url: "branch", component: <Branch /> },
-  {
-    module: "branch",
-    operation: "modify",
-    url: "branch/edit/:id",
-    component: <BranchForm />,
-  },
-  { module: "branch", url: "branch", component: <Branch /> },
-  { module: "branch", url: "branch/cid/:id", component: <Branch /> },
-  { module: "branch", url: "branch/bid/:id", component: <Branch /> },
-
   // groups
   { module: "groups", url: "groups", component: <CreateGroups /> },
   { module: "groups", url: "groups/permission/", component: <Permission /> },
@@ -361,6 +345,7 @@ const AdminRoutes = () => {
           })}
           <Route path="/business/*" element={<BusinessGroupRoutes />} />
           <Route path="/company/*" element={<CompanyRoutes />} />
+          <Route path="/branch/*" element={<BranchRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

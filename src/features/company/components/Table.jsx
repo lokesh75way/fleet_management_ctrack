@@ -11,7 +11,6 @@ const CompanyTable = ({
   currentPage,
   itemsPerPage,
   onConfirmDelete,
-  editDrawerOpen,
 }) => {
   const { can } = usePermissions();
   const editPermission = can("company", "modify");
@@ -60,12 +59,13 @@ const CompanyTable = ({
               <td>
                 <span className="d-flex justify-content-center">
                   {editPermission && (
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => editDrawerOpen(item?._id)}
-                    >
-                      <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-                    </span>
+                    <Link to={`/company/edit/${item?.companyId?._id}`}>
+                      <span className="cursor-pointer">
+                        <FaEdit
+                          style={{ color: "green", fontSize: "1.2rem" }}
+                        />
+                      </span>
+                    </Link>
                   )}
                   {deletePermission && (
                     <DeleteModal
