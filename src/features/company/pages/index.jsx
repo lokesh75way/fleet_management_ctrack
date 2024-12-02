@@ -19,8 +19,18 @@ const routes = [
     url: "/edit/:id",
     component: <CompanyForm />,
   },
-  { module: "company", url: "/gid/:groupId", component: <CompanyList /> },
-  { module: "company", url: "/", component: <CompanyList /> },
+  {
+    module: "company",
+    url: "/gid/:groupId",
+    operation: "view",
+    component: <CompanyList />,
+  },
+  {
+    module: "company",
+    url: "/",
+    operation: "view",
+    component: <CompanyList />,
+  },
 ];
 
 const CompanyPages = () => {

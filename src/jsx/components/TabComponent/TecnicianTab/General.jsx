@@ -7,7 +7,7 @@ import CustomInput from "../../../../components/Input/CustomInput";
 import "@/assets/scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import { useParams } from "react-router-dom";
 const General = ({
   register,

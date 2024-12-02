@@ -25,7 +25,7 @@ import { getGroups } from "../../../../features/businessGroup/api";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 import { useTranslation } from "react-i18next";
 
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";

@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-
-import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
-import usePagination from "@/hooks/usePagination";
-import { usePermissions } from "@/context/PermissionContext";
 import { useLocation } from "react-router-dom";
 
-const GroupDropdownList = ({
+import usePagination from "@/hooks/usePagination";
+import { usePermissions } from "@/context/PermissionContext";
+import { getAllCompanies, getCompanyById } from "../api";
+
+const CompanyDropdownList = ({
   onChange,
   value,
   customStyles,
   isDisabled,
+  groupId,
   name,
 }) => {
   const [selectedOption, setSelectedOption] = useState(value);
@@ -21,21 +22,21 @@ const GroupDropdownList = ({
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["groups"],
+      queryKey: ["companies", groupId],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllGroups(pageParam);
+        return getAllCompanies(pageParam, groupId);
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
         lastPage.data?.length ? page + 1 : null,
-      enabled: can("business", "view"),
+      enabled: can("company", "view"),
       staleTime: Infinity,
     });
 
   const { refetch } = useQuery({
-    queryKey: ["group", value],
-    queryFn: () => getGroupById(value),
+    queryKey: ["company", value],
+    queryFn: () => getCompanyById(value),
     enabled: false,
     staleTime: Infinity,
   });
@@ -67,16 +68,16 @@ const GroupDropdownList = ({
         } else {
           refetch().then(({ data }) => {
             setSelectedOption({
-              label: data?.businessGroupId?.groupName,
-              value: data?.businessGroupId?._id,
+              label: data?.companyId?.companyName,
+              value: data?.companyId?._id,
             });
           });
         }
       }
-    } else if (!can("business", "view")) {
-      const userGroup = userDetails.user.businessGroupId[0];
+    } else if (!can("company", "view")) {
+      const userGroup = userDetails.user.companyId[0];
       setSelectedOption({
-        label: userGroup.groupName,
+        label: userGroup.companyName,
         value: userGroup._id,
       });
       onChange({
@@ -99,18 +100,14 @@ const GroupDropdownList = ({
     <Select
       options={options}
       value={selectedOption}
-      onChange={onChange}
+      onChange={(newValue) => onChange(newValue)}
+      styles={customStyles}
       name={name}
-      isDisabled={isDisabled || userDetails.user.role !== "SUPER_ADMIN"}
+      isDisabled={isDisabled}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
-      menuPortalTarget={document.body}
-      styles={{
-        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-        ...customStyles,
-      }}
     />
   );
 };
 
-export default GroupDropdownList;
+export default CompanyDropdownList;
