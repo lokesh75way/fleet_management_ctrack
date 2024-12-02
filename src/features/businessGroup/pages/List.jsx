@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   useQuery,
@@ -19,7 +19,6 @@ import TableSkeleton from "@/components/Skeleton/Table";
 
 const BusinessList = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { can, setUserPermission } = usePermissions();
   const { page, setCount, totalCount, goToPage } = usePagination();
   const itemsPerPage = 10;

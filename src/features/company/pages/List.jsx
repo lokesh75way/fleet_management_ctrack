@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -38,26 +38,12 @@ const CompanyList = () => {
   const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
   const { can, setUserPermission } = usePermissions();
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const queryClient = useQueryClient();
   const { control } = useForm();
-  const isAdmin = useMemo(
-    () => userDetails.user.role === "SUPER_ADMIN",
-    [userDetails]
-  );
-
-  const fetchAllCompany = async () => {
-    let gId = groupId;
-    if (userDetails?.user?.role === "BUSINESS_GROUP") {
-      const businessId = userDetails?.user?.businessGroupId[0]?._id;
-      gId = groupId ?? businessId;
-    }
-    return getAllCompanies(page, gId);
-  };
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
-    queryFn: fetchAllCompany,
+    queryFn: () => getAllCompanies(page, groupId),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
@@ -106,7 +92,7 @@ const CompanyList = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("companies")}</h4>
                     <div className="d-flex align-items-center">
-                      {isAdmin && (
+                      {can("business", "view") && (
                         <>
                           <Link
                             className="btn  btn-xxs"
@@ -140,7 +126,7 @@ const CompanyList = () => {
                                 }
                                 customStyles={customStyles}
                                 ref={ref}
-                                isDisabled={!isAdmin}
+                                isDisabled={!can("business", "view")}
                                 name={name}
                               />
                             )}

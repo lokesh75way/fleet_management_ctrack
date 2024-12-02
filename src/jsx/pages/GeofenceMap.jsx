@@ -17,7 +17,7 @@ import {
 } from "../../services/api/GeoFenceService";
 
 import { useTranslation } from "react-i18next";
-import CompanyDropdown from "../components/CompanyDropdown";
+import CompanyDropdown from "../../features/company/components/DropDownList";
 
 const GeofenceDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null);

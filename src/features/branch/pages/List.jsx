@@ -1,152 +1,74 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import {
+  useQuery,
+  keepPreviousData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import MainPagetitle from "@/components/MainPagetitle";
 import { usePermissions } from "@/context/PermissionContext";
+import BranchTable from "../components/Table";
+import { notifyError } from "@/utils/toast";
+import usePagination from "@/hooks/usePagination";
+import CompanyDropdownList from "@/features/company/components/DropDownList";
+import Paginate from "@/components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
+import { deleteBranch, getAllBranch } from "../api";
 
-import SubCompanyTable from "../../../jsx/components/Tables/SubCompanyTable";
-import {
-  getAllBranch,
-  deleteBranch,
-} from "../../../services/api/BranchServices";
-import { notifySuccess } from "../../../utils/toast";
-import usePagination from "../../../hooks/usePagination";
-import CompanyDropdown from "../../../jsx/components/CompanyDropdown";
-import Paginate from "../../../components/Paginate";
-import TableSkeleton from "../../../components/Skeleton/Table";
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    marginRight: "1rem",
+    marginLeft: "1rem",
+    width: "15rem",
+    height: "0.6rem",
+    menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
+    menu: (provided) => ({ ...provided, zIndex: 9999 }),
+  }),
+};
 
 const BranchList = () => {
-  const { can, setUserPermission } = usePermissions();
+  const { can } = usePermissions();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [tempValue, setTempValue] = useState("All Companies");
-  const [tempValue2, setTempValue2] = useState("All Branches");
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      marginRight: "1rem",
-      marginLeft: "1rem",
-      width: "15rem",
-      height: "0.6rem",
-      menuPortal: (provided) => ({ ...provided, zIndex: 9999 }),
-      menu: (provided) => ({ ...provided, zIndex: 9999 }),
-    }),
-  };
-  const { control, setValue } = useForm();
-  const userData = JSON.parse(localStorage.getItem("userDetails"));
-  const role = userData?.user?.role;
-  const [companyId, setCompanyId] = useState(null);
-  const [tableData, setTableData] = useState([]);
-  const [editData, setEditData] = useState({
-    id: 0,
-    reseller: "",
-    contact: 0,
-    username: "",
-    status: "",
-    location: "",
-    usergroup: "",
-    branches: 0,
-  });
-  const [companyDropdown, setCompanyDropdown] = useState({
-    label: t("allCompanies"),
-    value: "All Companies",
-  });
-  const [branches, setBranches] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState(null);
-  const [selectedBranch, setSelectedBranch] = useState(null);
-  const { page, goToPage, setCount, totalCount, setPage } = usePagination();
-  const [initialLoad, setInitialLoad] = useState(false);
+  const { cId } = useParams();
+  const { page, goToPage, setCount, totalCount } = usePagination();
+  const queryClient = useQueryClient();
+  const { control } = useForm();
   const itemsPerPage = 10;
+
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["companies", page, cId],
+    queryFn: () => getAllBranch(page, cId),
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
+  });
+
+  const { mutate } = useMutation({
+    onError: (err) => {
+      const messge = err.response.data.message;
+      notifyError(messge ?? "Something went wrong!!");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("companies");
+    },
+    mutationFn: deleteBranch,
+  });
+
+  useEffect(() => {
+    if (data) setCount(data.totalCount);
+  }, [data]);
+
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const fetchAllBranch = async (page, CompanyId, branchId) => {
-    try {
-      if (page == 1) setInitialLoad(true);
-      if (CompanyId) {
-        const { data, success } = await getAllBranch(undefined, CompanyId);
-        setTableData(data.data);
-        setCount(data.totalCount);
-        setBranches(data.data);
-      } else if (branchId) {
-        const { data, success } = await getAllBranch(
-          undefined,
-          undefined,
-          branchId
-        );
-        setTableData(data.data);
-        setCount(data.totalCount);
-        setBranches(data.data);
-      } else {
-        const { data, success } = await getAllBranch(page);
-        const permissions = JSON.parse(localStorage.getItem("permission"));
-        setUserPermission(permissions?.[0]?.permission);
-        setTableData(data.data);
-        setCount(data.totalCount);
-        // setBranches(data.data);
-      }
-    } catch (error) {
-      console.log("Error in fetching data", error);
-    } finally {
-      setInitialLoad(false);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      fetchAllBranch(page, id);
-    } else {
-      fetchAllBranch(page);
-    }
-  }, [page, id]);
-
-  const filteredBranches = branches.filter(
-    (branch) =>
-      selectedCompany && branch.companyId._id === selectedCompany.value
-  );
-
-  const branchOptions = filteredBranches.map((branch) => ({
-    value: branch._id,
-    label: branch.branchName,
-  }));
-
-  const handleCompanyChange = (selectedOption) => {
-    setSelectedCompany(selectedOption);
-    setCompanyId(selectedOption.value);
-    setPage(1);
-    fetchAllBranch(1, selectedOption.value);
-  };
-
-  // Handler function for branch selection
-  const handleBranchChange = (branchOption) => {
-    setSelectedBranch(branchOption);
-    setPage(1);
-    fetchAllBranch(1, undefined, branchOption.value);
-  };
   const handleClearFilter = () => {
-    fetchAllBranch();
-    setCompanyId(null);
-    setValue("company", "");
-    setValue("parent", "");
-    setCompanyDropdown({
-      label: "All companies",
-      value: "All companies",
-    });
-  };
-
-  const onConfirmDelete = async (id) => {
-    await deleteBranch(id);
-    notifySuccess("Branch Deleted");
-    await fetchAllBranch();
-  };
-
-  const editDrawerOpen = (item) => {
-    const filteredData = tableData?.filter((data) => data._id === item);
-    navigate(`/branch/edit/${item}`, { state: filteredData });
+    navigate("/branch");
   };
 
   return (
@@ -165,7 +87,7 @@ const BranchList = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("branches")}</h4>
                     <div className="d-flex align-items-center">
-                      {role !== "COMPANY" && (
+                      {can("company", "view") && (
                         <>
                           <Link
                             className="btn  btn-xxs"
@@ -187,50 +109,31 @@ const BranchList = () => {
                             render={({
                               field: { onChange, value, name, ref },
                             }) => (
-                              <CompanyDropdown
-                                onChange={async (newValue) => {
-                                  setValue("company", newValue.value);
-                                  setCompanyId(newValue.value);
-                                  handleCompanyChange(newValue);
+                              <CompanyDropdownList
+                                onChange={(newValue) => {
+                                  navigate(`/branch/cid/${newValue?.value}`);
                                 }}
-                                key={companyId}
-                                value={value ? value : companyDropdown}
+                                value={
+                                  cId ?? {
+                                    label: t("allCompanies"),
+                                    value: "All Companies",
+                                  }
+                                }
                                 customStyles={customStyles}
                                 name={name}
                                 ref={ref}
-                                isDisabled={role === "COMPANY" ? true : false}
+                                isDisabled={!can("company", "view")}
                               />
                             )}
                           />
                         </>
                       )}
-                      {/* <Controller
-                        name="parent"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { onChange, value, name, ref } }) => (
-                          <ParentBranchDropdown
-                            key={companyId}
-                            onChange={(newValue) => {
-                              setValue("parent", newValue.value);
-                              handleBranchChange(newValue);
-                            }}
-                            companyId={companyId}
-                            value={value? value : branchDropdown}
-                            customStyles={customStyles}
-                            ref={ref}
-                            name={name}
-                            
-                          />
-                        )}
-                      /> */}
                       {can("branch", "add") && (
                         <Link
                           to={"/branch/create"}
                           className="btn btn-primary btn-sm ms-1"
                           style={{ paddingBlock: "9px" }}
                           data-bs-toggle="offcanvas"
-                          // onClick={()=>subCompany.current.showModal()}
                         >
                           + {t("addBranch")}
                         </Link>
@@ -242,7 +145,7 @@ const BranchList = () => {
                     className="dataTables_wrapper no-footer"
                   >
                     <div className="table-responsive ">
-                      {!tableData.length && initialLoad ? (
+                      {isLoading || isFetching ? (
                         <TableSkeleton />
                       ) : (
                         <table
@@ -258,7 +161,7 @@ const BranchList = () => {
                               <th>{t("businessGroup")}</th>
                               {/* <th>{t('mobileNumber')}</th> */}
                               <th>{t("location")}</th>
-                              <th>{t("childBranches")}</th>
+                              {/* <th>{t("childBranches")}</th> */}
                               {(can("branch", "modify") ||
                                 can("branch", "delete")) && (
                                 <th>{t("action")}</th>
@@ -266,17 +169,11 @@ const BranchList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <SubCompanyTable
-                              key={tableData}
-                              tempValue={tempValue}
-                              tempValue2={tempValue2}
-                              editData={editData}
-                              tableData={tableData}
+                            <BranchTable
+                              tableData={data?.data ?? []}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
-                              onConfirmDelete={onConfirmDelete}
-                              editDrawerOpen={editDrawerOpen}
-                              setEditData={setEditData}
+                              onConfirmDelete={mutate}
                             />
                           </tbody>
                         </table>

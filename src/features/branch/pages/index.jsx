@@ -18,9 +18,18 @@ const routes = [
   //     url: "branch/edit/:id",
   //     component: <BranchForm />,
   //   },
-  { module: "branch", url: "branch", component: <BranchList /> },
-  { module: "branch", url: "branch/cid/:id", component: <BranchList /> },
-  { module: "branch", url: "branch/gid/:id", component: <BranchList /> },
+  {
+    module: "branch",
+    operation: "view",
+    url: "/",
+    component: <BranchList />,
+  },
+  {
+    module: "branch",
+    operation: "view",
+    url: "/cid/:cId",
+    component: <BranchList />,
+  },
 ];
 
 const BranchPages = () => {

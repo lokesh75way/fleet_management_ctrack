@@ -10,7 +10,7 @@ import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { useLocation } from "react-router-dom";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import FormField from "../../../../components/Input/UserDetailsForm";
 import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
 import LocationSelector from "../../../../components/Input/LocationSelector";

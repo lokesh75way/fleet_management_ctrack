@@ -14,7 +14,7 @@ import {
 } from "@/constants/options";
 import CustomInput from "../../../../components/Input/CustomInput";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import BranchDropdown from "../../BranchDropdown";
 import { getDriverById } from "../../../../services/api/driverService";
 import { notifyError } from "../../../../utils/toast";

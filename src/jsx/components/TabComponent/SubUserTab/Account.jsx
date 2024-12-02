@@ -18,7 +18,7 @@ import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import BranchDropdown from "../../BranchDropdown";
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
 import VehicleDropdown from "../../VehicleDropdown";
