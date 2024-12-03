@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 
 import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
 import { usePermissions } from "@/context/PermissionContext";
-import { useLocation } from "react-router-dom";
 
 const GroupDropdownList = ({
   onChange,
@@ -14,7 +14,7 @@ const GroupDropdownList = ({
   isDisabled,
   name,
 }) => {
-  const [selectedOption, setSelectedOption] = useState(value);
+  const [selectedOption, setSelectedOption] = useState(null);
   const { page, setPage } = usePagination();
   const { userDetails, can } = usePermissions();
   const { pathname } = useLocation();
@@ -54,37 +54,48 @@ const GroupDropdownList = ({
   }, [data]);
 
   useEffect(() => {
-    if (value) {
-      if (typeof value != "string") {
-        setSelectedOption(value);
-      } else {
-        let selected;
-        if (options.length) {
-          selected = options.find((option) => option.value === value);
+    const initializeValue = async () => {
+      if (!value) {
+        if (!can("business", "view")) {
+          const userGroup = userDetails.user.businessGroupId[0];
+          const defaultOption = {
+            label: userGroup.groupName,
+            value: userGroup._id,
+          };
+          setSelectedOption(defaultOption);
+          onChange(defaultOption);
         }
-        if (selected) {
-          setSelectedOption(selected);
-        } else {
-          refetch().then(({ data }) => {
-            setSelectedOption({
-              label: data?.businessGroupId?.groupName,
-              value: data?.businessGroupId?._id,
-            });
-          });
+        return;
+      }
+      if (value && typeof value === "object" && value.label && value.value) {
+        setSelectedOption(value);
+        return;
+      }
+      if (typeof value === "string" || value?._id) {
+        const valueId = value?._id || value;
+        const existingOption = options.find((opt) => opt.value === valueId);
+        if (existingOption) {
+          setSelectedOption(existingOption);
+          return;
+        }
+        try {
+          const { data: groupData } = await refetch();
+          if (groupData?.businessGroupId) {
+            const newOption = {
+              label: groupData.businessGroupId.groupName,
+              value: groupData.businessGroupId._id,
+            };
+            setSelectedOption(newOption);
+            onChange(newOption);
+          }
+        } catch (error) {
+          console.error("Error fetching group details:", error);
         }
       }
-    } else if (!can("business", "view")) {
-      const userGroup = userDetails.user.businessGroupId[0];
-      setSelectedOption({
-        label: userGroup.groupName,
-        value: userGroup._id,
-      });
-      onChange({
-        label: userGroup.groupName,
-        value: userGroup._id,
-      });
-    }
-  }, [options, pathname, userDetails, isFetching]);
+    };
+
+    initializeValue();
+  }, [value, options, pathname, userDetails, can]);
 
   const handleMenuScroll = async (event) => {
     const bottom =

@@ -4,20 +4,21 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import PermissionDenied from "@/components/PermissionDenied";
 import { usePermissions } from "@/context/PermissionContext";
 import BranchList from "./List";
+import BranchForm from "./Create";
 
 const routes = [
-  //   {
-  //     module: "branch",
-  //     operation: "add",
-  //     url: "branch/create",
-  //     component: <BranchForm />,
-  //   },
-  //   {
-  //     module: "branch",
-  //     operation: "modify",
-  //     url: "branch/edit/:id",
-  //     component: <BranchForm />,
-  //   },
+  {
+    module: "branch",
+    operation: "add",
+    url: "/create",
+    component: <BranchForm />,
+  },
+  {
+    module: "branch",
+    operation: "modify",
+    url: "/edit/:id",
+    component: <BranchForm />,
+  },
   {
     module: "branch",
     operation: "view",

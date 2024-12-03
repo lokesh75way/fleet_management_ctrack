@@ -42,7 +42,7 @@ const BranchList = () => {
   const itemsPerPage = 10;
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["companies", page, cId],
+    queryKey: ["branches", page, cId],
     queryFn: () => getAllBranch(page, cId),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
@@ -170,7 +170,7 @@ const BranchList = () => {
                           </thead>
                           <tbody>
                             <BranchTable
-                              tableData={data?.data ?? []}
+                              tableData={data?.data.data ?? []}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
                               onConfirmDelete={mutate}

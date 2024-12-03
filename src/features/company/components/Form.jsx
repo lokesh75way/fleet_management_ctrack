@@ -141,8 +141,8 @@ const CompanyForm = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdownList
-                onChange={(newValue) => {
-                  setValue("businessGroupId", newValue.value);
+                onChange={async (newValue) => {
+                  await setValue("businessGroupId", newValue.value);
                 }}
                 value={value}
                 ref={ref}

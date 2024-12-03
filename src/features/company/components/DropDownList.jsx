@@ -15,7 +15,7 @@ const CompanyDropdownList = ({
   groupId,
   name,
 }) => {
-  const [selectedOption, setSelectedOption] = useState(value);
+  const [selectedOption, setSelectedOption] = useState(null);
   const { page, setPage } = usePagination();
   const { userDetails, can } = usePermissions();
   const { pathname } = useLocation();
@@ -46,8 +46,8 @@ const CompanyDropdownList = ({
     data?.pages.forEach((pageData) => {
       pageData.data.forEach((group) => {
         flatData.push({
-          label: group?.businessGroupId?.groupName,
-          value: group?.businessGroupId?._id,
+          label: group?.companyId?.companyName,
+          value: group?.companyId?._id,
         });
       });
     });
@@ -55,37 +55,39 @@ const CompanyDropdownList = ({
   }, [data]);
 
   useEffect(() => {
-    if (value) {
-      if (typeof value != "string") {
-        setSelectedOption(value);
-      } else {
-        let selected;
-        if (options.length) {
-          selected = options.find((option) => option.value === value);
-        }
-        if (selected) {
-          setSelectedOption(selected);
-        } else {
-          refetch().then(({ data }) => {
-            setSelectedOption({
-              label: data?.companyId?.companyName,
-              value: data?.companyId?._id,
-            });
-          });
-        }
+    if (!value) {
+      if (!can("company", "view") && userDetails?.user?.companyId?.[0]) {
+        const userGroup = userDetails.user.companyId[0];
+        const defaultOption = {
+          label: userGroup.companyName,
+          value: userGroup._id,
+        };
+        setSelectedOption(defaultOption);
+        onChange(defaultOption);
       }
-    } else if (!can("company", "view")) {
-      const userGroup = userDetails.user.companyId[0];
-      setSelectedOption({
-        label: userGroup.companyName,
-        value: userGroup._id,
-      });
-      onChange({
-        label: userGroup.groupName,
-        value: userGroup._id,
+      return;
+    }
+
+    if (typeof value === "object" && value.label && value.value) {
+      setSelectedOption(value);
+      return;
+    }
+
+    const selected = options.find((option) => option.value === value);
+    if (selected) {
+      setSelectedOption(selected);
+    } else {
+      refetch().then(({ data }) => {
+        if (data?.companyId) {
+          const newOption = {
+            label: data.companyId.companyName,
+            value: data.companyId._id,
+          };
+          setSelectedOption(newOption);
+        }
       });
     }
-  }, [options, pathname, userDetails, isFetching]);
+  }, [value, options, pathname, userDetails, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
@@ -100,7 +102,7 @@ const CompanyDropdownList = ({
     <Select
       options={options}
       value={selectedOption}
-      onChange={(newValue) => onChange(newValue)}
+      onChange={onChange}
       styles={customStyles}
       name={name}
       isDisabled={isDisabled}

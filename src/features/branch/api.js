@@ -33,7 +33,7 @@ export const deleteBranch = async (body) => {
   return data.data;
 };
 
-export const editBranch = async (body) => {
-  const data = await axios.patch(`/branches`, body);
+export const editBranch = async (id, body) => {
+  const data = await axios.put(`/branches/${id}`, body);
   return data.data;
 };

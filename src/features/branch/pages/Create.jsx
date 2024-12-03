@@ -1,36 +1,27 @@
 import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate, useParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 import MainPagetitle from "@/components/MainPagetitle";
-import CreateForm from "../components/Form";
-import { companyAccountSchema, companyPasswordSchema } from "@/utils/yup";
+import { branchAccountSchema } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
-import ChangePassword from "@/components/Form/ChangePassword";
-import { addCompany, changePassword, editCompany } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
+import { createNewBranch, editBranch } from "../api";
+import MyAccount from "../../../jsx/components/TabComponent/BranchTabs/MyAccount";
 
-const CreateCompany = () => {
+const BranchForm = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { id } = useParams();
-  let tabHeading = [
-    id ? t("editCompany") : t("newCompany"),
-    t("changePassword"),
-  ];
-  let component = [CreateForm, ChangePassword];
   const [activeIndex, setActiveIndex] = useState(0);
+  const { id } = useParams();
+  const tabHeading = [id ? t("editBranch") : t("newBranch")];
+  const component = [MyAccount];
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  if (!id) {
-    tabHeading = [t("newCompany")];
-    component = [CreateForm];
-  }
 
   const {
     register,
@@ -41,6 +32,7 @@ const CreateCompany = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
+      companyId: "",
       businessGroupId: "",
       userInfo: [
         {
@@ -51,41 +43,32 @@ const CreateCompany = () => {
         },
       ],
     },
-    resolver: yupResolver(
-      activeIndex === 1 ? companyPasswordSchema : companyAccountSchema(id)
-    ),
+    resolver: yupResolver(branchAccountSchema),
   });
 
   const onError = (err) => notifyError(getApiErrorMessage(err));
 
-  const { mutate: editCompanyMutation, isPending: editPending } = useMutation({
-    mutationFn: ({ data, id }) => editCompany(id, data),
-    onSuccess: () => {
-      notifySuccess("Company Updated Successfully");
-      queryClient.invalidateQueries(["companies"]);
-      navigate("/company");
-    },
-    onError,
-  });
-
-  const { mutate: createCompanyMutation, isPending: createPending } =
+  const { mutate: createBranchMutation, isPending: createPending } =
     useMutation({
-      mutationFn: addCompany,
+      mutationFn: createNewBranch,
       onSuccess: () => {
-        notifySuccess("New Company Created");
-        queryClient.invalidateQueries(["companies"]);
-        navigate("/company");
+        notifySuccess("Branch has been created");
+        queryClient.invalidateQueries(["branches"]);
+        navigate("/branch");
       },
       onError,
     });
 
-  const { mutate: passwordMutation, isPending: passwordPending } = useMutation({
-    mutationFn: changePassword,
+  const { mutate: editBranchMutation, isPending: editPending } = useMutation({
+    mutationFn: ({ data, id }) => editBranch(id, data),
     onSuccess: () => {
-      notifySuccess("Password has been changed");
-      navigate("/company");
+      notifySuccess("Branch has been updated!");
+      queryClient.invalidateQueries(["branches"]);
+      navigate("/branch");
     },
-    onError,
+    onError: (error) => {
+      notifyError(error.message);
+    },
   });
 
   const onSubmit = async (data) => {
@@ -97,28 +80,19 @@ const CreateCompany = () => {
         delete data.file;
       }
       if (id) {
-        editCompanyMutation({ data, id });
+        editBranchMutation({ data, id });
       } else {
-        createCompanyMutation(data);
+        createBranchMutation(data);
       }
-    } else if (activeIndex === 1) {
-      const passwordData = {
-        password: data.newPassword,
-        oldPassword: data.oldPassword,
-        confirmPassword: data.confirmPassword,
-        _id: id,
-      };
-
-      passwordMutation(passwordData);
     }
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle={t("company")}
-        pageTitle={id ? t("edit") : t("create")}
-        parentTitle={t("company")}
+        mainTitle="Branch"
+        pageTitle={id ? "Edit" : "Create"}
+        parentTitle={"Branch"}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -157,9 +131,6 @@ const CreateCompany = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
-                          isFormSubmitting={
-                            createPending || editPending || passwordPending
-                          }
                         />
                       </Tab.Pane>
                     );
@@ -173,4 +144,4 @@ const CreateCompany = () => {
     </>
   );
 };
-export default CreateCompany;
+export default BranchForm;

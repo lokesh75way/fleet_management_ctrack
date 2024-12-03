@@ -99,8 +99,6 @@ const CreateBusiness = () => {
         delete data.file;
       }
       if (id) {
-        console.log({ id });
-
         editGroupMutation({ data, id });
       } else {
         createGroupMutation(data);
@@ -115,8 +113,6 @@ const CreateBusiness = () => {
       passwordMutation(passwordData);
     }
   };
-
-  console.log({ errors });
 
   return (
     <>

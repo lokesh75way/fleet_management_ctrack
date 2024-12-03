@@ -19,7 +19,7 @@ const SubCompanyTable = ({
 
   return (
     <>
-      {tableData.map((item, index) => (
+      {tableData?.map((item, index) => (
         <tr key={index}>
           <td>
             <span>{startIndex + index}</span>
@@ -56,7 +56,7 @@ const SubCompanyTable = ({
             <td>
               <span className="d-flex justify-content-center">
                 {editPermission && (
-                  <Link to={`/branch/edit/${item?.branchId?._id}`}>
+                  <Link to={`/branch/edit/${item?._id}`}>
                     <span className="cursor-pointer">
                       <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
                     </span>
@@ -66,7 +66,7 @@ const SubCompanyTable = ({
                   <DeleteModal
                     className="cursor-pointer "
                     onConfirmDelete={onConfirmDelete}
-                    id={item.branchId?._id}
+                    id={item._id}
                   >
                     <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
                   </DeleteModal>

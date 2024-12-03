@@ -1,7 +1,5 @@
 import React, { Suspense } from "react";
-/// React router dom
 import { Routes, Route, useNavigate } from "react-router-dom";
-/// Css
 import "./index.css";
 import "./chart.css";
 import "./step.css";

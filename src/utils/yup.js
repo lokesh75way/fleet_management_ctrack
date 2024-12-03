@@ -223,10 +223,7 @@ export const branchAccountSchema = yup.object({
     .trim()
     .required("Business Group Name is required "),
   tradeLicenseNumber: yup.string().trim(),
-  officeNumber: yup
-    .string()
-    .trim()
-    .matches(MOBILE_REG, { message: "Enter valid number" }),
+  officeNumber: yup.string().trim(),
   country: yup.string().trim().required("Please select a Country"),
   state: yup.string().trim(),
   email: yup
