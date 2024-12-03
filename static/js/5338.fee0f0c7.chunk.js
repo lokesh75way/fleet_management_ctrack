@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[5338],{72957:(s,e,c)=>{c.r(e),c.d(e,{default:()=>u});c(78109);var h=c(47337);const u=()=>(0,h.jsx)("h1",{children:"Logs"})}}]);
+//# sourceMappingURL=5338.fee0f0c7.chunk.js.map

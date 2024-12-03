@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/5656.3b30b0df.chunk.js","mappings":"qJAEA,MAMA,EANYA,KAERC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,O","sources":["jsx/pages/company/reports/RPM.jsx"],"sourcesContent":["import React from 'react'\n\nconst RPM = () => {\n  return (\n    <h1>RPM</h1>\n  )\n}\n\nexport default RPM"],"names":["RPM","_jsx","children"],"sourceRoot":""}

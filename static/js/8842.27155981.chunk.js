@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[8842],{28842:(a,e,n)=>{n.r(e),n.d(e,{default:()=>r});n(65043);var l=n(9866),s=n(53358),c=n(70579);const r=()=>(0,c.jsxs)(c.Fragment,{children:[(0,c.jsx)(l.A,{mainTitle:"Branch Tracking",pageTitle:"Branch Tracking",parentTitle:"Tracking"}),(0,c.jsx)("div",{className:"p-2",children:(0,c.jsx)(s.A,{data:[{lat:30.7099475,lng:76.6900474},{lat:30.7333,lng:76.7794}]})})]})}}]);
-//# sourceMappingURL=8842.27155981.chunk.js.map
