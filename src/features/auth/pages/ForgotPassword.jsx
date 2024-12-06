@@ -1,12 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "@/assets/images/logo/logo-full.png";
 import { useForm } from "react-hook-form";
-import { forgetpasswordSchema } from "../../utils/yup";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import CustomInput from "../../components/Input/CustomInput";
-import PasswordServices from "../../services/api/PasswordServices";
-import { notifyError, notifySuccess } from "../../utils/toast";
+
+import logo from "@/assets/images/logo/logo-full.png";
+import { forgetpasswordSchema } from "@/utils/yup";
+import CustomInput from "@/components/Input/CustomInput";
+import { notifyError, notifySuccess } from "@/utils/toast";
+import { forgotPassword } from "../api";
 
 const ForgotPassword = ({ history }) => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const ForgotPassword = ({ history }) => {
   });
 
   const onSubmit = ({ email }) => {
-    PasswordServices.forgotPassword({ email: email }).then((response) => {
+    forgotPassword({ email: email }).then((response) => {
       console.log(response);
       if (response.status === 200) {
         notifySuccess("Email Sent successfully !!");

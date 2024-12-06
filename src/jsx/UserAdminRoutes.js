@@ -13,7 +13,7 @@ import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
-import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
+import VehicleForm from "../features/vehicle/pages/Create";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
 import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
@@ -44,7 +44,7 @@ const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(() => import("./pages/company/profile/MyProfile"));
 
 //Update Pages

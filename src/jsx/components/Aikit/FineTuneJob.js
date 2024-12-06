@@ -5,7 +5,7 @@ import Select from "react-select";
 
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 
 const options = [
   { value: "1", label: "Product" },

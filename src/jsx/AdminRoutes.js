@@ -9,12 +9,13 @@ import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
-import { usePermissions } from "../context/PermissionContext";
 import { useEffect } from "react";
 import UnassinedVehicle from "./pages/UnassinedVehicle";
 import BusinessGroupRoutes from "@/features/businessGroup/pages";
 import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
+import VehicleRoutes from "@/features/vehicle/pages";
+import usePermissions from "@/hooks/usePermissions";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -76,7 +77,7 @@ const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
 );
 const VehicleForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/VehicleForm")
+  () => import("../features/vehicle/pages/Create")
 );
 const DriverForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/DriverForm")
@@ -103,7 +104,7 @@ const ClassifyTripForm = React.lazy(
 const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
 const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
@@ -166,19 +167,6 @@ const allroutes = [
     module: "vehicle",
     url: "vehicle-tracking/:id",
     component: <DriverTracking />,
-  },
-  {
-    module: "vehicle",
-    operation: "add",
-    url: "vehicle/create",
-    component: <VehicleForm />,
-  },
-  { module: "vehicle", url: "vehicle", component: <Vehicle /> },
-  {
-    module: "vehicle",
-    operation: "modify",
-    url: "vehicle/edit/:id",
-    component: <UpdateVehicleForm />,
   },
   {
     module: "vehicle",
@@ -301,8 +289,8 @@ const allroutes = [
   },
 ];
 const AdminRoutes = () => {
-  const { can, setUserPermission } = usePermissions();
-  const navigate = useNavigate();
+  const { can } = usePermissions();
+
   function NotFound() {
     const url = allroutes.map((route) => route.url);
     let path = window.location.pathname;
@@ -312,10 +300,6 @@ const AdminRoutes = () => {
       return <Error404 />;
     }
   }
-  useEffect(() => {
-    const permissions = JSON.parse(localStorage.getItem("permission"));
-    setUserPermission(permissions?.[0]?.permission);
-  }, []);
 
   return (
     <Suspense fallback={<Loader />}>
@@ -344,6 +328,7 @@ const AdminRoutes = () => {
           <Route path="/business/*" element={<BusinessGroupRoutes />} />
           <Route path="/company/*" element={<CompanyRoutes />} />
           <Route path="/branch/*" element={<BranchRoutes />} />
+          <Route path="/vehicle/*" element={<VehicleRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

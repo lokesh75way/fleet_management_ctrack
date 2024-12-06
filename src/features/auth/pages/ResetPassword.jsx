@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// image
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
 import logo from "@/assets/images/logo/logo-full.png";
 import LogoWhite from "@/assets/images/logo/logofull-white.png";
-import { ThemeContext } from "../../context/ThemeContext";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { forgetpasswordSchema, resetPassword } from "../../utils/yup";
-import { useForm } from "react-hook-form";
-import CustomInput from "../../components/Input/CustomInput";
-import PasswordServices from "../../services/api/PasswordServices";
-import { notifySuccess } from "../../utils/toast";
+import { ThemeContext } from "@/context/ThemeContext";
+import { resetPassword as resetPasswordSchema } from "@/utils/yup";
+import CustomInput from "@/components/Input/CustomInput";
+import { notifySuccess } from "@/utils/toast";
+import { resetPassword } from "../api";
+
 const ResetPassword = () => {
   const { background } = useContext(ThemeContext);
 
@@ -22,7 +23,7 @@ const ResetPassword = () => {
       newPassword: "",
       confirmPassword: "",
     },
-    resolver: yupResolver(resetPassword),
+    resolver: yupResolver(resetPasswordSchema),
   });
 
   const nav = useNavigate();
@@ -33,7 +34,7 @@ const ResetPassword = () => {
       token: token,
     };
     console.log(data);
-    const response = await PasswordServices.resetPassword(data);
+    const response = await resetPassword(data);
     if (response?.data?.success) {
       notifySuccess("Password Reset Successfully");
       nav("/login");

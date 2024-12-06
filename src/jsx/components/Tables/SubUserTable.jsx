@@ -2,8 +2,8 @@ import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../../../components/Modal/DeleteModal";
-import { IMAGES } from "../../constant/theme";
-import { usePermissions } from "../../../context/PermissionContext";
+import { IMAGES } from "../../../constants/theme";
+import usePermissions from "@/hooks/usePermissions";
 
 const SubUserTable = ({
   tableData,

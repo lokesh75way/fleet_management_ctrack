@@ -16,7 +16,7 @@ import {
 import FileUploader from "@/components/FileUploader";
 import GroupDropdownList from "@/features/businessGroup/components/DropDownList";
 import CredentialsInput from "@/components/Input/CredentialsInput";
-import FormField from "@/components/Input/UserDetailsForm";
+import UserDetailsForm from "@/components/Input/UserDetailsForm";
 import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 import { getCompanyById } from "../api";
@@ -305,7 +305,7 @@ const CompanyForm = ({
           </Button>
         </div>
         {fields.map((field, index) => (
-          <FormField
+          <UserDetailsForm
             key={field.id}
             field={field}
             index={index}

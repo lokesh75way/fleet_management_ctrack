@@ -1,5 +1,11 @@
 /// Menu
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
 
@@ -9,13 +15,13 @@ import { Link } from "react-router-dom";
 import { AdminMenuList } from "./AdminMenu";
 import { CompanyMenuList } from "./CompanyMenu";
 import { BusinessGroupMenuList } from "./BusinessGroupMenu";
-import { SubCompanyMenuList } from "./SubCompanyMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 import { useTranslation } from "react-i18next";
-import { usePermissions } from "../../../context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 import { CgChevronDoubleLeftR } from "react-icons/cg";
+import { useSelector } from "react-redux";
 
 const useBaseUrl = () => {
   const location = useLocation();
@@ -40,48 +46,35 @@ const initialState = {
 const SideBar = () => {
   const { iconHover, sidebarposition, headerposition, sidebarLayout } =
     useContext(ThemeContext);
-
-  const navigate = useNavigate();
-
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const { role, permissions } = usePermissions();
   let filteredAdminMenuList = [];
-  const role = userDetails?.user?.role;
-  const type = userDetails?.user?.type;
-  if (userDetails && userDetails.permissions?.[0] && role === "USER") {
-    const modulePermissions = userDetails.permissions?.[0].permission;
-    const viewableModules = modulePermissions
+
+  if (permissions?.length && role === "USER") {
+    const viewableModules = permissions
       .filter((item) => item.view === true)
-      .map((item) => ({
-        moduleId: item.moduleId._id,
-        title: item.moduleId.title,
-        basePath: item.moduleId.basePath,
-      }));
-    const viewmoduleTitles = viewableModules.map((item) => item.title);
+      .map((item) => item.moduleId.title);
+
     filteredAdminMenuList = AdminMenuList.filter((item) =>
-      viewmoduleTitles.includes(item.title)
+      viewableModules.includes(item.title)
     );
   }
-  let MenuList;
-  if (userDetails) {
+
+  const MenuList = useMemo(() => {
     switch (role) {
       case "COMPANY":
-        MenuList = CompanyMenuList;
-        break;
+        return CompanyMenuList;
+
       case "SUPER_ADMIN":
-        MenuList = AdminMenuList;
-        break;
+        return AdminMenuList;
       case "BUSINESS_GROUP":
-        MenuList = BusinessGroupMenuList;
-        break;
+        return BusinessGroupMenuList;
 
       default:
-        MenuList = [];
+        return [];
     }
-  }
+  }, [role]);
 
   const [state, setState] = useReducer(reducer, initialState);
-  useEffect(() => {}, []);
-  //For scroll
   const [hideOnScroll, setHideOnScroll] = useState(true);
   useScrollPosition(
     ({ prevPos, currPos }) => {

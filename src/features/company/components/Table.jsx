@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import DeleteModal from "@/components/Modal/DeleteModal";
-import { usePermissions } from "@/context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const CompanyTable = ({
   tableData,

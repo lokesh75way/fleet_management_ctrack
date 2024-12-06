@@ -24,7 +24,7 @@ import CompanyDropdown from "../../../../features/company/components/DropDownLis
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
-import CustomCheckbox from "./CustomCheckbox";
+import CustomCheckbox from "../../../../components/Input/CustomCheckbox";
 import "@/assets/scss/pages/_driver-tracking.scss";
 
 const General = ({

@@ -1,39 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
-import Error from "../../../../components/Error/Error";
-import "@/assets/scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
-import FileUploader from "../../../../components/FileUploader";
-import CustomInput from "../../../../components/Input/CustomInput";
+
+import Error from "@/components/Error/Error";
+import "@/assets/scss/pages/_driver-tracking.scss";
+import FileUploader from "@/components/FileUploader";
+import CustomInput from "@/components/Input/CustomInput";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ",
+  }),
+};
 
 const Document = ({
   setValue,
   handleSubmit,
   onSubmit,
-  formData,
   control,
   getValues,
   errors,
   register,
+  isLoading,
 }) => {
   const [loading, setLoading] = useState();
   const { t } = useTranslation();
-  const [tempValue, setTempValue] = useState(null);
   const [documents, setDocuments] = useState([]);
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control,
     name: "documents",
   });
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ",
-    }),
-  };
+
   const driverDocumentOptions = [
     { value: "INSURANCE", label: "INSURANCE" },
     { value: "PSU", label: "PSU" },
@@ -44,10 +45,7 @@ const Document = ({
     { value: "RTO_PASSING", label: "RTO_PASSING" },
     { value: "ROAD_TAX", label: "Road Tax" },
   ];
-  const formFields =
-    formData && formData[0] && formData[0].documents
-      ? formData[0]?.documents
-      : fields;
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "100%" }}>
@@ -60,19 +58,13 @@ const Document = ({
                 issueDate: "",
                 expireDate: "",
               });
-              formFields.push({
-                documentType: "",
-                file: null,
-                issueDate: "",
-                expireDate: "",
-              });
             }}
             className="ms-auto"
           >
             + {t("addDocument")}
           </Button>
         </div>
-        {formFields.map((item, index) => {
+        {fields.map((item, index) => {
           return (
             <>
               <div key={item.id} className="row mb-4 ">
@@ -96,24 +88,11 @@ const Document = ({
                         ref={ref}
                         name={name}
                         styles={customStyles}
-                        defaultValue={{
-                          value:
-                            formData && formData[0].documents.length > 0
-                              ? formData[0].documents[index].documentType
-                              : driverDocumentOptions[1].value,
-                          label:
-                            formData && formData[0].documents.length > 0
-                              ? formData[0].documents[index].documentType
-                              : driverDocumentOptions[1].label,
-                        }}
                       />
                     )}
                   />
-                  {!getValues(`documents.${index}.documentType`) && (
-                    <Error
-                      errorName={errors?.documents?.[index]?.documentType}
-                    />
-                  )}
+
+                  <Error errorName={errors?.documents?.[index]?.documentType} />
                 </div>
 
                 <div className="col-xl-2 d-flex flex-column mb-2 ">
@@ -123,11 +102,7 @@ const Document = ({
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
-                        selected={
-                          formData && formData[0]?.documents[index]?.issueDate
-                            ? new Date(formData[0]?.documents[index]?.issueDate)
-                            : getValues(`documents.${index}.issueDate`)
-                        }
+                        selected={getValues(`documents.${index}.issueDate`)}
                         className="form-control customDateHeight"
                         onChange={(newValue) => {
                           setValue(`documents.${index}.issueDate`, newValue);
@@ -153,9 +128,8 @@ const Document = ({
                       />
                     )}
                   />
-                  {!getValues(`documents.${index}.issueDate`) && (
-                    <Error errorName={errors?.documents?.[index]?.issueDate} />
-                  )}
+
+                  <Error errorName={errors?.documents?.[index]?.issueDate} />
                 </div>
                 <div className="col-xl-2 d-flex flex-column  mb-2">
                   <label className="form-label">{t("expiryDate")}</label>
@@ -164,13 +138,7 @@ const Document = ({
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
-                        selected={
-                          formData && formData[0]?.documents[index]?.expireDate
-                            ? new Date(
-                                formData[0]?.documents[index]?.expireDate
-                              )
-                            : getValues(`documents.${index}.expireDate`)
-                        }
+                        selected={getValues(`documents.${index}.expireDate`)}
                         className="form-control customDateHeight"
                         onChange={(newValue) => {
                           setValue(`documents.${index}.expireDate`, newValue);
@@ -195,9 +163,8 @@ const Document = ({
                       />
                     )}
                   />
-                  {!getValues(`documents.${index}.expireDate`) && (
-                    <Error errorName={errors?.documents?.[index]?.expireDate} />
-                  )}
+
+                  <Error errorName={errors?.documents?.[index]?.expireDate} />
                 </div>
                 <div className="col-xl-2 d-flex flex-column mb-2 ">
                   <label className="form-label">
@@ -216,22 +183,14 @@ const Document = ({
                       />
                     )}
                   />
-                  {!getValues(`documents.${index}.issueDate`) && (
-                    <Error errorName={errors?.documents?.[index]?.issueDate} />
-                  )}
+
+                  <Error errorName={errors?.documents?.[index]?.issueDate} />
                 </div>
                 <div className="col-xl-2 mb-2">
                   <label className="form-label">{t("uploadFile")}</label>
                   <FileUploader
                     getValue={getValues}
-                    link={
-                      formData &&
-                      formData.length > 0 &&
-                      formData[0].documents &&
-                      formData[0].documents[index]?.file
-                        ? formData[0].documents[index]?.file
-                        : false
-                    }
+                    link={getValues(`documents.${index}.file`)}
                     register={register}
                     name={`documents.${index}.file`}
                     label="Select File"
@@ -241,11 +200,7 @@ const Document = ({
                     loading={loading}
                   />
 
-                  <Error
-                    errorName={
-                      errors.documents?.[index]?.file ? "File is required" : ""
-                    }
-                  />
+                  <Error errorName={errors.documents?.[index]?.file} />
                 </div>
               </div>
             </>
@@ -261,7 +216,7 @@ const Document = ({
         >
           <Button
             type="submit"
-            disabled={loading}
+            disabled={loading || isLoading}
             onClick={handleSubmit(onSubmit)}
           >
             {" "}

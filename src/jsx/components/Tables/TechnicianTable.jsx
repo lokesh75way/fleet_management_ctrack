@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../../../components/Modal/DeleteModal";
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 import { useParams } from "react-router-dom";
 
 const TechnicianTable = ({

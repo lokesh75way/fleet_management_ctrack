@@ -9,7 +9,7 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 import lgZoom from "lightgallery/plugins/zoom";
 
 import PageTitle from "../../../layouts/PageTitle";
-import { IMAGES, SVGICON } from "../../../constant/theme";
+import { IMAGES, SVGICON } from "../../../../constants/theme";
 
 const aboutme = [
   {

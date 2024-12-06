@@ -22,7 +22,7 @@ const password = yup
 export const vehicleGeneralSchema = yup
   .object({
     companyId: yup.string().required("Company name id required"),
-    businessGroupId: yup.string().required("Business group name is required"),
+    businessGroupId: yup.string().required("Business group is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
     deviceType: yup.string().required("Please select an option"),
     imeiNumber: yup
@@ -47,10 +47,81 @@ export const vehicleGeneralSchema = yup
     serverAddress: yup
       .string()
       .url("Server address must be a valid URL")
-      .required(),
+      .required("Server address is required"),
     distanceCounter: yup.string().required("Distance counter is required"),
   })
   .required();
+
+export const vehicleLicenseSchema = yup.object({
+  licenseLastRenewalDate: yup
+    .string()
+    .trim()
+    .when("licenseReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Last renewable is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  licensePeriod: yup
+    .string()
+    .trim()
+    .when("licenseReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Period is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  licenseNextRenewalDue: yup
+    .string()
+    .trim()
+    .when("licenseReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Due date is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  licenseReminderStart: yup
+    .string()
+    .trim()
+    .when("licenseReminder", {
+      is: true,
+      then: () =>
+        yup.string().trim().required("Reminder start week is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+
+  roadworthyLastRenewalDate: yup
+    .string()
+    .trim()
+    .when("roadworthyReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Last renewable is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  roadworthyPeriod: yup
+    .string()
+    .trim()
+    .when("roadworthyReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Period is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  roadworthyNextRenewalDue: yup
+    .string()
+    .trim()
+    .when("roadworthyReminder", {
+      is: true,
+      then: () => yup.string().trim().required("Due date is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+  roadworthyReminderStart: yup
+    .string()
+    .trim()
+    .when("roadworthyReminder", {
+      is: true,
+      then: () =>
+        yup.string().trim().required("Reminder start week is required"),
+      otherwise: () => yup.string().trim().optional(),
+    }),
+});
+
 export const vehicleProfileSchema = yup
   .object({
     dvirTemplate: yup.string().required("DIVR Template is required "),
@@ -59,10 +130,6 @@ export const vehicleProfileSchema = yup
       .positive()
       .integer()
       .typeError("Purchase Amount must be a number"),
-    // plateNumber: yup.string().required("Plate Number is required "),
-    registrationNumber: yup
-      .string()
-      .min(4, "Registration Number must be of 4 digit or more"),
     passengerSeat: yup
       .number()
       .positive()
@@ -84,20 +151,6 @@ export const vehicleProfileSchema = yup
       .nullable()
       .positive()
       .integer(),
-    // gpsWarranty: yup
-    //   .number()
-    //   .typeError("Weight Capacity must be a number")
-    //   .required("GPS Warranty is required "),
-    // weightCapacity: yup
-    //   .number()
-    //   .positive()
-    //   .integer()
-    //   .typeError("Weight Capacity must be a number")
-    //   .required("Weight Capacity is required "),
-    registrationNumber: yup
-      .string()
-      .typeError("Registration Number must be a string")
-      .required("Registration Number is required "),
     fuelType: yup.string().required(" Select Fuel Type "),
     permit: yup.string().required("Select Permit type "),
     vehicleCategory: yup.string().required("Vehicle category is required"),
@@ -110,26 +163,33 @@ export const vehicleProfileSchema = yup
       .number()
       .typeError("This field is required")
       .required(),
-    // sleepModeDuration: yup
-    //   .number()
-    //   .typeError("Sleep mode duration must be a number")
-    //   .required(),
   })
   .required();
 
 export const vehicleInformationSchema = yup
   .object({
-    selectedInput: yup.string().required("Please select an option"),
-    registrationNumber: yup.string().when("selectedInput", {
-      is: "registrationNumber",
-      then: () => yup.string().required("Registration Number is required"),
-      otherwise: () => yup.string().optional(),
-    }),
-    fleetnumber: yup.string().when("selectedInput", {
-      is: "fleetnumber",
-      then: () => yup.string().required("fleet Number is required"),
-      otherwise: () => yup.string().optional(),
-    }),
+    selectedInput: yup.string().trim().required("Please select an option"),
+    registrationNumber: yup
+      .string()
+      .trim()
+      .when("selectedInput", {
+        is: "registrationNumber",
+        then: () =>
+          yup.string().trim().required("Registration Number is required"),
+        otherwise: () => yup.string().trim().optional(),
+      }),
+    fleetnumber: yup
+      .string()
+      .trim()
+      .when("selectedInput", {
+        is: "fleetNumber",
+        then: () => yup.string().trim().required("fleet Number is required"),
+        otherwise: () => yup.string().trim().optional(),
+      }),
+    engineNumber: yup.string().trim().required("Engine Number is required"),
+    vinNumber: yup.string().trim().required("VIN Number is required"),
+    licenseNumber: yup.string().trim().required("License is required"),
+    roadWorthy: yup.string().trim().required("Road worthy is required"),
   })
   .required();
 
@@ -138,7 +198,7 @@ export const vehicleDocumentSchema = yup
     documents: yup.array().of(
       yup.object().shape({
         documentType: yup.string().required("This field is required"),
-        file: yup.string(),
+        file: yup.string().required("Upload a document"),
       })
     ),
   })

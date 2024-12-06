@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import usePagination from "../../hooks/usePagination";
 import { ThemeContext } from "../../context/ThemeContext";
 import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
+import { ICON } from "../../constants/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 

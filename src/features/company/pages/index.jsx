@@ -1,10 +1,10 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
-import { usePermissions } from "@/context/PermissionContext";
 import PermissionDenied from "@/components/PermissionDenied";
-import CompanyList from "./List";
-import CompanyForm from "./Create";
+import usePermissions from "@/hooks/usePermissions";
+const CompanyList = lazy(() => import("./List"));
+const CompanyForm = lazy(() => import("./Create"));
 
 const routes = [
   {

@@ -8,21 +8,19 @@ import MainPagetitle from "../../components/MainPagetitle";
 import Paginate from "../../components/Paginate";
 import SubUserTable from "../components/Tables/SubUserTable";
 import { getUser, deleteUser } from "../../services/api/UserServices";
-import { usePermissions } from "../../context/PermissionContext";
 import usePagination from "../../hooks/usePagination";
+import usePermissions from "@/hooks/usePermissions";
 
 const SubUser = () => {
   const { t } = useTranslation();
 
-  const { can, setUserPermission } = usePermissions();
+  const { can } = usePermissions();
   const [isLoading, setIsLoading] = useState(true);
   const { page, goToPage, setCount, totalCount } = usePagination();
 
   const fetchUser = async () => {
     setIsLoading(true);
     const { data, count } = await getUser(page);
-    const permissions = JSON.parse(localStorage.getItem("permission"));
-    setUserPermission(permissions?.[0]?.permission);
     setTableData(data);
     setCount(count);
     setIsLoading(false);

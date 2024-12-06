@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
-import Error from "../../../../components/Error/Error";
+import { useTranslation } from "react-i18next";
 
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import Error from "@/components/Error/Error";
 import "@/assets/scss/pages/_driver-tracking.scss";
 import {
-  options,
   permitOptions,
   fuelTypeOptions,
   distanceQuantitySelectOptions,
   durationSelectOptions,
-  durationCostSelectOptions,
-} from "../../../../constants/options";
-import CustomInput from "../../../../components/Input/CustomInput";
-import { useTranslation } from "react-i18next";
+} from "@/constants/options";
+import CustomInput from "@/components/Input/CustomInput";
 
 const Profile = ({
   register,
@@ -28,17 +23,9 @@ const Profile = ({
   onSubmit,
   control,
   getValues,
-  formData,
 }) => {
-  const id = useParams();
-  const [selectedOption, setSelectedOption] = useState(null);
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
-  const [isCheckedCBO, setIsCheckedCBO] = useState(false);
-  const [isCheckedCBO2, setIsCheckedCBO2] = useState(false);
-  const [isCheckedWC, setIsCheckedWC] = useState(false);
-  const [isCheckedGS, setIsCheckedGS] = useState(false);
-  const [tempValue, setTempValue] = useState();
 
   const customStyles = {
     control: (base) => ({
@@ -46,176 +33,12 @@ const Profile = ({
       padding: ".25rem 0 ",
     }),
   };
-  const handleChange = (e) => {
-    setSelectedOption(e.target.value);
-    setValue("fuelSensor", e.target.value);
-  };
 
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (formData && id) {
-      // setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
-      // setValue("companyName",formData[0].companyId?.companyName)
-      // setValue("userName", formData[0].userName)
-      // setValue("email",formData[0].email)
-      // setValue("mobileNumber",formData[0].mobileNumber)
-      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
-      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
-      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
-      // setValue("street1",formData[0].companyId?.street1)
-      // setValue("street2",formData[0].companyId?.street2)
-      // setValue("contactPerson",formData[0].companyId?.contactPerson)
-      // setValue("faxNumber",formData[0].companyId?.faxNumber)
-      // setValue("zipCode",formData[0].companyId?.zipCode)
-      // setValue("city",formData[0].companyId?.city)
-      // setValue("storageCapacity",formData[0].companyId?.capacity )
-      // setValue("country",formData[0].country)
-      // setValue("state",formData[0].state || '' )
-      // setDefaultCountry({ name:formData[0].country })
-      // setSelectStateName({name : formData[0].state || ''})
-      // setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
-
-      setValue("plateNumber", formData[0].plateNumber || "");
-      setValue("vehicleCategory", formData[0].vehicleCategory || "");
-      setValue("dvirTemplate", formData[0].dvirTemplate || "");
-      setValue("purchaseAmount", formData[0].purchaseAmount || "");
-      setValue("manufacturerDate", formData[0].manufacturerDate || "");
-      setValue("purchaseDate", formData[0].purchaseDate || "");
-      setValue("weightCapacity", formData[0].weightCapacity || "");
-      setValue("gpsInstallationDate", formData[0].gpsInstallationDate || "");
-      setValue("gpsWarranty", formData[0].gpsWarranty || "");
-      setValue("companyAverage", formData[0].companyAverage || "");
-      setValue("permit", formData[0].permit || "");
-      setValue("installationDate", formData[0].installationDate || "");
-      setValue("registrationNumber", formData[0].registrationNumber || "");
-      setValue("fuelType", formData[0].fuelType || "");
-      const distanceBaseFuelConsumption =
-        formData?.[0]?.distanceBaseFuelConsumption;
-      setValue(
-        "distanceBasedDistanceQuantity",
-        formData[0].distanceBasedDistanceQuantity || ""
-      );
-      if (distanceBaseFuelConsumption) {
-        setValue(
-          "distanceBaseFuelConsumption",
-          formData[0].distanceBaseFuelConsumption || ""
-        );
-        setValue(
-          "distanceBaseFuelConsumptionUnit",
-          formData[0].distanceBaseFuelConsumptionUnit || ""
-        );
-        setIsCheckedDBFC(true);
-      }
-      setValue(
-        "durationBaseFuelConsumptionDurationQuanitty",
-        formData[0].durationBaseFuelConsumptionDurationQuanitty || ""
-      );
-      setValue(
-        "durationBaseFuelConsumptionDurationUnit",
-        formData[0].durationBaseFuelConsumptionDurationUnit || ""
-      );
-      const durationBaseDistanceQuantity =
-        formData?.[0]?.durationBaseDistanceQuantity;
-      if (durationBaseDistanceQuantity) {
-        setValue(
-          "durationBaseDistanceQuantity",
-          formData[0].durationBaseDistanceQuantity || ""
-        );
-        setValue(
-          "durationBaseFuelConsumptionUnit",
-          formData[0].durationBaseFuelConsumptionUnit || ""
-        );
-        setIsCheckedDBFC2(true);
-      }
-      setValue(
-        "fuelIdlingConsumption",
-        formData[0].fuelIdlingConsumption || ""
-      );
-      setValue(
-        "fuelIdlingConsumptionUnit",
-        formData[0].fuelIdlingConsumptionUnit || ""
-      );
-      setValue(
-        "consumptionTolerancePercent",
-        formData[0].consumptionTolerancePercent || ""
-      );
-      setValue("vinNumber", formData[0].vinNumber || "");
-      setValue("engineNumber", formData[0].engineNumber || "");
-      setValue("odometer", formData[0].odometer || "");
-      setValue("LBSDetectionRadius", formData[0].LBSDetectionRadius || "");
-      setValue("engineHour", formData[0].engineHour || "");
-      setValue("passengerSeat", formData[0].passengerSeat || "");
-      const distanceCostQuantity = formData?.[0]?.distanceCostQuantity;
-      if (distanceCostQuantity) {
-        setValue("distanceCostQuantity", distanceCostQuantity);
-        setIsCheckedCBO(true);
-      }
-      const durationCostQuantity = formData?.[0]?.durationCostQuantity;
-      if (durationCostQuantity) {
-        setValue("durationCostQuantity", durationCostQuantity);
-        setValue("durationUnit", formData[0].durationUnit || "");
-        setIsCheckedCBO2(true);
-      }
-      setValue("rfidTimeoutDuration", formData[0].rfidTimeoutDuration || "");
-      setValue("sleepModeDuration", formData[0].sleepModeDuration || "");
-      setValue("minimumWorkingHour", formData[0].minimumWorkingHour || "");
-      const weightSensor = formData?.[0]?.weightSensor;
-      if (weightSensor) {
-        setValue("weightSensor", weightSensor);
-        setIsCheckedWC(weightSensor);
-      }
-      setValue("fuelSensor", formData[0].fuelSensor || "");
-      setValue("noOfTanks", formData[0].noOfTanks || "");
-      const gSensor = formData?.[0]?.gSensor;
-      if (gSensor) {
-        setIsCheckedGS(gSensor);
-      }
-      setValue("axisX", formData[0].axisX || "");
-      setValue("axisY", formData[0].axisY || "");
-      setValue("axisZ", formData[0].axisZ || "");
-      setValue("duration", formData[0].duration || "");
-      setValue("underweightTolerance", formData[0].underweightTolerance || "");
-      setValue("overweightTolerance", formData[0].overweightTolerance || "");
-      setValue(
-        "loadingUnloadingTolerance",
-        formData[0].loadingUnloadingTolerance || ""
-      );
-
-      // setValue("plateNumber",FormData.plateNumber || '' )
-      // setValue("vehicleCategory",FormData.vehicleCategory || '' )
-      // setValue("purchaseAmount",FormData.purchaseAmount || '' )
-      // setValue("DVIRTemplate",FormData.DVIRTemplate || '' )
-      // setValue("weightCapacity",FormData.weightCapacity || '' )
-      // setValue("companyAverage",FormData.companyAverage || '' )
-      // setValue("permit",FormData.permit || '' )
-      // setValue("registrationNumber",FormData.registrationNumber || '' )
-      // setValue("fuelType",FormData.fuelType || '' )
-      // setValue("fuelIdlingConsumption",FormData.fuelIdlingConsumption || '' )
-      // setValue("vinNumber",FormData.vinNumber || '' )
-      // setValue("engineNumber",FormData.engineNumber || '' )
-      // setValue("duration",FormData.duration || '' )
-      // setValue("sleepModeDuration",FormData.sleepModeDuration || '' )
-      // setValue("underweightTolerance",FormData.underweightTolerance || '' )
-      // setValue("overweightTolerance",FormData.overweightTolerance || '' )
-      // setValue("loadingUnloadingTolerance",FormData.loadingUnloadingTolerance || '' )
-    }
-  }, [formData, id]);
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "80%" }}>
-        {/* <div className="col-xl-3 mb-3">
-          <label className="form-label">{t('plateNumber')}</label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Plate Number"
-            name="plateNumber"
-            placeholder=""
-          />
-          <Error errorName={errors.plateNumber} />
-        </div> */}
         <div className="col-xl-3 mb-3">
           <label className="form-label">
             {t("vehicleCategory")}
@@ -229,7 +52,6 @@ const Profile = ({
                 name="optradioCustom1"
                 onChange={() => {
                   setValue("vehicleCategory", "MOVABLE");
-                  setTempValue("vechicleCategory");
                 }}
                 checked={getValues("vehicleCategory") === "MOVABLE"}
               />
@@ -243,7 +65,6 @@ const Profile = ({
                 className="form-check-input"
                 onChange={() => {
                   setValue("vehicleCategory", "IMMOVABLE");
-                  setTempValue("vehicleCategory");
                 }}
                 name="optradioCustom1"
                 checked={getValues("vehicleCategory") === "IMMOVABLE"}
@@ -253,9 +74,8 @@ const Profile = ({
               </label>
             </div>
           </div>
-          {!getValues("vehicleCategory") && (
-            <Error errorName={errors.vehicleCategory} />
-          )}
+
+          <Error errorName={errors.vehicleCategory} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">
@@ -381,7 +201,6 @@ const Profile = ({
             render={({ field: { onChange, value, name, rules, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
                   setValue("permit", newValue.value);
                 }}
                 options={permitOptions}
@@ -396,7 +215,7 @@ const Profile = ({
               />
             )}
           />
-          {!getValues("permit") && <Error errorName={errors.permit} />}
+          <Error errorName={errors.permit} />
         </div>
         <div className="col-xl-3 mb-3 d-flex flex-column">
           <label className="form-label">{t("installationDate")}</label>
@@ -428,7 +247,6 @@ const Profile = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => {
-                  setTempValue(newValue.value);
                   setValue("fuelType", newValue.value);
                 }}
                 options={fuelTypeOptions}
@@ -443,7 +261,7 @@ const Profile = ({
               />
             )}
           />
-          {!getValues("fuelType") && <Error errorName={errors.fuelType} />}
+          <Error errorName={errors.fuelType} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -499,7 +317,7 @@ const Profile = ({
               </>
             )}
           </div>
-          <Error errorName={errors.distanceBaseFuelConsumption} />
+          <Error errorName={errors.distanceBasedDistanceQuantity} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -610,10 +428,12 @@ const Profile = ({
           </label>
           <CustomInput
             type="text"
-            register={register}
             label="VIN Number"
-            name="vinNumber"
+            register={register}
+            name="vinNumber_dupe"
+            disabled
             placeholder=""
+            value={getValues("vinNumber")}
           />
           <Error errorName={errors.vinNumber} />
         </div>

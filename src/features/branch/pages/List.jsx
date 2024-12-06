@@ -10,7 +10,6 @@ import {
 } from "@tanstack/react-query";
 
 import MainPagetitle from "@/components/MainPagetitle";
-import { usePermissions } from "@/context/PermissionContext";
 import BranchTable from "../components/Table";
 import { notifyError } from "@/utils/toast";
 import usePagination from "@/hooks/usePagination";
@@ -18,6 +17,8 @@ import CompanyDropdownList from "@/features/company/components/DropDownList";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 import { deleteBranch, getAllBranch } from "../api";
+import { getApiErrorMessage } from "@/utils/helper";
+import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
   control: (base) => ({
@@ -50,8 +51,7 @@ const BranchList = () => {
 
   const { mutate } = useMutation({
     onError: (err) => {
-      const messge = err.response.data.message;
-      notifyError(messge ?? "Something went wrong!!");
+      notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
       queryClient.invalidateQueries("companies");

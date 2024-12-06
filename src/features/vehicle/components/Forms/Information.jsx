@@ -1,35 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useForm, Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../../../components/Error/Error";
+import { useTranslation } from "react-i18next";
+
+import Error from "@/components/Error/Error";
 import {
-  deviceTypeOptions,
-  copyFromOptions,
-  distanceCounterOptions,
-  unitOfDistanceOptions,
-  speedDetectionOptions,
   tollCategoryOptions,
   tarrifTypeOptions,
   skillSetOptions,
   profileOwningOptions,
   costCenterOptions,
 } from "@/constants/options";
-import AsyncSelect from "react-select/async";
-import CustomInput from "../../../../components/Input/CustomInput";
-import DummyData from "../../../../users.json";
-import useStorage from "../../../../hooks/useStorage";
-import { useParams } from "react-router-dom";
-import { getCompany } from "../../../../services/api/CompanyServices";
-import { getGroups } from "../../../../features/businessGroup/api";
-import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
-import { useTranslation } from "react-i18next";
+import CustomInput from "@/components/Input/CustomInput";
+import FileUploader from "@/components/FileUploader";
 
-import CompanyDropdown from "../../../../features/company/components/DropDownList";
-import BranchDropdown from "../../BranchDropdown";
-import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import ParentBranchDropdown from "../../ParentBranch";
-import FileUploader from "../../../../components/FileUploader";
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ",
+  }),
+};
 
 const Information = ({
   register,
@@ -39,28 +30,10 @@ const Information = ({
   control,
   handleSubmit,
   onSubmit,
-  formData,
+  isLoading,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [logo, setLogo] = useState(null);
-  const { checkRole, checkUserName } = useStorage();
+  const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
-
-  const handleOptionChange = (event) => {
-    console.log("event", event.target.value);
-    setSelectedOption(event.target.value);
-  };
-  console.log("res", register);
-
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
-
-  const role = checkRole();
-
   const { t } = useTranslation();
 
   return (
@@ -81,18 +54,18 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("Number")}
+                    {t("vehicleNumber")}
                   </label>
                   <CustomInput
                     type="number"
                     required
                     register={register}
-                    name="number"
-                    label="Number"
+                    name="vehicleNumber"
+                    label="Vehicle Number"
                     placeholder=""
-                    defaultValue={getValues("number")}
+                    defaultValue={getValues("vehicleNumber")}
                   />
-                  <Error errorName={errors.number} />
+                  <Error errorName={errors.vehicleNumber} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("unitId")}</label>
@@ -175,8 +148,8 @@ const Information = ({
                             <input
                               type="radio"
                               className="form-check-input"
-                              value="fleetnumber"
-                              checked={field.value === "fleetnumber"}
+                              value="fleetNumber"
+                              checked={field.value === "fleetNumber"}
                               onChange={(e) => {
                                 field.onChange(e.target.value);
                                 setSelectedOption(e.target.value);
@@ -212,11 +185,11 @@ const Information = ({
                     required
                     register={register}
                     label="Make"
-                    name="make"
+                    name="manufacture"
                     placeholder=""
-                    defaultValue={getValues("make")}
+                    defaultValue={getValues("manufacture")}
                   />
-                  <Error errorName={errors.make} />
+                  <Error errorName={errors.manufacture} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("year")}</label>
@@ -305,7 +278,7 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("group") && <Error errorName={errors.group} />}
+                  <Error errorName={errors.group} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("description")}</label>
@@ -342,9 +315,8 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("tollCategory") && (
-                    <Error errorName={errors.tollCategory} />
-                  )}
+
+                  <Error errorName={errors.tollCategory} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("tarrifType")}</label>
@@ -368,9 +340,8 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("tarrifType") && (
-                    <Error errorName={errors.tarrifType} />
-                  )}
+
+                  <Error errorName={errors.tarrifType} />
                 </div>
                 <div className="col-xl-6 mb-3">
                   <label
@@ -580,9 +551,8 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("skillSet") && (
-                    <Error errorName={errors.skillSet} />
-                  )}
+
+                  <Error errorName={errors.skillSet} />
                 </div>
 
                 <div className="col-xl-6 mb-3">
@@ -607,9 +577,8 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("profileOwning") && (
-                    <Error errorName={errors.profileOwning} />
-                  )}
+
+                  <Error errorName={errors.profileOwning} />
                 </div>
 
                 <div className="col-xl-6 mb-3">
@@ -634,9 +603,8 @@ const Information = ({
                       />
                     )}
                   />
-                  {!getValues("costCenter") && (
-                    <Error errorName={errors.costCenter} />
-                  )}
+
+                  <Error errorName={errors.costCenter} />
                 </div>
               </div>
             </div>
@@ -652,9 +620,8 @@ const Information = ({
                   label="Business Group Logo"
                   name="logo"
                   getValue={getValues}
-                  setLoading={setLoading}
-                  loading={loading}
-                  link={logo}
+                  setLoading={setFileUploadLoading}
+                  loading={fileUploadLoading}
                 />
                 <Error errorName={errors.logo} />
                 <div className="d-flex align-items-center justify-content-center p-2 m-0">
@@ -683,6 +650,7 @@ const Information = ({
       >
         <Button
           type="submit"
+          disabled={isLoading}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

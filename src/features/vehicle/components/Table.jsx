@@ -1,21 +1,17 @@
 import React from "react";
-import DeleteModal from "../../../components/Modal/DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { FaCar } from "react-icons/fa6";
-import useStorage from "../../../hooks/useStorage";
-import { usePermissions } from "../../../context/PermissionContext";
+import { Link } from "react-router-dom";
 
-const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  // const { getData } = useStorage();
-  // const filteredItems = getData(tableData);
+import DeleteModal from "@/components/Modal/DeleteModal";
+import usePermissions from "@/hooks/usePermissions";
+
+const VehicleTable = ({ tableData, onConfirmDelete }) => {
   const { can } = usePermissions();
   const editPermission = can("vehicle", "modify");
   const deletePermission = can("vehicle", "delete");
-  if (tableData.length === 0) {
-    return;
-  }
-  return tableData?.map((item, index) => (
+
+  return tableData?.map((item) => (
     <tr key={item.id}>
       <td>
         <div className="products">
@@ -43,19 +39,15 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <span>{item.weightCapacity}</span>
       </td>
-      {/* <td>
-                <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
-            </td> */}
       {(deletePermission || editPermission) && (
         <td>
           <span className="d-flex justify-content-center">
             {editPermission && (
-              <span
-                className="cursor-pointer"
-                onClick={() => editDrawerOpen(item._id)}
-              >
-                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-              </span>
+              <Link to={`/vehicle/edit/${item?._id}`}>
+                <span className="cursor-pointer">
+                  <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+                </span>
+              </Link>
             )}
             {deletePermission && (
               <DeleteModal

@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import usePagination from "@/hooks/usePagination";
-import { usePermissions } from "@/context/PermissionContext";
 import { getAllCompanies, getCompanyById } from "../api";
+import usePermissions from "@/hooks/usePermissions";
 
 const CompanyDropdownList = ({
   onChange,
@@ -17,7 +18,8 @@ const CompanyDropdownList = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { page, setPage } = usePagination();
-  const { userDetails, can } = usePermissions();
+  const { can } = usePermissions();
+  const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
@@ -56,8 +58,8 @@ const CompanyDropdownList = ({
 
   useEffect(() => {
     if (!value) {
-      if (!can("company", "view") && userDetails?.user?.companyId?.[0]) {
-        const userGroup = userDetails.user.companyId[0];
+      if (!can("company", "view") && userDetails?.companyId?.[0]) {
+        const userGroup = userDetails.companyId[0];
         const defaultOption = {
           label: userGroup.companyName,
           value: userGroup._id,

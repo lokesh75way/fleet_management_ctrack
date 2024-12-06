@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
-import { usePermissions } from "@/context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const GroupDropdownList = ({
   onChange,
@@ -16,7 +17,8 @@ const GroupDropdownList = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { page, setPage } = usePagination();
-  const { userDetails, can } = usePermissions();
+  const { can, role } = usePermissions();
+  const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
@@ -57,7 +59,7 @@ const GroupDropdownList = ({
     const initializeValue = async () => {
       if (!value) {
         if (!can("business", "view")) {
-          const userGroup = userDetails.user.businessGroupId[0];
+          const userGroup = userDetails.businessGroupId[0];
           const defaultOption = {
             label: userGroup.groupName,
             value: userGroup._id,
@@ -112,7 +114,7 @@ const GroupDropdownList = ({
       value={selectedOption}
       onChange={onChange}
       name={name}
-      isDisabled={isDisabled || userDetails.user.role !== "SUPER_ADMIN"}
+      isDisabled={isDisabled || role !== "SUPER_ADMIN"}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       menuPortalTarget={document.body}

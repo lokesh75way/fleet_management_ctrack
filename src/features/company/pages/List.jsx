@@ -11,13 +11,14 @@ import {
 
 import MainPagetitle from "@/components/MainPagetitle";
 import CompanyTable from "../components/Table";
-import { usePermissions } from "@/context/PermissionContext";
 import { deleteCompany, getAllCompanies } from "../api";
 import { notifyError } from "@/utils/toast";
 import usePagination from "@/hooks/usePagination";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 import GroupDropdownList from "@/features/businessGroup/components/DropDownList";
+import { getApiErrorMessage } from "@/utils/helper";
+import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
   control: (base) => ({
@@ -37,7 +38,7 @@ const CompanyList = () => {
   const { groupId } = useParams();
   const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
-  const { can, setUserPermission } = usePermissions();
+  const { can } = usePermissions();
   const queryClient = useQueryClient();
   const { control } = useForm();
 
@@ -50,8 +51,7 @@ const CompanyList = () => {
 
   const { mutate } = useMutation({
     onError: (err) => {
-      const messge = err.response.data.message;
-      notifyError(messge ?? "Something went wrong!!");
+      notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
       queryClient.invalidateQueries("companies");
@@ -66,11 +66,6 @@ const CompanyList = () => {
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
-
-  useEffect(() => {
-    const permissions = JSON.parse(localStorage.getItem("permission"));
-    setUserPermission(permissions?.[0]?.permission);
-  }, []);
 
   const handleClearFilter = () => {
     navigate("/company");

@@ -7,7 +7,7 @@ import Select from "react-select";
 import PageTitle from "../../layouts/PageTitle";
 import MainContent from "./MainContent";
 import TopMenus from "./TopMenus";
-import { IMAGES } from "../../constant/theme";
+import { IMAGES } from "../../../constants/theme";
 
 const data = [
   { icon: IMAGES.England, value: 1, label: "England" },

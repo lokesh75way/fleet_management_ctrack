@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import { IMAGES } from "../../../constant/theme";
+import { IMAGES } from "../../../../constants/theme";
 import InviteCustomer from "../../../constant/ModalList";
 import EmployeeOffcanvas from "../../../constant/EmployeeOffcanvas";
 

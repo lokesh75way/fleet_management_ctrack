@@ -11,7 +11,7 @@ import { deleteDrivers, getDrivers } from "../../services/api/driverService";
 import { notifyError } from "../../utils/toast";
 import usePagination from "../../hooks/usePagination";
 import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
+import { ICON } from "../../constants/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 

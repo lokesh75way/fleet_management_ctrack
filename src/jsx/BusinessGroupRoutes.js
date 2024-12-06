@@ -16,9 +16,6 @@ import UserGroups from "../features/businessGroup/pages/List";
 import BusinessUser from "../features/businessGroup/pages/List";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
-import PermissionDenied from "./pages/PermissionDenied";
-import { usePermissions } from "../context/PermissionContext";
-import { GiConsoleController } from "react-icons/gi";
 import CompanyRoutes from "@/features/company/pages";
 
 const TripClassification = React.lazy(
@@ -73,7 +70,7 @@ const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
 );
 const VehicleForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/VehicleForm")
+  () => import("../features/vehicle/pages/Create")
 );
 const DriverForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/DriverForm")
@@ -96,7 +93,7 @@ const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("./pages/Vehicle"));
+const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(
   () => import("./pages/businessUser/profile/MyProfile")
 );
@@ -332,7 +329,6 @@ const BusinessGroupRoutes = () => {
       return <Error404 />;
     }
   }
-  const { can } = usePermissions();
 
   return (
     <Suspense fallback={<Loader />}>

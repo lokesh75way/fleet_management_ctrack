@@ -1,29 +1,33 @@
-import React, { useContext, useEffect, useState } from "react";
-import { connect, useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import {
-  loadingToggleAction,
-  loginAction,
-} from "../../store/actions/AuthActions";
-// import users from '../../users.json'
+import React, { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import { useForm } from "react-hook-form";
+import { clsx } from "clsx";
+import { t } from "i18next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import logo from "@/assets/images/logo/logo-full.png";
 import LogoWhite from "@/assets/images/logo/logofull-white.png";
 import bg6 from "@/assets/images/background/bg6.jpg";
-import { loginValidation } from "../../utils/yup";
+import { loginValidation } from "@/utils/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { notifyError } from "../../utils/toast";
-import { LuEye, LuEyeOff } from "react-icons/lu";
 import login_logo from "@/assets/images/login_logo.png";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "@/context/ThemeContext";
 import "@/assets/scss/pages/_login.scss";
-import { clsx } from "clsx";
-import { t } from "i18next";
+import { login as loginApi } from "../api";
+import { notifyError } from "@/utils/toast";
+import { getApiErrorMessage } from "@/utils/helper";
+import { login } from "@/store/silces/authSlice";
 
 function Login(props) {
   const [heartActive, setHeartActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const { isRtl } = useContext(ThemeContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const imageLogin = clsx({
     "img-login-rtl": isRtl,
@@ -42,13 +46,18 @@ function Login(props) {
     resolver: yupResolver(loginValidation),
   });
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  function onLogin({ email, password }) {
-    dispatch(loadingToggleAction(true));
-    dispatch(loginAction(email, password, navigate));
-  }
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginApi,
+    onSuccess(res) {
+      dispatch(login(res));
+      const from = location.state?.from ?? "/dashboard";
+      queryClient.invalidateQueries();
+      navigate(from);
+    },
+    onError(err) {
+      notifyError(getApiErrorMessage(err));
+    },
+  });
 
   return (
     <div className="page-wraper">
@@ -125,7 +134,7 @@ function Login(props) {
                                       )}
                                       <form
                                         className=" dz-form pb-3"
-                                        onSubmit={handleSubmit(onLogin)}
+                                        onSubmit={handleSubmit(mutate)}
                                       >
                                         <h3 className="form-title m-t0">
                                           {t("personalInformation")}
@@ -194,6 +203,7 @@ function Login(props) {
                                           <button
                                             type="submit"
                                             className="btn btn-primary dz-xs-flex m-r5"
+                                            disabled={isPending}
                                           >
                                             {t("login")}
                                           </button>
@@ -318,11 +328,4 @@ function Login(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errorMessage: state.auth.errorMessage,
-    successMessage: state.auth.successMessage,
-    showLoading: state.auth.showLoading,
-  };
-};
-export default connect(mapStateToProps)(Login);
+export default Login;

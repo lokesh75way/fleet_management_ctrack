@@ -1,25 +1,21 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
-import Error from "../../../../components/Error/Error";
-
-import CustomInput from "../../../../components/Input/CustomInput";
-
 import { useTranslation } from "react-i18next";
 
-import CustomCheckbox from "./CustomCheckbox";
+import Error from "@/components/Error/Error";
+import CustomInput from "@/components/Input/CustomInput";
+import CustomCheckbox from "@/components/Input/CustomCheckbox";
 
 const Licensing = ({
   register,
-  setValue,
   getValues,
   errors,
-  control,
   handleSubmit,
   onSubmit,
   watch,
+  isLoading,
 }) => {
   const { t } = useTranslation();
-
   const isLicenseReminderDisabled = watch("licenseReminder", false);
   const isRoadworthyReminderEnabled = watch("roadworthyReminder", false);
 
@@ -34,9 +30,10 @@ const Licensing = ({
                 type="text"
                 required
                 register={register}
-                name="licenseNumber"
+                name="licenseNumber_dupe"
                 placeholder=""
-                defaultValue={getValues("licenseNumber")}
+                disabled
+                value={getValues("licenseNumber")}
               />
               <Error errorName={errors.licenseNumber} />
             </div>
@@ -46,11 +43,12 @@ const Licensing = ({
                 type="text"
                 required
                 register={register}
-                name="roadworthyNumber"
+                name="roadWorthy_dupe"
                 placeholder=""
-                defaultValue={getValues("roadworthyNumber")}
+                disabled
+                value={getValues("roadWorthy")}
               />
-              <Error errorName={errors.roadworthyNumber} />
+              <Error errorName={errors.roadWorthy} />
             </div>
           </div>
           {/* License Reminder */}
@@ -191,6 +189,7 @@ const Licensing = ({
         <Button
           type="submit"
           onClick={handleSubmit(onSubmit)}
+          disabled={isLoading}
           style={{ width: "10%" }}
         >
           {t("next")}

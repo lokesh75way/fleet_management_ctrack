@@ -10,16 +10,17 @@ import {
 
 import MainPagetitle from "@/components/MainPagetitle";
 import BusinessTable from "../components/Table";
-import { usePermissions } from "@/context/PermissionContext";
 import { deleteGroup, getAllGroups } from "../api";
 import usePagination from "@/hooks/usePagination";
 import Paginate from "@/components/Paginate";
 import { notifyError } from "@/utils/toast";
 import TableSkeleton from "@/components/Skeleton/Table";
+import { getApiErrorMessage } from "@/utils/helper";
+import usePermissions from "@/hooks/usePermissions";
 
 const BusinessList = () => {
   const { t } = useTranslation();
-  const { can, setUserPermission } = usePermissions();
+  const { can } = usePermissions();
   const { page, setCount, totalCount, goToPage } = usePagination();
   const itemsPerPage = 10;
   const startIndex = (page - 1) * itemsPerPage;
@@ -34,8 +35,7 @@ const BusinessList = () => {
 
   const { mutate } = useMutation({
     onError: (err) => {
-      const messge = err.response.data.message;
-      notifyError(messge ?? "Something went wrong!!");
+      notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
       queryClient.invalidateQueries("groups");
@@ -58,11 +58,6 @@ const BusinessList = () => {
       setCount(data.totalCount);
     }
   }, [data]);
-
-  useEffect(() => {
-    const permissions = JSON.parse(localStorage.getItem("permission"));
-    setUserPermission(permissions?.[0]?.permission);
-  }, []);
 
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);

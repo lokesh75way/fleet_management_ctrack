@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import MainPagetitle from "../../../components/MainPagetitle";
 import { Link } from "react-router-dom";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import TaskSummaryBlog from "./TaskSummaryBlog";
 import EmployeeOffcanvas from "../../constant/EmployeeOffcanvas";
 

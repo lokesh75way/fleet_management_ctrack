@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 import PageTitle from "../../../../layouts/PageTitle";
 
 // images
-import { IMAGES } from "../../../../constant/theme";
+import { IMAGES } from "../../../../../constants/theme";
 
 const productListBlog = [
   {

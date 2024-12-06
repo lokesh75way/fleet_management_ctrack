@@ -1,10 +1,10 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import PermissionDenied from "@/components/PermissionDenied";
-import { usePermissions } from "@/context/PermissionContext";
-import BranchList from "./List";
-import BranchForm from "./Create";
+import usePermissions from "@/hooks/usePermissions";
+const BranchList = lazy(() => import("./List"));
+const BranchForm = lazy(() => import("./Create"));
 
 const routes = [
   {
