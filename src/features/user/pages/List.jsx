@@ -2,55 +2,56 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import {
+  useQuery,
+  keepPreviousData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 import TableSkeleton from "@/components/Skeleton/Table";
-import MainPagetitle from "../../components/MainPagetitle";
-import Paginate from "../../components/Paginate";
-import SubUserTable from "../components/Tables/SubUserTable";
-import { getUser, deleteUser } from "../../services/api/UserServices";
-import usePagination from "../../hooks/usePagination";
+import MainPagetitle from "@/components/MainPagetitle";
+import Paginate from "@/components/Paginate";
+import UserTable from "../components/Table";
+import { getAllUser, deleteUser } from "../api";
+import usePagination from "@/hooks/usePagination";
 import usePermissions from "@/hooks/usePermissions";
+import { notifyError } from "@/utils/toast";
+import { getApiErrorMessage } from "@/utils/helper";
 
-const SubUser = () => {
+const UserList = () => {
   const { t } = useTranslation();
-
   const { can } = usePermissions();
-  const [isLoading, setIsLoading] = useState(true);
   const { page, goToPage, setCount, totalCount } = usePagination();
+  const queryClient = useQueryClient();
 
-  const fetchUser = async () => {
-    setIsLoading(true);
-    const { data, count } = await getUser(page);
-    setTableData(data);
-    setCount(count);
-    setIsLoading(false);
-  };
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["users", page],
+    queryFn: () => getAllUser(page),
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
+  });
+
+  const { mutate } = useMutation({
+    onError: (err) => {
+      notifyError(getApiErrorMessage(err));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries("users");
+    },
+    mutationFn: deleteUser,
+  });
+
   useEffect(() => {
-    fetchUser(page);
-  }, [page]);
-
-  const navigate = useNavigate();
-
-  const [tableData, setTableData] = useState([]);
-
-  const onConfirmDelete = async (id) => {
-    await deleteUser(id);
-    const data = tableData.filter((item) => item._id === id);
-    setTableData(data);
-  };
-
-  const editDrawerOpen = (_id) => {
-    const data = tableData.filter((item) => item._id === _id);
-    navigate(`/user/edit/${_id}`, { state: { formData: data } });
-  };
-
-  const itemsPerPage = 10;
+    if (data) setCount(data.totalCount);
+  }, [data]);
 
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
+  const itemsPerPage = 10;
+
   return (
     <>
       <MainPagetitle mainTitle="User" pageTitle={"User"} parentTitle={"Home"} />
@@ -68,7 +69,6 @@ const SubUser = () => {
                           to={"/user/create"}
                           className="btn btn-primary btn-sm ms-1"
                           data-bs-toggle="offcanvas"
-                          // onClick={()=>subuser.current.showModal()}
                         >
                           + {t("addUser")}
                         </Link>
@@ -79,7 +79,7 @@ const SubUser = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    {!tableData.length && isLoading ? (
+                    {isFetching && isLoading ? (
                       <TableSkeleton />
                     ) : (
                       <table
@@ -100,13 +100,11 @@ const SubUser = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <SubUserTable
-                            key={tableData}
+                          <UserTable
                             currentPage={page}
                             itemsPerPage={itemsPerPage}
-                            tableData={tableData}
-                            onConfirmDelete={onConfirmDelete}
-                            editDrawerOpen={editDrawerOpen}
+                            tableData={data.data}
+                            onConfirmDelete={mutate}
                           />
                         </tbody>
                       </table>
@@ -139,4 +137,4 @@ const SubUser = () => {
   );
 };
 
-export default SubUser;
+export default UserList;

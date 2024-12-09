@@ -23,7 +23,7 @@ import { useTranslation } from "react-i18next";
 import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import ParentBranchDropdown from "../../ParentBranch";
+import ParentBranchDropdown from "../../../../features/branch/components/DropDownList";
 import CustomCheckbox from "../../../../components/Input/CustomCheckbox";
 
 const General = ({

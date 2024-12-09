@@ -76,23 +76,14 @@ const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
 const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
 );
-const VehicleForm = React.lazy(
-  () => import("../features/vehicle/pages/Create")
-);
 const DriverForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/DriverForm")
 );
 const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
-const CompanyForm = React.lazy(
-  () => import("../features/company/pages/Create")
-);
-const BusinessForm = React.lazy(
-  () => import("../features/businessGroup/pages/Create")
-);
-const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
-const SubUser = React.lazy(() => import("./pages/SubUser"));
+const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
+const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const ExpenseForm = React.lazy(() => import("./pages/Expense/ExpenseForm"));
@@ -104,18 +95,12 @@ const ClassifyTripForm = React.lazy(
 const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(() => import("./pages/admin/profile/MyProfile"));
 const Error404 = React.lazy(() => import("../components/Error/Error404"));
 const PermissionDenied = React.lazy(() => import("./pages/PermissionDenied"));
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
-const Company = React.lazy(() => import("./pages/admin/Company"));
-const Business = React.lazy(
-  () => import("../features/businessGroup/pages/List")
-);
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
-const Branch = React.lazy(() => import("../features/branch/pages/List"));
 const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 //groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
@@ -291,16 +276,6 @@ const allroutes = [
 const AdminRoutes = () => {
   const { can } = usePermissions();
 
-  function NotFound() {
-    const url = allroutes.map((route) => route.url);
-    let path = window.location.pathname;
-    path = path.split("/");
-    path = path[path.length - 1];
-    if (url.indexOf(path) <= 0) {
-      return <Error404 />;
-    }
-  }
-
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -330,7 +305,7 @@ const AdminRoutes = () => {
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       <ScrollToTop />
     </Suspense>

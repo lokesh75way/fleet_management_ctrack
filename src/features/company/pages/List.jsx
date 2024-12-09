@@ -113,8 +113,9 @@ const CompanyList = () => {
                                 onChange={(newValue) => {
                                   navigate(`/company/gid/${newValue?.value}`);
                                 }}
+                                defaultValue={groupId}
                                 value={
-                                  groupId ?? {
+                                  !groupId && {
                                     value: "All Business Groups",
                                     label: t("allBusinessGroup"),
                                   }
@@ -167,7 +168,7 @@ const CompanyList = () => {
                               <th className="text-center">{t("email")}</th>
                               <th className="text-center">{t("branches")}</th>
 
-                              {(can("company", "edit") ||
+                              {(can("company", "modify") ||
                                 can("company", "delete")) && (
                                 <th className="d-flex justify-content-center">
                                   {t("action")}

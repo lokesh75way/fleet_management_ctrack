@@ -57,6 +57,7 @@ const CreateVehicle = () => {
       selectedInput: vehicleData?.fleetnumber
         ? "fleetnumber"
         : "registrationNumber",
+      branchId: vehicleData?.branchId?._id,
     };
   }, [vehicleData]);
 
@@ -142,7 +143,6 @@ const CreateVehicle = () => {
     if (activeIndex === totalTabs - 1) {
       validateAllFields(data);
       if (vehicleId) {
-        data.businessGroupName = getValues("businessGroupName");
         for (const key in data) {
           if (data[key] === undefined || data[key] === "") {
             delete data[key];

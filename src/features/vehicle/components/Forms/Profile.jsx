@@ -23,6 +23,7 @@ const Profile = ({
   onSubmit,
   control,
   getValues,
+  watch,
 }) => {
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
@@ -53,7 +54,7 @@ const Profile = ({
                 onChange={() => {
                   setValue("vehicleCategory", "MOVABLE");
                 }}
-                checked={getValues("vehicleCategory") === "MOVABLE"}
+                checked={watch("vehicleCategory") === "MOVABLE"}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
                 {t("movable")}
@@ -67,7 +68,7 @@ const Profile = ({
                   setValue("vehicleCategory", "IMMOVABLE");
                 }}
                 name="optradioCustom1"
-                checked={getValues("vehicleCategory") === "IMMOVABLE"}
+                checked={watch("vehicleCategory") === "IMMOVABLE"}
               />
               <label className="form-check-label" style={{ marginBottom: "0" }}>
                 {t("immovable")}

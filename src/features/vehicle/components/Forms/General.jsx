@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -16,7 +15,7 @@ import {
 import CustomInput from "@/components/Input/CustomInput";
 import CompanyDropdown from "@/features/company/components/DropDownList";
 import GroupDropdown from "@/features/businessGroup/components/DropDownList";
-import ParentBranchDropdown from "../../../../jsx/components/ParentBranch";
+import BranchDropdownList from "@/features/branch/components/DropDownList";
 import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
@@ -34,10 +33,10 @@ const General = ({
   control,
   handleSubmit,
   onSubmit,
+  watch,
 }) => {
-  const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
-  const [companyDisabled] = useState(false);
+  const [company, setCompany] = useState();
+  const [branch, setBranch] = useState();
   const { role } = usePermissions();
   const userDetails = useSelector((state) => state.auth.user);
   const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
@@ -66,13 +65,16 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
                 onChange={(newValue) => {
-                  setValue("businessGroupId", newValue.value);
-                  setValue("businessId", newValue.value);
-                  setValue("businessGroupName", newValue.label);
-                  setGroupId(newValue.value);
-                  setCompanyId(null);
+                  if (getValues("businessGroupId") != newValue.value) {
+                    setValue("businessGroupId", newValue.value);
+                    setValue("businessGroupName", newValue.label);
+                    setValue("companyId", "");
+                    setValue("branchId", "");
+                    setCompany(null);
+                    setBranch(null);
+                  }
                 }}
-                value={value}
+                defaultValue={value}
                 customStyles={customStyles}
                 ref={ref}
                 isDisabled={isBuisnessGroupDisabled}
@@ -93,16 +95,19 @@ const General = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <CompanyDropdown
-                key={groupId}
-                groupId={groupId}
+                groupId={watch("businessGroupId")}
                 onChange={(newValue) => {
-                  setValue("companyId", newValue.value);
-                  setCompanyId(newValue.value);
+                  if (getValues("companyId") != newValue.value) {
+                    setValue("companyId", newValue.value);
+                    setValue("branchId", "");
+                    setCompany(newValue);
+                    setBranch(null);
+                  }
                 }}
-                value={value}
+                defaultValue={value}
+                value={company}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={companyDisabled}
                 name={name}
               />
             )}
@@ -116,34 +121,19 @@ const General = ({
             name="branchId"
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
-                key={companyId}
-                companyId={companyId}
-                onChange={async (newValue) => {
-                  // setValue("parentBranchId", newValue.value);
-                  setValue("branch", newValue.value);
+              <BranchDropdownList
+                companyId={watch("companyId")}
+                onChange={(newValue) => {
                   setValue("branchId", newValue.value);
+                  setBranch(newValue);
                 }}
-                value={value}
+                defaultValue={value}
+                value={branch}
                 customStyles={customStyles}
                 ref={ref}
                 isDisabled={false}
                 name={name}
               />
-              // <BranchDropdown
-              //   key={companyId}
-              //   companyId={companyId}
-              //   onChange={async (newValue) => {
-              //     // setValue("parentBranchId", newValue.value);
-              //     setValue("branch", newValue.label);
-              //     setValue("branchID", newValue.value);
-              //   }}
-              //   value={value}
-              //   customStyles={customStyles}
-              //   ref={ref}
-              //   isDisabled={false}
-              //   name={name}
-              // />
             )}
           />
         </div>

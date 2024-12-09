@@ -1,46 +1,46 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Select from "react-select";
+import { t } from "i18next";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
-import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
+import { getAllBranch, getBranchById } from "../api";
 import usePermissions from "@/hooks/usePermissions";
 
-const GroupDropdownList = ({
+const BranchDropdownList = ({
   onChange,
   value,
   defaultValue,
   customStyles,
   isDisabled,
+  companyId,
   name,
 }) => {
   const [selectedOption, setSelectedOption] = useState(value);
   const { page, setPage } = usePagination();
-  const { can, role } = usePermissions();
+  const { can } = usePermissions();
   const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
 
-  console.log({ defaultValue });
-
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["groups"],
+      queryKey: ["branches", companyId],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllGroups(pageParam);
+        return getAllBranch(pageParam, companyId);
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
         lastPage.data?.length ? page + 1 : null,
-      enabled: can("business", "view"),
+      enabled: can("branch", "view"),
       staleTime: Infinity,
     });
 
   const { refetch } = useQuery({
-    queryKey: ["group", defaultValue],
-    queryFn: () => getGroupById(defaultValue),
+    queryKey: ["branch", defaultValue],
+    queryFn: () => getBranchById(defaultValue),
     enabled: false,
     staleTime: Infinity,
   });
@@ -48,10 +48,10 @@ const GroupDropdownList = ({
   const options = useMemo(() => {
     let flatData = [];
     data?.pages.forEach((pageData) => {
-      pageData.data.forEach((group) => {
+      pageData.data.forEach((item) => {
         flatData.push({
-          label: group?.businessGroupId?.groupName,
-          value: group?.businessGroupId?._id,
+          label: item?.branchName,
+          value: item?._id,
         });
       });
     });
@@ -69,10 +69,10 @@ const GroupDropdownList = ({
   useEffect(() => {
     const initializeValue = async () => {
       if (!value && !defaultValue) {
-        if (!can("business", "view")) {
-          const userGroup = userDetails.businessGroupId[0];
+        if (!can("branch", "view") && userDetails?.companyId?.[0]) {
+          const userGroup = userDetails.companyId[0];
           const defaultOption = {
-            label: userGroup?.groupName,
+            label: userGroup?.companyName,
             value: userGroup?._id,
           };
           setSelectedOption(defaultOption);
@@ -82,34 +82,33 @@ const GroupDropdownList = ({
       }
 
       if (defaultValue) {
-        const existingOption = options.find(
-          (opt) => opt.value === defaultValue
+        const selected = options.find(
+          (option) => option.value === defaultValue
         );
-        if (existingOption) {
-          setSelectedOption(existingOption);
-          onChange(existingOption);
+        if (selected) {
+          setSelectedOption(selected);
+          onChange(selected);
           return;
         }
         try {
-          const { data: groupData } = await refetch();
-          if (groupData?.businessGroupId) {
+          const { data: branchData } = await refetch();
+          if (branchData) {
             const newOption = {
-              label: groupData.businessGroupId.groupName,
-              value: groupData.businessGroupId._id,
+              label: branchData.branchName,
+              value: branchData._id,
             };
             setSelectedOption(newOption);
             onChange(newOption);
           }
         } catch (error) {
-          console.error("Error fetching group details:", error);
+          console.error("Error fetching branch details:", error);
         }
       } else {
         setSelectedOption(value);
       }
     };
-
     initializeValue();
-  }, [defaultValue, options, pathname, userDetails]);
+  }, [defaultValue, options, pathname, userDetails, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
@@ -125,17 +124,15 @@ const GroupDropdownList = ({
       options={options}
       value={selectedOption}
       onChange={onChange}
+      styles={customStyles}
       name={name}
-      isDisabled={isDisabled || !can("business", "view")}
+      placeholder={t("selectParentBranch")}
+      isDisabled={isDisabled || !can("branch", "view")}
+      isClearable
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
-      menuPortalTarget={document.body}
-      styles={{
-        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-        ...customStyles,
-      }}
     />
   );
 };
 
-export default GroupDropdownList;
+export default BranchDropdownList;

@@ -1,33 +1,36 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../../../components/Error/Error";
 import { useParams } from "react-router-dom";
-import CustomInput from "../../../../components/Input/CustomInput";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import useStorage from "../../../../hooks/useStorage";
-import "@/assets/scss/pages/_driver-tracking.scss";
-import DummyData from "../../../../users.json";
-import { getSelectValues } from "../../../../utils/helper";
-import { getTemplates } from "../../../../services/api/TemplateServices";
 import { useTranslation } from "react-i18next";
-import { notifyError } from "../../../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
+import { useSelector } from "react-redux";
+
+import Error from "@/components/Error/Error";
+import CustomInput from "@/components/Input/CustomInput";
+import "@/assets/scss/pages/_driver-tracking.scss";
+import { getTemplates } from "../../../services/api/TemplateServices";
+import { notifyError } from "@/utils/toast";
 import { getAllGroups } from "@/features/businessGroup/api";
-import { getCompany } from "../../../../services/api/CompanyServices";
-import { getAllBranch } from "../../../../services/api/BranchServices";
-import BranchDropdown from "../../BranchDropdown";
-import CompanyDropdown from "../../../../features/company/components/DropDownList";
-import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import ParentBranchDropdown from "../../ParentBranch";
-import VehicleDropdown from "../../VehicleDropdown";
-import { unitOfDistanceOptions } from "../../../../constants/options";
-import LocationSelector from "../../../../components/Input/LocationSelector";
+import { getCompany } from "../../../services/api/CompanyServices";
+import { getAllBranch } from "../../../services/api/BranchServices";
+import BranchDropdown from "../../../jsx/components/BranchDropdown";
+import CompanyDropdown from "@/features/company/components/DropDownList";
+import GroupDropdown from "@/features/businessGroup/components/DropDownList";
+import VehicleDropdown from "../../../jsx/components/VehicleDropdown";
+import { unitOfDistanceOptions } from "../../../constants/options";
+import LocationSelector from "../../../components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 
-const Account = ({
-  handleNext,
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: "0.25rem 0 ", // Adjust the height as needed
+  }),
+};
+
+const UserForm = ({
   register,
   setValue,
   onSubmit,
@@ -35,35 +38,21 @@ const Account = ({
   getValues,
   errors,
   control,
-  formData,
+  watch,
 }) => {
   const [selectStateName, setSelectStateName] = useState("");
   const [defaultCountry, setDefaultCountry] = useState();
-  const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
   const [allBranches, setAllBranches] = useState([]);
-  const { checkRole, checkUser } = useStorage();
-  const [tempValue, setTempValue] = useState();
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
   const [TemplateOptions, setTemplateOptions] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
-  const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
   const [branchId, setBranchId] = useState([]);
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const userDetails = useSelector((state) => state.auth.user);
   const { t } = useTranslation();
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: "0.25rem 0 ", // Adjust the height as needed
-    }),
-  };
+
   async function onGroupChange(groupId) {
     const companies = allCompanies
       .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
@@ -75,7 +64,6 @@ const Account = ({
     setValue("parentCompany", "");
     setBranchOptions([]);
   }
-  console.log("errors", errors);
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter((item) => item?.companyId?._id == companyId)
@@ -145,77 +133,19 @@ const Account = ({
     fetchOptions();
   }, []);
 
-  const role = checkRole();
   const { id } = useParams();
   // const User = JSON.parse(localStorage.getItem("userJsonData"));
   const loggedinemail = localStorage.getItem("loginDetails-name");
-  let defaultCompanyOptions;
-
-  if (role === "SUPER_ADMIN") {
-    defaultCompanyOptions = DummyData.filter(
-      (item) => item.role === "company"
-    ).map((item) => ({
-      label: item.userName,
-      value: item._id,
-    }));
-  } else {
-    defaultCompanyOptions = DummyData.filter(
-      (item) => item.role === "company" && item.parent === loggedinemail
-    ).map((item) => ({
-      label: item.userName,
-      value: item._id,
-    }));
-  }
 
   const [filteredUserData, setFilteredUserData] = useState([]);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
   const [branchOptions, setBranchOptions] = useState([]);
   const [parentOptions, setParentOptions] = useState([]);
-  const [vehiclesOptions, setVehiclesOptions] = useState([]);
-  const [businessUserValue, setBusinessUserValue] = useState();
-  const [companyValue, setCompanyValue] = useState([]);
-  const [parentValue, setParentValue] = useState();
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
   const { location: locationData, error: locationError } = useUserLocation();
 
-  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
-  useEffect(() => {
-    if (userDetails.user.role === "COMPANY") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
-      setValue("businessUser", userDetails?.user.businessGroupId[0]?._id);
-      setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-      setValue("parentCompany", userDetails?.user.companyId[0]?._id);
-      setCompanyId(userDetails?.user.companyId[0]?._id);
-      setCompanyDisabled(true);
-    }
-    if (userDetails.user.role === "BUSINESS_GROUP") {
-      // setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId?._id);
-      setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (formData && id) {
-      setValue("businessUser", formData?.[0]?.businessGroupId);
-      setValue("companyId", formData?.[0]?.companyId);
-      setValue("branchIds", formData?.[0]?.branchIds);
-      setValue("vehicleIds", formData?.[0]?.vehicleIds);
-      setValue("email", formData?.[0]?.email);
-      setValue("userName", formData?.[0]?.userName);
-      setValue("mobileNumber", formData?.[0]?.mobileNumber);
-      setValue("country", formData[0].country);
-      setDefaultCountry({ name: formData[0].country });
-      setValue("state", formData[0].state || "");
-      setSelectStateName({ name: formData[0].state || "" });
-      setValue("featureTemplateId", formData?.[0]?.featureTemplateId);
-      setValue("unitOfDistance", formData?.[0].unitOfDistance);
-    }
-  }, [formData, id]);
+  const [company, setCompany] = useState();
+  const [branch, setBranch] = useState();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -228,21 +158,23 @@ const Account = ({
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <Controller
-            name="businessUser"
+            name="businessGroupId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-                key={groupId}
                 onChange={async (newValue) => {
-                  setValue("businessUser", newValue.value);
-                  setGroupId(newValue.value);
-                  setCompanyId(null);
+                  if (newValue.value != getValues("businessGroupId")) {
+                    setValue("businessGroupId", newValue.value);
+                    setCompany(null);
+                    setValue("companyId", "");
+                    setBranch(null);
+                    setValue("branchIds", "");
+                  }
                 }}
-                value={value}
+                defaultValue={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={businessDisabled}
                 name={name}
               />
             )}
@@ -250,24 +182,26 @@ const Account = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("company")}</label>
-
           <Controller
             name="companyId"
             control={control}
             rules={{ required: true }}
-            render={({ field: { onChange, value, name, ref } }) => (
+            render={({ field: { value, name, ref } }) => (
               <CompanyDropdown
                 onChange={async (newValue) => {
-                  setValue("companyId", newValue.value);
-                  setCompanyId(newValue.value);
+                  if (newValue.value != getValues("companyId")) {
+                    setValue("companyId", newValue.value);
+                    setCompany(newValue);
+                    setBranch(null);
+                    setValue("branchIds", "");
+                  }
                 }}
-                key={groupId}
-                groupId={groupId}
-                value={value}
+                groupId={watch("businessGroupId")}
+                defaultValue={value}
+                value={company}
                 customStyles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={companyDisabled}
               />
             )}
           />
@@ -285,12 +219,12 @@ const Account = ({
                   setValue("branchIds", newArray);
                   setBranchId(newArray);
                 }}
-                value={value}
+                defaultValue={value}
                 customStyles={customStyles}
                 ref={ref}
-                companyId={companyId}
+                companyId={watch("companyId")}
                 name={name}
-                isDisabled={companyId ? false : true}
+                isDisabled={!company?.value}
               />
             )}
           />
@@ -378,7 +312,6 @@ const Account = ({
           errors={errors}
           getValues={getValues}
           locationData={locationData}
-          dValues={formData?.[0]}
           id={id}
           showCity={false}
         />
@@ -451,7 +384,6 @@ const Account = ({
             render={({ field }) => (
               <Select
                 onChange={(e) => {
-                  setTempValue(e);
                   setValue("featureTemplateId", e.value);
                 }}
                 options={TemplateOptions}
@@ -461,7 +393,6 @@ const Account = ({
                 value={TemplateOptions.find(
                   (option) => option.value === field.value
                 )}
-                // defaultValue={filteredUserData[0] ? TemplateOptions.find(option => option._id === filteredUserData[0].featureTemplateId) : ""}
               />
             )}
           />
@@ -481,7 +412,6 @@ const Account = ({
               <Select
                 onChange={(newValue) => {
                   setValue("unitOfDistance", newValue.value);
-                  setTempValue(newValue.value);
                 }}
                 options={unitOfDistanceOptions}
                 ref={ref}
@@ -520,4 +450,4 @@ const Account = ({
   );
 };
 
-export default Account;
+export default UserForm;

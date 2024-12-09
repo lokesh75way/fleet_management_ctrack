@@ -1,21 +1,20 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../../../components/Modal/DeleteModal";
-import { IMAGES } from "../../../constants/theme";
+import { Link } from "react-router-dom";
+
+import DeleteModal from "@/components/Modal/DeleteModal";
 import usePermissions from "@/hooks/usePermissions";
 
-const SubUserTable = ({
+const UserTable = ({
   tableData,
   currentPage,
   itemsPerPage,
   onConfirmDelete,
-  editDrawerOpen,
 }) => {
   const { can } = usePermissions();
   const editPermission = can("subUser", "modify");
   const deletePermission = can("subUser", "delete");
-
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
 
   return (
@@ -42,17 +41,16 @@ const SubUserTable = ({
             <td>
               <span className="d-flex justify-content-center">
                 {editPermission && (
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => editDrawerOpen(item._id)}
-                  >
-                    <FaEdit
-                      style={{
-                        color: "green",
-                        fontSize: "1.2rem",
-                      }}
-                    />
-                  </span>
+                  <Link to={`/user/edit/${item?._id}`}>
+                    <span className="cursor-pointer">
+                      <FaEdit
+                        style={{
+                          color: "green",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    </span>
+                  </Link>
                 )}
                 {deletePermission && (
                   <DeleteModal
@@ -72,4 +70,4 @@ const SubUserTable = ({
   );
 };
 
-export default SubUserTable;
+export default UserTable;

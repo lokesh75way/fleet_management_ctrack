@@ -177,7 +177,6 @@ const LocationSelector = ({
         <TimeZoneSelector
           setValue={setValue}
           id={id}
-          dValues={dValues}
           countryCode={countryCode}
           customStyle={customStyles}
           Comptype={Comptype}

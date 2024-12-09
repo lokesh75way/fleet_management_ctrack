@@ -11,7 +11,6 @@ const TimeZoneSelector = ({
   dValues,
   Comptype,
 }) => {
-  console.log(dValues, "compnay timexzone");
   const { t } = useTranslation();
   const [timezones, setTimezones] = useState([]);
   const [selectedTimezone, setSelectedTimezone] = useState(null);

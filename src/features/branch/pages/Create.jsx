@@ -12,14 +12,14 @@ import { branchAccountSchema } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { getApiErrorMessage } from "@/utils/helper";
 import { createNewBranch, editBranch } from "../api";
-import MyAccount from "../../../jsx/components/TabComponent/BranchTabs/MyAccount";
+import CreateForm from "../components/Form";
 
 const BranchForm = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const { id } = useParams();
   const tabHeading = [id ? t("editBranch") : t("newBranch")];
-  const component = [MyAccount];
+  const component = [CreateForm];
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -30,6 +30,7 @@ const BranchForm = () => {
     getValues,
     control,
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       companyId: "",
@@ -131,6 +132,7 @@ const BranchForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmit}
+                          watch={watch}
                         />
                       </Tab.Pane>
                     );

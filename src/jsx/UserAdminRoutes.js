@@ -36,8 +36,8 @@ const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
-const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
-const SubUser = React.lazy(() => import("./pages/SubUser"));
+const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
+const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));

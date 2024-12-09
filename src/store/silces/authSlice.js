@@ -18,7 +18,7 @@ export const authSlice = createSlice({
       const data = action.payload;
       state.user = data.user;
       state.token = data.token;
-      state.permissions = data.permissions?.[0]?.permissions;
+      state.permissions = data.permissions?.[0]?.permission;
       state.role = data.user.role;
       state.isAuthenticated = true;
     },

@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../../../components/Error/Error";
-import CustomInput from "../../../../components/Input/CustomInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getAllGroups } from "@/features/businessGroup/api";
-import { getCompany } from "../../../../services/api/CompanyServices";
-import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
-import CompanyDropdown from "../../../../features/company/components/DropDownList";
-import FormField from "../../../../components/Input/UserDetailsForm";
+
+import Error from "@/components/Error/Error";
+import CustomInput from "@/components/Input/CustomInput";
+import GroupDropdown from "@/features/businessGroup/components/DropDownList";
+import CompanyDropdown from "@/features/company/components/DropDownList";
+import FormField from "@/components/Input/UserDetailsForm";
 import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
-import LocationSelector from "../../../../components/Input/LocationSelector";
+import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 import { getBranchById } from "@/features/branch/api";
 import { useQuery } from "@tanstack/react-query";
@@ -25,7 +24,7 @@ const customStyles = {
   }),
 };
 
-const MyAccount = ({
+const BranchForm = ({
   setValue,
   getValues,
   register,
@@ -34,14 +33,13 @@ const MyAccount = ({
   errors,
   control,
   isFormSubmitting,
+  watch,
 }) => {
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
-  const [groupId, setGroupId] = useState(null);
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
+  const [company, setCompany] = useState();
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
@@ -71,8 +69,6 @@ const MyAccount = ({
   useEffect(() => {
     if (formData && id) {
       setValue("businessGroupId", formData.businessGroupId?._id);
-      setGroupId(formData?.businessGroupId?._id);
-      // setBusinessDisabled(true);
       setValue("companyId", formData?.companyId?._id);
       setValue("branchName", formData?.branchName);
       setValue("email", formData?.email);
@@ -110,49 +106,29 @@ const MyAccount = ({
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <span className="text-danger">*</span>
-          {id ? (
-            <Controller
-              name="businessGroupId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <GroupDropdown
-                  onChange={async (newValue) => {
-                    await setValue("businessGroupId", newValue.value);
-                    setGroupId(newValue.value);
+
+          <Controller
+            name="businessGroupId"
+            control={control}
+            rules={{ required: true }}
+            render={({ field: { onChange, value, name, ref } }) => (
+              <GroupDropdown
+                onChange={(newValue) => {
+                  if (getValues("businessGroupId") != newValue.value) {
+                    setValue("businessGroupId", newValue.value);
                     setValue("companyName", "");
                     setValue("companyId", "");
-                  }}
-                  value={value}
-                  customStyles={customStyles}
-                  ref={ref}
-                  isDisabled={businessDisabled}
-                  name={name}
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              name="businessGroupId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <GroupDropdown
-                  onChange={async (newValue) => {
-                    await setValue("businessGroupId", newValue.value);
-                    setGroupId(newValue.value);
-                    setValue("companyName", "");
-                    setValue("companyId", "");
-                  }}
-                  value={value}
-                  customStyles={customStyles}
-                  ref={ref}
-                  isDisabled={businessDisabled}
-                  name={name}
-                />
-              )}
-            />
-          )}
+                    setCompany(null);
+                  }
+                }}
+                defaultValue={value}
+                customStyles={customStyles}
+                ref={ref}
+                name={name}
+              />
+            )}
+          />
+
           {!getValues("businessGroupId") && (
             <Error errorName={errors.businessGroupId} />
           )}
@@ -162,80 +138,31 @@ const MyAccount = ({
             {t("company")}
             <span className="text-danger">*</span>
           </label>
-          {id ? (
-            <Controller
-              name="companyId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <CompanyDropdown
-                  key={groupId}
-                  groupId={groupId}
-                  onChange={async (newValue) => {
-                    onChange(newValue);
-                    setValue("companyName", newValue.label);
-                  }}
-                  value={value}
-                  customStyles={customStyles}
-                  ref={ref}
-                  isDisabled={companyDisabled}
-                  name={name}
-                />
-              )}
-            />
-          ) : (
-            <Controller
-              name="companyId"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <CompanyDropdown
-                  key={groupId}
-                  groupId={groupId}
-                  onChange={async (newValue) => {
-                    await setValue("companyId", newValue.value);
-                    setValue("companyName", newValue.label);
-                  }}
-                  value={value}
-                  customStyles={customStyles}
-                  ref={ref}
-                  isDisabled={companyDisabled}
-                  name={name}
-                />
-              )}
-            />
-          )}
 
-          {!getValues("companyId") && <Error errorName={errors.companyId} />}
-        </div>
-        {/* <div className="col-xl-3 mb-3">
-          <label className="form-label">{t("parentBranch")}</label>
           <Controller
-            name="parent"
+            name="companyId"
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <ParentBranchDropdown
-                key={companyId}
-                companyId={companyId}
-                onChange={async (newValue) => {
-                  setValue("parentBranchId", newValue.value);
-                  setValue("parentBranch", newValue.value);
-                  setValue("parent", newValue.value);
-                }
-                }
-                value={value}
+              <CompanyDropdown
+                groupId={watch("businessGroupId")}
+                onChange={(newValue) => {
+                  setValue("companyId", newValue.value);
+                  setValue("companyName", newValue.label);
+                  setCompany(newValue);
+                }}
+                defaultValue={value}
+                value={company}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={false}
                 name={name}
               />
             )}
           />
-          {!getValues("parentBranch") && (
-            <Error errorName={errors.parentBranch} />
-          )}
-        </div> */}
+
+          {!getValues("companyId") && <Error errorName={errors.companyId} />}
+        </div>
+
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">
             {t("branchName")} <span className="text-danger">*</span>
@@ -392,4 +319,4 @@ const MyAccount = ({
   );
 };
 
-export default MyAccount;
+export default BranchForm;

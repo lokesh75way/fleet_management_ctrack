@@ -10,7 +10,7 @@ import { GrUserPolice } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { getUser } from "../../../../services/api/UserServices";
+import { getAllUser } from "@/features/user/api";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import { getTechnicians } from "../../../../services/api/TechnicianService";
 import { getDrivers } from "../../../../services/api/driverService";
@@ -47,7 +47,7 @@ const CardWidget = ({ usageData }) => {
         const { totalCount: companyCount } = companies.data;
         setCompanyCount(companyCount);
 
-        const { count: userCount } = await getUser();
+        const { count: userCount } = await getAllUser();
         setUserCount(userCount);
 
         const { data: branch } = await getAllBranch();

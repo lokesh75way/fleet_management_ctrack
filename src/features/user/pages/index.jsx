@@ -1,40 +1,34 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import PermissionDenied from "@/components/PermissionDenied";
 import usePermissions from "@/hooks/usePermissions";
 import Error404 from "@/components/Error/Error404";
-const BusinessForm = React.lazy(() => import("./Create"));
-const BusinessList = React.lazy(() => import("./List"));
+const UserList = lazy(() => import("./List"));
+const UserForm = lazy(() => import("./Create"));
 
 const routes = [
   {
-    module: "business",
+    module: "subUser",
     operation: "add",
     url: "/create",
-    component: <BusinessForm />,
+    component: <UserForm />,
   },
   {
-    module: "business",
+    module: "subUser",
+    url: "/",
+    operation: "view",
+    component: <UserList />,
+  },
+  {
+    module: "subUser",
     operation: "modify",
     url: "/edit/:id",
-    component: <BusinessForm />,
+    component: <VehicleFrom />,
   },
-  {
-    module: "business",
-    operation: "view",
-    url: "/",
-    component: <BusinessList />,
-  },
-  //   { module: "business", url: "business-group", component: <BusinessUser /> },
-  //   {
-  //     module: "business",
-  //     url: "business-group/:id",
-  //     component: <BusinessUser />,
-  //   },
 ];
 
-const BusinessGroupPages = () => {
+const UserPages = () => {
   const { can } = usePermissions();
 
   return (
@@ -59,4 +53,4 @@ const BusinessGroupPages = () => {
   );
 };
 
-export default BusinessGroupPages;
+export default UserPages;

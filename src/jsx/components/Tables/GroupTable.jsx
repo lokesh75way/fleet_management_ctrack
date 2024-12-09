@@ -3,6 +3,7 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../../../components/Modal/DeleteModal";
 import { useNavigate } from "react-router-dom";
+import usePermissions from "@/hooks/usePermissions";
 
 const GroupTable = ({
   onConfirmDelete,
@@ -14,6 +15,9 @@ const GroupTable = ({
 }) => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const { can } = usePermissions();
+  const canModify = can("groups", "modify");
+  const canDelete = can("groups", "delete");
   const handleClick = (index, id) => {
     setIsEditTrue(index);
     const props = {
@@ -44,23 +48,29 @@ const GroupTable = ({
               <h6>{item.name}</h6>
             </div>
           </td>
-          <td>
-            <span className="d-flex justify-content-center">
-              <span
-                className="cursor-pointer"
-                onClick={() => handleClick(index, item._id)}
-              >
-                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+          {(canModify || canDelete) && (
+            <td>
+              <span className="d-flex justify-content-center">
+                {canModify && (
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => handleClick(index, item._id)}
+                  >
+                    <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+                  </span>
+                )}
+                {canDelete && (
+                  <DeleteModal
+                    className="cursor-pointer "
+                    onConfirmDelete={() => onConfirmDelete(index, item._id)}
+                    id={item.id}
+                  >
+                    <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
+                  </DeleteModal>
+                )}
               </span>
-              <DeleteModal
-                className="cursor-pointer "
-                onConfirmDelete={() => onConfirmDelete(index, item._id)}
-                id={item.id}
-              >
-                <MdDelete style={{ color: "red", fontSize: "1.2rem" }} />
-              </DeleteModal>
-            </span>
-          </td>
+            </td>
+          )}
         </tr>
       ))}
     </>

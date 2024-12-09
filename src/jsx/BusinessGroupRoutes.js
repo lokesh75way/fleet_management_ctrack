@@ -12,11 +12,9 @@ import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
-import UserGroups from "../features/businessGroup/pages/List";
-import BusinessUser from "../features/businessGroup/pages/List";
-import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
-import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 import CompanyRoutes from "@/features/company/pages";
+import BranchRoutes from "@/features/branch/pages";
+import VehicleRoutes from "@/features/vehicle/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -69,23 +67,14 @@ const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
 const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
 );
-const VehicleForm = React.lazy(
-  () => import("../features/vehicle/pages/Create")
-);
 const DriverForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/DriverForm")
 );
 const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
 );
-const CompanyForm = React.lazy(
-  () => import("../features/company/pages/Create")
-);
-const BusinessForm = React.lazy(
-  () => import("../features/businessGroup/pages/Create")
-);
-const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
-const SubUser = React.lazy(() => import("./pages/SubUser"));
+const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
+const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
@@ -93,7 +82,6 @@ const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(
   () => import("./pages/businessUser/profile/MyProfile")
 );
@@ -105,16 +93,9 @@ const GeofenceMap = React.lazy(() => import("./pages/GeofenceMap"));
 const Error404 = React.lazy(() => import("../components/Error/Error404"));
 
 const AdminLayout = React.lazy(() => import("./layouts/AdminLayout"));
-const Company = React.lazy(() => import("./pages/admin/Company"));
-const Business = React.lazy(
-  () => import("../features/businessGroup/pages/List")
-);
 const General = React.lazy(() => import("./pages/admin/settings/General"));
 const Master = React.lazy(() => import("./pages/admin/settings/Master"));
-const Branch = React.lazy(() => import("../features/branch/pages/List"));
-//groups
 const CreateGroups = React.lazy(() => import("./pages/CreateGroups"));
-// import Permission from "./pages/Permission";
 
 const BusinessGroupRoutes = () => {
   const allroutes = [
@@ -168,19 +149,6 @@ const BusinessGroupRoutes = () => {
     },
     {
       module: "vehicle",
-      operation: "add",
-      url: "vehicle/create",
-      component: <VehicleForm />,
-    },
-    { module: "vehicle", url: "Vehicle", component: <Vehicle /> },
-    {
-      module: "vehicle",
-      operation: "modify",
-      url: "vehicle/edit/:id",
-      component: <UpdateVehicleForm />,
-    },
-    {
-      module: "vehicle",
       url: "vehicle-tracking/:id",
       component: <DriverTracking />,
     },
@@ -219,20 +187,6 @@ const BusinessGroupRoutes = () => {
 
     { module: "subUser", url: "user", component: <SubUser /> },
 
-    { module: "business", url: "business-group", component: <BusinessUser /> },
-    {
-      module: "business",
-      operation: "add",
-      url: "business/create",
-      component: <BusinessForm />,
-    },
-    {
-      module: "business",
-      url: "business-group/:id",
-      component: <BusinessUser />,
-    },
-    { module: "business", url: "business", component: <Business /> },
-
     { module: "settings", url: "/settings/alert", component: <Alert /> },
     {
       module: "settings",
@@ -246,23 +200,6 @@ const BusinessGroupRoutes = () => {
       url: "/settings/geofence/map",
       component: <GeofenceMap />,
     },
-
-    {
-      module: "branch",
-      operation: "add",
-      url: "branch/create",
-      component: <BranchForm />,
-    },
-    {
-      module: "branch",
-      operation: "modify",
-      url: "branch/edit/:id",
-      component: <BranchForm />,
-    },
-    { module: "branch", url: "branch", component: <Branch /> },
-    { module: "branch", url: "branch", component: <Branch /> },
-    { module: "branch", url: "branch/:id", component: <Branch /> },
-
     // groups
     { module: "groups", url: "groups", component: <CreateGroups /> },
     { module: "groups", url: "groups/permission", component: <Permission /> },
@@ -345,6 +282,8 @@ const BusinessGroupRoutes = () => {
             );
           })}
           <Route path="/company/*" element={<CompanyRoutes />} />
+          <Route path="/branch/*" element={<BranchRoutes />} />
+          <Route path="/vehicle/*" element={<VehicleRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -23,6 +23,10 @@ import Business from "../features/businessGroup/pages/List";
 import CompanyForm from "../features/company/pages/Create";
 import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
+import BusinessGroupRoutes from "@/features/businessGroup/pages";
+import CompanyRoutes from "@/features/company/pages";
+import BranchRoutes from "@/features/branch/pages";
+import VehicleRoutes from "@/features/vehicle/pages";
 
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -42,8 +46,8 @@ const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
-const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
-const SubUser = React.lazy(() => import("./pages/SubUser"));
+const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
+const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
@@ -289,7 +293,6 @@ const UserRoutes = () => {
     // { url: "manage-client", component: <ManageClient /> },
     { url: "reports/generated", component: <Report /> },
     { url: "technician/details", component: <Technician /> },
-    { url: "branch/:id", component: <Branch /> },
     { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
@@ -301,11 +304,8 @@ const UserRoutes = () => {
 
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle /> },
-    { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
     { url: "technician/details/create", component: <TechnicianForm /> },
-    { url: "branch/create", component: <BranchForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
 
     //Reports
@@ -337,7 +337,6 @@ const UserRoutes = () => {
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
     { url: "technician", component: <Technician /> },
-    { url: "branch", component: <Branch /> },
     { url: "driver", component: <Driver /> },
     { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
@@ -443,42 +442,12 @@ const UserRoutes = () => {
     { url: "driver/edit/:id", component: <DriverForm /> },
     { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
 
-    // buisness
-    {
-      module: "business",
-      operation: "add",
-      url: "business/create",
-      component: <BusinessForm />,
-    },
-    {
-      module: "business",
-      operation: "modify",
-      url: "business/edit/:id",
-      component: <BusinessForm />,
-    },
-    { module: "business", url: "business-group", component: <BusinessUser /> },
     {
       module: "business",
       url: "business-group/:id",
       component: <BusinessUser />,
     },
-    { module: "business", url: "business", component: <Business /> },
 
-    //company
-    {
-      module: "company",
-      operation: "add",
-      url: "company/create",
-      component: <CompanyForm />,
-    },
-    {
-      module: "company",
-      operation: "modify",
-      url: "company/edit/:id",
-      component: <CompanyForm />,
-    },
-    { module: "company", url: "company/:id", component: <Company /> },
-    { module: "company", url: "company", component: <Company /> },
     {
       module: "company",
       url: "company-tracking",
@@ -499,24 +468,6 @@ const UserRoutes = () => {
       url: "user/edit/:id",
       component: <SubUserForm />,
     },
-
-    //branch
-    {
-      module: "branch",
-      operation: "add",
-      url: "branch/create",
-      component: <BranchForm />,
-    },
-    { module: "branch", url: "branch", component: <Branch /> },
-    {
-      module: "branch",
-      operation: "modify",
-      url: "branch/edit/:id",
-      component: <BranchForm />,
-    },
-    { module: "branch", url: "branch", component: <Branch /> },
-    { module: "branch", url: "branch/cid/:id", component: <Branch /> },
-    { module: "branch", url: "branch/bid/:id", component: <Branch /> },
   ];
 
   function NotFound() {
@@ -542,6 +493,10 @@ const UserRoutes = () => {
               element={data.component}
             />
           ))}
+          <Route path="/business/*" element={<BusinessGroupRoutes />} />
+          <Route path="/company/*" element={<CompanyRoutes />} />
+          <Route path="/branch/*" element={<BranchRoutes />} />
+          <Route path="/vehicle/*" element={<VehicleRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

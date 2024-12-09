@@ -75,7 +75,7 @@ const CompanyForm = ({
 
   useEffect(() => {
     if (formData && id) {
-      setValue("businessGroupId", formData?.companyId?.businessGroupId?._id);
+      setValue("businessGroupId", formData?.businessGroupId);
       setValue("companyName", formData.companyId?.companyName);
       setValue("userName", formData.userName);
       setValue("email", formData.email);
@@ -141,10 +141,10 @@ const CompanyForm = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdownList
-                onChange={async (newValue) => {
-                  await setValue("businessGroupId", newValue.value);
+                onChange={(newValue) => {
+                  setValue("businessGroupId", newValue.value);
                 }}
-                value={value}
+                defaultValue={value}
                 ref={ref}
                 name={name}
                 customStyles={customStyles}

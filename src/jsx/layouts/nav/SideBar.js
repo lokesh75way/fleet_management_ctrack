@@ -8,20 +8,15 @@ import React, {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
-
-/// Link
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AdminMenuList } from "./AdminMenu";
 import { CompanyMenuList } from "./CompanyMenu";
 import { BusinessGroupMenuList } from "./BusinessGroupMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
-import { ThemeContext } from "../../../context/ThemeContext";
-
-import { useTranslation } from "react-i18next";
+import { ThemeContext } from "@/context/ThemeContext";
 import usePermissions from "@/hooks/usePermissions";
-import { CgChevronDoubleLeftR } from "react-icons/cg";
-import { useSelector } from "react-redux";
 
 const useBaseUrl = () => {
   const location = useLocation();

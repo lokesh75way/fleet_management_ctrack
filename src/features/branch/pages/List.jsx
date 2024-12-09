@@ -113,6 +113,7 @@ const BranchList = () => {
                                 onChange={(newValue) => {
                                   navigate(`/branch/cid/${newValue?.value}`);
                                 }}
+                                defaultValue={cId}
                                 value={
                                   cId ?? {
                                     label: t("allCompanies"),
@@ -170,7 +171,7 @@ const BranchList = () => {
                           </thead>
                           <tbody>
                             <BranchTable
-                              tableData={data?.data.data ?? []}
+                              tableData={data?.data ?? []}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
                               onConfirmDelete={mutate}

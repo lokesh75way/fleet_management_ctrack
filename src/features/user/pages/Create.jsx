@@ -1,33 +1,54 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import React, { useState, useMemo, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../components/MainPagetitle";
-import Account from "../../components/TabComponent/SubUserTab/Account";
-import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  subUserAccountSchema,
-  subUserEditAccountSchema,
-} from "../../../utils/yup";
-import { notifyError, notifySuccess } from "../../../utils/toast";
-import useStorage from "../../../hooks/useStorage";
 import { useTranslation } from "react-i18next";
-import { createUser, updateUser } from "../../../services/api/UserServices";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 
-const SubUserForm = ({ Title, editData, setEditData }) => {
+import MainPagetitle from "@/components/MainPagetitle";
+import UserForm from "../components/Form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { subUserAccountSchema, subUserEditAccountSchema } from "@/utils/yup";
+import { notifyError, notifySuccess } from "@/utils/toast";
+import { createUser, getUserById, updateUser } from "../api";
+import { getApiErrorMessage } from "@/utils/helper";
+
+const CreateUser = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const { checkRole, checkUserName } = useStorage();
-  const role = checkRole();
-  const userName = checkUserName();
   const tabHeading = [t("account")];
-  const component = [Account];
-  const totalTabs = tabHeading.length;
+  const component = [UserForm];
   const navigate = useNavigate();
-  const location = useLocation();
-  const { formData } = location.state || {};
+  const queryClient = useQueryClient();
+  const userDetails = useSelector((state) => state.auth.user);
+
+  const {
+    data: userData,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["user", id],
+    queryFn: () => getUserById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
+  const parsedUserData = useMemo(() => {
+    return {
+      ...userData,
+    };
+  }, [userData]);
+
+  useEffect(() => {
+    if (isError && !!id) {
+      notifyError("Not able to fetch user data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+
   const {
     register,
     formState: { errors },
@@ -35,55 +56,42 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     getValues,
     control,
     handleSubmit,
+    watch,
   } = useForm({
     resolver: yupResolver(id ? subUserEditAccountSchema : subUserAccountSchema),
+    values: parsedUserData,
   });
 
-  console.log(errors, "erroe:-");
+  const onError = (err) => notifyError(getApiErrorMessage(err));
 
-  const onSubmit = async (data) => {
-    if (data.businessUser) {
-      data.businessGroupId = data.businessUser;
-    }
-    if (data.parentCompany) {
-      data.companyId = data.parentCompany;
-    }
-    if (data.Branch) {
-      console.log(data.Branch);
-      data.branchId = data.Branch;
-    }
+  const { mutate: ediUserMutation, isPending: editPending } = useMutation({
+    mutationFn: ({ data, id }) => updateUser(id, data),
+    onSuccess: () => {
+      notifySuccess("Company Updated Successfully");
+      queryClient.invalidateQueries(["users"]);
+      navigate("/user");
+    },
+    onError,
+  });
+
+  const { mutate: createUserMutation, isPending: createPending } = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      notifySuccess("New User Created");
+      queryClient.invalidateQueries(["users"]);
+      navigate("/user");
+    },
+    onError,
+  });
+
+  const onSubmit = (data) => {
     if (id) {
-      try {
-        // data.role = "USER";
-        // data.parent = userName;
-        // data.type = "STAFF";
-        const response = await updateUser(id, data);
-        if (response.error) {
-          notifyError(response.error);
-        } else {
-          data._id = response._id;
-          notifySuccess("User updated successfully !!");
-          navigate("/user");
-        }
-      } catch (error) {
-        notifyError("Something Went Wrong");
-      }
+      ediUserMutation({ id, data });
     } else {
-      try {
-        data.role = "USER";
-        data.parent = userName;
-        data.type = "STAFF";
-        const response = await createUser(data);
-        if (response.error) {
-          notifyError(response.error);
-        } else {
-          data._id = response._id;
-          notifySuccess("User created successfully !!");
-          navigate("/user");
-        }
-      } catch (error) {
-        notifyError("Something Went Wrong");
-      }
+      data.role = "USER";
+      data.parent = userDetails.userName;
+      data.type = "STAFF";
+      createUserMutation(data);
     }
   };
 
@@ -131,7 +139,8 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
                           errors={errors}
                           onSubmit={onSubmit}
                           handleSubmit={handleSubmit}
-                          formData={formData}
+                          isLoading={createPending || editPending}
+                          watch={watch}
                         />
                       </Tab.Pane>
                     );
@@ -145,4 +154,4 @@ const SubUserForm = ({ Title, editData, setEditData }) => {
     </>
   );
 };
-export default SubUserForm;
+export default CreateUser;
