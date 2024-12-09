@@ -28,17 +28,20 @@ import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import {
   createVehicles,
+  getVehicleById,
   updateVehicles,
 } from "../../../../../services/api/VehicleService";
 
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
+import { useQuery } from "@tanstack/react-query";
 
 const VehicleForm = () => {
   const { t } = useTranslation();
-  const { saveData } = useStorage();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [formData, setFormData] = useState();
+  const { id } = useParams();
   const tabHeading = [
     t("information"),
     t("general"),
@@ -47,7 +50,7 @@ const VehicleForm = () => {
     // t("statuses"),
 
     t("profile"),
-    t("document"),
+    // t("document"),
     // t("messageforwarding"),
   ];
 
@@ -58,15 +61,38 @@ const VehicleForm = () => {
     // Servicing,
     // Statuses,
     Profile,
-    Document,
+    // Document,
     // MessageForwarding,
   ];
 
   const totalTabs = tabHeading.length;
-
-  const { id } = useParams();
   const location = useLocation();
-  const { formData, vehicle } = location.state || {};
+  const {
+    // formData,
+    vehicle,
+  } = location.state || {};
+
+  const { data, isError } = useQuery({
+    queryKey: ["vehicle", id],
+    queryFn: () => getVehicleById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (isError && !!id) {
+      notifyError("Not able to fetch business group data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+
+  useEffect(() => {
+    if (id && data) {
+      setFormData(data?.data);
+    }
+  }, [data]);
+
+  console.log("data", formData);
 
   const {
     register,
@@ -86,10 +112,10 @@ const VehicleForm = () => {
           issueDate: new Date(),
         },
       ],
-      vehicleName: vehicle?.Vehicle_Name,
-      imeiNumber: vehicle?.imeiNumber,
-      plateNumber: vehicle?.Vehicle_No,
-      registrationNumber: vehicle?.Vehicle_No,
+      // vehicleName: vehicle?.Vehicle_Name,
+      // imeiNumber: vehicle?.imeiNumber,
+      // plateNumber: vehicle?.Vehicle_No,
+      // registrationNumber: vehicle?.Vehicle_No,
       selectedInput: "registrationNumber",
     },
     resolver: yupResolver(
@@ -104,8 +130,6 @@ const VehicleForm = () => {
               : vehicleDocumentSchema
     ),
   });
-
-  console.log("first", errors);
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
@@ -127,6 +151,7 @@ const VehicleForm = () => {
             notifyError("Some Error occured");
           }
         } else {
+          console.log("data", data);
           try {
             for (const key in data) {
               const element = data[key];

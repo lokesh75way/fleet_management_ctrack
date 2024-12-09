@@ -718,6 +718,7 @@ export const english = {
     unitId: "UnitId",
     fleetnumber: "Fleet Number",
     make: "Make",
+    manufacture: "Manufacture",
     year: "Year",
     model: "Model",
     color: "Color",

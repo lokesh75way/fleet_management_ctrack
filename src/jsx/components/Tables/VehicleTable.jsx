@@ -3,12 +3,9 @@ import DeleteModal from "../../../components/Modal/DeleteModal";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaCar } from "react-icons/fa6";
-import useStorage from "../../../hooks/useStorage";
 import { usePermissions } from "../../../context/PermissionContext";
 
 const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
-  // const { getData } = useStorage();
-  // const filteredItems = getData(tableData);
   const { can } = usePermissions();
   const editPermission = can("vehicle", "modify");
   const deletePermission = can("vehicle", "delete");
@@ -25,7 +22,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
         </div>
       </td>
       <td>
-        <span>{item.plateNumber}</span>
+        <span>{item.registrationNumber}</span>
       </td>
       <td>
         <span className="text-primary">{item?.branchId?.branchName}</span>
@@ -40,12 +37,6 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
       <td>
         <span className="text-primary">{item.registrationNumber}</span>
       </td>
-      <td>
-        <span>{item.weightCapacity}</span>
-      </td>
-      {/* <td>
-                <span className={`badge light border-0 ${item.status==="Active" ? 'badge-success' : 'badge-danger'} `}style={{width:"45%"}}>{item.status}</span>
-            </td> */}
       {(deletePermission || editPermission) && (
         <td>
           <span className="d-flex justify-content-center">

@@ -76,7 +76,6 @@ const Vehicle = () => {
     "simNumber",
     "IMEINumber",
     "registrationNumber",
-    "weightCapacity",
   ];
 
   if (can("vehicle", "modify") || can("vehicle", "delete")) {

@@ -50,7 +50,6 @@ const Information = ({
     console.log("event", event.target.value);
     setSelectedOption(event.target.value);
   };
-  console.log("res", register);
 
   const customStyles = {
     control: (base) => ({
@@ -58,10 +57,38 @@ const Information = ({
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
   const role = checkRole();
 
   const { t } = useTranslation();
+  const { id } = useParams();
+  useEffect(() => {
+    if (formData && id) {
+      setValue("vehicleNumber", formData.vehicleNumber);
+      setValue("registrationNumber", formData.registrationNumber);
+      setValue("unitId", formData.unitId);
+      setValue("description", formData.description);
+      setValue("manufacture", formData.manufacture);
+      setValue("color", formData.color);
+      setValue("model", formData.model);
+      setValue("group", formData.group);
+      setValue("groupDescription", formData.groupDescription);
+      setValue("year", formData.year);
+      setValue("licenseNumber", formData.licenseNumber);
+      setValue("licenseExpire", formData.licenseExpire);
+      setValue("roadWorthy", formData.roadWorthy);
+      setValue("roadWorthyExpire", formData.roadWorthyExpire);
+      setValue("odo", formData.odo);
+      setValue("odoNextService", formData.odoNextService);
+      setValue("hours", formData.hours);
+      setValue("hoursNextService", formData.hoursNextService);
+      setValue("currentStatus", formData.currentStatus);
+      setValue("currentDriver", formData.currentDriver);
+      setValue("currentLocation", formData.currentLocation);
+      setValue("speed", formData.speed);
+      setValue("heading", formData.heading);
+      setValue("skillSet", formData.skillSet);
+    }
+  }, [formData, id]);
 
   return (
     <div className="p-4 relative">
@@ -87,10 +114,10 @@ const Information = ({
                     type="number"
                     required
                     register={register}
-                    name="number"
+                    name="vehicleNumber"
                     label="Number"
                     placeholder=""
-                    defaultValue={getValues("number")}
+                    defaultValue={getValues("vehicleNumber")}
                   />
                   <Error errorName={errors.number} />
                 </div>
@@ -206,15 +233,15 @@ const Information = ({
                   <Error errorName={errors.description} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">{t("make")}</label>
+                  <label className="form-label">{t("manufacture")}</label>
                   <CustomInput
                     type="text"
                     required
                     register={register}
-                    label="Make"
-                    name="make"
+                    label="Manufacture"
+                    name="manufacture"
                     placeholder=""
-                    defaultValue={getValues("make")}
+                    defaultValue={getValues("manufacture")}
                   />
                   <Error errorName={errors.make} />
                 </div>
@@ -264,11 +291,11 @@ const Information = ({
                     required
                     register={register}
                     label="VINNumber"
-                    name="vinNumber"
+                    name="vinChassisNumber"
                     placeholder=""
-                    defaultValue={getValues("vinNumber")}
+                    defaultValue={getValues("vinChassisNumber")}
                   />
-                  <Error errorName={errors.vinNumber} />
+                  <Error errorName={errors.vinChassisNumber} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("engineNumber")}</label>
@@ -314,9 +341,9 @@ const Information = ({
                     required
                     register={register}
                     label="Description"
-                    name="description"
+                    name="groupDescription"
                     placeholder=""
-                    defaultValue={getValues("description")}
+                    defaultValue={getValues("groupDescription")}
                   />
                   <Error errorName={errors.description} />
                 </div>
@@ -471,9 +498,9 @@ const Information = ({
                   <CustomInput
                     type="number"
                     register={register}
-                    name="nextService"
+                    name="odoNextService"
                     placeholder=""
-                    defaultValue={getValues("nextService")}
+                    defaultValue={getValues("odoNextService")}
                   />
                   <Error errorName={errors.nextService} />
                 </div>
@@ -493,9 +520,9 @@ const Information = ({
                   <CustomInput
                     type="number"
                     register={register}
-                    name="nextService"
+                    name="hoursNextService"
                     placeholder=""
-                    defaultValue={getValues("nextService")}
+                    defaultValue={getValues("hoursNextService")}
                   />
                   <Error errorName={errors.nextService} />
                 </div>

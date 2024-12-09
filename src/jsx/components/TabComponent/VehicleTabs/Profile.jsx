@@ -56,96 +56,93 @@ const Profile = ({
   useEffect(() => {
     if (formData && id) {
       // setValue("businessGroupId",formData?.[0].companyId?.businessGroupId?._id)
-      // setValue("companyName",formData[0].companyId?.companyName)
-      // setValue("userName", formData[0].userName)
-      // setValue("email",formData[0].email)
-      // setValue("mobileNumber",formData[0].mobileNumber)
-      // setValue("helpDeskEmail",formData[0].companyId?.helpDeskEmail)
-      // setValue("whatsappContactNumber",formData[0].companyId?.whatsappContactNumber)
-      // setValue("helpDeskTelephoneNumber",formData[0].companyId?.helpDeskTelephoneNumber)
-      // setValue("street1",formData[0].companyId?.street1)
-      // setValue("street2",formData[0].companyId?.street2)
-      // setValue("contactPerson",formData[0].companyId?.contactPerson)
-      // setValue("faxNumber",formData[0].companyId?.faxNumber)
-      // setValue("zipCode",formData[0].companyId?.zipCode)
-      // setValue("city",formData[0].companyId?.city)
-      // setValue("storageCapacity",formData[0].companyId?.capacity )
-      // setValue("country",formData[0].country)
-      // setValue("state",formData[0].state || '' )
-      // setDefaultCountry({ name:formData[0].country })
-      // setSelectStateName({name : formData[0].state || ''})
+      // setValue("companyName",formData.companyId?.companyName)
+      // setValue("userName", formData.userName)
+      // setValue("email",formData.email)
+      // setValue("mobileNumber",formData.mobileNumber)
+      // setValue("helpDeskEmail",formData.companyId?.helpDeskEmail)
+      // setValue("whatsappContactNumber",formData.companyId?.whatsappContactNumber)
+      // setValue("helpDeskTelephoneNumber",formData.companyId?.helpDeskTelephoneNumber)
+      // setValue("street1",formData.companyId?.street1)
+      // setValue("street2",formData.companyId?.street2)
+      // setValue("contactPerson",formData.companyId?.contactPerson)
+      // setValue("faxNumber",formData.companyId?.faxNumber)
+      // setValue("zipCode",formData.companyId?.zipCode)
+      // setValue("city",formData.companyId?.city)
+      // setValue("storageCapacity",formData.companyId?.capacity )
+      // setValue("country",formData.country)
+      // setValue("state",formData.state || '' )
+      // setDefaultCountry({ name:formData.country })
+      // setSelectStateName({name : formData.state || ''})
       // setBussinessGpLable(formData?.[0].companyId?.businessGroupId?.groupName)
 
-      setValue("plateNumber", formData[0].plateNumber || "");
-      setValue("vehicleCategory", formData[0].vehicleCategory || "");
-      setValue("dvirTemplate", formData[0].dvirTemplate || "");
-      setValue("purchaseAmount", formData[0].purchaseAmount || "");
-      setValue("manufacturerDate", formData[0].manufacturerDate || "");
-      setValue("purchaseDate", formData[0].purchaseDate || "");
-      setValue("weightCapacity", formData[0].weightCapacity || "");
-      setValue("gpsInstallationDate", formData[0].gpsInstallationDate || "");
-      setValue("gpsWarranty", formData[0].gpsWarranty || "");
-      setValue("companyAverage", formData[0].companyAverage || "");
-      setValue("permit", formData[0].permit || "");
-      setValue("installationDate", formData[0].installationDate || "");
-      setValue("registrationNumber", formData[0].registrationNumber || "");
-      setValue("fuelType", formData[0].fuelType || "");
+      setValue("plateNumber", formData.plateNumber || "");
+      setValue("vehicleCategory", formData.vehicleCategory || "");
+      setValue("dvirTemplate", formData.dvirTemplate || "");
+      setValue("purchaseAmount", formData.purchaseAmount || "");
+      setValue("manufacturerDate", formData.manufacturerDate || "");
+      setValue("purchaseDate", formData.purchaseDate || "");
+      setValue("weightCapacity", formData.weightCapacity || "");
+      setValue("gpsInstallationDate", formData.gpsInstallationDate || "");
+      setValue("gpsWarranty", formData.gpsWarranty || "");
+      setValue("companyAverage", formData.companyAverage || "");
+      setValue("permit", formData.permit || "");
+      setValue("installationDate", formData.installationDate || "");
+      setValue("registrationNumber", formData.registrationNumber || "");
+      setValue("fuelType", formData.fuelType || "");
       const distanceBaseFuelConsumption =
         formData?.[0]?.distanceBaseFuelConsumption;
       setValue(
         "distanceBasedDistanceQuantity",
-        formData[0].distanceBasedDistanceQuantity || ""
+        formData.distanceBasedDistanceQuantity || ""
       );
       if (distanceBaseFuelConsumption) {
         setValue(
           "distanceBaseFuelConsumption",
-          formData[0].distanceBaseFuelConsumption || ""
+          formData.distanceBaseFuelConsumption || ""
         );
         setValue(
           "distanceBaseFuelConsumptionUnit",
-          formData[0].distanceBaseFuelConsumptionUnit || ""
+          formData.distanceBaseFuelConsumptionUnit || ""
         );
         setIsCheckedDBFC(true);
       }
       setValue(
         "durationBaseFuelConsumptionDurationQuanitty",
-        formData[0].durationBaseFuelConsumptionDurationQuanitty || ""
+        formData.durationBaseFuelConsumptionDurationQuanitty || ""
       );
       setValue(
         "durationBaseFuelConsumptionDurationUnit",
-        formData[0].durationBaseFuelConsumptionDurationUnit || ""
+        formData.durationBaseFuelConsumptionDurationUnit || ""
       );
       const durationBaseDistanceQuantity =
         formData?.[0]?.durationBaseDistanceQuantity;
       if (durationBaseDistanceQuantity) {
         setValue(
           "durationBaseDistanceQuantity",
-          formData[0].durationBaseDistanceQuantity || ""
+          formData.durationBaseDistanceQuantity || ""
         );
         setValue(
           "durationBaseFuelConsumptionUnit",
-          formData[0].durationBaseFuelConsumptionUnit || ""
+          formData.durationBaseFuelConsumptionUnit || ""
         );
         setIsCheckedDBFC2(true);
       }
-      setValue(
-        "fuelIdlingConsumption",
-        formData[0].fuelIdlingConsumption || ""
-      );
+      setValue("fuelIdlingConsumption", formData.fuelIdlingConsumption || "");
       setValue(
         "fuelIdlingConsumptionUnit",
-        formData[0].fuelIdlingConsumptionUnit || ""
+        formData.fuelIdlingConsumptionUnit || ""
       );
       setValue(
         "consumptionTolerancePercent",
-        formData[0].consumptionTolerancePercent || ""
+        formData.consumptionTolerancePercent || ""
       );
-      setValue("vinNumber", formData[0].vinNumber || "");
-      setValue("engineNumber", formData[0].engineNumber || "");
-      setValue("odometer", formData[0].odometer || "");
-      setValue("LBSDetectionRadius", formData[0].LBSDetectionRadius || "");
-      setValue("engineHour", formData[0].engineHour || "");
-      setValue("passengerSeat", formData[0].passengerSeat || "");
+      setValue("vinNumber", formData.vinNumber || "");
+      setValue("engineNumber", formData.engineNumber || "");
+      setValue("odometer", formData.odometer || "");
+      setValue("LBSDetectionRadius", formData.LBSDetectionRadius || "");
+      setValue("engineHour", formData.engineHour || "");
+      setValue("passengerSeat", formData.passengerSeat || "");
       const distanceCostQuantity = formData?.[0]?.distanceCostQuantity;
       if (distanceCostQuantity) {
         setValue("distanceCostQuantity", distanceCostQuantity);
@@ -154,32 +151,32 @@ const Profile = ({
       const durationCostQuantity = formData?.[0]?.durationCostQuantity;
       if (durationCostQuantity) {
         setValue("durationCostQuantity", durationCostQuantity);
-        setValue("durationUnit", formData[0].durationUnit || "");
+        setValue("durationUnit", formData.durationUnit || "");
         setIsCheckedCBO2(true);
       }
-      setValue("rfidTimeoutDuration", formData[0].rfidTimeoutDuration || "");
-      setValue("sleepModeDuration", formData[0].sleepModeDuration || "");
-      setValue("minimumWorkingHour", formData[0].minimumWorkingHour || "");
+      setValue("rfidTimeoutDuration", formData.rfidTimeoutDuration || "");
+      setValue("sleepModeDuration", formData.sleepModeDuration || "");
+      setValue("minimumWorkingHour", formData.minimumWorkingHour || "");
       const weightSensor = formData?.[0]?.weightSensor;
       if (weightSensor) {
         setValue("weightSensor", weightSensor);
         setIsCheckedWC(weightSensor);
       }
-      setValue("fuelSensor", formData[0].fuelSensor || "");
-      setValue("noOfTanks", formData[0].noOfTanks || "");
+      setValue("fuelSensor", formData.fuelSensor || "");
+      setValue("noOfTanks", formData.noOfTanks || "");
       const gSensor = formData?.[0]?.gSensor;
       if (gSensor) {
         setIsCheckedGS(gSensor);
       }
-      setValue("axisX", formData[0].axisX || "");
-      setValue("axisY", formData[0].axisY || "");
-      setValue("axisZ", formData[0].axisZ || "");
-      setValue("duration", formData[0].duration || "");
-      setValue("underweightTolerance", formData[0].underweightTolerance || "");
-      setValue("overweightTolerance", formData[0].overweightTolerance || "");
+      setValue("axisX", formData.axisX || "");
+      setValue("axisY", formData.axisY || "");
+      setValue("axisZ", formData.axisZ || "");
+      setValue("duration", formData.duration || "");
+      setValue("underweightTolerance", formData.underweightTolerance || "");
+      setValue("overweightTolerance", formData.overweightTolerance || "");
       setValue(
         "loadingUnloadingTolerance",
-        formData[0].loadingUnloadingTolerance || ""
+        formData.loadingUnloadingTolerance || ""
       );
 
       // setValue("plateNumber",FormData.plateNumber || '' )
@@ -632,7 +629,7 @@ const Profile = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("next")}
+          {t("submit")}
         </Button>
       </div>
     </div>

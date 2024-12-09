@@ -58,38 +58,33 @@ const General = ({
   const role = checkRole();
 
   const { t } = useTranslation();
-
-  // const[formData,setFormData] = useState([])
   useEffect(() => {
     if (formData && id) {
-      setValue("businessGroupId", formData?.[0]?.businessGroupId);
-      setGroupId(formData?.[0]?.businessGroupId);
-      setValue("companyId", formData?.[0]?.companyId);
-      setCompanyId(formData?.[0]?.companyId);
-      setValue("imeiNumber", formData?.[0].imeiNumber);
+      setValue("businessGroupId", formData?.businessGroupId);
+      setGroupId(formData?.businessGroupId);
+      setValue("companyId", formData.companyId);
+      setCompanyId(formData.companyId);
+      setValue("imeiNumber", formData?.imeiNumber);
 
-      setValue("vehicleName", formData?.[0].vehicleName);
-      setValue("plateNumber", formData?.[0].plateNumber);
+      setValue("vehicleName", formData?.vehicleName);
+      setValue("plateNumber", formData?.plateNumber);
       setValue("branchId", formData[0]?.branchId?._id);
       // setValue(
       //   "branch",
-      //   formData?.[0]?.branchId.map((branch) => branch._id)
+      //   formData??.branchId.map((branch) => branch._id)
       // );
-      setValue("simNumber", formData?.[0].simNumber);
-      setValue("secondrySimNumber", formData?.[0].secondrySimNumber);
-      setValue("IMEINumber", formData?.[0].IMEINumber);
-      setValue("registrationNumber", formData?.[0].registrationNumber);
-      setValue("weightCapacity", formData?.[0].weightCapacity);
-      setValue("deviceType", formData?.[0].deviceType);
-      setValue("serverAddress", formData?.[0].serverAddress);
-      setValue("distanceCounter", formData?.[0].distanceCounter);
-      setValue("unitOfDistance", formData?.[0].unitOfDistance);
-      setValue("speedDetection", formData?.[0].speedDetection);
+      setValue("simNumber", formData?.simNumber);
+      setValue("secondrySimNumber", formData?.secondrySimNumber);
+      setValue("IMEINumber", formData?.IMEINumber);
+      setValue("registrationNumber", formData?.registrationNumber);
+      setValue("weightCapacity", formData?.weightCapacity);
+      setValue("deviceType", formData?.deviceType);
+      setValue("serverAddress", formData?.serverAddress);
+      setValue("distanceCounter", formData?.distanceCounter);
+      setValue("unitOfDistance", formData?.unitOfDistance);
+      setValue("speedDetection", formData?.speedDetection);
 
-      setValue(
-        "deviceAccuracyTolerance",
-        formData?.[0].deviceAccuracyTolerance
-      );
+      setValue("deviceAccuracyTolerance", formData?.deviceAccuracyTolerance);
     }
   }, [formData, id]);
 

@@ -45,9 +45,7 @@ const Document = ({
     { value: "ROAD_TAX", label: "Road Tax" },
   ];
   const formFields =
-    formData && formData[0] && formData[0].documents
-      ? formData[0]?.documents
-      : fields;
+    formData && formData.documents ? formData?.documents : fields;
   return (
     <div className="p-4">
       <div className="row" style={{ width: "100%" }}>

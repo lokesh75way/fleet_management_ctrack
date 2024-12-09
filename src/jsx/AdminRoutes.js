@@ -178,7 +178,8 @@ const allroutes = [
     module: "vehicle",
     operation: "modify",
     url: "vehicle/edit/:id",
-    component: <UpdateVehicleForm />,
+    component: <VehicleForm />,
+    // component: <UpdateVehicleForm />,
   },
   {
     module: "vehicle",

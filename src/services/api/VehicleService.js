@@ -47,6 +47,11 @@ const getVehiclesTraking = async (id, status) => {
   return { data: data.data };
 };
 
+const getVehicleById = async (id) => {
+  const { data } = await axios.get(`/vehicles/${id}`);
+  return data?.data;
+};
+
 export {
   createVehicles,
   getVehicles,
@@ -55,4 +60,5 @@ export {
   getVehiclesByCompany,
   getVehiclesTraking,
   getUnassignedVehicles,
+  getVehicleById,
 };
