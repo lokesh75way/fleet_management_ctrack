@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CSVLink } from "react-csv";
-import { IMAGES } from "../constant/theme";
+import { IMAGES } from "../../constants/theme";
 import MainPagetitle from "../../components/MainPagetitle";
 import { ClassifyTripData } from "../components/Tables/Tables";
 import { FormProvider, useForm } from "react-hook-form";

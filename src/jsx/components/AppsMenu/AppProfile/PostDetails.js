@@ -15,7 +15,7 @@ import profile01 from "@/assets/images/profile/1.jpg";
 import profile08 from "@/assets/images/profile/8.jpg";
 import profile from "@/assets/images/profile/profile.png";
 import PageTitle from "../../../layouts/PageTitle";
-import { IMAGES } from "../../../constant/theme";
+import { IMAGES } from "../../../../constants/theme";
 
 const galleryBlog = [
   { image: IMAGES.Profile3 },

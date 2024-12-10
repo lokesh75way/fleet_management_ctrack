@@ -7,7 +7,7 @@ import PageTitle from "../../layouts/PageTitle";
 import TopMenus from "./TopMenus";
 
 import MainContent from "./MainContent";
-import { IMAGES } from "../../constant/theme";
+import { IMAGES } from "../../../constants/theme";
 
 const tableData = [
   { title: "Landing Page" },

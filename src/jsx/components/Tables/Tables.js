@@ -1,4 +1,4 @@
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 
 export const CompanyData = [
   {

@@ -8,7 +8,7 @@ import PageTitle from "../../layouts/PageTitle";
 import TopMenus from "./TopMenus";
 import MainContent from "./MainContent";
 import { useState } from "react";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 
 const options1 = [
   { value: "1", label: "Categorized" },

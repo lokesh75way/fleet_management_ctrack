@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { Droppable } from "@hello-pangea/dnd";
-import { IMAGES } from "../../../constant/theme";
+import { IMAGES } from "../../../../constants/theme";
 import { Dropdown } from "react-bootstrap";
 
 const Column = ({ column, tasks }) => {

@@ -2,22 +2,27 @@ import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
-import { usePermissions } from "@/context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const GroupDropdownList = ({
   onChange,
   value,
+  defaultValue,
   customStyles,
   isDisabled,
   name,
 }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(value);
   const { page, setPage } = usePagination();
-  const { userDetails, can } = usePermissions();
+  const { can, role } = usePermissions();
+  const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
+
+  console.log({ defaultValue });
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
@@ -34,8 +39,8 @@ const GroupDropdownList = ({
     });
 
   const { refetch } = useQuery({
-    queryKey: ["group", value],
-    queryFn: () => getGroupById(value),
+    queryKey: ["group", defaultValue],
+    queryFn: () => getGroupById(defaultValue),
     enabled: false,
     staleTime: Infinity,
   });
@@ -54,28 +59,35 @@ const GroupDropdownList = ({
   }, [data]);
 
   useEffect(() => {
+    if (value?.value != selectedOption?.value) {
+      setSelectedOption(value);
+    }
+
+    return () => {};
+  }, [value]);
+
+  useEffect(() => {
     const initializeValue = async () => {
-      if (!value) {
+      if (!value && !defaultValue) {
         if (!can("business", "view")) {
-          const userGroup = userDetails.user.businessGroupId[0];
+          const userGroup = userDetails.businessGroupId[0];
           const defaultOption = {
-            label: userGroup.groupName,
-            value: userGroup._id,
+            label: userGroup?.groupName,
+            value: userGroup?._id,
           };
           setSelectedOption(defaultOption);
           onChange(defaultOption);
         }
         return;
       }
-      if (value && typeof value === "object" && value.label && value.value) {
-        setSelectedOption(value);
-        return;
-      }
-      if (typeof value === "string" || value?._id) {
-        const valueId = value?._id || value;
-        const existingOption = options.find((opt) => opt.value === valueId);
+
+      if (defaultValue) {
+        const existingOption = options.find(
+          (opt) => opt.value === defaultValue
+        );
         if (existingOption) {
           setSelectedOption(existingOption);
+          onChange(existingOption);
           return;
         }
         try {
@@ -91,11 +103,13 @@ const GroupDropdownList = ({
         } catch (error) {
           console.error("Error fetching group details:", error);
         }
+      } else {
+        setSelectedOption(value);
       }
     };
 
     initializeValue();
-  }, [value, options, pathname, userDetails, can]);
+  }, [defaultValue, options, pathname, userDetails]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
@@ -112,7 +126,7 @@ const GroupDropdownList = ({
       value={selectedOption}
       onChange={onChange}
       name={name}
-      isDisabled={isDisabled || userDetails.user.role !== "SUPER_ADMIN"}
+      isDisabled={isDisabled || !can("business", "view")}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       menuPortalTarget={document.body}

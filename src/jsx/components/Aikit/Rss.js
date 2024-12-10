@@ -5,7 +5,7 @@ import Select from "react-select";
 import PageTitle from "../../layouts/PageTitle";
 import TopMenus from "./TopMenus";
 import MainContent from "./MainContent";
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 import Prompts from "./Prompts";
 
 const data = [

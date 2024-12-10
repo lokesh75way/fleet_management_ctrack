@@ -1,6 +1,6 @@
+import usePermissions from "@/hooks/usePermissions";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
-import { usePermissions } from "../../../context/PermissionContext";
 
 const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
   const { can } = usePermissions();

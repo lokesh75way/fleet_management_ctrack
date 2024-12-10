@@ -5,7 +5,6 @@ import CompanyTable from "../../../features/company/components/Table";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-import { usePermissions } from "../../../context/PermissionContext";
 import {
   deleteCompany,
   getCompany,
@@ -16,6 +15,8 @@ import usePagination from "../../../hooks/usePagination";
 import Paginate from "../../../components/Paginate";
 import { getApiErrorMessage } from "../../../utils/helper";
 import TableSkeleton from "../../../components/Skeleton/Table";
+import usePermissions from "@/hooks/usePermissions";
+import { useSelector } from "react-redux";
 
 const Company = () => {
   const [businessGroupNames, setBusinessGroupNames] = useState();
@@ -26,29 +27,29 @@ const Company = () => {
     value: "All Business Groups",
     label: t("allBusinessGroup"),
   });
+  const { can, role } = usePermissions();
   const [businessGroupOptions, setBusinessGroupOptions] = useState([]);
   const [tempValue, setTempValue] = useState("All");
   const { id } = useParams();
   const { page, goToPage, setCount, totalCount, setPage } = usePagination();
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const [dropdownDisable, setDropdownDisable] = useState(false);
   const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
   const [initialLoad, setInitialLoad] = useState(false);
-
+  const userDetails = useSelector((state) => state.auth.user);
   const { control, setValue } = useForm();
 
   const fetchAllCompany = async (page, groupId) => {
     try {
       if (page == 1) setInitialLoad(true);
       let responseData;
-      if (userDetails?.user?.role === "SUPER_ADMIN") {
+      if (role === "SUPER_ADMIN") {
         responseData = await getCompany(page, groupId);
-      } else if (userDetails?.user?.role === "BUSINESS_GROUP") {
+      } else if (role === "BUSINESS_GROUP") {
         setDropdownDisable(true);
-        const businessId = userDetails?.user?.businessGroupId[0]?._id;
+        const businessId = userDetails?.businessGroupId[0]?._id;
         responseData = await getCompany(page, businessId);
       }
       const { data, success, totalCount } = responseData;
@@ -125,7 +126,6 @@ const Company = () => {
     });
   };
 
-  const { can, setUserPermission } = usePermissions();
   return (
     <>
       <MainPagetitle

@@ -52,7 +52,7 @@ import {
   SparklinesReferenceLine,
 } from "react-sparklines";
 import BarChart5 from "../charts/Chartjs/bar5";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import Setting from "../../layouts/Setting";
 import CompSetting from "../../layouts/CompSetting";
 import BarChart6 from "../charts/Chartjs/bar6";

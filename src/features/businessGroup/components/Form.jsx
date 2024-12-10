@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
 import "@/assets/scss/pages/_driver-tracking.scss";
-import {
-  dateFormatOptions,
-  storageCapacityOptions,
-  timeFormatOptions,
-} from "@/constants/options";
+import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
 import FileUploader from "@/components/FileUploader";
 import CredentialsInput from "@/components/Input/CredentialsInput";
 import UserDetailsForm from "@/components/Input/UserDetailsForm";
 import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
-import { getGroupById } from "../api";
-import { notifyError } from "@/utils/toast";
 
 const BusinessForm = ({
   setValue,
@@ -38,72 +31,8 @@ const BusinessForm = ({
   });
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
-  const [logo, setLogo] = useState(null);
-  const [dValues, setDvalues] = useState({});
   const { id } = useParams();
-  const navigate = useNavigate();
   const { location: locationData, error: locationError } = useUserLocation();
-
-  // TODO: show loading state in UI
-  const { data, isError } = useQuery({
-    queryKey: ["group", id],
-    queryFn: () => getGroupById(id),
-    enabled: !!id,
-    staleTime: Infinity,
-  });
-
-  useEffect(() => {
-    if (isError && !!id) {
-      notifyError("Not able to fetch business group data");
-      navigate("/not-found");
-    }
-  }, [isError && id]);
-
-  useEffect(() => {
-    if (id && data) {
-      // TODO: set directly to form instead of state
-      setDvalues(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (dValues && id) {
-      setValue("groupName", dValues.businessGroupId?.groupName);
-      setValue("userName", dValues.userName);
-      setValue("email", dValues.email);
-      setValue("mobileNumber", dValues.mobileNumber);
-      setValue(
-        "whatsappContactNumber",
-        dValues.businessGroupId?.whatsappContactNumber
-      );
-      setValue("helpDeskEmail", dValues.businessGroupId?.helpDeskEmail);
-      setValue(
-        "helpDeskTelephoneNumber",
-        dValues.businessGroupId?.helpDeskTelephoneNumber
-      );
-      setValue("street1", dValues.businessGroupId?.street1);
-      setValue(
-        "tradeLicenseNumber",
-        dValues.businessGroupId?.tradeLicenseNumber
-      );
-      setValue("officeNumber", dValues.businessGroupId?.officeNumber);
-      setValue("logo", dValues?.businessGroupId?.logo);
-      setLogo(dValues?.businessGroupId?.logo);
-      setValue("street2", dValues.businessGroupId?.street2);
-      setValue("capacity", dValues.businessGroupId?.capacity);
-      setValue("contactPerson", dValues.businessGroupId?.contactPerson);
-      setValue("faxNumber", dValues?.businessGroupId?.faxNumber);
-      setValue("zipCode", dValues.businessGroupId?.zipCode);
-      setValue("dateFormat", dValues.businessGroupId?.dateFormat);
-      setValue("timeFormat", dValues.businessGroupId?.timeFormat);
-      setValue("timezone", dValues?.businessGroupId?.timezone);
-      setValue("userInfo", dValues?.userInfo);
-    } else {
-      setValue("capacity", storageCapacityOptions[1].value);
-      setValue("dateFormat", dateFormatOptions[0]?.value);
-      setValue("timeFormat", timeFormatOptions[1]?.value);
-    }
-  }, [dValues, id]);
 
   const handleAddForm = () => {
     append({
@@ -172,7 +101,7 @@ const BusinessForm = ({
             getValue={getValues}
             setLoading={setLoading}
             loading={loading}
-            link={logo}
+            link={getValues("logo")}
           />
           <Error errorName={errors.logo} />
         </span>
@@ -198,7 +127,6 @@ const BusinessForm = ({
           errors={errors}
           getValues={getValues}
           locationData={locationData}
-          dValues={dValues}
           id={id}
           showCity={true}
           Comptype={"businessGroupId"}

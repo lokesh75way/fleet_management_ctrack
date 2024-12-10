@@ -4,7 +4,7 @@ import { CSVLink } from "react-csv";
 import MainPagetitle from "../../../components/MainPagetitle";
 import EmployeeOffcanvas from "../../constant/EmployeeOffcanvas";
 import InviteCustomer from "../../constant/ModalList";
-import { IMAGES } from "../../constant/theme";
+import { IMAGES } from "../../../constants/theme";
 
 const tableData = [
   {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { SVGICON } from "../jsx/constant/theme";
+import { SVGICON } from "../constants/theme";
 
 const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
   const redirectTo = {

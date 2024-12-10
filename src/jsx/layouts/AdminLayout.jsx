@@ -3,6 +3,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 import Nav from "./nav";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
+import Loader from "@/components/Loader";
 
 function AdminLayout() {
   const { menuToggle } = useContext(ThemeContext);
@@ -35,7 +36,9 @@ function AdminLayout() {
           className="content-body"
           // style={{ minHeight: window.screen.height - 45 }}
         >
-          <Outlet />
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
         </div>
         {/* <Footer /> */}
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 
 const MainContent = (props) => {
   return (

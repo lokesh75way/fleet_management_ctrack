@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { VehicleData } from "../Tables/Tables";
-import VehicleTable from "../Tables/VehicleTable";
+import VehicleTable from "../../../features/vehicle/components/Table";
 import VehicleOffCanvas from "../../constant/VehicleOffCanvas";
 import { ThemeContext } from "../../../context/ThemeContext";
 

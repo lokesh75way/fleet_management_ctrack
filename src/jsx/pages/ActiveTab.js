@@ -12,7 +12,7 @@ import usePagination from "../../hooks/usePagination";
 import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
+import { ICON } from "../../constants/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 const ActiveTab = ({ tableData1, tabType }) => {

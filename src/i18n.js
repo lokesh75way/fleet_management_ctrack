@@ -1,9 +1,9 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { arabic } from "./lang/Arabic";
-import { english } from "./lang/English";
-import { spanish } from "./lang/Spanish";
+import { arabic } from "@/assets/lang/Arabic";
+import { english } from "@/assets/lang/English";
+import { spanish } from "@/assets/lang/Spanish";
 
 // the translations
 // (tip move them in a JSON file and import them)

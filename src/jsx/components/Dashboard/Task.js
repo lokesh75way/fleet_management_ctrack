@@ -5,7 +5,7 @@ import { Dropdown } from "react-bootstrap";
 import CountUp from "react-countup";
 import { CSVLink } from "react-csv";
 import MainPagetitle from "../../../components/MainPagetitle";
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 import EmployeeOffcanvas from "../../constant/EmployeeOffcanvas";
 
 const cardCounter = [

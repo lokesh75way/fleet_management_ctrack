@@ -12,7 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 // import EditControlFC from './EditControl';
 
-import { IMAGES } from "../../../constant/theme";
+import { IMAGES } from "../../../../constants/theme";
 
 const listBlog = [
   { title: "India", image: IMAGES.India, barvalue: "80%" },

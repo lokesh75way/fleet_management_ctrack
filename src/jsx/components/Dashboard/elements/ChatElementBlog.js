@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IMAGES, SVGICON } from "../../../constant/theme";
+import { IMAGES, SVGICON } from "../../../../constants/theme";
 import { Dropdown } from "react-bootstrap";
 
 const ChatElementBlog = () => {

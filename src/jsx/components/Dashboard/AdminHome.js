@@ -52,7 +52,7 @@ import {
   SparklinesReferenceLine,
 } from "react-sparklines";
 import BarChart5 from "../charts/Chartjs/bar5";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import Setting from "../../layouts/Setting";
 import CompSetting from "../../layouts/CompSetting";
 import BarChart1 from "../charts/Chartjs/bar1";
@@ -194,8 +194,8 @@ const Home = () => {
         statusApiData.progress,
       ]);
       setApplicationUsage([
-        usageApiData.applicationUsage.mobile,
-        usageApiData.applicationUsage.web,
+        usageApiData.applicationUsage?.mobile,
+        usageApiData.applicationUsage?.web,
       ]);
       setTasksData(tasksApiData);
       setIsLoading(false);
@@ -274,7 +274,7 @@ const Home = () => {
                   marginLeft: ".2rem",
                 }}
               >
-                <ActiveUserMap usageData={usageData} />
+                {/* <ActiveUserMap usageData={usageData} /> */}
               </div>
             </div>
           )}

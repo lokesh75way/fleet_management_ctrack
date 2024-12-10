@@ -1,0 +1,27 @@
+import axios from "axios";
+import initAxios from "../../services/api";
+initAxios();
+
+export const createDriver = async (body) => {
+  return axios.post("/drivers", body);
+};
+
+export const updateDriver = async (id, body) => {
+  return axios.put(`/drivers/${id}`, body);
+};
+
+export const getAllDrivers = async (pageNo = 1, limit) => {
+  const { data } = await axios.get(`/drivers/?page=${pageNo}&limit=${10}`);
+  return { data: data.data.data, totalCount: data.data.totalCount };
+};
+
+export const getDriverById = async (driverId) => {
+  const { data } = await axios.get(`/drivers/${driverId}`);
+  return data.data;
+};
+
+export const deleteDrivers = async (body) => {
+  return axios.delete(`/drivers`, {
+    data: body,
+  });
+};

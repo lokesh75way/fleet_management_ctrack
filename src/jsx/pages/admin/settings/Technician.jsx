@@ -2,7 +2,7 @@ import React from "react";
 import MainPagetitle from "../../../../components/MainPagetitle";
 import Tabs from "../../../components/Tabs";
 import DepositlineChart from "../../../components/Dashboard/elements/DepositlineChart";
-import { SVGICON } from "../../../constant/theme";
+import { SVGICON } from "../../../../constants/theme";
 import { FaCarAlt, FaUser, FaBuilding } from "react-icons/fa";
 import { BiSolidBellRing } from "react-icons/bi";
 import { HiClipboardDocumentList } from "react-icons/hi2";

@@ -12,7 +12,7 @@ import "rsuite/dist/rsuite.min.css";
 import TopMenus from "./TopMenus";
 import MainContent from "./MainContent";
 import PageTitle from "../../layouts/PageTitle";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 
 const CountryList = [
   { name: "English" },

@@ -14,8 +14,12 @@ export const getAllBranch = async (page, companyId) => {
   if (params.length > 0) {
     url += "?" + params.join("&");
   }
-  const data = await axios.get(url);
-  return data.data;
+  const { data } = await axios.get(url);
+  return {
+    data: data.data.data,
+    totalPage: data.data.totalPage,
+    totalCount: data.data.totalCount,
+  };
 };
 
 export const getBranchById = async (id) => {

@@ -52,7 +52,7 @@ const ClassifyTripTable = ({
             <span className="d-flex justify-content-center">
               {active && (
                 <span className="cursor-pointer" title="tracking">
-                  <Link to={`/vehicle-tracking/${item.tripId}`}>
+                  <Link to={`/vehicle/tracking/${item.tripId}`}>
                     <FaLocationDot
                       style={{ color: "#ff9f00", fontSize: "18px" }}
                     />

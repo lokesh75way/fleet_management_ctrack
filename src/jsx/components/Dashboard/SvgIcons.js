@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 
 import MainPagetitle from "../../../components/MainPagetitle";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 
 const svgBlogData = [
   { Iconname: "2 User.svg", svgtype: SVGICON.userdouble },

@@ -17,7 +17,6 @@ const DriverTab = ({
   handleToggleCardPosition,
   isOutside,
   setVehicleIds,
-  getVehiclesByIds,
   setVehicleStatus,
   vehicleCounts,
 }) => {
@@ -86,7 +85,6 @@ const DriverTab = ({
                     data={componentData}
                     handleToggleCardPosition={handleToggleCardPosition}
                     setVehicleIds={setVehicleIds}
-                    getVehiclesByIds={getVehiclesByIds}
                     setVehicleStatus={setVehicleStatus}
                     vehicleCounts={vehicleCounts}
                   />
@@ -257,7 +255,6 @@ const DriverTabComponent1 = (props) => {
           companyVehicle={companyVehicle ?? []}
           setVehicleIds={props.setVehicleIds}
           vehicles={vehicles}
-          getVehiclesByIds={props.getVehiclesByIds}
           handleToggleCardPositionHandler={props.handleToggleCardPosition}
         />
       }

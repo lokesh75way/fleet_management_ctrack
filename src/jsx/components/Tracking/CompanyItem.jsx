@@ -50,9 +50,7 @@ const CompanyItem = (props) => {
     setExpanded(expanded);
   };
   const handleSubmit = () => {
-    props.getVehiclesByIds();
-    // const selectedObject = checked.map((data) => JSON.parse(data));
-    // console.log(selectedObject)
+    // TODO Only set vehicleIds here
     props.handleToggleCardPositionHandler();
   };
 

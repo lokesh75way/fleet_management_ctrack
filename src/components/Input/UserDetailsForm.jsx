@@ -1,7 +1,7 @@
 import React from "react";
 import CustomInput from "./CustomInput";
 import Error from "../Error/Error";
-import { SVGICON } from "../../jsx/constant/theme";
+import { SVGICON } from "../../constants/theme";
 import { t } from "i18next";
 
 const UserDetailsForm = ({

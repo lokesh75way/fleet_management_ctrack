@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import MainPagetitle from "../../../components/MainPagetitle";
 import EmployeeOffcanvas from "../../constant/EmployeeOffcanvas";
 import { DriverData } from "../Tables/Tables";
-import DriverTable from "../Tables/DriverTable";
+import DriverTable from "../../../features/driver/components/Table";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
