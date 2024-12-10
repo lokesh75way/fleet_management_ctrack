@@ -48,7 +48,12 @@ class ApexLine4 extends React.Component {
 
     return (
       <div id="chart" className="bar-chart">
-        <ReactApexChart options={options} series={series} type="line" height={300} />
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="line"
+          height={300}
+        />
       </div>
     );
   }

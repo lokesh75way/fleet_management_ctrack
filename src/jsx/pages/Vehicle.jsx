@@ -1,17 +1,14 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+import TableSkeleton from "@/components/Skeleton/Table";
 import VehicleTable from "../components/Tables/VehicleTable";
-import { ThemeContext } from "../../context/ThemeContext";
-import MainPagetitle from "../layouts/MainPagetitle";
-import { clsx } from "clsx";
-import VehicleServices from "../../services/api/VehicleService";
+import MainPagetitle from "../../components/MainPagetitle";
+import Paginate from "../../components/Paginate";
 import { usePermissions } from "../../context/PermissionContext";
 import { deleteVehicles, getVehicles } from "../../services/api/VehicleService";
 import usePagination from "../../hooks/usePagination";
-import { useTranslation } from "react-i18next";
-import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
 
 const Vehicle = () => {
   const { t } = useTranslation();
@@ -21,6 +18,7 @@ const Vehicle = () => {
   const navigate = useNavigate();
   const [deleteId, setDeleteId] = useState();
   const [tableData, setTableData] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(false);
   const [editData, setEditData] = useState({
     id: 0,
     vehicleName: "",
@@ -31,25 +29,24 @@ const Vehicle = () => {
     distanceCounter: 0,
   });
 
-  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
-    usePagination();
+  const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
-
   async function getVehicleData(page) {
     try {
+      setInitialLoad(true);
       const { data, totalLength } = await getVehicles(page);
       setCount(totalLength);
       setTableData(data);
       // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);
+    } finally {
+      setInitialLoad(false);
     }
   }
 
@@ -72,8 +69,19 @@ const Vehicle = () => {
     navigate(`edit/${id}`, { state: { formData: data } });
     // vehicle.current.showModal();
   };
+  const headers = [
+    "vehicleName",
+    "plateNumber",
+    "branch",
+    "simNumber",
+    "IMEINumber",
+    "registrationNumber",
+  ];
 
-  const vehicle = useRef();
+  if (can("vehicle", "modify") || can("vehicle", "delete")) {
+    headers.push("action");
+  }
+
   return (
     <>
       <MainPagetitle
@@ -105,33 +113,31 @@ const Vehicle = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("vehicleName")}</th>
-                          <th>{t("plateNumber")}</th>
-                          <th>{t("branch")}</th>
-                          <th>{t("simNumber")}</th>
-                          <th>{t("IMEINumber")}</th>
-                          <th>{t("registrationNumber")}</th>
-                          <th>{t("weightCapacity")}</th>
-                          {(can("vehicle", "modify") ||
-                            can("vehicle", "delete")) && <th>{t("action")}</th>}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <VehicleTable
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && initialLoad ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            {headers.map((header) => (
+                              <th key={header}>{t(header)}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <VehicleTable
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

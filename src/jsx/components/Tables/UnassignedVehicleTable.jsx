@@ -3,23 +3,22 @@ import { FaEdit } from "react-icons/fa";
 import { usePermissions } from "../../../context/PermissionContext";
 
 const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
-  const {can} = usePermissions()
-  const editPermission = can('vehicle','modify')
-  if(tableData.length ===0){
+  const { can } = usePermissions();
+  const editPermission = can("vehicle", "modify");
+  if (tableData.length === 0) {
     return;
   }
 
   const startIndex = (currentPage - 1) * 10 + 1;
 
-  const getVehicleStatus = (status)=>{
-    if(status === true){
-      return "ASSIGNED"
+  const getVehicleStatus = (status) => {
+    if (status === true) {
+      return "ASSIGNED";
     }
-    return "UNASSIGNED"
-  }
+    return "UNASSIGNED";
+  };
 
   return tableData?.map((item, index) => (
-  
     <tr key={item.id}>
       <td>
         <span>{startIndex + index}</span>
@@ -44,24 +43,30 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
         <span>{item.Vehicle_No}</span>
       </td>
       <td>
-      <span
-              className={`badge light border-0 ${
-                item?.isVehicleAssigned ? "badge-success" : "badge-danger"
-              } d-inline-block text-center`}
-              style={{ width: "7rem" }}
-            >{getVehicleStatus(item?.isVehicleAssigned)}</span>
+        <span
+          className={`badge light border-0 ${
+            item?.isVehicleAssigned ? "badge-success" : "badge-danger"
+          } d-inline-block text-center`}
+          style={{ width: "7rem" }}
+        >
+          {getVehicleStatus(item?.isVehicleAssigned)}
+        </span>
       </td>
 
-      {editPermission && <td>
-        <span className="d-flex justify-content-center">
-          {editPermission && (item?.isVehicleAssigned === false) && <span
-            className="cursor-pointer"
-            onClick={() => editDrawerOpen(item)}
-          >
-            <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-          </span>}
-        </span>
-      </td>}
+      {editPermission && (
+        <td>
+          <span className="d-flex justify-content-center">
+            {editPermission && item?.isVehicleAssigned === false && (
+              <span
+                className="cursor-pointer"
+                onClick={() => editDrawerOpen(item)}
+              >
+                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+              </span>
+            )}
+          </span>
+        </td>
+      )}
     </tr>
   ));
 };

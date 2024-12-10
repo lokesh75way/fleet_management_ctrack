@@ -1,8 +1,6 @@
-import useStorage from "../hooks/useStorage";
-
 export const getSelectValues = (id) => {
-  const user  = JSON.parse(localStorage.getItem('userDetails'))
-  const role = user?.user?.role
+  const user = JSON.parse(localStorage.getItem("userDetails"));
+  const role = user?.user?.role;
   if (role === "SUPER_ADMIN") {
     return {
       business: {
@@ -15,7 +13,7 @@ export const getSelectValues = (id) => {
       },
     };
   } else if (role === "BUSINESS_GROUP") {
-    const businessName = user?.user?.userName
+    const businessName = user?.user?.userName;
     return {
       business: {
         disabled: true,
@@ -27,7 +25,7 @@ export const getSelectValues = (id) => {
       },
     };
   } else if (role === "COMPANY") {
-    const companyName = user?.user?.userName
+    const companyName = user?.user?.userName;
     return {
       business: {
         disabled: true,
@@ -142,7 +140,7 @@ export function filterClassifyTable(filter, data) {
   const { driverId, start, end } = filter;
   let filteredData = data;
 
-  if (driverId !== '') {
+  if (driverId !== "") {
     filteredData = filteredData.filter((item) => item.driverId === driverId);
   }
 
@@ -158,3 +156,13 @@ export function filterClassifyTable(filter, data) {
   return filteredData;
 }
 
+export const getApiErrorMessage = (error) => {
+  let message = "Some error occured !!";
+  const response = error.response?.data;
+  if (response?.message === "Validation error!") {
+    message = response?.data?.errors?.[0]?.msg ?? "Validation error!";
+  } else if (response?.message) {
+    message = response.message;
+  }
+  return message;
+};

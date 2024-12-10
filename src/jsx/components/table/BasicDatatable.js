@@ -22,7 +22,7 @@ const BasicDatatable = () => {
   // use effect
   useEffect(() => {
     setData(document.querySelectorAll("#job_data tbody tr"));
-   // chackboxFun();
+    // chackboxFun();
   }, [test]);
 
   // Active pagginarion
@@ -38,7 +38,6 @@ const BasicDatatable = () => {
     chageData(activePag.current * sort, (activePag.current + 1) * sort);
     settest(i);
   };
- 
 
   return (
     <div className="col-12">
@@ -160,7 +159,6 @@ const BasicDatatable = () => {
                     <td>$433,060</td>
                   </tr>
                 </tbody>
-               
               </table>
               <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-md-0 mb-2">
                 <div className="dataTables_info">
@@ -181,7 +179,10 @@ const BasicDatatable = () => {
                       activePag.current > 0 && onClick(activePag.current - 1)
                     }
                   >
-                    <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-left"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                   <span>
                     {paggination.map((number, i) => (
@@ -205,7 +206,10 @@ const BasicDatatable = () => {
                       onClick(activePag.current + 1)
                     }
                   >
-                    <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-right"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                 </div>
               </div>

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const HardwareMaintenance = () => {
-  return (
-    <h1>HardwareMaintenance</h1>
-  )
-}
+  return <h1>HardwareMaintenance</h1>;
+};
 
-export default HardwareMaintenance
+export default HardwareMaintenance;

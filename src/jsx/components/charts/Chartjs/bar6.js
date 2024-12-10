@@ -28,34 +28,32 @@ class BarChart6 extends Component {
       ],
     };
     const options = {
-      plugins:{
+      plugins: {
         legend: {
           display: false,
         },
         title: {
           display: false,
         },
-		    tooltips: {
-			   mode: "index",
-			    intersect: false,
-		    },
-		    responsive: true,
-	   },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+        },
+        responsive: true,
+      },
       scales: {
-        x:
-          {
-            stacked: true,
-            grid:{
-              color:"rgba(255, 255, 255, 0.1)"
-            }
+        x: {
+          stacked: true,
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)",
           },
-        y:
-          {
-            stacked: true,
-            grid:{
-              color:"rgba(255, 255, 255, 0.1)"
-            }
+        },
+        y: {
+          stacked: true,
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)",
           },
+        },
       },
     };
 

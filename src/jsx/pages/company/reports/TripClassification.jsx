@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 // import { ClassificationReports } from "../../../components/Tables/Tables"
 
 import { filterAlerts } from "../../../../utils/helper";
@@ -270,7 +270,8 @@ const TripClassification = (ref) => {
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >
-                        <i className="fa-solid fa-file-excel" /> {t("exportReport")}
+                        <i className="fa-solid fa-file-excel" />{" "}
+                        {t("exportReport")}
                       </CSVLink>
                       <Link
                         to={"#"}

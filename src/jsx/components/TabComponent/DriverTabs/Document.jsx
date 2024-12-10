@@ -4,8 +4,8 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
-import CustomInput from "../../Input/CustomInput";
-import Error from "../../Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
+import Error from "../../../../components/Error/Error";
 
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";
@@ -27,12 +27,12 @@ const Document = ({
   });
 
   const [tempValue, setTempValue] = useState(null);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [documents, setDocuments] = useState([]);
   const [issueDate, setIssueDate] = useState();
   const [expiryDate, setExpiryDate] = useState();
   const [dValues, setDvalues] = useState([]);
-  
+
   const { t } = useTranslation();
   const { id } = useParams();
   const location = useLocation();
@@ -43,7 +43,7 @@ const Document = ({
     }),
   };
 
-  const driverDocumentOptions=[
+  const driverDocumentOptions = [
     { value: "DRIVING_LICENSE", label: "DRIVING_LICENSE" },
     { value: "AADHAR_CARD", label: "AADHAR_CARD" },
     { value: "PAN_CARD", label: "PAN_CARD" },
@@ -51,20 +51,15 @@ const Document = ({
     { value: "MEDICLAIM", label: "MEDICLAIM" },
   ];
 
-
   useEffect(() => {
     if (id) {
       const data = location.state[0];
       setDvalues(data);
-      setValue('documents', data.documents);
+      setValue("documents", data.documents);
     }
   }, [id]);
 
-  const formFields =
-  dValues && dValues.documents
-    ? dValues?.documents
-    : fields;
- 
+  const formFields = dValues && dValues.documents ? dValues?.documents : fields;
 
   return (
     <div className="p-4">
@@ -117,11 +112,11 @@ const Document = ({
                         styles={customStyles}
                         defaultValue={{
                           value:
-                          dValues && dValues.documents?.length > 0
+                            dValues && dValues.documents?.length > 0
                               ? dValues?.documents[index]?.documentType
                               : driverDocumentOptions[1].value,
                           label:
-                          dValues && dValues?.documents?.length > 0
+                            dValues && dValues?.documents?.length > 0
                               ? dValues?.documents[index]?.documentType
                               : driverDocumentOptions[1].label,
                         }}
@@ -158,7 +153,11 @@ const Document = ({
                     loading={loading}
                   />
 
-                  <Error errorName={errors?.documents?.[index]?.file ? "File is required" : '' } />
+                  <Error
+                    errorName={
+                      errors?.documents?.[index]?.file ? "File is required" : ""
+                    }
+                  />
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
                   <label className="form-label">{t("issueDate")}</label>
@@ -210,9 +209,7 @@ const Document = ({
                       <DatePicker
                         selected={
                           dValues && dValues?.documents?.[index]?.expireDate
-                            ? new Date(
-                              dValues?.documents[index]?.expireDate
-                              )
+                            ? new Date(dValues?.documents[index]?.expireDate)
                             : getValues(`documents.${index}.expireDate`)
                         }
                         className="form-control customDateHeight"

@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import TechnicianTaskTable from "../components/Tables/TechnicianTaskTable";
 import TechnicianTaskOffcanvas from "../constant/TechnicianTaskOffcanvas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { technicianTaskSchema } from "../../yup";
+import { technicianTaskSchema } from "../../utils/yup";
 import { useTranslation } from "react-i18next";
 import { ThemeContext } from "../../context/ThemeContext";
 import usePagination from "../../hooks/usePagination";
@@ -19,25 +19,29 @@ import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
 import dayjs from "dayjs";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
-
+import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const TechnicianTask = (ref) => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
- 
+
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
   const [editData, setEditData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllTasks = async (page, businessGroupId) => {
     try {
+      setIsLoading(true);
       const { data, totalCount } = await getTasks(page, 10);
       setTableData(data);
       setCount(totalCount);
     } catch (error) {
       notifyError("Error in fetching data");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -75,7 +79,9 @@ const TechnicianTask = (ref) => {
   const onSubmit = async (data) => {
     try {
       if (data.plannedReportingDate) {
-        const formattedDate = dayjs(data.plannedReportingDate).format('YYYY-MM-DD');
+        const formattedDate = dayjs(data.plannedReportingDate).format(
+          "YYYY-MM-DD"
+        );
         data.plannedReportingDate = formattedDate;
       }
       if (data._id && data._id !== 0) {
@@ -87,7 +93,7 @@ const TechnicianTask = (ref) => {
         notifySuccess("Task Created Successfully !!");
         technicianTask.current.closeModal();
       }
-      fetchAllTasks()
+      fetchAllTasks();
     } catch (error) {
       const validationErr = error.response?.data?.data?.errors;
       if (validationErr && validationErr.length > 0) {
@@ -101,7 +107,6 @@ const TechnicianTask = (ref) => {
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
-
 
   const technicianTask = useRef();
   return (
@@ -138,32 +143,36 @@ const TechnicianTask = (ref) => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("id")}</th>
-                          <th>{t("taskName")}</th>
-                          <th>{t("taskCategory")}</th>
-                          <th>{t("technicianName")}</th>
-                          <th>{t("serviceLocation")}</th>
-                          <th>{t("reportingTime")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <TechnicianTaskTable
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page}
-                          itemsPerPage={itemsPerPage}
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("taskName")}</th>
+                            <th>{t("taskCategory")}</th>
+                            <th>{t("technicianName")}</th>
+                            <th>{t("serviceLocation")}</th>
+                            <th>{t("reportingTime")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <TechnicianTaskTable
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
@@ -174,12 +183,12 @@ const TechnicianTask = (ref) => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                            isRtl={isRtl}
-                          />
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                          isRtl={isRtl}
+                        />
                       </div>
                     </div>
                   </div>

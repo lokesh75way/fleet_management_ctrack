@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
-import "../../../../scss/pages/_driver-tracking.scss";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
+import "@/assets/scss/pages/_driver-tracking.scss";
 
 import { useTranslation } from "react-i18next";
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import { useParams } from "react-router-dom";
 const General = ({
   register,
@@ -35,7 +35,6 @@ const General = ({
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
   const maxDate = new Date();
-
 
   return (
     <div className="p-4">
@@ -131,7 +130,10 @@ const General = ({
         </div>
 
         <div className="col-xl-6 mb-3">
-          <label className="form-label">{t("gender")}<span className="text-danger">*</span></label>
+          <label className="form-label">
+            {t("gender")}
+            <span className="text-danger">*</span>
+          </label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
             <div className="form-check custom-checkbox form-check-inline">
               <input
@@ -234,11 +236,11 @@ const General = ({
             control={control}
             render={({ value, name }) => (
               <DatePicker
-              selected={
-                getValues("dateOfBirth")
-                  ? new Date(getValues("dateOfBirth"))
-                  : new Date()
-              }
+                selected={
+                  getValues("dateOfBirth")
+                    ? new Date(getValues("dateOfBirth"))
+                    : new Date()
+                }
                 minDate={minDate}
                 maxDate={maxDate}
                 className="form-control customDateHeight"

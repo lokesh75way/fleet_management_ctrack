@@ -1,31 +1,33 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CSVLink } from "react-csv";
 
-import { ICON, IMAGES } from "../../constant/theme";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import InviteCustomer from "../../constant/ModalList";
 import { ExpenseData } from "../../components/Tables/Tables";
 import ExpenseTable from "../../components/Tables/ExpenseTable";
 // import ExpenseOffcanvas from "../constant/ExpenseOffcanvas";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {expenseSchema} from '../../../yup'
+import { expenseSchema } from "../../../utils/yup";
 
-import {useTranslation} from 'react-i18next'
-import { deleteExpense, getExpenses } from "../../../services/api/ExpenseServices";
+import { useTranslation } from "react-i18next";
+import {
+  deleteExpense,
+  getExpenses,
+} from "../../../services/api/ExpenseServices";
 import usePagination from "../../../hooks/usePagination";
 import { ThemeContext } from "../../../context/ThemeContext";
 import clsx from "clsx";
 import { notifySuccess } from "../../../utils/toast";
 import ReactPaginate from "react-paginate";
-import Paginate from "../../components/Pagination/Paginate";
+import Paginate from "../../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const Expense = (ref) => {
-
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isRtl } = useContext(ThemeContext);
 
@@ -38,9 +40,7 @@ const Expense = (ref) => {
     formState: { errors },
     control,
   } = useForm({
-    resolver: yupResolver(
-        expenseSchema
-    ),
+    resolver: yupResolver(expenseSchema),
   });
   const [editData, setEditData] = useState({
     id: 0,
@@ -52,34 +52,34 @@ const Expense = (ref) => {
     gender: "",
     location: "",
   });
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount,setPage } =
+  const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
 
-    const itemsPerPage=10;
+  const itemsPerPage = 10;
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
+  };
 
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   // const[formData, setFormData] = useState()
-  const getAllExpenses = async()=>{
+  const getAllExpenses = async () => {
     try {
-      const {data, success, totalLength} = await getExpenses(page);
+      setIsLoading(true);
+      const { data, success, totalLength } = await getExpenses(page);
       setTableData(data);
-      setCount(totalLength)
+      setCount(totalLength);
     } catch (error) {
-      console.log("Error", error)
+      console.log("Error", error);
+    } finally {
+      setIsLoading(false);
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getAllExpenses();
-  },[])
-
-
+  }, []);
 
   const onConfirmDelete = async (id) => {
     await deleteExpense(id);
@@ -92,15 +92,13 @@ const Expense = (ref) => {
     // company.current.showModal();
   };
 
-
-
   const expense = useRef();
   return (
     <>
       <MainPagetitle
-        mainTitle={t('expense')}
-        pageTitle={t('expense')}
-        parentTitle={t('settings')}
+        mainTitle={t("expense")}
+        pageTitle={t("expense")}
+        parentTitle={t("settings")}
       />
       <div className="container-fluid">
         <div className="row">
@@ -109,7 +107,7 @@ const Expense = (ref) => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t('expense')}</h4>
+                    <h4 className="heading mb-0">{t("expense")}</h4>
                     <div>
                       <Link
                         to={"/settings/expense/create"}
@@ -117,7 +115,7 @@ const Expense = (ref) => {
                         // data-bs-toggle="offcanvas"
                         // onClick={() => {expense.current.showModal(); console.log(expense)}}
                       >
-                        + {t('addExpense')}
+                        + {t("addExpense")}
                       </Link>{" "}
                     </div>
                   </div>
@@ -125,32 +123,36 @@ const Expense = (ref) => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t('id')}</th>
-                          <th>{t('vehicleName')}</th>
-                          <th>{t('expenseDate')}</th>
-                          <th>{t('amount')}</th>
-                          <th>{t('description')}</th>
-                          <th>{t('action')}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <ExpenseTable
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("id")}</th>
+                            <th>{t("vehicleName")}</th>
+                            <th>{t("expenseDate")}</th>
+                            <th>{t("amount")}</th>
+                            <th>{t("description")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ExpenseTable
+                            editData={editData}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
@@ -162,10 +164,10 @@ const Expense = (ref) => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

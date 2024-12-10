@@ -11,9 +11,9 @@
 // import "react-country-state-city/dist/react-country-state-city.css";
 // import { Controller, FormProvider, useForm } from "react-hook-form";
 // import Error from "../components/Error/Error";
-// import { tripStatusOptions } from "../components/TabComponent/VehicleTabs/Options";
+// import { tripStatusOptions } from "@/constants/options";
 // import CustomInput from "../components/Input/CustomInput";
-// import "../../scss/pages/_driver-tracking.scss";
+// import "@/assets/scss/pages/_driver-tracking.scss";
 // import DriverDropdown from "../components/DriverDropdown";
 // const ClassifyTripsOffcanvas = forwardRef(
 //   (

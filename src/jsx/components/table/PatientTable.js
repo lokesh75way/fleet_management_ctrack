@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {  Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
 // import data from "./tableData.js";
@@ -25,7 +25,7 @@ const PatientTable = () => {
   // use effect
   useEffect(() => {
     setData(document.querySelectorAll("#patientTable_basic_table tbody tr"));
-   // chackboxFun();
+    // chackboxFun();
   }, [test]);
 
   // Active pagginarion
@@ -837,7 +837,10 @@ const PatientTable = () => {
                       activePag.current > 0 && onClick(activePag.current - 1)
                     }
                   >
-                    <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-left"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                   <span>
                     {paggination.map((number, i) => (
@@ -861,7 +864,10 @@ const PatientTable = () => {
                       onClick(activePag.current + 1)
                     }
                   >
-                    <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-right"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                 </div>
               </div>

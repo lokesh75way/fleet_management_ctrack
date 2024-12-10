@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import {
   deviceTypeOptions,
   copyFromOptions,
@@ -14,20 +14,20 @@ import {
   skillSetOptions,
   profileOwningOptions,
   costCenterOptions,
-} from "./Options";
+} from "@/constants/options";
 import AsyncSelect from "react-select/async";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getGroups } from "../../../../features/businessGroup/api";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 import { useTranslation } from "react-i18next";
 
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import BranchDropdown from "../../BranchDropdown";
-import GroupDropdown from "../../GroupDropdown";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
 import FileUploader from "../../../../components/FileUploader";
 
@@ -47,6 +47,7 @@ const Information = ({
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
 
   const handleOptionChange = (event) => {
+    console.log("event", event.target.value);
     setSelectedOption(event.target.value);
   };
 
@@ -56,10 +57,38 @@ const Information = ({
       padding: ".25rem 0 ", // Adjust the height as needed
     }),
   };
-
   const role = checkRole();
 
   const { t } = useTranslation();
+  const { id } = useParams();
+  useEffect(() => {
+    if (formData && id) {
+      setValue("vehicleNumber", formData.vehicleNumber);
+      setValue("registrationNumber", formData.registrationNumber);
+      setValue("unitId", formData.unitId);
+      setValue("description", formData.description);
+      setValue("manufacture", formData.manufacture);
+      setValue("color", formData.color);
+      setValue("model", formData.model);
+      setValue("group", formData.group);
+      setValue("groupDescription", formData.groupDescription);
+      setValue("year", formData.year);
+      setValue("licenseNumber", formData.licenseNumber);
+      setValue("licenseExpire", formData.licenseExpire);
+      setValue("roadWorthy", formData.roadWorthy);
+      setValue("roadWorthyExpire", formData.roadWorthyExpire);
+      setValue("odo", formData.odo);
+      setValue("odoNextService", formData.odoNextService);
+      setValue("hours", formData.hours);
+      setValue("hoursNextService", formData.hoursNextService);
+      setValue("currentStatus", formData.currentStatus);
+      setValue("currentDriver", formData.currentDriver);
+      setValue("currentLocation", formData.currentLocation);
+      setValue("speed", formData.speed);
+      setValue("heading", formData.heading);
+      setValue("skillSet", formData.skillSet);
+    }
+  }, [formData, id]);
 
   return (
     <div className="p-4 relative">
@@ -79,23 +108,21 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("Number")} 
+                    {t("Number")}
                   </label>
                   <CustomInput
                     type="number"
                     required
                     register={register}
-                    name="number"
+                    name="vehicleNumber"
                     label="Number"
                     placeholder=""
-                    defaultValue={getValues("number")}
+                    defaultValue={getValues("vehicleNumber")}
                   />
                   <Error errorName={errors.number} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("unitId")} 
-                  </label>
+                  <label className="form-label">{t("unitId")}</label>
                   <CustomInput
                     type="text"
                     required
@@ -147,40 +174,53 @@ const Information = ({
                   <div className="col-md-2 d-flex flex-column border rounded border-[#6e6e6e] custom-margin-checkbox gap-4">
                     <div className="basic-form mt-2">
                       <div className="form-check custom-checkbox">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="optradioCustom1"
-                          id="registrationNumberOption"
-                          value="registrationNumber"
-                          checked={selectedOption === "registrationNumber"}
-                          onChange={handleOptionChange}
+                        <Controller
+                          name="selectedInput"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              value="registrationNumber"
+                              checked={field.value === "registrationNumber"}
+                              onChange={(e) => {
+                                field.onChange(e.target.value);
+                                setSelectedOption(e.target.value);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                       <h5 className="my-4" style={{ marginLeft: "20px" }}>
                         {t("Use In Reports")}
                       </h5>
                       <div className="form-check custom-checkbox">
-                        <input
-                          type="radio"
-                          className="form-check-input"
-                          name="optradioCustom1"
-                          id="fleetNumberOption"
-                          value="fleetNumber"
-                          checked={selectedOption === "fleetNumber"}
-                          onChange={handleOptionChange}
+                        <Controller
+                          name="selectedInput"
+                          control={control}
+                          render={({ field }) => (
+                            <input
+                              type="radio"
+                              className="form-check-input"
+                              value="fleetnumber"
+                              checked={field.value === "fleetnumber"}
+                              onChange={(e) => {
+                                field.onChange(e.target.value);
+                                setSelectedOption(e.target.value);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                     </div>
+                    <Error errorName={errors.selectedInput} />
                   </div>
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-xl-12 mb-3 ">
-                  <label className="form-label">
-                    {t("description")} 
-                  </label>
+                  <label className="form-label">{t("description")}</label>
                   <CustomInput
                     type="textarea"
                     required
@@ -193,24 +233,20 @@ const Information = ({
                   <Error errorName={errors.description} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("make")} 
-                  </label>
+                  <label className="form-label">{t("manufacture")}</label>
                   <CustomInput
                     type="text"
                     required
                     register={register}
-                    label="Make"
-                    name="make"
+                    label="Manufacture"
+                    name="manufacture"
                     placeholder=""
-                    defaultValue={getValues("make")}
+                    defaultValue={getValues("manufacture")}
                   />
                   <Error errorName={errors.make} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("year")} 
-                  </label>
+                  <label className="form-label">{t("year")}</label>
                   <CustomInput
                     type="text"
                     required
@@ -223,9 +259,7 @@ const Information = ({
                   <Error errorName={errors.year} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("model")} 
-                  </label>
+                  <label className="form-label">{t("model")}</label>
                   <CustomInput
                     type="text"
                     required
@@ -238,9 +272,7 @@ const Information = ({
                   <Error errorName={errors.model} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("color")} 
-                  </label>
+                  <label className="form-label">{t("color")}</label>
                   <CustomInput
                     type="text"
                     required
@@ -253,24 +285,20 @@ const Information = ({
                   <Error errorName={errors.color} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("vinNumber")} 
-                  </label>
+                  <label className="form-label">{t("vinNumber")}</label>
                   <CustomInput
                     type="text"
                     required
                     register={register}
                     label="VINNumber"
-                    name="vinNumber"
+                    name="vinChassisNumber"
                     placeholder=""
-                    defaultValue={getValues("vinNumber")}
+                    defaultValue={getValues("vinChassisNumber")}
                   />
-                  <Error errorName={errors.vinNumber} />
+                  <Error errorName={errors.vinChassisNumber} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("engineNumber")} 
-                  </label>
+                  <label className="form-label">{t("engineNumber")}</label>
                   <CustomInput
                     type="text"
                     required
@@ -283,9 +311,7 @@ const Information = ({
                   <Error errorName={errors.engineNumber} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("group")} 
-                  </label>
+                  <label className="form-label">{t("group")}</label>
                   <Controller
                     name="group"
                     control={control}
@@ -309,24 +335,20 @@ const Information = ({
                   {!getValues("group") && <Error errorName={errors.group} />}
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("description")} 
-                  </label>
+                  <label className="form-label">{t("description")}</label>
                   <CustomInput
                     type="textarea"
                     required
                     register={register}
                     label="Description"
-                    name="description"
+                    name="groupDescription"
                     placeholder=""
-                    defaultValue={getValues("description")}
+                    defaultValue={getValues("groupDescription")}
                   />
                   <Error errorName={errors.description} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("tollCategory")} 
-                  </label>
+                  <label className="form-label">{t("tollCategory")}</label>
                   <Controller
                     name="tollCategory"
                     control={control}
@@ -352,9 +374,7 @@ const Information = ({
                   )}
                 </div>
                 <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">
-                    {t("tarrifType")} 
-                  </label>
+                  <label className="form-label">{t("tarrifType")}</label>
                   <Controller
                     name="tarrifType"
                     control={control}
@@ -384,7 +404,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("licenseNumber")} 
+                    {t("licenseNumber")}
                   </label>
                   <CustomInput
                     type="number"
@@ -402,7 +422,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("licenseExpire")} 
+                    {t("licenseExpire")}
                   </label>
                   <CustomInput
                     type="number"
@@ -420,7 +440,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput3"
                     className="form-label"
                   >
-                    {t("roadWorthy")} 
+                    {t("roadWorthy")}
                   </label>
                   <CustomInput
                     type="number"
@@ -439,7 +459,6 @@ const Information = ({
                     className="form-label"
                   >
                     {t("roadWorthyExpire")}{" "}
-                    
                   </label>
                   <CustomInput
                     type="number"
@@ -457,7 +476,7 @@ const Information = ({
                     htmlFor="exampleFormControlInput4"
                     className="form-label"
                   >
-                    {t("odo")} 
+                    {t("odo")}
                   </label>
                   <CustomInput
                     type="number"
@@ -474,21 +493,19 @@ const Information = ({
                     htmlFor="exampleFormControlInput4"
                     className="form-label"
                   >
-                    {t("nextService")} 
+                    {t("nextService")}
                   </label>
                   <CustomInput
                     type="number"
                     register={register}
-                    name="nextService"
+                    name="odoNextService"
                     placeholder=""
-                    defaultValue={getValues("nextService")}
+                    defaultValue={getValues("odoNextService")}
                   />
                   <Error errorName={errors.nextService} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("hours")} 
-                  </label>
+                  <label className="form-label">{t("hours")}</label>
                   <CustomInput
                     type="number"
                     register={register}
@@ -499,22 +516,18 @@ const Information = ({
                   <Error errorName={errors.hours} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("nextService")} 
-                  </label>
+                  <label className="form-label">{t("nextService")}</label>
                   <CustomInput
                     type="number"
                     register={register}
-                    name="nextService"
+                    name="hoursNextService"
                     placeholder=""
-                    defaultValue={getValues("nextService")}
+                    defaultValue={getValues("hoursNextService")}
                   />
                   <Error errorName={errors.nextService} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("currentStatus")} 
-                  </label>
+                  <label className="form-label">{t("currentStatus")}</label>
                   <CustomInput
                     type="text"
                     register={register}
@@ -525,9 +538,7 @@ const Information = ({
                   <Error errorName={errors.currentStatus} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("speed")} 
-                  </label>
+                  <label className="form-label">{t("speed")}</label>
                   <CustomInput
                     type="number"
                     register={register}
@@ -539,9 +550,7 @@ const Information = ({
                 </div>
 
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("currentDriver")} 
-                  </label>
+                  <label className="form-label">{t("currentDriver")}</label>
                   <CustomInput
                     type="text"
                     register={register}
@@ -552,9 +561,7 @@ const Information = ({
                   <Error errorName={errors.currentDriver} />
                 </div>
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("heading")} 
-                  </label>
+                  <label className="form-label">{t("heading")}</label>
                   <CustomInput
                     type="text"
                     register={register}
@@ -566,10 +573,7 @@ const Information = ({
                 </div>
 
                 <div className="col-md-12 mb-3">
-                  <label className="form-label">
-                    {t("currentLocation")}{" "}
-                    
-                  </label>
+                  <label className="form-label">{t("currentLocation")} </label>
                   <CustomInput
                     type="text"
                     register={register}
@@ -582,9 +586,7 @@ const Information = ({
               </div>
               <div className="d-flex flex-column">
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("skillSet")} 
-                  </label>
+                  <label className="form-label">{t("skillSet")}</label>
                   <Controller
                     name="skillSet"
                     control={control}
@@ -611,9 +613,7 @@ const Information = ({
                 </div>
 
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("profile")} 
-                  </label>
+                  <label className="form-label">{t("profile")}</label>
                   <Controller
                     name="profile"
                     control={control}
@@ -640,10 +640,7 @@ const Information = ({
                 </div>
 
                 <div className="col-xl-6 mb-3">
-                  <label className="form-label">
-                    {t("owningCostCenter")}{" "}
-                    
-                  </label>
+                  <label className="form-label">{t("owningCostCenter")} </label>
                   <Controller
                     name="owningCostCenter"
                     control={control}
@@ -700,7 +697,6 @@ const Information = ({
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // image
-import logo from "../../images/logo/logo-full.png";
-import LogoWhite from "../../images/logo/logofull-white.png";
+import logo from "@/assets/images/logo/logo-full.png";
+import LogoWhite from "@/assets/images/logo/logofull-white.png";
 import { ThemeContext } from "../../context/ThemeContext";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { forgetpasswordSchema, resetPassword } from "../../yup";
+import { forgetpasswordSchema, resetPassword } from "../../utils/yup";
 import { useForm } from "react-hook-form";
-import CustomInput from "../components/Input/CustomInput";
+import CustomInput from "../../components/Input/CustomInput";
 import PasswordServices from "../../services/api/PasswordServices";
 import { notifySuccess } from "../../utils/toast";
 const ResetPassword = () => {
@@ -26,7 +26,7 @@ const ResetPassword = () => {
   });
 
   const nav = useNavigate();
-  const onSubmit = async ({newPassword}) => {
+  const onSubmit = async ({ newPassword }) => {
     const token = window.location.pathname.split("/")[2];
     const data = {
       password: newPassword,
@@ -34,10 +34,10 @@ const ResetPassword = () => {
     };
     console.log(data);
     const response = await PasswordServices.resetPassword(data);
-    if(response?.data?.success){
+    if (response?.data?.success) {
       notifySuccess("Password Reset Successfully");
       nav("/login");
-    }else{
+    } else {
       notifySuccess("Password Reset Failed");
     }
     // nav("/login");

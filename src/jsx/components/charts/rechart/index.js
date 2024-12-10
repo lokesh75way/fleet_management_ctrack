@@ -14,49 +14,49 @@ function RechartJs() {
     <>
       <PageTitle motherMenu="Charts" activeMenu="ReChartJs" />
       <div className="container-fluid">
-          <Row>
-            <Col xl={6} lg={6}>
-              <Card>
-                <Card.Header>
+        <Row>
+          <Col xl={6} lg={6}>
+            <Card>
+              <Card.Header>
                 <h4 className="card-title">Bar</h4>
-                </Card.Header>
-                <Card.Body>
-                  <BarChartNoPadding />
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xl={6} lg={6}>
-              <Card>
-                <Card.Header>
-                  <h4 className="card-title">Bar</h4>
-                </Card.Header>
-                <Card.Body>
-                  <NagetivePositive />
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xl={6} lg={6}>
-              <Card>
-                <Card.Header>
-                  <h4 className="card-title">Line</h4>
-                </Card.Header>
-                <Card.Body>
-                  <TinyLineChart />
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xl={6} lg={6}>
-              <Card>
-                <Card.Header>
-                  <h4 className="card-title">Line</h4>
-                </Card.Header>
-                <Card.Body>
-                  <LegendEffectOpacity />
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </div>
+              </Card.Header>
+              <Card.Body>
+                <BarChartNoPadding />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xl={6} lg={6}>
+            <Card>
+              <Card.Header>
+                <h4 className="card-title">Bar</h4>
+              </Card.Header>
+              <Card.Body>
+                <NagetivePositive />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xl={6} lg={6}>
+            <Card>
+              <Card.Header>
+                <h4 className="card-title">Line</h4>
+              </Card.Header>
+              <Card.Body>
+                <TinyLineChart />
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xl={6} lg={6}>
+            <Card>
+              <Card.Header>
+                <h4 className="card-title">Line</h4>
+              </Card.Header>
+              <Card.Body>
+                <LegendEffectOpacity />
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }

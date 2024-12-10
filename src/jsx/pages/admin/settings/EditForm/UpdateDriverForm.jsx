@@ -8,14 +8,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { driverProfileSchema, driverInfoSchema } from "../../../../../yup";
+import {
+  driverProfileSchema,
+  driverInfoSchema,
+} from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import '../../../../../scss/pages/_driver-tracking.scss'
+import "@/assets/scss/pages/_driver-tracking.scss";
 
 const UpdateDriverForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -31,9 +34,7 @@ const UpdateDriverForm = () => {
     getValues,
     control,
     handleSubmit,
-  } = useForm({
-  
-  });
+  } = useForm({});
 
   const onSubmit = (data) => {
     if (activeIndex === totalTabs - 1) {

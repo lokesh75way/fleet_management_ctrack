@@ -1,91 +1,91 @@
-import EngliandImg from "../../images/svg/england.svg";
-import IndiaImg from "../../images/svg/india.svg";
-import ArabImg from "../../images/svg/united-arab-emirates.svg";
+import EngliandImg from "@/assets/images/svg/england.svg";
+import IndiaImg from "@/assets/images/svg/india.svg";
+import ArabImg from "@/assets/images/svg/united-arab-emirates.svg";
 
 export const IMAGES = {
-  Tab1: require("../../images/tab/1.jpg"),
-  Avatar: require("../../images/avatar/1.jpg"),
+  Tab1: require("@/assets/images/tab/1.jpg"),
+  Avatar: require("@/assets/images/avatar/1.jpg"),
 
-  contact1: require("../../images/contacts/pic1.jpg"),
-  contact2: require("../../images/contacts/pic2.jpg"),
-  contact3: require("../../images/contacts/pic3.jpg"),
-  contact4: require("../../images/contacts/d4.jpg"),
-  contact5: require("../../images/contacts/pic555.jpg"),
-  contact6: require("../../images/contacts/pic666.jpg"),
-  contact7: require("../../images/contacts/pic777.jpg"),
-  contact8: require("../../images/contacts/pic888.jpg"),
-  contact9: require("../../images/contacts/pic999.jpg"),
+  contact1: require("@/assets/images/contacts/pic1.jpg"),
+  contact2: require("@/assets/images/contacts/pic2.jpg"),
+  contact3: require("@/assets/images/contacts/pic3.jpg"),
+  contact4: require("@/assets/images/contacts/d4.jpg"),
+  contact5: require("@/assets/images/contacts/pic555.jpg"),
+  contact6: require("@/assets/images/contacts/pic666.jpg"),
+  contact7: require("@/assets/images/contacts/pic777.jpg"),
+  contact8: require("@/assets/images/contacts/pic888.jpg"),
+  contact9: require("@/assets/images/contacts/pic999.jpg"),
 
-  contactd1: require("../../images/contacts/d1.jpg"),
-  contactd2: require("../../images/contacts/d2.jpg"),
-  contactd3: require("../../images/contacts/d3.jpg"),
-  contactd4: require("../../images/contacts/d4.jpg"),
-  contactd5: require("../../images/contacts/d5.jpg"),
-  contactd6: require("../../images/contacts/d6.jpg"),
-  contactd7: require("../../images/contacts/d7.jpg"),
-  contactd8: require("../../images/contacts/d8.jpg"),
-  contactd9: require("../../images/contacts/d9.jpg"),
-  contactd10: require("../../images/contacts/d10.jpg"),
-  contactd11: require("../../images/contacts/d11.jpg"),
-  contactd12: require("../../images/contacts/d12.jpg"),
-  contactd13: require("../../images/contacts/d13.jpg"),
-  contactd14: require("../../images/contacts/d14.jpg"),
+  contactd1: require("@/assets/images/contacts/d1.jpg"),
+  contactd2: require("@/assets/images/contacts/d2.jpg"),
+  contactd3: require("@/assets/images/contacts/d3.jpg"),
+  contactd4: require("@/assets/images/contacts/d4.jpg"),
+  contactd5: require("@/assets/images/contacts/d5.jpg"),
+  contactd6: require("@/assets/images/contacts/d6.jpg"),
+  contactd7: require("@/assets/images/contacts/d7.jpg"),
+  contactd8: require("@/assets/images/contacts/d8.jpg"),
+  contactd9: require("@/assets/images/contacts/d9.jpg"),
+  contactd10: require("@/assets/images/contacts/d10.jpg"),
+  contactd11: require("@/assets/images/contacts/d11.jpg"),
+  contactd12: require("@/assets/images/contacts/d12.jpg"),
+  contactd13: require("@/assets/images/contacts/d13.jpg"),
+  contactd14: require("@/assets/images/contacts/d14.jpg"),
 
-  India: require("../../images/country/india.png"),
-  Canada: require("../../images/country/canada.png"),
-  Russia: require("../../images/country/russia.png"),
-  Uk: require("../../images/country/uk.png"),
-  Aus: require("../../images/country/aus.png"),
-  Usa: require("../../images/country/usa.png"),
-  Pak: require("../../images/country/pak.png"),
-  Germany: require("../../images/country/germany.png"),
-  Uae: require("../../images/country/uae.png"),
-  China: require("../../images/country/china.png"),
+  India: require("@/assets/images/country/india.png"),
+  Canada: require("@/assets/images/country/canada.png"),
+  Russia: require("@/assets/images/country/russia.png"),
+  Uk: require("@/assets/images/country/uk.png"),
+  Aus: require("@/assets/images/country/aus.png"),
+  Usa: require("@/assets/images/country/usa.png"),
+  Pak: require("@/assets/images/country/pak.png"),
+  Germany: require("@/assets/images/country/germany.png"),
+  Uae: require("@/assets/images/country/uae.png"),
+  China: require("@/assets/images/country/china.png"),
 
-  Books: require("../../images/books.png"),
-  News: require("../../images/news.png"),
-  Heart: require("../../images/heart.png"),
-  File: require("../../images/file.png"),
-  User: require("../../images/user1.jpg"),
+  Books: require("@/assets/images/books.png"),
+  News: require("@/assets/images/news.png"),
+  Heart: require("@/assets/images/heart.png"),
+  File: require("@/assets/images/file.png"),
+  User: require("@/assets/images/user1.jpg"),
 
-  Professional: require("../../images/blog/professional.jpg"),
-  Professional2: require("../../images/blog/professional2.jpg"),
-  Friends1: require("../../images/profile/friends/f1.jpg"),
-  Friends2: require("../../images/profile/friends/f2.jpg"),
-  Friends3: require("../../images/profile/friends/f3.jpg"),
-  Friends4: require("../../images/profile/friends/f4.jpg"),
+  Professional: require("@/assets/images/blog/professional.jpg"),
+  Professional2: require("@/assets/images/blog/professional2.jpg"),
+  Friends1: require("@/assets/images/profile/friends/f1.jpg"),
+  Friends2: require("@/assets/images/profile/friends/f2.jpg"),
+  Friends3: require("@/assets/images/profile/friends/f3.jpg"),
+  Friends4: require("@/assets/images/profile/friends/f4.jpg"),
 
-  Blogs1: require("../../images/blog/s1.jpg"),
-  Blogs2: require("../../images/blog/s2.jpg"),
-  Blogs3: require("../../images/blog/s3.jpg"),
-  Blogs4: require("../../images/blog/s4.jpg"),
-  Blogs5: require("../../images/blog/s5.jpg"),
-  Blogs6: require("../../images/blog/s6.jpg"),
+  Blogs1: require("@/assets/images/blog/s1.jpg"),
+  Blogs2: require("@/assets/images/blog/s2.jpg"),
+  Blogs3: require("@/assets/images/blog/s3.jpg"),
+  Blogs4: require("@/assets/images/blog/s4.jpg"),
+  Blogs5: require("@/assets/images/blog/s5.jpg"),
+  Blogs6: require("@/assets/images/blog/s6.jpg"),
 
-  Profile1: require("../../images/profile/1.jpg"),
-  Profile2: require("../../images/profile/2.jpg"),
-  Profile3: require("../../images/profile/3.jpg"),
-  Profile4: require("../../images/profile/4.jpg"),
-  Profile5: require("../../images/profile/5.jpg"),
-  Profile6: require("../../images/profile/6.jpg"),
-  Profile7: require("../../images/profile/7.jpg"),
-  Profile8: require("../../images/profile/8.jpg"),
-  Profile9: require("../../images/profile/9.jpg"),
+  Profile1: require("@/assets/images/profile/1.jpg"),
+  Profile2: require("@/assets/images/profile/2.jpg"),
+  Profile3: require("@/assets/images/profile/3.jpg"),
+  Profile4: require("@/assets/images/profile/4.jpg"),
+  Profile5: require("@/assets/images/profile/5.jpg"),
+  Profile6: require("@/assets/images/profile/6.jpg"),
+  Profile7: require("@/assets/images/profile/7.jpg"),
+  Profile8: require("@/assets/images/profile/8.jpg"),
+  Profile9: require("@/assets/images/profile/9.jpg"),
 
-  Product2: require("../../images/product/2.jpg"),
-  Product3: require("../../images/product/3.jpg"),
-  Product4: require("../../images/product/4.jpg"),
-  Product5: require("../../images/product/5.jpg"),
-  Product6: require("../../images/product/6.jpg"),
-  Product7: require("../../images/product/7.jpg"),
+  Product2: require("@/assets/images/product/2.jpg"),
+  Product3: require("@/assets/images/product/3.jpg"),
+  Product4: require("@/assets/images/product/4.jpg"),
+  Product5: require("@/assets/images/product/5.jpg"),
+  Product6: require("@/assets/images/product/6.jpg"),
+  Product7: require("@/assets/images/product/7.jpg"),
 
-  Post1: require("../../images/post/post1.jpg"),
-  Post2: require("../../images/post/post2.jpg"),
-  Post11: require("../../images/post/post11.jpg"),
-  Post12: require("../../images/post/post12.jpg"),
-  Post13: require("../../images/post/post13.jpg"),
-  Credit: require("../../images/credit.png"),
-  Econimics: require("../../images/economics.png"),
+  Post1: require("@/assets/images/post/post1.jpg"),
+  Post2: require("@/assets/images/post/post2.jpg"),
+  Post11: require("@/assets/images/post/post11.jpg"),
+  Post12: require("@/assets/images/post/post12.jpg"),
+  Post13: require("@/assets/images/post/post13.jpg"),
+  Credit: require("@/assets/images/credit.png"),
+  Econimics: require("@/assets/images/economics.png"),
 
   England: EngliandImg,
   IndiaFlag: IndiaImg,
@@ -1723,11 +1723,37 @@ export const SVGICON = {
         <path d="M12.0024 13.4148V10.3148" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M11.995 16.5H12.005" stroke="#130F26" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>  `,
-  Delete: <svg width="24" height="24" viewBox="0 0 24 24" fill="#DC3545" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.3248 9.4682C19.3248 9.4682 18.7818 16.2032 18.4668 19.0402C18.3168 20.3952 17.4798 21.1892 16.1088 21.2142C13.4998 21.2612 10.8878 21.2642 8.27979 21.2092C6.96079 21.1822 6.13779 20.3782 5.99079 19.0472C5.67379 16.1852 5.13379 9.4682 5.13379 9.4682" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M20.708 6.23969H3.75" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M17.4406 6.23967C16.6556 6.23967 15.9796 5.68467 15.8256 4.91567L15.5826 3.69967C15.4326 3.13867 14.9246 2.75067 14.3456 2.75067H10.1126C9.53358 2.75067 9.02558 3.13867 8.87558 3.69967L8.63258 4.91567C8.47858 5.68467 7.80258 6.23967 7.01758 6.23967" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>,
+  Delete: (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="#DC3545"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19.3248 9.4682C19.3248 9.4682 18.7818 16.2032 18.4668 19.0402C18.3168 20.3952 17.4798 21.1892 16.1088 21.2142C13.4998 21.2612 10.8878 21.2642 8.27979 21.2092C6.96079 21.1822 6.13779 20.3782 5.99079 19.0472C5.67379 16.1852 5.13379 9.4682 5.13379 9.4682"
+        stroke="#130F26"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M20.708 6.23969H3.75"
+        stroke="#130F26"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17.4406 6.23967C16.6556 6.23967 15.9796 5.68467 15.8256 4.91567L15.5826 3.69967C15.4326 3.13867 14.9246 2.75067 14.3456 2.75067H10.1126C9.53358 2.75067 9.02558 3.13867 8.87558 3.69967L8.63258 4.91567C8.47858 5.68467 7.80258 6.23967 7.01758 6.23967"
+        stroke="#130F26"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
   Discount: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4.79476 7.05601C4.79476 5.80701 5.80676 4.79501 7.05576 4.79401H8.08476C8.68176 4.79401 9.25376 4.55701 9.67776 4.13701L10.3968 3.41701C11.2778 2.53101 12.7098 2.52701 13.5958 3.40801L13.5968 3.40901L13.6058 3.41701L14.3258 4.13701C14.7498 4.55801 15.3218 4.79401 15.9188 4.79401H16.9468C18.1958 4.79401 19.2088 5.80601 19.2088 7.05601V8.08301C19.2088 8.68001 19.4448 9.25301 19.8658 9.67701L20.5858 10.397C21.4718 11.278 21.4768 12.71 20.5958 13.596L20.5948 13.597L20.5858 13.606L19.8658 14.326C19.4448 14.749 19.2088 15.321 19.2088 15.918V16.947C19.2088 18.196 18.1968 19.208 16.9478 19.208H16.9468H15.9168C15.3198 19.208 14.7468 19.445 14.3238 19.866L13.6038 20.585C12.7238 21.471 11.2928 21.476 10.4068 20.597C10.4058 20.596 10.4048 20.595 10.4038 20.594L10.3948 20.585L9.67576 19.866C9.25276 19.445 8.67976 19.209 8.08276 19.208H7.05576C5.80676 19.208 4.79476 18.196 4.79476 16.947V15.916C4.79476 15.319 4.55776 14.747 4.13676 14.324L3.41776 13.604C2.53176 12.724 2.52676 11.293 3.40676 10.407C3.40676 10.406 3.40776 10.405 3.40876 10.404L3.41776 10.395L4.13676 9.67501C4.55776 9.25101 4.79476 8.67901 4.79476 8.08101V7.05601" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             <path d="M9.43164 14.5717L14.5716 9.4317" stroke="#130F26" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

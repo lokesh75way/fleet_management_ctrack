@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import General from "../../../../components/TabComponent/TecnicianTab/General";
 import Address from "../../../../components/TabComponent/TecnicianTab/Address";
 import Leave from "../../../../components/TabComponent/TecnicianTab/Leave";
@@ -12,7 +12,7 @@ import {
   technicianGeneralSchema,
   technicianAddressSchema,
   technicianLeaveSchema,
-} from "../../../../../yup";
+} from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
 import {
@@ -44,8 +44,8 @@ const TechnicianForm = () => {
       activeIndex === 0
         ? technicianGeneralSchema
         : activeIndex === 1
-        ? technicianAddressSchema
-        : technicianLeaveSchema
+          ? technicianAddressSchema
+          : technicianLeaveSchema
     ),
   });
   const { id: techId } = useParams();
@@ -78,10 +78,10 @@ const TechnicianForm = () => {
     try {
       const data = await getTechnicianById(id);
       setEditData(data);
-      console.log(data, "techdata")
-      setValue('noOfDaysCL',data.leave[0].days)
-      setValue('noOfDays',data.leave[1].days)
-      setValue('noOfDaysPL',data.leave[2].days)
+      console.log(data, "techdata");
+      setValue("noOfDaysCL", data.leave[0].days);
+      setValue("noOfDays", data.leave[1].days);
+      setValue("noOfDaysPL", data.leave[2].days);
       reset(data);
     } catch (error) {
       notifyError("Some error occured !!");
@@ -91,9 +91,8 @@ const TechnicianForm = () => {
 
   useEffect(() => {
     if (techId) {
-     getTechnician(techId)
-     
-    };
+      getTechnician(techId);
+    }
   }, [techId]);
   return (
     <>

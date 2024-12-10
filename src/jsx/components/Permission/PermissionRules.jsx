@@ -2,14 +2,9 @@ import { useContext, useState, useEffect } from "react";
 import React from "react";
 import { Card, Table } from "react-bootstrap";
 import Select from "react-select";
-import { staticoptions } from "./Options";
-import { ThemeContext } from "../../../context/ThemeContext";
-// import { reset } from "./Options";
-import _ from "lodash";
 import TemplateServices from "../../../services/api/TemplateServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Error from "../Error/Error";
 import { notifyError, notifySuccess } from "../../../utils/toast";
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
@@ -17,16 +12,16 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
   // const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
   // const [show, setShow] = useState(false);
-    const [groupsDataState, setGroupsDataState] = useState([]);
+  const [groupsDataState, setGroupsDataState] = useState([]);
   const [subModuleIndexArray, setSubModuleIndexArray] = useState([]);
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const [newGroupData, setNewGroupData] = useState({
     name: "",
     permission: {},
   });
-    const [selectOptions, setSelectOptions] = useState([]);
+  const [selectOptions, setSelectOptions] = useState([]);
 
   const [selectedTemplate, setSelectedTemplate] = useState(null); // Step 1: State to hold selected template data
   const handleCopy = () => {
@@ -57,7 +52,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     });
 
     setData(updatedData);
-    
+
     // Clear subModuleIndexArray
     setSubModuleIndexArray(
       updatedData
@@ -99,7 +94,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     const moduleIndex = updatedData.findIndex((element) => element._id === id);
     updatedData[moduleIndex].permission = modulePermissions;
     setData(updatedData);
-      };
+  };
   const handleSubModulePermisssionChange = (
     isChecked,
     name,
@@ -124,7 +119,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
       return module;
     });
     setData(updatedData);
-      };
+  };
 
   const handleInputChange = (e) => {
     setIsErrror(false);
@@ -142,10 +137,10 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
       const editData = groupsDataState.filter(
         (item, index) => index === isEditTrue
       );
-        setNewGroupData({
-          name: editData.name,
-          permission: editData.permission,
-        });
+      setNewGroupData({
+        name: editData.name,
+        permission: editData.permission,
+      });
     }
   }, []);
 
@@ -171,7 +166,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         });
 
         setData(newData);
-     
       } catch (error) {
         console.error("Error fetching template data:", error);
       }
@@ -190,26 +184,28 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         // setCurrentTemplate();
         const filteredData = templateData.data.data.find((d) => d._id === id);
         setNewGroupData(filteredData);
-        
+
         setEditGroupName(filteredData.name);
-      
-                const updatedData = moduleData.data.map((module) => {
-// Find the permission for the current module or submodule
+
+        const updatedData = moduleData.data.map((module) => {
+          // Find the permission for the current module or submodule
           const permission = filteredData.permission.find(
             (perm) => perm.moduleId === (module.id || module._id)
           );
-                  if (permission) {
-// Assign permissions
+          if (permission) {
+            // Assign permissions
             module.permission = {
               add: permission?.add,
               view: permission?.view,
               modify: permission?.modify,
               delete: permission?.delete,
             };
-        
+
             if (module.subModules && module.subModules.length > 0) {
               module.subModules.forEach((submodule) => {
-                const subModulePermissions = filteredData.permission.find((perm) => perm.moduleId === (submodule.id || submodule._id));
+                const subModulePermissions = filteredData.permission.find(
+                  (perm) => perm.moduleId === (submodule.id || submodule._id)
+                );
                 if (subModulePermissions) {
                   submodule.permission = {
                     add: subModulePermissions.add,
@@ -221,11 +217,11 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               });
             }
           }
-                  return module;
+          return module;
         });
 
         setData(updatedData);
-                setSubModuleIndexArray(
+        setSubModuleIndexArray(
           filteredData.permission
             .filter((d) => {
               return !(!d.delete && !d.view && !d.modify && !d.add);
@@ -247,7 +243,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   };
 
   const groupNames = groupsDataState.map((e) => e.name);
- 
 
   const handleSave = async () => {
     if (!newGroupData.name) {
@@ -284,7 +279,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         // console.log(mainModulePermissions, "module")
 
         acc.push(mainModulePermissions);
-        
 
         if (module.subModules && module.subModules.length > 0) {
           module.subModules.forEach((subModule) => {
@@ -295,10 +289,10 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
               modify: subModule.permission?.modify,
               delete: subModule.permission?.delete,
             };
-                        acc.push(subModulePermissions);
+            acc.push(subModulePermissions);
           });
         }
-        
+
         return acc;
       }, []);
 
@@ -306,7 +300,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         ...newGroupData,
         permission: flattenedPermissions,
       };
-      
+
       setNewGroupData((prev) => ({
         ...prev,
         permission: flattenedPermissions,
@@ -316,7 +310,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         ? TemplateServices.udpateTemplate
         : TemplateServices.createTemplate;
       await method(tempGroupData);
-      
+
       setSubModuleIndexArray([]);
 
       console.log("Data saved successfully");
@@ -330,8 +324,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
   useEffect(() => {
     fetchTemplates();
   }, []);
-
-
 
   let isDisabled = false;
 
@@ -424,7 +416,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                   // const anyPermissionTrue = Object.values(
                   //   element.permission
                   // ).some((perm) => perm === true);
-                                    if (!element || !element.title) return null;
+                  if (!element || !element.title) return null;
                   return (
                     <React.Fragment key={element._id}>
                       <tr>

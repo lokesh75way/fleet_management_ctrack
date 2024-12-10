@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const RPM = () => {
-  return (
-    <h1>RPM</h1>
-  )
-}
+  return <h1>RPM</h1>;
+};
 
-export default RPM
+export default RPM;

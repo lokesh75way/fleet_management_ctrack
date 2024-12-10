@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import TechnicianTable from "../components/Tables/TechnicianTable";
 import { useTranslation } from "react-i18next";
 import { clsx } from "clsx";
@@ -14,25 +14,29 @@ import {
 import { notifyError, notifySuccess } from "../../utils/toast";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const Technician = () => {
   const { t } = useTranslation();
   const { isRtl } = useContext(ThemeContext);
 
-
   const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllTechnicians = async (page, businessGroupId) => {
     try {
+      setIsLoading(true);
       const { technicians, count } = await getTechnicians(page, 10);
       setTableData(technicians);
       setCount(count);
     } catch (error) {
       notifyError("Error in fetching data");
+    } finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -54,9 +58,9 @@ const Technician = () => {
     navigate(`/technician/edit/${item}`);
   };
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
-    goToPage(selected + 1); 
+    goToPage(selected + 1);
   };
 
   const startIndex = (page - 1) * itemsPerPage;
@@ -99,31 +103,35 @@ const Technician = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("technicianId")}</th>
-                          <th>{t("technicianName")}</th>
-                          <th>{t("email")}</th>
-                          <th>{t("contactNumber")}</th>
-                          <th>{t("location")}</th>
-                          <th>{t("technicianNumber")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <TechnicianTable
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          tableData={tableData}
-                          currentPage={page} 
-                          itemsPerPage={itemsPerPage} 
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("technicianId")}</th>
+                            <th>{t("technicianName")}</th>
+                            <th>{t("email")}</th>
+                            <th>{t("contactNumber")}</th>
+                            <th>{t("location")}</th>
+                            <th>{t("technicianNumber")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <TechnicianTable
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            tableData={tableData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
@@ -134,11 +142,11 @@ const Technician = () => {
                         className="dataTables_paginate paging_simple_numbers"
                         id="example2_paginate"
                       >
-                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                        <Paginate
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

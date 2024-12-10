@@ -34,10 +34,9 @@ const MainNouiSlider = () => {
                   }}
                   // onUpdate={this.onUpdate(index)}
                 />
-                
               </div>
             </div>
-          </div> 
+          </div>
         </div>
         {/* <div className="col-xl-4">
           <div className="card">

@@ -55,7 +55,7 @@ function ApexChart() {
           </Col>
           <Col xl={6} lg={6}>
             <Card>
-              <Card.Header> 
+              <Card.Header>
                 <h4 className="card-title">Line</h4>
               </Card.Header>
               <Card.Body>

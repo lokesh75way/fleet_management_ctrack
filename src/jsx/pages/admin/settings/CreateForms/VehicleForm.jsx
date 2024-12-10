@@ -7,63 +7,92 @@ import React, {
 import { Button, Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
 import General from "../../../../components/TabComponent/VehicleTabs/General";
 import Document from "../../../../components/TabComponent/VehicleTabs/Document";
-import Information from "../../../../components/TabComponent/VehicleTabs/Information"
-import Licensing from "../../../../components/TabComponent/VehicleTabs/Licensing"
-import Servicing from "../../../../components/TabComponent/VehicleTabs/Servicing"
-import Statuses from "../../../../components/TabComponent/VehicleTabs/Statuses"
-import MessageForwarding from "../../../../components/TabComponent/VehicleTabs/MessageForwarding"
+import Information from "../../../../components/TabComponent/VehicleTabs/Information";
+import Licensing from "../../../../components/TabComponent/VehicleTabs/Licensing";
+import Servicing from "../../../../components/TabComponent/VehicleTabs/Servicing";
+import Statuses from "../../../../components/TabComponent/VehicleTabs/Statuses";
+import MessageForwarding from "../../../../components/TabComponent/VehicleTabs/MessageForwarding";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   vehicleGeneralSchema,
   vehicleProfileSchema,
   vehicleDocumentSchema,
-} from "../../../../../yup";
+  vehicleInformationSchema,
+} from "../../../../../utils/yup";
 import useStorage from "../../../../../hooks/useStorage";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import {
   createVehicles,
+  getVehicleById,
   updateVehicles,
 } from "../../../../../services/api/VehicleService";
 
 import { useTranslation } from "react-i18next";
+import * as yup from "yup";
+import { useQuery } from "@tanstack/react-query";
 
 const VehicleForm = () => {
   const { t } = useTranslation();
-  const { saveData } = useStorage();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [
-    t("information"), 
-    t("licensing"), 
-    t("servicing"), 
-    t("statuses"), 
-    t("general"), 
-    t("profile"), 
-    t("document"), 
-    t("messageforwarding")
-  ];
-  
-  const component = [
-    Information, 
-    Licensing, 
-    Servicing, 
-    Statuses, 
-    General, 
-    Profile, 
-    Document, 
-    MessageForwarding
-  ];
-  
-  const totalTabs = tabHeading.length;
-
+  const [formData, setFormData] = useState();
   const { id } = useParams();
+  const tabHeading = [
+    t("information"),
+    t("general"),
+    t("licensing"),
+    // t("servicing"),
+    // t("statuses"),
+
+    t("profile"),
+    // t("document"),
+    // t("messageforwarding"),
+  ];
+
+  const component = [
+    Information,
+    General,
+    Licensing,
+    // Servicing,
+    // Statuses,
+    Profile,
+    // Document,
+    // MessageForwarding,
+  ];
+
+  const totalTabs = tabHeading.length;
   const location = useLocation();
-  const { formData, vehicle } = location.state || {};
+  const {
+    // formData,
+    vehicle,
+  } = location.state || {};
+
+  const { data, isError } = useQuery({
+    queryKey: ["vehicle", id],
+    queryFn: () => getVehicleById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (isError && !!id) {
+      notifyError("Not able to fetch business group data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+
+  useEffect(() => {
+    if (id && data) {
+      setFormData(data?.data);
+    }
+  }, [data]);
+
+  console.log("data", formData);
 
   const {
     register,
@@ -74,27 +103,33 @@ const VehicleForm = () => {
     handleSubmit,
     watch,
   } = useForm({
-      defaultValues: {
-        documents: [{
-          documentType: {label : 'INSURANCE' , value : 'INSURANCE'},
-          file: '',
-          expireDate:  new Date(),
-          issueDate:  new Date(),
-        }],
-        vehicleName: vehicle?.Vehicle_Name,
-        imeiNumber: vehicle?.imeiNumber,
-        plateNumber: vehicle?.Vehicle_No,
-        registrationNumber: vehicle?.Vehicle_No,
-      },
+    defaultValues: {
+      documents: [
+        {
+          documentType: { label: "INSURANCE", value: "INSURANCE" },
+          file: "",
+          expireDate: new Date(),
+          issueDate: new Date(),
+        },
+      ],
+      // vehicleName: vehicle?.Vehicle_Name,
+      // imeiNumber: vehicle?.imeiNumber,
+      // plateNumber: vehicle?.Vehicle_No,
+      // registrationNumber: vehicle?.Vehicle_No,
+      selectedInput: "registrationNumber",
+    },
     resolver: yupResolver(
       activeIndex === 0
-        ? vehicleGeneralSchema
+        ? vehicleInformationSchema
         : activeIndex === 1
-        ? vehicleProfileSchema
-        : vehicleDocumentSchema
+          ? vehicleGeneralSchema
+          : activeIndex === 3
+            ? vehicleProfileSchema
+            : activeIndex === 2
+              ? yup.object()
+              : vehicleDocumentSchema
     ),
   });
-
 
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
@@ -106,7 +141,8 @@ const VehicleForm = () => {
               const element = data[key];
               if (data[key] === undefined || data[key] === "") {
                 delete data[key];
-              }}
+              }
+            }
             await updateVehicles(data);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");
@@ -115,6 +151,7 @@ const VehicleForm = () => {
             notifyError("Some Error occured");
           }
         } else {
+          console.log("data", data);
           try {
             for (const key in data) {
               const element = data[key];

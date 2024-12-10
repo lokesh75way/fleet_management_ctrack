@@ -7,10 +7,10 @@ import React, {
 import { Button, Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import MyAccount from "../../../components/TabComponent/AdminProfileTabs/MyProfile";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { adminProfileAccountSchema } from "../../../../yup";
+import { adminProfileAccountSchema } from "../../../../utils/yup";
 import useStorage from "../../../../hooks/useStorage";
 import { notifySuccess } from "../../../../utils/toast";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ const AdminProfile = () => {
   const component = [MyAccount];
   const totalTabs = tabHeading.length;
   const [isEdit, setIsEdit] = useState(false);
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
   const editData = allData.find((data) => data.role === "admin");
 
@@ -43,7 +43,13 @@ const navigate = useNavigate();
 
     const indexToUpdate = val.findIndex((item) => item.id == editData.id);
     if (indexToUpdate !== -1) {
-      val[indexToUpdate] = { ...data, id : editData.id, email : editData.email, role : "admin", whatsappContactNumber: editData.whatsappContactNumber };
+      val[indexToUpdate] = {
+        ...data,
+        id: editData.id,
+        email: editData.email,
+        role: "admin",
+        whatsappContactNumber: editData.whatsappContactNumber,
+      };
       localStorage.setItem("userJsonData", JSON.stringify(val));
       notifySuccess("Profile Updated!");
       navigate("/");

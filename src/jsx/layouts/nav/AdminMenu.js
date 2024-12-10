@@ -248,7 +248,7 @@ export const AdminMenuList = [
         title: "Fuel",
         to: "/reports/fuel",
       },
-      
+
       {
         title: "Trip Classification",
         to: "/reports/trip-classification",

@@ -29,7 +29,7 @@ const BranchDropdown = ({
       setdropDownOptions(groupOptions);
     };
     fetchBusinessGroups();
-  }, [page,companyId]);
+  }, [page, companyId]);
   useEffect(() => {
     if (value && Array.isArray(value)) {
       const selected = dropDownOptions.filter((option) =>

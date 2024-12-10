@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import MainPagetitle from "../layouts/MainPagetitle";
+import MainPagetitle from "../../components/MainPagetitle";
 import InviteCustomer from "../constant/ModalList";
 import EmployeeOffcanvas from "../constant/EmployeeOffcanvas";
 import { GeofenceData } from "../components/Tables/Tables";
@@ -17,7 +17,8 @@ import { ThemeContext } from "../../context/ThemeContext";
 import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 
 const headers = [
   { label: "Employee ID", key: "emplid" },
@@ -31,14 +32,13 @@ const headers = [
 ];
 
 const Geofence = (ref) => {
- 
   const navigate = useNavigate();
-  const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
-    usePagination();
+  const { page, goToPage, setCount, totalCount } = usePagination();
 
   const { isRtl } = useContext(ThemeContext);
 
   const [tableData, setTableData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [editData, setEditData] = useState({
     id: 0,
     status: "",
@@ -50,22 +50,25 @@ const Geofence = (ref) => {
     location: "",
   });
 
-  const itemsPerPage=10;
+  const itemsPerPage = 10;
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   const getData = async () => {
     try {
+      setIsLoading(true);
       const { geofences, count } = await getGeofenceData(page);
       setCount(count);
       setTableData(geofences);
     } catch (error) {
       notifyError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -76,14 +79,13 @@ const Geofence = (ref) => {
   const onConfirmDelete = async (id) => {
     try {
       const data = await deleteGeofenceData(id);
-      if(data.success){
+      if (data.success) {
         notifySuccess(data.message);
       }
       getData(page);
     } catch (error) {
-      notifyError(error)
+      notifyError(error);
     }
-  
   };
   const editDrawerOpen = (item) => {
     navigate(`/settings/geofence/map/edit/${item}`);
@@ -121,35 +123,39 @@ const Geofence = (ref) => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    <table
-                      id="empoloyees-tblwrapper"
-                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>{t("geofenceID")}</th>
-                          <th>{t("geofenceName")}</th>
-                          <th>{t("geofenceType")}</th>
-                          <th>{t("contactNumber")}</th>
-                          <th>{t("address")}</th>
-                          <th>{t("description")}</th>
-                          <th>{t("geofenceAccess")}</th>
-                          <th>{t("action")}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <GeofenceTable
-                          page={page}
-                          editData={editData}
-                          tableData={tableData}
-                          onConfirmDelete={onConfirmDelete}
-                          editDrawerOpen={editDrawerOpen}
-                          setEditData={setEditData}
-                          currentPage={page} 
-                            itemsPerPage={itemsPerPage} 
-                        />
-                      </tbody>
-                    </table>
+                    {!tableData.length && isLoading ? (
+                      <TableSkeleton />
+                    ) : (
+                      <table
+                        id="empoloyees-tblwrapper"
+                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>{t("geofenceID")}</th>
+                            <th>{t("geofenceName")}</th>
+                            <th>{t("geofenceType")}</th>
+                            <th>{t("contactNumber")}</th>
+                            <th>{t("address")}</th>
+                            <th>{t("description")}</th>
+                            <th>{t("geofenceAccess")}</th>
+                            <th>{t("action")}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <GeofenceTable
+                            page={page}
+                            editData={editData}
+                            tableData={tableData}
+                            onConfirmDelete={onConfirmDelete}
+                            editDrawerOpen={editDrawerOpen}
+                            setEditData={setEditData}
+                            currentPage={page}
+                            itemsPerPage={itemsPerPage}
+                          />
+                        </tbody>
+                      </table>
+                    )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
@@ -161,10 +167,10 @@ const Geofence = (ref) => {
                         id="example2_paginate"
                       >
                         <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                          totalCount={totalCount}
+                          itemsPerPage={itemsPerPage}
+                          handlePageClick={handlePageClick}
+                        />
                       </div>
                     </div>
                   </div>

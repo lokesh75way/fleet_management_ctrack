@@ -55,7 +55,6 @@ class ApexBar3 extends React.Component {
               fontWeight: 100,
             },
           },
-         
         },
         stroke: {
           show: true,
@@ -81,7 +80,7 @@ class ApexBar3 extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <div id="chart" className="line-chart-style bar-chart">
         <ReactApexChart

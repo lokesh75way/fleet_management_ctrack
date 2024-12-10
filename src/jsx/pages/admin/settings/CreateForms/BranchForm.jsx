@@ -1,33 +1,28 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import MyAccount from "../../../../components/TabComponent/BranchTabs/MyAccount";
-import UserSetting from "../../../../components/TabComponent/BranchTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { branchAccountSchema, companySettingSchema } from "../../../../../yup";
+import { branchAccountSchema } from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
-import ManagePassword from "../../../../components/TabComponent/AdminProfileTabs/ManagePassword";
+import ManagePassword from "../../../../../components/Form/ChangePassword";
 import { useTranslation } from "react-i18next";
 import {
   createNewBranch,
   editBranch,
 } from "../../../../../services/api/BranchServices";
-import { editCompany } from "../../../../../services/api/CompanyServices";
+import { getApiErrorMessage } from "../../../../../utils/helper";
 
 const BranchForm = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t("newBranch"), t("changePassword")];
-  const component = [MyAccount, ManagePassword];
-
-  const navigate = useNavigate();
   const { id } = useParams();
-
-  component.pop();
-  tabHeading.pop();
+  const tabHeading = [id ? t("editBranch") : t("newBranch")];
+  const component = [MyAccount];
+  const navigate = useNavigate();
 
   const totalTabs = tabHeading.length;
   const {
@@ -39,69 +34,52 @@ const BranchForm = () => {
     handleSubmit,
   } = useForm({
     defaultValues: {
-      userInfo: [{
-        name:'',
-        designation : '', 
-        mobileNumber :null,
-        email:'',
-      }],
+      userInfo: [
+        {
+          name: "",
+          designation: "",
+          mobileNumber: null,
+          email: "",
+        },
+      ],
     },
-    resolver: yupResolver(
-       branchAccountSchema 
-    ),
+    resolver: yupResolver(branchAccountSchema),
   });
-  
+
   const onSubmit = async (data) => {
     if (activeIndex === totalTabs - 1) {
       try {
+        if (data.logo == null || data.logo.length === 0) {
+          delete data.logo;
+        }
+        if (data.file && data.file.length === 0) {
+          delete data.file;
+        }
+        if (data.file && Object.keys(data.file).length === 0) {
+          delete data.file;
+        }
         if (id) {
-          try {
-            const Branchdata = {
-              ...data,
-              branchId: id,
-            };
-            if (data.logo && data.logo.length === 0) {
-              delete data.logo;
-            }
-            if (data.file && data.file.length === 0) {
-              delete data.file;
-            }
-            if (data.file && Object.keys(data.file).length === 0) {
-              delete data.file;
-            }
-            await editBranch(Branchdata);
-            notifySuccess("Branch Updated!");
-            navigate("/branch");
-            return;
-          } catch (e) {
-            console.log(e)
-            notifyError("Some error occured !!");
-          }
-          return;
+          const Branchdata = {
+            ...data,
+            branchId: id,
+          };
+
+          await editBranch(Branchdata);
+          notifySuccess("Branch Updated!");
+          navigate("/branch");
         } else {
-          try {
-            if (data.logo && data.logo.length === 0) {
-              delete data.logo;
-            }
-            if (data.file && data.file.length === 0) {
-              delete data.file;
-            }
-            await createNewBranch(data);
-            notifySuccess("New Branch Created!");
-            navigate("/branch");
-            return;
-          } catch (e) {
-            console.log(e);
-            notifyError("Some error occured !!");
-          }
+          await createNewBranch(data);
+          notifySuccess("New Branch Created!");
+          navigate("/branch");
+          return;
         }
       } catch (error) {
-        console.log(error)
-        notifyError("Some error occured !!");
+        notifyError(getApiErrorMessage(error));
       }
     }
-    setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
+    // setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
   };
+
   return (
     <>
       <MainPagetitle

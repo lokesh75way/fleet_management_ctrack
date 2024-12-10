@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import CheckboxTree from "react-checkbox-tree";
-import "../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { Button } from "react-bootstrap";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 
@@ -10,12 +10,11 @@ const GeoFenceItem = ({ geoFences, handleToggleCardPositionHandler }) => {
   const [expanded, setExpanded] = useState([]);
   const [nodes, setNodes] = useState([]);
 
-
-useEffect(() => {
+  useEffect(() => {
     const data = Object.entries(geoFences).map(([company, fences]) => {
-      const childNodes = fences.map(fence => ({
+      const childNodes = fences.map((fence) => ({
         label: fence.name,
-        value: fence.id
+        value: fence.id,
       }));
       return { value: company, label: company, children: childNodes };
     });

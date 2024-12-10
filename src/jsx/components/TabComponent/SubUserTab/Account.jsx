@@ -2,29 +2,29 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import { useParams } from "react-router-dom";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
 import useStorage from "../../../../hooks/useStorage";
-import "../../../../scss/pages/_driver-tracking.scss";
+import "@/assets/scss/pages/_driver-tracking.scss";
 import DummyData from "../../../../users.json";
 import { getSelectValues } from "../../../../utils/helper";
 import { getTemplates } from "../../../../services/api/TemplateServices";
 import { useTranslation } from "react-i18next";
 import { notifyError } from "../../../../utils/toast";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import BranchDropdown from "../../BranchDropdown";
-import CompanyDropdown from "../../CompanyDropdown";
-import GroupDropdown from "../../GroupDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
 import VehicleDropdown from "../../VehicleDropdown";
-import { unitOfDistanceOptions } from "../VehicleTabs/Options";
-import UserLocation from "../../UserLocation";
-import LocationSelector from "../../LocationSelector";
+import { unitOfDistanceOptions } from "../../../../constants/options";
+import LocationSelector from "../../../../components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
 
 const Account = ({
   handleNext,
@@ -38,7 +38,7 @@ const Account = ({
   formData,
 }) => {
   const [selectStateName, setSelectStateName] = useState("");
-  const [defaultCountry,setDefaultCountry] = useState();
+  const [defaultCountry, setDefaultCountry] = useState();
   const [defaultValue, setDefaultValue] = useState("");
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
@@ -55,8 +55,7 @@ const Account = ({
   const [isEdit, setIsEdit] = useState(false);
   const [groupId, setGroupId] = useState(null);
   const [companyId, setCompanyId] = useState(null);
-  const [branchId, setBranchId] = useState([])
-  const [locationData, setLocationData] = useState(null);
+  const [branchId, setBranchId] = useState([]);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
   const customStyles = {
@@ -76,7 +75,7 @@ const Account = ({
     setValue("parentCompany", "");
     setBranchOptions([]);
   }
-console.log("errors",errors);
+  console.log("errors", errors);
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter((item) => item?.companyId?._id == companyId)
@@ -86,7 +85,7 @@ console.log("errors",errors);
 
   useEffect(() => {
     const fetchOptions = async () => {
-      const response = await getGroups();
+      const response = await getAllGroups();
       const companyResponse = await getCompany();
       const branchResponse = await getAllBranch();
       if (response.error) {
@@ -168,7 +167,6 @@ console.log("errors",errors);
     }));
   }
 
-
   const [filteredUserData, setFilteredUserData] = useState([]);
   const [businessUserOptions, setBusinessUserOptions] = useState([]);
   const [companyOptions, setCompanyOptions] = useState([]);
@@ -180,7 +178,7 @@ console.log("errors",errors);
   const [parentValue, setParentValue] = useState();
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
-
+  const { location: locationData, error: locationError } = useUserLocation();
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
   useEffect(() => {
@@ -200,36 +198,33 @@ console.log("errors",errors);
       setBusinessDisabled(true);
     }
   }, []);
-  
-  useEffect(()=>{
-    if(formData && id){
-      setValue("businessUser",formData?.[0]?.businessGroupId)
-      setValue("companyId",formData?.[0]?.companyId)
-      setValue("branchIds",formData?.[0]?.branchIds)
-      setValue("vehicleIds",formData?.[0]?.vehicleIds)
-      setValue("email",formData?.[0]?.email)
-      setValue("userName",formData?.[0]?.userName)
-      setValue("mobileNumber",formData?.[0]?.mobileNumber)
-      setValue("country",formData[0].country)
-      setDefaultCountry({ name:formData[0].country })
-      setValue("state",formData[0].state || '' )
-      setSelectStateName({name : formData[0].state || ''})    
-      setValue("featureTemplateId",formData?.[0]?.featureTemplateId)
+
+  useEffect(() => {
+    if (formData && id) {
+      setValue("businessUser", formData?.[0]?.businessGroupId);
+      setValue("companyId", formData?.[0]?.companyId);
+      setValue("branchIds", formData?.[0]?.branchIds);
+      setValue("vehicleIds", formData?.[0]?.vehicleIds);
+      setValue("email", formData?.[0]?.email);
+      setValue("userName", formData?.[0]?.userName);
+      setValue("mobileNumber", formData?.[0]?.mobileNumber);
+      setValue("country", formData[0].country);
+      setDefaultCountry({ name: formData[0].country });
+      setValue("state", formData[0].state || "");
+      setSelectStateName({ name: formData[0].state || "" });
+      setValue("featureTemplateId", formData?.[0]?.featureTemplateId);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
     }
-  },[formData,id])
-
-  const handleLocationData = useCallback((data) => {
-    setLocationData(data);
-  }, []);
+  }, [formData, id]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-      <UserLocation onLocationData={handleLocationData} />
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <Controller
@@ -285,18 +280,18 @@ console.log("errors",errors);
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdown
-              onChange={(newValue) => {
-                const newArray = newValue.map((temp)=> temp.value)
-                setValue("branchIds", newArray);
-                setBranchId(newArray)
-              }}
-              value={value}
-              customStyles={customStyles}
-              ref={ref}
-              companyId={companyId}
-              name={name}
-              isDisabled={companyId  ? false  : true}
-            />
+                onChange={(newValue) => {
+                  const newArray = newValue.map((temp) => temp.value);
+                  setValue("branchIds", newArray);
+                  setBranchId(newArray);
+                }}
+                value={value}
+                customStyles={customStyles}
+                ref={ref}
+                companyId={companyId}
+                name={name}
+                isDisabled={companyId ? false : true}
+              />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -309,16 +304,16 @@ console.log("errors",errors);
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <VehicleDropdown
-              onChange={(newValue) => {
-                const newArray = newValue.map((temp)=> temp.value)
-                setValue("vehicleIds", newArray);
-              }}
-              value={value}
-              branchids={branchId}
-              customStyles={customStyles}
-              ref={ref}
-              name={name}
-            />
+                onChange={(newValue) => {
+                  const newArray = newValue.map((temp) => temp.value);
+                  setValue("vehicleIds", newArray);
+                }}
+                value={value}
+                branchids={branchId}
+                customStyles={customStyles}
+                ref={ref}
+                name={name}
+              />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
@@ -376,8 +371,8 @@ console.log("errors",errors);
           />
           <Error errorName={errors.mobileNumber} />
         </div>
-  
-              <LocationSelector
+
+        <LocationSelector
           register={register}
           setValue={setValue}
           errors={errors}
@@ -387,7 +382,7 @@ console.log("errors",errors);
           id={id}
           showCity={false}
         />
-        {!id && (        
+        {!id && (
           <>
             <div className="col-xl-3 mb-3 ">
               <label className="form-label">

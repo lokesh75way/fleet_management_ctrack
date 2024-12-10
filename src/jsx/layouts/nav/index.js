@@ -5,7 +5,7 @@ import NavHader from "./NavHader";
 import Header from "./Header";
 import ChatBox from "../ChatBox";
 
-const Nav = ({ title, onClick: ClickToAddEvent, role = 'company' }) => {
+const Nav = ({ title, onClick: ClickToAddEvent, role = "company" }) => {
   const [toggle, setToggle] = useState("");
   const onClick = (name) => setToggle(toggle === name ? "" : name);
   return (

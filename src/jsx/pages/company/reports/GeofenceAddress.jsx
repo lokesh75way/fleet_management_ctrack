@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
-import MainPagetitle from "../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../components/MainPagetitle";
 import { GeofenceData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
 import GeofenceTable from "../../../components/Tables/GeofenceTable";
@@ -454,7 +454,7 @@ const GeofenceAddress = (ref) => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">GeofenceAddress</h4>
                     <div className="d-flex">
-                    <CSVLink
+                      <CSVLink
                         {...csvlink}
                         className="btn btn-primary light btn-sm me-1"
                       >

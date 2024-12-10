@@ -30,7 +30,7 @@ export function signupAction(data, navigate) {
         //history.push('/dashboard');
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         const errorMessage = formatError(error?.response?.data);
         dispatch(signupFailedAction(errorMessage));
       });
@@ -54,11 +54,14 @@ export function loginAction(email, password, navigate) {
         saveTokenInLocalStorage(response.data.data);
         dispatch(loginConfirmedAction(response.data.data));
         dispatch(setPermissions(response.data.data.permissions));
-        localStorage.setItem("permission", JSON.stringify(response.data.data.permissions))
+        localStorage.setItem(
+          "permission",
+          JSON.stringify(response.data.data.permissions)
+        );
         navigate("/dashboard");
       })
       .catch((error) => {
-        console.log(error?.response?.data?.message,"yt:0")
+        console.log(error?.response?.data?.message, "yt:0");
         const errorMessage = formatError(error?.response?.data?.message);
         dispatch(loginFailedAction(errorMessage));
       });

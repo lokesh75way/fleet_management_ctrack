@@ -11,41 +11,38 @@ const data = {
       borderColor: "rgba(255, 29, 45,1)",
       borderWidth: "3",
       backgroundColor: "rgba(255, 29, 45, 0.1)",
-	    fill:true,
-	    tension:0.4
+      fill: true,
+      tension: 0.4,
     },
   ],
 };
 
 const options = {
-	plugins:{
-		legend: false,
-	},
+  plugins: {
+    legend: false,
+  },
   scales: {
-    y: 
-      {
-		    max: 100,
-        min: 0,
-        ticks: {
-          beginAtZero: true,
-          stepSize: 20,
-          padding: 5,
-        },
-        grid:{
-          color:"rgba(255, 255, 255, 0.1)"
-        }
+    y: {
+      max: 100,
+      min: 0,
+      ticks: {
+        beginAtZero: true,
+        stepSize: 20,
+        padding: 5,
       },
-    
-    x: 
-      {
-        ticks: {
-          padding: 5,
-        },
-        grid:{
-          color:"rgba(255, 255, 255, 0.1)"
-        }
+      grid: {
+        color: "rgba(255, 255, 255, 0.1)",
       },
-    
+    },
+
+    x: {
+      ticks: {
+        padding: 5,
+      },
+      grid: {
+        color: "rgba(255, 255, 255, 0.1)",
+      },
+    },
   },
 };
 class GradientArea extends Component {

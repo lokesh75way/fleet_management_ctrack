@@ -74,7 +74,7 @@ export const BusinessGroupMenuList = [
         }}
       />
     ),
-    url : "/technician",
+    url: "/technician",
     content: [
       {
         title: "Technician Details",
@@ -210,7 +210,7 @@ export const BusinessGroupMenuList = [
         title: "Fuel",
         to: "/reports/fuel",
       },
-      
+
       {
         title: "Trip Classification",
         to: "/reports/trip-classification",

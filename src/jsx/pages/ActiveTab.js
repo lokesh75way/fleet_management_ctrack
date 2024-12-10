@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ClassifyTripTable from "../components/Tables/ClassifyTripTable";
-import { classifyTripsSchema } from "../../yup";
+import { classifyTripsSchema } from "../../utils/yup";
 import { deleteTrip, getTrips } from "../../services/api/ClassifyTripServices";
 import { notifySuccess } from "../../utils/toast";
 import { ThemeContext } from "../../context/ThemeContext";
@@ -13,15 +13,15 @@ import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
-import Paginate from "../components/Pagination/Paginate";
+import Paginate from "../../components/Paginate";
+import TableSkeleton from "@/components/Skeleton/Table";
 const ActiveTab = ({ tableData1, tabType }) => {
-  console.log("tabledata1",tableData1)
   const [tableData, setTableData] = useState(tableData1);
-  const [status, setStatus] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     setTableData(tableData1);
-  },[tableData1])
+  }, [tableData1]);
   const {
     register,
     setValue,
@@ -47,14 +47,14 @@ const ActiveTab = ({ tableData1, tabType }) => {
   const navigate = useNavigate();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount, setPage } =
     usePagination();
-    const itemsPerPage=10;
+  const itemsPerPage = 10;
 
-    const handlePageClick = ({ selected }) => {
-      goToPage(selected + 1); 
-    };
-  
-    const startIndex = (page - 1) * itemsPerPage;
-    const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
+  const handlePageClick = ({ selected }) => {
+    goToPage(selected + 1);
+  };
+
+  const startIndex = (page - 1) * itemsPerPage;
+  // const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
 
   useEffect(() => {
     let status = "";
@@ -71,17 +71,22 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const getAllTrips = async (status) => {
     try {
-      const { data, success, totalLength } = await getTrips(page, status); 
+      setIsLoading(true);
+      const { data, success, totalLength } = await getTrips(page, status);
       setTableData(data);
       setCount(totalLength);
     } catch (error) {
       console.log("Error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const onConfirmDelete = async (id) => {
     await deleteTrip(id);
-    setTableData(prevTableData => prevTableData.filter(trip => trip._id !== id));
+    setTableData((prevTableData) =>
+      prevTableData.filter((trip) => trip._id !== id)
+    );
     notifySuccess("Trip Deleted");
   };
 
@@ -104,36 +109,40 @@ const ActiveTab = ({ tableData1, tabType }) => {
                   id="employee-tbl_wrapper"
                   className="dataTables_wrapper no-footer"
                 >
-                  <table
-                    id="empoloyees-tblwrapper"
-                    className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>{t("tripId")}</th>
-                        <th>{t("startTime")}</th>
-                        <th>{t("startLocation")}</th>
-                        <th>{t("reachTime")}</th>
-                        <th>{t("reachLocation")}</th>
-                        <th>{t("distance")}</th>
-                        <th>{t("fuelConsumption")}</th>
-                        <th>{t("driver")}</th>
-                        <th>{t("action")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <ClassifyTripTable
-                        active={true}
-                        editData={editData}
-                        tableData={tableData}
-                        onConfirmDelete={onConfirmDelete}
-                        editDrawerOpen={editDrawerOpen}
-                        setEditData={setEditData}
-                        currentPage={page} 
-                        itemsPerPage={itemsPerPage}
-                      />
-                    </tbody>
-                  </table>
+                  {!tableData.length && isLoading ? (
+                    <TableSkeleton />
+                  ) : (
+                    <table
+                      id="empoloyees-tblwrapper"
+                      className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                    >
+                      <thead>
+                        <tr>
+                          <th>{t("tripId")}</th>
+                          <th>{t("startTime")}</th>
+                          <th>{t("startLocation")}</th>
+                          <th>{t("reachTime")}</th>
+                          <th>{t("reachLocation")}</th>
+                          <th>{t("distance")}</th>
+                          <th>{t("fuelConsumption")}</th>
+                          <th>{t("driver")}</th>
+                          <th>{t("action")}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ClassifyTripTable
+                          active={true}
+                          editData={editData}
+                          tableData={tableData}
+                          onConfirmDelete={onConfirmDelete}
+                          editDrawerOpen={editDrawerOpen}
+                          setEditData={setEditData}
+                          currentPage={page}
+                          itemsPerPage={itemsPerPage}
+                        />
+                      </tbody>
+                    </table>
+                  )}
                   <div className="d-sm-flex text-center justify-content-between align-items-center">
                     <div className="dataTables_info">
                       {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
@@ -144,11 +153,11 @@ const ActiveTab = ({ tableData1, tabType }) => {
                       className="dataTables_paginate paging_simple_numbers"
                       id="example2_paginate"
                     >
-                       <Paginate
-                            totalCount={totalCount}
-                            itemsPerPage={itemsPerPage}
-                            handlePageClick={handlePageClick}
-                          />
+                      <Paginate
+                        totalCount={totalCount}
+                        itemsPerPage={itemsPerPage}
+                        handlePageClick={handlePageClick}
+                      />
                     </div>
                   </div>
                 </div>

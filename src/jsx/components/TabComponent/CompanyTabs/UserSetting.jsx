@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 import TimezoneSelect from "react-timezone-select";
-import { currencyOptions } from "../VehicleTabs/Options";
-import { dayOptions } from "../VehicleTabs/Options";
-import { statusOptions } from "../VehicleTabs/Options";
-import { languageOptions } from "../VehicleTabs/Options";
+import { currencyOptions } from "@/constants/options";
+import { dayOptions } from "@/constants/options";
+import { statusOptions } from "@/constants/options";
+import { languageOptions } from "@/constants/options";
 import { useTranslation } from "react-i18next";
 
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import {
   timeFormatOptions,
   dateFormatOptions,
@@ -19,7 +19,7 @@ import {
   preferredCurrencyUnitOptions,
   unitOfFuelOptions,
   fuelEconomyScalingOptions,
-} from "../VehicleTabs/Options";
+} from "@/constants/options";
 import { useParams } from "react-router-dom";
 import FileUploader from "../../../../components/FileUploader";
 
@@ -38,8 +38,8 @@ const UserSetting = ({
   const [selectedTimezone, setSelectedTimezone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone
   );
-  const [loading , setLoading] = useState(false)
-  const [logo, setLogo] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [logo, setLogo] = useState(null);
 
   const customStyles = {
     control: (base) => ({
@@ -64,7 +64,10 @@ const UserSetting = ({
       "unitOfFuel",
       formData?.[0].companyId?.unitOfFuel || unitOfFuelOptions[0].value
     );
-    setSelectedTimezone(formData?.[0].companyId?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone);
+    setSelectedTimezone(
+      formData?.[0].companyId?.timezone ||
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
     setValue(
       "language",
       formData?.[0].companyId?.language || languageOptions[0].value
@@ -81,8 +84,8 @@ const UserSetting = ({
       "currency",
       formData?.[0].companyId?.currency || currencyOptions[0].value
     );
-    setLogo(formData?.[0].companyId?.file)
-  },[]);
+    setLogo(formData?.[0].companyId?.file);
+  }, []);
 
   return (
     <div className="p-4">
@@ -263,11 +266,10 @@ const UserSetting = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <TimezoneSelect
                 // onChange={(newValue) => setValue("unitOfFuel", newValue.value)}
-                onChange={(timeZone)=> {
-                  setSelectedTimezone(timeZone)
-                  setValue("timezone", timeZone.value)
+                onChange={(timeZone) => {
+                  setSelectedTimezone(timeZone);
+                  setValue("timezone", timeZone.value);
                 }}
-                  
                 ref={ref}
                 name={name}
                 styles={customStyles}

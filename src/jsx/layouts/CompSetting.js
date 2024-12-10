@@ -7,11 +7,11 @@ import { ThemeContext } from "../../context/ThemeContext";
 import useStorage from "../../hooks/useStorage";
 
 const CompSetting = () => {
-  const {checkRole} = useStorage();
+  const { checkRole } = useStorage();
   const [settingToggle, setSettingToggle] = useState(false);
   const [demoToggle, setDemoToggle] = useState(false);
   const role = checkRole();
-  
+
   const {
     body,
     sideBarOption,
@@ -120,14 +120,14 @@ const CompSetting = () => {
       case "Top-5-Technician":
         setTop5Technician(value);
         break;
-      case  "Fleet-Fuel":
-        setShowFleetFuel (value);
+      case "Fleet-Fuel":
+        setShowFleetFuel(value);
         break;
-      case  "Fleet-Usage":
-        setFleetUsage (value);
+      case "Fleet-Usage":
+        setFleetUsage(value);
         break;
       case "Fleet-Idle":
-       setShowFleetIdle(value);
+        setShowFleetIdle(value);
         break;
       case "Maintenance":
         setMaintenance(value);
@@ -147,14 +147,14 @@ const CompSetting = () => {
 
   //   Function to render checkboxes and handle visibility toggle
   const renderComponentCheckbox = (componentName) => {
-    const label = componentName.replaceAll('-',' ');
+    const label = componentName.replaceAll("-", " ");
     return (
       <div key={componentName} className="form-check custom-checkbox mb-2">
         <input
           type="checkbox"
           className="form-check-input"
           id="customCheckBox1"
-          checked={eval(`show${componentName.replaceAll('-','')}`)}
+          checked={eval(`show${componentName.replaceAll("-", "")}`)}
           onChange={(e) => toggleComponent(componentName, e.target.checked)}
         />
         <label className="form-check-label fs-18">{label}</label>

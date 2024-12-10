@@ -1,4 +1,4 @@
-import React, { Fragment,  useRef } from "react";
+import React, { Fragment, useRef } from "react";
 // import { Table, Pagination } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
@@ -25,7 +25,6 @@ const ProfileDatatable = () => {
       activePag.current * sort,
       (activePag.current + 1) * sort
     );
- 
   };
   return (
     <div className="col-12">
@@ -84,7 +83,6 @@ const ProfileDatatable = () => {
                     </tr>
                   ))}
                 </tbody>
-                
               </table>
 
               <div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-2">
@@ -106,7 +104,10 @@ const ProfileDatatable = () => {
                       activePag.current > 0 && onClick(activePag.current - 1)
                     }
                   >
-                    <i className="fa fa-angle-double-left" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-left"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                   <span>
                     {paggination.map((number, i) => (
@@ -130,7 +131,10 @@ const ProfileDatatable = () => {
                       onClick(activePag.current + 1)
                     }
                   >
-                    <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+                    <i
+                      className="fa fa-angle-double-right"
+                      aria-hidden="true"
+                    ></i>
                   </Link>
                 </div>
               </div>

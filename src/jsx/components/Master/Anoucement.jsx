@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Anoucement = () => {
   return (
-   <>
-   <h1>Annoucement</h1>
-   </>
-  )
-}
+    <>
+      <h1>Annoucement</h1>
+    </>
+  );
+};
 
-export default Anoucement
+export default Anoucement;

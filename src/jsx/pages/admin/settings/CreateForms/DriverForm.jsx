@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../../layouts/MainPagetitle";
+import MainPagetitle from "../../../../../components/MainPagetitle";
 import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
 import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
 import Document from "../../../../components/TabComponent/DriverTabs/Document";
@@ -12,7 +12,7 @@ import {
   driverProfileSchema,
   driverInfoSchema,
   driverDocumentSchema,
-} from "../../../../../yup";
+} from "../../../../../utils/yup";
 import { notifyError, notifySuccess } from "../../../../../utils/toast";
 import { useTranslation } from "react-i18next";
 import {
@@ -20,7 +20,7 @@ import {
   getDriverById,
   updateDriver,
 } from "../../../../../services/api/driverService";
-import { driverDocumentOptions } from "../../../../components/TabComponent/VehicleTabs/Options";
+import { driverDocumentOptions } from "@/constants/options";
 
 const DriverForm = () => {
   const { t } = useTranslation();
@@ -45,12 +45,10 @@ const DriverForm = () => {
       activeIndex === 0
         ? driverProfileSchema
         : activeIndex === 1
-        ? driverInfoSchema
-        : driverDocumentSchema
+          ? driverInfoSchema
+          : driverDocumentSchema
     ),
   });
-
-
 
   const onSubmitHanlder = async (data) => {
     try {
@@ -60,18 +58,28 @@ const DriverForm = () => {
 
         // Check if issueDate and expireDate are valid dates
         if (isNaN(issueDate.getTime()) || isNaN(expireDate.getTime())) {
-            throw new Error("Invalid date format");
+          throw new Error("Invalid date format");
         }
 
         // Convert issueDate and expireDate to ISO strings
         const formattedIssueDate = issueDate.toISOString();
         const formattedExpireDate = expireDate.toISOString();
         if (driverId) {
-          await updateDriver(driverId, { ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          await updateDriver(driverId, {
+            ...data,
+            documents: [
+              { ...data.documents[0], expireDate: formattedExpireDate },
+            ],
+          });
           notifySuccess("Driver Updated!");
           navigate("/driver");
         } else {
-          await createDriver({ ...data, documents: [{ ...data.documents[0], expireDate: formattedExpireDate }] });
+          await createDriver({
+            ...data,
+            documents: [
+              { ...data.documents[0], expireDate: formattedExpireDate },
+            ],
+          });
           notifySuccess(t("newDriverCreated"));
           navigate("/driver");
         }
@@ -82,6 +90,7 @@ const DriverForm = () => {
       notifyError(t("someErrorOccurred"));
     }
   };
+  console.log("first", errors);
 
   return (
     <>

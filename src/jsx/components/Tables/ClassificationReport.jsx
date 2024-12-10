@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 
-
-const ClassificationReport = ({
-  tableData,
-}) => {
-  console.log(tableData)
+const ClassificationReport = ({ tableData }) => {
+  console.log(tableData);
   return (
     <>
       {tableData.map((item, index) => (

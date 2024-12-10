@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const ReminderRules = () => {
   return (
-   <>
-   
-   <h1>Reminder Rules</h1>
-   </>
-  )
-}
+    <>
+      <h1>Reminder Rules</h1>
+    </>
+  );
+};
 
-export default ReminderRules
+export default ReminderRules;

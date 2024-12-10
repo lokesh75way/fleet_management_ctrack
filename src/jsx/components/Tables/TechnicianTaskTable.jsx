@@ -1,13 +1,14 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import DeleteModal from "../Modal/DeleteModal";
+import DeleteModal from "../../../components/Modal/DeleteModal";
 
 const TechnicianTaskTable = ({
   tableData,
   onConfirmDelete,
   editDrawerOpen,
-  currentPage, itemsPerPage
+  currentPage,
+  itemsPerPage,
 }) => {
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (

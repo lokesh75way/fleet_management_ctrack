@@ -5,10 +5,10 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { tripStatusOptions } from "../../components/TabComponent/VehicleTabs/Options";
-import "../../../scss/pages/_driver-tracking.scss";
-import Error from "../../components/Error/Error";
-import CustomInput from "../../components/Input/CustomInput";
+import { tripStatusOptions } from "@/constants/options";
+import "@/assets/scss/pages/_driver-tracking.scss";
+import Error from "../../../components/Error/Error";
+import CustomInput from "../../../components/Input/CustomInput";
 import DriverDropdown from "../../components/DriverDropdown";
 import { useTranslation } from "react-i18next";
 
@@ -30,7 +30,7 @@ const Trip = ({
   const [tempValue, setTempValue] = useState();
   const [dValues, setDvalues] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -48,21 +48,18 @@ const Trip = ({
 
   useEffect(() => {
     if (dValues && id) {
-    //   setValue("startTime", dValues?.startTime);
+      //   setValue("startTime", dValues?.startTime);
       setValue("startLocation", dValues?.startLocation);
       setValue("reachLocation", dValues?.reachLocation);
       setValue("distance", dValues?.distance);
       setValue("fuelConsumption", dValues?.fuelConsumption);
       setValue("tripStatus", dValues?.tripStatus);
-      setValue('driver', dValues?.driver)
-    }
-    else{
+      setValue("driver", dValues?.driver);
+    } else {
       setValue("startTime", new Date());
       setValue("reachTime", new Date());
     }
   }, [dValues, id]);
-
-
 
   return (
     <>
@@ -70,7 +67,7 @@ const Trip = ({
         <div className="row" style={{ width: "70%", margin: "auto" }}>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("startTime")} <span className="text-danger">*</span>
+              {t("startTime")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="startTime"
@@ -101,7 +98,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("reachTime")} <span className="text-danger">*</span>
+              {t("reachTime")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="reachTime"
@@ -119,7 +116,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("reachLocation")} <span className="text-danger">*</span>
+              {t("reachLocation")} <span className="text-danger">*</span>
             </label>
             <CustomInput
               type="text"
@@ -132,7 +129,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("distance")}
+              {t("distance")}
             </label>
             <CustomInput
               type="number"
@@ -144,7 +141,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("fuelConsumption")}
+              {t("fuelConsumption")}
             </label>
             <CustomInput
               type="number"
@@ -156,7 +153,7 @@ const Trip = ({
           </div>
           <div className="col-xl-6 mb-3">
             <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("driver")} <span className="text-danger">*</span>
+              {t("driver")} <span className="text-danger">*</span>
             </label>
             <Controller
               name="driver"

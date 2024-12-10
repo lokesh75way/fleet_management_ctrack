@@ -11,16 +11,18 @@ import {
 } from "react-bootstrap";
 
 /// imge
-import avatar1 from "../../../images/avatar/1.jpg";
-import avatar2 from "../../../images/avatar/2.jpg";
-import avatar3 from "../../../images/avatar/3.jpg";
+import avatar1 from "@/assets/images/avatar/1.jpg";
+import avatar2 from "@/assets/images/avatar/2.jpg";
+import avatar3 from "@/assets/images/avatar/3.jpg";
 import { Link } from "react-router-dom";
 
 const BootstrapTable = () => {
   const chackboxFun = (type) => {
-    setTimeout(()=>{
+    setTimeout(() => {
       const chackbox = document.querySelectorAll(".bs_exam_topper input");
-      const motherChackBox = document.querySelector(".bs_exam_topper_all input");
+      const motherChackBox = document.querySelector(
+        ".bs_exam_topper_all input"
+      );
       for (let i = 0; i < chackbox.length; i++) {
         const element = chackbox[i];
         if (type === "all") {
@@ -38,7 +40,7 @@ const BootstrapTable = () => {
           }
         }
       }
-    },100)
+    }, 100);
   };
   const svg1 = (
     <svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1">
@@ -97,7 +99,9 @@ const BootstrapTable = () => {
                       <td>Dr. Jackson</td>
                       <td>01 August 2022</td>
                       <td>
-                        <span  className="badge light badge-success">Successful</span>
+                        <span className="badge light badge-success">
+                          Successful
+                        </span>
                       </td>
                       <td>$21.56</td>
                       <td>
@@ -123,7 +127,9 @@ const BootstrapTable = () => {
                       <td>Dr. Jackson</td>
                       <td>01 August 2022</td>
                       <td>
-                        <Badge bg="" className="light badge-danger">Canceled</Badge>
+                        <Badge bg="" className="light badge-danger">
+                          Canceled
+                        </Badge>
                       </td>
                       <td>$21.56</td>
                       <td>
@@ -149,7 +155,9 @@ const BootstrapTable = () => {
                       <td>Dr. Jackson</td>
                       <td>01 August 2022</td>
                       <td>
-                        <Badge bg="" className="badge-warning light">Pending</Badge>
+                        <Badge bg="" className="badge-warning light">
+                          Pending
+                        </Badge>
                       </td>
                       <td>$21.56</td>
                       <td>
@@ -406,7 +414,9 @@ const BootstrapTable = () => {
                       <th>1</th>
                       <td>Kolor Tea Shirt For Man</td>
                       <td>
-                        <Badge bg="" className="badge-primary light">Sale</Badge>
+                        <Badge bg="" className="badge-primary light">
+                          Sale
+                        </Badge>
                       </td>
                       <td>January 22</td>
                       <td className="color-primary">$21.56</td>
@@ -464,7 +474,9 @@ const BootstrapTable = () => {
                       <th>2</th>
                       <td>Color Tea Shirt For Women</td>
                       <td>
-                        <Badge bg="" className="badge-success light">Tax</Badge>
+                        <Badge bg="" className="badge-success light">
+                          Tax
+                        </Badge>
                       </td>
                       <td>January 30</td>
                       <td className="color-success">$55.32</td>
@@ -553,7 +565,9 @@ const BootstrapTable = () => {
                       <th>1</th>
                       <td>Kolor Tea Shirt For Man</td>
                       <td>
-                        <Badge bg="" className="badge-primary light">Sale</Badge>
+                        <Badge bg="" className="badge-primary light">
+                          Sale
+                        </Badge>
                       </td>
                       <td>January 22</td>
                       <td className="color-primary">$21.56</td>
@@ -571,7 +585,9 @@ const BootstrapTable = () => {
                       <th>3</th>
                       <td>Blue Backpack For Baby</td>
                       <td>
-                        <Badge bg="" className="badge-danger light">Extended</Badge>
+                        <Badge bg="" className="badge-danger light">
+                          Extended
+                        </Badge>
                       </td>
                       <td>January 25</td>
                       <td className="color-danger">$14.85</td>
@@ -588,7 +604,11 @@ const BootstrapTable = () => {
                 <Card.Title>Hover Table</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Table responsive hover className="header-border verticle-middle">
+                <Table
+                  responsive
+                  hover
+                  className="header-border verticle-middle"
+                >
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -605,7 +625,9 @@ const BootstrapTable = () => {
                         <ProgressBar now={70} variant="primary" />
                       </td>
                       <td>
-                        <Badge bg="" className="badge-primary light">70%</Badge>
+                        <Badge bg="" className="badge-primary light">
+                          70%
+                        </Badge>
                       </td>
                     </tr>
                     <tr>
@@ -625,7 +647,9 @@ const BootstrapTable = () => {
                         <ProgressBar variant="dark" now="70" />
                       </td>
                       <td>
-                        <Badge bg="" className="badge badge-dark light">70%</Badge>
+                        <Badge bg="" className="badge badge-dark light">
+                          70%
+                        </Badge>
                       </td>
                     </tr>
                     <tr>
@@ -677,7 +701,9 @@ const BootstrapTable = () => {
                       </td>
                       <td>Apr 20,2018</td>
                       <td>
-                        <Badge bg="" className="badge-primary light">70%</Badge>
+                        <Badge bg="" className="badge-primary light">
+                          70%
+                        </Badge>
                       </td>
                       <td>
                         <span>
@@ -725,7 +751,9 @@ const BootstrapTable = () => {
                       </td>
                       <td>May 18,2018</td>
                       <td>
-                        <Badge bg="" className="badge badge-dark light">70%</Badge> 
+                        <Badge bg="" className="badge badge-dark light">
+                          70%
+                        </Badge>
                       </td>
                       <td>
                         <span>
@@ -979,7 +1007,9 @@ const BootstrapTable = () => {
                       </td>
                       <td>$245.30</td>
                       <td>
-                        <Badge bg="" className="badge badge-info light">Shipped</Badge>
+                        <Badge bg="" className="badge badge-info light">
+                          Shipped
+                        </Badge>
                       </td>
                       <td>CN</td>
                     </tr>

@@ -1,29 +1,29 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
-import { Controller, useForm, useFieldArray } from "react-hook-form";
-import AsyncSelect from "react-select/async";
+import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
-import CustomInput from "../../Input/CustomInput";
-import DummyData from "../../../../users.json";
-import { useParams } from "react-router-dom";
-import { getSelectValues } from "../../../../utils/helper";
+import Error from "../../../../components/Error/Error";
+import CustomInput from "../../../../components/Input/CustomInput";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { editBranch } from "../../../../services/api/BranchServices";
-import { useLocation } from "react-router-dom";
-import GroupDropdown from "../../GroupDropdown";
-import CompanyDropdown from "../../CompanyDropdown";
-import ParentBranchDropdown from "../../ParentBranch";
-import useStorage from "../../../../hooks/useStorage";
-import { getUser } from "../../../../services/api/UserServices";
-import { use } from "i18next";
-import FormField from "../../FormField";
-import { dateFormatOptions, timeFormatOptions } from "../VehicleTabs/Options";
-import UserLocation from "../../UserLocation";
-import LocationSelector from "../../LocationSelector";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
+import FormField from "../../../../components/Input/UserDetailsForm";
+import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
+import LocationSelector from "../../../../components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
+import { getBranchById } from "@/features/branch/api";
+import { useQuery } from "@tanstack/react-query";
+import { notifyError } from "@/utils/toast";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ",
+  }),
+};
 
 const MyAccount = ({
   setValue,
@@ -33,140 +33,66 @@ const MyAccount = ({
   handleSubmit,
   errors,
   control,
+  isFormSubmitting,
 }) => {
-  // const defaultValues = getSelectValues();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "userInfo",
   });
-
-  const [selectStateName, setSelectStateName] = useState({
-    name: "",
-  });
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
-  const [tempValue, setTempValue] = useState();
-
-
   const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
-
-
   const [businessDisabled, setBusinessDisabled] = useState(false);
   const [companyDisabled, setCompanyDisabled] = useState(false);
-
-
-  
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-    const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
-
   const { t } = useTranslation();
-  const location = useLocation();
-
-  const [isStateDisabled, setIsStateDisabled] = useState(true);
-
-  // const [tempbusinessUserOptions, SetTempbusinessUserOptions] = useState([]);
-  // const [tempcompanyOptions, SetTempcompanyOptions] = useState([]);
-  const [dValues, setDvalues] = useState([]);
-  const [defaultCountry, setDefaultCountry] = useState();
-  const [locationData, setLocationData] = useState(null);
-
-
-  useEffect(() => {
-    if(userDetails.user.role === 'COMPANY'){
-      let bus
-      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
-      setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-      
-      setValue("companyId", userDetails?.user.companyId[0]?._id)
-      setCompanyId(userDetails?.user.companyId[0]?._id);
-      setCompanyDisabled(true);
-    }
-    if(userDetails.user.role === 'BUSINESS_GROUP'){
-      setValue("businessGroupId", userDetails?.user?.businessGroupId[0]?._id);
-      setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-    }
-},[])
-
-  const businessGroupOptions = async (inputValue) => {
-    try {
-      const businessGroupResponse = await getGroups();
-      const businessGroupData = businessGroupResponse.data;
-      const response = businessGroupData.map((item) => ({
-        label: item.businessGroupId.groupName,
-        value: item.businessGroupId._id,
-      }))
-      return response;  
-    } catch (error) {
-      console.error("Error fetching business group options:", error);
-      return []; // Return empty array in case of an error
-    }
-  };
-
-  const allCompanyOptions = async (inputValue) => {
-    try {
-      const companyResponse = await getCompany();
-      const companyData = companyResponse.data.data.data;
-      const response = companyData.map((item) => ({
-        label: item.companyId?.companyName,
-        value: item.companyId?._id,
-      }));
-      return response;
-    } catch (error) {
-      console.error("Error fetching company options:", error);
-      return []; // Return empty array in case of an error
-    }
-  };
-
   const { id } = useParams();
+  const { location: locationData, error: locationError } = useUserLocation();
+  const [formData, setFormData] = useState();
+  const navigate = useNavigate();
+
+  const { data, isError } = useQuery({
+    queryKey: ["branch", id],
+    queryFn: () => getBranchById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
   useEffect(() => {
-    if (id) {
-      const data = location.state[0];
-      setDvalues(data);
+    if (isError && !!id) {
+      notifyError("Not able to fetch company data");
+      navigate("/not-found");
     }
-  }, [id]);
-
-  console.log(dValues, "data");
+  }, [isError && id]);
 
   useEffect(() => {
-    if (dValues && id) {
-      setValue("businessGroupName", dValues.businessGroupId?.groupName);
-      setValue("businessGroupId", dValues.businessGroupId?._id);
-      setValue("companyName", dValues.companyId?.companyName);
-      setValue("companyId", dValues.companyId?._id);
-      setValue("tradeLicenseNumber", dValues?.tradeLicenseNumber);
-      setValue("officeNumber", dValues?.officeNumber);
-      setValue("parentBranch", dValues.parentBranchId?.branchName);
-      setValue("parentBranchId", dValues.parentBranchId?._id);
-      setValue("parent", dValues.parentBranchId?._id);
-      setValue("branchName", dValues.branchName);
-      setValue("country", dValues.country);
-      setValue("zipCode", dValues.zipCode);
-      setValue("street1", dValues.street1);
-      setValue("street2", dValues.street2);
-      setDefaultCountry({ name: dValues.country })
-      setValue("country", dValues.country)
-      setSelectStateName({ name: dValues.state || '' })
-      setValue("state", dValues.state)
-      setValue("userInfo", dValues.userInfo)
-      setValue("dateFormat", dValues?.dateFormat);
-      setValue("timeFormat", dValues?.timeFormat);
-      setValue("email",dValues?.email)
-     
-    }else{
-      setValue('dateFormat',dateFormatOptions[0]?.value);
-      setValue('timeFormat',timeFormatOptions[1]?.value)
+    if (id && data) {
+      setFormData(data);
     }
-  }, [dValues, id]);
+  }, [data]);
 
-  const [filteredCompanyData, setFilteredCompanyData] = useState([]);
+  useEffect(() => {
+    if (formData && id) {
+      setValue("businessGroupId", formData.businessGroupId?._id);
+      setGroupId(formData?.businessGroupId?._id);
+      // setBusinessDisabled(true);
+      setValue("companyId", formData?.companyId?._id);
+      setValue("branchName", formData?.branchName);
+      setValue("email", formData?.email);
+      setValue("officeNumber", formData?.officeNumber);
+      setValue("companyId", formData.companyId?._id);
+      setValue("tradeLicenseNumber", formData?.tradeLicenseNumber);
+      setValue("country", formData.country);
+      setValue("zipCode", formData.zipCode);
+      setValue("street1", formData.street1);
+      setValue("street2", formData.street2);
+      setValue("country", formData.country);
+      setValue("state", formData.state);
+      setValue("userInfo", formData.userInfo);
+      setValue("dateFormat", formData.dateFormat);
+      setValue("timeFormat", formData.timeFormat);
+    } else {
+      setValue("dateFormat", dateFormatOptions[0]?.value);
+      setValue("timeFormat", timeFormatOptions[1]?.value);
+    }
+  }, [formData, id]);
 
   const handleAddForm = () => {
     append({
@@ -176,19 +102,14 @@ const MyAccount = ({
       email: "",
     });
   };
-  const handleLocationData = useCallback((data) => {
-    setLocationData(data);
-  }, []);
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%", margin: "auto" }}>
-      <UserLocation onLocationData={handleLocationData} />
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("businessGroup")}</label>
           <span className="text-danger">*</span>
-          {/* {
-             checkRole() === "admin" ? 
-          } */}
           {id ? (
             <Controller
               name="businessGroupId"
@@ -198,9 +119,9 @@ const MyAccount = ({
                 <GroupDropdown
                   onChange={async (newValue) => {
                     await setValue("businessGroupId", newValue.value);
-                    await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
-                    setCompanyId(null);
+                    setValue("companyName", "");
+                    setValue("companyId", "");
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -208,7 +129,6 @@ const MyAccount = ({
                   isDisabled={businessDisabled}
                   name={name}
                 />
-
               )}
             />
           ) : (
@@ -219,10 +139,10 @@ const MyAccount = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <GroupDropdown
                   onChange={async (newValue) => {
-               
                     await setValue("businessGroupId", newValue.value);
-                    await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
+                    setValue("companyName", "");
+                    setValue("companyId", "");
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -248,12 +168,12 @@ const MyAccount = ({
               control={control}
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
-                <CompanyDropdown 
+                <CompanyDropdown
                   key={groupId}
                   groupId={groupId}
-                  onChange={(newValue) => {
-                    setValue("companyId", newValue.value);
-                    setValue("companyName", newValue.value);
+                  onChange={async (newValue) => {
+                    onChange(newValue);
+                    setValue("companyName", newValue.label);
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -272,10 +192,9 @@ const MyAccount = ({
                 <CompanyDropdown
                   key={groupId}
                   groupId={groupId}
-                  onChange={(newValue) => {
-                    setValue("companyId", newValue.value);
-                    setValue("companyName", newValue.value);
-                    setCompanyId(newValue.value);
+                  onChange={async (newValue) => {
+                    await setValue("companyId", newValue.value);
+                    setValue("companyName", newValue.label);
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -333,9 +252,7 @@ const MyAccount = ({
           <Error errorName={errors.branchName} />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("tradeLicenseNumber")} 
-          </label>
+          <label className="form-label">{t("tradeLicenseNumber")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -347,9 +264,7 @@ const MyAccount = ({
           <Error errorName={errors.tradeLicenseNumber} />
         </div>
         <div className="col-xl-3 mb-3 ">
-          <label className="form-label">
-            {t("officeNo")} 
-          </label>
+          <label className="form-label">{t("officeNo")}</label>
           <CustomInput
             type="text"
             register={register}
@@ -358,7 +273,7 @@ const MyAccount = ({
             placeholder=""
             defaultValue={getValues("officeNumber")}
           />
-          <Error errorName={errors.officeNo} />
+          <Error errorName={errors.officeNumber} />
         </div>
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">
@@ -371,9 +286,7 @@ const MyAccount = ({
             label="Email"
             name="email"
             placeholder=""
-            defaultValue={
-              getValues('email')
-            }
+            defaultValue={getValues("email")}
             disabled={id ? true : false}
           />
           <Error errorName={errors.email} />
@@ -384,12 +297,11 @@ const MyAccount = ({
           errors={errors}
           getValues={getValues}
           locationData={locationData}
-          dValues={dValues}
+          dValues={formData}
           id={id}
           showCity={true}
-          Comptype={''}
+          Comptype={""}
         />
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -408,7 +320,6 @@ const MyAccount = ({
           />
           <Error errorName={errors.dateFormat} />
         </div>
-
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller
@@ -427,8 +338,6 @@ const MyAccount = ({
             )}
           />
         </div>
-       
-
         <div
           style={{
             width: "100%",
@@ -471,12 +380,12 @@ const MyAccount = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
           {" "}
           {t("submit")}
-
         </Button>
       </div>
     </div>

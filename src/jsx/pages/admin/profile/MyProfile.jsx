@@ -3,31 +3,42 @@ import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import MainPagetitle from "../../../layouts/MainPagetitle";
-import MyAccount from "../../../components/TabComponent/CompanyTabs/MyAccount";
+import MainPagetitle from "../../../../components/MainPagetitle";
+import MyAccount from "../../../../features/company/components/Form";
 import UserSetting from "../../../components/TabComponent/CompanyTabs/UserSetting";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { companyAccountSchema, companySettingSchema } from '../../../../yup' ;
+import {
+  companyAccountSchema,
+  companySettingSchema,
+} from "../../../../utils/yup";
 
 const MyProfile = () => {
-
   const [activeIndex, setActiveIndex] = useState(0);
   const tabHeading = ["My Account", "User Setting"];
   const component = [MyAccount, UserSetting];
   const totalTabs = tabHeading.length;
 
-  const {register, formState:{errors}, setValue, getValues, control, handleSubmit} = useForm({
-    resolver: yupResolver(activeIndex === 0 ? companyAccountSchema: companySettingSchema)
-  })
+  const {
+    register,
+    formState: { errors },
+    setValue,
+    getValues,
+    control,
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(
+      activeIndex === 0 ? companyAccountSchema : companySettingSchema
+    ),
+  });
 
-  const onSubmit = (data)=>{
-    if(activeIndex === (totalTabs -1)){
-      console.log(data)
+  const onSubmit = (data) => {
+    if (activeIndex === totalTabs - 1) {
+      console.log(data);
       return;
     }
     setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
-  }
-  
+  };
+
   return (
     <>
       <MainPagetitle

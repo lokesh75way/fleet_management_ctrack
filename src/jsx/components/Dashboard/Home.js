@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { ThemeContext } from "../../../context/ThemeContext";
-import MainPagetitle from "../../layouts/MainPagetitle";
+import MainPagetitle from "../../../components/MainPagetitle";
 import CardWidget from "./elements/CardWidget";
 import ProjectOverviewTab from "./elements/ProjectOverviewTab";
 import ToDoList from "./elements/ToDoList";
@@ -111,7 +111,7 @@ const Home = () => {
     showMaintenance,
     showOverSpeed,
     showStayInZone,
-    showFleetUsage
+    showFleetUsage,
   } = useContext(ThemeContext);
 
   const customStyles = {

@@ -13,16 +13,15 @@ import { SubCompanyMenuList } from "./SubCompanyMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
 
-import {useTranslation} from 'react-i18next'
+import { useTranslation } from "react-i18next";
 import { usePermissions } from "../../../context/PermissionContext";
 import { CgChevronDoubleLeftR } from "react-icons/cg";
 
 const useBaseUrl = () => {
-
   const location = useLocation();
   const { pathname } = location;
   const segments = pathname.split("/");
-  const {can} = usePermissions()
+  const { can } = usePermissions();
   const baseUrl = segments.slice(0, 2).join("/");
 
   return baseUrl;
@@ -48,19 +47,22 @@ const SideBar = () => {
   let filteredAdminMenuList = [];
   const role = userDetails?.user?.role;
   const type = userDetails?.user?.type;
-  if (userDetails && userDetails.permissions?.[0] && role === 'USER') {
-    
+  if (userDetails && userDetails.permissions?.[0] && role === "USER") {
     const modulePermissions = userDetails.permissions?.[0].permission;
-    const viewableModules = modulePermissions.filter(item => item.view === true).map(item => ({
-      moduleId: item.moduleId._id,
-      title: item.moduleId.title,
-      basePath: item.moduleId.basePath
-    }));
-    const viewmoduleTitles = viewableModules.map(item => item.title);
-    filteredAdminMenuList = AdminMenuList.filter(item => viewmoduleTitles.includes(item.title));
+    const viewableModules = modulePermissions
+      .filter((item) => item.view === true)
+      .map((item) => ({
+        moduleId: item.moduleId._id,
+        title: item.moduleId.title,
+        basePath: item.moduleId.basePath,
+      }));
+    const viewmoduleTitles = viewableModules.map((item) => item.title);
+    filteredAdminMenuList = AdminMenuList.filter((item) =>
+      viewmoduleTitles.includes(item.title)
+    );
   }
   let MenuList;
-  if(userDetails){
+  if (userDetails) {
     switch (role) {
       case "COMPANY":
         MenuList = CompanyMenuList;
@@ -134,8 +136,8 @@ const SideBar = () => {
   const url = useBaseUrl();
   const { pathname: url2 } = useLocation();
 
-  const {t} = useTranslation();
-  const menuListToMap = role === 'USER' ? filteredAdminMenuList : MenuList;
+  const { t } = useTranslation();
+  const menuListToMap = role === "USER" ? filteredAdminMenuList : MenuList;
   return (
     <div
       className={`deznav  border-right ${iconHover} ${
@@ -148,7 +150,7 @@ const SideBar = () => {
           : ""
       }`}
     >
-      <div className="deznav-scroll" >
+      <div className="deznav-scroll">
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
           {menuListToMap.map((data, index) => {
             let menuClass = data.classsChange;
@@ -156,13 +158,14 @@ const SideBar = () => {
               return (
                 <li
                   className={` ${
-                    url === data.to || url === "dashboard" + data?.to?.split("/")[0] || data.url === url
+                    url === data.to ||
+                    url === "dashboard" + data?.to?.split("/")[0] ||
+                    data.url === url
                       ? "mm-active text-primary"
                       : ""
                   }`}
                   key={index}
                 >
-                 
                   {data.content && data.content.length > 0 ? (
                     <>
                       <Link
@@ -255,9 +258,9 @@ const SideBar = () => {
                                       className={`${
                                         data.to === url ||
                                         data.to === url2 ||
-                                       url2.substring(
+                                        url2.substring(
                                           0,
-                                         url2.lastIndexOf("/")
+                                          url2.lastIndexOf("/")
                                         ) === data.to
                                           ? "mm-active"
                                           : ""
@@ -295,7 +298,7 @@ const SideBar = () => {
         </ul>
         <div className="help-desk">
           <Link to={"/contactUs"} className="btn btn-primary">
-            {t('helpDesk')}
+            {t("helpDesk")}
           </Link>
         </div>
       </div>

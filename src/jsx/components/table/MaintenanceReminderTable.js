@@ -3,23 +3,18 @@ import { Table } from "react-bootstrap";
 
 const MaintenanceReminderData = {
   data: [
-    [
-      "Paul Byrd",
-      "$725,000",
-    ],
-    ["Gloria ",  "$237,500"],
+    ["Paul Byrd", "$725,000"],
+    ["Gloria ", "$237,500"],
     ["Bradley ", "$132,000"],
-    ["Dai Rios",  "$217,500"],
-    ["Jenette",  "$345,000"],
+    ["Dai Rios", "$217,500"],
+    ["Jenette", "$345,000"],
     ["Yuri Berry", "$675,000"],
-    ["Caesar Vance",  "$106,450"],
-    ["Doris Wilder","$85,600"],
+    ["Caesar Vance", "$106,450"],
+    ["Doris Wilder", "$85,600"],
     ["Angelica Ramos", "$1,200,000"],
     ["Gavin Joyce", "$92,575"],
   ],
-  columns: [
-    "Maintenance Type",	"Due"
-  ],
+  columns: ["Maintenance Type", "Due"],
 };
 
 const MaintenanceReminderTable = () => {
@@ -35,11 +30,17 @@ const MaintenanceReminderTable = () => {
                 role="grid"
                 aria-describedby="example_info"
               >
-                  {MaintenanceReminderData.columns.map((d, i) => (
-                    <th style={{ padding: "0.25rem 0.9375rem", backgroundColor:'#F5F5F5' }} key={i}>
-                      {d}
-                    </th>
-                  ))}
+                {MaintenanceReminderData.columns.map((d, i) => (
+                  <th
+                    style={{
+                      padding: "0.25rem 0.9375rem",
+                      backgroundColor: "#F5F5F5",
+                    }}
+                    key={i}
+                  >
+                    {d}
+                  </th>
+                ))}
                 <tbody>
                   {MaintenanceReminderData.data.map((d, i) => (
                     <tr key={i}>

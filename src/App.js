@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from "react";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   Route,
@@ -11,24 +11,33 @@ import {
 // action
 import { checkAutoLogin } from "./services/AuthService";
 import { isAuthenticated } from "./store/selectors/AuthSelectors";
+import "react-loading-skeleton/dist/skeleton.css";
 
-import "./css/style.css";
-import BasicLayout from './jsx/layouts/BasicLayout';
-import AdminRoutes from './jsx/AdminRoutes';
-import CompanyRoutes from './jsx/CompanyRoutes';
-import BusinessGroupRoutes from './jsx/BusinessGroupRoutes';
-import SubCompanyRoutes from './jsx/SubCompanyRoutes';
-import ForgotPassword from './jsx/pages/ForgotPassword';
-import ResetPassword from './jsx/pages/ResetPassword';
-import { CompanyData, DriverData, VehicleData, SubCompanyData } from "./jsx/components/Tables/Tables";
-import { BusinessData, TechnicianData, UserData } from './jsx/components/Tables/Tables';
-import UserJsonData from './users.json'
-import GeofenceData from './geofenceData.json'
+import "@/assets/css/style.css";
+import BasicLayout from "./jsx/layouts/BasicLayout";
+import AdminRoutes from "./jsx/AdminRoutes";
+import CompanyRoutes from "./jsx/CompanyRoutes";
+import BusinessGroupRoutes from "./jsx/BusinessGroupRoutes";
+import SubCompanyRoutes from "./jsx/SubCompanyRoutes";
+import ForgotPassword from "./jsx/pages/ForgotPassword";
+import ResetPassword from "./jsx/pages/ResetPassword";
+import {
+  CompanyData,
+  DriverData,
+  VehicleData,
+  SubCompanyData,
+} from "./jsx/components/Tables/Tables";
+import {
+  BusinessData,
+  TechnicianData,
+  UserData,
+} from "./jsx/components/Tables/Tables";
+import UserJsonData from "./users.json";
+import GeofenceData from "./geofenceData.json";
 import { GiLabCoat } from "react-icons/gi";
 import useStorage from "./hooks/useStorage";
 import { usePermissions } from "./context/PermissionContext";
 import UserRoutes from "./jsx/UserRoutes";
-import UserLocation from "./jsx/components/UserLocation";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const Login = lazy(() => {
@@ -38,10 +47,7 @@ const Login = lazy(() => {
 });
 
 function withRouter(Component) {
-
   function ComponentWithRouterProp(props) {
-
-
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
@@ -53,11 +59,11 @@ function withRouter(Component) {
 }
 
 function App(props) {
-  const { checkRole, checkType } = useStorage()
-  let role = checkRole()
-  let type = checkType()
-  const { setUserPermission } = usePermissions()
-  const userPermission = useSelector(state => state.auth.permission);
+  const { checkRole, checkType } = useStorage();
+  let role = checkRole();
+  let type = checkType();
+  const { setUserPermission } = usePermissions();
+  const userPermission = useSelector((state) => state.auth.permission);
   //useLocation
   const location = useLocation();
 
@@ -83,13 +89,12 @@ function App(props) {
   //   if (!userJsonData) localStorage.setItem('userJsonData', JSON.stringify(UserJsonData))
   //   if (!geoData) localStorage.setItem('geofenceData', JSON.stringify(GeofenceData))
 
-
   // }, [role])
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!location.pathname.includes('resetpassword')){
+    if (!location.pathname.includes("resetpassword")) {
       checkAutoLogin(dispatch, navigate);
     }
   }, []);
@@ -103,24 +108,26 @@ function App(props) {
       case "COMPANY":
         return <CompanyRoutes />;
       case "USER":
-        return <UserRoutes/>
+        return <UserRoutes />;
     }
   }
 
-  return (<>
-    <div className="vh-100">
-      <Suspense fallback={<h4>Loading...</h4>} >
-        <Routes>
-          <Route element={<BasicLayout />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<SignUp />} />
-            <Route path="/forgotpassword" element={<ForgotPassword />} />
-            <Route path="/resetpassword/:token" element={<ResetPassword />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    </div>
-  </>);
+  return (
+    <>
+      <div className="vh-100">
+        <Suspense fallback={<h4>Loading...</h4>}>
+          <Routes>
+            <Route element={<BasicLayout />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/resetpassword/:token" element={<ResetPassword />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </div>
+    </>
+  );
 }
 
 const mapStateToProps = (state) => {

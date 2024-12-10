@@ -2,32 +2,28 @@ import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
-import Error from "../../Error/Error";
+import Error from "../../../../components/Error/Error";
 import {
   deviceTypeOptions,
   copyFromOptions,
   distanceCounterOptions,
   unitOfDistanceOptions,
   speedDetectionOptions,
-} from "./Options";
+} from "../../../../constants/options";
 import AsyncSelect from "react-select/async";
-import CustomInput from "../../Input/CustomInput";
+import CustomInput from "../../../../components/Input/CustomInput";
 import DummyData from "../../../../users.json";
 import useStorage from "../../../../hooks/useStorage";
 import { useParams } from "react-router-dom";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { getGroups } from "../../../../services/api/BusinessGroup";
+import { getGroups } from "../../../../features/businessGroup/api";
 import { allCompanyOptions, businessGroupOptions } from "../../ReusableApi/Api";
 import { useTranslation } from "react-i18next";
 
-import CompanyDropdown from "../../CompanyDropdown";
+import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import BranchDropdown from "../../BranchDropdown";
-import GroupDropdown from "../../GroupDropdown";
+import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
-
-
-
-
 
 const General = ({
   register,
@@ -46,7 +42,7 @@ const General = ({
   const [companyDisabled, setCompanyDisabled] = useState(false);
 
   const { checkRole, checkUserName } = useStorage();
-  
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -57,57 +53,49 @@ const General = ({
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   // const newData = userData?.filter((data) => data.id == parseInt(id, 10));
   const [filteredUserData, setFilteredUserData] = useState([]);
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false)
+  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
 
   const role = checkRole();
 
   const { t } = useTranslation();
-
-  // const[formData,setFormData] = useState([])
   useEffect(() => {
     if (formData && id) {
-      setValue("businessGroupId", formData?.[0]?.businessGroupId);
-      setGroupId(formData?.[0]?.businessGroupId);
-      setValue("companyId", formData?.[0]?.companyId);
-      setCompanyId(formData?.[0]?.companyId);
-      setValue("imeiNumber", formData?.[0].imeiNumber);
+      setValue("businessGroupId", formData?.businessGroupId);
+      setGroupId(formData?.businessGroupId);
+      setValue("companyId", formData.companyId);
+      setCompanyId(formData.companyId);
+      setValue("imeiNumber", formData?.imeiNumber);
 
-      setValue("vehicleName", formData?.[0].vehicleName);
-      setValue("plateNumber", formData?.[0].plateNumber);
-      setValue("branchId", formData[0]?.branchId?._id)
+      setValue("vehicleName", formData?.vehicleName);
+      setValue("plateNumber", formData?.plateNumber);
+      setValue("branchId", formData[0]?.branchId?._id);
       // setValue(
       //   "branch",
-      //   formData?.[0]?.branchId.map((branch) => branch._id)
+      //   formData??.branchId.map((branch) => branch._id)
       // );
-      setValue("simNumber", formData?.[0].simNumber);
-      setValue("secondrySimNumber", formData?.[0].secondrySimNumber);
-      setValue("IMEINumber", formData?.[0].IMEINumber);
-      setValue("registrationNumber", formData?.[0].registrationNumber);
-      setValue("weightCapacity", formData?.[0].weightCapacity);
-      setValue("deviceType", formData?.[0].deviceType);
-      setValue("serverAddress", formData?.[0].serverAddress);
-      setValue("distanceCounter", formData?.[0].distanceCounter);
-      setValue("unitOfDistance", formData?.[0].unitOfDistance);
-      setValue("speedDetection", formData?.[0].speedDetection);
-      
-      setValue(
-        "deviceAccuracyTolerance",
-        formData?.[0].deviceAccuracyTolerance
-      );
+      setValue("simNumber", formData?.simNumber);
+      setValue("secondrySimNumber", formData?.secondrySimNumber);
+      setValue("IMEINumber", formData?.IMEINumber);
+      setValue("registrationNumber", formData?.registrationNumber);
+      setValue("weightCapacity", formData?.weightCapacity);
+      setValue("deviceType", formData?.deviceType);
+      setValue("serverAddress", formData?.serverAddress);
+      setValue("distanceCounter", formData?.distanceCounter);
+      setValue("unitOfDistance", formData?.unitOfDistance);
+      setValue("speedDetection", formData?.speedDetection);
 
-      
+      setValue("deviceAccuracyTolerance", formData?.deviceAccuracyTolerance);
     }
   }, [formData, id]);
 
   useEffect(() => {
-    if(checkRole() !== "SUPER_ADMIN"){
-      setIsBuisnessGroupDisabled(true)
+    if (checkRole() !== "SUPER_ADMIN") {
+      setIsBuisnessGroupDisabled(true);
     }
-    if(userDetails?.user?.role === 'BUSINESS_GROUP'){
+    if (userDetails?.user?.role === "BUSINESS_GROUP") {
       setValue("businessGroupId", userDetails?.user.businessGroupId);
     }
-},[])
-
+  }, []);
 
   return (
     <div className="p-4">
@@ -121,10 +109,10 @@ const General = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <GroupDropdown
-                onChange={ (newValue) => {
-                   setValue("businessGroupId", newValue.value);
-                   setValue("businessId", newValue.value);
-                   setValue("businessGroupName", newValue.label);
+                onChange={(newValue) => {
+                  setValue("businessGroupId", newValue.value);
+                  setValue("businessId", newValue.value);
+                  setValue("businessGroupName", newValue.label);
                   setGroupId(newValue.value);
                   setCompanyId(null);
                 }}
@@ -180,8 +168,7 @@ const General = ({
                   // setValue("parentBranchId", newValue.value);
                   setValue("branch", newValue.value);
                   setValue("branchId", newValue.value);
-                }
-                }
+                }}
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
@@ -308,7 +295,7 @@ const General = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
-            {t("secondarySimNumber")} 
+            {t("secondarySimNumber")}
           </label>
           <CustomInput
             type="number"
@@ -431,7 +418,7 @@ const General = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t('next')} 
+          {t("next")}
         </Button>
       </div>
     </div>
