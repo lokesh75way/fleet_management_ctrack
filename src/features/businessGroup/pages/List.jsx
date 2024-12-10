@@ -119,12 +119,22 @@ const BusinessList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <BusinessTable
-                              currentPage={page}
-                              itemsPerPage={itemsPerPage}
-                              tableData={data?.data ?? []}
-                              onConfirmDelete={mutate}
-                            />
+                            {data.data?.length ? (
+                              <BusinessTable
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                tableData={data?.data ?? []}
+                                onConfirmDelete={mutate}
+                              />
+                            ) : (
+                              <tr>
+                                <td colspan="10" rowSpan={2} height={150}>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       )}

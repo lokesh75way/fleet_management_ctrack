@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { getDrivers } from "../../../services/api/driverService";
+import { getAllDrivers } from "../../../features/driver/api";
 const DriverDropdown = ({
   onChange,
   value,
@@ -13,7 +13,7 @@ const DriverDropdown = ({
   const [selectedOption, setSelectedOption] = useState(value);
   useEffect(() => {
     const fetchDrivers = async () => {
-      const response = await getDrivers();
+      const response = await getAllDrivers();
       const driverOptions = response.data.map((item) => ({
         label: item?.firstName,
         value: item?._id,

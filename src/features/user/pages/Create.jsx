@@ -14,6 +14,7 @@ import { subUserAccountSchema, subUserEditAccountSchema } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { createUser, getUserById, updateUser } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
+import Loader from "@/components/Loader";
 
 const CreateUser = () => {
   const { id } = useParams();
@@ -122,29 +123,33 @@ const CreateUser = () => {
                   ))}
                 </Nav>
                 <Tab.Content className="pt-4">
-                  {tabHeading.map((data, i) => {
-                    const Component = component[i];
-                    return (
-                      <Tab.Pane
-                        eventKey={data.toLowerCase()}
-                        key={i}
-                        active={i === activeIndex}
-                      >
-                        <Component
-                          data={tabHeading}
-                          control={control}
-                          setValue={setValue}
-                          register={register}
-                          getValues={getValues}
-                          errors={errors}
-                          onSubmit={onSubmit}
-                          handleSubmit={handleSubmit}
-                          isLoading={createPending || editPending}
-                          watch={watch}
-                        />
-                      </Tab.Pane>
-                    );
-                  })}
+                  {isLoading ? (
+                    <Loader height={500} />
+                  ) : (
+                    tabHeading.map((data, i) => {
+                      const Component = component[i];
+                      return (
+                        <Tab.Pane
+                          eventKey={data.toLowerCase()}
+                          key={i}
+                          active={i === activeIndex}
+                        >
+                          <Component
+                            data={tabHeading}
+                            control={control}
+                            setValue={setValue}
+                            register={register}
+                            getValues={getValues}
+                            errors={errors}
+                            onSubmit={onSubmit}
+                            handleSubmit={handleSubmit}
+                            isFormSubmitting={createPending || editPending}
+                            watch={watch}
+                          />
+                        </Tab.Pane>
+                      );
+                    })
+                  )}
                 </Tab.Content>
               </Tab.Container>
             </div>

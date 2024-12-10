@@ -45,7 +45,11 @@ export const getVehiclesByCompany = async (search = "") => {
 
 export const getVehiclesTraking = async (id, status) => {
   const { data } = await axios.get(`/vehicles/tracking?${id}&status=${status}`);
-  return { data: data.data };
+  return {
+    data: data.data.data,
+    count: data.data.count,
+    centerCoordinate: data.data.centerCoordinate,
+  };
 };
 
 export const getVehicleById = async (id) => {

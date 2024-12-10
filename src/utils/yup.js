@@ -283,7 +283,12 @@ export const branchAccountSchema = yup.object({
     .trim()
     .required("Business Group Name is required "),
   tradeLicenseNumber: yup.string().trim(),
-  officeNumber: yup.string().trim(),
+  officeNumber: yup
+    .string()
+    .trim()
+    .nullable()
+    .transform((curr, orig) => (orig === "" ? null : curr))
+    .matches(MOBILE_REG, { message: "Enter valid number" }),
   country: yup.string().trim().required("Please select a Country"),
   state: yup.string().trim(),
   email: yup
@@ -453,11 +458,15 @@ export const driverProfileSchema = yup
       .transform((_, val) => (val ? Number(val) : null)),
     contact1: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits")
+      .trim()
+      .matches(MOBILE_REG, { message: "Enter valid number" })
       .required("Contact Number1 is required "),
     contact2: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Contact number must be between 5 and 15 digits"),
+      .trim()
+      .nullable()
+      .transform((curr, orig) => (orig === "" ? null : curr))
+      .matches(MOBILE_REG, { message: "Enter valid number" }),
     country: yup.string().required("Please select a Country "),
     street1: yup.string().required("Please enter street1 address"),
     street2: yup.string(),

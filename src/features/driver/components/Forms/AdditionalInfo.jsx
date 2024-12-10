@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Button } from "react-bootstrap";
 import Select from "react-select";
-import { licenseToDriveOptions } from "@/constants/options";
-import CustomInput from "../../../../components/Input/CustomInput";
-import Error from "../../../../components/Error/Error";
-import { useParams, useLocation } from "react-router-dom";
-import "@/assets/scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
+
+import { licenseToDriveOptions } from "@/constants/options";
+import CustomInput from "@/components/Input/CustomInput";
+import Error from "@/components/Error/Error";
+import "@/assets/scss/pages/_driver-tracking.scss";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ", // Adjust the height as needed
+  }),
+};
 
 const AdditionalInfo = ({
   setValue,
@@ -19,63 +26,22 @@ const AdditionalInfo = ({
   getValues,
   control,
   errors,
+  isFormSubmitting,
+  watch,
 }) => {
   const { t } = useTranslation();
-  const { id } = useParams();
-  const location = useLocation();
-  const userData = JSON.parse(localStorage.getItem("userJsonData"));
-  const newData = userData?.filter((data) => data.id === parseInt(id, 10));
-  const [filteredUserData, setFilteredUserData] = useState(newData);
-  const [date, setDate] = useState({});
-  const [dValues, setDvalues] = useState([]);
-  const [toggle, setToggle] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ", // Adjust the height as needed
-    }),
-  };
   const handleChange = (e) => {
     const value = e.target.value === "yes" ? true : false;
-    setSelectedOption(value);
     setValue("licenseAvailable", value);
   };
 
-  useEffect(() => {
-    if (id) {
-      const data = location.state[0];
-      setDvalues(data);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (dValues && id) {
-      setValue("age", dValues.age);
-      setValue("drivingExperience", dValues?.drivingExperience);
-      setValue("lifeInsuranceNumber", dValues?.lifeInsuranceNumber);
-      setValue("mediclaimNumber", dValues?.mediclaimNumber);
-      setValue("dateOfBirth", dValues?.dateOfBirth);
-      setValue("dateOfJoining", dValues?.dateOfJoining);
-      setValue("dateOfLeaving", dValues?.dateOfLeaving);
-      setValue("licenseExpiryDate", dValues?.licenseExpiryDate);
-      setValue("licenseIssueDate", dValues?.licenseIssueDate);
-      setValue("lifeInsuranceExpiry", dValues?.lifeInsuranceExpiry);
-      setValue("mediclaimExpiryDate", dValues?.mediclaimExpiryDate);
-      setSelectedOption(dValues.licenseAvailable);
-      setToggle(dValues?.active);
-    }
-  }, [dValues, id]);
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100);
   const maxDate = new Date();
 
-  const [dateOfBirth, setDateOfBirth] = useState(null);
-
   const calculateAge = (dateOfBirth) => {
     if (!dateOfBirth) return null;
-
     const today = dayjs();
     const birthDate = dayjs(dateOfBirth);
     const age = today.diff(birthDate, "year");
@@ -84,15 +50,10 @@ const AdditionalInfo = ({
   };
 
   const handleDateOfBirthChange = (date) => {
-    setDateOfBirth(date);
     const age = calculateAge(date);
     setValue("age", age);
   };
 
-  // Custom validation rule to check if date A is less than date B
-  const dateBeforeValidator = (a, b) => {
-    return dayjs(a).isBefore(dayjs(b));
-  };
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
@@ -213,7 +174,7 @@ const AdditionalInfo = ({
                 id="customRadioBox987"
                 name="optradioCustom1"
                 value="yes"
-                checked={selectedOption === true}
+                checked={watch("licenseAvailable")}
                 onChange={handleChange}
               />
               <label
@@ -231,7 +192,7 @@ const AdditionalInfo = ({
                 // style={{backgroundColor : 'white'}}
                 id="customRadioBox988"
                 value="no"
-                checked={selectedOption === false}
+                checked={!watch("licenseAvailable")}
                 onChange={handleChange}
                 name="optradioCustom1"
               />
@@ -250,7 +211,7 @@ const AdditionalInfo = ({
           <div className="col-xl-6 mb-3 ">
             <label className="form-label">{t("licenseNumber")}</label>
             <div
-              className={`${selectedOption !== "yes" ? "d-flex align-items-center pe-none" : "d-flex align-items-center"}`}
+              className={`${!getValues("licenseAvailable") ? "d-flex align-items-center pe-none" : "d-flex align-items-center"}`}
             >
               <CustomInput
                 type="number"
@@ -264,7 +225,7 @@ const AdditionalInfo = ({
             </div>
           </div>
           <div
-            className={`${selectedOption !== "yes" ? "col-xl-6 mb-3  pe-none" : "col-xl-6 mb-3 "}`}
+            className={`${!getValues("licenseAvailable") ? "col-xl-6 mb-3  pe-none" : "col-xl-6 mb-3 "}`}
           >
             <label className="form-label">{t("licenseToDrive")}</label>
             <Controller
@@ -279,7 +240,10 @@ const AdditionalInfo = ({
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  // defaultValue={licenseToDriveOptions[0]}
+                  defaultValue={{
+                    value: getValues("licenseToDrive"),
+                    label: getValues("licenseToDrive"),
+                  }}
                 />
               )}
             />
@@ -288,7 +252,7 @@ const AdditionalInfo = ({
             )}
           </div>
           <div
-            className={`${selectedOption !== true ? "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column"}`}
+            className={`${!getValues("licenseAvailable") ? "col-xl-6 mb-3 d-flex flex-column  pe-none" : "col-xl-6 mb-3 d-flex flex-column"}`}
           >
             <label className="form-label">
               {t("licenseIssueDate")}
@@ -308,7 +272,7 @@ const AdditionalInfo = ({
                   onChange={(newValue) => {
                     setValue("licenseIssueDate", newValue);
                   }}
-                  maxDate={getValues("licenseExpiryDate")}
+                  // maxDate={getValues("licenseExpiryDate")}
                 />
               )}
             />
@@ -333,7 +297,7 @@ const AdditionalInfo = ({
                   onChange={(newValue) => {
                     setValue("licenseExpiryDate", newValue);
                   }}
-                  minDate={getValues("licenseIssueDate")}
+                  // minDate={getValues("licenseIssueDate")}
                 />
               )}
             />
@@ -409,10 +373,9 @@ const AdditionalInfo = ({
               // style={{backgroundColor : 'white'}}
               id="customCheckBox1"
               name="active"
-              checked={toggle}
+              checked={watch("active")}
               onClick={() => {
-                setValue("active", !toggle);
-                setToggle(!toggle);
+                setValue("active", !getValues("active"));
               }}
             />
           </div>
@@ -430,6 +393,7 @@ const AdditionalInfo = ({
           type="submit"
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
+          disabled={isFormSubmitting}
         >
           {" "}
           {t("next")}

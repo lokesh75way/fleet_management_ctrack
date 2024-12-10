@@ -1,86 +1,71 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
-import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import MainPagetitle from "@/components/MainPagetitle";
 import Profile from "../components/Forms/Profile";
-import General from "../components/Forms/General";
+import AdditionalInfo from "../components/Forms/AdditionalInfo";
 import Document from "../components/Forms/Document";
-import Information from "../components/Forms/Information";
-import Licensing from "../components/Forms/Licensing";
 import {
-  vehicleGeneralSchema,
-  vehicleProfileSchema,
-  vehicleDocumentSchema,
-  vehicleInformationSchema,
-  vehicleLicenseSchema,
+  driverProfileSchema,
+  driverInfoSchema,
+  driverDocumentSchema,
 } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
-import { createVehicles, updateVehicles, getVehicleById } from "../api";
+import { createDriver, getDriverById, updateDriver } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
 import Loader from "@/components/Loader";
 
-const CreateVehicle = () => {
+const CreateDriver = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
-  const { id: vehicleId } = useParams();
-  const tabHeading = [
-    t("information"),
-    t("general"),
-    t("licensing"),
-    t("profile"),
-    t("document"),
-  ];
-  let component = [Information, General, Licensing, Profile, Document];
+  const tabHeading = [t("profile"), t("additionalInfo"), t("document")];
+  const component = [Profile, AdditionalInfo, Document];
   const totalTabs = tabHeading.length;
+  const { id: driverId } = useParams();
   const queryClient = useQueryClient();
 
   const {
-    data: vehicleData,
+    data: driverData,
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["vehicle", vehicleId],
-    queryFn: () => getVehicleById(vehicleId),
-    enabled: !!vehicleId,
+    queryKey: ["driver", driverId],
+    queryFn: () => getDriverById(driverId),
+    enabled: !!driverId,
     staleTime: Infinity,
   });
 
-  const parsedVehicleData = useMemo(() => {
+  const parsedDriverData = useMemo(() => {
     return {
-      ...vehicleData,
-      selectedInput: vehicleData?.fleetnumber
-        ? "fleetnumber"
-        : "registrationNumber",
-      branchId: vehicleData?.branchId?._id,
+      ...driverData,
+      businessGroupId: driverData?.businessGroupId?._id,
+      companyId: driverData?.companyId?._id,
+      branchId: driverData?.branchId?._id,
     };
-  }, [vehicleData]);
+  }, [driverData]);
 
   useEffect(() => {
-    if (isError && !!vehicleId) {
-      notifyError("Not able to fetch vehicle data");
+    if (isError && !!driverId) {
+      notifyError("Not able to fetch driver data");
       navigate("/not-found");
     }
-  }, [isError && vehicleId]);
+  }, [isError && driverId]);
 
   const validationSchema = useCallback((index) => {
     switch (index) {
       case 0:
-        return vehicleInformationSchema;
+        return driverProfileSchema;
       case 1:
-        return vehicleGeneralSchema;
+        return driverInfoSchema;
       case 2:
-        return vehicleLicenseSchema;
-      case 3:
-        return vehicleProfileSchema;
-      case 4:
-        return vehicleDocumentSchema;
+        return driverDocumentSchema;
     }
   }, []);
 
@@ -93,37 +78,27 @@ const CreateVehicle = () => {
     handleSubmit,
     watch,
   } = useForm({
-    defaultValues: {
-      documents: [
-        {
-          documentType: { label: "INSURANCE", value: "INSURANCE" },
-          file: "",
-          expireDate: new Date(),
-          issueDate: new Date(),
-        },
-      ],
-      selectedInput: "registrationNumber",
-    },
     resolver: yupResolver(validationSchema(activeIndex)),
-    values: parsedVehicleData,
+    values: parsedDriverData,
   });
 
   const onError = (err) => notifyError(getApiErrorMessage(err));
-  const { mutate: createVehicle, isPending: createPending } = useMutation({
-    mutationFn: createVehicles,
+  const { mutate: createDriverMutation, isPending: createPending } =
+    useMutation({
+      mutationFn: createDriver,
+      onSuccess: () => {
+        notifySuccess("New Driver Created");
+        queryClient.invalidateQueries(["drivers"]);
+        navigate("/driver");
+      },
+      onError,
+    });
+  const { mutate: editDriverMutation, isPending: editPending } = useMutation({
+    mutationFn: ({ data, id }) => updateDriver(id, data),
     onSuccess: () => {
-      notifySuccess("New Vehicle Created");
-      queryClient.invalidateQueries(["vehicles"]);
-      navigate("/vehicle");
-    },
-    onError,
-  });
-  const { mutate: editVeicle, isPending: editPending } = useMutation({
-    mutationFn: ({ data, id }) => updateVehicles(data, id),
-    onSuccess: () => {
-      notifySuccess("Vehicle Updated Successfully");
-      queryClient.invalidateQueries(["vehicles"]);
-      navigate("/vehicle");
+      notifySuccess("Driver Updated Successfully");
+      queryClient.invalidateQueries(["drivers"]);
+      navigate("/driver");
     },
     onError,
   });
@@ -141,43 +116,34 @@ const CreateVehicle = () => {
     return true;
   };
 
-  const onSubmit = async (data) => {
+  const onSubmitHanlder = async (data) => {
     if (activeIndex === totalTabs - 1) {
       const isValid = validateAllFields(data);
       if (!isValid) return;
-      if (vehicleId) {
-        for (const key in data) {
-          if (data[key] === undefined || data[key] === "") {
-            delete data[key];
-          }
-        }
-        editVeicle({ data, vehicleId });
+
+      if (driverId) {
+        editDriverMutation({
+          id: driverId,
+          data,
+        });
       } else {
-        for (const key in data) {
-          if (data[key] === undefined || data[key] === "") {
-            delete data[key];
-          }
-        }
-        delete data.test;
-        createVehicle(data);
+        createDriverMutation(data);
       }
     } else {
-      setActiveIndex((prevIndex) => {
-        return Math.min(prevIndex + 1, totalTabs - 1);
-      });
+      setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
     }
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle={t("vehicle")}
-        pageTitle={vehicleId ? t("edit") : t("create")}
-        parentTitle={t("vehicle")}
+        mainTitle={t("driver")}
+        pageTitle={driverId ? t("edit") : t("create")}
+        parentTitle={t("driver")}
       />
       <div className="m-2 p-2">
         <FormProvider>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmitHanlder)}>
             <div className="default-tab">
               <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
                 <Nav as="ul" className="nav-tabs">
@@ -200,7 +166,6 @@ const CreateVehicle = () => {
                   ) : (
                     tabHeading.map((data, i) => {
                       const Component = component[i];
-
                       return (
                         <Tab.Pane
                           eventKey={data.toLowerCase()}
@@ -209,21 +174,20 @@ const CreateVehicle = () => {
                         >
                           <Component
                             data={tabHeading}
-                            register={register}
-                            setValue={setValue}
-                            getValues={getValues}
                             control={control}
+                            setValue={setValue}
+                            register={register}
+                            getValues={getValues}
                             errors={errors}
                             handleSubmit={handleSubmit}
-                            onSubmit={onSubmit}
+                            onSubmit={onSubmitHanlder}
+                            isFormSubmitting={editPending || createPending}
                             watch={watch}
-                            isFormSubmitting={createPending || editPending}
                           />
                         </Tab.Pane>
                       );
                     })
                   )}
-                  {}
                 </Tab.Content>
               </Tab.Container>
             </div>
@@ -233,4 +197,4 @@ const CreateVehicle = () => {
     </>
   );
 };
-export default CreateVehicle;
+export default CreateDriver;

@@ -16,6 +16,7 @@ import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
 import VehicleRoutes from "@/features/vehicle/pages";
 import usePermissions from "@/hooks/usePermissions";
+import DriverRoutes from "@/features/driver/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -50,15 +51,6 @@ const ExpenseReport = React.lazy(
   () => import("./pages/company/reports/Expense")
 );
 const FuelReport = React.lazy(() => import("./pages/company/reports/Fuel"));
-const UpdateDriverForm = React.lazy(
-  () => import("./pages/admin/settings/EditForm/UpdateDriverForm")
-);
-const UpdateVehicleForm = React.lazy(
-  () => import("./pages/admin/settings/EditForm/UpdateVehicleForm")
-);
-const UpdateCompanyForm = React.lazy(
-  () => import("../features/company/pages/Create")
-);
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
 );
@@ -70,14 +62,12 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
-);
-const DriverForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/DriverForm")
 );
 const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
@@ -119,19 +109,6 @@ const allroutes = [
   { module: "*", url: "app-profile", component: <AdminProfile /> },
   { module: "*", url: "changepassword", component: <ChangePassword /> },
   { module: "*", url: "contactUs", component: <ContactUs /> },
-  { module: "driver", url: "driver", component: <Driver /> },
-  {
-    module: "driver",
-    operation: "add",
-    url: "driver/create",
-    component: <DriverForm />,
-  },
-  {
-    module: "driver",
-    operation: "modify",
-    url: "driver/edit/:id",
-    component: <DriverForm />,
-  },
 
   {
     module: "subUser",
@@ -145,13 +122,6 @@ const allroutes = [
     operation: "modify",
     url: "user/edit/:id",
     component: <SubUserForm />,
-  },
-
-  { module: "vehicle", url: "vehicle-tracking", component: <DriverTracking /> },
-  {
-    module: "vehicle",
-    url: "vehicle-tracking/:id",
-    component: <DriverTracking />,
   },
   {
     module: "vehicle",
@@ -304,6 +274,7 @@ const AdminRoutes = () => {
           <Route path="/company/*" element={<CompanyRoutes />} />
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
+          <Route path="/driver/*" element={<DriverRoutes />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

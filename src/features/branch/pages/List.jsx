@@ -170,12 +170,22 @@ const BranchList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <BranchTable
-                              tableData={data?.data ?? []}
-                              currentPage={page}
-                              itemsPerPage={itemsPerPage}
-                              onConfirmDelete={mutate}
-                            />
+                            {data.data?.length ? (
+                              <BranchTable
+                                tableData={data?.data ?? []}
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                onConfirmDelete={mutate}
+                              />
+                            ) : (
+                              <tr>
+                                <td colspan="10" rowSpan={2} height={150}>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       )}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import MainPagetitle from "../../../../components/MainPagetitle";
 import { DriverData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
-import DriverTable from "../../../components/Tables/DriverTable";
+import DriverTable from "../../../../features/driver/components/Table";
 import { filterAlerts } from "../../../../utils/helper";
 import { CSVLink } from "react-csv";
 import { useTranslation } from "react-i18next";

@@ -30,7 +30,7 @@ const Information = ({
   control,
   handleSubmit,
   onSubmit,
-  isLoading,
+  isFormSubmitting,
 }) => {
   const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
@@ -650,7 +650,7 @@ const Information = ({
       >
         <Button
           type="submit"
-          disabled={isLoading}
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

@@ -274,7 +274,7 @@ const Home = () => {
                   marginLeft: ".2rem",
                 }}
               >
-                <ActiveUserMap usageData={usageData} />
+                {/* <ActiveUserMap usageData={usageData} /> */}
               </div>
             </div>
           )}

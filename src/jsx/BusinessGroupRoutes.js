@@ -15,6 +15,7 @@ import ChangePassword from "./pages/ChangePassword";
 import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
 import VehicleRoutes from "@/features/vehicle/pages";
+import DriverRoutes from "@/features/driver/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -61,14 +62,12 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
-);
-const DriverForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/DriverForm")
 );
 const TechnicianForm = React.lazy(
   () => import("./pages/admin/settings/CreateForms/TechnicianForm")
@@ -141,35 +140,10 @@ const BusinessGroupRoutes = () => {
       url: "technician/edit/:id",
       component: <TechnicianForm />,
     },
-
-    {
-      module: "vehicle",
-      url: "vehicle-tracking",
-      component: <DriverTracking />,
-    },
-    {
-      module: "vehicle",
-      url: "vehicle-tracking/:id",
-      component: <DriverTracking />,
-    },
     {
       module: "company",
       url: "company-tracking",
       component: <CompanyTracking />,
-    },
-
-    { module: "driver", url: "driver", component: <Driver /> },
-    {
-      module: "driver",
-      operation: "add",
-      url: "driver/create",
-      component: <DriverForm />,
-    },
-    {
-      module: "driver",
-      operation: "modify",
-      url: "driver/edit/:id",
-      component: <DriverForm />,
     },
 
     {
@@ -284,6 +258,7 @@ const BusinessGroupRoutes = () => {
           <Route path="/company/*" element={<CompanyRoutes />} />
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
+          <Route path="/driver/*" element={<DriverRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

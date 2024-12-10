@@ -25,7 +25,7 @@ const Document = ({
   getValues,
   errors,
   register,
-  isLoading,
+  isFormSubmitting,
 }) => {
   const [loading, setLoading] = useState();
   const { t } = useTranslation();
@@ -216,7 +216,7 @@ const Document = ({
         >
           <Button
             type="submit"
-            disabled={loading || isLoading}
+            disabled={loading || isFormSubmitting}
             onClick={handleSubmit(onSubmit)}
           >
             {" "}

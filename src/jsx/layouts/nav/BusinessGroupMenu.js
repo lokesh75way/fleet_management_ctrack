@@ -135,7 +135,7 @@ export const BusinessGroupMenuList = [
         }}
       />
     ),
-    to: "/vehicle-tracking",
+    to: "/vehicle/tracking",
   },
 
   {

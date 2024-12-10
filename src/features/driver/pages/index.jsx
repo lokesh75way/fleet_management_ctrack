@@ -4,44 +4,31 @@ import { Route, Routes } from "react-router-dom";
 import PermissionDenied from "@/components/PermissionDenied";
 import usePermissions from "@/hooks/usePermissions";
 import Error404 from "@/components/Error/Error404";
-const VehicleList = lazy(() => import("./List"));
-const VehicleFrom = lazy(() => import("./Create"));
-const DriverTracking = lazy(() => import("./Tracking"));
+const DriverList = lazy(() => import("./List"));
+const DriverForm = lazy(() => import("./Create"));
 
 const routes = [
   {
-    module: "vehicle",
+    module: "driver",
     operation: "add",
     url: "/create",
-    component: <VehicleFrom />,
+    component: <DriverForm />,
   },
   {
-    module: "vehicle",
+    module: "driver",
     url: "/",
     operation: "view",
-    component: <VehicleList />,
+    component: <DriverList />,
   },
   {
-    module: "vehicle",
+    module: "driver",
     operation: "modify",
     url: "/edit/:id",
-    component: <VehicleFrom />,
-  },
-  {
-    module: "vehicle-tracking",
-    url: "/tracking",
-    operation: "view",
-    component: <DriverTracking />,
-  },
-  {
-    module: "vehicle-tracking",
-    operation: "view",
-    url: "/tracking/:id",
-    component: <DriverTracking />,
+    component: <DriverForm />,
   },
 ];
 
-const VehiclePages = () => {
+const DriverPages = () => {
   const { can } = usePermissions();
 
   return (
@@ -66,4 +53,4 @@ const VehiclePages = () => {
   );
 };
 
-export default VehiclePages;
+export default DriverPages;

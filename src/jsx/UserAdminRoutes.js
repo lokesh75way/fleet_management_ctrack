@@ -15,7 +15,7 @@ import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
 import VehicleForm from "../features/vehicle/pages/Create";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
-import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
+import DriverForm from "../features/driver/pages/Create";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
 
 const Performance = React.lazy(
@@ -30,9 +30,11 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
+const Driver = React.lazy(() => import("../features/driver/pages/List"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
@@ -334,7 +336,7 @@ const UserAdminRoutes = () => {
     { url: "technician", component: <Technician /> },
     { url: "branch", component: <Branch /> },
     { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
+    { url: "vehicle/tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -349,7 +351,7 @@ const UserAdminRoutes = () => {
     { url: "add-email", component: <AddMail /> },
     { url: "add-blog", component: <AddBlog /> },
     { url: "blog-category", component: <BlogCategory /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
+    { url: "vehicle/tracking/:id", component: <DriverTracking /> },
     ///AiKit
     { url: "auto-write", component: <AutoWriter /> },
     { url: "scheduled", component: <Scheduler /> },

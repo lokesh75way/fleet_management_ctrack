@@ -39,9 +39,8 @@ const UserForm = ({
   errors,
   control,
   watch,
+  isFormSubmitting,
 }) => {
-  const [selectStateName, setSelectStateName] = useState("");
-  const [defaultCountry, setDefaultCountry] = useState();
   const [allGroups, setAllGroups] = useState([]);
   const [allCompanies, setAllCompanies] = useState([]);
   const [allBranches, setAllBranches] = useState([]);
@@ -439,6 +438,7 @@ const UserForm = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

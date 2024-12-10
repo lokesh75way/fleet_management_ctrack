@@ -14,10 +14,10 @@ import ScrollToTop from "./layouts/ScrollToTop";
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
-import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
 import BranchRoutes from "@/features/branch/pages";
 import VehicleRoutes from "@/features/vehicle/pages";
+import DriverRoutes from "@/features/driver/pages";
 
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -31,9 +31,10 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
@@ -280,7 +281,6 @@ const CompanyRoutes = () => {
     { url: "reports/generated", component: <Report /> },
     { url: "technician/details", component: <Technician /> },
 
-    { url: "driver", component: <Driver /> },
     { url: "user/create", component: <SubUserForm /> },
     { url: "user", component: <SubUser /> },
     { url: "user/edit/:id", component: <SubUserForm /> },
@@ -293,7 +293,6 @@ const CompanyRoutes = () => {
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
 
-    { url: "driver/create", component: <DriverForm /> },
     { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
 
@@ -326,8 +325,6 @@ const CompanyRoutes = () => {
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
     { url: "technician", component: <Technician /> },
-    { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -342,7 +339,6 @@ const CompanyRoutes = () => {
     { url: "add-email", component: <AddMail /> },
     { url: "add-blog", component: <AddBlog /> },
     { url: "blog-category", component: <BlogCategory /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
     ///AiKit
     { url: "auto-write", component: <AutoWriter /> },
     { url: "scheduled", component: <Scheduler /> },
@@ -427,8 +423,6 @@ const CompanyRoutes = () => {
     { url: "groups", component: <CreateGroups /> },
     { url: "groups/permission", component: <Permission /> },
 
-    // drivers
-    { url: "driver/edit/:id", component: <DriverForm /> },
     {
       module: "company",
       url: "company-tracking",
@@ -450,6 +444,7 @@ const CompanyRoutes = () => {
           ))}
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
+          <Route path="/driver/*" element={<DriverRoutes />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

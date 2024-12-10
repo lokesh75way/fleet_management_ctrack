@@ -157,16 +157,12 @@ const CompanyList = () => {
                           <thead>
                             <tr>
                               <th>{t("id")}</th>
-                              <th className="text-center">
-                                {t("companyName")}
-                              </th>
-                              <th className="text-center">
-                                {t("businessGroup")}
-                              </th>
+                              <th>{t("companyName")}</th>
+                              <th>{t("businessGroup")}</th>
                               {/* <th>{t('mobileNumber')}</th> */}
-                              <th className="text-center">{t("location")}</th>
-                              <th className="text-center">{t("email")}</th>
-                              <th className="text-center">{t("branches")}</th>
+                              <th>{t("location")}</th>
+                              <th>{t("email")}</th>
+                              <th>{t("branches")}</th>
 
                               {(can("company", "modify") ||
                                 can("company", "delete")) && (
@@ -177,12 +173,22 @@ const CompanyList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <CompanyTable
-                              tableData={data?.data ?? []}
-                              currentPage={page}
-                              itemsPerPage={itemsPerPage}
-                              onConfirmDelete={mutate}
-                            />
+                            {data.data?.length ? (
+                              <CompanyTable
+                                tableData={data?.data ?? []}
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                onConfirmDelete={mutate}
+                              />
+                            ) : (
+                              <tr>
+                                <td colspan="10" rowSpan={2} height={150}>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       )}

@@ -174,7 +174,7 @@ export const AdminMenuList = [
         }}
       />
     ),
-    to: "/vehicle-tracking",
+    to: "/vehicle/tracking",
   },
 
   {

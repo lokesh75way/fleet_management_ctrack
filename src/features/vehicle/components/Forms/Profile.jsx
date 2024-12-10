@@ -24,6 +24,7 @@ const Profile = ({
   control,
   getValues,
   watch,
+  isFormSubmitting,
 }) => {
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
@@ -449,6 +450,7 @@ const Profile = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

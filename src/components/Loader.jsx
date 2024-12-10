@@ -1,13 +1,13 @@
 import React from "react";
 
-const Loader = () => {
+const Loader = ({ height = "100vh" }) => {
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: height,
         marginTop: "-50px",
       }}
     >

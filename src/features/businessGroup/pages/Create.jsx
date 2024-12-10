@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "@/components/MainPagetitle";
@@ -11,9 +12,10 @@ import CreateForm from "../components/Form";
 import ChangePassword from "@/components/Form/ChangePassword";
 import { businessGroupAccountSchema, companyPasswordSchema } from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
-import { changePassword, createGroup, updateGroup } from "../api";
+import { changePassword, createGroup, getGroupById, updateGroup } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
+import Loader from "@/components/Loader";
 
 const CreateBusiness = () => {
   const { t } = useTranslation();
@@ -31,6 +33,31 @@ const CreateBusiness = () => {
     tabHeading = [t("newBusinessGroup")];
     component = [CreateForm];
   }
+
+  const {
+    data: groupData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["group", id],
+    queryFn: () => getGroupById(id),
+    enabled: !!id,
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (isError && !!id) {
+      notifyError("Not able to fetch business group data");
+      navigate("/not-found");
+    }
+  }, [isError && id]);
+  const parsedGroupData = useMemo(() => {
+    return {
+      ...groupData,
+      ...groupData?.businessGroupId,
+      logo: groupData?.businessGroupId?.logo ?? null,
+    };
+  }, [groupData]);
 
   const {
     register,
@@ -51,10 +78,13 @@ const CreateBusiness = () => {
           email: "",
         },
       ],
+      timeFormat: timeFormatOptions[1]?.value,
+      dateFormat: dateFormatOptions[1]?.value,
     },
     resolver: yupResolver(
       activeIndex === 0 ? businessGroupAccountSchema(id) : companyPasswordSchema
     ),
+    values: parsedGroupData,
   });
 
   const onError = (err) => notifyError(getApiErrorMessage(err));
@@ -141,30 +171,34 @@ const CreateBusiness = () => {
                   ))}
                 </Nav>
                 <Tab.Content className="pt-4">
-                  {tabHeading.map((data, i) => {
-                    const Component = component[i];
-                    return (
-                      <Tab.Pane
-                        eventKey={data.toLowerCase()}
-                        key={i}
-                        active={i === activeIndex}
-                      >
-                        <Component
-                          data={tabHeading}
-                          control={control}
-                          setValue={setValue}
-                          register={register}
-                          getValues={getValues}
-                          errors={errors}
-                          handleSubmit={handleSubmit}
-                          onSubmit={onSubmit}
-                          isFormSubmitting={
-                            createPending || editPending || passwordPending
-                          }
-                        />
-                      </Tab.Pane>
-                    );
-                  })}
+                  {isLoading ? (
+                    <Loader height={500} />
+                  ) : (
+                    tabHeading.map((data, i) => {
+                      const Component = component[i];
+                      return (
+                        <Tab.Pane
+                          eventKey={data.toLowerCase()}
+                          key={i}
+                          active={i === activeIndex}
+                        >
+                          <Component
+                            data={tabHeading}
+                            control={control}
+                            setValue={setValue}
+                            register={register}
+                            getValues={getValues}
+                            errors={errors}
+                            handleSubmit={handleSubmit}
+                            onSubmit={onSubmit}
+                            isFormSubmitting={
+                              createPending || editPending || passwordPending
+                            }
+                          />
+                        </Tab.Pane>
+                      );
+                    })
+                  )}
                 </Tab.Content>
               </Tab.Container>
             </div>

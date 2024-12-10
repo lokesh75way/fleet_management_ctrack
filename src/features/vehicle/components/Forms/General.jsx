@@ -34,6 +34,7 @@ const General = ({
   handleSubmit,
   onSubmit,
   watch,
+  isFormSubmitting,
 }) => {
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
@@ -358,6 +359,7 @@ const General = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >

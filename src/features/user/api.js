@@ -11,7 +11,7 @@ export const getAllUser = async (page) => {
   return {
     data: data.data.data,
     totalPage: data.data.totalPage,
-    totalCount: data.data.totalCount,
+    totalCount: data.data.count,
   };
 };
 

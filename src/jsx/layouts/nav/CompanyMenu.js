@@ -119,7 +119,7 @@ export const CompanyMenuList = [
         }}
       />
     ),
-    to: "/vehicle-tracking",
+    to: "/vehicle/tracking",
   },
 
   {

@@ -13,7 +13,7 @@ const Licensing = ({
   handleSubmit,
   onSubmit,
   watch,
-  isLoading,
+  isFormSubmitting,
 }) => {
   const { t } = useTranslation();
   const isLicenseReminderDisabled = watch("licenseReminder", false);
@@ -189,7 +189,7 @@ const Licensing = ({
         <Button
           type="submit"
           onClick={handleSubmit(onSubmit)}
-          disabled={isLoading}
+          disabled={isFormSubmitting}
           style={{ width: "10%" }}
         >
           {t("next")}

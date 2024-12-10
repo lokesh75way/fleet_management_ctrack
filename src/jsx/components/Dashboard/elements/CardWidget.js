@@ -13,7 +13,7 @@ import { getCompany } from "../../../../services/api/CompanyServices";
 import { getAllUser } from "@/features/user/api";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import { getTechnicians } from "../../../../services/api/TechnicianService";
-import { getDrivers } from "../../../../services/api/driverService";
+import { getAllDrivers } from "../../../../features/driver/api";
 
 const CardWidget = ({ usageData }) => {
   const { t } = useTranslation();
@@ -57,7 +57,8 @@ const CardWidget = ({ usageData }) => {
         const { count: technicianCount } = await getTechnicians();
         setTechnicianCount(technicianCount);
 
-        const { data: drivers, totalLength: driverCount } = await getDrivers();
+        const { data: drivers, totalLength: driverCount } =
+          await getAllDrivers();
         setDriverCount(driverCount);
       } catch (error) {
         console.error("Error fetching data:", error);

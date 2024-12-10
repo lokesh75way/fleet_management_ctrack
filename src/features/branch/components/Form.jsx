@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import Error from "@/components/Error/Error";
@@ -13,9 +13,6 @@ import FormField from "@/components/Input/UserDetailsForm";
 import { dateFormatOptions, timeFormatOptions } from "@/constants/options";
 import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
-import { getBranchById } from "@/features/branch/api";
-import { useQuery } from "@tanstack/react-query";
-import { notifyError } from "@/utils/toast";
 
 const customStyles = {
   control: (base) => ({
@@ -43,52 +40,6 @@ const BranchForm = ({
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
-  const [formData, setFormData] = useState();
-  const navigate = useNavigate();
-
-  const { data, isError } = useQuery({
-    queryKey: ["branch", id],
-    queryFn: () => getBranchById(id),
-    enabled: !!id,
-    staleTime: Infinity,
-  });
-
-  useEffect(() => {
-    if (isError && !!id) {
-      notifyError("Not able to fetch company data");
-      navigate("/not-found");
-    }
-  }, [isError && id]);
-
-  useEffect(() => {
-    if (id && data) {
-      setFormData(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (formData && id) {
-      setValue("businessGroupId", formData.businessGroupId?._id);
-      setValue("companyId", formData?.companyId?._id);
-      setValue("branchName", formData?.branchName);
-      setValue("email", formData?.email);
-      setValue("officeNumber", formData?.officeNumber);
-      setValue("companyId", formData.companyId?._id);
-      setValue("tradeLicenseNumber", formData?.tradeLicenseNumber);
-      setValue("country", formData.country);
-      setValue("zipCode", formData.zipCode);
-      setValue("street1", formData.street1);
-      setValue("street2", formData.street2);
-      setValue("country", formData.country);
-      setValue("state", formData.state);
-      setValue("userInfo", formData.userInfo);
-      setValue("dateFormat", formData.dateFormat);
-      setValue("timeFormat", formData.timeFormat);
-    } else {
-      setValue("dateFormat", dateFormatOptions[0]?.value);
-      setValue("timeFormat", timeFormatOptions[1]?.value);
-    }
-  }, [formData, id]);
 
   const handleAddForm = () => {
     append({
@@ -224,7 +175,6 @@ const BranchForm = ({
           errors={errors}
           getValues={getValues}
           locationData={locationData}
-          dValues={formData}
           id={id}
           showCity={true}
           Comptype={""}

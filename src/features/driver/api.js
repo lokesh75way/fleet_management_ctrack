@@ -1,5 +1,5 @@
 import axios from "axios";
-import initAxios from "../api";
+import initAxios from "../../services/api";
 initAxios();
 
 export const createDriver = async (body) => {
@@ -10,9 +10,9 @@ export const updateDriver = async (id, body) => {
   return axios.put(`/drivers/${id}`, body);
 };
 
-export const getDrivers = async (pageNo = 1, limit) => {
+export const getAllDrivers = async (pageNo = 1, limit) => {
   const { data } = await axios.get(`/drivers/?page=${pageNo}&limit=${10}`);
-  return { data: data.data.data, totalLength: data.data.totalCount };
+  return { data: data.data.data, totalCount: data.data.totalCount };
 };
 
 export const getDriverById = async (driverId) => {

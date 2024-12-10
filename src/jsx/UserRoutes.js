@@ -13,20 +13,15 @@ import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
-import VehicleForm from "../features/vehicle/pages/Create";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
-import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
-import BusinessForm from "../features/businessGroup/pages/Create";
 import BusinessUser from "../features/businessGroup/pages/List";
-import Business from "../features/businessGroup/pages/List";
-import CompanyForm from "../features/company/pages/Create";
-import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
 import BusinessGroupRoutes from "@/features/businessGroup/pages";
 import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
 import VehicleRoutes from "@/features/vehicle/pages";
+import DriverRoutes from "@/features/driver/pages";
 
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -40,9 +35,10 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
@@ -54,7 +50,6 @@ const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
 const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("../features/vehicle/pages/List"));
 const MyProfile = React.lazy(() => import("./pages/company/profile/MyProfile"));
 
 //Update Pages
@@ -293,7 +288,6 @@ const UserRoutes = () => {
     // { url: "manage-client", component: <ManageClient /> },
     { url: "reports/generated", component: <Report /> },
     { url: "technician/details", component: <Technician /> },
-    { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
     { url: "/settings/alert", component: <Alert /> },
@@ -304,7 +298,6 @@ const UserRoutes = () => {
 
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "driver/create", component: <DriverForm /> },
     { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
 
@@ -337,8 +330,6 @@ const UserRoutes = () => {
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
     { url: "technician", component: <Technician /> },
-    { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -353,7 +344,6 @@ const UserRoutes = () => {
     { url: "add-email", component: <AddMail /> },
     { url: "add-blog", component: <AddBlog /> },
     { url: "blog-category", component: <BlogCategory /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
     ///AiKit
     { url: "auto-write", component: <AutoWriter /> },
     { url: "scheduled", component: <Scheduler /> },
@@ -438,8 +428,6 @@ const UserRoutes = () => {
     { url: "groups", component: <CreateGroups /> },
     { url: "groups/permission", component: <Permission /> },
 
-    // drivers
-    { url: "driver/edit/:id", component: <DriverForm /> },
     { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
 
     {
@@ -497,6 +485,7 @@ const UserRoutes = () => {
           <Route path="/company/*" element={<CompanyRoutes />} />
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
+          <Route path="/driver/*" element={<DriverRoutes />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

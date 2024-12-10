@@ -15,7 +15,7 @@ import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
 import VehicleForm from "../features/vehicle/pages/Create";
 import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
-import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
+import DriverForm from "../features/driver/pages/Create";
 
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -29,9 +29,11 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
+const Driver = React.lazy(() => import("../features/driver/pages/List"));
 const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
@@ -296,7 +298,7 @@ const SubCompanyRoutes = () => {
     { url: "Vehicle", component: <Vehicle /> },
     { url: "vehicle/create", component: <VehicleForm /> },
     { url: "driver/create", component: <DriverForm /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
+    { url: "vehicle/tracking/:id", component: <DriverTracking /> },
     { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "branch/create", component: <BranchForm /> },
     { url: "/branch/my-profile/edit", component: <MyProfile /> },
@@ -332,7 +334,7 @@ const SubCompanyRoutes = () => {
     { url: "Technician", component: <Technician /> },
     { url: "branch", component: <Branch /> },
     { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
+    { url: "vehicle/tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
