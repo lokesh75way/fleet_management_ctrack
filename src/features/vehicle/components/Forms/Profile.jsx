@@ -455,7 +455,7 @@ const Profile = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("next")}
+          {t("submit")}
         </Button>
       </div>
     </div>

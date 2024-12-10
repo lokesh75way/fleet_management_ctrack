@@ -21,7 +21,7 @@ const VehicleTable = ({ tableData, onConfirmDelete }) => {
         </div>
       </td>
       <td>
-        <span>{item.plateNumber}</span>
+        <span>{item.registrationNumber}</span>
       </td>
       <td>
         <span className="text-primary">{item?.branchId?.branchName}</span>

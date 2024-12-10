@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 
 import Error from "@/components/Error/Error";
 import {
@@ -16,7 +15,6 @@ import CustomInput from "@/components/Input/CustomInput";
 import CompanyDropdown from "@/features/company/components/DropDownList";
 import GroupDropdown from "@/features/businessGroup/components/DropDownList";
 import BranchDropdownList from "@/features/branch/components/DropDownList";
-import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
   control: (base) => ({
@@ -38,20 +36,7 @@ const General = ({
 }) => {
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
-  const { role } = usePermissions();
-  const userDetails = useSelector((state) => state.auth.user);
-  const [isBuisnessGroupDisabled, setIsBuisnessGroupDisabled] = useState(false);
-
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (role !== "SUPER_ADMIN") {
-      setIsBuisnessGroupDisabled(true);
-    }
-    if (role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-    }
-  }, []);
 
   return (
     <div className="p-4">
@@ -78,7 +63,6 @@ const General = ({
                 defaultValue={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={isBuisnessGroupDisabled}
                 name={name}
               />
             )}

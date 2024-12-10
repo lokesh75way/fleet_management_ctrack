@@ -45,7 +45,6 @@ const Document = ({
     { value: "RTO_PASSING", label: "RTO_PASSING" },
     { value: "ROAD_TAX", label: "Road Tax" },
   ];
-
   return (
     <div className="p-4">
       <div className="row" style={{ width: "100%" }}>
