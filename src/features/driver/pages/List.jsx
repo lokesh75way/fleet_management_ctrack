@@ -81,7 +81,7 @@ const DriverList = () => {
                     className="dataTables_wrapper no-footer"
                   >
                     <div className="table-responsive">
-                      {isFetching && isLoading ? (
+                      {isFetching || isLoading ? (
                         <TableSkeleton />
                       ) : (
                         <table

@@ -458,17 +458,6 @@ const UserRoutes = () => {
     },
   ];
 
-  function NotFound() {
-    const url = allroutes.map((route) => route.url);
-    let path = window.location.pathname;
-    path = path.split("/");
-    path = path[path.length - 1];
-
-    if (url.indexOf(path) <= 0) {
-      return <Error404 />;
-    }
-  }
-
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -487,7 +476,7 @@ const UserRoutes = () => {
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
           <Route path="/driver/*" element={<DriverRoutes />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       <ScrollToTop />
     </Suspense>

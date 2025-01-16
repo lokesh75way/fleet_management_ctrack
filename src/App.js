@@ -10,6 +10,7 @@ import CompanyRoutes from "./jsx/CompanyRoutes";
 import BusinessGroupRoutes from "./jsx/BusinessGroupRoutes";
 import UserRoutes from "./jsx/UserRoutes";
 import AuthPages from "@/features/auth/pages";
+import Loader from "@/components/Loader";
 
 function App(props) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -31,7 +32,7 @@ function App(props) {
   return (
     <>
       <div className="vh-100">
-        <Suspense fallback={<h4>Loading...</h4>}>
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route element={<BasicLayout />}>
               <Route path="/*" element={<AuthPages />} />

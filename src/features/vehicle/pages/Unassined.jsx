@@ -1,81 +1,37 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import MainPagetitle from "../../components/MainPagetitle";
-import { getUnassignedVehicles } from "../../services/api/VehicleService";
-import { deleteVehicles } from "../../services/api/VehicleService";
-import usePagination from "../../hooks/usePagination";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Paginate from "../../components/Paginate";
-import UnassignedVehicleTable from "../components/Tables/UnassignedVehicleTable";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
+
+import MainPagetitle from "@/components/MainPagetitle";
+import usePagination from "@/hooks/usePagination";
+import Paginate from "@/components/Paginate";
+import UnassignedTable from "../components/UnassignedTable";
 import TableSkeleton from "@/components/Skeleton/Table";
 import usePermissions from "@/hooks/usePermissions";
+import { getUnassignedVehicles } from "../api";
 
-const UnassinedVehicle = () => {
+const UnassinedVehicleList = () => {
   const { t } = useTranslation();
   const { can } = usePermissions();
 
-  const navigate = useNavigate();
-  const [deleteId, setDeleteId] = useState();
-  const [tableData, setTableData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [editData, setEditData] = useState({
-    id: 0,
-    vehicleName: "",
-    plateNumber: "",
-    simNumber: 0,
-    IMEINumber: 0,
-    GPSDeviceType: "",
-    distanceCounter: 0,
+  const { page, goToPage, setCount, totalCount } = usePagination();
+  const itemsPerPage = 10;
+
+  const { data, isLoading, isFetching } = useQuery({
+    queryKey: ["vehicles", "unassigned", page],
+    queryFn: () => getUnassignedVehicles(page),
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
   });
 
-  const { page, nextPage, prevPage, goToPage, setCount, count, totalCount } =
-    usePagination();
-  const itemsPerPage = 10;
+  useEffect(() => {
+    if (data) setCount(data.totalCount);
+  }, [data]);
 
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
 
-  const startIndex = (page - 1) * itemsPerPage;
-  const slicedData = tableData.slice(startIndex, startIndex + itemsPerPage);
-
-  async function getVehicleData(page) {
-    try {
-      setIsLoading(true);
-      const { data, totalLength } = await getUnassignedVehicles(page);
-      console.log(data);
-      setCount(totalLength);
-      setTableData(data);
-      // setCount(totalCount);
-    } catch (error) {
-      console.log("Error in fetching data", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getVehicleData(page);
-  }, [deleteId, page]);
-
-  // delete function
-  const onConfirmDelete = (id) => {
-    deleteVehicles(id);
-    getVehicleData(id);
-    setDeleteId(id);
-  };
-  // Edit function
-  const editDrawerOpen = (data) => {
-    // tableData.map((table) => table.id === id && setEditData(table));
-
-    // const data = tableData.filter((item) => item._id === id);
-
-    // navigate(`edit/${id}`, { state: { formData: data } });
-    navigate(`/vehicle/create`, { state: { vehicle: data } });
-    // vehicle.current.showModal();
-  };
-
-  const vehicle = useRef();
   return (
     <>
       <MainPagetitle
@@ -107,7 +63,7 @@ const UnassinedVehicle = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    {!tableData.length && isLoading ? (
+                    {isLoading || isFetching ? (
                       <TableSkeleton />
                     ) : (
                       <table
@@ -131,10 +87,8 @@ const UnassinedVehicle = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          <UnassignedVehicleTable
-                            tableData={tableData}
-                            onConfirmDelete={onConfirmDelete}
-                            editDrawerOpen={editDrawerOpen}
+                          <UnassignedTable
+                            tableData={data.data}
                             currentPage={page}
                             itemsPerPage={itemsPerPage}
                           />
@@ -169,4 +123,4 @@ const UnassinedVehicle = () => {
   );
 };
 
-export default UnassinedVehicle;
+export default UnassinedVehicleList;

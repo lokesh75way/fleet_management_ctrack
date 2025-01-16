@@ -5,12 +5,12 @@ import "./chart.css";
 import "./step.css";
 import ScrollToTop from "./layouts/ScrollToTop";
 import AdminHome from "./components/Dashboard/AdminHome";
-import Loader from "./components/Loader";
+import Loader from "@/components/Loader";
 import AdminProfile from "./components/AppsMenu/AppProfile/AdminProfile";
 import ChangePassword from "./pages/ChangePassword";
 import BranchForm from "./pages/admin/settings/CreateForms/BranchForm";
 import { useEffect } from "react";
-import UnassinedVehicle from "./pages/UnassinedVehicle";
+import UnassinedVehicle from "../features/vehicle/pages/Unassined";
 import BusinessGroupRoutes from "@/features/businessGroup/pages";
 import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
@@ -122,11 +122,6 @@ const allroutes = [
     operation: "modify",
     url: "user/edit/:id",
     component: <SubUserForm />,
-  },
-  {
-    module: "vehicle",
-    url: "unassigned-vehicle",
-    component: <UnassinedVehicle />,
   },
 
   { module: "settings", url: "/settings/alert", component: <Alert /> },

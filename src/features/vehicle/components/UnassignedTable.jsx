@@ -1,14 +1,12 @@
-import usePermissions from "@/hooks/usePermissions";
 import React from "react";
 import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
+import usePermissions from "@/hooks/usePermissions";
+
+const UnassignedTable = ({ tableData, currentPage }) => {
   const { can } = usePermissions();
   const editPermission = can("vehicle", "modify");
-  if (tableData.length === 0) {
-    return;
-  }
-
   const startIndex = (currentPage - 1) * 10 + 1;
 
   const getVehicleStatus = (status) => {
@@ -19,7 +17,7 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
   };
 
   return tableData?.map((item, index) => (
-    <tr key={item.id}>
+    <tr key={item._id}>
       <td>
         <span>{startIndex + index}</span>
       </td>
@@ -57,12 +55,11 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
         <td>
           <span className="d-flex justify-content-center">
             {editPermission && item?.isVehicleAssigned === false && (
-              <span
-                className="cursor-pointer"
-                onClick={() => editDrawerOpen(item)}
-              >
-                <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
-              </span>
+              <Link to={`/vehicle/edit/${item?._id}`}>
+                <span className="cursor-pointer">
+                  <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
+                </span>
+              </Link>
             )}
           </span>
         </td>
@@ -71,4 +68,4 @@ const UnassignedVehicleTable = ({ tableData, editDrawerOpen, currentPage }) => {
   ));
 };
 
-export default UnassignedVehicleTable;
+export default UnassignedTable;

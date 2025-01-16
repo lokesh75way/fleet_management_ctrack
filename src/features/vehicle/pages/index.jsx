@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import PermissionDenied from "@/components/PermissionDenied";
 import usePermissions from "@/hooks/usePermissions";
 import Error404 from "@/components/Error/Error404";
+import UnassinedVehicleList from "./Unassined";
 const VehicleList = lazy(() => import("./List"));
 const VehicleFrom = lazy(() => import("./Create"));
 const DriverTracking = lazy(() => import("./Tracking"));
@@ -38,6 +39,12 @@ const routes = [
     operation: "view",
     url: "/tracking/:id",
     component: <DriverTracking />,
+  },
+  {
+    module: "vehicle",
+    operation: "view",
+    url: "/unassigned",
+    component: <UnassinedVehicleList />,
   },
 ];
 

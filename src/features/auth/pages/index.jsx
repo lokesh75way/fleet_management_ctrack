@@ -2,6 +2,8 @@ import { lazy } from "react";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 
+import Error404 from "@/components/Error/Error404";
+
 const Login = lazy(() => import("./Login"));
 const SignUp = lazy(() => import("./Registration"));
 const ForgotPassword = lazy(() => import("./ForgotPassword"));
@@ -14,7 +16,7 @@ const AuthPages = () => {
       <Route path="/register" element={<SignUp />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword/:token" element={<ResetPassword />} />
-      <Route path="*" element={<h1>Not found</h1>} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };

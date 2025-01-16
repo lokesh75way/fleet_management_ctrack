@@ -23,11 +23,11 @@ export const getAllVehicles = async (page, branchIds) => {
   return { data: data.data.data, totalCount: data.data.totalCount };
 };
 
-export const getUnassignedVehicle = async (page) => {
+export const getUnassignedVehicles = async (page) => {
   const { data } = await axios.get(
     `/vehicles/unassigned?page=${page}&limit=${10}`
   );
-  return { data: data.data.data, totalLength: data.data.totalCount };
+  return { data: data.data.data, totalCount: data.data.totalCount };
 };
 
 export const deleteVehicle = async (body) => {

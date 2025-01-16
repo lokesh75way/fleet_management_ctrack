@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import usePagination from "@/hooks/usePagination";
 import { getAllBranch, getBranchById } from "../api";
 import usePermissions from "@/hooks/usePermissions";
+import Spinner from "@/components/Loader/Spinner";
 
 const BranchDropdownList = ({
   onChange,
@@ -131,6 +132,10 @@ const BranchDropdownList = ({
       isClearable
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
+      isLoading={isFetching}
+      components={{
+        LoadingIndicator: Spinner,
+      }}
     />
   );
 };

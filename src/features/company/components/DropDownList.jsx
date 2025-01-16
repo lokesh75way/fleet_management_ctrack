@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import usePagination from "@/hooks/usePagination";
 import { getAllCompanies, getCompanyById } from "../api";
 import usePermissions from "@/hooks/usePermissions";
+import Spinner from "@/components/Loader/Spinner";
 
 const CompanyDropdownList = ({
   onChange,
@@ -22,8 +23,6 @@ const CompanyDropdownList = ({
   const { can } = usePermissions();
   const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
-
-  console.log({ defaultValue });
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
@@ -132,6 +131,10 @@ const CompanyDropdownList = ({
       isDisabled={isDisabled || !can("company", "view")}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
+      isLoading={isFetching}
+      components={{
+        LoadingIndicator: Spinner,
+      }}
     />
   );
 };

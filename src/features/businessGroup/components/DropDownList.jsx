@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { getAllGroups, getGroupById } from "@/features/businessGroup/api";
 import usePagination from "@/hooks/usePagination";
 import usePermissions from "@/hooks/usePermissions";
+import Spinner from "@/components/Loader/Spinner";
 
 const GroupDropdownList = ({
   onChange,
@@ -21,8 +22,6 @@ const GroupDropdownList = ({
   const { can, role } = usePermissions();
   const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
-
-  console.log({ defaultValue });
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
@@ -133,6 +132,10 @@ const GroupDropdownList = ({
       styles={{
         menuPortal: (base) => ({ ...base, zIndex: 9999 }),
         ...customStyles,
+      }}
+      isLoading={isFetching}
+      components={{
+        LoadingIndicator: Spinner,
       }}
     />
   );

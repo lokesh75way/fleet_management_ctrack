@@ -106,7 +106,7 @@ export const AdminMenuList = [
         }}
       />
     ),
-    to: "/unassigned-vehicle",
+    to: "/vehicle/unassigned",
   },
   {
     title: "Vehicle",

@@ -1,7 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Error404 = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <div className="authincation h-100">
       <div className="container h-100">
@@ -17,7 +20,10 @@ const Error404 = () => {
                   The page you were looking for is not found!
                 </h4>
                 <div>
-                  <Link to={"/dashboard"} className="btn btn-secondary">
+                  <Link
+                    to={isAuthenticated ? "/dashboard" : "/login"}
+                    className="btn btn-secondary"
+                  >
                     BACK TO HOMEPAGE
                   </Link>
                 </div>

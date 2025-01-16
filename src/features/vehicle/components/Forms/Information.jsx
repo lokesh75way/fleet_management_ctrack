@@ -35,35 +35,6 @@ const Information = ({
   const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
   const { t } = useTranslation();
-  const { id } = useParams();
-  useEffect(() => {
-    if (formData && id) {
-      setValue("vehicleNumber", formData.vehicleNumber);
-      setValue("registrationNumber", formData.registrationNumber);
-      setValue("unitId", formData.unitId);
-      setValue("description", formData.description);
-      setValue("manufacture", formData.manufacture);
-      setValue("color", formData.color);
-      setValue("model", formData.model);
-      setValue("group", formData.group);
-      setValue("groupDescription", formData.groupDescription);
-      setValue("year", formData.year);
-      setValue("licenseNumber", formData.licenseNumber);
-      setValue("licenseExpire", formData.licenseExpire);
-      setValue("roadWorthy", formData.roadWorthy);
-      setValue("roadWorthyExpire", formData.roadWorthyExpire);
-      setValue("odo", formData.odo);
-      setValue("odoNextService", formData.odoNextService);
-      setValue("hours", formData.hours);
-      setValue("hoursNextService", formData.hoursNextService);
-      setValue("currentStatus", formData.currentStatus);
-      setValue("currentDriver", formData.currentDriver);
-      setValue("currentLocation", formData.currentLocation);
-      setValue("speed", formData.speed);
-      setValue("heading", formData.heading);
-      setValue("skillSet", formData.skillSet);
-    }
-  }, [formData, id]);
 
   return (
     <div className="p-4 relative">
