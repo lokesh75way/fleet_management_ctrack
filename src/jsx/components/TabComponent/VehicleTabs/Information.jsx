@@ -47,7 +47,6 @@ const Information = ({
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
 
   const handleOptionChange = (event) => {
-    console.log("event", event.target.value);
     setSelectedOption(event.target.value);
   };
 
@@ -103,37 +102,41 @@ const Information = ({
           >
             <div className="row" style={{ width: "78%" }}>
               <div className="d-flex flex-column">
-                <div className="col-xl-6 mb-3">
-                  <label
-                    htmlFor="exampleFormControlInput3"
-                    className="form-label"
-                  >
-                    {t("Number")}
-                  </label>
-                  <CustomInput
-                    type="number"
-                    required
-                    register={register}
-                    name="vehicleNumber"
-                    label="Number"
-                    placeholder=""
-                    defaultValue={getValues("vehicleNumber")}
-                  />
-                  <Error errorName={errors.number} />
+                <div className="row">
+                  <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-3">
+                    <label
+                      htmlFor="exampleFormControlInput3"
+                      className="form-label"
+                    >
+                      {t("Number")}
+                    </label>
+                    <CustomInput
+                      type="number"
+                      required
+                      register={register}
+                      name="vehicleNumber"
+                      label="Number"
+                      placeholder=""
+                      defaultValue={getValues("vehicleNumber")}
+                    />
+                    <Error errorName={errors.number} />
+                  </div>
+
+                  <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6 mb-3">
+                    <label className="form-label">{t("unitId")}</label>
+                    <CustomInput
+                      type="text"
+                      required
+                      register={register}
+                      label="Unit Id"
+                      name="unitId"
+                      placeholder=""
+                      defaultValue={getValues("unitId")}
+                    />
+                    <Error errorName={errors.unitId} />
+                  </div>
                 </div>
-                <div className="col-xl-6 mb-3 ">
-                  <label className="form-label">{t("unitId")}</label>
-                  <CustomInput
-                    type="text"
-                    required
-                    register={register}
-                    label="Unit Id"
-                    name="unitId"
-                    placeholder=""
-                    defaultValue={getValues("unitId")}
-                  />
-                  <Error errorName={errors.unitId} />
-                </div>
+
                 <div className="row">
                   <div className="col-xl-6">
                     <div className="mb-3">

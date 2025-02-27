@@ -33,6 +33,7 @@ const UnassinedVehicle = () => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setTableData([])
     goToPage(selected + 1);
   };
 
@@ -43,7 +44,6 @@ const UnassinedVehicle = () => {
     try {
       setIsLoading(true);
       const { data, totalLength } = await getUnassignedVehicles(page);
-      console.log(data);
       setCount(totalLength);
       setTableData(data);
       // setCount(totalCount);

@@ -50,6 +50,7 @@ const ActiveTab = ({ tableData1, tabType }) => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setTableData([]);
     goToPage(selected + 1);
   };
 
@@ -97,7 +98,6 @@ const ActiveTab = ({ tableData1, tabType }) => {
 
   const classifyTrips = useRef();
   const classifyTripsFilter = useRef();
-  console.log(tableData);
   return (
     <div className="container-fluid">
       <div className="row">

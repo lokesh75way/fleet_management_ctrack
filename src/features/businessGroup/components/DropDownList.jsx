@@ -55,18 +55,20 @@ const GroupDropdownList = ({
 
   useEffect(() => {
     const initializeValue = async () => {
+      
       if (!value) {
-        if (!can("business", "view")) {
+        if (can("business", "view")) {
           const userGroup = userDetails.user.businessGroupId[0];
           const defaultOption = {
-            label: userGroup.groupName,
-            value: userGroup._id,
+            label: userGroup?.groupName,
+            value: userGroup?._id,
           };
           setSelectedOption(defaultOption);
           onChange(defaultOption);
         }
         return;
       }
+      
       if (value && typeof value === "object" && value.label && value.value) {
         setSelectedOption(value);
         return;
@@ -82,8 +84,8 @@ const GroupDropdownList = ({
           const { data: groupData } = await refetch();
           if (groupData?.businessGroupId) {
             const newOption = {
-              label: groupData.businessGroupId.groupName,
-              value: groupData.businessGroupId._id,
+              label: groupData.businessGroupId?.groupName,
+              value: groupData.businessGroupId?._id,
             };
             setSelectedOption(newOption);
             onChange(newOption);

@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 const Permission = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const { isEditTrue, setIsEditTrue } = JSON.parse(location.state);
-  console.log(isEditTrue, setIsEditTrue);
+  const state = location.state ? JSON.parse(location.state) : {};  
+  const { isEditTrue, setIsEditTrue } = state;
   const data = [
     {
       title: "Permission",

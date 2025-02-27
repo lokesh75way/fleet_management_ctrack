@@ -11,7 +11,6 @@ const TimeZoneSelector = ({
   dValues,
   Comptype,
 }) => {
-  console.log(dValues, "compnay timexzone");
   const { t } = useTranslation();
   const [timezones, setTimezones] = useState([]);
   const [selectedTimezone, setSelectedTimezone] = useState(null);
@@ -52,13 +51,11 @@ const TimeZoneSelector = ({
           label: `(GMT ${getGMTOffset(timezone)}) ${timezone}`,
           value: timezone,
         });
-        console.log(selectedTimezone, "hi");
       }
     }
   }, [dValues, id]);
 
   const handleTimezoneChange = (selectedOption) => {
-    // console.log(selectedOption, "ds:-")
     setValue("timezone", selectedOption.value);
     setSelectedTimezone(selectedOption);
   };

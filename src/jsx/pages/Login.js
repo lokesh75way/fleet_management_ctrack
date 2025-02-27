@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   loadingToggleAction,
@@ -19,8 +19,10 @@ import { ThemeContext } from "../../context/ThemeContext";
 import "@/assets/scss/pages/_login.scss";
 import { clsx } from "clsx";
 import { t } from "i18next";
+import Button from "../components/Button";
 
 function Login(props) {
+  const showLoading = useSelector((store) => store.auth.showLoading);
   const [heartActive, setHeartActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const { isRtl } = useContext(ThemeContext);
@@ -191,12 +193,6 @@ function Login(props) {
                                           )}
                                         </div>
                                         <div className="form-group text-left mb-5">
-                                          <button
-                                            type="submit"
-                                            className="btn btn-primary dz-xs-flex m-r5"
-                                          >
-                                            {t("login")}
-                                          </button>
                                           <span className="form-check d-inline-block ms-2">
                                             <input
                                               type="checkbox"
@@ -214,6 +210,7 @@ function Login(props) {
                                               {t("rememberMe")}
                                             </label>
                                           </span>
+                                          <Button text="login" isLoading={showLoading} />
                                         </div>
                                         <div className="dz-social">
                                           <h5 className="form-title fs-20">
@@ -254,13 +251,18 @@ function Login(props) {
                                         </div>
                                       </form>
                                       <div className="text-center bottom">
-                                        <NavLink
+                                        {/* <NavLink
                                           to="/register"
                                           className="btn btn-primary button-md btn-block"
                                         >
                                           {t("createAccount")}
+                                        </NavLink> */}
+                                        <NavLink
+                                          to="/register"
+                                          className="btn btn-outline-primary btn-block"
+                                        >
+                                          {t("createAccount")}
                                         </NavLink>
-
                                         <div className="mt-2">
                                           <Link
                                             to="/forgotpassword"
@@ -282,9 +284,8 @@ function Login(props) {
                                       {" "}
                                       © {t("copyrightBy")}{" "}
                                       <span
-                                        className={`heart ${
-                                          heartActive ? "" : "heart-blast"
-                                        }`}
+                                        className={`heart ${heartActive ? "" : "heart-blast"
+                                          }`}
                                         onClick={() =>
                                           setHeartActive(!heartActive)
                                         }

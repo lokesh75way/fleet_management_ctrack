@@ -71,3 +71,12 @@ export const getDashboardTasks = async () => {
     return error;
   }
 };
+
+export const getTaskCount = async () => {
+  try {
+    const data = await axios.get("/dashboard/task-count");
+    return data?.data?.data;
+  } catch (error) {
+    return error;
+  }
+}

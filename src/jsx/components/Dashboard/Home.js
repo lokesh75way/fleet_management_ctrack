@@ -56,6 +56,8 @@ import { SVGICON } from "../../constant/theme";
 import Setting from "../../layouts/Setting";
 import CompSetting from "../../layouts/CompSetting";
 import BarChart6 from "../charts/Chartjs/bar6";
+import { getFleetStatus } from "@/services/api/DashboardServices";
+import Loader from "../Loader";
 
 const speed = {
   data: [
@@ -146,7 +148,41 @@ const Home = () => {
       : "Select Date Range";
 
   const role = localStorage.getItem("role");
+  const [statusData, setStatusData] = useState({
+    cancelled: 0,
+    yetToStart: 0,
+    complete: 0,
+    progress: 0
+  })
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      //  const usageApiData = await getFleetUsage();
+      // console.log("fetching data : ", usageApiData);
+      const statusApiData = await getFleetStatus();
+      //  const tasksApiData = await getDashboardTasks();
+      //  setVehicleData(usageApiData.vehicle);
+      //  setGroupData(usageApiData.groups);
+      //  setActiveUsers(usageApiData.activeUsers);
+      //  setUsageData(usageApiData);
+      setStatusData({
+        cancelled: statusApiData.cancelled,
+        yetToStart: statusApiData.yetToStart,
+        complete: statusApiData.complete,
+        progress: statusApiData.progress,
+      });
+      //  setApplicationUsage([
+      //    usageApiData.applicationUsage.mobile,
+      //    usageApiData.applicationUsage.web,
+      //  ]);
+      //  setTasksData(tasksApiData);
+      setIsLoading(false);
+    };
+    fetchData();
 
+  }, []);
+  
   return (
     <>
       {/* Modal component */}
@@ -217,7 +253,7 @@ const Home = () => {
             </div>
           )}
 
-          {showFleetStatus && (
+          {(showFleetStatus && !isLoading) && (
             <div className="col-xl-5 col-sm-12">
               <div className="card same-card p-2">
                 <div className="d-flex justify-content-between">
@@ -237,7 +273,7 @@ const Home = () => {
                       "Progress",
                     ]}
                     width={300}
-                    data={[18, 19, 25, 23]}
+                    data={[statusData.cancelled, statusData.yetToStart, statusData.complete, statusData.progress]}
                     completeLabel="Total"
                   />
                   <ul className="project-list">

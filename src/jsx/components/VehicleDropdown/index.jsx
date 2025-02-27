@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
-import { getDrivers } from "../../../services/api/driverService";
 import { getVehicles } from "../../../services/api/VehicleService";
 import usePagination from "../../../hooks/usePagination";
+import DropdownLoader from "../DropdownLoader";
+
 const VehicleDropdown = ({
   onChange,
   value,
@@ -11,25 +12,35 @@ const VehicleDropdown = ({
   ref,
   isDisabled,
   name,
+  isMulti = true
 }) => {
-  const [dropDownOptions, setdropDownOptions] = useState([]);
+  const [dropDownOptions, setDropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
   const { page } = usePagination();
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchVehicles = async () => {
-      const response = await getVehicles(
-        page,
-        branchids ? branchids : undefined
-      );
-      const vehicleOptions = response.data.map((item) => ({
-        label: item?.vehicleName,
-        value: item?._id,
-      }));
-
-      setdropDownOptions(vehicleOptions);
+      setLoading(true); 
+      try {
+        const response = await getVehicles(
+          page,
+          branchids ? branchids : undefined
+        );
+        const vehicleOptions = response.data.map((item) => ({
+          label: item?.vehicleName,
+          value: item?._id,
+        }));
+        setDropDownOptions(vehicleOptions);
+      } catch (error) {
+        console.error("Error fetching vehicles:", error);
+      }
+      setLoading(false);
     };
+
     fetchVehicles();
   }, [page, branchids]);
+
   useEffect(() => {
     if (value && Array.isArray(value)) {
       const selected = dropDownOptions.filter((option) =>
@@ -43,14 +54,20 @@ const VehicleDropdown = ({
 
   return (
     <Select
-      options={dropDownOptions}
+      options={loading ? [] : dropDownOptions} 
       value={selectedOption}
       onChange={(newValue) => onChange(newValue)}
       styles={customStyles}
       ref={ref}
       name={name}
-      isMulti
+      isMulti={isMulti}
+      noOptionsMessage={() =>
+        loading ? <DropdownLoader /> : "No vehicles available"
+      } 
+      isDisabled={isDisabled}
+      placeholder="Select Vehicle"
     />
   );
 };
+
 export default VehicleDropdown;

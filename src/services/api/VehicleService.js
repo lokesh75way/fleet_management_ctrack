@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const createVehicles = async (body) => {
-  return axios.post("/vehicles", body);
+  return await axios.post("/vehicles", body);
 };
 const getVehicles = async (page, branchIds) => {
   let url = `/vehicles?page=${page}&limit=10`;

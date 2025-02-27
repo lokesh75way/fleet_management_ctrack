@@ -1,19 +1,23 @@
-import React, { Suspense, useContext } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import Nav from "./nav";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
 function AdminLayout() {
-  const { menuToggle } = useContext(ThemeContext);
-  const { lang, setIsArabic } = useContext(ThemeContext);
-  if (lang == "ar") {
-    document.getElementById("root").style.direction = "rtl";
-    setIsArabic(true);
-  } else {
-    document.getElementById("root").style.direction = "ltr";
-    setIsArabic(false);
-  }
+  const { menuToggle, lang, setIsArabic } = useContext(ThemeContext);
+  
+  useEffect(() => {
+    const root = document.getElementById("root");
+    if (lang === "ar") {
+      root.style.direction = "rtl";
+      setIsArabic(true);
+    } else {
+      root.style.direction = "ltr";
+      setIsArabic(false);
+    }
+  }, [lang, setIsArabic]);
+
   return (
     <Suspense
       fallback={

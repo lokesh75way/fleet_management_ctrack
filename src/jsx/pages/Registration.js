@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import {
   loadingToggleAction,
   signupAction,
@@ -18,9 +18,11 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import SvgIcons from "../components/Dashboard/SvgIcons";
 import { SVGICON } from "../constant/theme";
 import { t } from "i18next";
+import Button from "../components/Button";
 
 function Register(props) {
   const [heartActive, setHeartActive] = useState(true);
+  const { showLoading } = useSelector((store) => store.auth);
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -260,20 +262,12 @@ function Register(props) {
                                             </label>
                                           </span>
                                         </div>
-                                        <div className="form-group clearfix text-left">
-                                          {/* <NavLink
-                                            to="/login"
-                                            className="btn btn-primary outline gray"
-                                            type="button"
-                                          >
-                                            Back
-                                          </NavLink> */}
-                                          <button
-                                            type="submit"
-                                            className="btn btn-primary float-end w-100"
-                                          >
-                                            {t("submit")}
-                                          </button>
+                                        <div className="form-group clearfix text-left">                                         
+                                          <Button text="Register" isLoading={showLoading}/>
+                                          <div>
+                                            Already have an account
+                                            <Link to="/login"> Login</Link>
+                                            </div>
                                         </div>
                                       </form>
                                     </div>

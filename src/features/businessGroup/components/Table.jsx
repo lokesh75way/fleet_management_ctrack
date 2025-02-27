@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -43,7 +43,7 @@ const BusinessTable = ({
           </td>
           <td>
             <Link
-              to={`/company/${item.businessGroupId?._id}`}
+              to={`/company/gid/${item?.businessGroupId?._id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {item.companyCount}
@@ -54,7 +54,7 @@ const BusinessTable = ({
             <td>
               <span className="d-flex justify-content-center">
                 {editPermission && (
-                  <Link to={`/business/edit/${item.businessGroupId?._id}`}>
+                  <Link to={`/business/edit/${item?.businessGroupId?._id}`}>
                     <span className="cursor-pointer">
                       <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
                     </span>

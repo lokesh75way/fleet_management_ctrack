@@ -281,7 +281,7 @@ const AppProfile = () => {
 
   const userName = checkUserName();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
-  const editData = allData.find((data) => data.userName === userName);
+  const editData = allData?.find((data) => data.userName === userName);
 
   const {
     register,

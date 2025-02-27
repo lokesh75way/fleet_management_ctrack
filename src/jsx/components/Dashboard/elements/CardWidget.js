@@ -76,7 +76,6 @@ const CardWidget = ({ usageData }) => {
           usageData.vehicle.stopped || 0,
         ]
       : [0, 0, 0];
-    console.log("parseVehicleData", parseVehicleData);
     setVehicleData(parseVehicleData);
   }, [usageData?.vehicle?.running]);
 

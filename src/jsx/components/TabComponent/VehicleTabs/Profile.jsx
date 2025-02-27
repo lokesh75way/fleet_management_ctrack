@@ -19,6 +19,7 @@ import {
 } from "../../../../constants/options";
 import CustomInput from "../../../../components/Input/CustomInput";
 import { useTranslation } from "react-i18next";
+import Spinner from "../../Spinner";
 
 const Profile = ({
   register,
@@ -29,6 +30,7 @@ const Profile = ({
   control,
   getValues,
   formData,
+  isLoading,
 }) => {
   const id = useParams();
   const [selectedOption, setSelectedOption] = useState(null);
@@ -627,9 +629,9 @@ const Profile = ({
           type="submit"
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
+          disabled={isLoading}
         >
-          {" "}
-          {t("submit")}
+          {isLoading ? <Spinner/> : t("Submit")}
         </Button>
       </div>
     </div>

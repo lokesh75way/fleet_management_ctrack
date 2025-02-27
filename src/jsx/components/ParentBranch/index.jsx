@@ -3,6 +3,7 @@ import { getAllBranch } from "../../../services/api/BranchServices";
 import Select from "react-select";
 import usePagination from "../../../hooks/usePagination";
 import { t } from "i18next";
+import DropdownLoader from "../DropdownLoader";
 
 const ParentBranchDropdown = ({
   onChange,
@@ -15,6 +16,7 @@ const ParentBranchDropdown = ({
 }) => {
   const [dropDownOptions, setdropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
+  const [loading, setLoading] = useState(false);
   const { page, setPage } = usePagination();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const ParentBranchDropdown = ({
   }, [page, companyId]);
 
   const fetchBranches = async () => {
+    setLoading(true);
     try {
       const response = await getAllBranch(page, companyId);
       const newOptions = response.data.data.map((item) => ({
@@ -36,6 +39,7 @@ const ParentBranchDropdown = ({
     } catch (error) {
       console.error("Error fetching branches:", error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -66,7 +70,7 @@ const ParentBranchDropdown = ({
 
   return (
     <Select
-      options={dropDownOptions}
+      options={loading ? [] : dropDownOptions} 
       value={selectedOption}
       onChange={handleChange}
       styles={customStyles}
@@ -77,6 +81,9 @@ const ParentBranchDropdown = ({
       isClearable
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
+      noOptionsMessage={() =>
+        loading ? <DropdownLoader /> : t("No branches available")
+      } 
     />
   );
 };

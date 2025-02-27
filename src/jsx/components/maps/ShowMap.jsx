@@ -11,7 +11,7 @@ import {
   Popup,
   Tooltip,
 } from "react-leaflet";
-import EditControlFC from "./EditControl";
+// import EditControlFC from "./EditControl";
 
 const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
   return (

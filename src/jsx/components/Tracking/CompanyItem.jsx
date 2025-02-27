@@ -67,11 +67,11 @@ const CompanyItem = (props) => {
           onExpand={handleExpand}
           showNodeIcon={false}
           icons={{
-            expandOpen: <i class="fa-solid fa-minus"></i>,
-            expandClose: <i class="fa-solid fa-plus"></i>,
+            expandOpen: <i className="fa-solid fa-minus"></i>,
+            expandClose: <i className="fa-solid fa-plus"></i>,
             uncheck: (
               <i
-                class="fa-regular fa-square"
+                className="fa-regular fa-square"
                 style={{
                   fontSize: "16px",
                 }}
@@ -79,7 +79,7 @@ const CompanyItem = (props) => {
             ),
             check: (
               <i
-                class="fa-solid fa-square-check"
+              className="fa-solid fa-square-check"
                 style={{
                   fontSize: "16px",
                 }}
@@ -87,7 +87,7 @@ const CompanyItem = (props) => {
             ),
             halfCheck: (
               <i
-                class="fa-regular fa-square-minus"
+              className="fa-regular fa-square-minus"
                 style={{
                   fontSize: "16px",
                 }}

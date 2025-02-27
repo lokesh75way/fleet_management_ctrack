@@ -34,6 +34,7 @@ const Company = () => {
   const [dropdownDisable, setDropdownDisable] = useState(false);
   const itemsPerPage = 10;
   const handlePageClick = ({ selected }) => {
+    setTableData([]);
     goToPage(selected + 1);
   };
   const [initialLoad, setInitialLoad] = useState(false);

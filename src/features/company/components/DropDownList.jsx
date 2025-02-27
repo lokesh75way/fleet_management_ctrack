@@ -56,7 +56,7 @@ const CompanyDropdownList = ({
 
   useEffect(() => {
     if (!value) {
-      if (!can("company", "view") && userDetails?.user?.companyId?.[0]) {
+      if (can("company", "view") && userDetails?.user?.companyId?.[0]) {
         const userGroup = userDetails.user.companyId[0];
         const defaultOption = {
           label: userGroup.companyName,
@@ -105,7 +105,7 @@ const CompanyDropdownList = ({
       onChange={onChange}
       styles={customStyles}
       name={name}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || userDetails.user.role!=="SUPER_ADMIN" && userDetails.user.role!=="BUSINESS_GROUP"}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
     />

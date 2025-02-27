@@ -39,6 +39,7 @@ export function signupAction(data, navigate) {
 
 export function Logout(navigate) {
   localStorage.removeItem("userDetails");
+  localStorage.clear();
   navigate("/login");
   //history.push('/login');
 

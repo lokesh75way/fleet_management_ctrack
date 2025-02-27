@@ -63,11 +63,11 @@ export const vehicleProfileSchema = yup
     registrationNumber: yup
       .string()
       .min(4, "Registration Number must be of 4 digit or more"),
-    passengerSeat: yup
-      .number()
-      .positive()
-      .integer()
-      .typeError("Passenger seats must be a number"),
+    // passengerSeat: yup
+    //   .number()
+    //   .positive()
+    //   .integer()
+    //   .typeError("Passenger seats must be a number"),
     distanceCostQuantity: yup
       .number()
       .transform((value, originalValue) =>
@@ -444,7 +444,8 @@ export const subUserAccountSchema = yup.object({
   featureTemplateId: yup.string().required("Feature Template is required "),
   password: yup
     .string()
-    .test("password", "Password is required", function (value) {
+    .required("Password is required")
+    .test("password", "Minimum 8 characters required", function (value) {
       const { isEdit } = this.parent;
       if (isEdit) {
         return true;
@@ -454,7 +455,9 @@ export const subUserAccountSchema = yup.object({
     }),
   confirmPassword: yup
     .string()
-    .test("confirmPassword", "Password is required", function (value) {
+    .required("confirm Password is required")
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .test("confirmPassword", "Minimum 8 characters required", function (value) {
       const { isEdit } = this.parent;
       if (isEdit) {
         return true;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -25,26 +25,26 @@ const CompanyTable = ({
             <td>
               <span>{startIndex + index}</span>
             </td>
-            <td className="text-center">
+            <td className="text-left">
               <span className="text-primary">
                 {item?.companyId?.companyName}
               </span>
             </td>
             <td>
-              <div className="products d-flex justify-content-center">
+              <div className="products d-flex justify-content-left">
                 <div>
                   <h6>{item?.companyId?.businessGroupId?.groupName}</h6>
                 </div>
               </div>
             </td>
 
-            <td className="text-center">
+            <td className="text-left">
               <span>{item.country}</span>
             </td>
-            <td className="text-center">
+            <td className="text-left">
               <span>{item?.email}</span>
             </td>
-            <td className="text-center">
+            <td className="text-left">
               <Link
                 to={`/branch/cid/${item?.companyId?._id}`}
                 className="text-primary badge light border-0 badge-count"

@@ -169,7 +169,7 @@ const DriverTabComponent1 = (props) => {
           <span>Running</span>
         </span>
         <span
-          pill
+          // pill
           className={`light fs-9 idle ${
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
@@ -182,7 +182,7 @@ const DriverTabComponent1 = (props) => {
           <span>Idle</span>
         </span>
         <span
-          pill
+          // pill
           className={`light stopped fs-9 ${
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
@@ -195,7 +195,7 @@ const DriverTabComponent1 = (props) => {
           <span>Stopped</span>
         </span>
         <span
-          pill
+          // pill
           className={`light fs-9 inActive ${
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
@@ -208,7 +208,7 @@ const DriverTabComponent1 = (props) => {
           <span>InActive</span>
         </span>
         <span
-          pill
+          // pill
           className={`light fs-9 noData ${
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
@@ -405,7 +405,7 @@ const DriverTabComponent2 = (props) => {
       <div className="px-2 vehicle_tracking-object">
         <span
           bg=""
-          pill
+          // pill
           className={`light fs-9  running ${
             selectValue === "Allocated"
               ? "vehicle_tracking-active"
@@ -418,7 +418,7 @@ const DriverTabComponent2 = (props) => {
         </span>
         <span
           bg=""
-          pill
+          // pill
           className={`light fs-9 idle ${
             selectValue === "Not Allocated"
               ? "vehicle_tracking-active"
@@ -431,7 +431,7 @@ const DriverTabComponent2 = (props) => {
         </span>
         <span
           bg=""
-          pill
+          // pill
           className={`light fs-9 total ${
             selectValue === "Total"
               ? "vehicle_tracking-active"

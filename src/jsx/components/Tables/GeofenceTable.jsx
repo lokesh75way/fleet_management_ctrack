@@ -11,7 +11,6 @@ const GeofenceTable = ({
   editDrawerOpen,
   page,
 }) => {
-  console.log(tableData);
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
   return (
     <>

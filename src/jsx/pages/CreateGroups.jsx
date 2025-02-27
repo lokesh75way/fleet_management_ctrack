@@ -26,7 +26,6 @@ const CreateGroups = () => {
     try {
       setIsLoading(true);
       const templateData = await getTemplates(page);
-      console.log("Received template data:", templateData);
       setCount(templateData.data.totalCount);
       setGroupsDataState(templateData.data.data); // Assuming 'data' property contains template data array
     } catch (error) {
@@ -41,6 +40,10 @@ const CreateGroups = () => {
 
   const [groupsDataState, setGroupsDataState] = useState([]);
   const [isEditTrue, setIsEditTrue] = useState(-1);
+  useEffect(() => {
+    const userdetails = JSON.parse(localStorage.getItem("userDetails"));
+    setIsEditTrue(userdetails?.user?.role==='SUPER_ADMIN' ? 1 : -1);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -69,6 +72,7 @@ const CreateGroups = () => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setGroupsDataState([]);
     goToPage(selected + 1);
   };
 

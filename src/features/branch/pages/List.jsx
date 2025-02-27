@@ -44,8 +44,8 @@ const BranchList = () => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["branches", page, cId],
     queryFn: () => getAllBranch(page, cId),
-    placeholderData: keepPreviousData,
-    staleTime: Infinity,
+    // placeholderData: keepPreviousData,
+    staleTime: 0,
   });
 
   const { mutate } = useMutation({
@@ -60,7 +60,9 @@ const BranchList = () => {
   });
 
   useEffect(() => {
-    if (data) setCount(data.totalCount);
+    if (data && data.data) {
+      setCount(data?.data?.totalCount);
+    }
   }, [data]);
 
   const handlePageClick = ({ selected }) => {

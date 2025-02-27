@@ -15,7 +15,7 @@ const DriverTable = ({
   return (
     <>
       {tableData.map((item, index) => (
-        <tr key={item.id}>
+        <tr key={index}>
           <td>
             <span>{startIndex + index}</span>
           </td>

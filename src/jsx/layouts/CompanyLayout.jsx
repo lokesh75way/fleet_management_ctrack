@@ -32,8 +32,6 @@ function CompanyLayout() {
     }
   }, [isArabic]);
 
-  console.log("isarabic", isArabic);
-  console.log("this is lang", langStyle);
   return (
     <Suspense
       fallback={

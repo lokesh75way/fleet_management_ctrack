@@ -1,20 +1,11 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Nav, Tab } from "react-bootstrap";
-
 import { useTranslation } from "react-i18next";
 
 const ProjectOverviewChart = () => {
   const { t } = useTranslation();
-  const chartHeaderData = [
-    { title: t("week"), type: "week" },
-    { title: t("month"), type: "month" },
-    { title: t("year"), type: "year" },
-    { title: t("all"), type: "all" },
-  ];
-
-  const chartRef = useRef();
-  const series = [
+  const [series, setSeries] = useState([
     {
       name: t("avgFreq"),
       type: "column",
@@ -30,6 +21,13 @@ const ProjectOverviewChart = () => {
       type: "line",
       data: [20, 22, 24, 21, 23, 25, 21, 23, 22, 24, 25, 20],
     },
+  ]);
+
+  const chartHeaderData = [
+    { title: t("week"), type: "week" },
+    { title: t("month"), type: "month" },
+    { title: t("year"), type: "year" },
+    { title: t("all"), type: "all" },
   ];
 
   const options = {
@@ -41,7 +39,6 @@ const ProjectOverviewChart = () => {
         show: false,
       },
     },
-
     stroke: {
       dashArray: [0, 0, 5],
       width: [0, 1, 1],
@@ -68,45 +65,17 @@ const ProjectOverviewChart = () => {
         type: "vertical",
         colorStops: [
           [
-            {
-              offset: 0,
-              color: "var(--primary)",
-              opacity: 1,
-            },
-            {
-              offset: 100,
-              color: "var(--primary)",
-              opacity: 1,
-            },
+            { offset: 0, color: "var(--primary)", opacity: 1 },
+            { offset: 100, color: "var(--primary)", opacity: 1 },
           ],
           [
-            {
-              offset: 0,
-              color: "#FF5E5E",
-              opacity: 1,
-            },
-            {
-              offset: 0.4,
-              color: "#FF5E5E",
-              opacity: 0.15,
-            },
-            {
-              offset: 100,
-              color: "#FF5E5E",
-              opacity: 0,
-            },
+            { offset: 0, color: "#FF5E5E", opacity: 1 },
+            { offset: 0.4, color: "#FF5E5E", opacity: 0.15 },
+            { offset: 100, color: "#FF5E5E", opacity: 0 },
           ],
           [
-            {
-              offset: 0,
-              color: "#3AC977",
-              opacity: 1,
-            },
-            {
-              offset: 100,
-              color: "#3AC977",
-              opacity: 1,
-            },
+            { offset: 0, color: "#3AC977", opacity: 1 },
+            { offset: 100, color: "#3AC977", opacity: 1 },
           ],
         ],
         stops: [0, 100, 100, 100],
@@ -141,19 +110,17 @@ const ProjectOverviewChart = () => {
       intersect: false,
       y: {
         formatter: function (y) {
-          if (typeof y !== "undefined") {
-            return y.toFixed(0) + " points";
-          }
-          return y;
+          return typeof y !== "undefined" ? `${y.toFixed(0)} points` : y;
         },
       },
     },
   };
 
   const dataSeries = (seriesType) => {
-    var columnData = [];
-    var areaData = [];
-    var lineData = [];
+    let columnData = [];
+    let areaData = [];
+    let lineData = [];
+
     switch (seriesType) {
       case "week":
         columnData = [75, 85, 72, 100, 50, 100, 80, 75, 95, 35, 75, 100];
@@ -180,69 +147,54 @@ const ProjectOverviewChart = () => {
         areaData = [44, 65, 55, 75, 45, 55, 40, 60, 75, 45, 50, 42];
         lineData = [30, 25, 45, 30, 25, 35, 20, 45, 35, 30, 35, 20];
     }
-    // chartRef.current.chart.ctx.updateSeries([
-    //     {
-    //       name: "Average Temperature",
-    //       type: 'column',
-    //       data: columnData
-    //     },{
-    //       name: 'Min Temp',
-    //       type: 'area',
-    //       data: areaData
-    //     },{
-    //       name: 'Max Temp',
-    //       type: 'line',
-    //       data: lineData
-    //     }
-    // ]);
+
+    setSeries([
+      {
+        name: t("avgFreq"),
+        type: "column",
+        data: columnData,
+      },
+      {
+        name: t("maxFreq"),
+        type: "area",
+        data: areaData,
+      },
+      {
+        name: t("minFreq"),
+        type: "line",
+        data: lineData,
+      },
+    ]);
   };
 
   return (
-    <>
-      <Tab.Container defaultActiveKey={"Week"}>
-        <div className="card-header border-0 pb-0 flex-wrap">
-          <h4 className="heading mb-0">{t("dataFrequency")}</h4>
-          <Nav as="ul" className="nav nav-pills mix-chart-tab">
-            {chartHeaderData.map((item, index) => (
-              <Nav.Item as="li" className="nav-item" key={index}>
-                <Nav.Link
-                  eventKey={item.title}
-                  onClick={() => dataSeries(item.type)}
-                >
-                  {item.title}
-                </Nav.Link>
-              </Nav.Item>
-            ))}
-          </Nav>
+    <Tab.Container defaultActiveKey="Week">
+      <div className="card-header border-0 pb-0 flex-wrap">
+        <h4 className="heading mb-0">{t("dataFrequency")}</h4>
+        <Nav as="ul" className="nav nav-pills mix-chart-tab">
+          {chartHeaderData.map((item, index) => (
+            <Nav.Item as="li" className="nav-item" key={index}>
+              <Nav.Link
+                eventKey={item.title}
+                onClick={() => dataSeries(item.type)}
+              >
+                {item.title}
+              </Nav.Link>
+            </Nav.Item>
+          ))}
+        </Nav>
+      </div>
+      <div className="card-body p-0">
+        <div id="overiewChart">
+          <ReactApexChart
+            options={options}
+            series={series}
+            type="line"
+            height={300}
+          />
         </div>
-        <div className="card-body  p-0">
-          <div id="overiewChart">
-            <ReactApexChart
-              options={options}
-              series={series}
-              ref={chartRef}
-              type="line"
-              height={300}
-            />
-          </div>
-          {/* <div className="ttl-project">
-                    <div className="pr-data">
-                        <h5>30</h5>
-                        <span>Average Temperature</span>
-                    </div>
-                    <div className="pr-data">
-                        <h5 className="text-primary">26</h5>
-                        <span>Minimum Temperature</span>
-                    </div>
-                    <div className="pr-data">
-                        <h5>32</h5>
-                        <span>Maximum Temperature</span>
-                    </div>
-                  
-                </div> */}
-        </div>
-      </Tab.Container>
-    </>
+      </div>
+    </Tab.Container>
   );
 };
 

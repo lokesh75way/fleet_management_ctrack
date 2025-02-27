@@ -41,6 +41,7 @@ const Alert = () => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setTableData([]);
     goToPage(selected + 1);
   };
 
@@ -106,10 +107,9 @@ const Alert = () => {
       // setUserPermission(permissions?.[0]?.permission);
       const { data, totalPage, totalCount } = await getAlerts();
       setTableData(data);
-      console.log("data came", data);
       // setCount(totalCount);
     } catch (error) {
-      console.log("Error in fetching data", error);
+      console.log("Error in fetching Alert data", error);
     } finally {
       // setIsLoading(false);
     }

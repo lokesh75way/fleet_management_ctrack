@@ -6,8 +6,11 @@ import TemplateServices from "../../../services/api/TemplateServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { notifyError, notifySuccess } from "../../../utils/toast";
+import Button from "../Button";
+import Spinner from "../Spinner";
 
 const Permission = ({ isEditTrue, setIsEditTrue }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   // const { groupsDataState, setGroupsDataState } = useContext(ThemeContext);
   // const templateData =  JSON.parse(localStorage.getItem("templateData")) || []
@@ -66,8 +69,6 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         })
         .map((d) => d._id)
     );
-
-    console.log("Data copied successfully");
   };
 
   const handleCheckboxChange = (isChecked, id) => {
@@ -264,7 +265,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         return;
       }
     }
-
+    setIsLoading(true);
     try {
       setIsErrror(false);
       // console.log(data, "data-;;");
@@ -313,11 +314,12 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
 
       setSubModuleIndexArray([]);
 
-      console.log("Data saved successfully");
       notifySuccess("saved");
       navigate("/groups");
     } catch (error) {
       console.error("Error saving data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -359,7 +361,10 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
             <Select
               options={selectOptions}
               placeholder={t("selectFeatureTemplate")}
-              styles={{ control: (base) => ({ ...base, width: "18rem" }) }}
+              styles={{
+                control: (base) => ({ ...base, width: "18rem" }),
+                menu: (base) => ({ ...base, zIndex: 1000 }),
+              }}
               onChange={(selectedOption) => {
                 const selectedTemplateData = groupsDataState.find(
                   (template) => template._id === selectedOption.value
@@ -405,7 +410,12 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
           >
             <Table>
               <thead
-                style={{ position: "sticky", top: 0, background: "white" }}
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  background: "white",
+                  zIndex: 1,
+                }}
               >
                 <tr>
                   <th scope="col">{t("module")}</th>
@@ -420,11 +430,11 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                   return (
                     <React.Fragment key={element._id}>
                       <tr>
-                        <td>
+                        <td style={{ display: "flex", alignItems: "center" }}>
                           <input
                             type="checkbox"
                             className="form-check-input"
-                            style={{ marginRight: "0.2rem" }}
+                            style={{ left: "1.7rem", position: "relative" }}
                             name="create"
                             checked={subModuleIndexArray.includes(element._id)}
                             onChange={(e) =>
@@ -434,7 +444,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                               )
                             }
                           />
-                          <span style={{ marginRight: "1.7rem" }}>
+                          <span style={{ marginLeft: "2.2rem" }}>
                             {t(element.title)}
                           </span>
                         </td>
@@ -459,7 +469,12 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
             <Table>
               <thead
                 id="feature_template"
-                style={{ position: "sticky", top: 0, background: "white" }}
+                style={{
+                  position: "sticky",
+                  top: 0,
+                  background: "white",
+                  zIndex: 1,
+                }}
               >
                 <tr>
                   <th scope="col" className="col-4" style={{ width: "150px" }}>
@@ -499,7 +514,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                                   mindex
                                 )
                               }
-                              className="form-check-input"
+                              className="form-check-input position-relative ms-2"
                               name="add"
                               disabled={
                                 isDisabled && moduleData.subModules.length > 0
@@ -510,7 +525,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                             <input
                               type="checkbox"
                               checked={moduleData.permission?.view}
-                              className="form-check-input"
+                              className="form-check-input position-relative ms-2"
                               onChange={(e) =>
                                 handleModulePermisssionChange(
                                   e.target.checked,
@@ -525,7 +540,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                             <input
                               type="checkbox"
                               checked={moduleData.permission?.modify}
-                              className="form-check-input"
+                              className="form-check-input position-relative ms-2"
                               onChange={(e) =>
                                 handleModulePermisssionChange(
                                   e.target.checked,
@@ -543,7 +558,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                             <input
                               type="checkbox"
                               checked={moduleData.permission?.delete}
-                              className="form-check-input"
+                              className="form-check-input position-relative ms-2"
                               onChange={(e) =>
                                 handleModulePermisssionChange(
                                   e.target.checked,
@@ -573,7 +588,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                                     element.id
                                   )
                                 }
-                                className="form-check-input"
+                                className="form-check-input  position-relative ms-2"
                                 name="add"
                               />
                             </td>
@@ -589,7 +604,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                                     element.id
                                   )
                                 }
-                                className="form-check-input"
+                                className="form-check-input  position-relative ms-2"
                                 name="view"
                               />
                             </td>
@@ -605,7 +620,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                                     element.id
                                   )
                                 }
-                                className="form-check-input"
+                                className="form-check-input position-relative ms-2"
                                 name="modify"
                               />
                             </td>
@@ -621,7 +636,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
                                     element.id
                                   )
                                 }
-                                className="form-check-input"
+                                className="form-check-input position-relative ms-2"
                                 name="delete"
                               />
                             </td>
@@ -636,12 +651,16 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
         </Card.Body>
         <div className="d-flex justify-content-end  p-3">
           <button
-            className="btn btn-primary"
-            style={{ marginLeft: "1rem", padding: "7px 16px" }}
+            className="btn btn-primary d-flex align-items-center justify-content-center"
+            style={{
+              marginLeft: "1rem",
+              padding: "7px 16px",
+              minWidth: "100px",
+            }}
             onClick={handleSave}
+            disabled={isLoading}
           >
-            {" "}
-            {id ? "Update" : "Save"}{" "}
+            {isLoading ? <Spinner /> : id ? "Update" : "Save"}
           </button>
         </div>
       </Card>

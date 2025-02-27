@@ -18,7 +18,6 @@ const ClassifyTripTable = ({
     return dayjs(dateTimeString).format("YYYY-MM-DD HH:MM");
   };
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
-
   return (
     <>
       {tableData.map((item, index) => (
@@ -45,7 +44,7 @@ const ClassifyTripTable = ({
             <span>{item.fuelConsumption}</span>
           </td>
           <td>
-            <span>{item.driver}</span>
+            <span>{item.driver?.firstName +" "+ item.driver?.lastName}</span>
           </td>
 
           <td>

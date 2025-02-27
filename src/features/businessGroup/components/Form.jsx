@@ -21,6 +21,7 @@ import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 import { getGroupById } from "../api";
 import { notifyError } from "@/utils/toast";
+import Spinner from "@/jsx/components/Spinner";
 
 const BusinessForm = ({
   setValue,
@@ -113,6 +114,12 @@ const BusinessForm = ({
       email: "",
     });
   };
+  useEffect(() => {
+    if (!id) {
+      setValue("dateFormat", dateFormatOptions[0]?.value); // Default value
+      setValue("timeFormat", timeFormatOptions[1]?.value); // Default value
+    }
+  }, []);
 
   return (
     <div className="p-4">
@@ -220,7 +227,7 @@ const BusinessForm = ({
                     padding: ".25rem 0 ",
                   }),
                 }}
-                value={{ value, label: value }}
+                value={dateFormatOptions.find(opt => opt.value === value) || dateFormatOptions[0]}
               />
             )}
           />
@@ -243,8 +250,8 @@ const BusinessForm = ({
                     padding: ".25rem 0 ",
                   }),
                 }}
-                value={{ value, label: value }}
-                defaultValue={timeFormatOptions[1]}
+                value={timeFormatOptions.find(opt => opt.value === value) || timeFormatOptions[1]}
+                // defaultValue={timeFormatOptions[1]}
               />
             )}
           />
@@ -301,9 +308,8 @@ const BusinessForm = ({
           disabled={loading || isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
-        >
-          {" "}
-          {t("submit")}
+        >  
+          {loading ? <Spinner/> : t("submit")}
         </Button>
       </div>
     </div>

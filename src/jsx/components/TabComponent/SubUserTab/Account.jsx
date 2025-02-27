@@ -75,7 +75,6 @@ const Account = ({
     setValue("parentCompany", "");
     setBranchOptions([]);
   }
-  console.log("errors", errors);
   async function onCompanyChange(companyId) {
     const branches = allBranches
       .filter((item) => item?.companyId?._id == companyId)
@@ -192,8 +191,8 @@ const Account = ({
       setCompanyDisabled(true);
     }
     if (userDetails.user.role === "BUSINESS_GROUP") {
-      // setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId?._id);
+      setValue("businessGroupId", userDetails?.user?.businessGroupId);
+      setGroupId(userDetails?.user?.businessGroupId[0]?._id);
       setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
       setBusinessDisabled(true);
     }
@@ -238,6 +237,10 @@ const Account = ({
                   setValue("businessUser", newValue.value);
                   setGroupId(newValue.value);
                   setCompanyId(null);
+                  setValue("companyId", null);
+                  setValue("branchIds", []);
+                  setValue("vehicleIds", []);
+                  setBranchId([]);
                 }}
                 value={value}
                 customStyles={customStyles}
@@ -260,6 +263,9 @@ const Account = ({
                 onChange={async (newValue) => {
                   setValue("companyId", newValue.value);
                   setCompanyId(newValue.value);
+                  setValue("branchIds", []);
+                  setValue("vehicleIds", []);
+                  setBranchId([]);
                 }}
                 key={groupId}
                 groupId={groupId}
@@ -267,7 +273,7 @@ const Account = ({
                 customStyles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={companyDisabled}
+                isDisabled={groupId ? false : true}
               />
             )}
           />
@@ -313,6 +319,7 @@ const Account = ({
                 customStyles={customStyles}
                 ref={ref}
                 name={name}
+                isDisabled={companyId ? false : true}
               />
             )}
           />

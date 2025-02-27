@@ -51,11 +51,15 @@ const DriverForm = () => {
   });
 
   const onSubmitHanlder = async (data) => {
+    console.log("Driver form data: ", data);
     try {
       if (activeIndex === totalTabs - 1) {
+        if(data?.documents?.length <=0 ) {
+          notifyError(t("Please add atleast one document"));
+          return;
+        }
         const issueDate = new Date(data.documents[0].issueDate);
-        const expireDate = new Date(data.documents[0].expireDate);
-
+        const expireDate = new Date(data.documents[0].expireDate);    
         // Check if issueDate and expireDate are valid dates
         if (isNaN(issueDate.getTime()) || isNaN(expireDate.getTime())) {
           throw new Error("Invalid date format");
@@ -87,10 +91,14 @@ const DriverForm = () => {
         setActiveIndex((prevIndex) => Math.min(prevIndex + 1, totalTabs - 1));
       }
     } catch (error) {
-      notifyError(t("someErrorOccurred"));
+      console.log("Error in Driver form(create new Driver): ", error);
+      if(error?.status!==500) {
+        notifyError(t("Please add all required fields"));
+      }else{
+        notifyError(t("someErrorOccurred"));
+      }
     }
   };
-  console.log("first", errors);
 
   return (
     <>

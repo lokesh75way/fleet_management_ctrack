@@ -37,6 +37,7 @@ import * as yup from "yup";
 import { useQuery } from "@tanstack/react-query";
 
 const VehicleForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -48,7 +49,6 @@ const VehicleForm = () => {
     t("licensing"),
     // t("servicing"),
     // t("statuses"),
-
     t("profile"),
     // t("document"),
     // t("messageforwarding"),
@@ -92,8 +92,6 @@ const VehicleForm = () => {
     }
   }, [data]);
 
-  console.log("data", formData);
-
   const {
     register,
     formState: { errors },
@@ -106,7 +104,7 @@ const VehicleForm = () => {
     defaultValues: {
       documents: [
         {
-          documentType: { label: "INSURANCE", value: "INSURANCE" },
+          documentType: "INSURANCE",
           file: "",
           expireDate: new Date(),
           issueDate: new Date(),
@@ -131,8 +129,9 @@ const VehicleForm = () => {
     ),
   });
 
-  const onSubmit = async (data) => {
-    if (activeIndex === totalTabs - 1) {
+  const onSubmit = async (data) => { 
+    if (activeIndex === totalTabs - 1) { 
+      setIsLoading(true);
       try {
         if (id) {
           try {
@@ -143,15 +142,19 @@ const VehicleForm = () => {
                 delete data[key];
               }
             }
-            await updateVehicles(data);
+            console.log("data: ", data);
+            await updateVehicles(data, id);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");
             return;
           } catch (e) {
+            console.log("Error in addng new vechile form : ", e);
             notifyError("Some Error occured");
+          } finally {
+            setIsLoading(false);
           }
         } else {
-          console.log("data", data);
+          setIsLoading(true);
           try {
             for (const key in data) {
               const element = data[key];
@@ -163,12 +166,15 @@ const VehicleForm = () => {
             data.businessGroupId = getValues("businessId");
             data.companyId = getValues("companyId");
             data.branchId = getValues("branchId");
+            data.documents.documentType = "INSURANCE";
             await createVehicles(data);
             notifySuccess("Vehicle created");
             navigate("/vehicle");
             return;
           } catch (e) {
             notifyError("Some error occured");
+          } finally {
+            setIsLoading(false);
           }
         }
       } catch (error) {
@@ -189,7 +195,8 @@ const VehicleForm = () => {
       />
       <div className="m-2 p-2">
         <FormProvider>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+          <form onSubmit={handleSubmit(onSubmit, (errors) => console.log("❌ Errors:", errors))}>
             <div className="default-tab">
               <Tab.Container defaultActiveKey={tabHeading[0].toLowerCase()}>
                 <Nav as="ul" className="nav-tabs">
@@ -226,6 +233,7 @@ const VehicleForm = () => {
                           onSubmit={onSubmit}
                           formData={formData}
                           watch={watch}
+                          isLoading={isLoading}
                         />
                       </Tab.Pane>
                     );

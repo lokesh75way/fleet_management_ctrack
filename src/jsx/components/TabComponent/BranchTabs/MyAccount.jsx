@@ -17,6 +17,7 @@ import useUserLocation from "@/hooks/useUserLocation";
 import { getBranchById } from "@/features/branch/api";
 import { useQuery } from "@tanstack/react-query";
 import { notifyError } from "@/utils/toast";
+import Spinner from "../../Spinner";
 
 const customStyles = {
   control: (base) => ({
@@ -41,7 +42,7 @@ const MyAccount = ({
   });
   const [groupId, setGroupId] = useState(null);
   const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
+  const [companyDisabled, setCompanyDisabled] = useState(true);
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
@@ -178,7 +179,7 @@ const MyAccount = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={companyDisabled}
+                  isDisabled={groupId ? false : true}
                   name={name}
                 />
               )}
@@ -199,7 +200,7 @@ const MyAccount = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={companyDisabled}
+                  isDisabled={groupId ? false : true}
                   name={name}
                 />
               )}
@@ -384,8 +385,7 @@ const MyAccount = ({
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t("submit")}
+          {isFormSubmitting ? <Spinner/> : t("submit")}
         </Button>
       </div>
     </div>

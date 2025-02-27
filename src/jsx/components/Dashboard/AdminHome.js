@@ -67,6 +67,7 @@ import {
   getDashboardTasks,
   getFleetStatus,
   getFleetUsage,
+  getTaskCount,
 } from "../../../services/api/DashboardServices";
 
 import { useTranslation } from "react-i18next";
@@ -120,6 +121,7 @@ const Home = () => {
   const [statusData, setStatusData] = useState([0, 0, 0, 0]);
   const [applicationUsage, setApplicationUsage] = useState([0, 0]);
   const [tasksData, setTasksData] = useState({ xAxis: [], series: [] });
+  const [taskCountData, setTaskCountData] = useState({totalTasks: 0, INSTALLATION: 0, MAINTAINANCE: 0 });
   const [isLoading, setIsLoading] = useState(true);
   const { t } = useTranslation();
 
@@ -183,6 +185,8 @@ const Home = () => {
       const usageApiData = await getFleetUsage();
       const statusApiData = await getFleetStatus();
       const tasksApiData = await getDashboardTasks();
+      const taskApiDataCount = await getTaskCount();
+      setTaskCountData(taskApiDataCount);
       setVehicleData(usageApiData.vehicle);
       setGroupData(usageApiData.groups);
       setActiveUsers(usageApiData.activeUsers);
@@ -194,13 +198,14 @@ const Home = () => {
         statusApiData.progress,
       ]);
       setApplicationUsage([
-        usageApiData.applicationUsage.mobile,
-        usageApiData.applicationUsage.web,
+        usageApiData.applicationUsage?.mobile,
+        usageApiData.applicationUsage?.web,
       ]);
       setTasksData(tasksApiData);
       setIsLoading(false);
     };
     fetchData();
+    
   }, []);
 
   if (isLoading) {
@@ -523,39 +528,23 @@ const Home = () => {
                 >
                   <ApexLine4
                     height={300}
-                    categories={[
-                      "05-08-17",
-                      "09-11-23",
-                      "03-06-29",
-                      "10-04-18",
-                      "07-12-31",
-                      "01-10-22",
-                      "06-09-25",
-                      "02-01-14",
-                      "08-03-10",
-                      "11-05-27",
-                      "04-07-12",
-                      "12-02-24",
-                    ]}
+                    categories={tasksData?.xAxis}
                     series={[
                       {
                         name: "Upcoming Tasks",
-                        data: [
-                          65, 65, 65, 120, 120, 80, 120, 100, 100, 120, 120,
-                          120,
-                        ],
+                        data: tasksData?.series?.[0]?.data ?? [],
                       },
                       {
                         name: "Missed Tasks",
-                        data: [50, 100, 35, 35, 0, 0, 80, 20, 40, 40, 40, 40],
+                        data: tasksData?.series?.[1]?.data ?? [],
                       },
                       {
                         name: "Incomplete Tasks",
-                        data: [20, 40, 20, 80, 40, 40, 20, 60, 60, 20, 110, 60],
+                        data: tasksData?.series?.[2]?.data ?? [],
                       },
                       {
                         name: "Completed tasks",
-                        data: [10, 20, 10, 40, 60, 30, 80, 20, 50, 90, 10, 110],
+                        data: tasksData?.series?.[3]?.data ?? [],
                       },
                     ]}
                   />
@@ -628,10 +617,10 @@ const Home = () => {
                 >
                   <div>
                     <ChartPie
-                      key={applicationUsage}
+                      key={taskCountData}
                       color1={"#F58505"}
                       color2={"#1EF6EA"}
-                      Chartdata={applicationUsage}
+                      Chartdata={[taskCountData.INSTALLATION, taskCountData.MAINTAINANCE]}
                     />
                   </div>
                   <div>

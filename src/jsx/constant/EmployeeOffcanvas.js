@@ -347,7 +347,7 @@ const EmployeeOffcanvas = forwardRef(
                       type="text"
                       className="form-control"
                       name="title"
-                      defaultValue={editData.title}
+                      defaultValue={editData?.title}
                       onChange={handleChange}
                       id="exampleFormControlInput2"
                       placeholder=""
@@ -385,7 +385,7 @@ const EmployeeOffcanvas = forwardRef(
                     <label
                       htmlFor="exampleFormControlInput5"
                       name="age"
-                      defaultValue={editData.age}
+                      defaultValue={editData?.age}
                       onChange={handleChange}
                       className="form-label"
                     >
@@ -475,7 +475,7 @@ const EmployeeOffcanvas = forwardRef(
                     <input
                       type="number"
                       name="drivingExperience"
-                      defaultValue={editData.drivingExperience}
+                      defaultValue={editData?.drivingExperience}
                       onChange={handleChange}
                       className="form-control"
                       id="exampleFormControlInput6"
@@ -492,7 +492,7 @@ const EmployeeOffcanvas = forwardRef(
                     <input
                       type="number"
                       name="contact"
-                      defaultValue={editData.contact}
+                      defaultValue={editData?.contact}
                       onChange={handleChange}
                       className="form-control"
                       id="exampleFormControlInput88"

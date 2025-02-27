@@ -10,6 +10,8 @@ import Error from "../../../../components/Error/Error";
 import { useTranslation } from "react-i18next";
 import FileUploader from "../../../../components/FileUploader";
 import { useLocation, useParams } from "react-router-dom";
+import data from "../../table/tableData";
+import Spinner from "../../Spinner";
 
 const Document = ({
   setValue,
@@ -256,9 +258,10 @@ const Document = ({
             type="submit"
             disabled={loading}
             onClick={handleSubmit(onSubmit)}
+            className="d-flex align-items-center justify-content-center"
+            style={{ width: "120px", height: "40px" }}
           >
-            {" "}
-            {t("submit")}
+            {loading ? <Spinner /> : t("submit")}
           </Button>
         </div>
       </div>

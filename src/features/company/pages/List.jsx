@@ -44,8 +44,8 @@ const CompanyList = () => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
     queryFn: () => getAllCompanies(page, groupId),
-    placeholderData: keepPreviousData,
-    staleTime: Infinity,
+    // placeholderData: keepPreviousData,
+    staleTime: 0,
   });
 
   const { mutate } = useMutation({
@@ -161,16 +161,16 @@ const CompanyList = () => {
                           <thead>
                             <tr>
                               <th>{t("id")}</th>
-                              <th className="text-center">
+                              <th className="text-left">
                                 {t("companyName")}
                               </th>
-                              <th className="text-center">
+                              <th className="text-left">
                                 {t("businessGroup")}
                               </th>
                               {/* <th>{t('mobileNumber')}</th> */}
-                              <th className="text-center">{t("location")}</th>
-                              <th className="text-center">{t("email")}</th>
-                              <th className="text-center">{t("branches")}</th>
+                              <th className="text-left">{t("location")}</th>
+                              <th className="text-left">{t("email")}</th>
+                              <th className="text-left">{t("branches")}</th>
 
                               {(can("company", "edit") ||
                                 can("company", "delete")) && (

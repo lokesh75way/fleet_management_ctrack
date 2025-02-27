@@ -24,7 +24,7 @@ const AdminProfile = () => {
   const [isEdit, setIsEdit] = useState(false);
   const navigate = useNavigate();
   const allData = JSON.parse(localStorage.getItem("userJsonData"));
-  const editData = allData.find((data) => data.role === "admin");
+  const editData = allData?.find((data) => data.role === "admin");
 
   const {
     register,

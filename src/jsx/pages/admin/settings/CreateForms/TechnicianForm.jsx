@@ -78,10 +78,9 @@ const TechnicianForm = () => {
     try {
       const data = await getTechnicianById(id);
       setEditData(data);
-      console.log(data, "techdata");
-      setValue("noOfDaysCL", data.leave[0].days);
-      setValue("noOfDays", data.leave[1].days);
-      setValue("noOfDaysPL", data.leave[2].days);
+      setValue("noOfDaysCL", data?.leave[0]?.days);
+      setValue("noOfDays", data?.leave[1]?.days);
+      setValue("noOfDaysPL", data?.leave[2]?.days);
       reset(data);
     } catch (error) {
       notifyError("Some error occured !!");

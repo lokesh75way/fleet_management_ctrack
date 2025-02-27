@@ -80,7 +80,6 @@ class ApexBar3 extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div id="chart" className="line-chart-style bar-chart">
         <ReactApexChart

@@ -150,7 +150,7 @@ const Address = ({
           style={{ width: "10%" }}
         >
           {" "}
-          {t("submit")}
+          {t("Next")}
         </Button>
       </div>
     </div>

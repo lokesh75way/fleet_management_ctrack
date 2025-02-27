@@ -10,25 +10,27 @@ import { ToastContainer } from "react-toastify";
 import "./i18n";
 import { PermissionProvider } from "./context/PermissionContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ErrorBoundary from "./jsx/components/ErrorBoundary/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PermissionProvider>
           <ToastContainer />
-          <BrowserRouter basename="/">
-            <ThemeContext>
+          <ThemeContext>
+            <ErrorBoundary>
               <App />
-            </ThemeContext>
-          </BrowserRouter>
+            </ErrorBoundary>
+          </ThemeContext>
         </PermissionProvider>
       </Provider>
     </QueryClientProvider>
-  </React.StrictMode>
+  </BrowserRouter>
+
 );
 
 reportWebVitals();

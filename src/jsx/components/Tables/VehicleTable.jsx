@@ -13,7 +13,7 @@ const VehicleTable = ({ tableData, onConfirmDelete, editDrawerOpen }) => {
     return;
   }
   return tableData?.map((item, index) => (
-    <tr key={item.id}>
+    <tr key={index}>
       <td>
         <div className="products">
           <div>

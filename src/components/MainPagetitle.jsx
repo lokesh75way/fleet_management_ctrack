@@ -32,7 +32,7 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
               </Link>
             </li>
             <li className="breadcrumb-item active">
-              <Link to={"#"}>/ {pageTitle}</Link>
+              <Link to={"#"}> {pageTitle}</Link>
             </li>
           </ol>
         </div>

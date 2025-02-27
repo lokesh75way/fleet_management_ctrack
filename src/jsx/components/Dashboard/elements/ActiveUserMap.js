@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import WorldMap from "react-svg-worldmap";
 import { createRoot } from "react-dom/client";
 import {
@@ -114,6 +114,20 @@ const ActiveUserMap = ({ usageData }) => {
     );
     setListState(listStateOfUAE);
   }, [usageData]);
+
+  // Extracted function to render markers
+  const renderMarkers = useCallback(() => {
+    return markers
+      .filter(marker => marker.lat !== undefined && marker.lon !== undefined)
+      .map((marker, index) => (
+        <Marker key={index} position={[marker.lat, marker.lon]}>
+          <Popup>{marker.name}</Popup>
+          <Tooltip>{marker.name}</Tooltip>
+        </Marker>
+      ));
+  }, [markers]);
+
+
   const { t } = useTranslation();
   return (
     <>
@@ -121,6 +135,7 @@ const ActiveUserMap = ({ usageData }) => {
         <div className="card-header border-0" style={{ paddingBottom: 0 }}>
           <h4 className="heading mb-0">{t("activeUsers")}</h4>
         </div>
+
         <div className="card-body pe-0">
           <div className="row">
             <div className="col-xl-8 active-map-main">
@@ -136,18 +151,13 @@ const ActiveUserMap = ({ usageData }) => {
                       attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                       url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                     />
-                    {markers.map((marker, index) => (
-                      <Marker key={index} position={[marker.lat, marker.lon]}>
-                        <Popup>{marker.name}</Popup>
-                        <Tooltip>{marker.name}</Tooltip>
-                      </Marker>
-                    ))}
+                    {renderMarkers()}
                   </MapContainer>
                 </div>
               </div>
               {/* </div> */}
             </div>
-            <div className="col-xl-4 active-country dz-scroll">
+            <div className="col-xl-4 active-country dz-scroll overflow-auto p-3 pt-5">
               {listState?.map((item, i) => (
                 <div className="country-list" key={i}>
                   <img src={item.image} alt="" />

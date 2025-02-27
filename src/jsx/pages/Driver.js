@@ -28,6 +28,7 @@ const Driver = () => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setTableData([]);
     goToPage(selected + 1);
   };
 
@@ -79,7 +80,7 @@ const Driver = () => {
     const filteredData = tableData.filter((data) => data._id === item._id);
     navigate(`/driver/edit/${item._id}`, { state: filteredData });
   };
-
+  
   return (
     <>
       <MainPagetitle

@@ -25,7 +25,7 @@ import { notifyError } from "@/utils/toast";
 const customStyles = {
   control: (base) => ({
     ...base,
-    padding: ".25rem 0 ", // Adjust the height as needed
+    padding: ".25rem 0 ",
   }),
 };
 
@@ -112,7 +112,7 @@ const CompanyForm = ({
       setValue("userInfo", formData?.userInfo);
     } else {
       setValue("storageCapacity", storageCapacityOptions[1].value);
-      setValue("dateFormat", dateFormatOptions?.value);
+      setValue("dateFormat", dateFormatOptions[0].value);
       setValue("timeFormat", timeFormatOptions[1]?.value);
     }
   }, [formData, id]);
@@ -256,6 +256,7 @@ const CompanyForm = ({
                 name={name}
                 styles={customStyles}
                 value={{ value, label: value }}
+                // defaultValue={dateFormatOptions[0]}
               />
             )}
           />

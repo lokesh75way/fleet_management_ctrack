@@ -33,6 +33,7 @@ const Vehicle = () => {
   const itemsPerPage = 10;
 
   const handlePageClick = ({ selected }) => {
+    setTableData([]);
     goToPage(selected + 1);
   };
 
