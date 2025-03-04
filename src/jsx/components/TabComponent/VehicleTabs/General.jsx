@@ -93,7 +93,29 @@ const General = ({
       setIsBuisnessGroupDisabled(true);
     }
     if (userDetails?.user?.role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
+      const bGroup = userDetails?.user?.businessGroupId?.[0];
+      setValue("businessGroupId", bGroup._id);
+      setValue("businessGroupName", bGroup.groupName);
+      setGroupId(bGroup._id);
+    }
+    if(userDetails?.user?.role === "USER") {
+      const bGroup = userDetails?.user?.businessGroupId?.[0];
+      const company = userDetails?.user?.companyId?.[0];
+      const branchIds = userDetails?.user?.branchIds;
+      if(bGroup) {
+        setValue("businessGroupId", bGroup._id);
+        setValue("businessId", bGroup._id);
+        setValue("businessGroupName", bGroup.groupName);
+        setGroupId(bGroup._id);
+      }
+      if(company) {
+        setValue("companyId", company._id);
+        setValue("companyName", company.companyName);
+        setCompanyId(company._id);
+      }
+      if(branchIds) {
+        
+      }
     }
   }, []);
 
@@ -115,6 +137,8 @@ const General = ({
                   setValue("businessGroupName", newValue.label);
                   setGroupId(newValue.value);
                   setCompanyId(null);
+                  setValue("companyId", "");
+                  setValue("branchId", "");
                 }}
                 value={value}
                 customStyles={customStyles}
@@ -143,11 +167,12 @@ const General = ({
                 onChange={(newValue) => {
                   setValue("companyId", newValue.value);
                   setCompanyId(newValue.value);
+                  setValue("branchId", "");
                 }}
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={companyDisabled}
+                isDisabled={!groupId}
                 name={name}
               />
             )}
@@ -172,7 +197,7 @@ const General = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={false}
+                isDisabled={!companyId}
                 name={name}
               />
               // <BranchDropdown

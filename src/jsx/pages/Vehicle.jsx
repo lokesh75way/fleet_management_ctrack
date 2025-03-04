@@ -13,6 +13,7 @@ import usePagination from "../../hooks/usePagination";
 const Vehicle = () => {
   const { t } = useTranslation();
   const { can } = usePermissions();
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   //   const { setAddVehicle, addVehicle } = useContext(ThemeContext);
 
   const navigate = useNavigate();
@@ -40,9 +41,22 @@ const Vehicle = () => {
   async function getVehicleData(page) {
     try {
       setInitialLoad(true);
-      const { data, totalLength } = await getVehicles(page);
-      setCount(totalLength);
-      setTableData(data);
+      if (userDetails?.user?.role === "USER") {
+        const branchIds = userDetails?.user?.branchIds;
+        const companyId = userDetails?.user?.companyId?.[0]?._id;
+        const { data, totalLength } = await getVehicles(
+          page,
+          branchIds,
+          companyId
+        );
+        setCount(totalLength);
+        setTableData(data);
+      } else {
+        const { data, totalLength } = await getVehicles(page);
+        setCount(totalLength);
+        setTableData(data);
+      }
+
       // setCount(totalCount);
     } catch (error) {
       console.log("Error in fetching data", error);

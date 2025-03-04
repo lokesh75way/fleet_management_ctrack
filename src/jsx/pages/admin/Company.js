@@ -47,7 +47,7 @@ const Company = () => {
       let responseData;
       if (userDetails?.user?.role === "SUPER_ADMIN") {
         responseData = await getCompany(page, groupId);
-      } else if (userDetails?.user?.role === "BUSINESS_GROUP") {
+      } else if (userDetails?.user?.role === "BUSINESS_GROUP" || "USER") {
         setDropdownDisable(true);
         const businessId = userDetails?.user?.businessGroupId[0]?._id;
         responseData = await getCompany(page, businessId);

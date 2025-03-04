@@ -56,6 +56,20 @@ const MyAccount = ({
     staleTime: Infinity,
   });
 
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  useEffect(() => {
+    if (userDetails?.user?.role === "USER") {
+      const gId = userDetails?.user?.businessGroupId?.[0]?._id;
+      const gName = userDetails?.user?.businessGroupId?.[0]?.groupName;
+      const cId = userDetails?.user?.companyId?.[0]?._id;
+      const cName = userDetails?.user?.companyId?.[0]?._id;
+      setValue("businessGroupId", gId);
+      setValue("businessGroupName", gName);
+      setGroupId(gId);
+      setValue("companyId", cId);
+      setValue("companyName", cName);
+    }
+  }, [userDetails]);
   useEffect(() => {
     if (isError && !!id) {
       notifyError("Not able to fetch company data");
@@ -141,6 +155,7 @@ const MyAccount = ({
                 <GroupDropdown
                   onChange={async (newValue) => {
                     await setValue("businessGroupId", newValue.value);
+                    await setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
                     setValue("companyName", "");
                     setValue("companyId", "");
@@ -385,7 +400,7 @@ const MyAccount = ({
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {isFormSubmitting ? <Spinner/> : t("submit")}
+          {isFormSubmitting ? <Spinner /> : t("submit")}
         </Button>
       </div>
     </div>

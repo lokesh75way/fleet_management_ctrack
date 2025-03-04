@@ -40,6 +40,7 @@ const DriverForm = () => {
     control,
     handleSubmit,
     reset,
+    watch
   } = useForm({
     resolver: yupResolver(
       activeIndex === 0
@@ -51,7 +52,6 @@ const DriverForm = () => {
   });
 
   const onSubmitHanlder = async (data) => {
-    console.log("Driver form data: ", data);
     try {
       if (activeIndex === totalTabs - 1) {
         if(data?.documents?.length <=0 ) {
@@ -69,20 +69,24 @@ const DriverForm = () => {
         const formattedIssueDate = issueDate.toISOString();
         const formattedExpireDate = expireDate.toISOString();
         if (driverId) {
-          await updateDriver(driverId, {
+          const result = await updateDriver(driverId, {
             ...data,
-            documents: [
-              { ...data.documents[0], expireDate: formattedExpireDate },
-            ],
+            documents: data?.documents?.map((doc) => ({
+              ...doc,
+              issueDate: new Date(doc.issueDate).toISOString(),
+              expireDate: new Date(doc.expireDate).toISOString(),
+            })),
           });
           notifySuccess("Driver Updated!");
           navigate("/driver");
         } else {
-          await createDriver({
+          const result = await createDriver({
             ...data,
-            documents: [
-              { ...data.documents[0], expireDate: formattedExpireDate },
-            ],
+            documents: data?.documents?.map((doc) => ({
+              ...doc,
+              issueDate: new Date(doc.issueDate).toISOString(),
+              expireDate: new Date(doc.expireDate).toISOString(),
+            })),
           });
           notifySuccess(t("newDriverCreated"));
           navigate("/driver");
@@ -92,7 +96,11 @@ const DriverForm = () => {
       }
     } catch (error) {
       console.log("Error in Driver form(create new Driver): ", error);
-      if(error?.status!==500) {
+      if(error?.response?.data?.error_code===400) {
+        notifyError(t("Please add all required fields"));
+      }else if(error?.response?.data?.error_code===401) {
+        notifyError(t("Unauthorised access"));
+      }else if(error?.status!==500) {
         notifyError(t("Please add all required fields"));
       }else{
         notifyError(t("someErrorOccurred"));
@@ -144,6 +152,7 @@ const DriverForm = () => {
                           errors={errors}
                           handleSubmit={handleSubmit}
                           onSubmit={onSubmitHanlder}
+                          watch={watch}
                         />
                       </Tab.Pane>
                     );

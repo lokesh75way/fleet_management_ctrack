@@ -3,7 +3,7 @@ import axios from "axios";
 const createVehicles = async (body) => {
   return await axios.post("/vehicles", body);
 };
-const getVehicles = async (page, branchIds) => {
+const getVehicles = async (page, branchIds, companyId) => {
   let url = `/vehicles?page=${page}&limit=10`;
 
   if (branchIds) {
@@ -16,6 +16,9 @@ const getVehicles = async (page, branchIds) => {
       // If branchIds is a single value, append it directly to the URL
       url += `&branchIds=${branchIds}`;
     }
+  }
+  if(companyId) {
+    url+=`&companyId=${companyId}`
   }
 
   const { data } = await axios.get(url);

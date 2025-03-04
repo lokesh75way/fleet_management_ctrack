@@ -31,6 +31,6 @@ export const deleteBranch = async (body) => {
   return data.data;
 };
 export const editBranch = async (body) => {
-  const data = await axios.patch(`/branches`, body);
+  const data = await axios.put(`/branches/${body?.branchId}`, body);
   return data.data;
 };

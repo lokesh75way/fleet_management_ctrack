@@ -108,10 +108,10 @@ const Information = ({
                       htmlFor="exampleFormControlInput3"
                       className="form-label"
                     >
-                      {t("Number")}
+                      {t("Vehicle Number")}
                     </label>
                     <CustomInput
-                      type="number"
+                      type="text"
                       required
                       register={register}
                       name="vehicleNumber"

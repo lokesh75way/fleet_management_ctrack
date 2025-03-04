@@ -3,7 +3,7 @@ import initAxios from "../api";
 initAxios();
 
 export const createDriver = async (body) => {
-  return axios.post("/drivers", body);
+  return await axios.post("/drivers", body);
 };
 
 export const updateDriver = async (id, body) => {

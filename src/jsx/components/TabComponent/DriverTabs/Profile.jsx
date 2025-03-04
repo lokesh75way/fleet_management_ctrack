@@ -131,6 +131,10 @@ const Profile = ({
                       setValue("businessGroupName", newValue.value);
                       setGroupId(newValue.value);
                       setCompanyId(null);
+                      setValue("companyId", "");
+                      setValue("companyName", "");
+                      setValue("branchId", "");
+                      setValue("branchName", "");
                     }}
                     value={value}
                     customStyles={customStyles}
@@ -152,6 +156,11 @@ const Profile = ({
                     setValue("businessGroupId", newValue.value);
                     setValue("businessGroupName", newValue.value);
                     setGroupId(newValue.value);
+                    setCompanyId(null);
+                    setValue("companyId", "");
+                    setValue("companyName", "");
+                    setValue("branchId", "");
+                    setValue("branchName", "");
                   }}
                   value={value}
                   customStyles={customStyles}
@@ -182,11 +191,14 @@ const Profile = ({
                   onChange={(newValue) => {
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.value);
+                    setCompanyId(newValue.value);
+                    setValue("branchId", "");
+                    setValue("branchName", "");
                   }}
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  // isDisabled={companyDisabled}
+                  isDisabled={!groupId}
                   name={name}
                 />
               )}
@@ -204,11 +216,13 @@ const Profile = ({
                     setValue("companyId", newValue.value);
                     setValue("companyName", newValue.value);
                     setCompanyId(newValue.value);
+                    setValue("branchId", "");
+                    setValue("branchName", "");
                   }}
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={companyDisabled}
+                  isDisabled={!groupId}
                   name={name}
                 />
               )}
@@ -233,7 +247,7 @@ const Profile = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={false}
+                isDisabled={!companyId}
                 name={name}
               />
             )}

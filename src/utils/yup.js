@@ -21,7 +21,7 @@ const password = yup
 
 export const vehicleGeneralSchema = yup
   .object({
-    companyId: yup.string().required("Company name id required"),
+    companyId: yup.string().required("Company name is required"),
     businessGroupId: yup.string().required("Business group name is required"),
     vehicleName: yup.string().required("Vehicle name is required"),
     deviceType: yup.string().required("Please select an option"),

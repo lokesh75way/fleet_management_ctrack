@@ -35,11 +35,16 @@ const BranchList = () => {
   const { can } = usePermissions();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { cId } = useParams();
+  let { cId } = useParams();
   const { page, goToPage, setCount, totalCount } = usePagination();
   const queryClient = useQueryClient();
   const { control } = useForm();
   const itemsPerPage = 10;
+
+  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  if(userDetails?.user?.role === "USER") {
+    if(!cId) cId = userDetails?.user?.companyId[0]?._id;
+  }
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["branches", page, cId],
