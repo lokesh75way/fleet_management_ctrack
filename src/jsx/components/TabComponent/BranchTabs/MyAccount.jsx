@@ -22,7 +22,7 @@ import Spinner from "../../Spinner";
 const customStyles = {
   control: (base) => ({
     ...base,
-    padding: ".25rem 0 ",
+    padding: ".25rem 0 ", 
   }),
 };
 

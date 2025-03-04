@@ -14,8 +14,10 @@ import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
+import { usePermissions } from "@/context/PermissionContext";
 
 const Driver = () => {
+  const { can } = usePermissions();
   const { isRtl } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -80,7 +82,8 @@ const Driver = () => {
     const filteredData = tableData.filter((data) => data._id === item._id);
     navigate(`/driver/edit/${item._id}`, { state: filteredData });
   };
-  
+
+
   return (
     <>
       <MainPagetitle
@@ -97,14 +100,15 @@ const Driver = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("drivers")}</h4>
                     <div>
-                      <Link
-                        to={"/driver/create"}
-                        className="btn btn-primary btn-sm ms-1"
-                        data-bs-toggle="offcanvas"
-                        // onClick={() => employe.current.showModal()}
-                      >
-                        + {t("addDriver")}
-                      </Link>{" "}
+                      {can("driver", "add") && (
+                        <Link
+                          to={"/driver/create"}
+                          className="btn btn-primary btn-sm ms-1"
+                          data-bs-toggle="offcanvas"
+                        >
+                          + {t("addDriver")}
+                        </Link>
+                      )}{" "}
                     </div>
                   </div>
                   <div

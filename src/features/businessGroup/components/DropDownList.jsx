@@ -57,15 +57,13 @@ const GroupDropdownList = ({
     const initializeValue = async () => {
       
       if (!value) {
-        if (can("business", "view")) {
-          const userGroup = userDetails.user.businessGroupId[0];
+          const userGroup = userDetails.user.businessGroupId[0];  
           const defaultOption = {
             label: userGroup?.groupName,
             value: userGroup?._id,
           };
           setSelectedOption(defaultOption);
           onChange(defaultOption);
-        }
         return;
       }
       

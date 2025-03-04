@@ -290,7 +290,6 @@ const UserRoutes = () => {
     { url: "reports/generated", component: <Report /> },
     { url: "technician/details", component: <Technician /> },
     { url: "branch/:id", component: <Branch /> },
-    { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
     { url: "/settings/alert", component: <Alert /> },
@@ -301,9 +300,32 @@ const UserRoutes = () => {
 
     { url: "contactUs", component: <ContactUs /> },
     { url: "technician/tasks", component: <TechnicianTask /> },
+
+    // vehicle module routes
     { url: "Vehicle", component: <Vehicle /> },
     { url: "vehicle/create", component: <VehicleForm /> },
-    { url: "driver/create", component: <DriverForm /> },
+    {
+      module: "vehicle",
+      operation: "modify",
+      url: "vehicle/edit/:id",
+      component: <VehicleForm />,
+      // component: <UpdateVehicleForm />,
+    },
+
+    // driver module routes
+    { url: "driver", component: <Driver /> },
+    { 
+      url: "driver/create",
+      operation: "add", 
+      component: <DriverForm /> 
+    },
+    { 
+      url: "driver/edit/:id",
+      operation: "modify",
+      component: <DriverForm /> 
+    },
+
+
     { url: "technician/details/create", component: <TechnicianForm /> },
     { url: "branch/create", component: <BranchForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
@@ -438,10 +460,7 @@ const UserRoutes = () => {
     // groups
     { url: "groups", component: <CreateGroups /> },
     { url: "groups/permission", component: <Permission /> },
-
-    // drivers
-    { url: "driver/edit/:id", component: <DriverForm /> },
-    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
+    
 
     // buisness
     {

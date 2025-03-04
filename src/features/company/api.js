@@ -32,7 +32,6 @@ export const addCompany = async (body) => {
 };
 
 export const deleteCompany = async (_id) => {
-  console.log(_id);
   return axios.delete(`/companies/${_id}`);
 };
 

@@ -109,6 +109,21 @@ const Profile = ({
       setGroupId(userDetails?.user.businessGroupId[0]?._id);
       setBusinessDisabled(true);
     }
+
+    if (userDetails.user.role === "USER") {
+      const bGroup = userDetails?.user?.businessGroupId?.[0];
+      const company = userDetails?.user?.companyId?.[0];
+      if(bGroup) {
+        setValue("businessGroupId", bGroup._id);
+        setValue("businessGroupName", bGroup.groupName);
+        setGroupId(bGroup._id);
+      }
+      if(company) {
+        setValue("companyId", company._id);
+        setValue("companyName", company.companyName);
+        setCompanyId(company._id);
+      }
+    }
   }, []);
 
   return (

@@ -80,34 +80,56 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
       );
     }
   };
+  
   const handleModulePermisssionChange = (isChecked, name, id) => {
     let updatedData = [...data];
-    const modulePermissions = {
-      ...updatedData.find((element) => element._id === id).permission,
-    };
-
-    if (isChecked) {
-      modulePermissions[name] = true;
-    } else {
-      modulePermissions[name] = false;
+    const module = updatedData.find((element) => element._id === id);
+  
+    if (!module) return;
+  
+    const modulePermissions = { ...module.permission };
+  
+    // Set the selected permission
+    modulePermissions[name] = isChecked;
+  
+    // If "add", "modify", or "delete" is checked, ensure "view" is also checked
+    if (isChecked && (name === "add" || name === "modify" || name === "delete")) {
+      modulePermissions["view"] = true;
     }
-
+  
+    // If "view" is being unchecked, check if any dependent permissions are still enabled
+    if (!isChecked && name === "view") {
+      if (modulePermissions["add"] || modulePermissions["modify"] || modulePermissions["delete"]) {
+        return; // Prevent unchecking "view" if other permissions are still enabled
+      }
+    }
+  
     const moduleIndex = updatedData.findIndex((element) => element._id === id);
     updatedData[moduleIndex].permission = modulePermissions;
+    
     setData(updatedData);
   };
-  const handleSubModulePermisssionChange = (
-    isChecked,
-    name,
-    moduleId,
-    subModuleId
-  ) => {
+  
+  const handleSubModulePermisssionChange = (isChecked, name, moduleId, subModuleId) => {
     const updatedData = data.map((module) => {
       if (module._id === moduleId) {
         const subModules = module.subModules.map((subModule) => {
           if (subModule.id === subModuleId) {
             const updatedSubModulePermissions = { ...subModule.permission };
             updatedSubModulePermissions[name] = isChecked;
+  
+            // Ensure "view" is checked if "add", "modify", or "delete" is selected
+            if (isChecked && (name === "add" || name === "modify" || name === "delete")) {
+              updatedSubModulePermissions["view"] = true;
+            }
+  
+            // Prevent "view" from being unchecked if other permissions are still enabled
+            if (!isChecked && name === "view") {
+              if (updatedSubModulePermissions["add"] || updatedSubModulePermissions["modify"] || updatedSubModulePermissions["delete"]) {
+                return subModule; // Keep the original state to prevent unchecking "view"
+              }
+            }
+  
             return {
               ...subModule,
               permission: updatedSubModulePermissions,
@@ -121,7 +143,7 @@ const Permission = ({ isEditTrue, setIsEditTrue }) => {
     });
     setData(updatedData);
   };
-
+  
   const handleInputChange = (e) => {
     setIsErrror(false);
     const { value } = e.target;

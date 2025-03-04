@@ -213,6 +213,8 @@ const Account = ({
       setSelectStateName({ name: formData[0].state || "" });
       setValue("featureTemplateId", formData?.[0]?.featureTemplateId);
       setValue("unitOfDistance", formData?.[0].unitOfDistance);
+      setGroupId(formData?.[0]?.businessGroupId);
+      setCompanyId(formData?.[0]?.companyId);
     }
   }, [formData, id]);
 
