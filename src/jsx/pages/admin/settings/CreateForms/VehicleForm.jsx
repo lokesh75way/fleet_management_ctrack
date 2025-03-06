@@ -142,7 +142,6 @@ const VehicleForm = () => {
                 delete data[key];
               }
             }
-            console.log("data: ", data);
             await updateVehicles(data, id);
             notifySuccess("Vehicle Updated Successfully");
             navigate("/vehicle");

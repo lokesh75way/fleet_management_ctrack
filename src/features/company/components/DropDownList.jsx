@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import usePagination from "@/hooks/usePagination";
 import { usePermissions } from "@/context/PermissionContext";
 import { getAllCompanies, getCompanyById } from "../api";
+import DropdownLoader from "@/jsx/components/DropdownLoader";
 
 const CompanyDropdownList = ({
   onChange,
@@ -100,12 +101,17 @@ const CompanyDropdownList = ({
 
   return (
     <Select
-      options={options}
+      // options={options}
+      options={
+        isFetching
+          ? [{ value: "", label: <DropdownLoader /> }]
+          : options
+      }
       value={selectedOption}
       onChange={onChange}
       styles={customStyles}
       name={name}
-      isDisabled={isDisabled || userDetails.user.role!=="SUPER_ADMIN" && userDetails.user.role!=="BUSINESS_GROUP"}
+      isDisabled={isDisabled}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
     />

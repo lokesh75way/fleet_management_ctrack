@@ -24,6 +24,7 @@ import CompanyDropdown from "../../../../features/company/components/DropDownLis
 import BranchDropdown from "../../BranchDropdown";
 import GroupDropdown from "../../../../features/businessGroup/components/DropDownList";
 import ParentBranchDropdown from "../../ParentBranch";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const General = ({
   register,
@@ -35,11 +36,8 @@ const General = ({
   onSubmit,
   formData,
 }) => {
-  const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
 
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
+  const {businessDisabled, companyDisabled, groupId, companyId, setGroupId, setCompanyId} = useUserRoleData();
 
   const { checkRole, checkUserName } = useStorage();
 
@@ -88,37 +86,6 @@ const General = ({
     }
   }, [formData, id]);
 
-  useEffect(() => {
-    if (checkRole() !== "SUPER_ADMIN") {
-      setIsBuisnessGroupDisabled(true);
-    }
-    if (userDetails?.user?.role === "BUSINESS_GROUP") {
-      const bGroup = userDetails?.user?.businessGroupId?.[0];
-      setValue("businessGroupId", bGroup._id);
-      setValue("businessGroupName", bGroup.groupName);
-      setGroupId(bGroup._id);
-    }
-    if(userDetails?.user?.role === "USER") {
-      const bGroup = userDetails?.user?.businessGroupId?.[0];
-      const company = userDetails?.user?.companyId?.[0];
-      const branchIds = userDetails?.user?.branchIds;
-      if(bGroup) {
-        setValue("businessGroupId", bGroup._id);
-        setValue("businessId", bGroup._id);
-        setValue("businessGroupName", bGroup.groupName);
-        setGroupId(bGroup._id);
-      }
-      if(company) {
-        setValue("companyId", company._id);
-        setValue("companyName", company.companyName);
-        setCompanyId(company._id);
-      }
-      if(branchIds) {
-        
-      }
-    }
-  }, []);
-
   return (
     <div className="p-4">
       <div className="row" style={{ width: "85%" }}>
@@ -135,15 +102,15 @@ const General = ({
                   setValue("businessGroupId", newValue.value);
                   setValue("businessId", newValue.value);
                   setValue("businessGroupName", newValue.label);
-                  setGroupId(newValue.value);
-                  setCompanyId(null);
                   setValue("companyId", "");
                   setValue("branchId", "");
+                  setGroupId(newValue.value);
+                  setCompanyId(null);
                 }}
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={isBuisnessGroupDisabled}
+                isDisabled={businessDisabled}
                 name={name}
               />
             )}
@@ -172,7 +139,7 @@ const General = ({
                 value={value}
                 customStyles={customStyles}
                 ref={ref}
-                isDisabled={!groupId}
+                isDisabled={companyDisabled || !groupId}
                 name={name}
               />
             )}

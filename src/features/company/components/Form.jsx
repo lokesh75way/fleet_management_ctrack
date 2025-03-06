@@ -21,6 +21,7 @@ import LocationSelector from "@/components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
 import { getCompanyById } from "../api";
 import { notifyError } from "@/utils/toast";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const customStyles = {
   control: (base) => ({
@@ -43,6 +44,7 @@ const CompanyForm = ({
     control,
     name: "userInfo",
   });
+  const { businessDisabled, userData } = useUserRoleData();
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { location: locationData, error: locationError } = useUserLocation();
@@ -72,6 +74,15 @@ const CompanyForm = ({
       setFormData(data);
     }
   }, [data]);
+  useEffect(() => {
+    if (userData) {
+      const role = userData.role;
+      if (role === "USER") {
+        setValue("companyId", null);
+        setValue("companyName", "");
+      }
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (formData && id) {
@@ -143,11 +154,13 @@ const CompanyForm = ({
               <GroupDropdownList
                 onChange={async (newValue) => {
                   await setValue("businessGroupId", newValue.value);
+                  setValue("businessGroupName", newValue.label);
                 }}
                 value={value}
                 ref={ref}
                 name={name}
                 customStyles={customStyles}
+                isDisabled={businessDisabled}
               />
             )}
           />

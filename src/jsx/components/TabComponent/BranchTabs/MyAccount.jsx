@@ -18,6 +18,7 @@ import { getBranchById } from "@/features/branch/api";
 import { useQuery } from "@tanstack/react-query";
 import { notifyError } from "@/utils/toast";
 import Spinner from "../../Spinner";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const customStyles = {
   control: (base) => ({
@@ -40,9 +41,7 @@ const MyAccount = ({
     control,
     name: "userInfo",
   });
-  const [groupId, setGroupId] = useState(null);
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(true);
+  const { groupId, setGroupId, businessDisabled, companyDisabled } = useUserRoleData();
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
@@ -56,20 +55,6 @@ const MyAccount = ({
     staleTime: Infinity,
   });
 
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  useEffect(() => {
-    if (userDetails?.user?.role === "USER") {
-      const gId = userDetails?.user?.businessGroupId?.[0]?._id;
-      const gName = userDetails?.user?.businessGroupId?.[0]?.groupName;
-      const cId = userDetails?.user?.companyId?.[0]?._id;
-      const cName = userDetails?.user?.companyId?.[0]?._id;
-      setValue("businessGroupId", gId);
-      setValue("businessGroupName", gName);
-      setGroupId(gId);
-      setValue("companyId", cId);
-      setValue("companyName", cName);
-    }
-  }, [userDetails]);
   useEffect(() => {
     if (isError && !!id) {
       notifyError("Not able to fetch company data");
@@ -190,11 +175,12 @@ const MyAccount = ({
                   onChange={async (newValue) => {
                     onChange(newValue);
                     setValue("companyName", newValue.label);
+                    setValue("companyId", newValue.value);
                   }}
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={groupId ? false : true}
+                  isDisabled={companyDisabled || !groupId}
                   name={name}
                 />
               )}
@@ -215,7 +201,7 @@ const MyAccount = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={groupId ? false : true}
+                  isDisabled={companyDisabled || !groupId}
                   name={name}
                 />
               )}

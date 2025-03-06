@@ -19,6 +19,7 @@ import BranchDropdown from "../../BranchDropdown";
 import { getDriverById } from "../../../../services/api/driverService";
 import { notifyError } from "../../../../utils/toast";
 import ParentBranchDropdown from "../../ParentBranch";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const Profile = ({
   setValue,
@@ -34,13 +35,10 @@ const Profile = ({
   const [selectStateName, setSelectStateName] = useState({
     name: "",
   });
+  const {groupId, setGroupId, companyId, setCompanyId, businessDisabled, companyDisabled} = useUserRoleData();
   const [stateid, setstateid] = useState(0);
   const [countryid, setCountryid] = useState(0);
   const [isStateDisabled, setIsStateDisabled] = useState(true);
-  const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
   const [editData, setEditData] = useState({});
   const [dValues, setDvalues] = useState([]);
   const [defaultCountry, setDefaultCountry] = useState();
@@ -92,39 +90,6 @@ const Profile = ({
   }, [dValues, id]);
 
   const [bussinessGpLable, setBussinessGpLable] = useState(null);
-
-  useEffect(() => {
-    if (userDetails.user.role === "COMPANY") {
-      let bus;
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
-      setBusinessDisabled(true);
-
-      setValue("companyId", userDetails?.user.companyId);
-      setCompanyId(userDetails?.user.companyId);
-      setCompanyDisabled(true);
-    }
-    if (userDetails.user.role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
-      setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-    }
-
-    if (userDetails.user.role === "USER") {
-      const bGroup = userDetails?.user?.businessGroupId?.[0];
-      const company = userDetails?.user?.companyId?.[0];
-      if(bGroup) {
-        setValue("businessGroupId", bGroup._id);
-        setValue("businessGroupName", bGroup.groupName);
-        setGroupId(bGroup._id);
-      }
-      if(company) {
-        setValue("companyId", company._id);
-        setValue("companyName", company.companyName);
-        setCompanyId(company._id);
-      }
-    }
-  }, []);
 
   return (
     <div className="p-4">
@@ -213,7 +178,7 @@ const Profile = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={!groupId}
+                  isDisabled={companyDisabled || !groupId}
                   name={name}
                 />
               )}
@@ -237,7 +202,7 @@ const Profile = ({
                   value={value}
                   customStyles={customStyles}
                   ref={ref}
-                  isDisabled={!groupId}
+                  isDisabled={companyDisabled || !groupId}
                   name={name}
                 />
               )}

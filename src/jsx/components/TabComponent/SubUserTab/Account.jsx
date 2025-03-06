@@ -25,6 +25,7 @@ import VehicleDropdown from "../../VehicleDropdown";
 import { unitOfDistanceOptions } from "../../../../constants/options";
 import LocationSelector from "../../../../components/Input/LocationSelector";
 import useUserLocation from "@/hooks/useUserLocation";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const Account = ({
   handleNext,
@@ -53,8 +54,6 @@ const Account = ({
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
-  const [groupId, setGroupId] = useState(null);
-  const [companyId, setCompanyId] = useState(null);
   const [branchId, setBranchId] = useState([]);
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
   const { t } = useTranslation();
@@ -64,6 +63,8 @@ const Account = ({
       padding: "0.25rem 0 ", // Adjust the height as needed
     }),
   };
+  const { groupId, setGroupId, companyId, setCompanyId, businessDisabled, companyDisabled, branchDisabled } = useUserRoleData();
+
   async function onGroupChange(groupId) {
     const companies = allCompanies
       .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
@@ -175,28 +176,9 @@ const Account = ({
   const [businessUserValue, setBusinessUserValue] = useState();
   const [companyValue, setCompanyValue] = useState([]);
   const [parentValue, setParentValue] = useState();
-  const [businessDisabled, setBusinessDisabled] = useState(false);
-  const [companyDisabled, setCompanyDisabled] = useState(false);
   const { location: locationData, error: locationError } = useUserLocation();
 
   const [filteredCompanyData, setFilteredCompanyData] = useState([]);
-  useEffect(() => {
-    if (userDetails.user.role === "COMPANY") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId[0]?._id);
-      setValue("businessUser", userDetails?.user.businessGroupId[0]?._id);
-      setGroupId(userDetails?.user.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-      setValue("parentCompany", userDetails?.user.companyId[0]?._id);
-      setCompanyId(userDetails?.user.companyId[0]?._id);
-      setCompanyDisabled(true);
-    }
-    if (userDetails.user.role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user?.businessGroupId);
-      setGroupId(userDetails?.user?.businessGroupId[0]?._id);
-      setValue("businessUser", userDetails?.user?.businessGroupId[0]?._id);
-      setBusinessDisabled(true);
-    }
-  }, []);
 
   useEffect(() => {
     if (formData && id) {
@@ -275,7 +257,7 @@ const Account = ({
                 customStyles={customStyles}
                 name={name}
                 ref={ref}
-                isDisabled={groupId ? false : true}
+                isDisabled={companyDisabled || !groupId}
               />
             )}
           />
@@ -298,7 +280,7 @@ const Account = ({
                 ref={ref}
                 companyId={companyId}
                 name={name}
-                isDisabled={companyId ? false : true}
+                isDisabled={branchDisabled || !companyId}
               />
             )}
           />

@@ -149,9 +149,14 @@ const Driver = () => {
                     )}
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
-                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
-                        {t("entries")}
+                        {totalCount > 0 ? (
+                          <>
+                            {t("showing")} {Math.max((page - 1) * 10 + 1, 1)} {t("to")}{" "}
+                            {Math.min(page * 10, totalCount)} {t("of")} {totalCount} {t("entries")}
+                          </>
+                        ) : (
+                          <span className="text-gray-500">{t("No Driver Found")}</span>
+                        )}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

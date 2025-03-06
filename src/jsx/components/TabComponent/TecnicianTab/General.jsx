@@ -9,6 +9,7 @@ import "@/assets/scss/pages/_driver-tracking.scss";
 import { useTranslation } from "react-i18next";
 import CompanyDropdown from "../../../../features/company/components/DropDownList";
 import { useParams } from "react-router-dom";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 const General = ({
   register,
   setValue,
@@ -18,6 +19,7 @@ const General = ({
   handleSubmit,
   onSubmit,
 }) => {
+  const {companyDisabled} = useUserRoleData();
   const [tempGender, setTempGender] = useState("");
   const [date, setDate] = useState({});
   const { t } = useTranslation();
@@ -56,6 +58,7 @@ const General = ({
                 customStyles={customStyles}
                 ref={ref}
                 name={name}
+                isDisabled={companyDisabled}
               />
             )}
           />

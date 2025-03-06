@@ -161,9 +161,7 @@ const CompanyList = () => {
                           <thead>
                             <tr>
                               <th>{t("id")}</th>
-                              <th className="text-left">
-                                {t("companyName")}
-                              </th>
+                              <th className="text-left">{t("companyName")}</th>
                               <th className="text-left">
                                 {t("businessGroup")}
                               </th>
@@ -193,9 +191,17 @@ const CompanyList = () => {
                     </div>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
-                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
-                        {t("entries")}
+                        {totalCount > 0 ? (
+                          <>
+                            {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                            {Math.min(page * 10, totalCount)} {t("of")}{" "}
+                            {totalCount} {t("entries")}
+                          </>
+                        ) : (
+                          <span className="text-gray-500">
+                            {t("No Company Found")}
+                          </span>
+                        )}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

@@ -136,9 +136,15 @@ const BusinessList = () => {
                     </div>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {startIndex + 1} {t("to")}{" "}
-                        {Math.min(startIndex + itemsPerPage, totalCount)}{" "}
-                        {t("of")} {totalCount} {t("entries")}
+                        {totalCount > 0 ? (
+                          <>
+                            {t("showing")} {startIndex + 1} {t("to")}{" "}
+                            {Math.min(startIndex + itemsPerPage, totalCount)}{" "}
+                            {t("of")} {totalCount} {t("entries")}
+                          </>
+                        ) : (
+                          t("No Business Group Found")
+                        )}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

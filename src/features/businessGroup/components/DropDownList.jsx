@@ -55,8 +55,7 @@ const GroupDropdownList = ({
 
   useEffect(() => {
     const initializeValue = async () => {
-      
-      if (!value) {
+      if (can("business", "view") && !value) {
           const userGroup = userDetails.user.businessGroupId[0];  
           const defaultOption = {
             label: userGroup?.groupName,
@@ -112,7 +111,7 @@ const GroupDropdownList = ({
       value={selectedOption}
       onChange={onChange}
       name={name}
-      isDisabled={isDisabled || userDetails.user.role !== "SUPER_ADMIN"}
+      isDisabled={isDisabled}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       menuPortalTarget={document.body}

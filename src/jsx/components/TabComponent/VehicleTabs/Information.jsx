@@ -251,7 +251,7 @@ const Information = ({
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("year")}</label>
                   <CustomInput
-                    type="text"
+                    type="number"
                     required
                     register={register}
                     label="Year"
@@ -290,7 +290,7 @@ const Information = ({
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("vinNumber")}</label>
                   <CustomInput
-                    type="text"
+                    type="number"
                     required
                     register={register}
                     label="VINNumber"

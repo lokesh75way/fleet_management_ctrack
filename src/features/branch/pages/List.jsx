@@ -188,9 +188,15 @@ const BranchList = () => {
                     </div>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
-                        {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
-                        {Math.min(page * 10, totalCount)} {t("of")} {totalCount}{" "}
-                        {t("entries")}
+                        {totalCount > 0 ? (
+                          <>
+                            {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}
+                            {Math.min(page * 10, totalCount)} {t("of")}{" "}
+                            {totalCount} {t("entries")}
+                          </>
+                        ) : (
+                          t("No Branch Found")
+                        )}
                       </div>
                       <div
                         className="dataTables_paginate paging_simple_numbers"

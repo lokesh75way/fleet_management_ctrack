@@ -305,7 +305,6 @@ const TechnicianOffcanvas = forwardRef(
                     <button
                       type="submit"
                       onClick={() => {
-                        console.log("clicked here");
                         handleSubmit(onSubmit);
                       }}
                       className="btn btn-primary me-1 m-1"
