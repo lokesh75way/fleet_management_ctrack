@@ -6,6 +6,7 @@ import { Logout } from "../../../store/actions/AuthActions";
 import { isAuthenticated } from "../../../store/selectors/AuthSelectors";
 import { SVGICON } from "../../constant/theme";
 import { useTranslation } from "react-i18next";
+import { useLogout } from "@/hooks/useLogout";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
@@ -19,6 +20,7 @@ function withRouter(Component) {
 }
 
 function LogoutPage(props) {
+  const logout = useLogout();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function onLogout() {
@@ -30,7 +32,7 @@ function LogoutPage(props) {
     <>
       <button
         className="dropdown-item ai-icon ms-1 logout-btn"
-        onClick={onLogout}
+        onClick={logout}
       >
         {SVGICON.Logout} <span className="ms-2">{t("logout")} </span>
       </button>

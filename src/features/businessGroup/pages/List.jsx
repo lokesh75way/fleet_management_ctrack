@@ -28,8 +28,8 @@ const BusinessList = () => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["groups", page],
     queryFn: () => getAllGroups(page),
-    // placeholderData: keepPreviousData,
-    staleTime: 0,
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
   });
 
   const { mutate } = useMutation({

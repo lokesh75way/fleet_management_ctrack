@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Logout } from "../../../store/actions/AuthActions";
 import { isAuthenticated } from "../../../store/selectors/AuthSelectors";
 import { useTranslation } from "react-i18next";
+import { useLogout } from "@/hooks/useLogout";
 // import { SVGICON } from '../../constant/theme';
 
 function withRouter(Component) {
@@ -19,6 +20,7 @@ function withRouter(Component) {
 }
 
 function LogoutPage(props) {
+  const logout = useLogout();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function LogoutPage(props) {
   }
   return (
     <>
-      <button className="btn btn-primary btn-sm" onClick={onLogout}>
+      <button className="btn btn-primary btn-sm" onClick={logout}>
         {t("logout")}
       </button>
     </>

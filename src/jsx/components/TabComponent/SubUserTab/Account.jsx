@@ -234,6 +234,7 @@ const Account = ({
               />
             )}
           />
+          <Error errorName={errors.businessUser} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("company")}</label>
@@ -261,6 +262,7 @@ const Account = ({
               />
             )}
           />
+          <Error errorName={errors.companyId} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("branch")}</label>

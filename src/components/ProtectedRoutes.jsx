@@ -1,16 +1,22 @@
 import { Navigate } from "react-router-dom";
 import Loader from "./Loader";
 import { usePermissions } from "@/context/PermissionContext";
+import { useEffect, useState } from "react";
 
 const ProtectedRoute = ({ module, operation, Component }) => {
-  const { can, userDetails } = usePermissions();
+  const { can, userPermission } = usePermissions();
+  const [hasPermission, setHasPermission] = useState(null);
 
-  if (!userDetails) {
-    console.log("Waiting for user details to load...");
+  useEffect(() => {
+    if (userPermission && userPermission.length > 0) {
+      setHasPermission(() => can(module, operation));
+    }
+  }, [userPermission, module, operation, can]);
+
+  if (hasPermission === null) {
+    console.log("Waiting for permissions to load...");
     return <Loader />;
   }
-
-  const hasPermission = can(module, operation);
 
   if (!hasPermission) {
     console.log(`Access Denied: Module - ${module}, Operation - ${operation}`);
@@ -18,6 +24,7 @@ const ProtectedRoute = ({ module, operation, Component }) => {
   }
 
   console.log(`Access Granted: Module - ${module}, Operation - ${operation}`);
+
   return Component;
 };
 

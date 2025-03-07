@@ -440,6 +440,8 @@ export const driverDocumentSchema = yup
   .required();
 export const subUserAccountSchema = yup.object({
   isEdit: yup.boolean(),
+  companyId: yup.string().required("Company is required "),
+  businessUser: yup.string().required("Business group is required "),
   userName: yup.string().required("User Name is required "),
   featureTemplateId: yup.string().required("Feature Template is required "),
   password: yup
@@ -465,6 +467,7 @@ export const subUserAccountSchema = yup.object({
         return value && value.length >= 8;
       }
     }),
+  featureTemplateId: yup.string().required("Feature Template is required "),
   mobileNumber: yup
     .string()
     .trim()
@@ -474,6 +477,8 @@ export const subUserAccountSchema = yup.object({
 });
 export const subUserEditAccountSchema = yup.object({
   isEdit: yup.boolean(),
+  companyId: yup.string().required("Company is required "),
+  businessUser: yup.string().required("Business group is required "),
   userName: yup.string().required("User Name is required "),
   featureTemplateId: yup.string().required("Feature Template is required "),
   mobileNumber: yup

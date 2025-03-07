@@ -44,8 +44,8 @@ const CompanyList = () => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
     queryFn: () => getAllCompanies(page, groupId),
-    // placeholderData: keepPreviousData,
-    staleTime: 0,
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
   });
 
   const { mutate } = useMutation({

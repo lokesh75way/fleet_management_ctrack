@@ -18,6 +18,7 @@ import CompanyDropdownList from "@/features/company/components/DropDownList";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 import { deleteBranch, getAllBranch } from "../api";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 
 const customStyles = {
   control: (base) => ({
@@ -33,6 +34,7 @@ const customStyles = {
 
 const BranchList = () => {
   const { can } = usePermissions();
+  const { companyDisabled } = useUserRoleData();
   const { t } = useTranslation();
   const navigate = useNavigate();
   let { cId } = useParams();
@@ -49,8 +51,8 @@ const BranchList = () => {
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["branches", page, cId],
     queryFn: () => getAllBranch(page, cId),
-    // placeholderData: keepPreviousData,
-    staleTime: 0,
+    placeholderData: keepPreviousData,
+    staleTime: Infinity,
   });
 
   const { mutate } = useMutation({

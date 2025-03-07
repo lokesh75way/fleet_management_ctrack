@@ -55,7 +55,7 @@ const GroupDropdownList = ({
 
   useEffect(() => {
     const initializeValue = async () => {
-      if (can("business", "view") && !value) {
+      if (!value) {
           const userGroup = userDetails.user.businessGroupId[0];  
           const defaultOption = {
             label: userGroup?.groupName,

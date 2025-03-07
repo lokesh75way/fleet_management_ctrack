@@ -57,7 +57,7 @@ const CompanyDropdownList = ({
 
   useEffect(() => {
     if (!value) {
-      if (can("company", "view") && userDetails?.user?.companyId?.[0]) {
+      if (userDetails?.user?.companyId?.[0]) {
         const userGroup = userDetails.user.companyId[0];
         const defaultOption = {
           label: userGroup.companyName,
