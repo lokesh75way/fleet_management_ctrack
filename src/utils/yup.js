@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import moment from 'moment'
 const EMAIL_REG =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -614,13 +615,21 @@ export const technicianLeaveSchema = yup
   })
   .required();
 
-export const classifyTripsSchema = yup
-  .object({
-    startTime: yup.string().required("Trip start Location is required "),
-    reachTime: yup.string().required("Trip reach Location is required "),
-    driver: yup.string().required("Driver name is required "),
-  })
-  .required();
+
+export const classifyTripsSchema = yup.object({
+  businessUser: yup.string().required("Business group is required "),
+  companyId: yup.string().required("Company is required "),
+  startTime: yup
+    .date()
+    .required("Trip start time is required")
+    .max(yup.ref("reachTime"), "Start time must be before or same as Reach Time"),
+  reachTime: yup.date().required("Trip reach time is required"),
+  startLocation: yup.string().required("Start Location is required"),
+  reachLocation: yup.string().required("Reach Location is required"),
+  driverId: yup.string().required("Driver name is required"),
+  vehicleId: yup.string().required("Vehicle name is required"),
+}).required();
+
 
 export const classifyTripsFilterCanvas = yup
   .object({

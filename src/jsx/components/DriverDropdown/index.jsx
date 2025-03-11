@@ -3,7 +3,7 @@ import Select from "react-select";
 import { getDrivers } from "../../../services/api/driverService";
 import DropdownLoader from "../DropdownLoader";
 
-const DriverDropdown = ({ onChange, value, customStyles, inputRef, isDisabled, name }) => {
+const DriverDropdown = ({ onChange, value, customStyles, inputRef, isDisabled, name, isClearable=true }) => {
   const [dropDownOptions, setDropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
   const [loading, setLoading] = useState(false); 
@@ -40,7 +40,7 @@ const DriverDropdown = ({ onChange, value, customStyles, inputRef, isDisabled, n
       ref={inputRef}
       name={name}
       isDisabled={isDisabled}
-      isClearable
+      isClearable={isClearable}
       placeholder="Select Driver"
       noOptionsMessage={() =>
         loading ? <DropdownLoader /> : "No drivers available"

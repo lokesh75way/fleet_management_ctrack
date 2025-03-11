@@ -22,6 +22,7 @@ import BusinessUser from "../features/businessGroup/pages/List";
 import CompanyForm from "../features/company/pages/Create";
 import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
+import ClassifyTripForm from "./pages/ClassifyTrip/ClassifyTripForm";
 const Business = React.lazy(
   () => import("../features/businessGroup/pages/List")
 );
@@ -299,6 +300,16 @@ const CompanyRoutes = () => {
     { url: "user/edit/:id", component: <SubUserForm /> },
     { url: "/settings/alert", component: <Alert /> },
     { url: "/settings/classifyTrips", component: <ClassifyTrips /> },
+    {
+      module: "settings",
+      url: "/settings/classifyTrips/create",
+      component: <ClassifyTripForm />,
+    },
+    {
+      module: "settings",
+      url: "/settings/classifyTrips/edit/:id",
+      component: <ClassifyTripForm />,
+    },
     { url: "/settings/expense", component: <Expense /> },
     { url: "/settings/geofence", component: <Geofence /> },
     { url: "/settings/geofence/map", component: <GeofenceMap /> },

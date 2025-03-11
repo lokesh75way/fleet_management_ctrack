@@ -20,6 +20,7 @@ import PermissionDenied from "./pages/PermissionDenied";
 import { usePermissions } from "../context/PermissionContext";
 import { GiConsoleController } from "react-icons/gi";
 import CompanyRoutes from "@/features/company/pages";
+import ClassifyTripForm from "./pages/ClassifyTrip/ClassifyTripForm";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -241,6 +242,16 @@ const BusinessGroupRoutes = () => {
       module: "settings",
       url: "/settings/classifyTrips",
       component: <ClassifyTrips />,
+    },
+    {
+      module: "settings",
+      url: "/settings/classifyTrips/create",
+      component: <ClassifyTripForm />,
+    },
+    {
+      module: "settings",
+      url: "/settings/classifyTrips/edit/:id",
+      component: <ClassifyTripForm />,
     },
     { module: "settings", url: "/settings/expense", component: <Expense /> },
     { module: "settings", url: "/settings/geofence", component: <Geofence /> },

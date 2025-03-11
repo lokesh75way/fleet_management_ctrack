@@ -5,15 +5,23 @@ initAxios();
 export const getTrips = async (
   pageNo = 1,
   status,
+  businessGroup,
+  company,
   driverId,
   startDate,
-  endDate
+  endDate,
 ) => {
   let url = `/trips?page=${pageNo}&limit=10`;
   if (driverId && startDate && endDate) {
     url += `&driverId=${driverId}&start=${startDate}&end=${endDate}`;
   } else {
     url += `&status=${status}`;
+  }
+  if(businessGroup) {
+    url += `&businessGroup=${businessGroup}`;
+  }
+  if(company) {
+    url += `&companyId=${company}`;
   }
   const response = await axios.get(url);
   return {

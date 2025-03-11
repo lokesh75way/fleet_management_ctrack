@@ -6,6 +6,9 @@ const createVehicles = async (body) => {
 const getVehicles = async (page, branchIds, companyId) => {
   let url = `/vehicles?page=${page}&limit=10`;
 
+  if (companyId) {
+    url += `&companyId=${companyId}`
+  }
   if (branchIds) {
     if (Array.isArray(branchIds)) {
       // If branchIds is an array, append each branchId to the URL
@@ -16,9 +19,6 @@ const getVehicles = async (page, branchIds, companyId) => {
       // If branchIds is a single value, append it directly to the URL
       url += `&branchIds=${branchIds}`;
     }
-  }
-  if(companyId) {
-    url+=`&companyId=${companyId}`
   }
 
   const { data } = await axios.get(url);

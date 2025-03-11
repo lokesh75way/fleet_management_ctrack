@@ -243,7 +243,7 @@ export const toleranceOptions = [
 export const tripStatusOptions = [
   { value: "ONGOING", label: "OnGoing" },
   { value: "COMPLETED", label: "Completed" },
-  { value: "JUST_STARTED", label: "Just Started" },
+  { value: "PLANNED", label: "Planned" },
 ];
 export const parentOptions = [
   { value: "branch1@example.com", label: "branch1@example.com" },

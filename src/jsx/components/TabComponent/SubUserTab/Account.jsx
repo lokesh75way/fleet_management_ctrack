@@ -238,7 +238,6 @@ const Account = ({
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("company")}</label>
-
           <Controller
             name="companyId"
             control={control}

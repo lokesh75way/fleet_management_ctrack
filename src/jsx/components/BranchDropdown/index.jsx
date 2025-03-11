@@ -13,6 +13,7 @@ const BranchDropdown = ({
   isDisabled,
   ref,
   isMulti = true,
+  closeMenuOnSelect=false
 }) => {
   const [dropDownOptions, setdropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
@@ -40,16 +41,34 @@ const BranchDropdown = ({
 
     fetchBusinessGroups();
   }, [page, companyId]);
+  // useEffect(() => {
+  //   if (value && Array.isArray(value)) {
+  //     const selected = dropDownOptions.filter((option) =>
+  //       value.some((val) => val === option.value)
+  //     );
+  //     setSelectedOption(selected);
+  //   } else {
+  //     setSelectedOption(value);
+  //   }
+  // }, [value, dropDownOptions]);
+
   useEffect(() => {
-    if (value && Array.isArray(value)) {
-      const selected = dropDownOptions.filter((option) =>
-        value.some((val) => val === option.value)
-      );
-      setSelectedOption(selected);
+
+    if (value) {
+      if (Array.isArray(value)) {
+        const selected = dropDownOptions.filter((option) =>
+          value.includes(option.value)
+        );
+        setSelectedOption(selected);
+      } else {
+        const selected = dropDownOptions.find((option) => option.value === value) || null;
+        setSelectedOption(selected);
+      }
     } else {
-      setSelectedOption(value);
+      setSelectedOption(isMulti ? [] : null);
     }
   }, [value, dropDownOptions]);
+  
   return (
     <Select
       options={
@@ -64,7 +83,7 @@ const BranchDropdown = ({
       ref={ref}
       isDisabled={isDisabled}
       isMulti={isMulti}
-      closeMenuOnSelect={false}
+      closeMenuOnSelect={closeMenuOnSelect}
     />
   );
 };

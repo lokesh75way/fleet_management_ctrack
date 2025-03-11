@@ -15,9 +15,11 @@ import ReactPaginate from "react-paginate";
 import { ICON } from "../constant/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
+import { useUserRoleData } from "@/hooks/useUserRoleData";
 const ActiveTab = ({ tableData1, tabType }) => {
   const [tableData, setTableData] = useState(tableData1);
   const [isLoading, setIsLoading] = useState(false);
+  const { groupId, companyId} = useUserRoleData();
 
   useEffect(() => {
     setTableData(tableData1);
@@ -62,18 +64,18 @@ const ActiveTab = ({ tableData1, tabType }) => {
     if (tabType === "Active Trips") {
       status = "ONGOING";
     } else if (tabType === "Planned Trips") {
-      status = "JUST_STARTED";
+      status = "PLANNED";
     } else if (tabType === "Completed Trips") {
       status = "COMPLETED";
     }
+    getAllTrips(page, status, groupId, companyId);
+    
+  }, [tabType, page, groupId, companyId]);
 
-    getAllTrips(status);
-  }, [tabType, page]);
-
-  const getAllTrips = async (status) => {
+  const getAllTrips = async (page, status, groupId, companyId) => {
     try {
       setIsLoading(true);
-      const { data, success, totalLength } = await getTrips(page, status);
+      const { data, success, totalLength } = await getTrips(page, status, groupId, companyId);  
       setTableData(data);
       setCount(totalLength);
     } catch (error) {

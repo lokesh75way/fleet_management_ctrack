@@ -12,7 +12,8 @@ const VehicleDropdown = ({
   ref,
   isDisabled,
   name,
-  isMulti = true
+  isMulti = true,
+  companyId,
 }) => {
   const [dropDownOptions, setDropDownOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(value);
@@ -25,7 +26,8 @@ const VehicleDropdown = ({
       try {
         const response = await getVehicles(
           page,
-          branchids ? branchids : undefined
+          branchids ? branchids : undefined,
+          companyId ? companyId : undefined
         );
         const vehicleOptions = response.data.map((item) => ({
           label: item?.vehicleName,
@@ -42,16 +44,21 @@ const VehicleDropdown = ({
   }, [page, branchids]);
 
   useEffect(() => {
-    if (value && Array.isArray(value)) {
-      const selected = dropDownOptions.filter((option) =>
-        value.some((val) => val === option.value)
-      );
-      setSelectedOption(selected);
+    if (value) {
+      if (Array.isArray(value)) {
+        const selected = dropDownOptions.filter((option) =>
+          value.includes(option.value)
+        );
+        setSelectedOption(selected);
+      } else {
+        const selected = dropDownOptions.find((option) => option.value === value) || null;
+        setSelectedOption(selected);
+      }
     } else {
-      setSelectedOption(value);
+      setSelectedOption(isMulti ? [] : null);
     }
   }, [value, dropDownOptions, branchids]);
-
+  
   return (
     <Select
       options={loading ? [] : dropDownOptions} 

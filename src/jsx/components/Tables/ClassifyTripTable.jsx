@@ -44,7 +44,7 @@ const ClassifyTripTable = ({
             <span>{item.fuelConsumption}</span>
           </td>
           <td>
-            <span>{item.driver?.firstName +" "+ item.driver?.lastName}</span>
+            <span>{item.driverId?.firstName +" "+ item.driverId?.lastName}</span>
           </td>
 
           <td>

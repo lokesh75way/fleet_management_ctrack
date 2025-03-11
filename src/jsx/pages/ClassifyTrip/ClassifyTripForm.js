@@ -50,7 +50,6 @@ const ClassifyTripForm = () => {
         await createTrip(data);
         notifySuccess("New Trip Created!");
         navigate("/settings/classifyTrips");
-        console.log("Submit botn", data);
       } catch (error) {
         console.log("Error", error);
         notifyError("Some error occured !!");
