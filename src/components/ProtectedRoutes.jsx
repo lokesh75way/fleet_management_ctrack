@@ -14,7 +14,6 @@ const ProtectedRoute = ({ module, operation, Component }) => {
   }, [userPermission, module, operation, can]);
 
   if (hasPermission === null) {
-    console.log("Waiting for permissions to load...");
     return <Loader />;
   }
 
@@ -22,8 +21,6 @@ const ProtectedRoute = ({ module, operation, Component }) => {
     console.log(`Access Denied: Module - ${module}, Operation - ${operation}`);
     return <Navigate to="/dashboard" replace />;
   }
-
-  console.log(`Access Granted: Module - ${module}, Operation - ${operation}`);
 
   return Component;
 };

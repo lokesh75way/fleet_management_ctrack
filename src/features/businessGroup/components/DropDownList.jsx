@@ -56,13 +56,13 @@ const GroupDropdownList = ({
   useEffect(() => {
     const initializeValue = async () => {
       if (!value) {
-          const userGroup = userDetails.user.businessGroupId[0];  
-          const defaultOption = {
-            label: userGroup?.groupName,
-            value: userGroup?._id,
-          };
-          setSelectedOption(defaultOption);
-          onChange(defaultOption);
+        const userGroup = userDetails.user.businessGroupId[0];
+        const defaultOption = {
+          label: userGroup?.groupName,
+          value: userGroup?._id,
+        };
+        setSelectedOption(defaultOption);
+        onChange(defaultOption);
         return;
       }
       
@@ -104,7 +104,7 @@ const GroupDropdownList = ({
       fetchNextPage();
     }
   };
-
+  
   return (
     <Select
       options={options}

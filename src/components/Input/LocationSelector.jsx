@@ -32,12 +32,19 @@ const LocationSelector = ({
   const [countryCode, setCountryCode] = useState("IND");
 
   useEffect(() => {
-    GetCountries().then((result) => {
-      setCountriesList(result);
-    });
+    const fetchCountries = async () => {
+      try {
+        const result = await GetCountries();
+        setCountriesList(result);
+      } catch (error) {
+        console.error("Failed to fetch countries:", error);
+      }
+    };
+    fetchCountries();
   }, []);
+  
 
-  useEffect(() => {
+  useEffect(() => { 
     if (dValues && id) {
       setValue("city", dValues.city);
       setValue("country", dValues.country);
@@ -69,48 +76,57 @@ const LocationSelector = ({
         setStateList(result);
       });
     }
-  }, [locationData, id, dValues]);
-
+  }, [locationData, id, dValues, countriesList]);
+ 
   const isoToCountryId = (isoCode) => {
     const country = countriesList.find((country) => country.iso3 === isoCode);
     return country ? country.id : null;
   };
 
   const handleCountryChange = async (selectedOption) => {
-    const selectedIsoCode = selectedOption.value;
+    try {
+        const selectedIsoCode = selectedOption.value;
+        const selectedCountryId = isoToCountryId(selectedIsoCode);
 
-    const selectedCountryId = isoToCountryId(selectedIsoCode);
+        if (!selectedCountryId) {
+            console.error("Invalid country ID for:", selectedIsoCode);
+            return;
+        }
 
-    const selectedCountry = countriesList.find(
-      (country) => country.iso3 === selectedIsoCode
-    );
-    setCountryCode(selectedCountry.iso2);
+        const selectedCountry = countriesList.find(country => country.iso3 === selectedIsoCode);
+        setCountryCode(selectedCountry.iso2);
+        setValue("country", selectedIsoCode);
+        setSelectedCountry({ value: selectedIsoCode, label: selectedCountry.name });
 
-    setValue("country", selectedIsoCode);
-    setSelectedCountry({ value: selectedIsoCode, label: selectedCountry.name });
-    setStateList([]);
-    setSelectedState({
-      value: "",
-      label: "",
-    });
-    const result = await GetState(selectedCountryId);
-    setStateList(result);
-  };
+        setSelectedState(null);  
+        setValue("state", "");  
+        setStateList([]);   
+
+        const result = await GetState(selectedCountryId);
+        if (result.length > 0) {
+            setStateList(result);
+        } else {
+            console.warn("No states found for:", selectedCountry.name);
+        }
+    } catch (error) {
+        console.error("Failed to fetch states:", error);
+    }
+};
 
   const handleStateChange = (selectedOption) => {
     const selectedStateId = selectedOption.value;
-    const selectedState = stateList.find(
-      (state) => state.name === selectedStateId
-    );
-    if (
-      selectedCountry?.label === "United Arab Emirates" &&
-      selectedState?.name.endsWith(" Emirate")
-    ) {
-      selectedState.name = selectedState.name.replace(" Emirate", "");
+    const selectedState = stateList.find(state => state.name === selectedStateId);
+    if (!selectedState) return;
+
+    let formattedStateName = selectedState.name;
+    if (selectedCountry?.label === "United Arab Emirates" &&
+        selectedState.name.endsWith(" Emirate")) {
+        formattedStateName = selectedState.name.replace(" Emirate", "");
     }
-    setValue("state", selectedState.name);
-    setSelectedState({ value: selectedState.name, label: selectedState.name });
-  };
+
+    setValue("state", formattedStateName);
+    setSelectedState({ value: formattedStateName, label: formattedStateName });
+};
 
   const getStateName = (state) => {
     if (
