@@ -47,7 +47,7 @@ const CardWidget = ({ usageData }) => {
         const { totalCount: companyCount } = companies.data;
         setCompanyCount(companyCount);
 
-        const { count: userCount } = await getAllUser();
+        const { totalCount: userCount } = await getAllUser();
         setUserCount(userCount);
 
         const { data: branch } = await getAllBranch();
