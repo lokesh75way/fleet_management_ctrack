@@ -119,7 +119,7 @@ const CreateVehicle = () => {
     onError,
   });
   const { mutate: editVeicle, isPending: editPending } = useMutation({
-    mutationFn: ({ data, id }) => updateVehicles(data, id),
+    mutationFn: ({ data, vehicleId }) => updateVehicles(data, vehicleId),
     onSuccess: () => {
       notifySuccess("Vehicle Updated Successfully");
       queryClient.invalidateQueries(["vehicles"]);
@@ -171,9 +171,9 @@ const CreateVehicle = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle={t("vehicle")}
-        pageTitle={vehicleId ? t("edit") : t("create")}
-        parentTitle={t("vehicle")}
+        mainTitle={"Vehicle"}
+        pageTitle={vehicleId ? "Edit" : "Create"}
+        parentTitle={"Vehicle"}
       />
       <div className="m-2 p-2">
         <FormProvider>

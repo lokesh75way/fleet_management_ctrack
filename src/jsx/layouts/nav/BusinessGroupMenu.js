@@ -78,7 +78,7 @@ export const BusinessGroupMenuList = [
     content: [
       {
         title: "Technician Details",
-        to: "/technician/details",
+        to: "/technician",
       },
       {
         title: "Technician Tasks",

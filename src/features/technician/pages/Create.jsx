@@ -1,54 +1,76 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Nav, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-import MainPagetitle from "@/components/MainPagetitle";
-import UserForm from "../components/Form";
-import { subUserAccountSchema, subUserEditAccountSchema } from "@/utils/yup";
+import {
+  technicianAddressSchema,
+  technicianGeneralSchema,
+  technicianLeaveSchema,
+} from "@/utils/yup";
 import { notifyError, notifySuccess } from "@/utils/toast";
-import { createUser, getUserById, updateUser } from "../api";
 import { getApiErrorMessage } from "@/utils/helper";
+import { createTechnician, getTechnicianById, updateTechnician } from "../api";
+import MainPagetitle from "@/components/MainPagetitle";
+import General from "../components/Form/General";
+import Address from "../components/Form/Address";
+import Leave from "../components/Form/Leave";
 import Loader from "@/components/Loader";
 
-const CreateUser = () => {
+const CreateTechnician = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabHeading = [t("account")];
-  const component = [UserForm];
+  const tabHeading = [t("general"), t("address"), t("leave")];
+  const component = [General, Address, Leave];
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const userDetails = useSelector((state) => state.auth.user);
 
   const {
-    data: userData,
+    data: technicianData,
     isError,
     isLoading,
   } = useQuery({
-    queryKey: ["user", id],
-    queryFn: () => getUserById(id),
+    queryKey: ["technician", id],
+    queryFn: () => getTechnicianById(id),
     enabled: !!id,
     staleTime: Infinity,
   });
 
-  const parsedUserData = useMemo(() => {
+  const parsedTechnicianData = useMemo(() => {
     return {
-      ...userData,
+      ...technicianData,
+      noOfDaysCL: technicianData?.leave?.[0]?.days,
+      noOfDays: technicianData?.leave?.[1]?.days,
+      noOfDaysPL: technicianData?.leave?.[2]?.days,
     };
-  }, [userData]);
+  }, [technicianData]);
 
   useEffect(() => {
     if (isError && !!id) {
-      notifyError("Not able to fetch user data");
+      notifyError("Not able to fetch technician data");
       navigate("/not-found");
     }
   }, [isError && id]);
+
+  const onError = (err) => notifyError(getApiErrorMessage(err));
+
+  const { mutate: editTechniciaMutation, isPending: editPending } = useMutation(
+    {
+      mutationFn: ({ data, id }) => updateTechnician(id, data),
+      onSuccess: () => {
+        notifySuccess("Technician Updated Successfully");
+        queryClient.invalidateQueries(["technicians"]);
+        queryClient.invalidateQueries(["technician", id]);
+        navigate("/technician");
+      },
+      onError,
+    }
+  );
 
   const {
     register,
@@ -57,51 +79,48 @@ const CreateUser = () => {
     getValues,
     control,
     handleSubmit,
-    watch,
   } = useForm({
-    resolver: yupResolver(id ? subUserEditAccountSchema : subUserAccountSchema),
-    values: parsedUserData,
+    resolver: yupResolver(
+      activeIndex === 0
+        ? technicianGeneralSchema
+        : activeIndex === 1
+          ? technicianAddressSchema
+          : technicianLeaveSchema
+    ),
+    values: parsedTechnicianData,
   });
 
-  const onError = (err) => notifyError(getApiErrorMessage(err));
-
-  const { mutate: ediUserMutation, isPending: editPending } = useMutation({
-    mutationFn: ({ data, id }) => updateUser(id, data),
-    onSuccess: () => {
-      notifySuccess("User Updated Successfully");
-      queryClient.invalidateQueries(["users"]);
-      navigate("/user");
-    },
-    onError,
-  });
-
-  const { mutate: createUserMutation, isPending: createPending } = useMutation({
-    mutationFn: createUser,
-    onSuccess: () => {
-      notifySuccess("New User Created");
-      queryClient.invalidateQueries(["users"]);
-      navigate("/user");
-    },
-    onError,
-  });
+  const { mutate: createTechnicianMutation, isPending: createPending } =
+    useMutation({
+      mutationFn: createTechnician,
+      onSuccess: () => {
+        notifySuccess("New Technician Created");
+        queryClient.invalidateQueries(["technicians"]);
+        navigate("/technician");
+      },
+      onError,
+    });
 
   const onSubmit = (data) => {
-    if (id) {
-      ediUserMutation({ id, data });
-    } else {
-      data.role = "USER";
-      data.parent = userDetails.userName;
-      data.type = "STAFF";
-      createUserMutation(data);
+    if (activeIndex === tabHeading.length - 1) {
+      if (id) {
+        editTechniciaMutation({ id, data });
+      } else {
+        createTechnicianMutation(data);
+      }
+      return;
     }
+    setActiveIndex((prevIndex) =>
+      Math.min(prevIndex + 1, tabHeading.length - 1)
+    );
   };
 
   return (
     <>
       <MainPagetitle
-        mainTitle="User"
-        pageTitle={id ? "Edit" : "Create"}
-        parentTitle={"User"}
+        mainTitle={t("technician")}
+        pageTitle={id ? t("edit") : t("create")}
+        parentTitle={t("technician")}
       />
       <div className="m-2 p-2">
         <FormProvider>
@@ -141,10 +160,11 @@ const CreateUser = () => {
                             register={register}
                             getValues={getValues}
                             errors={errors}
-                            onSubmit={onSubmit}
                             handleSubmit={handleSubmit}
-                            isFormSubmitting={createPending || editPending}
-                            watch={watch}
+                            onSubmit={onSubmit}
+                            isFormSubmitting={
+                              createPending || editPending || isLoading
+                            }
                           />
                         </Tab.Pane>
                       );
@@ -159,4 +179,4 @@ const CreateUser = () => {
     </>
   );
 };
-export default CreateUser;
+export default CreateTechnician;

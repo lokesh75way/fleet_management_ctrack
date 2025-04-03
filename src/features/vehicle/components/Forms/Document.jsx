@@ -101,7 +101,15 @@ const Document = ({
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
-                        selected={getValues(`documents.${index}.issueDate`)}
+                        selected={
+                          typeof getValues(`documents.${index}.issueDate`) ==
+                            "string" &&
+                          getValues(`documents.${index}.issueDate`)
+                            ? new Date(
+                                getValues(`documents.${index}.issueDate`)
+                              )
+                            : getValues(`documents.${index}.issueDate`)
+                        }
                         className="form-control customDateHeight"
                         onChange={(newValue) => {
                           setValue(`documents.${index}.issueDate`, newValue);
@@ -113,7 +121,7 @@ const Document = ({
                             let temp = [...documents];
                             temp[index] = {
                               documentType: getValues(
-                                `documents.${index}.fieldName`
+                                `documents.${index}.documentType`
                               ),
                               file: getValues(`documents.${index}.file`),
                               issueDate: newValue,
@@ -137,7 +145,15 @@ const Document = ({
                     control={control}
                     render={({ value, name }) => (
                       <DatePicker
-                        selected={getValues(`documents.${index}.expireDate`)}
+                        selected={
+                          typeof getValues(`documents.${index}.expireDate`) ==
+                            "string" &&
+                          getValues(`documents.${index}.expireDate`)
+                            ? new Date(
+                                getValues(`documents.${index}.expireDate`)
+                              )
+                            : getValues(`documents.${index}.expireDate`)
+                        }
                         className="form-control customDateHeight"
                         onChange={(newValue) => {
                           setValue(`documents.${index}.expireDate`, newValue);
@@ -149,7 +165,7 @@ const Document = ({
                             let temp = [...documents];
                             temp[index] = {
                               documentType: getValues(
-                                `documents.${index}.fieldName`
+                                `documents.${index}.documentType`
                               ),
                               file: getValues(`documents.${index}.file`),
                               issueDate: getValues(

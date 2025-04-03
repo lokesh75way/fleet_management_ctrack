@@ -16,6 +16,9 @@ import CompanyRoutes from "@/features/company/pages";
 import BranchRoutes from "@/features/branch/pages";
 import VehicleRoutes from "@/features/vehicle/pages";
 import DriverRoutes from "@/features/driver/pages";
+import UserRoutes from "@/features/user/pages";
+import TemplateRotues from "@/features/featureTemplate/pages";
+import TechnicianRotues from "@/features/technician/pages";
 
 const TripClassification = React.lazy(
   () => import("./pages/company/reports/TripClassification")
@@ -62,25 +65,18 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Technician = React.lazy(() => import("./pages/Technician"));
 const DriverTracking = React.lazy(
   () => import("../features/vehicle/pages/Tracking")
 );
 const CompanyTracking = React.lazy(
   () => import("./pages/admin/tracking/CompanyTracking")
 );
-const TechnicianForm = React.lazy(
-  () => import("./pages/admin/settings/CreateForms/TechnicianForm")
-);
-const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
-const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const Permission = React.lazy(() => import("./pages/Permission"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
-const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
 const MyProfile = React.lazy(
   () => import("./pages/businessUser/profile/MyProfile")
 );
@@ -117,49 +113,11 @@ const BusinessGroupRoutes = () => {
     { module: "*", url: "reports/generated", component: <Report /> },
     { module: "*", url: "general", component: <General /> },
     { module: "*", url: "master", component: <Master /> },
-
-    {
-      module: "technician",
-      url: "technician/details",
-      component: <Technician />,
-    },
-    {
-      module: "technician",
-      operation: "add",
-      url: "technician/details/create",
-      component: <TechnicianForm />,
-    },
-    {
-      module: "technician",
-      url: "technician/tasks",
-      component: <TechnicianTask />,
-    },
-    {
-      module: "technician",
-      operation: "modify",
-      url: "technician/edit/:id",
-      component: <TechnicianForm />,
-    },
     {
       module: "company",
       url: "company-tracking",
       component: <CompanyTracking />,
     },
-
-    {
-      module: "subUser",
-      operation: "add",
-      url: "user/create",
-      component: <SubUserForm />,
-    },
-    {
-      module: "subUser",
-      operation: "add",
-      url: "user/edit/:id",
-      component: <SubUserForm />,
-    },
-
-    { module: "subUser", url: "user", component: <SubUser /> },
 
     { module: "settings", url: "/settings/alert", component: <Alert /> },
     {
@@ -174,9 +132,6 @@ const BusinessGroupRoutes = () => {
       url: "/settings/geofence/map",
       component: <GeofenceMap />,
     },
-    // groups
-    { module: "groups", url: "groups", component: <CreateGroups /> },
-    { module: "groups", url: "groups/permission", component: <Permission /> },
 
     //Reports
     {
@@ -248,6 +203,10 @@ const BusinessGroupRoutes = () => {
           <Route path="/branch/*" element={<BranchRoutes />} />
           <Route path="/vehicle/*" element={<VehicleRoutes />} />
           <Route path="/driver/*" element={<DriverRoutes />} />
+          <Route path="/user/*" element={<UserRoutes />} />
+          {/* TODO: change path to template */}
+          <Route path="/groups/*" element={<TemplateRotues />} />
+          <Route path="/technician/*" element={<TechnicianRotues />} />
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>

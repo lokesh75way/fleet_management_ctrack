@@ -530,6 +530,10 @@ export const subUserAccountSchema = yup.object({
       } else {
         return value && value.length >= 8;
       }
+    })
+    .test("confirmPassword", "Passwords must match", function (value) {
+      const { password, isEdit } = this.parent;
+      return value === password || isEdit;
     }),
   mobileNumber: yup
     .string()

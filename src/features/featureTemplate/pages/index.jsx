@@ -4,31 +4,32 @@ import { Route, Routes } from "react-router-dom";
 import PermissionDenied from "@/components/PermissionDenied";
 import usePermissions from "@/hooks/usePermissions";
 import Error404 from "@/components/Error/Error404";
-const UserList = lazy(() => import("./List"));
-const UserForm = lazy(() => import("./Create"));
+const TemplateList = lazy(() => import("./List"));
+const TemplateForm = lazy(() => import("./Create"));
 
+// TODO: change module name from groups to template
 const routes = [
   {
-    module: "subUser",
+    module: "groups",
     operation: "add",
     url: "/create",
-    component: <UserForm />,
+    component: <TemplateForm />,
   },
   {
-    module: "subUser",
-    url: "/",
-    operation: "view",
-    component: <UserList />,
-  },
-  {
-    module: "subUser",
+    module: "groups",
     operation: "modify",
     url: "/edit/:id",
-    component: <UserForm />,
+    component: <TemplateForm />,
+  },
+  {
+    module: "groups",
+    url: "/",
+    operation: "view",
+    component: <TemplateList />,
   },
 ];
 
-const UserPages = () => {
+const TemplatePages = () => {
   const { can } = usePermissions();
 
   return (
@@ -53,4 +54,4 @@ const UserPages = () => {
   );
 };
 
-export default UserPages;
+export default TemplatePages;

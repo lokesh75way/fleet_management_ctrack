@@ -2,31 +2,33 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
-  useQuery,
   keepPreviousData,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
 
+import TechnicianTable from "../components/TechnicianTable";
+
 import TableSkeleton from "@/components/Skeleton/Table";
+import usePermissions from "@/hooks/usePermissions";
+import { getApiErrorMessage } from "@/utils/helper";
+import { notifyError } from "@/utils/toast";
+import usePagination from "@/hooks/usePagination";
 import MainPagetitle from "@/components/MainPagetitle";
 import Paginate from "@/components/Paginate";
-import UserTable from "../components/Table";
-import { getAllUser, deleteUser } from "../api";
-import usePagination from "@/hooks/usePagination";
-import usePermissions from "@/hooks/usePermissions";
-import { notifyError } from "@/utils/toast";
-import { getApiErrorMessage } from "@/utils/helper";
+import { deleteTechnician, getAllTechnicians } from "../api";
 
-const UserList = () => {
+const TechnicianList = () => {
   const { t } = useTranslation();
   const { can } = usePermissions();
   const { page, goToPage, setCount, totalCount } = usePagination();
+  const itemsPerPage = 10;
   const queryClient = useQueryClient();
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["users", page],
-    queryFn: () => getAllUser(page),
+    queryKey: ["technicians", page],
+    queryFn: () => getAllTechnicians(page),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
@@ -36,9 +38,9 @@ const UserList = () => {
       notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("users");
+      queryClient.invalidateQueries("technicians");
     },
-    mutationFn: deleteUser,
+    mutationFn: deleteTechnician,
   });
 
   useEffect(() => {
@@ -49,11 +51,26 @@ const UserList = () => {
     goToPage(selected + 1);
   };
 
-  const itemsPerPage = 10;
+  const headers = [
+    t("technicianId"),
+    t("technicianName"),
+    t("email"),
+    t("contactNumber"),
+    t("location"),
+    t("technicianNumber"),
+  ];
+
+  if (can("technician", "modify") || can("technician", "delete")) {
+    headers.push(t("action"));
+  }
 
   return (
     <>
-      <MainPagetitle mainTitle="User" pageTitle={"User"} parentTitle={"Home"} />
+      <MainPagetitle
+        mainTitle={t("technicianDetails")}
+        pageTitle={t("technicianDetails")}
+        parentTitle={t("home")}
+      />
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">
@@ -61,17 +78,17 @@ const UserList = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t("users")}</h4>
+                    <h4 className="heading mb-0">{t("technician")}</h4>
                     <div>
-                      {can("subUser", "add") && (
+                      {can("technician", "add") && (
                         <Link
-                          to={"/user/create"}
+                          to={"/technician/create"}
                           className="btn btn-primary btn-sm ms-1"
                           data-bs-toggle="offcanvas"
                         >
-                          + {t("addUser")}
+                          + {t("technician")}
                         </Link>
-                      )}{" "}
+                      )}
                     </div>
                   </div>
                   <div
@@ -88,32 +105,18 @@ const UserList = () => {
                         >
                           <thead>
                             <tr>
-                              <th>{t("id")}</th>
-                              <th>{t("username")}</th>
-                              <th>{t("mobileNumber")}</th>
-                              <th>{t("email")}</th>
-                              <th>{t("location")}</th>
-                              {(can("subUser", "modify") ||
-                                can("subUser", "delete")) && (
-                                <th>{t("action")}</th>
-                              )}
+                              {headers.map((header) => (
+                                <th key={header}>{t(header)}</th>
+                              ))}
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
-                              <UserTable
-                                currentPage={page}
-                                itemsPerPage={itemsPerPage}
-                                tableData={data.data ?? []}
-                                onConfirmDelete={mutate}
-                              />
-                            ) : (
-                              <tr>
-                                <td colspan="10" rowSpan={2} height={150}>
-                                  <h1 className="text-center">No Data found!</h1>
-                                </td>
-                              </tr>
-                            )}
+                            <TechnicianTable
+                              onConfirmDelete={mutate}
+                              tableData={data.data || []}
+                              currentPage={page}
+                              itemsPerPage={itemsPerPage}
+                            />
                           </tbody>
                         </table>
                       )}
@@ -146,4 +149,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default TechnicianList;

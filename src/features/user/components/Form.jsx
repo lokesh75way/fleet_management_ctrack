@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
@@ -9,19 +9,15 @@ import { useSelector } from "react-redux";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
-import "@/assets/scss/pages/_driver-tracking.scss";
-import { getTemplates } from "../../../services/api/TemplateServices";
-import { notifyError } from "@/utils/toast";
-import { getAllGroups } from "@/features/businessGroup/api";
-import { getCompany } from "../../../services/api/CompanyServices";
-import { getAllBranch } from "../../../services/api/BranchServices";
-import BranchDropdown from "../../../jsx/components/BranchDropdown";
-import CompanyDropdown from "@/features/company/components/DropDownList";
 import GroupDropdown from "@/features/businessGroup/components/DropDownList";
-import VehicleDropdown from "../../../jsx/components/VehicleDropdown";
+import CompanyDropdown from "@/features/company/components/DropDownList";
+import BranchDropdown from "@/features/branch/components/DropDownList";
+import VehicleDropdown from "@/features/vehicle/components/DropdownList";
+import useUserLocation from "@/hooks/useUserLocation";
+
 import { unitOfDistanceOptions } from "../../../constants/options";
 import LocationSelector from "../../../components/Input/LocationSelector";
-import useUserLocation from "@/hooks/useUserLocation";
+import TemplateDropdownList from "@/features/featureTemplate/components/DropdownList";
 
 const customStyles = {
   control: (base) => ({
@@ -41,114 +37,16 @@ const UserForm = ({
   watch,
   isFormSubmitting,
 }) => {
-  const [allGroups, setAllGroups] = useState([]);
-  const [allCompanies, setAllCompanies] = useState([]);
-  const [allBranches, setAllBranches] = useState([]);
   const [TemplateOptions, setTemplateOptions] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [branchId, setBranchId] = useState([]);
-  const userDetails = useSelector((state) => state.auth.user);
   const { t } = useTranslation();
-
-  async function onGroupChange(groupId) {
-    const companies = allCompanies
-      .filter((item) => item?.companyId?.businessGroupId?._id == groupId)
-      .map((item) => ({
-        value: item?.companyId?._id,
-        label: item?.companyId?.companyName,
-      }));
-    setCompanyOptions(companies);
-    setValue("parentCompany", "");
-    setBranchOptions([]);
-  }
-  async function onCompanyChange(companyId) {
-    const branches = allBranches
-      .filter((item) => item?.companyId?._id == companyId)
-      .map((item) => ({ value: item?._id, label: item?.branchName }));
-    setBranchOptions(branches);
-  }
-
-  useEffect(() => {
-    const fetchOptions = async () => {
-      const response = await getAllGroups();
-      const companyResponse = await getCompany();
-      const branchResponse = await getAllBranch();
-      if (response.error) {
-        notifyError(response.error);
-      } else {
-        const groups = response.data;
-        setAllGroups(groups);
-        const groupOptions = groups.map((item) => ({
-          label: item?.businessGroupId?.groupName,
-          value: item?.businessGroupId?._id,
-        }));
-        setBusinessUserOptions(groupOptions);
-      }
-      if (companyResponse.error) {
-        notifyError(companyResponse.error);
-      } else {
-        const companies = companyResponse.data.data.data;
-        const companyOptions = companies.map((item) => ({
-          label: item.companyId?.companyName,
-          value: item.companyId?._id,
-        }));
-        setAllCompanies(companies);
-        // setCompanyOptions(companyOptions);
-      }
-      if (branchResponse.error) {
-        notifyError(branchResponse.error);
-      } else {
-        const branches = branchResponse.data.data;
-        const branchOptions = branches.map((item) => ({
-          label: item.branchName,
-          value: item._id,
-        }));
-        setAllBranches(branches);
-        setParentOptions(branchOptions);
-        // setBranchOptions(branchOptions);
-      }
-      setIsLoading(false);
-    };
-    setIsLoading(true);
-    fetchOptions();
-  }, []);
-
-  useEffect(() => {
-    const fetchOptions = async () => {
-      const response = await getTemplates();
-      if (response.error) {
-        notifyError(response.error);
-      } else {
-        const templates = response.data.data;
-        const tempOptions = templates.map((item) => ({
-          label: item.name,
-          value: item._id,
-        }));
-        setTemplateOptions(tempOptions);
-      }
-    };
-    fetchOptions();
-  }, []);
-
   const { id } = useParams();
-  // const User = JSON.parse(localStorage.getItem("userJsonData"));
-  const loggedinemail = localStorage.getItem("loginDetails-name");
-
-  const [filteredUserData, setFilteredUserData] = useState([]);
-  const [businessUserOptions, setBusinessUserOptions] = useState([]);
-  const [companyOptions, setCompanyOptions] = useState([]);
-  const [branchOptions, setBranchOptions] = useState([]);
-  const [parentOptions, setParentOptions] = useState([]);
   const { location: locationData, error: locationError } = useUserLocation();
 
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const [vehicles, setVehicles] = useState([]);
 
   return (
     <div className="p-4">
@@ -169,6 +67,8 @@ const UserForm = ({
                     setValue("companyId", "");
                     setBranch(null);
                     setValue("branchIds", "");
+                    setValue("vehicleIds", "");
+                    setVehicles([]);
                   }
                 }}
                 defaultValue={value}
@@ -178,6 +78,7 @@ const UserForm = ({
               />
             )}
           />
+          <Error errorName={errors.businessGroupId} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("company")}</label>
@@ -193,6 +94,8 @@ const UserForm = ({
                     setCompany(newValue);
                     setBranch(null);
                     setValue("branchIds", "");
+                    setValue("vehicleIds", "");
+                    setVehicles([]);
                   }
                 }}
                 groupId={watch("businessGroupId")}
@@ -204,6 +107,7 @@ const UserForm = ({
               />
             )}
           />
+          <Error errorName={errors.companyId} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("branch")}</label>
@@ -213,21 +117,25 @@ const UserForm = ({
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdown
+                companyId={watch("companyId")}
                 onChange={(newValue) => {
-                  const newArray = newValue.map((temp) => temp.value);
-                  setValue("branchIds", newArray);
-                  setBranchId(newArray);
+                  if (newValue?.value !== getValues("branchId")) {
+                    setValue("branchId", newValue?.value);
+                    setValue("branchIds", [newValue?.value]);
+                    setBranch(newValue);
+                    setValue("vehicleIds", "");
+                    setVehicles([]);
+                  }
                 }}
                 defaultValue={value}
+                value={branch}
                 customStyles={customStyles}
                 ref={ref}
-                companyId={watch("companyId")}
                 name={name}
-                isDisabled={!company?.value}
               />
             )}
           />
-          {!getValues("Branch") && <Error errorName={errors.parent} />}
+          <Error errorName={errors.branchId} />
         </div>
         <div className="col-xl-3 mb-3">
           <label className="form-label">{t("vehicle")}</label>
@@ -238,11 +146,13 @@ const UserForm = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <VehicleDropdown
                 onChange={(newValue) => {
-                  const newArray = newValue.map((temp) => temp.value);
+                  const newArray = newValue?.map((temp) => temp.value);
                   setValue("vehicleIds", newArray);
+                  setVehicles(newValue);
                 }}
-                value={value}
-                branchids={branchId}
+                defaultValue={value}
+                value={vehicles}
+                branchIds={watch("branchId")}
                 customStyles={customStyles}
                 ref={ref}
                 name={name}
@@ -262,7 +172,6 @@ const UserForm = ({
             label="Email"
             className="form-control"
             name="email"
-            defaultValue={filteredUserData[0] ? filteredUserData[0].email : ""}
             placeholder=""
           />
           <Error errorName={errors.email} />
@@ -277,9 +186,6 @@ const UserForm = ({
             label="User Name"
             name="userName"
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].userName : ""
-            }
           />
           <Error errorName={errors.userName} />
         </div>
@@ -298,9 +204,6 @@ const UserForm = ({
               e.target.value = temp < 1 ? "" : temp;
             }}
             placeholder=""
-            defaultValue={
-              filteredUserData[0] ? filteredUserData[0].mobileNumber : ""
-            }
           />
           <Error errorName={errors.mobileNumber} />
         </div>
@@ -327,9 +230,6 @@ const UserForm = ({
                   label="Password"
                   name="password"
                   placeholder=""
-                  defaultValue={
-                    filteredUserData[0] ? filteredUserData[0].password : ""
-                  }
                 />
                 <span
                   className="showPasswordIcon"
@@ -353,11 +253,6 @@ const UserForm = ({
                   label="Confirm Password"
                   name="confirmPassword"
                   placeholder=""
-                  defaultValue={
-                    filteredUserData[0]
-                      ? filteredUserData[0].confirmPassword
-                      : ""
-                  }
                 />
                 <span
                   className="showPasswordIcon"
@@ -380,18 +275,15 @@ const UserForm = ({
             name="featureTemplateId"
             control={control}
             rules={{ required: true }}
-            render={({ field }) => (
-              <Select
+            render={({ field: { onChange, value, name, ref } }) => (
+              <TemplateDropdownList
                 onChange={(e) => {
                   setValue("featureTemplateId", e.value);
                 }}
-                options={TemplateOptions}
-                ref={field.ref}
-                name={field.name}
+                ref={ref}
+                name={name}
+                defaultValue={value}
                 styles={customStyles}
-                value={TemplateOptions.find(
-                  (option) => option.value === field.value
-                )}
               />
             )}
           />

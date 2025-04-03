@@ -70,10 +70,10 @@ const BranchDropdownList = ({
   useEffect(() => {
     const initializeValue = async () => {
       if (!value && !defaultValue) {
-        if (!can("branch", "view") && userDetails?.companyId?.[0]) {
-          const userGroup = userDetails.companyId[0];
+        if (!can("branch", "view") && userDetails?.branchIds?.[0]) {
+          const userGroup = userDetails.branchIds[0];
           const defaultOption = {
-            label: userGroup?.companyName,
+            label: userGroup?.branchName,
             value: userGroup?._id,
           };
           setSelectedOption(defaultOption);

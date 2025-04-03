@@ -26,7 +26,7 @@ const usePermissions = () => {
 
   const can = (module, operation) => {
     if (module === "*") return true;
-    if (role == "SUPER_ADMIN") return true;
+    if (role === "SUPER_ADMIN") return true;
     if (
       allowedRoles.includes(role) &&
       !restrictedModules[role].includes(module)

@@ -4,31 +4,38 @@ import { Route, Routes } from "react-router-dom";
 import PermissionDenied from "@/components/PermissionDenied";
 import usePermissions from "@/hooks/usePermissions";
 import Error404 from "@/components/Error/Error404";
-const UserList = lazy(() => import("./List"));
-const UserForm = lazy(() => import("./Create"));
+const TechnicianList = lazy(() => import("./List"));
+const TechnicianFrom = lazy(() => import("./Create"));
+const Tasks = lazy(() => import("./Tasks"));
 
 const routes = [
   {
-    module: "subUser",
-    operation: "add",
-    url: "/create",
-    component: <UserForm />,
-  },
-  {
-    module: "subUser",
+    module: "technician",
     url: "/",
     operation: "view",
-    component: <UserList />,
+    component: <TechnicianList />,
   },
   {
-    module: "subUser",
-    operation: "modify",
+    module: "technician",
     url: "/edit/:id",
-    component: <UserForm />,
+    operation: "modify",
+    component: <TechnicianFrom />,
+  },
+  {
+    module: "technician",
+    url: "/create",
+    operation: "add",
+    component: <TechnicianFrom />,
+  },
+  {
+    module: "technician-tasks",
+    url: "/tasks",
+    operation: "view",
+    component: <Tasks />,
   },
 ];
 
-const UserPages = () => {
+const TechnicianPages = () => {
   const { can } = usePermissions();
 
   return (
@@ -53,4 +60,4 @@ const UserPages = () => {
   );
 };
 
-export default UserPages;
+export default TechnicianPages;

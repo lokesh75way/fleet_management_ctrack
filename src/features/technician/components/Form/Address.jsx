@@ -3,12 +3,12 @@ import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
 import { CountrySelect } from "react-country-state-city/dist/cjs";
-import Error from "../../../../components/Error/Error";
-import CustomInput from "../../../../components/Input/CustomInput";
 import "@/assets/scss/pages/_driver-tracking.scss";
-
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+
+import CustomInput from "@/components/Input/CustomInput";
+import Error from "@/components/Error/Error";
 
 const Address = ({
   register,
@@ -19,6 +19,7 @@ const Address = ({
   control,
   onSubmit,
   defaultCountry,
+  isFormSubmitting,
 }) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -37,9 +38,7 @@ const Address = ({
             name="address.street1"
             placeholder=""
           />
-          {!getValues("address.street1") && (
-            <Error errorName={errors.address?.street1} />
-          )}
+          {<Error errorName={errors.address?.street1} />}
         </div>
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
@@ -146,11 +145,11 @@ const Address = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t("submit")}
+          {t("next")}
         </Button>
       </div>
     </div>

@@ -3,12 +3,13 @@ import { FaUser } from "react-icons/fa";
 import { MdFence } from "react-icons/md";
 import { TbLocationFilled } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
-
+import "@/assets/scss/pages/_driver-tracking.scss";
 import { useQuery } from "@tanstack/react-query";
-import MainPagetitle from "@/components/MainPagetitle";
+
 import ShowMap from "../../../jsx/components/maps/ShowMap";
 import DriverTab from "../../../jsx/components/maps/DriverTab";
-import "@/assets/scss/pages/_driver-tracking.scss";
+
+import MainPagetitle from "@/components/MainPagetitle";
 import { notifyError } from "@/utils/toast";
 import { getVehiclesTraking } from "../api";
 

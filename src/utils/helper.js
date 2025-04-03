@@ -163,6 +163,9 @@ export const getApiErrorMessage = (error) => {
     message = response?.data?.errors?.[0]?.msg ?? "Validation error!";
   } else if (response?.message) {
     message = response.message;
+    if (message?.message) {
+      message = message.message;
+    }
   }
   return message;
 };

@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
-import Error from "../../../../components/Error/Error";
-import CustomInput from "../../../../components/Input/CustomInput";
 import "@/assets/scss/pages/_driver-tracking.scss";
-
 import { useTranslation } from "react-i18next";
-import CompanyDropdown from "../../../../features/company/components/DropDownList";
-import { useParams } from "react-router-dom";
+
+import CompanyDropdownList from "@/features/company/components/DropDownList";
+import CustomInput from "@/components/Input/CustomInput";
+import Error from "@/components/Error/Error";
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    padding: ".25rem 0 ",
+  }),
+};
+
 const General = ({
   register,
   setValue,
@@ -17,21 +24,17 @@ const General = ({
   getValues,
   handleSubmit,
   onSubmit,
+  isFormSubmitting,
 }) => {
   const [tempGender, setTempGender] = useState("");
   const [date, setDate] = useState({});
   const { t } = useTranslation();
-  const { id } = useParams();
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      padding: ".25rem 0 ",
-    }),
-  };
+
   const handleChange = (e) => {
     setTempGender(e.target.value);
     setValue("gender", e.target.value);
   };
+
   const minDate = new Date();
   minDate.setFullYear(minDate.getFullYear() - 100); // 100 years ago
   const maxDate = new Date();
@@ -48,18 +51,18 @@ const General = ({
             control={control}
             rules={{ required: true }}
             render={({ field: { onChange, value, name, ref } }) => (
-              <CompanyDropdown
+              <CompanyDropdownList
                 onChange={(newValue) => {
                   setValue("company", newValue.value);
                 }}
-                value={value}
+                defaultValue={value}
                 customStyles={customStyles}
                 ref={ref}
                 name={name}
               />
             )}
           />
-          {!getValues("company") && <Error errorName={errors.company} />}
+          {<Error errorName={errors.company} />}
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -273,11 +276,11 @@ const General = ({
       >
         <Button
           type="submit"
+          disabled={isFormSubmitting}
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
-          {t("submit")}
+          {t("next")}
         </Button>
       </div>
     </div>

@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use((config) => {
 });
 // TODO: make this default export
 export { axiosInstance };
-
+// TODO: remove below
 function initAxios() {
   axios.interceptors.request.use((config) => {
     const state = store.getState();

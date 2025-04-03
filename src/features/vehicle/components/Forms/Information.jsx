@@ -35,6 +35,7 @@ const Information = ({
   const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
   const { t } = useTranslation();
+  console.log({ errors });
 
   return (
     <div className="p-4 relative">
@@ -237,11 +238,11 @@ const Information = ({
                     required
                     register={register}
                     label="VINNumber"
-                    name="vinChassisNumber"
+                    name="vinNumber"
                     placeholder=""
-                    defaultValue={getValues("vinChassisNumber")}
+                    defaultValue={getValues("vinNumber")}
                   />
-                  <Error errorName={errors.vinChassisNumber} />
+                  <Error errorName={errors.vinNumber} />
                 </div>
                 <div className="col-xl-6 mb-3 ">
                   <label className="form-label">{t("engineNumber")}</label>

@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import Error from "../../../../components/Error/Error";
-import CustomInput from "../../../../components/Input/CustomInput";
+
+import CustomInput from "@/components/Input/CustomInput";
+import Error from "@/components/Error/Error";
 
 const Leave = ({
   handleNext,
@@ -12,6 +13,7 @@ const Leave = ({
   control,
   errors,
   getValues,
+  isFormSubmitting,
 }) => {
   return (
     <div className="p-4">
@@ -118,11 +120,11 @@ const Leave = ({
         }}
       >
         <Button
+          disabled={isFormSubmitting}
           type="submit"
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
           Submit
         </Button>
       </div>

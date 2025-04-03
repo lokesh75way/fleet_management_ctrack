@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 
@@ -63,38 +63,40 @@ const UnassinedVehicleList = () => {
                     id="employee-tbl_wrapper"
                     className="dataTables_wrapper no-footer"
                   >
-                    {isLoading || isFetching ? (
-                      <TableSkeleton />
-                    ) : (
-                      <table
-                        id="empoloyees-tblwrapper"
-                        className="table ItemsCheckboxSec dataTable no-footer mb-0"
-                      >
-                        <thead>
-                          <tr>
-                            <th>{t("id")}</th>
-                            <th>{t("vehicleName")}</th>
-                            {/* <th>{t("vehicleNumber")}</th> */}
-                            <th>{t("vehicleModel")}</th>
-                            <th>{t("vehicleType")}</th>
-                            <th>{t("IMEINumber")}</th>
-                            <th>{t("registrationNumber")}</th>
-                            <th>{t("status")}</th>
-                            {(can("vehicle", "modify") ||
-                              can("vehicle", "delete")) && (
-                              <th>{t("action")}</th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <UnassignedTable
-                            tableData={data.data}
-                            currentPage={page}
-                            itemsPerPage={itemsPerPage}
-                          />
-                        </tbody>
-                      </table>
-                    )}
+                    <div className="table-responsive">
+                      {isLoading || isFetching ? (
+                        <TableSkeleton />
+                      ) : (
+                        <table
+                          id="empoloyees-tblwrapper"
+                          className="table ItemsCheckboxSec dataTable no-footer mb-0"
+                        >
+                          <thead>
+                            <tr>
+                              <th>{t("id")}</th>
+                              <th>{t("vehicleName")}</th>
+                              {/* <th>{t("vehicleNumber")}</th> */}
+                              <th>{t("vehicleModel")}</th>
+                              <th>{t("vehicleType")}</th>
+                              <th>{t("IMEINumber")}</th>
+                              <th>{t("registrationNumber")}</th>
+                              <th>{t("status")}</th>
+                              {(can("vehicle", "modify") ||
+                                can("vehicle", "delete")) && (
+                                <th>{t("action")}</th>
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <UnassignedTable
+                              tableData={data.data}
+                              currentPage={page}
+                              itemsPerPage={itemsPerPage}
+                            />
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
                     <div className="d-sm-flex text-center justify-content-between align-items-center">
                       <div className="dataTables_info">
                         {t("showing")} {(page - 1) * 10 + 1} {t("to")}{" "}

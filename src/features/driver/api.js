@@ -1,6 +1,4 @@
-import axios from "axios";
-import initAxios from "../../services/api";
-initAxios();
+import {axiosInstance as axios} from "@/services/api";
 
 export const createDriver = async (body) => {
   return axios.post("/drivers", body);

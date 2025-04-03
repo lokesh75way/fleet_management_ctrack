@@ -16,6 +16,7 @@ import { deleteVehicle, getAllVehicles } from "../api";
 import usePagination from "@/hooks/usePagination";
 import { getApiErrorMessage } from "@/utils/helper";
 import usePermissions from "@/hooks/usePermissions";
+import { notifyError } from "@/utils/toast";
 
 const VehicleList = () => {
   const { t } = useTranslation();

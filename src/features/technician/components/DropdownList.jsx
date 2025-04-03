@@ -1,46 +1,43 @@
+import usePagination from "@/hooks/usePagination";
+import usePermissions from "@/hooks/usePermissions";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-import usePagination from "@/hooks/usePagination";
-import { getAllCompanies, getCompanyById } from "../api";
-import usePermissions from "@/hooks/usePermissions";
+import { getAllTechnicians, getTechnicianById } from "../api";
 import Spinner from "@/components/Loader/Spinner";
 
-const CompanyDropdownList = ({
+const TechnicianDropdownList = ({
   onChange,
   value,
-  defaultValue,
-  customStyles,
-  isDisabled,
   groupId,
+  customStyles,
   name,
+  ref,
+  isDisabled,
+  defaultValue,
 }) => {
   const [selectedOption, setSelectedOption] = useState(value);
   const { page, setPage } = usePagination();
   const { can } = usePermissions();
-  const userDetails = useSelector((state) => state.auth.user);
-  const { pathname } = useLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["companies", groupId],
+      queryKey: ["technicians", page],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllCompanies(pageParam, groupId);
+        return getAllTechnicians(pageParam);
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
         lastPage.data?.length ? page + 1 : null,
-      enabled: can("company", "view"),
+      enabled: can("technician", "view"),
       staleTime: Infinity,
     });
 
   const { refetch } = useQuery({
-    queryKey: ["company", defaultValue],
-    queryFn: () => getCompanyById(defaultValue),
+    queryKey: ["technician", defaultValue],
+    queryFn: () => getTechnicianById(defaultValue),
     enabled: false,
     staleTime: Infinity,
   });
@@ -48,10 +45,10 @@ const CompanyDropdownList = ({
   const options = useMemo(() => {
     let flatData = [];
     data?.pages.forEach((pageData) => {
-      pageData.data.forEach((group) => {
+      pageData.data.forEach((item) => {
         flatData.push({
-          label: group?.companyId?.companyName,
-          value: group?.companyId?._id,
+          label: `${item?.firstName ?? ""} ${item?.lastName ?? ""}`,
+          value: item?._id,
         });
       });
     });
@@ -69,15 +66,6 @@ const CompanyDropdownList = ({
   useEffect(() => {
     const initializeValue = async () => {
       if (!value && !defaultValue) {
-        if (!can("company", "view") && userDetails?.companyId?.[0]) {
-          const userGroup = userDetails.companyId[0];
-          const defaultOption = {
-            label: userGroup?.companyName,
-            value: userGroup?._id,
-          };
-          setSelectedOption(defaultOption);
-          onChange(defaultOption);
-        }
         return;
       }
 
@@ -91,24 +79,24 @@ const CompanyDropdownList = ({
           return;
         }
         try {
-          const { data: groupData } = await refetch();
-          if (groupData?.companyId) {
+          const { data: technician } = await refetch();
+          if (technician) {
             const newOption = {
-              label: groupData.companyId.companyName,
-              value: groupData.companyId._id,
+              label: `${technician?.firstName ?? ""} ${technician?.lastName ?? ""}`,
+              value: technician._id,
             };
             setSelectedOption(newOption);
             onChange(newOption);
           }
         } catch (error) {
-          console.error("Error fetching company details:", error);
+          console.error("Error fetching technician details:", error);
         }
       } else {
         setSelectedOption(value);
       }
     };
     initializeValue();
-  }, [defaultValue, options, pathname, userDetails, isFetching]);
+  }, [defaultValue, options, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
@@ -119,6 +107,13 @@ const CompanyDropdownList = ({
     }
   };
 
+  //
+
+  //   useEffect(() => {
+  //     const selected = dropdownOptions.find((option) => option.value === value);
+  //     setSelectedOption(selected);
+  //   }, [value, dropdownOptions, groupId]);
+
   return (
     <Select
       options={options}
@@ -126,7 +121,8 @@ const CompanyDropdownList = ({
       onChange={onChange}
       styles={customStyles}
       name={name}
-      isDisabled={isDisabled || !can("company", "view")}
+      ref={ref}
+      isDisabled={isDisabled || !can("technician", "view")}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       isLoading={isFetching}
@@ -136,5 +132,4 @@ const CompanyDropdownList = ({
     />
   );
 };
-
-export default CompanyDropdownList;
+export default TechnicianDropdownList;
