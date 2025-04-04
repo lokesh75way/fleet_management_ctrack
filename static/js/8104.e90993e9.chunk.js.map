@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/8104.e90993e9.chunk.js","mappings":"oJAEA,MAIA,EAJmBA,KACVC,EAAAA,EAAAA,KAAA,MAAAC,SAAI,c","sources":["jsx/pages/company/reports/Customized.jsx"],"sourcesContent":["import React from \"react\";\n\nconst Customized = () => {\n  return <h1>Customized</h1>;\n};\n\nexport default Customized;\n"],"names":["Customized","_jsx","children"],"sourceRoot":""}

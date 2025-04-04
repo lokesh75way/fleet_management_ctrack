@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/9979.92e132f3.chunk.js","mappings":"qJAEA,MAIA,EAJkBA,KACTC,EAAAA,EAAAA,KAAA,OAAAC,SAAK,a","sources":["jsx/pages/ContactUs.jsx"],"sourcesContent":["import React from \"react\";\n\nconst ContactUs = () => {\n  return <div>ContactUs</div>;\n};\n\nexport default ContactUs;\n"],"names":["ContactUs","_jsx","children"],"sourceRoot":""}

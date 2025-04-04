@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[4090],{24090:(e,s,c)=>{c.r(s),c.d(s,{default:()=>u});c(78109);var h=c(47337);const u=()=>(0,h.jsx)("h1",{children:"OBD"})}}]);
-//# sourceMappingURL=4090.9435ed2c.chunk.js.map

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkFLEET=self.webpackChunkFLEET||[]).push([[3180],{50799:(e,n,t)=>{t.r(n),t.d(n,{default:()=>i});t(65043);var s=t(70579);const i=function(){return(0,s.jsx)("div",{style:{height:"90vh",width:"100%",display:"flex",alignItems:"center",justifyContent:"center"},children:(0,s.jsx)("h1",{children:"Permission Denied"})})}}}]);
+//# sourceMappingURL=3180.de1c7f56.chunk.js.map
