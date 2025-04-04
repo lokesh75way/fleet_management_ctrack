@@ -21,6 +21,21 @@ import Address from "../components/Form/Address";
 import Leave from "../components/Form/Leave";
 import Loader from "@/components/Loader";
 
+const leaveArr = [
+  {
+    leaveType: "CASUAL",
+    days: "",
+  },
+  {
+    leaveType: "SICK",
+    days: "",
+  },
+  {
+    leaveType: "PRIVILEGE",
+    days: "",
+  },
+];
+
 const CreateTechnician = () => {
   const { id } = useParams();
   const { t } = useTranslation();
@@ -42,12 +57,11 @@ const CreateTechnician = () => {
   });
 
   const parsedTechnicianData = useMemo(() => {
-    return {
-      ...technicianData,
-      noOfDaysCL: technicianData?.leave?.[0]?.days,
-      noOfDays: technicianData?.leave?.[1]?.days,
-      noOfDaysPL: technicianData?.leave?.[2]?.days,
-    };
+    if (technicianData)
+      return {
+        ...technicianData,
+        leave: technicianData.leave.length ? technicianData.leave : leaveArr,
+      };
   }, [technicianData]);
 
   useEffect(() => {
@@ -61,7 +75,7 @@ const CreateTechnician = () => {
 
   const { mutate: editTechniciaMutation, isPending: editPending } = useMutation(
     {
-      mutationFn: ({ data, id }) => updateTechnician(id, data),
+      mutationFn: ({ data, id }) => updateTechnician(data, id),
       onSuccess: () => {
         notifySuccess("Technician Updated Successfully");
         queryClient.invalidateQueries(["technicians"]);
@@ -80,6 +94,9 @@ const CreateTechnician = () => {
     control,
     handleSubmit,
   } = useForm({
+    defaultValues: {
+      leave: leaveArr,
+    },
     resolver: yupResolver(
       activeIndex === 0
         ? technicianGeneralSchema

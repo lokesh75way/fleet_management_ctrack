@@ -25,7 +25,8 @@ const CustomInput = ({
   return (
     <div>
       <input
-        {...register(`${name}`)}
+        {...register?.(`${name}`)}
+        onChange={register ? register(`${name}`).onChange : onChange}
         name={name}
         type={type}
         onKeyDown={handleKeyDown}
@@ -34,7 +35,7 @@ const CustomInput = ({
         value={value}
         placeholder={placeholder}
         className="form-control"
-        defaultValue={defaultValue || register(`${name}`).value}
+        defaultValue={defaultValue || register?.(`${name}`).value}
         disabled={disabled}
         min={min}
         autoComplete="new-password"

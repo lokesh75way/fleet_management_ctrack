@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
 import GroupDropdown from "@/features/businessGroup/components/DropDownList";
 import CompanyDropdown from "@/features/company/components/DropDownList";
 import BranchDropdown from "@/features/branch/components/DropDownList";
+import LocationSelector from "@/components/Input/LocationSelector";
+import useUserLocation from "@/hooks/useUserLocation";
 
 const customStyles = {
   control: (base) => ({
@@ -36,10 +38,13 @@ const Profile = ({
   const { t } = useTranslation();
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
+  const { location: locationData, error: locationError } = useUserLocation();
+  const { id } = useParams();
 
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
+        <div>{locationError && <p>{locationError}</p>}</div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
             {t("businessGroup")} <span className="text-danger">*</span>
@@ -170,54 +175,23 @@ const Profile = ({
           />
           <Error errorName={errors.employeeNumber} />
         </div>
-        <div className="col-xl-6 mb-3">
-          <label className="form-label">
-            {t("country")} <span className="text-danger">*</span>
-          </label>
-          <CountrySelect
-            onChange={(e) => {
-              setSelectStateName({ name: "Select State" });
-              setCountryid(e.id);
-              setValue("country", e.name);
-              setIsStateDisabled(false);
-            }}
-            containerClassName="bg-white"
-            inputClassName="border border-white"
-            placeHolder="Select Country"
-          />
-          {!getValues("country") && <Error errorName={errors.country} />}
-        </div>
-        <div
-          className={`${isStateDisabled ? "col-xl-6 mb-3 pe-none" : "col-xl-6 mb-3"}`}
-        >
-          <label className="form-label">{t("state")}</label>
-          <div style={{ background: "white" }}>
-            <StateSelect
-              countryid={isStateDisabled ? 0 : countryid}
-              onChange={(e) => {
-                setValue("state", e.name);
-              }}
-              containerClassName="bg-white"
-              inputClassName="border border-white customSelectHeight"
-              placeHolder="Select State"
-              defaultValue={selectStateName}
-            />
-          </div>
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            {t("city")} <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="City"
-            name="city"
-            placeholder=""
-            defaultValue={""}
-          />
-          <Error errorName={errors.city} />
-        </div>
+        <LocationSelector
+          register={register}
+          setValue={setValue}
+          dValues={{
+            country: getValues("country"),
+            state: getValues("state"),
+            city: getValues("city"),
+          }}
+          errors={errors}
+          getValues={getValues}
+          locationData={locationData}
+          id={id}
+          showCity={true}
+          showtimeZone={false}
+          Comptype={""}
+        />
+
         <div className="col-xl-6 mb-3">
           <label htmlFor="exampleFormControlInput4" className="form-label">
             {t("zipCode")}

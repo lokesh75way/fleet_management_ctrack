@@ -23,6 +23,7 @@ const LocationSelector = ({
   id,
   showCity,
   Comptype,
+  showtimeZone = true,
 }) => {
   const { t } = useTranslation();
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -45,7 +46,6 @@ const LocationSelector = ({
         const option = countryOptions.find(
           (option) => option.value == dValues?.country
         );
-        console.log({ option });
         if (option) handleCountryChange(option);
       }
       if (dValues?.state) {
@@ -178,7 +178,7 @@ const LocationSelector = ({
           <Error errorName={errors.city} />
         </div>
       )}
-      {showCity && (
+      {showCity && showtimeZone && (
         <TimeZoneSelector
           setValue={setValue}
           id={id}

@@ -658,24 +658,17 @@ export const technicianAddressSchema = yup
 export const technicianLeaveSchema = yup
   .object()
   .shape({
-    noOfDaysCL: yup
-      .number()
-      .typeError("No of Days must be a number")
-      .positive("No of Days must be a positive number")
-      .integer("No of Days must be an integer")
-      .required("No of Days for Casual Leave is required"),
-    noOfDays: yup
-      .number()
-      .typeError("No of Days must be a number")
-      .positive("No of Days must be a positive number")
-      .integer("No of Days must be an integer")
-      .required("No of Days for Sick Leave is required"),
-    noOfDaysPL: yup
-      .number()
-      .typeError("No of Days must be a number")
-      .positive("No of Days must be a positive number")
-      .integer("No of Days must be an integer")
-      .required("No of Days for Privilege Leave is required"),
+    leave: yup.array(
+      yup.object().shape({
+        leaveType: yup.string().required("Leave Type is required"),
+        days: yup
+          .number()
+          .required("No of Days required")
+          .typeError("No of Days must be a number")
+          .positive("No of Days must be a positive number")
+          .integer("No of Days must be an integer"),
+      })
+    ),
   })
   .required();
 

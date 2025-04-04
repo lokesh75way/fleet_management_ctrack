@@ -172,6 +172,11 @@ const BranchForm = ({
         <LocationSelector
           register={register}
           setValue={setValue}
+          dValues={{
+            country: getValues("country"),
+            state: getValues("state"),
+            city: getValues("city"),
+          }}
           errors={errors}
           getValues={getValues}
           locationData={locationData}

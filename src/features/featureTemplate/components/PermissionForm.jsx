@@ -410,7 +410,10 @@ const PermissionForm = () => {
               customStyles={{
                 control: (base) => ({ ...base, width: "18rem" }),
               }}
-              value={selectedTemplate}
+              value={{
+                value: selectedTemplate?._id,
+                label: selectedTemplate?.name,
+              }}
               onChange={(selectedOption) => {
                 const selectedTemplateData = groupsDataState.find(
                   (template) => template._id === selectedOption.value

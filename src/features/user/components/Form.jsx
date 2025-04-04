@@ -292,7 +292,7 @@ const UserForm = ({
                 name={name}
                 defaultValue={getValues("featureTemplateId")}
                 value={template}
-                styles={customStyles}
+                customStyles={customStyles}
               />
             )}
           />

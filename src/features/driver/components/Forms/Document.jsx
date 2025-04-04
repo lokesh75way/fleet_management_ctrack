@@ -62,8 +62,6 @@ const Document = ({
           </Button>
         </div>
         {fields.map((item, index) => {
-          console.log({ item });
-
           return (
             <>
               <div key={item.id} className="row mb-4 ">

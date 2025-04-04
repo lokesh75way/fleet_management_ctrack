@@ -1,8 +1,15 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { useFieldArray } from "react-hook-form";
 
 import CustomInput from "@/components/Input/CustomInput";
 import Error from "@/components/Error/Error";
+
+const labels = {
+  CASUAL: "Casual Leave",
+  SICK: "Sick Leave",
+  PRIVILEGE: "Privilege Leave",
+};
 
 const Leave = ({
   handleNext,
@@ -15,101 +22,60 @@ const Leave = ({
   getValues,
   isFormSubmitting,
 }) => {
+  const { fields, update } = useFieldArray({
+    control,
+    name: "leave",
+  });
+
   return (
     <div className="p-4">
       <div className="row" style={{ width: "70%", margin: "auto" }}>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            Casual Leave
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Casual Leave"
-            name="casualLeave"
-            placeholder=""
-            defaultValue="Casual Leave"
-            disabled
-          />
-          <Error errorName={errors.casualLeave} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of Days
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="No Of Days"
-            name="noOfDaysCL"
-            onChange={(e) => {
-              setValue("leave[0].days", e.target.value);
-            }}
-          />
-          <Error errorName={errors.noOfDaysCL} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            Sick Leave
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Sick Leave"
-            name="sickLeave"
-            placeholder=""
-            defaultValue="Sick Leave"
-            disabled
-          />
-          <Error errorName={errors.sickLeave} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of Days
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="No Of DaysSL"
-            name="noOfDays"
-            placeholder=""
-            onChange={(e) => setValue("leave[1].days", e.target.value)}
-          />
-          <Error errorName={errors.noOfDays} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            Privilege Leave
-            <span className="text-danger">*</span>
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="Privilege Leave"
-            name="privilegeLeave"
-            placeholder=""
-            defaultValue="Privilege Leave"
-            disabled
-          />
-          <Error errorName={errors.privilegeLeave} />
-        </div>
-        <div className="col-xl-6 mb-3">
-          <label htmlFor="exampleFormControlInput3" className="form-label">
-            No of Days
-          </label>
-          <CustomInput
-            type="text"
-            register={register}
-            label="No Of Days"
-            name="noOfDaysPL"
-            onChange={(e) => {
-              setValue("leave[2].days", e.target.value);
-            }}
-          />
-          <Error errorName={errors.noOfDaysPL} />
-        </div>
+        {fields.map((item, index) => {
+          return (
+            <>
+              <div key={`${item.id}-1`} className="col-xl-6 mb-3">
+                <label
+                  htmlFor="exampleFormControlInput3"
+                  className="form-label"
+                >
+                  {labels[item.leaveType]}
+                  <span className="text-danger">*</span>
+                </label>
+                <CustomInput
+                  type="text"
+                  register={register}
+                  label={labels[item.leaveType]}
+                  name={item.leaveType}
+                  placeholder=""
+                  defaultValue={labels[item.leaveType]}
+                  disabled
+                />
+                <Error errorName={errors.leave?.[index]?.leaveType} />
+              </div>
+              <div key={`${item.id}-2`} className="col-xl-6 mb-3">
+                <label
+                  htmlFor="exampleFormControlInput3"
+                  className="form-label"
+                >
+                  No of Days
+                </label>
+                <CustomInput
+                  type="text"
+                  label="No Of Days"
+                  name="days"
+                  value={item.days}
+                  onChange={(e) => {
+                    update(index, {
+                      ...fields[index],
+                      days: e.target.value,
+                    });
+                  }}
+                />
+                <Error errorName={errors.leave?.[index]?.days} />
+              </div>
+            </>
+          );
+        })}
       </div>
       <div
         style={{

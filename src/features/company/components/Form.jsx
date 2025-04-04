@@ -161,6 +161,11 @@ const CompanyForm = ({
           setValue={setValue}
           errors={errors}
           getValues={getValues}
+          dValues={{
+            country: getValues("country"),
+            state: getValues("state"),
+            city: getValues("city"),
+          }}
           locationData={locationData}
           id={id}
           showCity={true}

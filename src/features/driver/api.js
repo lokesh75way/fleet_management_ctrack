@@ -14,8 +14,6 @@ export const getAllDrivers = async (pageNo = 1, limit = 10, filter) => {
     limit,
     ...filter,
   };
-  console.log({ filter });
-
   const { data } = await axios.get(`/drivers`, { params });
   return { data: data.data.data, totalCount: data.data.totalCount };
 };

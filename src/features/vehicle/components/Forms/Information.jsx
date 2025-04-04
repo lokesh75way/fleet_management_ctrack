@@ -35,7 +35,6 @@ const Information = ({
   const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
   const { t } = useTranslation();
-  console.log({ errors });
 
   return (
     <div className="p-4 relative">

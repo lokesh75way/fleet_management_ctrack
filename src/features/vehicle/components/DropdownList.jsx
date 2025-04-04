@@ -53,7 +53,6 @@ const VehicleDropdownList = ({
       const data = await getVehicleById(id);
       result.push(data);
     }
-    console.log({ result });
 
     return result;
   };
@@ -79,8 +78,6 @@ const VehicleDropdownList = ({
   }, [data]);
 
   useEffect(() => {
-    console.log({ value });
-
     if (value && value.length) setSelectedOption(value);
     else setSelectedOption(undefined);
   }, [JSON.stringify(value)]);

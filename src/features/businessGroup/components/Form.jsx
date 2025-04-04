@@ -125,6 +125,11 @@ const BusinessForm = ({
           register={register}
           setValue={setValue}
           errors={errors}
+          dValues={{
+            country: getValues("country"),
+            state: getValues("state"),
+            city: getValues("city"),
+          }}
           getValues={getValues}
           locationData={locationData}
           id={id}

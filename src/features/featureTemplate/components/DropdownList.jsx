@@ -75,8 +75,6 @@ const TemplateDropdownList = ({
         }
         try {
           const { data: template } = await refetch();
-          console.log({ template });
-
           if (template) {
             const newOption = {
               label: template.name,
