@@ -108,7 +108,7 @@ const TemplateList = () => {
                             <TemplateTable
                               isEditTrue={isEditTrue}
                               setIsEditTrue={setIsEditTrue}
-                              tableData={data.data ?? []}
+                              tableData={data?.data ?? []}
                               onConfirmDelete={mutate}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}

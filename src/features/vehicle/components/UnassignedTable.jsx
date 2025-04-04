@@ -55,7 +55,7 @@ const UnassignedTable = ({ tableData, currentPage }) => {
         <td>
           <span className="d-flex justify-content-center">
             {editPermission && item?.isVehicleAssigned === false && (
-              <Link to={`/vehicle/edit/${item?._id}`}>
+              <Link to={`/vehicle/edit/${item?.vehicle?._id}`}>
                 <span className="cursor-pointer">
                   <FaEdit style={{ color: "green", fontSize: "1.2rem" }} />
                 </span>

@@ -119,7 +119,7 @@ const BusinessList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <BusinessTable
                                 currentPage={page}
                                 itemsPerPage={itemsPerPage}

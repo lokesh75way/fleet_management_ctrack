@@ -297,6 +297,7 @@ const TaskForm = forwardRef(
                       {t("submit")}
                     </button>
                     <button
+                      type="button"
                       disabled={isLoading}
                       onClick={() => setAddEmploye(false)}
                       className="btn btn-danger light ms-1 m-1"

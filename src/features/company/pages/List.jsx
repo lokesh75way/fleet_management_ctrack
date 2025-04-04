@@ -44,7 +44,7 @@ const CompanyList = () => {
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
-    queryFn: () => getAllCompanies(page, groupId),
+    queryFn: () => getAllCompanies(page, 10, { groupId }),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
@@ -173,7 +173,7 @@ const CompanyList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <CompanyTable
                                 tableData={data?.data ?? []}
                                 currentPage={page}

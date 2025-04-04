@@ -98,7 +98,7 @@ const SettingExpense = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <ParentBranchDropdown
                   onChange={(newValue) => {
-                    setValue("branch", newValue.value);
+                    setValue("branch", newValue?.value);
                   }}
                   value={value}
                   customStyles={customStyles}

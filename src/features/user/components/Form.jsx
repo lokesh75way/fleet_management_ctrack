@@ -5,7 +5,6 @@ import Select from "react-select";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LuEye, LuEyeOff } from "react-icons/lu";
-import { useSelector } from "react-redux";
 
 import Error from "@/components/Error/Error";
 import CustomInput from "@/components/Input/CustomInput";
@@ -37,16 +36,16 @@ const UserForm = ({
   watch,
   isFormSubmitting,
 }) => {
-  const [TemplateOptions, setTemplateOptions] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
+  const [template, setTemplate] = useState();
 
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
-  const [vehicles, setVehicles] = useState([]);
+  const [vehicles, setVehicles] = useState();
 
   return (
     <div className="p-4">
@@ -92,7 +91,7 @@ const UserForm = ({
                   if (newValue.value != getValues("companyId")) {
                     setValue("companyId", newValue.value);
                     setCompany(newValue);
-                    setBranch(null);
+                    setBranch([]);
                     setValue("branchIds", "");
                     setValue("vehicleIds", "");
                     setVehicles([]);
@@ -118,17 +117,19 @@ const UserForm = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdown
                 companyId={watch("companyId")}
+                groupId={watch("businessGroupId")}
                 onChange={(newValue) => {
-                  if (newValue?.value !== getValues("branchId")) {
-                    setValue("branchId", newValue?.value);
-                    setValue("branchIds", [newValue?.value]);
-                    setBranch(newValue);
-                    setValue("vehicleIds", "");
-                    setVehicles([]);
-                  }
+                  setValue(
+                    "branchIds",
+                    newValue?.map((el) => el.value)
+                  );
+                  setValue("vehicleIds", "");
+                  setBranch(newValue);
+                  setVehicles([]);
                 }}
-                defaultValue={value}
+                defaultValue={getValues("branchIds")}
                 value={branch}
+                isMulti
                 customStyles={customStyles}
                 ref={ref}
                 name={name}
@@ -150,18 +151,20 @@ const UserForm = ({
                   setValue("vehicleIds", newArray);
                   setVehicles(newValue);
                 }}
-                defaultValue={value}
+                defaultValue={getValues("vehicleIds")}
                 value={vehicles}
-                branchIds={watch("branchId")}
+                branchIds={watch("branchIds")}
+                companyId={watch("companyId")}
+                groupId={watch("businessGroupId")}
                 customStyles={customStyles}
                 ref={ref}
+                isMulti
                 name={name}
               />
             )}
           />
           {!getValues("Branch") && <Error errorName={errors.parent} />}
         </div>
-
         <div className="col-xl-3 mb-3">
           <label htmlFor="exampleFormControlInput3" className="form-label">
             {t("email")} <span className="text-danger">*</span>
@@ -213,6 +216,10 @@ const UserForm = ({
           setValue={setValue}
           errors={errors}
           getValues={getValues}
+          dValues={{
+            state: getValues("state"),
+            country: getValues("country"),
+          }}
           locationData={locationData}
           id={id}
           showCity={false}
@@ -279,10 +286,12 @@ const UserForm = ({
               <TemplateDropdownList
                 onChange={(e) => {
                   setValue("featureTemplateId", e.value);
+                  setTemplate(e);
                 }}
                 ref={ref}
                 name={name}
-                defaultValue={value}
+                defaultValue={getValues("featureTemplateId")}
+                value={template}
                 styles={customStyles}
               />
             )}

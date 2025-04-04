@@ -1,7 +1,12 @@
 import {axiosInstance as axios} from "@/services/api";
 
-export const getAllUser = async (page = 1, limit = 10) => {
-  const { data } = await axios.get(`/users?page=${page}&limit=${limit}`);
+export const getAllUser = async (page, limit, filter) => {
+  const params = {
+    page: page || 1,
+    limit: limit || 10,
+    ...filter,
+  };
+  const { data } = await axios.get(`/users`, { params });
   return {
     data: data.data.data,
     totalPage: data.data.totalPage,

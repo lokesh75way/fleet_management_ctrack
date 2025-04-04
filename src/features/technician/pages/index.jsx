@@ -28,7 +28,7 @@ const routes = [
     component: <TechnicianFrom />,
   },
   {
-    module: "technician-tasks",
+    module: "technician/tasks",
     url: "/tasks",
     operation: "view",
     component: <Tasks />,

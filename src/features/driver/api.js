@@ -8,8 +8,15 @@ export const updateDriver = async (id, body) => {
   return axios.put(`/drivers/${id}`, body);
 };
 
-export const getAllDrivers = async (pageNo = 1, limit) => {
-  const { data } = await axios.get(`/drivers/?page=${pageNo}&limit=${10}`);
+export const getAllDrivers = async (pageNo = 1, limit = 10, filter) => {
+  const params = {
+    page: pageNo,
+    limit,
+    ...filter,
+  };
+  console.log({ filter });
+
+  const { data } = await axios.get(`/drivers`, { params });
   return { data: data.data.data, totalCount: data.data.totalCount };
 };
 

@@ -100,17 +100,19 @@ const UserList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <UserTable
                                 currentPage={page}
                                 itemsPerPage={itemsPerPage}
-                                tableData={data.data ?? []}
+                                tableData={data?.data ?? []}
                                 onConfirmDelete={mutate}
                               />
                             ) : (
                               <tr>
                                 <td colspan="10" rowSpan={2} height={150}>
-                                  <h1 className="text-center">No Data found!</h1>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
                                 </td>
                               </tr>
                             )}

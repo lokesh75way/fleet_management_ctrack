@@ -1,19 +1,16 @@
 import { axiosInstance as axios } from "@/services/api";
 
-export const getAllCompanies = async (page, groupId, limit = 10) => {
-  let url = "/companies";
-  let params = [];
-  if (page) {
-    params.push(`page=${page}`);
-    params.push(`limit=${limit}`);
+export const getAllCompanies = async (page, limit, filter) => {
+  const params = {
+    page: page || 1,
+    limit: limit || 10,
+  };
+
+  if (filter?.groupId) {
+    params.groupId = filter?.groupId;
   }
-  if (groupId !== undefined) {
-    params.push(`businessGroupId=${groupId}`);
-  }
-  if (params.length > 0) {
-    url += "?" + params.join("&");
-  }
-  const { data } = await axios.get(url);
+
+  const { data } = await axios.get("/companies", { params });
   return {
     data: data.data.data,
     totalPage: data.data.totalPage,

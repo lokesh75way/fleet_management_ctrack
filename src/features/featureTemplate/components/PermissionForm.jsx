@@ -11,6 +11,7 @@ import {
   updateTemplate,
 } from "../api";
 import TemplateDropdownList from "./DropdownList";
+import { useQueryClient } from "@tanstack/react-query";
 
 const PermissionForm = () => {
   const { t } = useTranslation();
@@ -19,6 +20,7 @@ const PermissionForm = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
+  const queryClient = useQueryClient();
   const [newGroupData, setNewGroupData] = useState({
     name: "",
     permission: {},
@@ -113,13 +115,25 @@ const PermissionForm = () => {
   };
   const handleModulePermisssionChange = (isChecked, name, id) => {
     let updatedData = [...data];
+    const module = updatedData.find((element) => element._id === id);
     const modulePermissions = {
-      ...updatedData.find((element) => element._id === id).permission,
+      ...module.permission,
     };
 
     if (isChecked) {
       modulePermissions[name] = true;
+      modulePermissions["view"] = true;
     } else {
+      if (
+        (name === "view" &&
+          Object.entries(modulePermissions).find(
+            ([key, val]) => key !== "view" && val
+          )) ||
+        module.subModules.some((subModule) =>
+          Object.entries(subModule.permission).some(([key, val]) => val)
+        )
+      )
+        return;
       modulePermissions[name] = false;
     }
 
@@ -134,10 +148,23 @@ const PermissionForm = () => {
     subModuleId
   ) => {
     const updatedData = data.map((module) => {
+      if (isChecked) {
+        handleModulePermisssionChange(isChecked, "view", moduleId);
+      }
       if (module._id === moduleId) {
         const subModules = module.subModules.map((subModule) => {
           if (subModule.id === subModuleId) {
             const updatedSubModulePermissions = { ...subModule.permission };
+            if (
+              !isChecked &&
+              name === "view" &&
+              Object.entries(updatedSubModulePermissions).find(
+                ([key, val]) => key !== "view" && val
+              )
+            ) {
+              return subModule;
+            }
+            if (isChecked) updatedSubModulePermissions["view"] = true;
             updatedSubModulePermissions[name] = isChecked;
             return {
               ...subModule,
@@ -334,10 +361,10 @@ const PermissionForm = () => {
 
       const method = id ? updateTemplate : createTemplate;
       await method(tempGroupData);
+      queryClient.invalidateQueries(["groups"]);
 
       setSubModuleIndexArray([]);
 
-      console.log("Data saved successfully");
       notifySuccess("saved");
       navigate("/groups");
     } catch (error) {
@@ -543,7 +570,7 @@ export const TBody = ({
           picked.add(moduleData._id);
 
           let isDisabled = false;
-          if (moduleData.subModules.length > 0) isDisabled = true;
+          if (moduleData.title === "Dashboard") isDisabled = true;
 
           return (
             <React.Fragment key={mindex}>
@@ -565,7 +592,7 @@ export const TBody = ({
                     }
                     className="form-check-input"
                     name="add"
-                    disabled={isDisabled && moduleData.subModules.length > 0}
+                    disabled={isDisabled || moduleData.subModules.length > 0}
                   />
                 </td>
                 <td>
@@ -595,7 +622,7 @@ export const TBody = ({
                         moduleData._id
                       )
                     }
-                    disabled={isDisabled && moduleData.subModules.length > 0}
+                    disabled={isDisabled || moduleData.subModules.length > 0}
                     name="modify"
                   />
                 </td>
@@ -611,7 +638,7 @@ export const TBody = ({
                         moduleData._id
                       )
                     }
-                    disabled={isDisabled && moduleData.subModules.length > 0}
+                    disabled={isDisabled || moduleData.subModules.length > 0}
                     name="delete"
                   />
                 </td>

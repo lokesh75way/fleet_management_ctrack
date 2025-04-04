@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { CountrySelect, StateSelect } from "react-country-state-city/dist/cjs";
+import { CountrySelect, StateSelect } from "react-country-state-city";
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
@@ -109,9 +109,10 @@ const Profile = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdown
                 companyId={watch("companyId")}
+                groupId={watch("businessGroupId")}
                 onChange={(newValue) => {
-                  if (newValue.value != getValues("branchId")) {
-                    setValue("branchId", newValue.value);
+                  if (newValue?.value != getValues("branchId")) {
+                    setValue("branchId", newValue?.value);
                     setBranch(newValue);
                   }
                 }}

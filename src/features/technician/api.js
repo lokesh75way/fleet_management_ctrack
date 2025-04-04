@@ -5,9 +5,14 @@ export const getTechnicianById = async (id) => {
   return data.data;
 };
 
-export const getAllTechnicians = async (page = 1, limit = 10) => {
-  let url = `/technicians?page=${page}&limit=${limit}`;
-  const { data } = await axios.get(url);
+export const getAllTechnicians = async (page, limit, filter) => {
+  const params = {
+    page: page || 1,
+    limit: limit || 10,
+    ...filter,
+  };
+
+  const { data } = await axios.get("/technicians", { params });
   return {
     data: data.data.technicians,
     totalPage: data.data.totalPage,

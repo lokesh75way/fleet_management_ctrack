@@ -29,3 +29,8 @@ export const createTemplate = async (body) => {
 export const updateTemplate = async (body) => {
   return await axios.patch("/feature-template", body);
 };
+
+export const getTemplateById = async (id) => {
+  const { data } = await axios.get(`/feature-template/${id}`);
+  return data?.data?.data;
+};

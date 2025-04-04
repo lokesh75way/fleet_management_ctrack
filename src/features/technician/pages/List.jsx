@@ -113,7 +113,7 @@ const TechnicianList = () => {
                           <tbody>
                             <TechnicianTable
                               onConfirmDelete={mutate}
-                              tableData={data.data || []}
+                              tableData={data?.data || []}
                               currentPage={page}
                               itemsPerPage={itemsPerPage}
                             />

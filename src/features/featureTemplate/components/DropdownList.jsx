@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 import usePagination from "@/hooks/usePagination";
-import { getAllTemplates } from "../api";
+import { getAllTemplates, getTemplateById } from "../api";
 import usePermissions from "@/hooks/usePermissions";
 import Spinner from "@/components/Loader/Spinner";
 
@@ -34,6 +34,13 @@ const TemplateDropdownList = ({
       staleTime: Infinity,
     });
 
+  const { refetch } = useQuery({
+    queryKey: ["template", defaultValue],
+    queryFn: () => getTemplateById(defaultValue),
+    enabled: false,
+    staleTime: Infinity,
+  });
+
   const options = useMemo(() => {
     let flatData = [];
     data?.pages.forEach((pageData) => {
@@ -54,6 +61,39 @@ const TemplateDropdownList = ({
 
     return () => {};
   }, [value, options]);
+
+  useEffect(() => {
+    const initializeValue = async () => {
+      if (defaultValue && !value) {
+        const selected = options.find(
+          (option) => option.value === defaultValue
+        );
+        if (selected) {
+          setSelectedOption(selected);
+          onChange(selected);
+          return;
+        }
+        try {
+          const { data: template } = await refetch();
+          console.log({ template });
+
+          if (template) {
+            const newOption = {
+              label: template.name,
+              value: template._id,
+            };
+            setSelectedOption(newOption);
+            onChange(newOption);
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    initializeValue();
+    return () => {};
+  }, [defaultValue, value]);
 
   const handleMenuScroll = async (event) => {
     const bottom =

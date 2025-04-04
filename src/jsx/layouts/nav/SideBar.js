@@ -49,9 +49,16 @@ const SideBar = () => {
       .filter((item) => item.view === true)
       .map((item) => item.moduleId.title);
 
-    filteredAdminMenuList = AdminMenuList.filter((item) =>
-      viewableModules.includes(item.title)
-    );
+      AdminMenuList.forEach((item) => {
+        let module = { ...item };
+        if (viewableModules.includes(item.title)) {
+          module.content =
+            item.content?.filter((item) =>
+              viewableModules.includes(item.title)
+            ) || [];
+          filteredAdminMenuList.push(module);
+        }
+      });
   }
 
   const MenuList = useMemo(() => {

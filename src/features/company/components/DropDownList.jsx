@@ -29,7 +29,7 @@ const CompanyDropdownList = ({
       queryKey: ["companies", groupId],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllCompanies(pageParam, groupId);
+        return getAllCompanies(pageParam, 10, { groupId });
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
@@ -77,6 +77,9 @@ const CompanyDropdownList = ({
           };
           setSelectedOption(defaultOption);
           onChange(defaultOption);
+        } else if (options.length == 1) {
+          setSelectedOption(options[0]);
+          onChange(options[0]);
         }
         return;
       }
@@ -126,7 +129,7 @@ const CompanyDropdownList = ({
       onChange={onChange}
       styles={customStyles}
       name={name}
-      isDisabled={isDisabled || !can("company", "view")}
+      isDisabled={isDisabled || !can("company", "view") || options.length <= 1}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       isLoading={isFetching}

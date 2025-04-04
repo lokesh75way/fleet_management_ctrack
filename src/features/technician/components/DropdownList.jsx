@@ -11,6 +11,8 @@ const TechnicianDropdownList = ({
   onChange,
   value,
   groupId,
+  branchId,
+  companyId,
   customStyles,
   name,
   ref,
@@ -23,10 +25,14 @@ const TechnicianDropdownList = ({
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["technicians", page],
+      queryKey: ["technicians", groupId, branchId, companyId],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllTechnicians(pageParam);
+        return getAllTechnicians(pageParam, 10, {
+          groupId,
+          branchId,
+          companyId,
+        });
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>

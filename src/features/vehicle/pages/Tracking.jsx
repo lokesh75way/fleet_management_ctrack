@@ -35,7 +35,11 @@ const DriverTracking = () => {
   const [vehicleStatus, setVehicleStatus] = useState("");
   const { data: trackingData } = useQuery({
     queryKey: ["tracking", vehicleIds.join(","), vehicleStatus],
-    queryFn: () => getVehiclesTraking(vehicleIds.join(","), vehicleStatus),
+    queryFn: () =>
+      getVehiclesTraking(
+        vehicleIds.map((id) => `id=${id}&`).join(""),
+        vehicleStatus
+      ),
     staleTime: 120000,
     refetchInterval: 120000,
     refetchOnWindowFocus: "always",

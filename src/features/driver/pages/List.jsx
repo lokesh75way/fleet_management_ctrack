@@ -104,7 +104,7 @@ const DriverList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <DriverTable
                                 tableData={data?.data}
                                 onConfirmDelete={(id) =>

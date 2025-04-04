@@ -38,18 +38,23 @@ const LocationSelector = ({
   }, []);
 
   useEffect(() => {
-    if (dValues && id) {
-      setValue("city", dValues.city);
-      setValue("country", dValues.country);
-      const option = countryOptions.find(
-        (option) => option.value == dValues?.country
-      );
-      setSelectedCountry(option);
-      setValue("state", dValues.state || "");
-      setSelectedState({
-        value: dValues.state,
-        label: dValues.state || "",
-      });
+    if (id) {
+      if (dValues?.city) setValue("city", dValues.city);
+      if (dValues?.country) {
+        setValue("country", dValues.country);
+        const option = countryOptions.find(
+          (option) => option.value == dValues?.country
+        );
+        console.log({ option });
+        if (option) handleCountryChange(option);
+      }
+      if (dValues?.state) {
+        setValue("state", dValues.state || "");
+        setSelectedState({
+          value: dValues.state,
+          label: dValues.state || "",
+        });
+      }
     } else {
       setSelectedCountry({
         value: locationData?.country?.isoAlpha3,

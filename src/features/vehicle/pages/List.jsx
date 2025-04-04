@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -111,9 +111,9 @@ const VehicleList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <VehicleTable
-                                tableData={data.data}
+                                tableData={data?.data}
                                 onConfirmDelete={removeVehicle}
                                 currentPage={page}
                                 itemsPerPage={itemsPerPage}

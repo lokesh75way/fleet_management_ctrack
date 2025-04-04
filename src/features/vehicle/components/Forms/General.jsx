@@ -62,7 +62,6 @@ const General = ({
                 }}
                 defaultValue={value}
                 customStyles={customStyles}
-                ref={ref}
                 name={name}
               />
             )}
@@ -92,7 +91,6 @@ const General = ({
                 defaultValue={value}
                 value={company}
                 customStyles={customStyles}
-                ref={ref}
                 name={name}
               />
             )}
@@ -108,14 +106,14 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <BranchDropdownList
                 companyId={watch("companyId")}
+                groupId={watch("businessGroupId")}
                 onChange={(newValue) => {
-                  setValue("branchId", newValue.value);
+                  setValue("branchId", newValue?.value);
                   setBranch(newValue);
                 }}
                 defaultValue={value}
                 value={branch}
                 customStyles={customStyles}
-                ref={ref}
                 isDisabled={false}
                 name={name}
               />

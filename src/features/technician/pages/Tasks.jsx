@@ -86,7 +86,7 @@ const TechnicianTask = () => {
     t("reportingTime"),
   ];
 
-  if (can("technician-tasks", "modify") || can("technician-tasks", "delete")) {
+  if (can("technician/tasks", "modify") || can("technician/tasks", "delete")) {
     headers.push(t("action"));
   }
   const editDrawerOpen = (item) => {
@@ -94,8 +94,6 @@ const TechnicianTask = () => {
     setEditData(editData);
     technicianTask.current?.showModal();
   };
-
-  //
 
   const {
     register,
@@ -142,18 +140,20 @@ const TechnicianTask = () => {
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
                     <h4 className="heading mb-0">{t("technicianTask")}</h4>
                     <div>
-                      <Link
-                        to={"#"}
-                        className="btn btn-primary btn-sm ms-1"
-                        data-bs-toggle="offcanvas"
-                        onClick={() => {
-                          clearErrors();
-                          reset();
-                          technicianTask.current.showModal();
-                        }}
-                      >
-                        + {t("addTechnicianTask")}
-                      </Link>{" "}
+                      {can("technician/tasks", "add") && (
+                        <Link
+                          to={"#"}
+                          className="btn btn-primary btn-sm ms-1"
+                          data-bs-toggle="offcanvas"
+                          onClick={() => {
+                            clearErrors();
+                            reset();
+                            technicianTask.current.showModal();
+                          }}
+                        >
+                          + {t("addTechnicianTask")}
+                        </Link>
+                      )}
                     </div>
                   </div>
                   <div

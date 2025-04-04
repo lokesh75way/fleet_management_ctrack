@@ -419,8 +419,6 @@ const UserRoutes = () => {
     { url: "table-sorting", component: <SortingTable /> },
     { url: "table-bootstrap-basic", component: <BootstrapTable /> },
 
-    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
-
     {
       module: "business",
       url: "business-group/:id",

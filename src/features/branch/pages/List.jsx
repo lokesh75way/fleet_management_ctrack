@@ -44,7 +44,7 @@ const BranchList = () => {
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["branches", page, cId],
-    queryFn: () => getAllBranch(page, cId),
+    queryFn: () => getAllBranch(page, 10, { companyId: cId }),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
@@ -170,7 +170,7 @@ const BranchList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {data.data?.length ? (
+                            {data?.data?.length ? (
                               <BranchTable
                                 tableData={data?.data ?? []}
                                 currentPage={page}

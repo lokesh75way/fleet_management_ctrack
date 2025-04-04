@@ -76,6 +76,9 @@ const GroupDropdownList = ({
           };
           setSelectedOption(defaultOption);
           onChange(defaultOption);
+        } else if (options.length === 1) {
+          setSelectedOption(options[0]);
+          onChange(options[0]);
         }
         return;
       }
@@ -125,7 +128,7 @@ const GroupDropdownList = ({
       value={selectedOption}
       onChange={onChange}
       name={name}
-      isDisabled={isDisabled || !can("business", "view")}
+      isDisabled={isDisabled || !can("business", "view") || options.length <= 1}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
       menuPortalTarget={document.body}

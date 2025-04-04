@@ -39,10 +39,6 @@ function Login(props) {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      email: "noreply.75way@gmail.com",
-      password: "Admin@123",
-    },
     resolver: yupResolver(loginValidation),
   });
 

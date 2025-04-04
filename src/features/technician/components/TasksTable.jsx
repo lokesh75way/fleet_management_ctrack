@@ -13,8 +13,8 @@ const TasksTable = ({
   itemsPerPage,
 }) => {
   const { can } = usePermissions();
-  const editPermission = can("technician-tasks", "modify");
-  const deletePermission = can("technician-tasks", "delete");
+  const editPermission = can("technician/tasks", "modify");
+  const deletePermission = can("technician/tasks", "delete");
   const startIndex = (currentPage - 1) * itemsPerPage + 1;
 
   return (
