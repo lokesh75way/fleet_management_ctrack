@@ -1,228 +1,73 @@
-import React from "react";
-
-import { Dropdown } from "react-bootstrap";
+import React, { useMemo } from "react";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import avatar1 from "@/assets/images/avatar/1.jpg";
+import { getAllTechnicians } from "../../../features/technician/api";
+import { useQuery } from "@tanstack/react-query";
+
+const renderStarRating = (rating = 0) => (
+  <>
+    {[...Array(5)].map((_, i) =>
+      i < Math.floor(rating) ? (
+        <FaStar key={i} color="gold" className="me-1" />
+      ) : (
+        <FaRegStar key={i} color="gold" className="me-1" />
+      )
+    )}
+  </>
+);
 
 const Notification = () => {
-  return (
-    <>
-      <div className="card-body">
-        <div id="DZ_W_Todo1" className="widget-media dz-scroll  ps--active-y">
-          <ul className="timeline">
-            <li>
-              <div className="timeline-panel">
-                <div className="media me-2">
-                  <img alt="" width="50" src={avatar1} />
-                </div>
-                <div className="media-body">
-                  <h5 className="mb-1 pe-2">Technician 1</h5>
-                </div>
-                <Dropdown className="dropdown">
-                  <Dropdown.Toggle
-                    variant="primary light"
-                    className=" i-false p-0 sharp"
-                  >
-                    <svg
-                      width="18px"
-                      height="18px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        strokeWidth="1"
-                        fill="none"
-                        fillRule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <circle fill="#000000" cx="5" cy="12" r="2" />
-                        <circle fill="#000000" cx="12" cy="12" r="2" />
-                        <circle fill="#000000" cx="19" cy="12" r="2" />
-                      </g>
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </li>
+  const { data, isLoading } = useQuery({
+    queryKey: ["all-technicians-sheet"],
+    queryFn: () => getAllTechnicians(), 
+    staleTime: Infinity,
+  });
 
-            <li>
-              <div className="timeline-panel">
-                <div className="media me-2 media-info">T2</div>
-                <div className="media-body">
-                  <h5 className="mb-1 pe-2">Technician 2</h5>
-                </div>
-                <Dropdown className="dropdown">
-                  <Dropdown.Toggle
-                    variant="primary light"
-                    className=" i-false p-0 sharp"
-                  >
-                    <svg
-                      width="18px"
-                      height="18px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        strokeWidth="1"
-                        fill="none"
-                        fillRule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <circle fill="#000000" cx="5" cy="12" r="2" />
-                        <circle fill="#000000" cx="12" cy="12" r="2" />
-                        <circle fill="#000000" cx="19" cy="12" r="2" />
-                      </g>
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </li>
-            <li>
-              <div className="timeline-panel">
+  const topTechnicians = useMemo(() => {
+    if (!data?.data) return [];
+  
+    return [...data.data]
+      .map(tech => ({
+        id: tech._id || tech.id,
+        name: `${tech.firstName || ''} ${tech.middleName || ''} ${tech.lastName || ''}`.trim(),
+        rating: 3 + Math.random() * 2, 
+        avatar: null
+      }))
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 5);
+  }, [data]);
+  
+  if (isLoading) {
+    return <div className="card-body">Loading...</div>;
+  }
+
+  return (
+    <div className="card-body">
+      <div className="widget-media dz-scroll ps--active-y">
+        <ul className="timeline">
+          {topTechnicians.map((tech) => (
+            <li key={tech.id}>
+              <div className="timeline-panel d-flex align-items-center justify-content-between">
                 <div className="media me-2">
-                  <img alt="" width="50" src={avatar1} />
+                  {tech.avatar ? (
+                    <img alt="" width="50" src={tech.avatar} />
+                  ) : (
+                    <div className="media media-info">{tech.name.charAt(0)}</div>
+                  )}
                 </div>
-                <div className="media-body">
-                  <h5 className="mb-1 pe-2">Technician 3</h5>
+                <div className="media-body d-flex align-items-center w-100">
+                  <h5 className="mb-0 pe-2">{tech.name}</h5>
+                  <div className="ms-auto d-flex align-items-center">
+                    <span className="me-2 text-muted">{tech.rating.toFixed(1)}</span>
+                    {renderStarRating(tech.rating)}
+                  </div>
                 </div>
-                <Dropdown className="dropdown">
-                  <Dropdown.Toggle
-                    variant="primary light"
-                    className=" i-false p-0 sharp"
-                  >
-                    <svg
-                      width="18px"
-                      height="18px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        strokeWidth="1"
-                        fill="none"
-                        fillRule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <circle fill="#000000" cx="5" cy="12" r="2" />
-                        <circle fill="#000000" cx="12" cy="12" r="2" />
-                        <circle fill="#000000" cx="19" cy="12" r="2" />
-                      </g>
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
               </div>
             </li>
-            <li>
-              <div className="timeline-panel">
-                <div className="media me-2 media-info">T4</div>
-                <div className="media-body">
-                  <h5 className="mb-1 pe-2">Technician 4</h5>
-                </div>
-                <Dropdown className="dropdown">
-                  <Dropdown.Toggle
-                    variant="primary light"
-                    className=" i-false p-0 sharp"
-                  >
-                    <svg
-                      width="18px"
-                      height="18px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        strokeWidth="1"
-                        fill="none"
-                        fillRule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <circle fill="#000000" cx="5" cy="12" r="2" />
-                        <circle fill="#000000" cx="12" cy="12" r="2" />
-                        <circle fill="#000000" cx="19" cy="12" r="2" />
-                      </g>
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </li>
-            <li>
-              <div className="timeline-panel">
-                <div className="media me-2 media-danger">T5</div>
-                <div className="media-body">
-                  <h5 className="mb-1 pe-2">Technician 5</h5>
-                </div>
-                <Dropdown className="dropdown">
-                  <Dropdown.Toggle
-                    variant="primary light"
-                    className=" i-false p-0 sharp"
-                  >
-                    <svg
-                      width="18px"
-                      height="18px"
-                      viewBox="0 0 24 24"
-                      version="1.1"
-                    >
-                      <g
-                        stroke="none"
-                        strokeWidth="1"
-                        fill="none"
-                        fillRule="evenodd"
-                      >
-                        <rect x="0" y="0" width="24" height="24" />
-                        <circle fill="#000000" cx="5" cy="12" r="2" />
-                        <circle fill="#000000" cx="12" cy="12" r="2" />
-                        <circle fill="#000000" cx="19" cy="12" r="2" />
-                      </g>
-                    </svg>
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Edit
-                    </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" to="/widget-basic">
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-            </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
       </div>
-    </>
+    </div>
   );
 };
 

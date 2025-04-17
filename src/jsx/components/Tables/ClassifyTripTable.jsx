@@ -1,10 +1,60 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "../../../components/Modal/DeleteModal";
 import { Link } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import dayjs from "dayjs";
+
+
+const CustomTooltip = ({ children, tooltipText }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  
+  return (
+    <div 
+      className="custom-tooltip-container" 
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+      style={{ position: 'relative', display: 'inline-block' }}
+    >
+      {children}
+      {showTooltip && (
+        <div 
+          className="custom-tooltip" 
+          style={{
+            position: 'absolute',
+            bottom: '100%',
+            left: '280%',
+            transform: 'translateX(-50%)',
+            backgroundColor: 'white',
+            color: '#333',
+            padding: '5px 10px',
+            borderRadius: '4px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+            zIndex: 10000,
+            whiteSpace: 'nowrap',
+            fontSize: '12px',
+            border: '1px solid #ddd',
+            marginBottom: '3px'
+          }}
+        >
+          {tooltipText}
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+const TruncatedId = ({ id }) => {
+  const truncatedId = id.length > 5 ? `${id.substring(0, 5)}...` : id;
+  
+  return (
+    <CustomTooltip tooltipText={id}>
+      <span>{truncatedId}</span>
+    </CustomTooltip>
+  );
+};
 
 const ClassifyTripTable = ({
   tableData,
@@ -24,7 +74,7 @@ const ClassifyTripTable = ({
       {tableData.map((item, index) => (
         <tr key={index}>
           <td>
-            <span>{item._id}</span>
+            <TruncatedId id={item._id} />
           </td>
           <td>
             <span>{formatDate(item.startTime)}</span>
@@ -45,7 +95,7 @@ const ClassifyTripTable = ({
             <span>{item.fuelConsumption}</span>
           </td>
           <td>
-            <span>{item.driver}</span>
+            <span>{item.driverName}</span>
           </td>
 
           <td>
