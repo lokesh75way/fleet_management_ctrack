@@ -183,8 +183,11 @@ const CompanyForm = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{ value, label: value }}
-                defaultValue={dateFormatOptions[1]}
+                value={
+                  dateFormatOptions.find((option) => option.value === value) ||
+                  dateFormatOptions[0]
+                }
+                defaultValue={dateFormatOptions[0]}
               />
             )}
           />
@@ -202,7 +205,10 @@ const CompanyForm = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{ value, label: value }}
+                value={
+                  timeFormatOptions.find((option) => option.value === value) ||
+                  timeFormatOptions[1]
+                }
                 defaultValue={timeFormatOptions[1]}
               />
             )}

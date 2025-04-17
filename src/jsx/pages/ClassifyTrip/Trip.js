@@ -371,7 +371,10 @@ const Trip = ({
           </button>
           <Link
             to={"#"}
-            onClick={() => setAddEmploye(false)}
+            onClick={() => {
+              setAddEmploye(false);
+              navigate(-1);
+            }}
             className="btn btn-danger light ms-1"
           >
             Cancel

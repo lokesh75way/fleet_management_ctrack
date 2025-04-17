@@ -469,29 +469,31 @@ const PermissionForm = () => {
                   return (
                     <React.Fragment key={element._id}>
                       <tr>
-                        <td>
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            style={{ marginRight: "0.2rem" }}
-                            name="create"
-                            checked={
-                              subModuleIndexArray.includes(element._id) ||
-                              element.subModules.some((submodule) =>
-                                subModuleIndexArray.includes(submodule.id)
-                              )
-                            }
-                            onChange={(e) =>
-                              handleCheckboxChange(
-                                e.target.checked,
-                                element._id
-                              )
-                            }
-                          />
-                          <span style={{ marginRight: "1.7rem" }}>
-                            {t(element.title)}
-                          </span>
-                        </td>
+                        {element.title !== "Reports" && (
+                          <td>
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              style={{ marginRight: "0.2rem" }}
+                              name="create"
+                              checked={
+                                subModuleIndexArray.includes(element._id) ||
+                                element.subModules.some((submodule) =>
+                                  subModuleIndexArray.includes(submodule.id)
+                                )
+                              }
+                              onChange={(e) =>
+                                handleCheckboxChange(
+                                  e.target.checked,
+                                  element._id
+                                )
+                              }
+                            />
+                            <span style={{ marginRight: "1.7rem" }}>
+                              {t(element.title)}
+                            </span>
+                          </td>
+                        )}
                       </tr>
                     </React.Fragment>
                   );

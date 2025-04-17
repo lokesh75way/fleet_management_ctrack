@@ -244,6 +244,7 @@ const TaskForm = forwardRef(
                             onChange={(newValue) =>
                               setValue("plannedReportingDate", newValue)
                             }
+                            minDate={new Date()}
                           />
                         )}
                       />

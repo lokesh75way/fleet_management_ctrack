@@ -196,7 +196,11 @@ const BranchForm = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{ value, label: value }}
+                value={
+                  dateFormatOptions.find((option) => option.value === value) ||
+                  dateFormatOptions[0]
+                }
+                defaultValue={dateFormatOptions[0]}
               />
             )}
           />
@@ -214,7 +218,10 @@ const BranchForm = ({
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                value={{ value, label: value }}
+                value={
+                  timeFormatOptions.find((option) => option.value === value) ||
+                  timeFormatOptions[1]
+                }
                 defaultValue={timeFormatOptions[1]}
               />
             )}

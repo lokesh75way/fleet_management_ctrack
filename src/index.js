@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import ThemeContext from "./context/ThemeContext";
@@ -19,13 +19,13 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <ToastContainer />
-        <BrowserRouter basename="/">
+        <HashRouter basename="/">
           <ThemeContext>
             <PersistGate loading={<>Loading....</>} persistor={persistor}>
               <App />
             </PersistGate>
           </ThemeContext>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     </QueryClientProvider>
   </React.StrictMode>

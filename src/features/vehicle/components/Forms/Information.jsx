@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 import Error from "@/components/Error/Error";
 import {
@@ -35,6 +36,17 @@ const Information = ({
   const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState("registrationNumber");
   const { t } = useTranslation();
+
+  const location = useLocation();
+
+    useEffect(() => {
+      const params = new URLSearchParams(location.search);
+      const vehicle_noFromQuery = params.get("vehicle_no");
+  
+      if (vehicle_noFromQuery) {
+        setValue("registrationNumber", vehicle_noFromQuery); 
+      }
+    }, [location.search, setValue]);
 
   return (
     <div className="p-4 relative">

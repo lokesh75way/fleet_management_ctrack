@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Controller } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-
+import { useLocation } from "react-router-dom";
 import Error from "@/components/Error/Error";
 import {
   deviceTypeOptions,
@@ -37,6 +37,16 @@ const General = ({
   const [company, setCompany] = useState();
   const [branch, setBranch] = useState();
   const { t } = useTranslation();
+
+  const location =useLocation();
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const imeiFromQuery = params.get("imei");
+
+    if (imeiFromQuery) {
+      setValue("imeiNumber", imeiFromQuery); 
+    }
+  }, [location.search, setValue]);
 
   return (
     <div className="p-4">

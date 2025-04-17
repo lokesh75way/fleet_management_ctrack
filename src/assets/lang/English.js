@@ -186,7 +186,7 @@ export const english = {
     weightCapacity: "Weight Capacity",
     action: "Action",
 
-    "uanassigned-vehicle": "Unassigned Vehicle",
+    "unassigned-vehicle": "Unassigned Vehicle", 
     vehicleNumber: "Vehicle Number",
     vehicleModel: "DeviceModel",
     vehicleType: "DeviceType",
