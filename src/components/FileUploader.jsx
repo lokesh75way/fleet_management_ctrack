@@ -70,8 +70,8 @@ const FileUploader = ({
             </button>
           </div>
         ) : (
-          <label htmlFor={`file-input-${name}`} className="file-upload-label">
-            <span>Upload Logo</span>
+          <label htmlFor={`file-input-${name}`} className="file-upload-label w-100 text-center mb-2">
+            <span>{label}</span>
           </label>
         )}
         <input

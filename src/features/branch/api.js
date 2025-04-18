@@ -1,21 +1,17 @@
 import { axiosInstance as axios } from "@/services/api";
 
-export const getAllBranch = async (page, companyId) => {
-  let url = "/branches";
-  let params = [];
-  if (page) {
-    params.push(`page=${page}`);
-    params.push(`limit=${10}`);
-  }
-  if (companyId) {
-    params.push(`companyId=${companyId}`);
-  }
-
-  if (params.length > 0) {
-    url += "?" + params.join("&");
-  }
-  const data = await axios.get(url);
-  return data.data;
+export const getAllBranch = async (page, limit, filter) => {
+  const params = {
+    page: page || 1,
+    limit: limit || 10,
+    ...filter,
+  };
+  const { data } = await axios.get("/branches", { params });
+  return {
+    data: data.data.data,
+    totalPage: data.data.totalPage,
+    totalCount: data.data.totalCount,
+  };
 };
 
 export const getBranchById = async (id) => {

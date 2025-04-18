@@ -1,8 +1,9 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import { usePermissions } from "@/context/PermissionContext";
 import PermissionDenied from "@/components/PermissionDenied";
+import usePermissions from "@/hooks/usePermissions";
+import Error404 from "@/components/Error/Error404";
 const BusinessForm = React.lazy(() => import("./Create"));
 const BusinessList = React.lazy(() => import("./List"));
 
@@ -53,7 +54,7 @@ const BusinessGroupPages = () => {
           <Route key={i} exact path={`${data.url}`} element={data.component} />
         );
       })}
-      <Route path="*" element={<Navigate to={"/not-found"} />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };

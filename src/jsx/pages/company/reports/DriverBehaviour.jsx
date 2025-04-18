@@ -4,7 +4,7 @@ import { CSVLink } from "react-csv";
 import MainPagetitle from "../../../../components/MainPagetitle";
 import { DriverData } from "../../../components/Tables/Tables";
 import FilterOffcanvas from "../../../constant/FilterOffcanvas";
-import DriverTable from "../../../components/Tables/DriverTable";
+import DriverTable from "../../../../features/driver/components/Table";
 import { filterAlerts } from "../../../../utils/helper";
 
 const tableData = [

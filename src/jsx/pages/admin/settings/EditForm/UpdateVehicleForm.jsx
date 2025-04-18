@@ -9,9 +9,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../../components/MainPagetitle";
 import useVehicleSubmit from "../../../../../hooks/useVehicleSubmit";
-import Profile from "../../../../components/TabComponent/VehicleTabs/Profile";
-import General from "../../../../components/TabComponent/VehicleTabs/General";
-import Document from "../../../../components/TabComponent/VehicleTabs/Document";
+import Profile from "../../../../../features/vehicle/components/Forms/Profile";
+import General from "../../../../../features/vehicle/components/Forms/General";
+import Document from "../../../../../features/vehicle/components/Forms/Document";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {

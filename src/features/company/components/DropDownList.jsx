@@ -2,22 +2,26 @@ import React, { useEffect, useMemo, useState } from "react";
 import Select from "react-select";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import usePagination from "@/hooks/usePagination";
-import { usePermissions } from "@/context/PermissionContext";
 import { getAllCompanies, getCompanyById } from "../api";
+import usePermissions from "@/hooks/usePermissions";
+import Spinner from "@/components/Loader/Spinner";
 
 const CompanyDropdownList = ({
   onChange,
   value,
+  defaultValue,
   customStyles,
   isDisabled,
   groupId,
   name,
 }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(value);
   const { page, setPage } = usePagination();
-  const { userDetails, can } = usePermissions();
+  const { can } = usePermissions();
+  const userDetails = useSelector((state) => state.auth.user);
   const { pathname } = useLocation();
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } =
@@ -25,7 +29,7 @@ const CompanyDropdownList = ({
       queryKey: ["companies", groupId],
       queryFn: ({ pageParam }) => {
         setPage(pageParam);
-        return getAllCompanies(pageParam, groupId);
+        return getAllCompanies(pageParam, 10, { groupId });
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage, pages) =>
@@ -35,8 +39,8 @@ const CompanyDropdownList = ({
     });
 
   const { refetch } = useQuery({
-    queryKey: ["company", value],
-    queryFn: () => getCompanyById(value),
+    queryKey: ["company", defaultValue],
+    queryFn: () => getCompanyById(defaultValue),
     enabled: false,
     staleTime: Infinity,
   });
@@ -55,39 +59,59 @@ const CompanyDropdownList = ({
   }, [data]);
 
   useEffect(() => {
-    if (!value) {
-      if (!can("company", "view") && userDetails?.user?.companyId?.[0]) {
-        const userGroup = userDetails.user.companyId[0];
-        const defaultOption = {
-          label: userGroup.companyName,
-          value: userGroup._id,
-        };
-        setSelectedOption(defaultOption);
-        onChange(defaultOption);
-      }
-      return;
-    }
-
-    if (typeof value === "object" && value.label && value.value) {
+    if (value?.value != selectedOption?.value) {
       setSelectedOption(value);
-      return;
     }
 
-    const selected = options.find((option) => option.value === value);
-    if (selected) {
-      setSelectedOption(selected);
-    } else {
-      refetch().then(({ data }) => {
-        if (data?.companyId) {
-          const newOption = {
-            label: data.companyId.companyName,
-            value: data.companyId._id,
+    return () => {};
+  }, [value]);
+
+  useEffect(() => {
+    const initializeValue = async () => {
+      if (!value && !defaultValue) {
+        if (!can("company", "view") && userDetails?.companyId?.[0]) {
+          const userGroup = userDetails.companyId[0];
+          const defaultOption = {
+            label: userGroup?.companyName,
+            value: userGroup?._id,
           };
-          setSelectedOption(newOption);
+          setSelectedOption(defaultOption);
+          onChange(defaultOption);
+        } else if (options.length == 1) {
+          setSelectedOption(options[0]);
+          onChange(options[0]);
         }
-      });
-    }
-  }, [value, options, pathname, userDetails, isFetching]);
+        return;
+      }
+
+      if (defaultValue) {
+        const selected = options.find(
+          (option) => option.value === defaultValue
+        );
+        if (selected) {
+          setSelectedOption(selected);
+          onChange(selected);
+          return;
+        }
+        try {
+          const { data: groupData } = await refetch();
+          if (groupData?.companyId) {
+            const newOption = {
+              label: groupData.companyId.companyName,
+              value: groupData.companyId._id,
+            };
+            setSelectedOption(newOption);
+            onChange(newOption);
+          }
+        } catch (error) {
+          console.error("Error fetching company details:", error);
+        }
+      } else {
+        setSelectedOption(value);
+      }
+    };
+    initializeValue();
+  }, [defaultValue, options, pathname, userDetails, isFetching]);
 
   const handleMenuScroll = async (event) => {
     const bottom =
@@ -105,9 +129,13 @@ const CompanyDropdownList = ({
       onChange={onChange}
       styles={customStyles}
       name={name}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || !can("company", "view") || options.length <= 1}
       onMenuScrollToBottom={handleMenuScroll}
       menuShouldScrollIntoView={false}
+      isLoading={isFetching}
+      components={{
+        LoadingIndicator: Spinner,
+      }}
     />
   );
 };

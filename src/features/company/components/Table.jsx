@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import DeleteModal from "@/components/Modal/DeleteModal";
-import { usePermissions } from "@/context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const CompanyTable = ({
   tableData,
@@ -25,26 +25,26 @@ const CompanyTable = ({
             <td>
               <span>{startIndex + index}</span>
             </td>
-            <td className="text-center">
+            <td>
               <span className="text-primary">
                 {item?.companyId?.companyName}
               </span>
             </td>
             <td>
-              <div className="products d-flex justify-content-center">
+              <div className="products d-flex">
                 <div>
                   <h6>{item?.companyId?.businessGroupId?.groupName}</h6>
                 </div>
               </div>
             </td>
 
-            <td className="text-center">
+            <td>
               <span>{item.country}</span>
             </td>
-            <td className="text-center">
+            <td>
               <span>{item?.email}</span>
             </td>
-            <td className="text-center">
+            <td>
               <Link
                 to={`/branch/cid/${item?.companyId?._id}`}
                 className="text-primary badge light border-0 badge-count"
@@ -52,7 +52,7 @@ const CompanyTable = ({
                 {item?.branchIds?.length}
               </Link>
             </td>
-            {/* <td className="text-center">
+            {/* <td >
             <span>{item?.companyId?.zipCode ? item?.companyId?.zipCode : <span className='ps-4'>-</span> }</span>
           </td> */}
             {(editPermission || deletePermission) && (

@@ -1,5 +1,5 @@
 import { FaTools } from "react-icons/fa";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import { CgPoll } from "react-icons/cg";
 
 export const SubCompanyMenuList = [
@@ -35,7 +35,7 @@ export const SubCompanyMenuList = [
       },
       {
         title: "Drivers",
-        to: "vehicle-tracking",
+        to: "vehicle/tracking",
       },
     ],
   },

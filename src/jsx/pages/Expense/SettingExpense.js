@@ -6,7 +6,7 @@ import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import CustomInput from "../../../components/Input/CustomInput";
-import ParentBranchDropdown from "../../components/ParentBranch";
+import ParentBranchDropdown from "../../../features/branch/components/DropDownList";
 import Error from "../../../components/Error/Error";
 import VehicleDropdown from "../../components/VehicleDropdown";
 import { TypeOptions } from "@/constants/options";
@@ -98,7 +98,7 @@ const SettingExpense = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <ParentBranchDropdown
                   onChange={(newValue) => {
-                    setValue("branch", newValue.value);
+                    setValue("branch", newValue?.value);
                   }}
                   value={value}
                   customStyles={customStyles}

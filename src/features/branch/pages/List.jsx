@@ -10,7 +10,6 @@ import {
 } from "@tanstack/react-query";
 
 import MainPagetitle from "@/components/MainPagetitle";
-import { usePermissions } from "@/context/PermissionContext";
 import BranchTable from "../components/Table";
 import { notifyError } from "@/utils/toast";
 import usePagination from "@/hooks/usePagination";
@@ -18,6 +17,8 @@ import CompanyDropdownList from "@/features/company/components/DropDownList";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 import { deleteBranch, getAllBranch } from "../api";
+import { getApiErrorMessage } from "@/utils/helper";
+import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
   control: (base) => ({
@@ -43,15 +44,14 @@ const BranchList = () => {
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["branches", page, cId],
-    queryFn: () => getAllBranch(page, cId),
+    queryFn: () => getAllBranch(page, 10, { companyId: cId }),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
 
   const { mutate } = useMutation({
     onError: (err) => {
-      const messge = err.response.data.message;
-      notifyError(messge ?? "Something went wrong!!");
+      notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
       queryClient.invalidateQueries("companies");
@@ -113,6 +113,7 @@ const BranchList = () => {
                                 onChange={(newValue) => {
                                   navigate(`/branch/cid/${newValue?.value}`);
                                 }}
+                                defaultValue={cId}
                                 value={
                                   cId ?? {
                                     label: t("allCompanies"),
@@ -169,12 +170,22 @@ const BranchList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <BranchTable
-                              tableData={data?.data.data ?? []}
-                              currentPage={page}
-                              itemsPerPage={itemsPerPage}
-                              onConfirmDelete={mutate}
-                            />
+                            {data?.data?.length ? (
+                              <BranchTable
+                                tableData={data?.data ?? []}
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                onConfirmDelete={mutate}
+                              />
+                            ) : (
+                              <tr>
+                                <td colspan="10" rowSpan={2} height={150}>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       )}

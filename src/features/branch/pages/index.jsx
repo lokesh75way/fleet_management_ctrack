@@ -1,10 +1,11 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { lazy } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import PermissionDenied from "@/components/PermissionDenied";
-import { usePermissions } from "@/context/PermissionContext";
-import BranchList from "./List";
-import BranchForm from "./Create";
+import usePermissions from "@/hooks/usePermissions";
+import Error404 from "@/components/Error/Error404";
+const BranchList = lazy(() => import("./List"));
+const BranchForm = lazy(() => import("./Create"));
 
 const routes = [
   {
@@ -53,7 +54,7 @@ const BranchPages = () => {
           <Route key={i} exact path={`${data.url}`} element={data.component} />
         );
       })}
-      <Route path="*" element={<Navigate to={"/not-found"} />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };

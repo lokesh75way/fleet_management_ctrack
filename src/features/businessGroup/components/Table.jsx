@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 import DeleteModal from "@/components/Modal/DeleteModal";
-import { usePermissions } from "@/context/PermissionContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const BusinessTable = ({
   tableData,
@@ -43,7 +43,7 @@ const BusinessTable = ({
           </td>
           <td>
             <Link
-              to={`/company/${item.businessGroupId?._id}`}
+              to={`/company/gid/${item.businessGroupId?._id}`}
               className="text-primary badge light border-0 badge-count"
             >
               {item.companyCount}

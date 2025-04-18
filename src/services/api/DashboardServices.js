@@ -71,3 +71,9 @@ export const getDashboardTasks = async () => {
     return error;
   }
 };
+
+export const getAllTasks = async () => {
+  let url = `/dashboard/tasks-data`;
+  const response = await axios.get(url);
+  return response?.data?.data;
+};

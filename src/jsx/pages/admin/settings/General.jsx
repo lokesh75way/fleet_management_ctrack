@@ -2,7 +2,7 @@ import React from "react";
 import MainPagetitle from "../../../../components/MainPagetitle";
 import Tabs from "../../../components/Tabs";
 import DepositlineChart from "../../../components/Dashboard/elements/DepositlineChart";
-import { SVGICON } from "../../../constant/theme";
+import { SVGICON } from "../../../../constants/theme";
 import Company from "../../../components/General/Company";
 import SubUser from "../../../components/General/SubUser";
 import Vehicle from "../../../components/General/Vehicle";

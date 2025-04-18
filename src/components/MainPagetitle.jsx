@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { SVGICON } from "../jsx/constant/theme";
+import { SVGICON } from "../constants/theme";
 
 const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
   const redirectTo = {
@@ -13,9 +13,10 @@ const MainPagetitle = ({ pageTitle, parentTitle, mainTitle, children }) => {
     "Sub User": "/user",
     "Feature Templates": "/groups",
     Driver: "/driver",
-    Technician: "/technician/details",
+    Technician: "/technician",
     Dashboard: "/dashboard",
     Expense: "/settings/expense",
+    Vehicle: "/vehicle",
   };
 
   return (

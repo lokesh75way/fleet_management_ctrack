@@ -1,29 +1,19 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-
-import { Logout } from "../../../store/actions/AuthActions";
-import { isAuthenticated } from "../../../store/selectors/AuthSelectors";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-// import { SVGICON } from '../../constant/theme';
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  }
+import withRouter from "@/hoc/withRouter";
+import { logout } from "@/store/silces/authSlice";
 
-  return ComponentWithRouterProp;
-}
-
-function LogoutPage(props) {
+function LogoutPage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   function onLogout() {
-    dispatch(Logout(navigate));
+    dispatch(logout());
+    navigate("/login");
   }
   return (
     <>
@@ -33,10 +23,5 @@ function LogoutPage(props) {
     </>
   );
 }
-const mapStateToProps = (state) => {
-  return {
-    isAuthenticated: isAuthenticated(state),
-  };
-};
 
-export default withRouter(connect(mapStateToProps)(LogoutPage));
+export default withRouter(LogoutPage);

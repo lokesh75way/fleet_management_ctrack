@@ -5,13 +5,12 @@ const createGroup = async (body) => {
   return data.data.data;
 };
 
-const getAllGroups = async (page) => {
-  let url = "/business-groups";
-  if (page !== undefined) {
-    url += `?page=${page}&limit=${10}`;
-  }
-
-  const { data } = await axios.get(url);
+const getAllGroups = async (page, limit) => {
+  const params = {
+    page: page || 1,
+    limit: limit || 10,
+  };
+  const { data } = await axios.get("/business-groups", { params });
   return {
     data: data.data.data,
     totalPage: data.data.totalPage,

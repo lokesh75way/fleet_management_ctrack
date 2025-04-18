@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { persistor, store } from "./store/store";
 import ThemeContext from "./context/ThemeContext";
 import { ToastContainer } from "react-toastify";
 import "./i18n";
-import { PermissionProvider } from "./context/PermissionContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryClient = new QueryClient();
 
@@ -18,14 +18,14 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <PermissionProvider>
-          <ToastContainer />
-          <BrowserRouter basename="/">
-            <ThemeContext>
+        <ToastContainer />
+        <HashRouter basename="/">
+          <ThemeContext>
+            <PersistGate loading={<>Loading....</>} persistor={persistor}>
               <App />
-            </ThemeContext>
-          </BrowserRouter>
-        </PermissionProvider>
+            </PersistGate>
+          </ThemeContext>
+        </HashRouter>
       </Provider>
     </QueryClientProvider>
   </React.StrictMode>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import MainPagetitle from "../../../components/MainPagetitle";
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 import CountUp from "react-countup";
 import { Dropdown } from "react-bootstrap";
 // import EmployeeOffcanvas from '../../constant/EmployeeOffcanvas';

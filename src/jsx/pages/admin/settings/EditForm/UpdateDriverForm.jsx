@@ -9,9 +9,9 @@ import { Dropdown, Nav, Offcanvas, Tab } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import "react-country-state-city/dist/react-country-state-city.css";
 import MainPagetitle from "../../../../../components/MainPagetitle";
-import Profile from "../../../../components/TabComponent/DriverTabs/Profile";
-import AdditionalInfo from "../../../../components/TabComponent/DriverTabs/AdditionalInfo";
-import Document from "../../../../components/TabComponent/DriverTabs/Document";
+import Profile from "../../../../../features/driver/components/Forms/Profile";
+import AdditionalInfo from "../../../../../features/driver/components/Forms/AdditionalInfo";
+import Document from "../../../../../features/driver/components/Forms/Document";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   driverProfileSchema,

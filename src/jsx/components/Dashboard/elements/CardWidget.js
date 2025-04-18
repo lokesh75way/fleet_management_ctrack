@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DepositlineChart from "./DepositlineChart";
 import AllProjectDonutChart from "./AllProjectDonutChart";
-import { SVGICON } from "../../../constant/theme";
+import { SVGICON } from "../../../../constants/theme";
 import { PiChartBar } from "react-icons/pi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { FaRegBuilding, FaTools } from "react-icons/fa";
@@ -10,11 +10,10 @@ import { GrUserPolice } from "react-icons/gr";
 import { useTranslation } from "react-i18next";
 import { getAllGroups } from "@/features/businessGroup/api";
 import { getCompany } from "../../../../services/api/CompanyServices";
-import { getUser } from "../../../../services/api/UserServices";
+import { getAllUser } from "@/features/user/api";
 import { getAllBranch } from "../../../../services/api/BranchServices";
 import { getTechnicians } from "../../../../services/api/TechnicianService";
-import { checkAutoLogin } from "../../../../services/AuthService";
-import { getDrivers } from "../../../../services/api/driverService";
+import { getAllDrivers } from "../../../../features/driver/api";
 
 const CardWidget = ({ usageData }) => {
   const { t } = useTranslation();
@@ -48,7 +47,7 @@ const CardWidget = ({ usageData }) => {
         const { totalCount: companyCount } = companies.data;
         setCompanyCount(companyCount);
 
-        const { count: userCount } = await getUser();
+        const { totalCount: userCount } = await getAllUser();
         setUserCount(userCount);
 
         const { data: branch } = await getAllBranch();
@@ -58,7 +57,8 @@ const CardWidget = ({ usageData }) => {
         const { count: technicianCount } = await getTechnicians();
         setTechnicianCount(technicianCount);
 
-        const { data: drivers, totalLength: driverCount } = await getDrivers();
+        const { data: drivers, totalLength: driverCount } =
+          await getAllDrivers();
         setDriverCount(driverCount);
       } catch (error) {
         console.error("Error fetching data:", error);

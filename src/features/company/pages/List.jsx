@@ -11,13 +11,14 @@ import {
 
 import MainPagetitle from "@/components/MainPagetitle";
 import CompanyTable from "../components/Table";
-import { usePermissions } from "@/context/PermissionContext";
 import { deleteCompany, getAllCompanies } from "../api";
 import { notifyError } from "@/utils/toast";
 import usePagination from "@/hooks/usePagination";
 import Paginate from "@/components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
 import GroupDropdownList from "@/features/businessGroup/components/DropDownList";
+import { getApiErrorMessage } from "@/utils/helper";
+import usePermissions from "@/hooks/usePermissions";
 
 const customStyles = {
   control: (base) => ({
@@ -37,21 +38,20 @@ const CompanyList = () => {
   const { groupId } = useParams();
   const { page, goToPage, setCount, totalCount } = usePagination();
   const itemsPerPage = 10;
-  const { can, setUserPermission } = usePermissions();
+  const { can } = usePermissions();
   const queryClient = useQueryClient();
   const { control } = useForm();
 
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["companies", page, groupId],
-    queryFn: () => getAllCompanies(page, groupId),
+    queryFn: () => getAllCompanies(page, 10, { groupId }),
     placeholderData: keepPreviousData,
     staleTime: Infinity,
   });
 
   const { mutate } = useMutation({
     onError: (err) => {
-      const messge = err.response.data.message;
-      notifyError(messge ?? "Something went wrong!!");
+      notifyError(getApiErrorMessage(err));
     },
     onSuccess: () => {
       queryClient.invalidateQueries("companies");
@@ -66,11 +66,6 @@ const CompanyList = () => {
   const handlePageClick = ({ selected }) => {
     goToPage(selected + 1);
   };
-
-  useEffect(() => {
-    const permissions = JSON.parse(localStorage.getItem("permission"));
-    setUserPermission(permissions?.[0]?.permission);
-  }, []);
 
   const handleClearFilter = () => {
     navigate("/company");
@@ -118,8 +113,9 @@ const CompanyList = () => {
                                 onChange={(newValue) => {
                                   navigate(`/company/gid/${newValue?.value}`);
                                 }}
+                                defaultValue={groupId}
                                 value={
-                                  groupId ?? {
+                                  !groupId && {
                                     value: "All Business Groups",
                                     label: t("allBusinessGroup"),
                                   }
@@ -161,18 +157,14 @@ const CompanyList = () => {
                           <thead>
                             <tr>
                               <th>{t("id")}</th>
-                              <th className="text-center">
-                                {t("companyName")}
-                              </th>
-                              <th className="text-center">
-                                {t("businessGroup")}
-                              </th>
+                              <th>{t("companyName")}</th>
+                              <th>{t("businessGroup")}</th>
                               {/* <th>{t('mobileNumber')}</th> */}
-                              <th className="text-center">{t("location")}</th>
-                              <th className="text-center">{t("email")}</th>
-                              <th className="text-center">{t("branches")}</th>
+                              <th>{t("location")}</th>
+                              <th>{t("email")}</th>
+                              <th>{t("branches")}</th>
 
-                              {(can("company", "edit") ||
+                              {(can("company", "modify") ||
                                 can("company", "delete")) && (
                                 <th className="d-flex justify-content-center">
                                   {t("action")}
@@ -181,12 +173,22 @@ const CompanyList = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            <CompanyTable
-                              tableData={data?.data ?? []}
-                              currentPage={page}
-                              itemsPerPage={itemsPerPage}
-                              onConfirmDelete={mutate}
-                            />
+                            {data?.data?.length ? (
+                              <CompanyTable
+                                tableData={data?.data ?? []}
+                                currentPage={page}
+                                itemsPerPage={itemsPerPage}
+                                onConfirmDelete={mutate}
+                              />
+                            ) : (
+                              <tr>
+                                <td colspan="10" rowSpan={2} height={150}>
+                                  <h1 className="text-center">
+                                    No Data found!
+                                  </h1>
+                                </td>
+                              </tr>
+                            )}
                           </tbody>
                         </table>
                       )}

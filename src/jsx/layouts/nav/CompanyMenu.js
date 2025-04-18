@@ -1,4 +1,4 @@
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import { GrMoney } from "react-icons/gr";
 import { FaCar } from "react-icons/fa6";
 import { FaRegBuilding } from "react-icons/fa";
@@ -62,7 +62,7 @@ export const CompanyMenuList = [
     content: [
       {
         title: "Technician Details",
-        to: "/technician/details",
+        to: "/technician",
       },
       {
         title: "Technician Tasks",
@@ -119,7 +119,7 @@ export const CompanyMenuList = [
         }}
       />
     ),
-    to: "/vehicle-tracking",
+    to: "/vehicle/tracking",
   },
 
   {

@@ -13,16 +13,17 @@ import ScrollToTop from "./layouts/ScrollToTop";
 /// Dashboard
 import Home from "./components/Dashboard/Home";
 import Loader from "./components/Loader";
-import VehicleForm from "./pages/admin/settings/CreateForms/VehicleForm";
-import TechnicianForm from "./pages/admin/settings/CreateForms/TechnicianForm";
-import DriverForm from "./pages/admin/settings/CreateForms/DriverForm";
 import UpdateVehicleForm from "./pages/admin/settings/EditForm/UpdateVehicleForm";
-import BusinessForm from "../features/businessGroup/pages/Create";
 import BusinessUser from "../features/businessGroup/pages/List";
-import Business from "../features/businessGroup/pages/List";
-import CompanyForm from "../features/company/pages/Create";
-import Company from "./pages/admin/Company";
 import CompanyTracking from "./pages/admin/tracking/CompanyTracking";
+import BusinessGroupRoutes from "@/features/businessGroup/pages";
+import CompanyRoutes from "@/features/company/pages";
+import BranchRoutes from "@/features/branch/pages";
+import VehicleRoutes from "@/features/vehicle/pages";
+import DriverRoutes from "@/features/driver/pages";
+import SubUserRoutes from "@/features/user/pages";
+import TemplateRotues from "@/features/featureTemplate/pages";
+import TechnicianRotues from "@/features/technician/pages";
 
 const Performance = React.lazy(
   () => import("./components/Dashboard/Performance")
@@ -36,21 +37,19 @@ const ManageClient = React.lazy(
   () => import("./components/Dashboard/ManageClient")
 );
 const Report = React.lazy(() => import("./components/Dashboard/Report"));
-const Driver = React.lazy(() => import("./pages/Driver"));
-const Technician = React.lazy(() => import("./pages/Technician"));
-const DriverTracking = React.lazy(() => import("./pages/DriverTracking"));
+const DriverTracking = React.lazy(
+  () => import("../features/vehicle/pages/Tracking")
+);
 const BranchTracking = React.lazy(
   () => import("./pages/company/tracking/BranchTracking")
 );
-const SubUserForm = React.lazy(() => import("./pages/CreateForms/SubUserForm"));
-const SubUser = React.lazy(() => import("./pages/SubUser"));
+const SubUserForm = React.lazy(() => import("../features/user/pages/Create"));
+const SubUser = React.lazy(() => import("../features/user/pages/List"));
 const Alert = React.lazy(() => import("./pages/Alert"));
 const Expense = React.lazy(() => import("./pages/Expense/Expense"));
 const Geofence = React.lazy(() => import("./pages/Geofence"));
 const ClassifyTrips = React.lazy(() => import("./pages/ClassifyTrips"));
 const ContactUs = React.lazy(() => import("./pages/ContactUs"));
-const TechnicianTask = React.lazy(() => import("./pages/TechnicianTask"));
-const Vehicle = React.lazy(() => import("./pages/Vehicle"));
 const MyProfile = React.lazy(() => import("./pages/company/profile/MyProfile"));
 
 //Update Pages
@@ -288,9 +287,6 @@ const UserRoutes = () => {
     { url: "blog-1", component: <HomeBlog /> },
     // { url: "manage-client", component: <ManageClient /> },
     { url: "reports/generated", component: <Report /> },
-    { url: "technician/details", component: <Technician /> },
-    { url: "branch/:id", component: <Branch /> },
-    { url: "driver", component: <Driver /> },
     { url: "subuser/create", component: <SubUserForm /> },
     { url: "subuser", component: <SubUser /> },
     { url: "/settings/alert", component: <Alert /> },
@@ -300,12 +296,6 @@ const UserRoutes = () => {
     { url: "/settings/geofence/map", component: <GeofenceMap /> },
 
     { url: "contactUs", component: <ContactUs /> },
-    { url: "technician/tasks", component: <TechnicianTask /> },
-    { url: "Vehicle", component: <Vehicle /> },
-    { url: "vehicle/create", component: <VehicleForm /> },
-    { url: "driver/create", component: <DriverForm /> },
-    { url: "technician/details/create", component: <TechnicianForm /> },
-    { url: "branch/create", component: <BranchForm /> },
     { url: "/company/my-profile/edit", component: <MyProfile /> },
 
     //Reports
@@ -336,10 +326,6 @@ const UserRoutes = () => {
     { url: "/charts/fuel", component: <FuelChart /> },
     { url: "/charts/expense", component: <ExpenseChart /> },
     { url: "/charts/temperature-chart", component: <TemperatureChart /> },
-    { url: "technician", component: <Technician /> },
-    { url: "branch", component: <Branch /> },
-    { url: "driver", component: <Driver /> },
-    { url: "vehicle-tracking", component: <DriverTracking /> },
     { url: "branch-tracking", component: <BranchTracking /> },
 
     //Update Pages
@@ -354,7 +340,6 @@ const UserRoutes = () => {
     { url: "add-email", component: <AddMail /> },
     { url: "add-blog", component: <AddBlog /> },
     { url: "blog-category", component: <BlogCategory /> },
-    { url: "vehicle-tracking/:id", component: <DriverTracking /> },
     ///AiKit
     { url: "auto-write", component: <AutoWriter /> },
     { url: "scheduled", component: <Scheduler /> },
@@ -368,7 +353,6 @@ const UserRoutes = () => {
 
     //Apps
     { url: "contacts", component: <Contacts /> },
-    { url: "user", component: <User /> },
     { url: "user-roles", component: <UserRoles /> },
     { url: "add-role", component: <AddRole /> },
     { url: "app-profile", component: <AppProfile /> },
@@ -435,100 +419,18 @@ const UserRoutes = () => {
     { url: "table-sorting", component: <SortingTable /> },
     { url: "table-bootstrap-basic", component: <BootstrapTable /> },
 
-    // groups
-    { url: "groups", component: <CreateGroups /> },
-    { url: "groups/permission", component: <Permission /> },
-
-    // drivers
-    { url: "driver/edit/:id", component: <DriverForm /> },
-    { url: "vehicle/edit/:id", component: <UpdateVehicleForm /> },
-
-    // buisness
-    {
-      module: "business",
-      operation: "add",
-      url: "business/create",
-      component: <BusinessForm />,
-    },
-    {
-      module: "business",
-      operation: "modify",
-      url: "business/edit/:id",
-      component: <BusinessForm />,
-    },
-    { module: "business", url: "business-group", component: <BusinessUser /> },
     {
       module: "business",
       url: "business-group/:id",
       component: <BusinessUser />,
     },
-    { module: "business", url: "business", component: <Business /> },
 
-    //company
-    {
-      module: "company",
-      operation: "add",
-      url: "company/create",
-      component: <CompanyForm />,
-    },
-    {
-      module: "company",
-      operation: "modify",
-      url: "company/edit/:id",
-      component: <CompanyForm />,
-    },
-    { module: "company", url: "company/:id", component: <Company /> },
-    { module: "company", url: "company", component: <Company /> },
     {
       module: "company",
       url: "company-tracking",
       component: <CompanyTracking />,
     },
-
-    //user
-    {
-      module: "subUser",
-      operation: "add",
-      url: "user/create",
-      component: <SubUserForm />,
-    },
-    { module: "subUser", url: "user", component: <SubUser /> },
-    {
-      module: "subUser",
-      operation: "modify",
-      url: "user/edit/:id",
-      component: <SubUserForm />,
-    },
-
-    //branch
-    {
-      module: "branch",
-      operation: "add",
-      url: "branch/create",
-      component: <BranchForm />,
-    },
-    { module: "branch", url: "branch", component: <Branch /> },
-    {
-      module: "branch",
-      operation: "modify",
-      url: "branch/edit/:id",
-      component: <BranchForm />,
-    },
-    { module: "branch", url: "branch", component: <Branch /> },
-    { module: "branch", url: "branch/cid/:id", component: <Branch /> },
-    { module: "branch", url: "branch/bid/:id", component: <Branch /> },
   ];
-
-  function NotFound() {
-    const url = allroutes.map((route) => route.url);
-    let path = window.location.pathname;
-    path = path.split("/");
-    path = path[path.length - 1];
-
-    if (url.indexOf(path) <= 0) {
-      return <Error404 />;
-    }
-  }
 
   return (
     <Suspense fallback={<Loader />}>
@@ -542,8 +444,17 @@ const UserRoutes = () => {
               element={data.component}
             />
           ))}
+          <Route path="/business/*" element={<BusinessGroupRoutes />} />
+          <Route path="/company/*" element={<CompanyRoutes />} />
+          <Route path="/branch/*" element={<BranchRoutes />} />
+          <Route path="/vehicle/*" element={<VehicleRoutes />} />
+          <Route path="/driver/*" element={<DriverRoutes />} />
+          <Route path="/user/*" element={<SubUserRoutes />} />
+          {/* TODO: change path to template */}
+          <Route path="/groups/*" element={<TemplateRotues />} />
+          <Route path="/technician/*" element={<TechnicianRotues />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
       <ScrollToTop />
     </Suspense>

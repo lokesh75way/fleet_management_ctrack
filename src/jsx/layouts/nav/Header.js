@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 import LogoutPage from "./Logout";
 import { HiOutlineLanguage } from "react-icons/hi2";
-import { IMAGES, SVGICON } from "../../constant/theme";
+import { IMAGES, SVGICON } from "../../../constants/theme";
 import Logoutbtn from "./Logoutbtn";
 import { useTranslation } from "react-i18next";
-import useStorage from "../../../hooks/useStorage";
+import { useSelector } from "react-redux";
 
 const NotificationBlog = ({ classChange }) => {
   return (
@@ -43,12 +43,9 @@ const NotificationBlog = ({ classChange }) => {
   );
 };
 
-const Header = ({ onNote }) => {
+const Header = () => {
   const { i18n } = useTranslation();
-  const { checkUser, checkUserName, checkRole } = useStorage();
-  const loginDetailsEmail = checkUser();
-  const loginDetailsName = checkUserName();
-  const role = checkRole();
+  const { role, email, userName } = useSelector((state) => state.auth.user);
   const [headerFix, setheaderFix] = useState(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -360,9 +357,9 @@ const Header = ({ onNote }) => {
                       </div>
                       <div className="header-info">
                         <h6>
-                          {loginDetailsName} ({role})
+                          {userName} ({role})
                         </h6>
-                        <p>{loginDetailsEmail}</p>
+                        <p>{email}</p>
                       </div>
                     </div>
                   </Dropdown.Toggle>
@@ -376,18 +373,19 @@ const Header = ({ onNote }) => {
                             alt=""
                           />
                           <div className="mx-2">
-                            <h6>User 1</h6>
+                            <h6>{userName}</h6>
+                            <span>{email}</span>
                           </div>
                         </div>
                       </div>
                       <div className="card-body px-0 py-2">
-                        <Link
+                        {/* <Link
                           to={"/app-profile"}
                           className="dropdown-item ai-icon mr-1"
                         >
                           {SVGICON.User}{" "}
                           <span className="ms-2">{t("myProfile")}</span>
-                        </Link>
+                        </Link> */}
 
                         <Link
                           to={"/changepassword"}

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Tab, Nav } from "react-bootstrap";
 import MainPagetitle from "../../../../components/MainPagetitle";
-import { SVGICON } from "../../../constant/theme";
+import { SVGICON } from "../../../../constants/theme";
 import GridTab from "./GridTab";
 import EmployeeOffcanvas from "../../../constant/EmployeeOffcanvas";
 import ListTab from "./ListTab";

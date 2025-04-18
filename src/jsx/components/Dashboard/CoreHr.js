@@ -6,7 +6,7 @@ import MainPagetitle from "../../../components/MainPagetitle";
 import CoreEmployeTable from "./elements/CoreEmployeTable";
 import ProjectStatusBlog from "./elements/ProjectStatusBlog";
 import UpcomingBlog from "./elements/UpcomingBlog";
-import { IMAGES } from "../../constant/theme";
+import { IMAGES } from "../../../constants/theme";
 import { Modal } from "react-bootstrap";
 
 const tableHeading = [

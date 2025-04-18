@@ -11,15 +11,16 @@ import { useTranslation } from "react-i18next";
 import usePagination from "../../hooks/usePagination";
 import { ThemeContext } from "../../context/ThemeContext";
 import ReactPaginate from "react-paginate";
-import { ICON } from "../constant/theme";
+import { ICON } from "../../constants/theme";
 import Paginate from "../../components/Paginate";
 import TableSkeleton from "@/components/Skeleton/Table";
+import usePermissions from "@/hooks/usePermissions";
 
 const CreateGroups = () => {
   const { isRtl } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  // const templateData = JSON.parse(localStorage.getItem("templateData")) || []
+  const { can } = usePermissions();
   const { page, nextPage, prevPage, goToPage, setCount, totalCount } =
     usePagination();
   const fetchData = async (page) => {
@@ -115,7 +116,10 @@ const CreateGroups = () => {
                           <tr>
                             <th className="text-center">{t("serialNumber")}</th>
                             <th className="text-center">{t("templateName")}</th>
-                            <th className="text-center">{t("action")}</th>
+                            {(can("groups", "modify") ||
+                              can("groups", "delete")) && (
+                              <th className="text-center">{t("action")}</th>
+                            )}
                           </tr>
                         </thead>
                         <tbody>

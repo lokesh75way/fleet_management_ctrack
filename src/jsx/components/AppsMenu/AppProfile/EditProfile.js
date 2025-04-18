@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 import Select from "react-select";
-import { IMAGES } from "../../../constant/theme";
+import { IMAGES } from "../../../../constants/theme";
 
 const inputBlog = [
   { label: "Name", value: "John" },

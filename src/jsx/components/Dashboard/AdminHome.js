@@ -52,7 +52,7 @@ import {
   SparklinesReferenceLine,
 } from "react-sparklines";
 import BarChart5 from "../charts/Chartjs/bar5";
-import { SVGICON } from "../../constant/theme";
+import { SVGICON } from "../../../constants/theme";
 import Setting from "../../layouts/Setting";
 import CompSetting from "../../layouts/CompSetting";
 import BarChart1 from "../charts/Chartjs/bar1";
@@ -63,11 +63,13 @@ import ApexLine5 from "../charts/apexcharts/Line5";
 import ApexLine4 from "../charts/apexcharts/Line4";
 import PolarChart from "../charts/Chartjs/polar";
 import Notification from "./Notification";
+import TechnicianSheet from "./TechnicianSheet";
 import {
   getDashboardTasks,
   getFleetStatus,
   getFleetUsage,
 } from "../../../services/api/DashboardServices";
+import {getAllTasks} from "../../../services/api/DashboardServices";
 
 import { useTranslation } from "react-i18next";
 import Loader from "../Loader";
@@ -121,6 +123,8 @@ const Home = () => {
   const [applicationUsage, setApplicationUsage] = useState([0, 0]);
   const [tasksData, setTasksData] = useState({ xAxis: [], series: [] });
   const [isLoading, setIsLoading] = useState(true);
+  const [showTechnicianSheet, setShowTechnicianSheet] = useState(false);
+  const [taskDataCount, settaskdatacount] = useState([0, 0]);
   const { t } = useTranslation();
 
   const {
@@ -183,6 +187,7 @@ const Home = () => {
       const usageApiData = await getFleetUsage();
       const statusApiData = await getFleetStatus();
       const tasksApiData = await getDashboardTasks();
+      const allTaskResponse= await getAllTasks();
       setVehicleData(usageApiData.vehicle);
       setGroupData(usageApiData.groups);
       setActiveUsers(usageApiData.activeUsers);
@@ -194,15 +199,33 @@ const Home = () => {
         statusApiData.progress,
       ]);
       setApplicationUsage([
-        usageApiData.applicationUsage.mobile,
-        usageApiData.applicationUsage.web,
+        usageApiData.applicationUsage?.mobile,
+        usageApiData.applicationUsage?.web,
       ]);
+
+      const tasksArray = allTaskResponse.data;
+      if (Array.isArray(tasksArray)) {
+        const installationCount = tasksArray.filter(
+          task => task.taskCategory === "INSTALLATION"
+        ).length;
+        
+        const maintenanceCount = tasksArray.filter(
+          task => task.taskCategory === "MAINTAINANCE" 
+        ).length;
+        
+        settaskdatacount([installationCount, maintenanceCount]);
+      } else {
+        console.error("Tasks data is not an array");
+        settaskdatacount([0, 0]);
+      }
+
       setTasksData(tasksApiData);
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
+  console.log(taskDataCount);
   if (isLoading) {
     return (
       <div style={{ height: "100vh" }}>
@@ -274,7 +297,7 @@ const Home = () => {
                   marginLeft: ".2rem",
                 }}
               >
-                <ActiveUserMap usageData={usageData} />
+                {/* <ActiveUserMap usageData={usageData} /> */}
               </div>
             </div>
           )}
@@ -498,66 +521,15 @@ const Home = () => {
               <div
                 className="card same-card p-2"
                 style={{
-                  // backgroundColor: "rgb(241 156 135 / 56%)",
                   cursor: "pointer",
                 }}
                 onClick={() => openModal(<OverspeedTable />, "Overspeed")}
               >
-                <div className="d-flex align-items-center justify-content-between">
-                  <h4
-                    className="text-black fs-4 p-3"
-                    style={{
-                      marginBottom: "2rem",
-                      whiteSpace: "nowrap", // Added: prevent text from wrapping
-                      overflow: "hidden", // Added: hide overflow
-                      textOverflow: "ellipsis", // Added: show ellipsis for overflow
-                    }}
-                  >
-                    {t("numberOfTasks")}
-                  </h4>
-                </div>
-
                 <div
                   className="justify-content-center align-items-center"
-                  // style={{ flexWrap: "wrap" }}
                 >
                   <ApexLine4
-                    height={300}
-                    categories={[
-                      "05-08-17",
-                      "09-11-23",
-                      "03-06-29",
-                      "10-04-18",
-                      "07-12-31",
-                      "01-10-22",
-                      "06-09-25",
-                      "02-01-14",
-                      "08-03-10",
-                      "11-05-27",
-                      "04-07-12",
-                      "12-02-24",
-                    ]}
-                    series={[
-                      {
-                        name: "Upcoming Tasks",
-                        data: [
-                          65, 65, 65, 120, 120, 80, 120, 100, 100, 120, 120,
-                          120,
-                        ],
-                      },
-                      {
-                        name: "Missed Tasks",
-                        data: [50, 100, 35, 35, 0, 0, 80, 20, 40, 40, 40, 40],
-                      },
-                      {
-                        name: "Incomplete Tasks",
-                        data: [20, 40, 20, 80, 40, 40, 20, 60, 60, 20, 110, 60],
-                      },
-                      {
-                        name: "Completed tasks",
-                        data: [10, 20, 10, 40, 60, 30, 80, 20, 50, 90, 10, 110],
-                      },
-                    ]}
+                  height={300}
                   />
                 </div>
               </div>
@@ -617,7 +589,6 @@ const Home = () => {
                   // backgroundColor: "rgb(241 156 135 / 56%)",
                   cursor: "pointer",
                 }}
-                onClick={() => openModal(<OverspeedTable />, "Overspeed")}
               >
                 <div className="d-flex align-items-center justify-content-between">
                   <h4 className="text-black fs-4 p-3">{t("technicianTask")}</h4>
@@ -628,10 +599,10 @@ const Home = () => {
                 >
                   <div>
                     <ChartPie
-                      key={applicationUsage}
+                      key={taskDataCount}
                       color1={"#F58505"}
                       color2={"#1EF6EA"}
-                      Chartdata={applicationUsage}
+                      Chartdata={taskDataCount}
                     />
                   </div>
                   <div>
@@ -654,10 +625,8 @@ const Home = () => {
               <div
                 className="card same-card p-2"
                 style={{
-                  // backgroundColor: "rgb(144 238 144 / 56%)",
                   cursor: "pointer",
                 }}
-                onClick={() => openModal(<StayInZoneTable />, "Stay In Zone")}
               >
                 <div className="d-flex align-items-center justify-content-between">
                   <h4
@@ -674,13 +643,24 @@ const Home = () => {
                     onClick={(e) => {
                       e.stopPropagation();
                     }}
-                  ></div>
+                  >
+                    <button
+                      className="btn btn-primary btn-sm me-3"
+                      onClick={() => setShowTechnicianSheet(true)}
+                    >
+                      {t("viewAll")}
+                    </button>
+                  </div>
                 </div>
 
                 <Notification />
               </div>
             </div>
           )}
+          <TechnicianSheet
+            isOpen={showTechnicianSheet}
+            onClose={() => setShowTechnicianSheet(false)}
+          />
         </div>
       </div>
     </>

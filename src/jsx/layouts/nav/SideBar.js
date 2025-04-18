@@ -1,21 +1,22 @@
 /// Menu
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Collapse from "react-bootstrap/Collapse";
-
-/// Link
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { AdminMenuList } from "./AdminMenu";
 import { CompanyMenuList } from "./CompanyMenu";
 import { BusinessGroupMenuList } from "./BusinessGroupMenu";
-import { SubCompanyMenuList } from "./SubCompanyMenu";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
-import { ThemeContext } from "../../../context/ThemeContext";
-
-import { useTranslation } from "react-i18next";
-import { usePermissions } from "../../../context/PermissionContext";
-import { CgChevronDoubleLeftR } from "react-icons/cg";
+import { ThemeContext } from "@/context/ThemeContext";
+import usePermissions from "@/hooks/usePermissions";
 
 const useBaseUrl = () => {
   const location = useLocation();
@@ -40,48 +41,42 @@ const initialState = {
 const SideBar = () => {
   const { iconHover, sidebarposition, headerposition, sidebarLayout } =
     useContext(ThemeContext);
-
-  const navigate = useNavigate();
-
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const { role, permissions } = usePermissions();
   let filteredAdminMenuList = [];
-  const role = userDetails?.user?.role;
-  const type = userDetails?.user?.type;
-  if (userDetails && userDetails.permissions?.[0] && role === "USER") {
-    const modulePermissions = userDetails.permissions?.[0].permission;
-    const viewableModules = modulePermissions
+
+  if (permissions?.length && role === "USER") {
+    const viewableModules = permissions
       .filter((item) => item.view === true)
-      .map((item) => ({
-        moduleId: item.moduleId._id,
-        title: item.moduleId.title,
-        basePath: item.moduleId.basePath,
-      }));
-    const viewmoduleTitles = viewableModules.map((item) => item.title);
-    filteredAdminMenuList = AdminMenuList.filter((item) =>
-      viewmoduleTitles.includes(item.title)
-    );
+      .map((item) => item.moduleId.title);
+
+    AdminMenuList.forEach((item) => {
+      let module = { ...item };
+      if (viewableModules.includes(item.title)) {
+        module.content =
+          item.content?.filter((item) =>
+            viewableModules.includes(item.title)
+          ) || [];
+        filteredAdminMenuList.push(module);
+      }
+    });
   }
-  let MenuList;
-  if (userDetails) {
+
+  const MenuList = useMemo(() => {
     switch (role) {
       case "COMPANY":
-        MenuList = CompanyMenuList;
-        break;
+        return CompanyMenuList;
+
       case "SUPER_ADMIN":
-        MenuList = AdminMenuList;
-        break;
+        return AdminMenuList;
       case "BUSINESS_GROUP":
-        MenuList = BusinessGroupMenuList;
-        break;
+        return BusinessGroupMenuList;
 
       default:
-        MenuList = [];
+        return [];
     }
-  }
+  }, [role]);
 
   const [state, setState] = useReducer(reducer, initialState);
-  useEffect(() => {}, []);
-  //For scroll
   const [hideOnScroll, setHideOnScroll] = useState(true);
   useScrollPosition(
     ({ prevPos, currPos }) => {
@@ -157,13 +152,15 @@ const SideBar = () => {
             if (menuClass !== "menu-title") {
               return (
                 <li
-                  className={` ${
-                    url === data.to ||
-                    url === "dashboard" + data?.to?.split("/")[0] ||
-                    data.url === url
-                      ? "mm-active text-primary"
-                      : ""
-                  }`}
+                className={` ${
+                  (data.to === "/vehicle/unassigned" && url2 === "/vehicle/unassigned") ||
+                  (data.to === "/vehicle" && url2 === "/vehicle" && url2 !== "/vehicle/unassigned") ||
+                  (data.to !== "/vehicle" && data.to !== "/vehicle/unassigned" && 
+                   (url === data.to || url2 === data.to || url2.startsWith(data.to + "/") ||
+                   url === "dashboard" + data?.to?.split("/")[0] || data.url === url))
+                    ? "mm-active text-primary"
+                    : ""
+                }`}
                   key={index}
                 >
                   {data.content && data.content.length > 0 ? (

@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { ThemeContext } from "../../../context/ThemeContext";
-import MapModes from "./MapModes";
+import React from "react";
 import "@/assets/scss/pages/_driver-tracking.scss";
-import { createRoot } from "react-dom/client";
 import {
   MapContainer,
   TileLayer,
@@ -11,9 +8,8 @@ import {
   Popup,
   Tooltip,
 } from "react-leaflet";
-import EditControlFC from "./EditControl";
 
-const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
+const ShowMapContainer = ({ trackingData, centerCoordinate }) => {
   return (
     <div
       style={{
@@ -27,8 +23,8 @@ const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
         <MapContainer
           // center={[ 24.420025, 54.49367]}
           center={[
-            centerCoordinate.latitude ?? 24.420025,
-            centerCoordinate.longitude ?? 54.49367,
+            centerCoordinate?.latitude ?? 24.420025,
+            centerCoordinate?.longitude ?? 54.49367,
           ]}
           zoom={14}
           zoomControl={false}
@@ -37,7 +33,7 @@ const ShowMapContainer = ({ data, trackingData, centerCoordinate }) => {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
           />
-          {trackingData?.data?.map((item, index) => {
+          {trackingData?.map((item, index) => {
             return (
               <Marker
                 styles={{ background: "red" }}
