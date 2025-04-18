@@ -99,9 +99,9 @@ const CreateUser = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="User"
-        pageTitle={id ? "Edit" : "Create"}
-        parentTitle={"User"}
+        mainTitle={t("user")}
+        pageTitle={t(id ? "edit" : "create")}
+        parentTitle={t("user")}
       />
       <div className="m-2 p-2">
         <FormProvider>

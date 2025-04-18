@@ -367,7 +367,7 @@ const Trip = ({
             }}
             className="btn btn-primary me-1"
           >
-            Submit
+            {t("submit")}
           </button>
           <Link
             to={"#"}
@@ -377,7 +377,7 @@ const Trip = ({
             }}
             className="btn btn-danger light ms-1"
           >
-            Cancel
+            {t("cancel")}
           </Link>
         </div>
       </div>

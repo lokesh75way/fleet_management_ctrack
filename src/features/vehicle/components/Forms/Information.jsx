@@ -150,7 +150,7 @@ const Information = ({
                         />
                       </div>
                       <h5 className="my-4" style={{ marginLeft: "20px" }}>
-                        {t("Use In Reports")}
+                        {t("use-in-reports")}
                       </h5>
                       <div className="form-check custom-checkbox">
                         <Controller
@@ -629,7 +629,7 @@ const Information = ({
                 <FileUploader
                   setValue={setValue}
                   register={register}
-                  label="Business Group Logo"
+                  label={t("Business-Group-Logo")}
                   name="logo"
                   getValue={getValues}
                   setLoading={setFileUploadLoading}

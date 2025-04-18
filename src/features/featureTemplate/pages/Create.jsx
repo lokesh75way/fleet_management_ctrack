@@ -21,7 +21,7 @@ const CreateTemplate = () => {
       <MainPagetitle
         mainTitle={t("permission")}
         pageTitle={t("permission")}
-        parentTitle={t("Feature Templates")}
+        parentTitle={t("featureTemplates")}
       />
       <Tabs tabs={data} />
     </>

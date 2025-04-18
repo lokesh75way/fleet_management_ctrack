@@ -47,7 +47,7 @@ export const AdminMenuList = [
     to: "/company",
   },
   {
-    title: "Branch",
+    title: "branch",
     iconStyle: (
       <FaRegBuilding
         style={{

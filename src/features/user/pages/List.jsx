@@ -53,7 +53,7 @@ const UserList = () => {
 
   return (
     <>
-      <MainPagetitle mainTitle="User" pageTitle={"User"} parentTitle={"Home"} />
+      <MainPagetitle mainTitle={t("user")} pageTitle={t("user")} parentTitle={t("home")} />
       <div className="container-fluid">
         <div className="row">
           <div className="col-xl-12">

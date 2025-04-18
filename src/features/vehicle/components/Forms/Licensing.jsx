@@ -25,7 +25,7 @@ const Licensing = ({
         <div className="row" style={{ width: "50%" }}>
           <div className="border border-1 p-3 row rounded">
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("License number")}</label>
+              <label className="form-label">{t("licenseNumber")}</label>
               <CustomInput
                 type="text"
                 required
@@ -38,7 +38,7 @@ const Licensing = ({
               <Error errorName={errors.licenseNumber} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("Roadworthy number")}</label>
+              <label className="form-label">{t("roadworthyNumber")}</label>
               <CustomInput
                 type="text"
                 required
@@ -58,12 +58,12 @@ const Licensing = ({
                 // onChange={onChange}
                 register={register}
                 name="licenseReminder"
-                label="License Reminder"
+                label={t("licenseReminder")}
                 checked={getValues("licenseReminder")}
               />
             </div>
             <div className="col-xl-6 mb-3 mt-2">
-              <label className="form-label">{t("Last renewal date")}</label>
+              <label className="form-label">{t("lastRenewalDate")}</label>
               <CustomInput
                 type="date"
                 required
@@ -76,7 +76,7 @@ const Licensing = ({
               <Error errorName={errors.licenseLastRenewalDate} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("Period (months)")}</label>
+              <label className="form-label">{t("period(months)")}</label>
               <CustomInput
                 type="number"
                 required
@@ -88,7 +88,7 @@ const Licensing = ({
               <Error errorName={errors.licensePeriod} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("Next renewal due on")}</label>
+              <label className="form-label">{t("nextRenewalDueOn")}</label>
               <CustomInput
                 type="date"
                 required
@@ -101,7 +101,7 @@ const Licensing = ({
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")}
+                {t("reminderStarts")}
               </label>
               <CustomInput
                 type="number"
@@ -121,11 +121,11 @@ const Licensing = ({
               <CustomCheckbox
                 register={register}
                 name="roadworthyReminder"
-                label="Roadworthy Reminder"
+                label={t("RoadworthyReminder")}
               />
             </div>
             <div className="col-xl-6 mb-3 mt-2">
-              <label className="form-label">{t("Last renewal date")}</label>
+              <label className="form-label">{t("lastRenewalDate")}</label>
               <CustomInput
                 type="date"
                 required
@@ -137,7 +137,7 @@ const Licensing = ({
               <Error errorName={errors.roadworthyLastRenewalDate} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("Period (months)")}</label>
+              <label className="form-label">{t("period(months)")}</label>
               <CustomInput
                 type="number"
                 required
@@ -149,7 +149,7 @@ const Licensing = ({
               <Error errorName={errors.roadworthyPeriod} />
             </div>
             <div className="col-xl-6 mb-3">
-              <label className="form-label">{t("Next renewal due on")}</label>
+              <label className="form-label">{t("nextRenewalDueOn")}</label>
               <CustomInput
                 type="date"
                 required
@@ -162,7 +162,7 @@ const Licensing = ({
             </div>
             <div className="col-xl-6 mb-3">
               <label className="form-label">
-                {t("Reminder starts (weeks before expiry)")}
+                {t("reminderStarts")}
               </label>
               <CustomInput
                 type="number"

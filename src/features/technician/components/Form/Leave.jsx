@@ -1,15 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useFieldArray } from "react-hook-form";
-
+import { useTranslation } from "react-i18next";
 import CustomInput from "@/components/Input/CustomInput";
 import Error from "@/components/Error/Error";
-
-const labels = {
-  CASUAL: "Casual Leave",
-  SICK: "Sick Leave",
-  PRIVILEGE: "Privilege Leave",
-};
 
 const Leave = ({
   handleNext,
@@ -26,6 +20,15 @@ const Leave = ({
     control,
     name: "leave",
   });
+
+  const {t}= useTranslation();
+
+  const labels = {
+    CASUAL: t("casual-Leave"),
+    SICK: t("sick-Leave"),
+    PRIVILEGE: t("privilege-Leave"),
+  };
+  
 
   return (
     <div className="p-4">
@@ -57,7 +60,7 @@ const Leave = ({
                   htmlFor="exampleFormControlInput3"
                   className="form-label"
                 >
-                  No of Days
+                { t("no-of-days")}
                 </label>
                 <CustomInput
                   type="text"

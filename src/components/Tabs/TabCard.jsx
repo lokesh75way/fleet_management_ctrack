@@ -1,8 +1,10 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function TabCard(props) {
   const { onClick, data, isActive } = props;
   const { title, icon } = data;
+  const {t} = useTranslation();
 
   return (
     <div
@@ -21,7 +23,7 @@ function TabCard(props) {
           {icon && (
             <span className="card-text text-primary fs-1 mb-2">{icon}</span>
           )}
-          <h6 className="card-text text-primary text-center fs-4">{title}</h6>
+          <h6 className="card-text text-primary text-center fs-4">{t(title.toLowerCase())}</h6>
         </div>
       </div>
     </div>

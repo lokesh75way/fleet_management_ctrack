@@ -544,8 +544,7 @@ const PermissionForm = () => {
             style={{ marginLeft: "1rem", padding: "7px 16px" }}
             onClick={handleSave}
           >
-            {" "}
-            {id ? "Update" : "Save"}{" "}
+            {t(id ? "update" : "save")}
           </button>
         </div>
       </Card>

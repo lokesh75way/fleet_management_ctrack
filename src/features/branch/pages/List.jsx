@@ -74,9 +74,9 @@ const BranchList = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Branch"
-        pageTitle={"Branch"}
-        parentTitle={"Home"}
+        mainTitle={t("branch")}
+        pageTitle={t("branch")}
+        parentTitle={t("home")}
       />
       <div className="container-fluid">
         <div className="row">

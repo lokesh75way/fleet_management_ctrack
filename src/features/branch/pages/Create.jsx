@@ -122,9 +122,9 @@ const BranchForm = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle="Branch"
-        pageTitle={id ? "Edit" : "Create"}
-        parentTitle={"Branch"}
+        mainTitle={t("branch")}
+        pageTitle={t(id ? "edit" : "create")}
+        parentTitle={t("branch")}
       />
       <div className="m-2 p-2">
         <FormProvider>

@@ -16,7 +16,9 @@ import { useTranslation } from "react-i18next";
 const ClassifyTripForm = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
-  const tabHeading = ["Trip"]; // Change the tab heading to "Trip"
+  const { t } = useTranslation();
+
+  const tabHeading = [t("trip")]; // Change the tab heading to "Trip"
   const component = [Trip]; // Use the Trip component for all tabs
 
   const totalTabs = tabHeading.length;
@@ -33,8 +35,7 @@ const ClassifyTripForm = () => {
   });
 
   const { id } = useParams();
-  const { t } = useTranslation();
-  const onSubmit = async (data) => {
+    const onSubmit = async (data) => {
     if (id) {
       try {
         await updateTrip(id, data);

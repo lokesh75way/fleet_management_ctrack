@@ -97,7 +97,6 @@ export const english = {
     vehicle: "Vehicle",
     confirmPassword: "Confirm Password",
     featureTemplate: "Feature Template",
-    branch: "Branch",
 
     technician: "Technician",
     technicians: "Technicians",
@@ -116,6 +115,12 @@ export const english = {
     general: "General Translation",
     Address: "Address Translation",
     Leave: "Leave Translation",
+
+    "casual-Leave": "Casual Leave",
+    "sick-Leave": "Sick Leave",
+    "privilege-Leave": "Privilege Leave",
+    "no-of-days": "No of Days",
+
 
     technician: "Technician",
     edit: "Edit",
@@ -180,7 +185,6 @@ export const english = {
     delete: "Delete",
     vehicleName: "Vehicle Name",
     plateNumber: "Plate Number",
-    branch: "Branch",
     simNumber: "SIM Number",
     IMEINumber: "IMEI Number",
     registrationNumber: "Registration Number",
@@ -229,6 +233,7 @@ export const english = {
     vinNumber: "VIN(Chassis) Number",
     engineNumber: "Engine Number",
     odometer: "Odometer",
+    variable:"Variable",
     LBSDetectionRadius: "LBS Detection Radius",
     engineHours: "Engine Hours",
     passengerSeats: "No of passenger seats",
@@ -325,7 +330,19 @@ export const english = {
     mediclaimNumber: "Mediclaim Number",
     mediclaimExpiryDate: "Mediclaim Expiry Date",
 
+
+    roadworthyNumber: "Roadworthy number",
+    licenseReminder: "License Reminder",
+    lastRenewalDate: "Last renewal date",
+    "period(months)": "Period (months)",
+    nextRenewalDueOn: "Next renewal due on",
+    reminderStarts:"Reminder starts (weeks before expiry)",
+    RoadworthyReminder: "Roadworthy Reminder",
+    "Reminder(Before Days)":"Reminder(Before Days)",
+    selectFile: "Select File",
+
     active: "Active",
+    selectDateOfBirth: "selectDateOfBirth",
 
     vehicleTracking: "Vehicle Tracking",
     tracking: "Tracking",
@@ -352,8 +369,6 @@ export const english = {
 
     dashboard: "Dashboard",
     businessGroup: "Business Group",
-    company: "Company",
-    branch: "Branch",
     user: "User",
     technician: "Technician",
     vehicle: "Vehicle",
@@ -362,7 +377,8 @@ export const english = {
     featureTemplate: "Feature Template",
     settings: "Settings",
     reports: "Reports",
-
+    fix: "Fix",
+    considerJob: "considerJob",
     featureTemplates: "Feature Templates",
     settings: "Settings",
     featureTemplate: "Feature Template",
@@ -468,6 +484,7 @@ export const english = {
     Dashboard: "Dashboard",
     "Business Group": "Business Group",
     Company: "Company",
+    branch: "Branch",
     Branch: "Branch",
     User: "User",
     Technician: "Technician",
@@ -524,7 +541,6 @@ export const english = {
     previous: "previous",
     next: "next",
 
-    branch: "Branch",
     basedOn: "Based On",
     vehicle: "Vehicle",
     vehicleGroup: "Vehicle Group",
@@ -572,7 +588,6 @@ export const english = {
     action: "Action",
 
     expenseDetails: "Expense Details",
-    branch: "Branch",
     category: "Category",
     type: "Type",
     amount: "Amount",
@@ -608,7 +623,6 @@ export const english = {
     action: "Action",
 
     geofenceDetail: "Geofence Detail",
-    company: "Company",
     name: "Name",
     category: "Category",
     geofenceAccess: "Geofence Access",
@@ -686,7 +700,7 @@ export const english = {
     designation: "Designation",
     update: "Update",
 
-    trip: "",
+    trip: " Trip",
     tripId: "Trip ID",
     startTime: "Start Time",
     startLocation: "Start Location",
@@ -732,7 +746,7 @@ export const english = {
     date: "Date",
     customer: "Customer",
     invoice: "Invoice",
-
+    "use-in-reports": "Use In Reports",
     information: "Information",
     licensing: "Licensing",
     servicing: "Servicing",
@@ -741,7 +755,7 @@ export const english = {
 
     add: "Add",
     "Business-Group-Logo": "Business Group Logo",
-
+    syncOnce: "syncOnce",
     unitInformation: "Unit Information",
     unitId: "UnitId",
     fleetnumber: "Fleet Number",
