@@ -10,7 +10,6 @@ import { licenseToDriveOptions } from "@/constants/options";
 import CustomInput from "@/components/Input/CustomInput";
 import Error from "@/components/Error/Error";
 import "@/assets/scss/pages/_driver-tracking.scss";
-
 const customStyles = {
   control: (base) => ({
     ...base,
@@ -30,6 +29,7 @@ const AdditionalInfo = ({
   watch,
 }) => {
   const { t } = useTranslation();
+  const [ageError, setAgeError] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value === "yes" ? true : false;
@@ -45,13 +45,20 @@ const AdditionalInfo = ({
     const today = dayjs();
     const birthDate = dayjs(dateOfBirth);
     const age = today.diff(birthDate, "year");
-
     return age;
   };
 
   const handleDateOfBirthChange = (date) => {
     const age = calculateAge(date);
     setValue("age", age);
+    
+    if (age < 16) {
+      setAgeError(t("Driver must be above 16"));
+      setValue("ageValid", false);
+    } else {
+      setAgeError("");
+      setValue("ageValid", true);
+    }
   };
 
   return (
@@ -70,7 +77,7 @@ const AdditionalInfo = ({
                 selected={
                   getValues("dateOfBirth")
                     ? new Date(getValues("dateOfBirth"))
-                    : new Date()
+                    : null
                 }
                 minDate={minDate}
                 maxDate={maxDate}
@@ -83,9 +90,11 @@ const AdditionalInfo = ({
                 scrollableYearDropdown={true}
                 popperClassName="date-picker-reports"
                 yearDropdownItemNumber={50}
+                placeholderText={t("selectDateOfBirth")}
               />
             )}
           />
+          <Error errorName={errors.dateOfBirth} />
         </div>
         <div className="col-xl-6 mb-3 ">
           <label className="form-label">
@@ -101,6 +110,7 @@ const AdditionalInfo = ({
             value={getValues("age")}
             disabled={true}
           />
+          {ageError && <div className="text-danger mt-1">{ageError}</div>}
           <Error errorName={errors.age} />
         </div>
         <div className="col-xl-6 mb-3 d-flex flex-column">

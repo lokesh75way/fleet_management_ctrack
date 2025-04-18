@@ -49,16 +49,16 @@ const SideBar = () => {
       .filter((item) => item.view === true)
       .map((item) => item.moduleId.title);
 
-      AdminMenuList.forEach((item) => {
-        let module = { ...item };
-        if (viewableModules.includes(item.title)) {
-          module.content =
-            item.content?.filter((item) =>
-              viewableModules.includes(item.title)
-            ) || [];
-          filteredAdminMenuList.push(module);
-        }
-      });
+    AdminMenuList.forEach((item) => {
+      let module = { ...item };
+      if (viewableModules.includes(item.title)) {
+        module.content =
+          item.content?.filter((item) =>
+            viewableModules.includes(item.title)
+          ) || [];
+        filteredAdminMenuList.push(module);
+      }
+    });
   }
 
   const MenuList = useMemo(() => {
@@ -152,13 +152,15 @@ const SideBar = () => {
             if (menuClass !== "menu-title") {
               return (
                 <li
-                  className={` ${
-                    url === data.to ||
-                    url === "dashboard" + data?.to?.split("/")[0] ||
-                    data.url === url
-                      ? "mm-active text-primary"
-                      : ""
-                  }`}
+                className={` ${
+                  (data.to === "/vehicle/unassigned" && url2 === "/vehicle/unassigned") ||
+                  (data.to === "/vehicle" && url2 === "/vehicle" && url2 !== "/vehicle/unassigned") ||
+                  (data.to !== "/vehicle" && data.to !== "/vehicle/unassigned" && 
+                   (url === data.to || url2 === data.to || url2.startsWith(data.to + "/") ||
+                   url === "dashboard" + data?.to?.split("/")[0] || data.url === url))
+                    ? "mm-active text-primary"
+                    : ""
+                }`}
                   key={index}
                 >
                   {data.content && data.content.length > 0 ? (

@@ -175,7 +175,7 @@ export const spanish = {
     weightCapacity: "Capacidad de Peso",
     action: "Acción",
 
-    "uanassigned-vehicle": "Vehículo no Asignado",
+    "unassigned-vehicle": "Vehículo no Asignado",
     vehicleNumber: "Número de Vehículo",
     vehicleModel: "Modelo de Dispositivo",
     vehicleType: "Tipo de Dispositivo",

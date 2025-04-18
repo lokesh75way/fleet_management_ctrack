@@ -35,8 +35,8 @@ const UnassinedVehicleList = () => {
   return (
     <>
       <MainPagetitle
-        mainTitle={t("uanassigned-vehicle")}
-        pageTitle={t("uanassigned-vehicle")}
+        mainTitle={t("unassigned-vehicle")}
+        pageTitle={t("unassigned-vehicle")}
         parentTitle={t("home")}
       />
       <div className="container-fluid">
@@ -46,7 +46,7 @@ const UnassinedVehicleList = () => {
               <div className="card-body p-0">
                 <div className="table-responsive active-projects style-1 ItemsCheckboxSec shorting">
                   <div className="tbl-caption d-flex justify-content-between text-wrap align-items-center">
-                    <h4 className="heading mb-0">{t("uanassigned-vehicle")}</h4>
+                    <h4 className="heading mb-0">{t("unassigned-vehicle")}</h4>
                     {/* <div>
                       {can("vehicle", "add") && (
                         <Link

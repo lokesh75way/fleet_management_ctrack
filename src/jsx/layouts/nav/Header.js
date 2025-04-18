@@ -379,13 +379,13 @@ const Header = () => {
                         </div>
                       </div>
                       <div className="card-body px-0 py-2">
-                        <Link
+                        {/* <Link
                           to={"/app-profile"}
                           className="dropdown-item ai-icon mr-1"
                         >
                           {SVGICON.User}{" "}
                           <span className="ms-2">{t("myProfile")}</span>
-                        </Link>
+                        </Link> */}
 
                         <Link
                           to={"/changepassword"}

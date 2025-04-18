@@ -424,7 +424,7 @@ export const arabic = {
     "Technician Details": "تفاصيل الفني",
     "Technician Tasks": "مهام الفني",
     Vehicle: "مركبة",
-    "Unassigned Vehicle": "مركبة",
+    "unassigned-vehicle": "مركبة",
     Driver: "سائق",
     "Vehicle Tracking": "تتبع المركبة",
     "Feature Template": "قالب الميزة",

@@ -153,7 +153,8 @@ const BusinessForm = ({
                     padding: ".25rem 0 ",
                   }),
                 }}
-                value={{ value, label: value }}
+                value={dateFormatOptions.find(option => option.value === value) || dateFormatOptions[0]}
+                defaultValue={dateFormatOptions[0]}
               />
             )}
           />
@@ -176,7 +177,7 @@ const BusinessForm = ({
                     padding: ".25rem 0 ",
                   }),
                 }}
-                value={{ value, label: value }}
+                value={timeFormatOptions.find(option => option.value === value) || timeFormatOptions[1]}
                 defaultValue={timeFormatOptions[1]}
               />
             )}
