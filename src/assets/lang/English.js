@@ -59,6 +59,7 @@ export const english = {
 
     company: "Company",
     companies: "Companies",
+    clear: "Clear",
     allCompanies: "All Companies",
     companyName: "Company Name",
     branches: "Branches",
@@ -381,7 +382,6 @@ export const english = {
     errorFetchingTemplateData: "Error fetching template data",
     receivedTemplateData: "Received template data",
 
-    dashboard: "Dashboard",
     home: "Home",
     date: "Date",
     selectDateRange: "Select Date Range",
@@ -738,6 +738,9 @@ export const english = {
     servicing: "Servicing",
     statuses: "Statuses",
     messageforwarding: "Message Forwarding",
+
+    add: "Add",
+    "Business-Group-Logo": "Business Group Logo",
 
     unitInformation: "Unit Information",
     unitId: "UnitId",

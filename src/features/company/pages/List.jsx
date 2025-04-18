@@ -100,7 +100,7 @@ const CompanyList = () => {
                               color: "white",
                             }}
                           >
-                            Clear
+                            {t("clear")}
                           </Link>
                           <Controller
                             name="companyOptions"

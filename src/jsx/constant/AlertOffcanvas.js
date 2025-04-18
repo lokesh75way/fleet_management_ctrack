@@ -20,6 +20,7 @@ import "@/assets/scss/pages/_driver-tracking.scss";
 import DatePicker from "react-datepicker";
 import { useTranslation } from "react-i18next";
 import BranchDropdown from "../components/BranchDropdown";
+import { useSelector } from "react-redux";
 
 const AlertOffcanvas = forwardRef(
   (
@@ -46,7 +47,7 @@ const AlertOffcanvas = forwardRef(
     const [tempValidDays, setTempValidDays] = useState("");
     const [companyId, setCompanyId] = useState();
     const { t } = useTranslation();
-    const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const userDetails = useSelector((state) => state.auth.user);
 
     useImperativeHandle(ref, () => ({
       showModal() {
@@ -61,8 +62,8 @@ const AlertOffcanvas = forwardRef(
     }));
 
     useEffect(() => {
-      if (userDetails.user.role === "COMPANY") {
-        setCompanyId(userDetails?.user.companyId[0]?._id);
+      if (userDetails.role === "COMPANY") {
+        setCompanyId(userDetails?.companyId[0]?._id);
       }
     }, []);
 

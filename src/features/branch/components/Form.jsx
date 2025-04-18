@@ -241,8 +241,7 @@ const BranchForm = ({
             onClick={handleAddForm}
             style={{ width: "10%" }}
           >
-            {" "}
-            ADD
+            {t("add")}
           </Button>
         </div>
         {fields.map((field, index) => (

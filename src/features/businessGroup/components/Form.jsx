@@ -96,7 +96,7 @@ const BusinessForm = ({
           <FileUploader
             setValue={setValue}
             register={register}
-            label="Business Group Logo"
+            label={t("Business-Group-Logo")}
             name="logo"
             getValue={getValues}
             setLoading={setLoading}
@@ -204,8 +204,7 @@ const BusinessForm = ({
             onClick={handleAddForm}
             style={{ width: "10%" }}
           >
-            {" "}
-            ADD
+            {t("add")}
           </Button>
         </div>
         {fields.map((field, index) => (

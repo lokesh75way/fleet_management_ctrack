@@ -18,6 +18,7 @@ import {
 
 import { useTranslation } from "react-i18next";
 import CompanyDropdown from "../../features/company/components/DropDownList";
+import { useSelector } from "react-redux";
 
 const GeofenceDetail = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -28,7 +29,7 @@ const GeofenceDetail = () => {
   const { id } = useParams();
   const [companyId, setCompanyId] = useState();
   const [companyDisabled, setCompanyDisabled] = useState(false);
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  const userDetails = useSelector((state) => state.auth.user);
 
   const customStyles = {
     control: (base) => ({
@@ -47,17 +48,17 @@ const GeofenceDetail = () => {
   };
 
   useEffect(() => {
-    if (userDetails.user.role === "COMPANY") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
+    if (userDetails.role === "COMPANY") {
+      setValue("businessGroupId", userDetails?.businessGroupId);
+      setGroupId(userDetails?.businessGroupId);
 
-      setValue("companyId", userDetails?.user.companyId);
-      setCompanyId(userDetails?.user.companyId);
+      setValue("companyId", userDetails?.companyId);
+      setCompanyId(userDetails?.companyId);
       setCompanyDisabled(true);
     }
-    if (userDetails.user.role === "BUSINESS_GROUP") {
-      setValue("businessGroupId", userDetails?.user.businessGroupId);
-      setGroupId(userDetails?.user.businessGroupId);
+    if (userDetails.role === "BUSINESS_GROUP") {
+      setValue("businessGroupId", userDetails?.businessGroupId);
+      setGroupId(userDetails?.businessGroupId);
     }
 
     if (id) {

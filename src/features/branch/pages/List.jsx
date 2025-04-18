@@ -100,7 +100,7 @@ const BranchList = () => {
                               color: "white",
                             }}
                           >
-                            Clear
+                            {t("clear")}
                           </Link>
                           <Controller
                             name="company"

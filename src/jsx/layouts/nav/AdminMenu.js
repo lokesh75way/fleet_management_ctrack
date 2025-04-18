@@ -92,7 +92,7 @@ export const AdminMenuList = [
     ],
   },
   {
-    title: "Unassigned Vehicle",
+    title: "unassigned-vehicle",
     iconStyle: (
       <FaCar
         style={{
