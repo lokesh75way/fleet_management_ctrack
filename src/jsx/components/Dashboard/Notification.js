@@ -27,7 +27,7 @@ const Notification = () => {
     if (!data?.data) return [];
   
     return [...data.data]
-      .map(tech => ({
+      .map((tech) => ({
         id: tech._id || tech.id,
         name: `${tech.firstName || ''} ${tech.middleName || ''} ${tech.lastName || ''}`.trim(),
         rating: 3 + Math.random() * 2, 
@@ -52,13 +52,17 @@ const Notification = () => {
                   {tech.avatar ? (
                     <img alt="" width="50" src={tech.avatar} />
                   ) : (
-                    <div className="media media-info">{tech.name.charAt(0)}</div>
+                    <div className="media media-info">
+                      {tech.name.charAt(0)}
+                    </div>
                   )}
                 </div>
-                <div className="media-body d-flex align-items-center w-100">
+                <div className="media-body d-flex align-items-center justify-content-between w-100">
                   <h5 className="mb-0 pe-2">{tech.name}</h5>
-                  <div className="ms-auto d-flex align-items-center">
-                    <span className="me-2 text-muted">{tech.rating.toFixed(1)}</span>
+                  <div className="d-flex align-items-center">
+                    <span className="text-muted me-2">
+                      {tech.rating.toFixed(1)}
+                    </span>
                     {renderStarRating(tech.rating)}
                   </div>
                 </div>

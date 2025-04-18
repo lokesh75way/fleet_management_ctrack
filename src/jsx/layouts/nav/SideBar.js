@@ -153,6 +153,7 @@ const SideBar = () => {
               return (
                 <li
                 className={` ${
+                  (data.to === "/" && url2 === "/") ||
                   (data.to === "/vehicle/unassigned" && url2 === "/vehicle/unassigned") ||
                   (data.to === "/vehicle" && url2 === "/vehicle" && url2 !== "/vehicle/unassigned") ||
                   (data.to !== "/vehicle" && data.to !== "/vehicle/unassigned" && 

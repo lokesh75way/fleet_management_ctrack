@@ -727,5 +727,9 @@ export const spanish = {
     add: "Agregar",
     "Business-Group-Logo": "Logotipo del grupo empresarial",
     clear: "clara",
+    rating: "clasificación",
+    tasks: "tareas",
+    technicians: "técnicos"
+    
   },
 };

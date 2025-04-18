@@ -681,5 +681,8 @@ export const arabic = {
     add: "اضافة",
     "Business-Group-Logo": "شعار مجموعة الأعمال",
     clear: "واضح",
+    rating: "تصنيف",
+    tasks: "المهام",
+    technicians: "الفنيين",
   },
 };

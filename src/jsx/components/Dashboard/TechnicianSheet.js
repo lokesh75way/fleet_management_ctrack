@@ -50,6 +50,7 @@ const TechnicianSheet = ({ isOpen, onClose }) => {
 
     return stars;
   };
+  const isRtl = document?.documentElement?.dir === "rtl";
 
   const formatCount = (num) => {
     if (num >= 1_000_000)
@@ -119,16 +120,28 @@ const TechnicianSheet = ({ isOpen, onClose }) => {
             <div className="d-sm-flex text-center justify-content-between align-items-center mt-3">
               <div className="dataTables_info">
                 {t("showing")} {(page - 1) * itemsPerPage + 1} {t("to")}{" "}
-                {Math.min(page * itemsPerPage, totalCount)} {t("of")} {totalCount}{" "}
-                {t("entries")}
+                {Math.min(page * itemsPerPage, totalCount)} {t("of")}{" "}
+                {totalCount} {t("entries")}
               </div>
               <div
                 className="dataTables_paginate paging_simple_numbers"
                 id="technician-sheet-paginate"
               >
                 <ReactPaginate
-                  previousLabel={<i className="fa-solid fa-angle-left"></i>}
-                  nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                  previousLabel={
+                    isRtl ? (
+                      <i className="fa-solid fa-angle-right"></i>
+                    ) : (
+                      <i className="fa-solid fa-angle-left"></i>
+                    )
+                  }
+                  nextLabel={
+                    isRtl ? (
+                      <i className="fa-solid fa-angle-left"></i>
+                    ) : (
+                      <i className="fa-solid fa-angle-right"></i>
+                    )
+                  }
                   breakLabel={"..."}
                   pageCount={Math.ceil(totalCount / itemsPerPage)}
                   marginPagesDisplayed={2}
@@ -142,7 +155,7 @@ const TechnicianSheet = ({ isOpen, onClose }) => {
                   previousLinkClassName="page-link"
                   nextClassName="page-item"
                   nextLinkClassName="page-link"
-                  forcePage={page - 1} 
+                  forcePage={page - 1}
                 />
               </div>
             </div>
