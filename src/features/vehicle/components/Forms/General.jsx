@@ -15,6 +15,7 @@ import CustomInput from "@/components/Input/CustomInput";
 import CompanyDropdown from "@/features/company/components/DropDownList";
 import GroupDropdown from "@/features/businessGroup/components/DropDownList";
 import BranchDropdownList from "@/features/branch/components/DropDownList";
+import useTranslate from "@/hooks/useTranslate";
 
 const customStyles = {
   control: (base) => ({
@@ -39,6 +40,14 @@ const General = ({
   const { t } = useTranslation();
 
   const location =useLocation();
+
+
+  const copyFromTranslated = useTranslate(copyFromOptions);
+  const distanceCounterTranslated = useTranslate(distanceCounterOptions);
+  const speedDetectionTranslated = useTranslate(speedDetectionOptions);
+
+
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const imeiFromQuery = params.get("imei");
@@ -194,11 +203,11 @@ const General = ({
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
                 onChange={(newValue) => setValue("copyFrom", newValue.value)}
-                options={copyFromOptions}
+                options={copyFromTranslated}
                 ref={ref}
                 name={name}
                 styles={customStyles}
-                defaultValue={copyFromOptions[0]}
+                // defaultValue={copyFromOptions[0]}
               />
             )}
           />
@@ -256,7 +265,7 @@ const General = ({
                 onChange={(newValue) => {
                   setValue("distanceCounter", newValue.value);
                 }}
-                options={distanceCounterOptions}
+                options={distanceCounterTranslated}
                 ref={ref}
                 name={name}
                 styles={customStyles}
@@ -312,7 +321,7 @@ const General = ({
                 onChange={(newValue) =>
                   setValue("speedDetection", newValue.value)
                 }
-                options={speedDetectionOptions}
+                options={speedDetectionTranslated}
                 ref={ref}
                 name={name}
                 styles={customStyles}

@@ -4,9 +4,10 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-
+import {driverDocumentOptions} from "../../../../constants/options"
 import Error from "@/components/Error/Error";
 import FileUploader from "@/components/FileUploader";
+import useTranslate from "@/hooks/useTranslate";
 
 const customStyles = {
   control: (base) => ({
@@ -35,17 +36,12 @@ const Document = ({
 
   const { t } = useTranslation();
 
-  const driverDocumentOptions = [
-    { value: "DRIVING_LICENSE", label: "DRIVING_LICENSE" },
-    { value: "AADHAR_CARD", label: "AADHAR_CARD" },
-    { value: "PAN_CARD", label: "PAN_CARD" },
-    { value: "BANK_ACCOUNT", label: "BANK_ACCOUNT" },
-    { value: "MEDICLAIM", label: "MEDICLAIM" },
-  ];
+  const driverDocumentTranslated = useTranslate(driverDocumentOptions);
+
 
   return (
     <div className="p-4">
-      <div className="row" style={{ width: "70%", margin: "auto" }}>
+      <div className="row" style={{ width: "90%", margin: "auto" }}>
         <div className="col-xl-12 d-flex align-items-center mb-4">
           <Button
             onClick={() => {
@@ -82,17 +78,17 @@ const Document = ({
                             newValue.value
                           );
                         }}
-                        options={driverDocumentOptions}
+                        options={driverDocumentTranslated}
                         ref={ref}
                         name={name}
                         styles={customStyles}
                         defaultValue={{
                           value:
                             getValues(`documents.${index}.documentType`) ??
-                            driverDocumentOptions[1].value,
+                            driverDocumentTranslated[1].value,
                           label:
                             getValues(`documents.${index}.documentType`) ??
-                            driverDocumentOptions[1].label,
+                            driverDocumentTranslated[1].label,
                         }}
                       />
                     )}
@@ -102,29 +98,6 @@ const Document = ({
                       errorName={errors?.documents?.[index]?.documentType}
                     />
                   )}
-                </div>
-                <div className="col-xl-3 mb-2">
-                  <label className="form-label">
-                    {t("uploadFile")}
-                    <span className="text-danger">*</span>
-                  </label>
-                  <FileUploader
-                    getValue={getValues}
-                    link={getValues(`documents.${index}.file`) ?? false}
-                    register={register}
-                    name={`documents.${index}.file`}
-                    label={t("selectFile")}
-                    defaultValue=""
-                    setValue={setValue}
-                    setLoading={setLoading}
-                    loading={loading}
-                  />
-
-                  <Error
-                    errorName={
-                      errors?.documents?.[index]?.file ? "File is required" : ""
-                    }
-                  />
                 </div>
                 <div className="col-xl-3 d-flex flex-column mb-2 ">
                   <label className="form-label">{t("issueDate")}</label>
@@ -202,6 +175,30 @@ const Document = ({
                   {!getValues(`documents.${index}.expireDate`) && (
                     <Error errorName={errors?.documents?.[index]?.expireDate} />
                   )}
+                </div>
+                <div className="col-xl-3 mb-2">
+                  <label className="form-label">
+                    {t("uploadFile")}
+                    <span className="text-danger">*</span>
+                  </label>
+                  <FileUploader
+                    getValue={getValues}
+                    link={getValues(`documents.${index}.file`) ?? false}
+                    register={register}
+                    name={`documents.${index}.file`}
+                    label={t("selectFile")}
+                    defaultValue=""
+                    setValue={setValue}
+                    setLoading={setLoading}
+                    loading={loading}
+                    componentType="driver"
+                  />
+
+                  <Error
+                    errorName={
+                      errors?.documents?.[index]?.file ? "File is required" : ""
+                    }
+                  />
                 </div>
               </div>
             </>

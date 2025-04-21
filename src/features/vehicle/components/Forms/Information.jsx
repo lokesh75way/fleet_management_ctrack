@@ -15,6 +15,7 @@ import {
 } from "@/constants/options";
 import CustomInput from "@/components/Input/CustomInput";
 import FileUploader from "@/components/FileUploader";
+import useTranslate from "@/hooks/useTranslate";
 
 const customStyles = {
   control: (base) => ({
@@ -38,6 +39,15 @@ const Information = ({
   const { t } = useTranslation();
 
   const location = useLocation();
+
+  const skillSet = useTranslate(skillSetOptions);
+  const profileOptions = useTranslate(profileOwningOptions);
+  const costOptions = useTranslate(costCenterOptions);
+  const tarrifOptions = useTranslate(tarrifTypeOptions);
+  const tollOptions = useTranslate(tollCategoryOptions);
+
+  
+ 
 
     useEffect(() => {
       const params = new URLSearchParams(location.search);
@@ -279,7 +289,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("group", newValue.value);
                         }}
-                        options={tarrifTypeOptions}
+                        options={tarrifOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -316,7 +326,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("tollCategory", newValue.value);
                         }}
-                        options={tollCategoryOptions}
+                        options={tollOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -341,7 +351,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("tarrifType", newValue.value);
                         }}
-                        options={tarrifTypeOptions}
+                        options={tarrifOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -552,7 +562,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("skillSet", newValue.value);
                         }}
-                        options={skillSetOptions}
+                        options={skillSet}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -578,7 +588,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("profile", newValue.value);
                         }}
-                        options={profileOwningOptions}
+                        options={profileOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -604,7 +614,7 @@ const Information = ({
                         onChange={(newValue) => {
                           setValue("owningCostCenter", newValue.value);
                         }}
-                        options={costCenterOptions}
+                        options={costOptions}
                         ref={ref}
                         name={name}
                         styles={customStyles}

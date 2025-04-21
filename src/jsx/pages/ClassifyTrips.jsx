@@ -145,7 +145,7 @@ const ClassifyTrip = (ref) => {
             </Tab.Container>
             <ClassifyTripsFilterOffcanvas
               ref={classifyTripsFilter}
-              Title={"Add Filter"}
+              Title={t("addFilter")}
               filterData={filterData}
             />
           </form>

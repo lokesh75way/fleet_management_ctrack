@@ -21,14 +21,17 @@ ChartJS.register(
   Legend
 );
 
+
 class BarChart1 extends Component {
   render() {
+    const { label } = this.props;
+
     const data = {
       defaultFontFamily: "Poppins",
       labels: ["0", "3", "5", "7", "9", "11", "13"],
       datasets: [
         {
-          label: "My First dataset",
+          label: label,
           data: [3, 1, 2, 3, 4, 5, 6],
           borderColor: "rgba(194, 100, 24, 1)",
           borderWidth: "0",

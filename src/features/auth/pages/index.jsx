@@ -1,6 +1,5 @@
 import { lazy } from "react";
-import { Routes } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import Error404 from "@/components/Error/Error404";
 
@@ -16,7 +15,10 @@ const AuthPages = () => {
       <Route path="/register" element={<SignUp />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword/:token" element={<ResetPassword />} />
-      <Route path="*" element={<Error404 />} />
+      <Route
+        path="*"
+        element={<Navigate to="/login" replace />}
+    />
     </Routes>
   );
 };

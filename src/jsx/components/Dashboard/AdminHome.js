@@ -334,10 +334,10 @@ const Home = () => {
                     key={statusData}
                     colors={["#FF5E5E", "var(--primary)", "#3AC977", "#FF9F00"]}
                     labels={[
-                      "Cancelled",
-                      "Yet To Start",
-                      "Complete",
-                      "Progress",
+                      t("completed"),
+                      t("progress"),
+                      t("yetToStart"),
+                      t("cancelled"),
                     ]}
                     width={300}
                     data={statusData}
@@ -345,7 +345,7 @@ const Home = () => {
                   />
                   <ul className="project-list">
                     <li>
-                      <CustomSVG fill="#3AC977" /> {t("complete")}
+                      <CustomSVG fill="#3AC977" /> {t("completed")}
                     </li>
 
                     <li>
@@ -385,7 +385,9 @@ const Home = () => {
                     {/* <Select /> */}
                   </div>
                 </div>
-                <BarChart1 />
+                <BarChart1
+                  label={t("MyFirstDataset")}
+                />
               </div>
             </div>
           )}
@@ -409,7 +411,8 @@ const Home = () => {
                   ></div>
                 </div>
                 <BarChart5
-                  labels={["Type A", "Type B", "Type C", "Type D"]}
+                  labels={[t("typeA"), t("typeB"), t("typeC"), t("typeD")]}
+                  dataSetLabel={t("MyFirstDataset")}
                   data={[65, 59, 23, 53]}
                   backgroundColor="#0d99ff"
                   hoverBackgroundColor="rgba(44, 44, 44, 0.5)"
@@ -447,6 +450,7 @@ const Home = () => {
                 </div>
 
                 <ApexBar3
+                  labels={[t("typeA"), t("typeB"), t("typeC"), t("typeD")]}
                   series={[
                     {
                       name: t("maintenance"),
@@ -493,7 +497,7 @@ const Home = () => {
                       color1={"#49BE25"}
                       color2={"#5179CF"}
                       Chartdata={applicationUsage}
-                      labels={["Web User", "Mobile User"]}
+                      labels={[t("webUser"), t("mobileUser")]}
                     />
                   </div>
                   <div>

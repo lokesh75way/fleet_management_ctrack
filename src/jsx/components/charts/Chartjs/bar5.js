@@ -5,6 +5,7 @@ class BarChart5 extends Component {
   render() {
     const {
       labels,
+      dataSetLabel,
       data,
       backgroundColor,
       hoverBackgroundColor,
@@ -17,7 +18,7 @@ class BarChart5 extends Component {
       labels: labels,
       datasets: [
         {
-          label: "My First dataset",
+          label: dataSetLabel,
           data: data,
           borderColor: "rgba(44, 44, 44, 1)",
           borderWidth: "0",

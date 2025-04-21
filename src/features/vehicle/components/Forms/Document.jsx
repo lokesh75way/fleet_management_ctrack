@@ -4,11 +4,13 @@ import DatePicker from "react-datepicker";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
-
+import {vehicleDocumentOptions } from "../../../../constants/options"
 import Error from "@/components/Error/Error";
 import "@/assets/scss/pages/_driver-tracking.scss";
 import FileUploader from "@/components/FileUploader";
 import CustomInput from "@/components/Input/CustomInput";
+import useTranslate from "@/hooks/useTranslate";
+
 
 const customStyles = {
   control: (base) => ({
@@ -34,17 +36,9 @@ const Document = ({
     control,
     name: "documents",
   });
+  const isRtl = document?.documentElement?.dir === "rtl";
 
-  const driverDocumentOptions = [
-    { value: "INSURANCE", label: "INSURANCE" },
-    { value: "PSU", label: "PSU" },
-    { value: "REGISTRARION_CERTIFICATE", label: "REGISTRARION_CERTIFICATE" },
-    { value: "SERVICE_CONTRACT", label: "SERVICE_CONTRACT" },
-    { value: "NATIONAL_PERMIT", label: "NATIONAL_PERMIT" },
-    { value: "STATE_PERMIT", label: "STATE_PERMIT" },
-    { value: "RTO_PASSING", label: "RTO_PASSING" },
-    { value: "ROAD_TAX", label: "Road Tax" },
-  ];
+  const vehicleDocumentTranslated = useTranslate(vehicleDocumentOptions);
   return (
     <div className="p-4">
       <div className="row" style={{ width: "100%" }}>
@@ -83,7 +77,7 @@ const Document = ({
                             newValue.value
                           );
                         }}
-                        options={driverDocumentOptions}
+                        options={vehicleDocumentTranslated}
                         ref={ref}
                         name={name}
                         styles={customStyles}
@@ -181,7 +175,7 @@ const Document = ({
 
                   <Error errorName={errors?.documents?.[index]?.expireDate} />
                 </div>
-                <div className="col-xl-2 d-flex flex-column mb-2 ">
+                <div className="col-xl-2 d-flex flex-column mb-2 width-xl-200">
                   <label className="form-label">
                     {t("Reminder(Before Days)")}
                   </label>
@@ -202,7 +196,7 @@ const Document = ({
                   <Error errorName={errors?.documents?.[index]?.issueDate} />
                 </div>
                 <div className="col-xl-2 mb-2">
-                  <label className="form-label">{t("uploadFile")}</label>
+                  <label className={`form-label me-4 ${isRtl ? "me-4" : "ms-4"}`}>{t("uploadFile")}</label>
                   <FileUploader
                     getValue={getValues}
                     link={getValues(`documents.${index}.file`)}

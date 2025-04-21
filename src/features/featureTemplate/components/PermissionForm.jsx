@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Card, Table } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -75,6 +75,15 @@ const PermissionForm = () => {
         .map((d) => d.moduleId)
     );
   };
+
+  const checkIfModuleIsChecked = useCallback((element) => {
+    return (
+      subModuleIndexArray.includes(element._id) ||
+      element.subModules.some((submodule) =>
+        subModuleIndexArray.includes(submodule.id)
+      )
+    );
+  }, [subModuleIndexArray]);
 
   const handleCheckboxChange = (isChecked, id) => {
     if (isChecked) {
@@ -476,17 +485,8 @@ const PermissionForm = () => {
                               className="form-check-input"
                               style={{ marginRight: "0.2rem" }}
                               name="create"
-                              checked={
-                                subModuleIndexArray.includes(element._id) ||
-                                element.subModules.some((submodule) =>
-                                  subModuleIndexArray.includes(submodule.id)
-                                )
-                              }
-                              onChange={(e) =>
-                                handleCheckboxChange(
-                                  e.target.checked,
-                                  element._id
-                                )
+                              checked={checkIfModuleIsChecked(element)}
+                              onChange={(e) =>handleCheckboxChange(e.target.checked,element._id)
                               }
                             />
                             <span style={{ marginRight: "1.7rem" }}>
@@ -553,6 +553,22 @@ const PermissionForm = () => {
 };
 export default PermissionForm;
 
+
+const translationKeys = {
+  "Dashboard": "dashboard",
+  "Business Group": "businessGroup",
+  "Company": "company",
+  "Branch": "branch",
+  "User": "user",
+  "Technician": "technician",
+  "Vehicle": "vehicle",
+  "Driver": "driver",
+  "Vehicle Tracking": "vehicleTracking",
+  "Feature Template": "featureTemplate",
+  "Settings": "settings",
+  "Reports": "reports",
+};
+
 export const TBody = ({
   subModuleIndexArray,
   data,
@@ -560,6 +576,7 @@ export const TBody = ({
   handleModulePermisssionChange,
 }) => {
   const picked = new Set();
+  const {t} = useTranslation();
 
   return (
     <tbody className="feature_template_table">
@@ -576,12 +593,13 @@ export const TBody = ({
           let isDisabled = false;
           if (moduleData.title === "Dashboard") isDisabled = true;
 
+          const translatedTitle = t(translationKeys[moduleData.title] || moduleData.title);
+
           return (
             <React.Fragment key={mindex}>
               <tr>
                 <td className="col-2" style={{ width: "130px" }}>
-                  {" "}
-                  {moduleData.title}
+                  {translatedTitle}
                 </td>
                 <td>
                   <input

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import { Controller } from "react-hook-form";
@@ -14,6 +14,7 @@ import {
   durationSelectOptions,
 } from "@/constants/options";
 import CustomInput from "@/components/Input/CustomInput";
+import useTranslate from "@/hooks/useTranslate";
 
 const Profile = ({
   register,
@@ -28,6 +29,12 @@ const Profile = ({
 }) => {
   const [isCheckedDBFC, setIsCheckedDBFC] = useState(false);
   const [isCheckedDBFC2, setIsCheckedDBFC2] = useState(false);
+  const isRTL = document?.documentElement?.dir === "rtl";
+
+  const permitTranslated = useTranslate(permitOptions);
+  const fuelTypeTranslated = useTranslate(fuelTypeOptions);
+  const distanceQuantityTranslated = useTranslate(distanceQuantitySelectOptions);
+
 
   const customStyles = {
     control: (base) => ({
@@ -47,7 +54,7 @@ const Profile = ({
             <span className="text-danger">*</span>
           </label>
           <div className="basic-form" style={{ marginTop: ".5rem" }}>
-            <div className="form-check custom-checkbox form-check-inline">
+            <div className="form-check custom-checkbox form-check-inline" >
               <input
                 type="radio"
                 className="form-check-input"
@@ -125,7 +132,7 @@ const Profile = ({
             )}
           />
         </div>
-        {/* <div className="col-xl-3 mb-3 d-flex flex-column">
+                {/* <div className="col-xl-3 mb-3 d-flex flex-column">
           <label className="form-label">{t('purchaseDate')}</label>
           <Controller
             name="purchaseDate"
@@ -205,7 +212,7 @@ const Profile = ({
                 onChange={(newValue) => {
                   setValue("permit", newValue.value);
                 }}
-                options={permitOptions}
+                options={permitTranslated}
                 ref={ref}
                 name={name}
                 styles={customStyles}
@@ -251,7 +258,7 @@ const Profile = ({
                 onChange={(newValue) => {
                   setValue("fuelType", newValue.value);
                 }}
-                options={fuelTypeOptions}
+                options={fuelTypeTranslated}
                 ref={ref}
                 name={name}
                 styles={customStyles}
@@ -265,161 +272,181 @@ const Profile = ({
           />
           <Error errorName={errors.fuelType} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        
+        {/* Distance based fuel consumption with RTL support */}
+        <div className="col-xl-6 mb-3">
           <label className="form-label">
             {t("distanceBasedFuelConsumption")}
             <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
-            <input
-              type="checkbox"
-              onChange={() => setIsCheckedDBFC(!isCheckedDBFC)}
-              className="form-check-input border border-2"
-              checked={isCheckedDBFC}
-            />
-            <CustomInput
-              type="number"
-              register={register}
-              label="Distance"
-              style={{ width: "5rem", margin: " 0 .4rem" }}
-              name="distanceBasedDistanceQuantity"
-              placeholder=""
-            />
-            <span>{t("kilometer")}</span>
-            {isCheckedDBFC && (
-              <>
-                <span style={{ paddingLeft: ".6rem" }}>/</span>
-                <CustomInput
-                  type="number"
-                  register={register}
-                  label="Distance Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
-                  name="distanceBaseFuelConsumption"
-                  placeholder=""
-                />
-                <Controller
-                  name="distanceBaseFuelConsumptionUnit"
-                  control={control}
-                  render={({ field: { onChange, value, name, ref } }) => (
-                    <Select
-                      onChange={(newValue) =>
-                        setValue(
-                          "distanceBaseFuelConsumptionUnit",
-                          newValue.value
-                        )
-                      }
-                      options={distanceQuantitySelectOptions}
-                      ref={ref}
-                      name={name}
-                      styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+            <div className={`me-2 ms-2 ${isRTL ? 'ms-5' : ''}`}>
+              <input
+                type="checkbox"
+                id="distanceCheckbox"
+                onChange={() => setIsCheckedDBFC(!isCheckedDBFC)}
+                className="form-check-input border border-2"
+                checked={isCheckedDBFC}
+              />
+            </div>
+            <div className="d-flex align-items-center ">
+              <CustomInput
+                type="number"
+                register={register}
+                label="Distance"
+                style={{ width: "5rem", margin: "0 .4rem" }}
+                name="distanceBasedDistanceQuantity"
+                placeholder=""
+              />
+              <span>{t("kilometer")}</span>
+              {isCheckedDBFC && (
+                <>
+                  <span style={{ padding: "0 .6rem" }}>/</span>
+                  <CustomInput
+                    type="number"
+                    register={register}
+                    label="Distance Quantity"
+                    style={{ width: "6rem", margin: "0 .4rem" }}
+                    name="distanceBaseFuelConsumption"
+                    placeholder=""
+                  />
+                  <div style={{ minWidth: "120px" }}>
+                    <Controller
+                      name="distanceBaseFuelConsumptionUnit"
+                      control={control}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            setValue(
+                              "distanceBaseFuelConsumptionUnit",
+                              newValue.value
+                            )
+                          }
+                          options={distanceQuantityTranslated}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={distanceQuantityTranslated[0]}
+                          value={{
+                            label: getValues("distanceBaseFuelConsumptionUnit"),
+                            value: getValues("distanceBaseFuelConsumptionUnit")
+                          }}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </>
-            )}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
           <Error errorName={errors.distanceBasedDistanceQuantity} />
         </div>
-        <div className="col-xl-6 mb-3 ">
+        
+        {/* Duration based fuel consumption with RTL support */}
+        <div className="col-xl-6 mb-3">
           <label className="form-label">
             {t("durationBasedFuelConsumption")}
             <span className="text-danger">*</span>
           </label>
           <div className="d-flex align-items-center">
-            <input
-              type="checkbox"
-              onChange={() => setIsCheckedDBFC2(!isCheckedDBFC2)}
-              className="form-check-input border border-2"
-              id="customCheckBox1"
-              checked={isCheckedDBFC2}
-            />
-            <CustomInput
-              type="number"
-              register={register}
-              label="Duration"
-              style={{ width: "5rem", margin: " 0 1rem" }}
-              name="durationBaseFuelConsumptionDurationQuanitty"
-              placeholder=""
-            />
-            <Controller
-              name="durationBaseFuelConsumptionDurationUnit"
-              control={control}
-              render={({ field: { onChange, value, name, ref } }) => (
-                <Select
-                  onChange={(newValue) =>
-                    setValue(
-                      "durationBaseFuelConsumptionDurationUnit",
-                      newValue.value
-                    )
-                  }
-                  options={durationSelectOptions}
-                  ref={ref}
-                  name={name}
-                  styles={customStyles}
-                  defaultValue={durationSelectOptions[0]}
-                  value={{
-                    label: getValues("durationBaseFuelConsumptionDurationUnit"),
-                    value: getValues("durationBaseFuelConsumptionDurationUnit"),
-                  }}
-                />
-              )}
-            />
-            {isCheckedDBFC2 && (
-              <>
-                <span style={{ paddingLeft: ".4rem", paddingRight: ".4rem" }}>
-                  /
-                </span>
-                <CustomInput
-                  type="number"
-                  register={register}
-                  label="Duration Quantity"
-                  style={{ width: "6rem", margin: " 0 1rem" }}
-                  name="durationBaseDistanceQuantity"
-                  placeholder=""
-                />
+            <div className={`me-2 ms-2 ${isRTL ? 'ms-5' : ''}`}>
+              <input
+                type="checkbox"
+                onChange={() => setIsCheckedDBFC2(!isCheckedDBFC2)}
+                className="form-check-input border border-2"
+                id="customCheckBox1"
+                checked={isCheckedDBFC2}
+              />
+            </div>
+            <div className="d-flex align-items-center ">
+              <CustomInput
+                type="number"
+                register={register}
+                label="Duration"
+                style={{ width: "5rem", margin: "0 .4rem" }}
+                name="durationBaseFuelConsumptionDurationQuanitty"
+                placeholder=""
+              />
+              <div style={{ minWidth: "120px" }}>
                 <Controller
-                  name="durationBaseFuelConsumptionUnit"
+                  name="durationBaseFuelConsumptionDurationUnit"
                   control={control}
                   render={({ field: { onChange, value, name, ref } }) => (
                     <Select
                       onChange={(newValue) =>
                         setValue(
-                          "durationBaseFuelConsumptionUnit",
+                          "durationBaseFuelConsumptionDurationUnit",
                           newValue.value
                         )
                       }
-                      options={distanceQuantitySelectOptions}
+                      options={durationSelectOptions}
                       ref={ref}
                       name={name}
                       styles={customStyles}
-                      defaultValue={distanceQuantitySelectOptions[0]}
+                      defaultValue={durationSelectOptions[0]}
                       value={{
-                        label: getValues("durationBaseFuelConsumptionUnit"),
-                        value: getValues("durationBaseFuelConsumptionUnit"),
+                        label: getValues("durationBaseFuelConsumptionDurationUnit"),
+                        value: getValues("durationBaseFuelConsumptionDurationUnit")
                       }}
                     />
                   )}
                 />
-              </>
-            )}
+              </div>
+              
+              {isCheckedDBFC2 && (
+                <>
+                  <span style={{ padding: "0 .4rem" }}>/</span>
+                  <CustomInput
+                    type="number"
+                    register={register}
+                    label="Duration Quantity"
+                    style={{ width: "6rem", margin: "0 .4rem" }}
+                    name="durationBaseDistanceQuantity"
+                    placeholder=""
+                  />
+                  <div style={{ minWidth: "120px" }}>
+                    <Controller
+                      name="durationBaseFuelConsumptionUnit"
+                      control={control}
+                      render={({ field: { onChange, value, name, ref } }) => (
+                        <Select
+                          onChange={(newValue) =>
+                            setValue(
+                              "durationBaseFuelConsumptionUnit",
+                              newValue.value
+                            )
+                          }
+                          options={distanceQuantityTranslated}
+                          ref={ref}
+                          name={name}
+                          styles={customStyles}
+                          defaultValue={distanceQuantityTranslated[0]}
+                          value={{
+                            label: getValues("durationBaseFuelConsumptionUnit"),
+                            value: getValues("durationBaseFuelConsumptionUnit")
+                          }}
+                        />
+                      )}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-          <Error
-            errorName={errors.durationBaseFuelConsumptionDurationQuanitty}
-          />
+          <Error errorName={errors.durationBaseFuelConsumptionDurationQuanitty} />
         </div>
 
-        <div className="col-xl-3 mb-3 ">
+        <div className="col-xl-3 mb-3">
           <label className="form-label">{t("consumptionTolerance")}</label>
-          <div className="d-flex align-items-center">
+          <div className={`d-flex align-items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
             <CustomInput
               type="number"
               register={register}
-              style={{ marginRight: ".5rem" }}
+              style={{ marginRight: ".5rem", marginLeft: ".5rem" }}
               name="consumptionTolerancePercent"
               placeholder=""
             />
-            <span style={{ padding: " 1rem" }}>%</span>
+            <span style={{ padding: "1rem" }}>%</span>
           </div>
         </div>
 
@@ -454,7 +481,6 @@ const Profile = ({
           onClick={handleSubmit(onSubmit)}
           style={{ width: "10%" }}
         >
-          {" "}
           {t("next")}
         </Button>
       </div>

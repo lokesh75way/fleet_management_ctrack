@@ -10,7 +10,6 @@ import ReactPaginate from "react-paginate";
 const TechnicianSheet = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
   const itemsPerPage = 8;
 
   const { data, isLoading } = useQuery({
@@ -21,9 +20,8 @@ const TechnicianSheet = ({ isOpen, onClose }) => {
   });
 
 
-  useEffect(() => {
-    if (data) setTotalCount(data.totalCount);
-  }, [data]);
+  const totalCount = useMemo(() => data?.totalCount || 0, [data]);
+
 
 
   const sortedTechnicians = useMemo(() => {

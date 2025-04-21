@@ -15,6 +15,7 @@ import GroupDropdown from "@/features/businessGroup/components/DropDownList";
 import CompanyDropdown from "@/features/company/components/DropDownList";
 import BranchDropdownList from "@/features/branch/components/DropDownList";
 import VehicleDropdownList from "@/features/vehicle/components/DropdownList";
+import useTranslate from "@/hooks/useTranslate";
 
 const Trip = ({
   Title,
@@ -39,6 +40,8 @@ const Trip = ({
   const [branch, setBranch] = useState();
   const [vehicle, setVehicle] = useState();
 
+  const tripStatusTranslated = useTranslate(tripStatusOptions);
+
   const customStyles = {
     control: (base) => ({
       ...base,
@@ -47,6 +50,27 @@ const Trip = ({
   };
 
   const { id } = useParams();
+
+  const handleGroupChange = (newValue) => {
+    if (getValues("businessGroupId") !== newValue.value) {
+      setValue("businessGroupId", newValue.value);
+      setValue("businessGroupName", newValue.label);
+      setValue("companyId", "");
+      setValue("branchId", "");
+      setCompany(null);
+      setBranch(null);
+    }
+  };
+
+  const handleCompanyChange = (newValue) => {
+    if (getValues("companyId") !== newValue.value) {
+      setValue("companyId", newValue.value);
+      setValue("branchId", "");
+      setCompany(newValue);
+      setBranch(null);
+    }
+  };
+
   useEffect(() => {
     if (id) {
       const data = location.state[0];
@@ -61,12 +85,12 @@ const Trip = ({
       setValue("reachLocation", dValues?.reachLocation);
       setValue("distance", dValues?.distance);
       setValue("fuelConsumption", dValues?.fuelConsumption);
-      setValue("tripStatus", dValues?.tripStatus || tripStatusOptions[0].value);
+      setValue("tripStatus", dValues?.tripStatus || tripStatusTranslated[0].value);
       setValue("driver", dValues?.driver);
     } else {
       setValue("startTime", new Date());
       setValue("reachTime", new Date());
-      setValue("tripStatus", tripStatusOptions[0].value);
+      setValue("tripStatus", tripStatusTranslated[0].value);
     }
   }, [dValues, id]);
 
@@ -84,16 +108,7 @@ const Trip = ({
               rules={{ required: true }}
               render={({ field: { onChange, value, name, ref } }) => (
                 <GroupDropdown
-                  onChange={(newValue) => {
-                    if (getValues("businessGroupId") != newValue.value) {
-                      setValue("businessGroupId", newValue.value);
-                      setValue("businessGroupName", newValue.label);
-                      setValue("companyId", "");
-                      setValue("branchId", "");
-                      setCompany(null);
-                      setBranch(null);
-                    }
-                  }}
+                  onChange={handleGroupChange}
                   defaultValue={value}
                   customStyles={customStyles}
                   name={name}
@@ -113,14 +128,7 @@ const Trip = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <CompanyDropdown
                   groupId={getValues("businessGroupId")}
-                  onChange={(newValue) => {
-                    if (getValues("companyId") != newValue.value) {
-                      setValue("companyId", newValue.value);
-                      setValue("branchId", "");
-                      setCompany(newValue);
-                      setBranch(null);
-                    }
-                  }}
+                  onChange={handleCompanyChange}
                   defaultValue={value}
                   value={company}
                   customStyles={customStyles}
@@ -333,18 +341,18 @@ const Trip = ({
               render={({ field: { onChange, value, name, ref } }) => (
                 <Select
                   onChange={(newValue) => {
-                    setValue("tripStatus", newValue.value); 
+                    setValue("tripStatus", newValue.value);
                     setTempValue(newValue.value);
                     onChange(newValue.value);
                   }}
-                  options={tripStatusOptions}
+                  options={tripStatusTranslated}
                   ref={ref}
                   name={name}
                   styles={customStyles}
-                  defaultValue={tripStatusOptions.find(
+                  defaultValue={tripStatusTranslated.find(
                     (option) => option.value === getValues("tripStatus")
                   )}
-                  value={tripStatusOptions.find(
+                  value={tripStatusTranslated.find(
                     (option) => option.value === value
                   )}
                 />

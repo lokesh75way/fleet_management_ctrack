@@ -12,9 +12,15 @@ const FileUploader = ({
   setLoading,
   loading,
   link = false,
+  componentType = null,
 }) => {
   const upload_Preset = "our_cloudinary_upload_preset";
   const [fileLink, setFileLink] = useState(null);
+  const isRtl = document?.documentElement?.dir === "rtl";
+
+  const marginStyle = componentType === 'driver' 
+    ? (isRtl ? { marginInlineEnd: "8rem" } : { marginInlineStart: "-8rem" })
+    : {};
 
   useEffect(() => {
     if (link) {
@@ -54,7 +60,7 @@ const FileUploader = ({
   };
 
   return (
-    <div className="file-uploader-container">
+    <div className="file-uploader-container" style={marginStyle}>
       <div className="file-upload-box">
         {loading ? (
           <div className="loader">Loading...</div>

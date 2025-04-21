@@ -98,13 +98,15 @@ const AlertOffcanvas = forwardRef(
       setValue(e.target.name, e.target.checked);
     };
 
+    const isRTL = document?.documentElement?.dir === "rtl";
+
     return (
       <>
         <Offcanvas
           show={addEmploye}
           onHide={setAddEmploye}
-          className="offcanvas-end customeoff"
-          placement="end"
+          className={`customeoff ${isRTL ? "offcanvas-start" : "offcanvas-end"}`}
+          placement={isRTL ? "start" : "end"}
         >
           <div className="offcanvas-header">
             <h5 className="modal-title" id="#gridSystemModal">

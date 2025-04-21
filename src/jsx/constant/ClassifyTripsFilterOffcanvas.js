@@ -11,33 +11,25 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import Error from "../../components/Error/Error";
-import { branchOptions, subCompanyOptions } from "@/constants/options";
-import {
-  FaBatteryFull,
-  FaCircle,
-  FaKey,
-  FaSearch,
-  FaWifi,
-} from "react-icons/fa";
-import CustomInput from "../../components/Input/CustomInput";
-import { findHighestAndLowestDates } from "../../utils/helper";
+
 import DriverDropdown from "../components/DriverDropdown";
 import { classifyTripsFilterCanvas } from "../../utils/yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getTrips } from "../../services/api/ClassifyTripServices";
+import { useTranslation } from "react-i18next";
 
 const ClassifyTripsFilterOffcanvas = forwardRef(
   ({ Title, filterData }, ref) => {
     const [addEmploye, setAddEmploye] = useState(false);
-    const [tempValue, setTempValue] = useState();
+
+    const {t}= useTranslation();
 
     useImperativeHandle(ref, () => ({
       showModal() {
         setAddEmploye(true);
       },
     }));
-    const nav = useNavigate();
+
     const customStyles = {
       control: (base) => ({
         ...base,
@@ -107,7 +99,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
                   <div className="container">
                     <div className="row ">
                       <div className="col-xl-12 mb-3 ">
-                        <label className="form-label">Driver</label>
+                        <label className="form-label">{t("Driver")}</label>
                         <Controller
                           name="driverId"
                           control={control}
@@ -127,7 +119,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
                         />
                       </div>
                       <div className="col-xl-12 mb-3 d-flex flex-column">
-                        <label className="form-label">Start Date</label>
+                        <label className="form-label">{t("startDate")}</label>
                         <Controller
                           name="startDate"
                           control={control}
@@ -141,7 +133,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
                         />
                       </div>
                       <div className="col-xl-12 mb-3 d-flex flex-column">
-                        <label className="form-label">End Date</label>
+                        <label className="form-label">{t("endDate")}</label>
                         <Controller
                           name="endDate"
                           control={control}
@@ -163,7 +155,7 @@ const ClassifyTripsFilterOffcanvas = forwardRef(
                             onClick={() => setAddEmploye(false)}
                             className="btn btn-primary me-4 w-100"
                           >
-                            Apply
+                            {t("apply")}
                           </button>
                         </div>
                       </div>

@@ -30,37 +30,47 @@ export const deviceTypeOptions = [
   { value: "2G Camera Howen 5636", label: "2G Camera Howen 5636" },
 ];
 export const tollCategoryOptions = [
-  { value: "Tolling Disabled", label: "Tolling Disabled" },
+  { value: "Tolling Disabled", label: "tollingDisabled" },
 ];
 export const tarrifTypeOptions = [
-  { value: "Regular with e-tag", label: "Regular with e-tag" },
+  { value: "Regular with e-tag", label: "regularWithETag" },
 ];
 export const rucLicenseOptions = [
   { value: "Not Assigned", label: "Not Assigned" },
   { value: "Assigned", label: "Assigned" },
 ];
 export const skillSetOptions = [
-  { value: "Not Assigned", label: "Not Assigned" },
-  { value: "Assigned", label: "Assigned" },
+  { value: "Not Assigned", label: "notAssigned" },
+  { value: "Assigned", label: "assigned" },
 ];
-export const profileOwningOptions = [{ value: "Custom", label: "Custom" }];
+export const profileOwningOptions = [{ value: "Custom", label: "custom" }];
 export const costCenterOptions = [
-  { value: "Owning Cost Center", label: "Owning Cost Center" },
+  { value: "Owning Cost Center", label: "owningCostCenter" },
 ];
-export const copyFromOptions = [{ value: "Test", label: "Test" }];
+export const copyFromOptions = [{ value: "Test", label: "test" }];
 export const distanceCounterOptions = [
-  { value: "GPS", label: "GPS" },
-  { value: "OBD", label: "OBD" },
-  { value: "RELATIVEODOMETER", label: "RELATIVEODOMETER" },
-  { value: "TACHOGRAPH", label: "TACHOGRAPH" },
+  { value: "GPS", label: "gps" },
+  { value: "OBD", label: "obd" },
+  { value: "RELATIVEODOMETER", label: "relativeOdometer" },
+  { value: "TACHOGRAPH", label: "tachograph" },
 ];
 export const driverDocumentOptions = [
-  { value: "Driving License", label: "Driving License" },
-  { value: "Aadhar Card", label: "Aadhar Card" },
-  { value: "PAN Card", label: "PAN Card" },
-  { value: "Bank Account", label: "Bank Account" },
-  { value: "Mediclaim", label: "Mediclaim" },
-  { value: "Custom", label: "Custom" },
+  { value: "DRIVING_LICENSE", label: "drivingLicense"},
+  { value: "AADHAR_CARD", label: "aadharCard"},  
+  { value: "PAN_CARD", label:"panCard"},  
+  { value: "BANK_ACCOUNT", label: "bankAccount" },  
+  { value: "MEDICLAIM", label: "mediclaim" }, 
+];
+
+export const vehicleDocumentOptions = [
+  { value: "INSURANCE", label: "insurance" },
+  { value: "PSU", label: "psu"},
+  { value: "REGISTRARION_CERTIFICATE", label: "registrarionCertificate"},
+  { value: "SERVICE_CONTRACT", label: "serviceContract"},
+  { value: "NATIONAL_PERMIT", label: "nationalPermit"},
+  { value: "STATE_PERMIT", label: "statePermit" },
+  { value: "RTO_PASSING", label: "rtoPassing" },
+  { value: "ROAD_TAX", label: "roadTax" },
 ];
 export const featureTemplateOptions = [
   { value: "Template 1", label: "Template 1" },
@@ -74,26 +84,26 @@ export const unitOfDistanceOptions = [
   { value: "NAUTICAL_MILES", label: "NAUTICAL_MILES" },
 ];
 export const speedDetectionOptions = [
-  { value: "DEVICE", label: "DEVICE" },
-  { value: "LATING", label: "LATING" },
+  { value: "DEVICE", label: "device" },
+  { value: "LATING", label: "lating" },
 ];
 export const permitOptions = [
-  { value: "ITC", label: "ITC" },
-  { value: "NORMAL", label: "NORMAL" },
-  { value: "RENT", label: "RENT" },
-  { value: "FULL_SENSOR", label: "FULL_SENSOR" },
-  { value: "MEDICAL", label: "MEDICAL" },
-  { value: "OTHER", label: "OTHER" },
+  { value: "ITC", label: "itc" },
+  { value: "NORMAL", label: "normal" },
+  { value: "RENT", label: "rent" },
+  { value: "FULL_SENSOR", label: "fullSensor" },
+  { value: "MEDICAL", label: "medical" },
+  { value: "OTHER", label: "other" },
 ];
 export const fuelTypeOptions = [
-  { value: "PETROL", label: "PETROL" },
-  { value: "DIESEL", label: "DIESEL" },
-  { value: "GAS", label: "GAS" },
-  { value: "ELECTRIC", label: "ELECTRIC" },
+  { value: "PETROL", label: "petrol" },
+  { value: "DIESEL", label: "diesel" },
+  { value: "GAS", label: "gas" },
+  { value: "ELECTRIC", label: "electric" },
 ];
 export const distanceQuantitySelectOptions = [
-  { value: "LITERS", label: "LITERS" },
-  { value: "GALLONS", label: "GALLONS" },
+  { value: "LITERS", label: "liters" },
+  { value: "GALLONS", label: "gallons" },
 ];
 export const durationSelectOptions = [
   { value: "MM", label: "MM" },
@@ -241,9 +251,9 @@ export const toleranceOptions = [
   { value: "40", label: "40" },
 ];
 export const tripStatusOptions = [
-  { value: "ONGOING", label: "OnGoing" },
-  { value: "COMPLETED", label: "Completed" },
-  { value: "JUST_STARTED", label: "Just Started" },
+  { value: "ONGOING", label: "ongoing" },
+  { value: "COMPLETED", label: "completed" },
+  { value: "JUST_STARTED", label: "justStarted" },
 ];
 export const parentOptions = [
   { value: "branch1@example.com", label: "branch1@example.com" },
