@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Button } from "react-bootstrap";
 import { Controller, useFieldArray } from "react-hook-form";
 import Select from "react-select";
@@ -40,6 +40,16 @@ const BranchForm = ({
   const { t } = useTranslation();
   const { id } = useParams();
   const { location: locationData, error: locationError } = useUserLocation();
+
+  // Create a stable reference for location values to prevent re-renders
+  const locationValues = useMemo(
+    () => ({
+      country: getValues("country"),
+      state: getValues("state"),
+      city: getValues("city"),
+    }),
+    [getValues("country"), getValues("state"), getValues("city")]
+  );
 
   const handleAddForm = () => {
     append({
@@ -172,11 +182,7 @@ const BranchForm = ({
         <LocationSelector
           register={register}
           setValue={setValue}
-          dValues={{
-            country: getValues("country"),
-            state: getValues("state"),
-            city: getValues("city"),
-          }}
+          dValues={locationValues}
           errors={errors}
           getValues={getValues}
           locationData={locationData}
@@ -184,6 +190,7 @@ const BranchForm = ({
           showCity={true}
           Comptype={""}
         />
+
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("dateFormat")}</label>
           <Controller
@@ -191,21 +198,24 @@ const BranchForm = ({
             control={control}
             render={({ field: { onChange, value, name, ref } }) => (
               <Select
-                onChange={(newValue) => setValue("dateFormat", newValue?.value)}
+                onChange={(newValue) => {
+                  setValue("dateFormat", newValue.value)
+                }}
                 options={dateFormatOptions}
                 ref={ref}
                 name={name}
                 styles={customStyles}
                 value={
                   dateFormatOptions.find((option) => option.value === value) ||
-                  dateFormatOptions[0]
+                  dateFormatOptions[1]
                 }
-                defaultValue={dateFormatOptions[0]}
+                defaultValue={dateFormatOptions[1]}
               />
             )}
           />
           <Error errorName={errors.dateFormat} />
         </div>
+
         <div className="col-xl-3 mb-3 ">
           <label className="form-label">{t("timeFormat")}</label>
           <Controller

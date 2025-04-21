@@ -72,7 +72,7 @@ const BranchForm = () => {
         },
       ],
       timeFormat: timeFormatOptions[1]?.value,
-      dateFormat: dateFormatOptions[1]?.value,
+      dateFormat: dateFormatOptions[1].value,
     },
     resolver: yupResolver(branchAccountSchema),
     values: parsedBranchData,

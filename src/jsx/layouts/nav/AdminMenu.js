@@ -1,16 +1,11 @@
 import { SVGICON } from "../../../constants/theme";
-import { GrMoney } from "react-icons/gr";
 import { FaCar } from "react-icons/fa6";
 import { FaRegBuilding } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { FaTools } from "react-icons/fa";
 import { GrUserPolice } from "react-icons/gr";
 import { BsPinMap } from "react-icons/bs";
-import { BiTask } from "react-icons/bi";
-import { FiAlertTriangle } from "react-icons/fi";
 import { PiWarningOctagonDuotone } from "react-icons/pi";
-import { TbFence } from "react-icons/tb";
-import { CgPoll } from "react-icons/cg";
 
 export const AdminMenuList = [
   //Content
@@ -47,7 +42,7 @@ export const AdminMenuList = [
     to: "/company",
   },
   {
-    title: "branch",
+    title: "Branch",
     iconStyle: (
       <FaRegBuilding
         style={{

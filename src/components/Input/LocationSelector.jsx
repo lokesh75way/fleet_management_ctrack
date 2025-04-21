@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { GetCountries, GetState, GetCity } from "react-country-state-city/dist/cjs";
 import Error from "../Error/Error";
 import CustomInput from "./CustomInput";
@@ -35,6 +35,8 @@ const LocationSelector = ({
   const [countryCode, setCountryCode] = useState("IND");
   const [countryId, setCountryId] = useState(null);
 
+  const initialLoadComplete = useRef(false);
+
   useEffect(() => {
     GetCountries().then((result) => {
       setCountriesList(result);
@@ -42,40 +44,58 @@ const LocationSelector = ({
   }, []);
 
   useEffect(() => {
-    if (id) {
-      if (dValues?.city) {
-        setValue("city", dValues.city);
-        setSelectedCity({
-          value: dValues.city,
-          label: dValues.city,
-        });
-      }
-      
-      if (dValues?.country) {
-        setValue("country", dValues.country);
-        const option = countryOptions.find(
-          (option) => option.value === dValues?.country
-        );
-        if (option) handleCountryChange(option);
-      }
-      
-      if (dValues?.state) {
-        setValue("state", dValues.state || "");
-        setSelectedState({
-          value: dValues.state,
-          label: dValues.state || "",
-        });
-        
-        // If we have both country and state, we can load cities
-        if (dValues?.country && dValues?.state && countryId) {
-          const stateObj = stateList.find(state => getStateName(state) === dValues.state);
-          if (stateObj) {
-            loadCities(countryId, stateObj.id);
+    if (countriesList.length > 0 && !initialLoadComplete.current) {
+      if (id) {
+        if (dValues?.country) {
+          const countryObj = countriesList.find(
+            (country) => country.iso3 === dValues.country
+          );
+          
+          if (countryObj) {
+            setValue("country", dValues.country);
+            setSelectedCountry({
+              value: dValues.country,
+              label: countryObj.name,
+            });
+            setCountryCode(countryObj.iso2);
+            setCountryId(countryObj.id);
+            
+            GetState(countryObj.id).then((states) => {
+              setStateList(states);
+              
+              if (dValues?.state) {
+                setValue("state", dValues.state);
+                
+                const stateObj = states.find(
+                  (state) => getStateName(state) === dValues.state
+                );
+                
+                if (stateObj) {
+                  setSelectedState({
+                    value: dValues.state,
+                    label: dValues.state,
+                  });
+                  
+                  // Load cities for the selected state
+                  GetCity(countryObj.id, stateObj.id).then((cities) => {
+                    setCityList(cities);
+                    
+                    if (dValues?.city) {
+                      setValue("city", dValues.city);
+                      setSelectedCity({
+                        value: dValues.city,
+                        label: dValues.city,
+                      });
+                    }
+                  });
+                }
+              }
+            });
           }
         }
-      }
-    } else {
-      if (locationData?.country?.isoAlpha3) {
+        
+        initialLoadComplete.current = true;
+      } else if (locationData?.country?.isoAlpha3 && !initialLoadComplete.current) {
         setSelectedCountry({
           value: locationData?.country?.isoAlpha3,
           label: locationData?.country?.isoName,
@@ -86,35 +106,36 @@ const LocationSelector = ({
         const selectedCountryId = isoToCountryId(locationData?.country?.isoAlpha3);
         setCountryId(selectedCountryId);
         
-        if (locationData?.location?.principalSubdivision) {
-          setSelectedState({
-            value: locationData?.location?.principalSubdivision,
-            label: locationData?.location?.principalSubdivision || "",
-          });
-          setValue("state", locationData?.location?.principalSubdivision || "");
-          
+        if (selectedCountryId) {
           GetState(selectedCountryId).then((result) => {
             setStateList(result);
-            // Find state ID to load cities
-            const stateObj = result.find(state => 
-              getStateName(state) === locationData?.location?.principalSubdivision);
-            if (stateObj) {
-              loadCities(selectedCountryId, stateObj.id);
+            
+            if (locationData?.location?.principalSubdivision) {
+              setSelectedState({
+                value: locationData?.location?.principalSubdivision,
+                label: locationData?.location?.principalSubdivision || "",
+              });
+              setValue("state", locationData?.location?.principalSubdivision || "");
+              
+              const stateObj = result.find(state => 
+                getStateName(state) === locationData?.location?.principalSubdivision);
+              
+              if (stateObj) {
+                loadCities(selectedCountryId, stateObj.id);
+                
+                if (locationData?.location?.city) {
+                  setValue("city", locationData?.location?.city);
+                  setSelectedCity({
+                    value: locationData?.location?.city,
+                    label: locationData?.location?.city,
+                  });
+                }
+              }
             }
-          });
-        } else {
-          GetState(selectedCountryId).then((result) => {
-            setStateList(result);
           });
         }
         
-        if (locationData?.location?.city) {
-          setValue("city", locationData?.location?.city);
-          setSelectedCity({
-            value: locationData?.location?.city,
-            label: locationData?.location?.city,
-          });
-        }
+        initialLoadComplete.current = true;
       }
     }
   }, [locationData, id, dValues, countriesList]);
@@ -276,4 +297,5 @@ const LocationSelector = ({
   );
 };
 
-export default LocationSelector;
+
+export default React.memo(LocationSelector);

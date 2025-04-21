@@ -56,6 +56,7 @@ const CreateBusiness = () => {
       ...groupData,
       ...groupData?.businessGroupId,
       logo: groupData?.businessGroupId?.logo ?? null,
+      dateFormat: groupData?.dateFormat || dateFormatOptions[1]?.value,
     };
   }, [groupData]);
 
@@ -65,7 +66,7 @@ const CreateBusiness = () => {
     setValue,
     getValues,
     control,
-    handleSubmit,
+    handleSubmit,watch
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
