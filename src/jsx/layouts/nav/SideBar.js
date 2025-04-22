@@ -148,6 +148,7 @@ const SideBar = () => {
       <div className="deznav-scroll">
         <ul className="metismenu" id="menu" style={{ minHeight: "85vh" }}>
           {menuListToMap.map((data, index) => {
+            console.log(data);
             let menuClass = data.classsChange;
             if (menuClass !== "menu-title") {
               return (
@@ -198,9 +199,7 @@ const SideBar = () => {
                                 <li
                                   key={index}
                                   className={`${
-                                    data.to === url || data.to === url2
-                                      ? "mm-active text-primary"
-                                      : ""
+                                    data.to === url2 ? "mm-active text-primary" : ""
                                   }`}
                                 >
                                   {data.content && data.content.length > 0 ? (
@@ -236,7 +235,6 @@ const SideBar = () => {
                                                 <li key={ind}>
                                                   <Link
                                                     className={`${
-                                                      url === data.to ||
                                                       url2 === data.to
                                                         ? "mm-active"
                                                         : ""
@@ -255,12 +253,7 @@ const SideBar = () => {
                                     <Link
                                       to={data.to}
                                       className={`${
-                                        data.to === url ||
-                                        data.to === url2 ||
-                                        url2.substring(
-                                          0,
-                                          url2.lastIndexOf("/")
-                                        ) === data.to
+                                        data.to === url2
                                           ? "mm-active"
                                           : ""
                                       }`}
