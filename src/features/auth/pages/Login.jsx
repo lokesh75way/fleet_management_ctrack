@@ -195,15 +195,24 @@ function Login(props) {
                                             </div>
                                           )}
                                         </div>
-                                        <div className="form-group text-left mb-5">
+                                        <div className="form-group text-left mb-5 ">
                                           <button
                                             type="submit"
-                                            className="btn btn-primary dz-xs-flex m-r5"
+                                            className="btn btn-primary dz-xs-flex m-r5 mb-3"
                                             disabled={isPending}
                                           >
                                             {t("login")}
                                           </button>
-                                          <span className="form-check d-inline-block ms-2">
+                                          <div className="mb-2 ">
+                                          <Link
+                                            to="/forgotpassword"
+                                            style={{ fontSize: "small" }}
+                                          >
+                                            {" "}
+                                            {t("forgotPassword")}
+                                          </Link>
+                                        </div>
+                                          {/* <span className="form-check d-inline-block ms-2">
                                             <input
                                               type="checkbox"
                                               className="form-check-input"
@@ -219,9 +228,9 @@ function Login(props) {
                                             >
                                               {t("rememberMe")}
                                             </label>
-                                          </span>
+                                          </span> */}
                                         </div>
-                                        <div className="dz-social">
+                                        {/* <div className="dz-social">
                                           <h5 className="form-title fs-20">
                                             {t("signInWith")}
                                           </h5>
@@ -257,25 +266,16 @@ function Login(props) {
                                               ></Link>
                                             </li>
                                           </ul>
-                                        </div>
+                                        </div> */}
                                       </form>
                                       <div className="text-center bottom">
-                                        <NavLink
+                                        {/* <NavLink
                                           to="/register"
                                           className="btn btn-primary button-md btn-block"
                                         >
                                           {t("createAccount")}
-                                        </NavLink>
+                                        </NavLink> */}
 
-                                        <div className="mt-2">
-                                          <Link
-                                            to="/forgotpassword"
-                                            style={{ fontSize: "small" }}
-                                          >
-                                            {" "}
-                                            {t("forgotPassword")}
-                                          </Link>
-                                        </div>
                                       </div>
                                     </div>
                                   </div>
