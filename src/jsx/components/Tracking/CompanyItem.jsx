@@ -49,14 +49,14 @@ const CompanyItem = (props) => {
   const handleExpand = (expanded) => {
     setExpanded(expanded);
   };
-  const handleSubmit = () => {
-    // TODO Only set vehicleIds here
-    props.handleToggleCardPositionHandler();
-  };
+  // const handleSubmit = () => {
+  //   // TODO Only set vehicleIds here
+  //   props.handleToggleCardPositionHandler();
+  // };
 
   return (
     <>
-      <div className="checkboxTree">
+      <div className="checkboxTree mb-4">
         <CheckboxTree
           nodes={nodes}
           checked={checked}
@@ -94,7 +94,7 @@ const CompanyItem = (props) => {
           }}
         />
       </div>
-      <div className="text-center  pt-2 ">
+      {/* <div className="text-center  pt-2 ">
         <Button
           className=" mb-5"
           variant="primary btn-md "
@@ -103,7 +103,7 @@ const CompanyItem = (props) => {
         >
           Save Selection
         </Button>
-      </div>
+      </div> */}
     </>
   );
 };

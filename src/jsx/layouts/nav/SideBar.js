@@ -288,11 +288,11 @@ const SideBar = () => {
             }
           })}
         </ul>
-        <div className="help-desk">
+        {/* <div className="help-desk">
           <Link to={"/contactUs"} className="btn btn-primary">
             {t("helpDesk")}
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

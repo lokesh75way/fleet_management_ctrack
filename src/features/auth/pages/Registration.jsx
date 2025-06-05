@@ -59,10 +59,10 @@ function Register(props) {
     }
     setErrors(errorObj);
     if (error) return;
-    dispatch(loadingToggleAction(true));
-    dispatch(
-      signupAction({ email, password, name, mobile, username }, navigate)
-    );
+    // dispatch(loadingToggleAction(true));
+    // dispatch(
+    //   signupAction({ email, password, name, mobile, username }, navigate)
+    // );
   }
 
   return (

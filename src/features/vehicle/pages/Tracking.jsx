@@ -23,8 +23,8 @@ const DriverTracking = () => {
 
   const tabData = [
     { name: "Object", icon: TbLocationFilled },
-    { name: "Driver", icon: FaUser },
-    { name: "Geofence", icon: MdFence },
+    // { name: "Driver", icon: FaUser },
+    // { name: "Geofence", icon: MdFence },
   ];
 
   const handleToggleCardPosition = () => {

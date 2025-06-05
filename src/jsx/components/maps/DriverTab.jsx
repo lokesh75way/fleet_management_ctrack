@@ -99,7 +99,7 @@ const DriverTab = ({
 };
 
 const DriverTabComponent1 = (props) => {
-  const { setVehicleStatus, vehicleCounts } = props;
+  const { setVehicleStatus, vehicleCounts, handleToggleCardPosition } = props;
 
   const { running, idle, stopped, inactive, nodata, total } = vehicleCounts;
   const [selectValue, setSelectValue] = useState("All");
@@ -132,33 +132,34 @@ const DriverTabComponent1 = (props) => {
         }))
     : [];
 
-  const handleSearch = (item) => {
-    const vehicleData = getVehicles(selectValue);
+  // const handleSearch = (item) => {
+  //   const vehicleData = getVehicles(selectValue);
 
-    const filteredData = Object.entries(vehicleData).filter((vehicle) => {
-      const vec = vehicle[1].filter((data) => data.id == item.id);
-      return vec.length > 0;
-    });
+  //   const filteredData = Object.entries(vehicleData).filter((vehicle) => {
+  //     const vec = vehicle[1].filter((data) => data.id == item.id);
+  //     return vec.length > 0;
+  //   });
 
-    const convertedData = filteredData.reduce((acc, [company, dataArray]) => {
-      dataArray.map((data) => {
-        if (data.vehicleName === item.name) {
-          acc[company] = [data];
-        }
-      });
-      return acc;
-    }, {});
-    setVehicles(convertedData);
-  };
+  //   const convertedData = filteredData.reduce((acc, [company, dataArray]) => {
+  //     dataArray.map((data) => {
+  //       if (data.vehicleName === item.name) {
+  //         acc[company] = [data];
+  //       }
+  //     });
+  //     return acc;
+  //   }, {});
+  //   setVehicles(convertedData);
+  // };
 
   return (
     <>
-      <div className="vehicle_tracking-object">
+      <div className="vehicle_tracking-object mb-4">
         <span
           className={`light fs-9 running ${
             selectValue === "Running" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("Running");
             setVehicleStatus("RUNNING");
           }}
@@ -172,6 +173,7 @@ const DriverTabComponent1 = (props) => {
             selectValue === "Idle" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("Idle");
             setVehicleStatus("IDLE");
           }}
@@ -185,6 +187,7 @@ const DriverTabComponent1 = (props) => {
             selectValue === "Stopped" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("Stopped");
             setVehicleStatus("STOP");
           }}
@@ -198,6 +201,7 @@ const DriverTabComponent1 = (props) => {
             selectValue === "Inactive" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("Inactive");
             setVehicleStatus("INACTIVE");
           }}
@@ -211,6 +215,7 @@ const DriverTabComponent1 = (props) => {
             selectValue === "NoData" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("NoData");
             setVehicleStatus("NODATA");
           }}
@@ -223,6 +228,7 @@ const DriverTabComponent1 = (props) => {
             selectValue === "All" && "vehicle_tracking-active"
           }`}
           onClick={() => {
+            handleToggleCardPosition();
             setSelectValue("All");
             setVehicleStatus("");
           }}
@@ -231,7 +237,7 @@ const DriverTabComponent1 = (props) => {
           <span>Total</span>
         </span>
       </div>
-      <div className="d-flex mt-4 mb-4">
+      {/* <div className="d-flex mt-4 mb-4">
         <ReactSearchAutocomplete
           items={items}
           className="w-100"
@@ -249,7 +255,7 @@ const DriverTabComponent1 = (props) => {
           }}
           onSelect={handleSearch}
         />
-      </div>
+      </div> */}
       {
         <CompanyItem
           companyVehicle={companyVehicle ?? []}
