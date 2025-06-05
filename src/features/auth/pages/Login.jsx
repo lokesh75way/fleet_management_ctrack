@@ -142,6 +142,7 @@ function Login(props) {
                                         <div className="form-group mb-3">
                                           <input
                                             type="email"
+                                            placeholder="Email"
                                             className="form-control"
                                             {...register("email")}
                                           />
@@ -159,6 +160,7 @@ function Login(props) {
                                                   ? "text"
                                                   : "password"
                                               }
+                                              placeholder="Password"
                                               className="form-control"
                                               {...register("password")}
                                             />
